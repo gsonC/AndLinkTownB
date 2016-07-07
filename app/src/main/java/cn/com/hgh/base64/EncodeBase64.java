@@ -8,6 +8,7 @@ public class EncodeBase64 extends CharacterEnd {
     {
     }
 
+
     protected int bytesPerAtom()
     {
         return 3;
