@@ -7,7 +7,6 @@ public abstract class CharacterEnd {
 	public CharacterEnd() {
 	}
 
-
 	protected abstract int bytesPerAtom();
 
 	protected abstract int bytesPerLine();
