@@ -24,14 +24,15 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import cn.com.hgh.utils.AbViewUtil;
-
 import com.xizhi.mezone.b.R;
+
+import cn.com.hgh.utils.AbViewUtil;
 
 /**
  * amsoft.cn 名称：AbListViewFooter.java 描述：加载更多Footer View类.
  */
 public class AbListViewFooter extends LinearLayout {
+
 
 	/** The m context. */
 	private Context mContext;
