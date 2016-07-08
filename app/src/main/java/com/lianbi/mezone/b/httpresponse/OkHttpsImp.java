@@ -1711,7 +1711,7 @@ public enum OkHttpsImp {
 		String sign = getSign(md5_key, params);
 		params.put("sign", sign);
 		String url = getAbsoluteUrl(API.GETEDITION);
-		getProgressResponse(myResultCallback, params, url);
+		getNoProgressResponse(myResultCallback, params, url);
 	}
 
 	/**
