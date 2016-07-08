@@ -30,6 +30,7 @@ import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
 import com.lianbi.mezone.b.impl.MyShopChange;
 import com.lianbi.mezone.b.ui.BaseActivity;
+import com.lianbi.mezone.b.ui.BookFunctionActivity;
 import com.lianbi.mezone.b.ui.H5WebActivty;
 import com.lianbi.mezone.b.ui.MainActivity;
 import com.lianbi.mezone.b.ui.ServiceMallActivity;
@@ -250,6 +251,12 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 							intent_web.putExtra(WebActivty.T, "货源批发");
 							intent_web.putExtra(WebActivty.U, getSupplyWholesaleUrl(API.TOSTORE_Supply_Wholesale));
 							mActivity.startActivity(intent_web);
+						}
+						break;
+					case 4:
+						if(isLogin){
+							Intent intent = new Intent(mActivity, BookFunctionActivity.class);
+							startActivity(intent);
 						}
 						break;
 					case 99:
