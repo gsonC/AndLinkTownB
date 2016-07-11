@@ -80,7 +80,7 @@ public class JumpIntent {
 	 * @param at
 	 *            class 跳转的类
 	 */
-	public static boolean jumpH5WebActivty(boolean isLogin, String type,
+	public static boolean jumpH5WebActivty(boolean isLogin, String type,String  title,
 											 Activity at) {
 		if (!isLogin) {
 			return isLogin;
@@ -90,7 +90,7 @@ public class JumpIntent {
 			intent_web.putExtra(Constants.NEDDLOGIN, false);
 			intent_web.putExtra("NEEDNOTTITLE", false);
 			intent_web.putExtra("Re", true);
-			intent_web.putExtra(WebActivty.T, "产品管理");
+			intent_web.putExtra(WebActivty.T, title);
 			intent_web.putExtra(WebActivty.U, getUrl(type));
 			at.startActivity(intent_web);
 
