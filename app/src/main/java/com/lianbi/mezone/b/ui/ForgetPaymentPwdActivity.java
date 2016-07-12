@@ -93,6 +93,10 @@ public class ForgetPaymentPwdActivity extends BaseActivity {
 				ContentUtils.showMsg(this, "请正确输入验证码");
 				return;
 			}
+			if(null==TLphone||TextUtils.isEmpty(TLphone)){
+				ContentUtils.showMsg(this, "请点击获取验证码");
+				return;
+			}
 			//
 			CheckPasswordCode();
 

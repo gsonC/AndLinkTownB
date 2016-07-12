@@ -8,9 +8,9 @@ import java.util.concurrent.TimeUnit;
 
 import cn.com.hgh.utils.DataCleanManager;
 import cn.com.hgh.utils.FilePathGet;
+import okhttp3.OkHttpClient;
 
 public class MyLinkTownBApplication extends Application {
-	public static final int CONNECTTIMEOUT = 10000;
 	@Override
 	public void onCreate() {
 		super.onCreate();
@@ -22,14 +22,26 @@ public class MyLinkTownBApplication extends Application {
 		// new Buffer()
 		// .writeUtf8(CER_12306)
 		// .inputStream()});
-		
-		OkHttpUtils.getInstance().debug("OkHttpUtils")
-				.setConnectTimeout(CONNECTTIMEOUT, TimeUnit.MILLISECONDS);
+
+		//OkHttpUtils.getInstance().debug("OkHttpUtils")
+		//		.setConnectTimeout(CONNECTTIMEOUT, TimeUnit.MILLISECONDS);
 		// 使用https，但是默认信任全部证书
-		OkHttpUtils.getInstance().setCertificates();
+		//OkHttpUtils.getInstance().setCertificates();
 
 		// 使用这种方式，设置多个OkHttpClient参数
 		// OkHttpUtils.getInstance(new OkHttpClient.Builder().build());
+
+		OkHttpClient okHttpClient = new OkHttpClient.Builder()
+				//                .addInterceptor(new LoggerInterceptor("TAG"))
+				.connectTimeout(10000L, TimeUnit.MILLISECONDS)
+				.readTimeout(10000L, TimeUnit.MILLISECONDS)
+				.retryOnConnectionFailure(false)
+				//其他配置
+				.build();
+
+		OkHttpUtils.getInstance(okHttpClient);
+
+	//	OkHttpUtils.getInstance().getOkHttpClient().newBuilder().retryOnConnectionFailure(false);
 
 		// 初始化异常捕获1
 		CrashHand handler = CrashHand.getInstance();
@@ -46,4 +58,6 @@ public class MyLinkTownBApplication extends Application {
 				.createSDCardDir("cacheImages"));
 
 	}
+
+
 }

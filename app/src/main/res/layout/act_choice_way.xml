@@ -115,4 +115,38 @@
             android:scaleType="centerInside"
             android:src="@mipmap/service_new_right"/>
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llt_book_dingdanway"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:scaleType="centerInside"
+            android:src="@mipmap/icon_books"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:text="预约订单"
+            android:textColor="@color/colores_news_10"
+            android:textSize="15sp"/>
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:scaleType="centerInside"
+            android:src="@mipmap/service_new_right"/>
+    </LinearLayout>
 </LinearLayout>

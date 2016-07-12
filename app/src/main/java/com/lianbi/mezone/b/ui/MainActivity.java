@@ -185,6 +185,9 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 		ContentUtils.putSharePre(MainActivity.this,
 				Constants.SHARED_PREFERENCE_NAME,
 				Constants.HHPF, "0");
+		ContentUtils.putSharePre(MainActivity.this,
+				Constants.SHARED_PREFERENCE_NAME,
+				Constants.YYDD, "0");
 		for(int i=0;i<datas.size();i++){
 			if(1==datas.get(i).getId()){
 				ContentUtils.putSharePre(MainActivity.this,
@@ -194,8 +197,10 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 				ContentUtils.putSharePre(MainActivity.this,
 						Constants.SHARED_PREFERENCE_NAME,
 						Constants.HHPF, "3");
-			}else{
-
+			}else if(4==datas.get(i).getId()){
+				ContentUtils.putSharePre(MainActivity.this,
+						Constants.SHARED_PREFERENCE_NAME,
+						Constants.YYDD, "4");
 			}
 		}
 
@@ -209,7 +214,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 		service.setId(99);
 		mDatas.add(service);
 
-		//第三次提交代码
+		//
 
 		ShouyeServiceBean endservie = new ShouyeServiceBean();
 		endservie.setIcoUrl("http");

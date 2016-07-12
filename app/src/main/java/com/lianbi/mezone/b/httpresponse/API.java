@@ -43,10 +43,10 @@ public class API {
 	 */
 	//	public static final String ENVIRONMENTAL = "http://front.xylbn.cn:9003";
 	//	public static final String TOSTORESERVICE = "http://mall.xylbn.cn:9005";//到店服务
-	//	public static final String ENVIRONMENTAL = "http://uat.xylbn.cn";
-	//	public static final String TOSTORESERVICE = "http://uat.xylbn.cn";//到店服务
-		public static final String ENVIRONMENTAL = "http://172.16.103.153:8080";
-		public static final String TOSTORESERVICE = "http://172.16.103.153:8085";//到店服务
+		public static final String ENVIRONMENTAL = "http://uat.xylbn.cn";
+		public static final String TOSTORESERVICE = "http://uat.xylbn.cn";//到店服务
+	//	public static final String ENVIRONMENTAL = "http://172.16.103.153:8080";
+	//	public static final String TOSTORESERVICE = "http://172.16.103.153:8085";//到店服务
 	/**
 	 * UAT二维码支付http://uat.xylbn.cn/
 	 * 测试二维码支付http://172.16.103.152/
@@ -79,6 +79,10 @@ public class API {
 	 * 货源订单明细
 	 */
 	public static final String HOST_SUPPLYGOODS_MALL = TOSTORESERVICE+"/wcm/sws/showOrderDetl?";
+	/**
+	 * 预约订单
+	 */
+	public static final String HOST_BOOK_MALL = TOSTORESERVICE+"/lincomb-wcm-web/rss/showOrderDetl?";
 	/**
 	 * webURL介绍 clerk - 店员管理 finance - 财务管理 financialTransactions - 我要理财 manage
 	 * - 经营收入 material - 我的资料 mySource - 我的货源 news - 我的资料 other - 其他功能 product -
