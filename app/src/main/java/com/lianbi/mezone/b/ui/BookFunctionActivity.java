@@ -43,7 +43,6 @@ public class BookFunctionActivity extends BaseActivity {
 		ButterKnife.bind(this);
 		setPageTitle("预约");
 		setListen();
-		initData();
 	}
 
 	private void setListen() {
@@ -69,30 +68,24 @@ public class BookFunctionActivity extends BaseActivity {
 	}
 
 	/**
-	 * 初始化Data
-	 */
-	private void initData() {
-	}
-
-	/**
-	 * 跳转WebActivity(在H5加入对应字段否则返回失效)
+	 * 跳转WebActivity(在webactivity加入对应字段否则返回失效)
 	 */
 	public void JumpWebActivity(int type) {
-		Intent intent_web = new Intent(this, H5WebActivty.class);
+		Intent intent_web = new Intent(this, BookWebActivity.class);
 		intent_web.putExtra("Re", true);
 		intent_web.putExtra(Constants.NEDDLOGIN, false);
 		intent_web.putExtra("NEEDNOTTITLE", false);
 		if (1 == type) {
 			if(null!=getUrl(type)&& !TextUtils.isEmpty(getUrl(type))){
-				intent_web.putExtra(H5WebActivty.U, getUrl(type));
+				intent_web.putExtra(BookWebActivity.U, getUrl(type));
 			}
 		} else if (2 == type) {
 			if(null!=getUrl(type)&& !TextUtils.isEmpty(getUrl(type))){
-				intent_web.putExtra(H5WebActivty.U, getUrl(type));
+				intent_web.putExtra(BookWebActivity.U, getUrl(type));
 			}
 		} else if (3 == type) {
 			if(null!=getUrl(type)&& !TextUtils.isEmpty(getUrl(type))){
-			intent_web.putExtra(H5WebActivty.U, getUrl(type));
+			intent_web.putExtra(BookWebActivity.U, getUrl(type));
 			}
 		} else {
 		}
