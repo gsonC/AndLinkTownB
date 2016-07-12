@@ -144,14 +144,16 @@ public class ServiceMallActivity extends BaseActivity {
 //									        	finish();
 										break;
 				                    case 2:
-										JumpIntent.jumpH5WebActivty(isLogin,API.TOSTORE_PRODUCT_MANAGEMENT,"产品管理",
+										String   wxurl=getUrl(API.TOSTORE_PRODUCT_MANAGEMENT);
+										JumpIntent.jumpH5WebActivty(isLogin,wxurl,"微信商城",
 												ServiceMallActivity.this);
 										break;
 									case 3:
-										String  url=API.TOSTORE_Supply_Wholesale+
-												"storeId="+
-												userShopInfoBean.getBusinessId();
-										JumpIntent.jumpH5WebActivty(isLogin,url,"货源批发",
+										String   hyurl=getSupplyWholesaleUrl(API.TOSTORE_Supply_Wholesale);
+//										String  url=API.TOSTORE_Supply_Wholesale+
+//												"storeId="+
+//												userShopInfoBean.getBusinessId();
+										JumpIntent.jumpH5WebActivty(isLogin,hyurl,"货源批发",
 												ServiceMallActivity.this);
 										break;
 									case 4:
@@ -256,6 +258,11 @@ public class ServiceMallActivity extends BaseActivity {
 		url = encryptionUrl(url, dataJson);
 		return url;
 	}
+	public String getSupplyWholesaleUrl(String address) {
+		String bussniessId = BaseActivity.userShopInfoBean.getBusinessId();
+		return address + "storeId=" + bussniessId;
+	}
+
 	/**
 	 * 加密
 	 */

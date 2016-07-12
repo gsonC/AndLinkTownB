@@ -91,7 +91,7 @@ public class JumpIntent {
 			intent_web.putExtra("NEEDNOTTITLE", false);
 			intent_web.putExtra("Re", true);
 			intent_web.putExtra(WebActivty.T, title);
-			intent_web.putExtra(WebActivty.U, getUrl(type));
+			intent_web.putExtra(WebActivty.U, type);
 			at.startActivity(intent_web);
 
 		}
@@ -109,6 +109,11 @@ public class JumpIntent {
 		url = encryptionUrl(url, dataJson);
 		return url;
 	}
+	public String getSupplyWholesaleUrl(String address) {
+		String bussniessId = BaseActivity.userShopInfoBean.getBusinessId();
+		return address + "storeId=" + bussniessId;
+	}
+
 	/**
 	 * 加密
 	 */
