@@ -1,10 +1,5 @@
 package com.lianbi.mezone.b.ui;
 
-import java.util.ArrayList;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,20 +10,26 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.alibaba.fastjson.JSON;
+import com.igexin.sdk.PushManager;
+import com.lianbi.mezone.b.app.Constants;
+import com.lianbi.mezone.b.bean.ChangeShopBean;
+import com.lianbi.mezone.b.httpresponse.MyResultCallback;
+import com.lianbi.mezone.b.impl.MyShopChange;
+import com.xizhi.mezone.b.R;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
 import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.QuickAdapter;
 import cn.com.hgh.utils.AbDateUtil;
 import cn.com.hgh.utils.AbStrUtil;
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.Result;
-
-import com.alibaba.fastjson.JSON;
-import com.igexin.sdk.PushManager;
-import com.xizhi.mezone.b.R;
-import com.lianbi.mezone.b.app.Constants;
-import com.lianbi.mezone.b.bean.ChangeShopBean;
-import com.lianbi.mezone.b.httpresponse.MyResultCallback;
-import com.lianbi.mezone.b.impl.MyShopChange;
 
 /**
  * 切换商铺
@@ -334,6 +335,10 @@ public class ChangeShopActivity extends BaseActivity {
 	}
 
 	private void setBinfoC() {
+
+		ContentUtils.putSharePre(ChangeShopActivity.this,
+				Constants.USERTAG, Constants.USERBUSINESSID, business_id);
+
 		userShopInfoBean.setBusinessId(business_id);
 		userShopInfoBean.setIndustry_id(datas.get(position).getIndustry_id());
 		userShopInfoBean.setAddress(datas.get(position).getAddress());
