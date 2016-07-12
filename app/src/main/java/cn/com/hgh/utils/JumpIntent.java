@@ -15,7 +15,7 @@ import com.lianbi.mezone.b.ui.WebActivty;
 public class JumpIntent {
 	/**
 	 * 跳转介绍2次
-	 * 
+	 *
 	 * @param isLogin
 	 *            是否登录
 	 * @param type

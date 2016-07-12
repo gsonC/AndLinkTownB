@@ -1,8 +1,4 @@
 package com.lianbi.mezone.b.fragment;
-import java.util.ArrayList;
-import java.util.List;
-
-import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,21 +7,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.lianbi.mezone.b.bean.InfoMessageBean;
+import com.lianbi.mezone.b.ui.InfoDetailsActivity;
+import com.xizhi.mezone.b.R;
+
+import java.util.ArrayList;
+
 import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.QuickAdapter;
 import cn.com.hgh.view.SlideListView2;
-
-import com.xizhi.mezone.b.R;
-import com.lianbi.mezone.b.bean.InfoMessageBean;
-import com.lianbi.mezone.b.ui.InfoDetailsActivity;
-import com.tencent.mm.sdk.modelmsg.GetMessageFromWX;
 
 public class LeaveMessageFragment extends Fragment {
 
@@ -149,22 +145,6 @@ public class LeaveMessageFragment extends Fragment {
 		}
 	}
 
-	/**
-	 * 逐条(或批量)审核留言 storeId, msgIds
-	 * 
-	 */
-
-	private void auditMessages() {
-
-	}
-
-	/**
-	 * 逐条(或批量)删除留言 getDeleteMessages
-	 * 
-	 */
-	private void getDeleteMessages() {
-
-	}
 
 	public static void setListViewHeightBasedOnChildren(ListView listView) {
 		ListAdapter listAdapter = listView.getAdapter();
@@ -226,7 +206,7 @@ public class LeaveMessageFragment extends Fragment {
 								fm_messagefragment_listView.slideBack();
 								// 通知服务器
 								mDatas.remove(item);
-								Toast.makeText(mActivity, "删除", 0).show();
+								//Toast.makeText(mActivity, "删除", 0).show();
 								mAdapter.replaceAll(mDatas);
 								ArrayList<String> ids = new ArrayList<String>();
 								ids.add(String.valueOf(item.getId()));
@@ -298,7 +278,7 @@ public class LeaveMessageFragment extends Fragment {
 
 	/**
 	 * 
-	 * @param isD是否删除状态
+	 * @param
 	 * @param isDel
 	 *            是否删除
 	 * @param cuArrayList

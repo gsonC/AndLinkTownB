@@ -61,11 +61,11 @@ public enum OkHttpsImp {
 				+ "/wcm/serviceMall/".concat(storeId).concat("/")
 				.concat(methodName);
 	}
-	private String getHttpUrl1(String storeId, String methodName) {
+	/*private String getHttpUrl1(String storeId, String methodName) {
 		// return "http://172.16.103.153:8085/wcm/serviceMall/".concat(storeId)
 		// .concat("/").concat(methodName);
 		return API.TOSTORESERVICE + "/lincomb-wcm-web/".concat(storeId).concat("/").concat(methodName);
-	}
+	}*/
 	/**
 	 * get请求有progress
 	 *
@@ -468,7 +468,7 @@ public enum OkHttpsImp {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("storeId", storeId);
 		params.put("pushId", pushId);
-		String url = getHttpUrl1(storeId, "modifyPushMessage");
+		String url = getHttpUrl(storeId, "modifyPushMessage");
 		postProgressResponse(myResultCallback, params, url);
 	}
 
@@ -485,7 +485,7 @@ public enum OkHttpsImp {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("storeId", storeId);
 		params.put("pushId", pushId);
-		String url = getHttpUrl1(storeId, "modifyPushDelSts");
+		String url = getHttpUrl(storeId, "modifyPushDelSts");
 		postProgressResponse(myResultCallback, params, url);
 	}
 	/**
