@@ -35,7 +35,7 @@ public class MyLinkTownBApplication extends Application {
 				//                .addInterceptor(new LoggerInterceptor("TAG"))
 				.connectTimeout(10000L, TimeUnit.MILLISECONDS)
 				.readTimeout(10000L, TimeUnit.MILLISECONDS)
-				.retryOnConnectionFailure(false)
+				.retryOnConnectionFailure(false)//当网络慢时 会请求两次 这个设置让它之请求一次 是否好使有待验证
 				//其他配置
 				.build();
 
