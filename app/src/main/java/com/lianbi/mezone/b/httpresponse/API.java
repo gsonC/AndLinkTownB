@@ -80,6 +80,10 @@ public class API {
 	 */
 	public static final String HOST_SUPPLYGOODS_MALL = TOSTORESERVICE+"/wcm/sws/showOrderDetl?";
 	/**
+	 * 预约订单
+	 */
+	public static final String HOST_BOOK_MALL = TOSTORESERVICE+"/lincomb-wcm-web/rss/showOrderDetl?";
+	/**
 	 * webURL介绍 clerk - 店员管理 finance - 财务管理 financialTransactions - 我要理财 manage
 	 * - 经营收入 material - 我的资料 mySource - 我的货源 news - 我的资料 other - 其他功能 product -
 	 * 产品管理 server - 服务商场 shops - 切换商铺 source - 货源商城 store - 我的店铺 sweep - 扫一扫

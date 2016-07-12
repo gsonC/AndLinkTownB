@@ -85,11 +85,15 @@ public class Constants {
 	 */
 	public static final String ISBANKRETURN = "isbankreturn";
 	/**
-	 * 到店服务
+	 * 微信和到店点单订单
 	 */
 	public static final String DDFW = "ddfu";
 	/**
-	 * 货源批发
+	 * 批发订单
 	 */
 	public static final String HHPF = "hhpf";
+	/**
+	 * 预约订单
+	 */
+	public static final String YYDD = "yydd";
 }
