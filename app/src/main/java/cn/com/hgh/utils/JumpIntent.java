@@ -6,6 +6,7 @@ import android.text.TextUtils;
 
 import com.lianbi.mezone.b.app.Constants;
 import com.lianbi.mezone.b.bean.WebProductManagementBean;
+import com.lianbi.mezone.b.httpresponse.API;
 import com.lianbi.mezone.b.ui.AddShopActivity;
 import com.lianbi.mezone.b.ui.BaseActivity;
 import com.lianbi.mezone.b.ui.H5WebActivty;
@@ -75,12 +76,12 @@ public class JumpIntent {
 	 * 服务商城菜单向H5页面跳转
 	 * @param isLogin
 	 *            是否登录
-	 * @param type
-	 *            类型
+	 * @param
+	 *
 	 * @param at
 	 *            class 跳转的类
 	 */
-	public static boolean jumpH5WebActivty(boolean isLogin, String type,String  title,
+	public static boolean jumpH5WebActivty(boolean isLogin, int primaryID,String  title,
 											 Activity at) {
 		if (!isLogin) {
 			return isLogin;
@@ -91,14 +92,36 @@ public class JumpIntent {
 			intent_web.putExtra("NEEDNOTTITLE", false);
 			intent_web.putExtra("Re", true);
 			intent_web.putExtra(WebActivty.T, title);
-			intent_web.putExtra(WebActivty.U, type);
+			intent_web.putExtra(WebActivty.U, setSupplyUrl(primaryID));
 			at.startActivity(intent_web);
 
 		}
 		return false;
 	}
 
+	public  static String  setSupplyUrl(int primaryID){
+            String   supplyurl="";
 
+		switch (primaryID){
+				case  2:
+                //微信商城
+				supplyurl=getUrl(API.TOSTORE_PRODUCT_MANAGEMENT);
+				break;
+				case  3:
+				//货源批发
+				supplyurl=getSupplyWholesaleUrl(API.TOSTORE_Supply_Wholesale);
+				break;
+				case  4:
+				//预约
+//				supplyurl=getUrl(API.TOSTORE_PRODUCT_MANAGEMENT);
+				break;
+				case  5:
+				//智能wifi
+//				supplyurl=getUrl(API.TOSTORE_PRODUCT_MANAGEMENT);
+				break;
+			}
+            return  supplyurl;
+	}
 	public static String getUrl(String address) {
 		String bussniessId = BaseActivity.userShopInfoBean.getBusinessId();
 		String url = address;
@@ -109,7 +132,7 @@ public class JumpIntent {
 		url = encryptionUrl(url, dataJson);
 		return url;
 	}
-	public String getSupplyWholesaleUrl(String address) {
+	public static String getSupplyWholesaleUrl(String address) {
 		String bussniessId = BaseActivity.userShopInfoBean.getBusinessId();
 		return address + "storeId=" + bussniessId;
 	}
