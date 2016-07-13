@@ -16,7 +16,6 @@ import com.alibaba.fastjson.JSON;
 import com.bumptech.glide.Glide;
 import com.lianbi.mezone.b.bean.ServiceMallBean;
 import com.lianbi.mezone.b.bean.WebProductManagementBean;
-import com.lianbi.mezone.b.httpresponse.API;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.xizhi.mezone.b.R;
 
@@ -132,6 +131,7 @@ public class ServiceMallActivity extends BaseActivity {
 								int primaryID = item.getId();
 								String  introduceurl=item.getIntroduceUrl();
 								String  isfdownload=item.getDownload();
+								String  isappname=item.getAppName();
 								if(isfdownload.equals("Y")){
 //									iv_store_service
 //									.setBackgroundResource(R.drawable.icon_storservice);
@@ -143,28 +143,16 @@ public class ServiceMallActivity extends BaseActivity {
 										startActivity(intent);
 //									        	finish();
 										break;
-				                    case 2:
-										String   wxurl=getUrl(API.TOSTORE_PRODUCT_MANAGEMENT);
-										JumpIntent.jumpH5WebActivty(isLogin,wxurl,"微信商城",
-												ServiceMallActivity.this);
-										break;
-									case 3:
-										String   hyurl=getSupplyWholesaleUrl(API.TOSTORE_Supply_Wholesale);
-//										String  url=API.TOSTORE_Supply_Wholesale+
-//												"storeId="+
-//												userShopInfoBean.getBusinessId();
-										JumpIntent.jumpH5WebActivty(isLogin,hyurl,"货源批发",
-												ServiceMallActivity.this);
-										break;
-									case 4:
-										String  url1="";
-										JumpIntent.jumpH5WebActivty(isLogin,url1,"预约",
-												ServiceMallActivity.this);
-										break;
-									case 5:
-										String  url2="";
-										JumpIntent.jumpH5WebActivty(isLogin,url2,"智能wifi",
-												ServiceMallActivity.this);
+										case 4:
+											Intent intentBookFunction = new Intent(
+													ServiceMallActivity.this,
+													BookFunctionActivity.class);
+											startActivity(intentBookFunction);
+											break;
+										default:
+
+										JumpIntent.jumpH5WebActivty(isLogin,primaryID,isappname,
+													ServiceMallActivity.this);
 										break;
 									}
 							        
