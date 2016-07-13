@@ -214,7 +214,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 		service.setId(99);
 		mDatas.add(service);
 
-		//
+		//测试提交
 
 		ShouyeServiceBean endservie = new ShouyeServiceBean();
 		endservie.setIcoUrl("http");
