@@ -111,7 +111,7 @@ public class ChoiceDingdanInfoWayActivity extends BaseActivity {
 
 	private String getbooksUrl() {
 		String bussniessId = userShopInfoBean.getBusinessId();
-		String url = API.HOST_BOOK_MALL+"storeId="+bussniessId+"&&flag=wl";
+		String url = API.HOST_BOOK_MALL + "storeId=" + bussniessId + "&&flag=wl";
 		return url;
 	}
 

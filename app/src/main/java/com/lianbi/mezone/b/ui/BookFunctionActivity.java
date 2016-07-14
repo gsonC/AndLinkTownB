@@ -99,13 +99,15 @@ public class BookFunctionActivity extends BaseActivity {
 	public String getUrl(int type) {
 		String bussniessId = userShopInfoBean.getBusinessId();
 		switch (type) {
-			case 1:
-				return "https://www.baidu.com/";
-			case 2:
-				String url = API.TOSTORESERVICE + "/wcm/productType/queryTypeList/" + bussniessId;
-				return "https://www.hao123.com/?1467686742";
-			case 3:
-				return "https://www.baidu.com/";
+			case 1://产品分类 Product
+				String productitemurl = API.TOSTORESERVICE + "/wcm/productType/queryTypeList/" + bussniessId;
+				return productitemurl;
+			case 2://产品库
+				String url = API.TOSTORESERVICE + "/wcm/rss/product/" + bussniessId+"/productsList";
+				return url;
+			case 3://预约订单
+				String bookurl = API.HOST_BOOK_MALL + "storeId=" + bussniessId + "&&flag=wl";
+				return bookurl;
 		}
 		return "";
 	}

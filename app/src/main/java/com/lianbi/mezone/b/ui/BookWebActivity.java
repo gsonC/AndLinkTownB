@@ -8,6 +8,7 @@ package com.lianbi.mezone.b.ui;
  * @更新时间   $Date$
  * @更新描述
  */
+
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -58,7 +59,7 @@ public class BookWebActivity extends BaseActivity {
 	WebView web_webactivty;
 	protected HttpDialog dialog;
 	String url;
-	Boolean   isSave=false;
+	Boolean isSave = false;
 
 	/**
 	 * 需要登陆
@@ -103,6 +104,7 @@ public class BookWebActivity extends BaseActivity {
 	//		int index = str1.indexOf(str); //str1是想要开始截取的字符。str是被截取的字符。
 	//		return str.substring(index+1,str.length());
 	//	}
+
 	/**
 	 * 初始化视图控件
 	 */
@@ -305,12 +307,11 @@ public class BookWebActivity extends BaseActivity {
 
 	@Override
 	protected void onTitleLeftClick() {
-
-		if (gobackurl.contains("getAllBannerInfo")) {
+		if (gobackurl.contains("showRssCreateProduct") || gobackurl.contains("showRssUpdateProduct") || gobackurl.contains("showRssAppointment")) {
 			web_webactivty.loadUrl(url);//返回一级目录
 		} else if (gobackurl.contains("viewMyAuthenticationMsg")) {
 			web_webactivty.loadUrl(MyMsg);//返回指定页面
-		} else if (gobackurl.contains("enterIntoProductManager")) {
+		} else if (gobackurl.contains("productsList") || gobackurl.contains("showOrderDetl") || gobackurl.contains("queryTypeList")) {
 			finish();//退出
 		} else {
 			web_webactivty.goBack();//正常返回

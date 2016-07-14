@@ -254,7 +254,7 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 						}
 						break;
 					case 4:
-						if(isLogin){
+						if(isLogin){//预约界面
 							Intent intent = new Intent(mActivity, BookFunctionActivity.class);
 							startActivity(intent);
 						}
