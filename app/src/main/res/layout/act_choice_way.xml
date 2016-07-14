@@ -116,6 +116,11 @@
             android:src="@mipmap/service_new_right"/>
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line"
+        android:background="@color/colores_news_14"/>
+
     <LinearLayout
         android:id="@+id/llt_book_dingdanway"
         android:layout_width="match_parent"

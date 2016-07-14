@@ -307,7 +307,8 @@ public class BookWebActivity extends BaseActivity {
 
 	@Override
 	protected void onTitleLeftClick() {
-		if (gobackurl.contains("showRssCreateProduct") || gobackurl.contains("showRssUpdateProduct") || gobackurl.contains("showRssAppointment")) {
+		if (gobackurl.contains("showRssCreateProduct") || gobackurl.contains("showRssUpdateProduct") || gobackurl.contains("showRssAppointment")
+				|| gobackurl.contains("queryReservationDetail")) {
 			web_webactivty.loadUrl(url);//返回一级目录
 		} else if (gobackurl.contains("viewMyAuthenticationMsg")) {
 			web_webactivty.loadUrl(MyMsg);//返回指定页面
