@@ -38,10 +38,10 @@
                 android:layout_height="50dp"
                  android:layout_weight="1"
                  android:background="@color/white"
-                android:clickable="true"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 >
+                 <!--android:clickable="true"-->
               <TextView
                     android:visibility="gone"
                     android:id="@+id/tv_download"
