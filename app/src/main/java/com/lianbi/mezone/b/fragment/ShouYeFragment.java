@@ -198,6 +198,7 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 	 * 裁剪view
 	 */
 	private void initViewTitle(View view) {
+
 		// LinearLayout.LayoutParams layoutParamsTitle =
 		// (android.widget.LinearLayout.LayoutParams) iv_banner
 		// .getLayoutParams();
