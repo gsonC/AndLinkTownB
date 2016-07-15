@@ -277,11 +277,7 @@ public class LeaveMessageFragment extends Fragment {
 	}
 
 	/**
-	 * 
-	 * @param
-	 * @param isDel
-	 *            是否删除
-	 * @param cuArrayList
+	 * 是否删除
 	 */
 	public void doSomething(boolean isD, boolean isDel,
 			ArrayList<InfoMessageBean> cuArrayList) {

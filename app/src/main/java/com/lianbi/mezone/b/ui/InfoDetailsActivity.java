@@ -58,7 +58,6 @@ public class InfoDetailsActivity extends BaseActivity {
 		setContentView(R.layout.act_infodetails, NOTYPE);
 		initView();
 		listen();
-		getMessageList(true);
 		getJumpInfo();
 		getPushMessages();
 
@@ -159,8 +158,7 @@ public class InfoDetailsActivity extends BaseActivity {
 	}
 
 	/**
-	 *
-	 * 查询所有待审核的留言
+	 * 留言
 	 */
 	private void getShowMessages() {
 		okHttpsImp.getShowMessages(new MyResultCallback<String>() {
@@ -203,9 +201,8 @@ public class InfoDetailsActivity extends BaseActivity {
 	}
 
 	/**
-	 * 4.13 查询推送消息
+	 * 待接单
 	 */
-
 	private void getPushMessages() {
 		okHttpsImp.getPushMessages(new MyResultCallback<String>() {
 
@@ -222,9 +219,7 @@ public class InfoDetailsActivity extends BaseActivity {
 								.parseArray(reString, InfoMessageBean.class);
 
 						arrayList.addAll(pullMessage);
-					//	swtFmDo(POSITION0, false, false, arrayList);
 						swtFmDo(POSITION0, false, false, arrayList);
-						//allMessageFragment.doSomething(false, false, arrayList);
 
 					} catch (JSONException e) {
 						e.printStackTrace();
@@ -258,9 +253,7 @@ public class InfoDetailsActivity extends BaseActivity {
 						ArrayList<InfoMessageBean> pullMessage = (ArrayList<InfoMessageBean>) JSON
 								.parseArray(reString, InfoMessageBean.class);
 						arrayList0.addAll(pullMessage);
-				//		swtFmDo(POSITION1, false, false, arrayList0);
 
-				//		sMessageFragment.doSomething(false, false, arrayList0);
 						swtFmDo(POSITION1, false, false, arrayList0);
 
 					} catch (JSONException e) {
@@ -296,9 +289,7 @@ public class InfoDetailsActivity extends BaseActivity {
 								.parseArray(reString, InfoMessageBean.class);
 
 						arrayList1.addAll(pullMessage);
-				//		swtFmDo(POSITION2, false, false, arrayList1);
 
-				//		orderMessageFragment.doSomething(false, false, arrayList1);
 						swtFmDo(POSITION2, false, false, arrayList1);
 
 					} catch (JSONException e) {
@@ -315,59 +306,9 @@ public class InfoDetailsActivity extends BaseActivity {
 
 	}
 
-	private void getMessageList(boolean b) {
-		// getShowMessages();
-		// new Handler().postDelayed(new Runnable() {
-		//
-		// @Override
-		// public void run() {
-		// for (int i = 0; i < 20; i++) {
-		// InfoMessageBean data = new InfoMessageBean();
-		// data.setTablenum(i + "号桌");
-		// data.setStatus(i % 2);
-		// data.setOrder("有新订单");
-		// data.setTime("10:00");
-		// arrayList.add(data);
-		// }
-		// for (int i = 0; i < 20; i++) {
-		// InfoMessageBean data = new InfoMessageBean();
-		// data.setTablenum(i + "号桌");
-		// data.setStatus(1);
-		// data.setOrder("呼叫服务");
-		// data.setTime("10:00");
-		// arrayList0.add(data);
-		// }
-		// for (int i = 0; i < 20; i++) {
-		// InfoMessageBean data = new InfoMessageBean();
-		// data.setTablenum(i + "号桌");
-		// data.setStatus(1);
-		// data.setOrder("呼叫买单啦");
-		// data.setTime("10:00");
-		// arrayList1.add(data);
-		// }
-		// for (int i = 0; i < 20; i++) {
-		// InfoMessageBean data = new InfoMessageBean();
-		// data.setStatus(1);
-		// /*data.setTablenum(i + "号桌" + "炒饭很好吃");
-		// data.setTime("10:00");*/
-		// arrayList2.add(data);
-		// }
-		// swtFmDo(POSITION0, false, false, arrayList);
-		// swtFmDo(POSITION1, false, false, arrayList0);
-		// swtFmDo(POSITION2, false, false, arrayList1);
-		// swtFmDo(POSITION3, false, false, arrayList2);
-		//
-		// }
-		// }, 80);
-
-	}
-
 	/**
 	 * 修改推送消息状态
-	 *
-	 * @param id
 	 */
-
 	public void changStatus(String id) {
 		okHttpsImp.postChangeStatus(new MyResultCallback<String>() {
 
@@ -387,10 +328,7 @@ public class InfoDetailsActivity extends BaseActivity {
 	}
 
 	/**
-	 * 删除审核消息
-	 *
-	 * @param ids
-	 *            消息id
+	 * 删除或审核留言信息
 	 */
 	public void delteMsg(ArrayList<String> ids, boolean status) {
 
@@ -451,10 +389,7 @@ public class InfoDetailsActivity extends BaseActivity {
 
 
 	/**
-	 * 删除,已读消息
-	 *
-	 * @param ids
-	 *            消息id
+	 * 已读或删除 待接单 服务 买单信息
 	 */
 	public void delteMsg1(ArrayList<String> ids, boolean status1) {
 		StringBuffer sb = new StringBuffer();
@@ -516,7 +451,6 @@ public class InfoDetailsActivity extends BaseActivity {
 
 		}
 	}
-
 
 
 	public class MyAdapter extends FragmentPagerAdapter {

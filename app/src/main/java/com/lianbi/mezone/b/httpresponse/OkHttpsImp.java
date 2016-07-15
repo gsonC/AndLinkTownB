@@ -61,11 +61,7 @@ public enum OkHttpsImp {
 				+ "/wcm/serviceMall/".concat(storeId).concat("/")
 				.concat(methodName);
 	}
-	/*private String getHttpUrl1(String storeId, String methodName) {
-		// return "http://172.16.103.153:8085/wcm/serviceMall/".concat(storeId)
-		// .concat("/").concat(methodName);
-		return API.TOSTORESERVICE + "/lincomb-wcm-web/".concat(storeId).concat("/").concat(methodName);
-	}*/
+
 	/**
 	 * get请求有progress
 	 *
