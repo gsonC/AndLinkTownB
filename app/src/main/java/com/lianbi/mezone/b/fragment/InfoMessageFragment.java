@@ -103,14 +103,15 @@ public class InfoMessageFragment extends Fragment {
 		tv_toexamine1.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				for(int i=0;i<mDatas.size();i++){
-					if(!"0".equals(mDatas.get(i).getAuditStatus())){
-						tv_tablename.setTextColor(Color.RED);
-						tv_messageContent.setTextColor(Color.RED);
-						tv_time.setTextColor(Color.RED);
+			//	for(int i=0;i<mDatas.size();i++){
+			//		if(!"0".equals(mDatas.get(i).getAuditStatus())){
+			//			tv_tablename.setTextColor(Color.RED);
+			//			tv_messageContent.setTextColor(Color.RED);
+			//			tv_time.setTextColor(Color.RED);
 
-					}
-				}
+			//		}
+			//	}
+				setExamineAndDelete(false);
 			}
 		});
 	}
@@ -120,7 +121,7 @@ public class InfoMessageFragment extends Fragment {
 		ArrayList<String> ids = new ArrayList<String>();
 		for (int i = 0; i < s; i++) {
 			if (mDatas.get(i).isS()) {
-				ids.add(mDatas.get(i).getId() + "");
+				ids.add(mDatas.get(i).getPushId() + "");
 			}
 		}
 		if (status1) {// 删除
@@ -266,17 +267,22 @@ public class InfoMessageFragment extends Fragment {
 	public void doSomething(boolean isD, boolean isDel,
 							ArrayList<InfoMessageBean> cuArrayList) {
 		isDeted = isD;
-
 		if (cuArrayList != null && cuArrayList.size() > 0) {
 			mDatas = cuArrayList;
 			mAdapter.replaceAll(mDatas);
+			fm_messagefragment_iv_empty.setVisibility(View.GONE);
+			fm_messagefragment_listView.setVisibility(View.VISIBLE);
 		} else {
 			if (mDatas.size() > 0) {
 				fm_messagefragment_iv_empty.setVisibility(View.GONE);
+				fm_messagefragment_listView.setVisibility(View.VISIBLE);
 				mAdapter.replaceAll(mDatas);
 			} else {
 				fm_messagefragment_iv_empty.setVisibility(View.VISIBLE);
+				fm_messagefragment_listView.setVisibility(View.GONE);
 			}
 		}
+
+
 	}
 }

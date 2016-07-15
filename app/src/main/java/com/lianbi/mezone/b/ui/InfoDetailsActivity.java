@@ -221,11 +221,11 @@ public class InfoDetailsActivity extends BaseActivity {
 						ArrayList<InfoMessageBean> pullMessage = (ArrayList<InfoMessageBean>) JSON
 								.parseArray(reString, InfoMessageBean.class);
 
-						for (int i = 0; i < pullMessage.size(); i++) {
-
-						}
 						arrayList.addAll(pullMessage);
+					//	swtFmDo(POSITION0, false, false, arrayList);
 						swtFmDo(POSITION0, false, false, arrayList);
+						//allMessageFragment.doSomething(false, false, arrayList);
+
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}
@@ -257,10 +257,10 @@ public class InfoDetailsActivity extends BaseActivity {
 						arrayList0.clear();
 						ArrayList<InfoMessageBean> pullMessage = (ArrayList<InfoMessageBean>) JSON
 								.parseArray(reString, InfoMessageBean.class);
-						for (int i = 0; i < pullMessage.size(); i++) {
-
-						}
 						arrayList0.addAll(pullMessage);
+				//		swtFmDo(POSITION1, false, false, arrayList0);
+
+				//		sMessageFragment.doSomething(false, false, arrayList0);
 						swtFmDo(POSITION1, false, false, arrayList0);
 
 					} catch (JSONException e) {
@@ -294,11 +294,11 @@ public class InfoDetailsActivity extends BaseActivity {
 						arrayList1.clear();
 						ArrayList<InfoMessageBean> pullMessage = (ArrayList<InfoMessageBean>) JSON
 								.parseArray(reString, InfoMessageBean.class);
-						for (int i = 0; i < pullMessage.size(); i++) {
-							/* pullMessage.get(i).setOrder("呼叫买单了"); */
-						}
 
 						arrayList1.addAll(pullMessage);
+				//		swtFmDo(POSITION2, false, false, arrayList1);
+
+				//		orderMessageFragment.doSomething(false, false, arrayList1);
 						swtFmDo(POSITION2, false, false, arrayList1);
 
 					} catch (JSONException e) {
@@ -435,6 +435,7 @@ public class InfoDetailsActivity extends BaseActivity {
 				public void onResponseResult(Result result) {
 
 					ContentUtils.showMsg(InfoDetailsActivity.this, "审核留言成功");
+					// 刷新页面
 					getShowMessages();
 
 				}
@@ -471,8 +472,6 @@ public class InfoDetailsActivity extends BaseActivity {
 			return;
 		}
 
-
-
 		if (status1) {
 
 			okHttpsImp.modifyPushDelSts(new MyResultCallback<String>() {
@@ -483,7 +482,8 @@ public class InfoDetailsActivity extends BaseActivity {
 					ContentUtils.showMsg(InfoDetailsActivity.this, "删除留言成功");
 					// 刷新页面
 					getPushMessages();
-
+					getPushMessages1();
+					getPushMessages2();
 				}
 
 				@Override
@@ -503,6 +503,8 @@ public class InfoDetailsActivity extends BaseActivity {
 
 					ContentUtils.showMsg(InfoDetailsActivity.this, "成功");
 					getPushMessages();
+					getPushMessages1();
+					getPushMessages2();
 
 				}
 

@@ -66,7 +66,7 @@
                     android:singleLine="true"
                     android:text="¥0.01/年"
                     android:layout_below="@id/tv_download"
-                    android:textColor="@color/colores_news_01"
+                    android:textColor="@color/colores_news_04"
                     android:textSize="14sp"
                      />   
                  

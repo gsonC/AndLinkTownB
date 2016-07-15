@@ -53,7 +53,8 @@ public class API {
 	 * 线上二维码支付http://www.xylbn.cn/
 	 */
 	//public static final String PAYQR = ENVIRONMENTAL+"/lincombFront/toOrderPay.do?state=";
-	public static final String PAYQR = ENVIRONMENTAL+"/weixin/toOrderPay?state=";
+	//http://172.16.103.153:8080/lincombFront/toOrderPay.do
+	public static final String PAYQR = ENVIRONMENTAL+"/lincombFront/toOrderPay.do?state=";
 	//  public static final String PAYQR = "http://www.xylbn.cn/weixin/toOrderPay?state=";
 	/**
 	 * 总入口
