@@ -16,6 +16,8 @@ android {
         release {
             debuggable false
             shrinkResources true//去掉不用资源
+            //Zipalign优化
+            zipAlignEnabled true
             minifyEnabled false//是否进行代码混淆
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
