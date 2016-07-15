@@ -37,7 +37,7 @@ public class InfoMessageFragment extends Fragment {
 	private ImageView iv_selectall1;
 	private TextView tv_seleteall1,tv_toexamine1,tv_deletemessage1;
 	private TextView tv_tablename,tv_messageContent,tv_time;
-
+	private RelativeLayout ray_choice;
 	/**
 	 * 是否删除
 	 */
@@ -62,7 +62,7 @@ public class InfoMessageFragment extends Fragment {
 		tv_seleteall1= (TextView) view.findViewById(R.id.tv_seleteall1);
 		tv_toexamine1= (TextView) view.findViewById(R.id.tv_toexamine1);
 		tv_deletemessage1= (TextView) view.findViewById(R.id.tv_deletemessage1);
-
+		ray_choice= (RelativeLayout) view.findViewById(R.id.ray_choice);
 		fm_messagefragment_listView = (ListView) view
 				.findViewById(R.id.fm_messagefragment_listView);
 		fm_messagefragment_iv_empty = (ImageView) view
@@ -70,7 +70,7 @@ public class InfoMessageFragment extends Fragment {
 	}
 
 	private void listen() {
-		iv_selectall1.setOnClickListener(new OnClickListener() {
+		ray_choice.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				if(isSeleteAll){

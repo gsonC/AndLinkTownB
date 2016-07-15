@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.lianbi.mezone.b.bean.InfoMessageBean;
@@ -33,6 +34,8 @@ public class LeaveMessageFragment extends Fragment {
 	private TextView tv_tablename;
 	private LinearLayout tv_info;
     private TextView tv_chshenhe;
+	private RelativeLayout ray_choice;
+
 	/**
 	 * 是否删除
 	 */
@@ -65,10 +68,12 @@ public class LeaveMessageFragment extends Fragment {
 		tv_toexamine = (TextView) view.findViewById(R.id.tv_toexamine);// 审核
 		iv_selectall = (ImageView) view.findViewById(R.id.iv_selectall);// 全选
 		tv_seleteall = (TextView) view.findViewById(R.id.tv_seleteall);// 全选
+		ray_choice= (RelativeLayout) view.findViewById(R.id.ray_choice);
+
 	}
 
 	private void listen() {
-		iv_selectall.setOnClickListener(new OnClickListener() {
+		ray_choice.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
