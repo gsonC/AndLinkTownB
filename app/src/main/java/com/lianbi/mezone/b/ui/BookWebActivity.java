@@ -152,11 +152,12 @@ public class BookWebActivity extends BaseActivity {
 			@Override
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {
 				if(url.startsWith("http:")||url.startsWith("https:")){
-	//				view.loadUrl(url);
+	//
 					return false;
 				}
 				Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
 				startActivity( intent );
+				view.loadUrl(url);
 				return true;
 
 			}

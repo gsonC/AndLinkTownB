@@ -8,7 +8,6 @@ import java.util.concurrent.TimeUnit;
 
 import cn.com.hgh.utils.DataCleanManager;
 import cn.com.hgh.utils.FilePathGet;
-import okhttp3.OkHttpClient;
 
 public class MyLinkTownBApplication extends Application {
 	@Override
@@ -30,7 +29,7 @@ public class MyLinkTownBApplication extends Application {
 
 		// 使用这种方式，设置多个OkHttpClient参数
 		// OkHttpUtils.getInstance(new OkHttpClient.Builder().build());
-
+/*
 		OkHttpClient okHttpClient = new OkHttpClient.Builder()
 				//                .addInterceptor(new LoggerInterceptor("TAG"))
 				.connectTimeout(10000L, TimeUnit.MILLISECONDS)
@@ -40,6 +39,12 @@ public class MyLinkTownBApplication extends Application {
 				.build();
 
 		OkHttpUtils.getInstance(okHttpClient);
+*/
+		OkHttpUtils.getInstance().debug("OkHttpUtils")
+				.setConnectTimeout(10000, TimeUnit.MILLISECONDS);
+		OkHttpUtils.getInstance().getOkHttpClient().newBuilder().retryOnConnectionFailure(false);
+		// 使用https，但是默认信任全部证书
+		OkHttpUtils.getInstance().setCertificates();
 
 	//	OkHttpUtils.getInstance().getOkHttpClient().newBuilder().retryOnConnectionFailure(false);
 
