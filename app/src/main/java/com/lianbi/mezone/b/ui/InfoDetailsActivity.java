@@ -414,7 +414,7 @@ public class InfoDetailsActivity extends BaseActivity {
 				@Override
 				public void onResponseResult(Result result) {
 
-					ContentUtils.showMsg(InfoDetailsActivity.this, "删除留言成功");
+					ContentUtils.showMsg(InfoDetailsActivity.this, "删除成功");
 					// 刷新页面
 					getPushMessages();
 					getPushMessages1();
