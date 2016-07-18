@@ -1,11 +1,6 @@
 package com.lianbi.mezone.b.photo;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
-
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
@@ -26,6 +21,14 @@ import android.graphics.drawable.TransitionDrawable;
 import android.view.View;
 import android.view.View.MeasureSpec;
 import android.widget.ImageView;
+
+import com.xizhi.mezone.b.R;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 
 /**
  * © 2012 amsoft.cn 名称：AbImageUtil.java 描述：图片处理类.
@@ -455,14 +458,15 @@ public class AbImageUtil {
 	 *            td.startTransition(200);
 	 * @return Drawable 转化完成的Drawable对象
 	 */
-	public static TransitionDrawable bitmapToTransitionDrawable(Bitmap bitmap) {
+	public static TransitionDrawable bitmapToTransitionDrawable(Context mContext, Bitmap bitmap) {
 		TransitionDrawable mBitmapDrawable = null;
 		try {
 			if (bitmap == null) {
 				return null;
 			}
 			mBitmapDrawable = new TransitionDrawable(new Drawable[] {
-					new ColorDrawable(android.R.color.transparent),
+//					new ColorDrawable(android.R.color.transparent),
+					new ColorDrawable(mContext.getResources().getColor(R.color.transparent)),
 					new BitmapDrawable(bitmap) });
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -478,7 +482,7 @@ public class AbImageUtil {
 	 *            td.startTransition(200);
 	 * @return Drawable 转化完成的Drawable对象
 	 */
-	public static TransitionDrawable drawableToTransitionDrawable(
+	public static TransitionDrawable drawableToTransitionDrawable(Context mContext,
 			Drawable drawable) {
 		TransitionDrawable mBitmapDrawable = null;
 		try {
@@ -486,7 +490,7 @@ public class AbImageUtil {
 				return null;
 			}
 			mBitmapDrawable = new TransitionDrawable(new Drawable[] {
-					new ColorDrawable(android.R.color.transparent), drawable });
+					new ColorDrawable(mContext.getResources().getColor(R.color.transparent)), drawable });
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
