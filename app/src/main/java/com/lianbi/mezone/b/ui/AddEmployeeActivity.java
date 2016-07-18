@@ -1,7 +1,5 @@
 package com.lianbi.mezone.b.ui;
 
-import java.io.File;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -13,18 +11,21 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.lianbi.mezone.b.httpresponse.MyResultCallback;
+import com.lianbi.mezone.b.photo.FileUtils;
+import com.lianbi.mezone.b.photo.PhotoUtills;
+import com.lianbi.mezone.b.photo.PickImageDescribe;
+import com.xizhi.mezone.b.R;
+
+import java.io.File;
+
 import cn.com.hgh.utils.AbStrUtil;
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.FilePathGet;
 import cn.com.hgh.utils.Picture_Base64;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.view.CircularImageView;
-
-import com.xizhi.mezone.b.R;
-import com.lianbi.mezone.b.httpresponse.MyResultCallback;
-import com.lianbi.mezone.b.photo.FileUtils;
-import com.lianbi.mezone.b.photo.PhotoUtills;
-import com.lianbi.mezone.b.photo.PickImageDescribe;
 
 public class AddEmployeeActivity extends BaseActivity {
 	static final String[] TITLE = { "新增店员" };
@@ -183,13 +184,13 @@ public class AddEmployeeActivity extends BaseActivity {
 		okHttpsImp.postAddsalesClerk(new MyResultCallback<String>() {
 			@Override
 			public void onResponseResult(Result result) {
-				Toast.makeText(AddEmployeeActivity.this, "新增店员成功", 0).show();
+				Toast.makeText(AddEmployeeActivity.this, "新增店员成功",Toast.LENGTH_SHORT).show();
 				finish();
 			}
 
 			@Override
 			public void onResponseFailed(String msg) {
-				Toast.makeText(AddEmployeeActivity.this, "新增店员失败", 0).show();
+				Toast.makeText(AddEmployeeActivity.this, "新增店员失败", Toast.LENGTH_SHORT).show();
 			}
 		}, name, userShopInfoBean.getBusinessId(), phone, position, pStr);
 	}

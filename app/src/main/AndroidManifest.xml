@@ -252,6 +252,7 @@
         <activity android:name="com.lianbi.mezone.b.ui.PhotoDeleteActivity">
         </activity>
         <activity android:name="com.lianbi.mezone.b.ui.AboutUsActivity"/>
+        <activity android:name="com.lianbi.mezone.b.wxapi.WXPayEntryActivity"/>
 
         <!-- 个推SDK配置开始 -->
         <!-- 配置的第三方参数属性 -->

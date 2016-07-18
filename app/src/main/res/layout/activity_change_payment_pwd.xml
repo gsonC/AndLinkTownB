@@ -82,10 +82,10 @@
         android:background="@drawable/shape_login"
         android:clickable="true"
         android:gravity="center"
-        android:onClick="click"
         android:padding="8dp"
         android:text="确认"
         android:textColor="@color/white"
         android:textSize="18sp" />
+    <!--android:onClick="click"-->
 
 </LinearLayout>
