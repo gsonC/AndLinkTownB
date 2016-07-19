@@ -378,7 +378,7 @@ public enum OkHttpsImp {
 		postProgressResponse(myResultCallback, params, url);
 	}
 
-	/**
+	 /**
 	 *  添加桌位
 	 */
 	public void getAddTable(MyResultCallback<String> myResultCallback,
@@ -452,6 +452,38 @@ public enum OkHttpsImp {
 		postProgressResponse(myResultCallback, params, url);
 	}
 
+	/**
+	 *
+	 * 4.14	修改推送消息已读状态
+	 * @param myResultCallback
+	 * @param storeId
+	 * @param pushId
+	 */
+	public void modifyPushMessage(MyResultCallback<String> myResultCallback,
+								  String storeId,String pushId){
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("storeId", storeId);
+		params.put("pushId", pushId);
+		String url = getHttpUrl(storeId, "modifyPushMessage");
+		postProgressResponse(myResultCallback, params, url);
+	}
+
+	/**
+	 *
+	 * 4.15	修改推送消息删除状态
+	 *
+	 * @param myResultCallback
+	 * @param storeId
+	 * @param pushId
+	 */
+	public void modifyPushDelSts(MyResultCallback<String> myResultCallback,
+								 String storeId,String pushId){
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("storeId", storeId);
+		params.put("pushId", pushId);
+		String url = getHttpUrl(storeId, "modifyPushDelSts");
+		postProgressResponse(myResultCallback, params, url);
+	}
 	/**
 	 *  添加二维码显示
 	 */
@@ -1711,7 +1743,7 @@ public enum OkHttpsImp {
 		String sign = getSign(md5_key, params);
 		params.put("sign", sign);
 		String url = getAbsoluteUrl(API.GETEDITION);
-		getProgressResponse(myResultCallback, params, url);
+		getNoProgressResponse(myResultCallback, params, url);
 	}
 
 	/**

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
@@ -10,6 +10,7 @@
             android:layout_height="match_parent"
             android:divider="@null"
             android:listSelector="@color/transparent"
+            android:layout_marginBottom="60dp"
             android:scrollbars="none"
         ></ListView>
 <ImageView
@@ -19,4 +20,95 @@
         android:scaleType="centerInside"
         android:src="@mipmap/iv_empty"
         android:visibility="gone" />
-</LinearLayout>
+   <!-- <View
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:background="#ededed" />-->
+
+    <LinearLayout
+        android:id="@+id/fm_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+        <RelativeLayout
+            android:id="@+id/ray_choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:layout_marginLeft="12dp"
+            android:layout_gravity="center_vertical"
+            >
+        <ImageView
+            android:id="@+id/iv_selectall1"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:scaleType="centerInside"
+            android:src="@mipmap/icon_uncheck" />
+        <TextView
+            android:id="@+id/tv_seleteall1"
+            android:layout_toRightOf="@id/iv_selectall1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="7dp"
+            android:singleLine="true"
+            android:text="全选"
+            android:textColor="@color/colores_news_10"
+            android:textSize="16sp" />
+        </RelativeLayout>
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null" />
+
+        <LinearLayout
+            android:id="@+id/login_div"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/shape1"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/tv_toexamine1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="已读"
+                android:padding="8dp"
+                android:textColor="@color/colores_news_10"
+                android:textSize="16sp" />
+
+            <View
+                android:layout_width="1dip"
+                android:layout_height="50dp"
+                android:background="#d9d9d9" />
+
+            <TextView
+                android:id="@+id/tv_deletemessage1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:singleLine="true"
+                android:padding="8dp"
+                android:text="删除"
+                android:gravity="center"
+                android:textColor="@color/colores_news_10"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </LinearLayout>
+    <View
+        android:id="@+id/v_01"
+        android:layout_above="@id/fm_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line"
+        android:background="@color/colores_news_14" />
+</RelativeLayout>

@@ -31,7 +31,7 @@
                 android:singleLine="true"
                 android:text=""
                 android:textColor="#191919"
-                android:textSize="20dip" />
+                android:textSize="@dimen/h20" />
             <!--
                  <ImageView 
 	            android:id="@+id/close"
@@ -94,7 +94,7 @@
                         android:singleLine="true"
                         android:text=""
                         android:textColor="#191919"
-                        android:textSize="16dip" />
+                        android:textSize="@dimen/h16" />
 
                     <TextView
                         android:id="@+id/app_version"
@@ -102,7 +102,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dip"
                         android:textColor="#191919"
-                        android:textSize="12dip" />
+                        android:textSize="@dimen/h12" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -115,7 +115,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="#191919"
-                        android:textSize="12dip" />
+                        android:textSize="@dimen/h12" />
 
                     <TextView
                         android:id="@+id/app_need_size"
@@ -123,7 +123,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dip"
                         android:textColor="#191919"
-                        android:textSize="12dip"
+                        android:textSize="@dimen/h12"
                         android:visibility="gone"
                          />
                 </LinearLayout>
@@ -305,7 +305,7 @@
             android:layout_marginLeft="10dip"
             android:layout_marginTop="5dip"
             android:textColor="#191919"
-            android:textSize="16dip" />
+            android:textSize="@dimen/h16" />
 
         <LinearLayout
             android:id="@+id/maybe_list"
@@ -376,7 +376,7 @@
                     android:gravity="center"
                     android:text=""
                     android:textColor="#191919"
-                    android:textSize="12dip" />
+                    android:textSize="@dimen/h12" />
             </LinearLayout>
 
             <LinearLayout
@@ -439,7 +439,7 @@
                     android:gravity="center"
                     android:text=""
                     android:textColor="#191919"
-                    android:textSize="12dip" />
+                    android:textSize="@dimen/h12" />
             </LinearLayout>
 
             <LinearLayout
@@ -502,7 +502,7 @@
                     android:gravity="center"
                     android:text=""
                     android:textColor="#191919"
-                    android:textSize="12dip" />
+                    android:textSize="@dimen/h12" />
             </LinearLayout>
 
             <LinearLayout
@@ -565,7 +565,7 @@
                     android:gravity="center"
                     android:text=""
                     android:textColor="#191919"
-                    android:textSize="12dip" />
+                    android:textSize="@dimen/h12" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

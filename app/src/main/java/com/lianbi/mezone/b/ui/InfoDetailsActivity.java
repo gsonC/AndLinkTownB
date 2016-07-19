@@ -1,31 +1,30 @@
 package com.lianbi.mezone.b.ui;
 
-import java.util.ArrayList;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.util.Log;
 import android.widget.LinearLayout;
-import cn.com.hgh.utils.ContentUtils;
-import cn.com.hgh.utils.Result;
-import cn.com.hgh.view.PagerSlidingTabStrip;
 
 import com.alibaba.fastjson.JSON;
-import com.xizhi.mezone.b.R;
 import com.lianbi.mezone.b.bean.InfoMessageBean;
 import com.lianbi.mezone.b.fragment.InfoMessageFragment;
 import com.lianbi.mezone.b.fragment.LeaveMessageFragment;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
+import com.xizhi.mezone.b.R;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
+import cn.com.hgh.utils.ContentUtils;
+import cn.com.hgh.utils.Result;
+import cn.com.hgh.view.PagerSlidingTabStrip;
 
 public class InfoDetailsActivity extends BaseActivity {
-
 	private ViewPager pager;
 	private PagerSlidingTabStrip tabs;
 	private LinearLayout ll_top_tabs;
@@ -59,7 +58,6 @@ public class InfoDetailsActivity extends BaseActivity {
 		setContentView(R.layout.act_infodetails, NOTYPE);
 		initView();
 		listen();
-		getMessageList(true);
 		getJumpInfo();
 		getPushMessages();
 
@@ -98,24 +96,24 @@ public class InfoDetailsActivity extends BaseActivity {
 				curPosition = arg0;
 				position = String.valueOf(arg0);
 				switch (arg0) {
-				case 0:
-					swtFmDo(arg0, isDeteled, false, arrayList);
-					getPushMessages();
-					break;
-				case 1:
-					swtFmDo(arg0, isDeteled, false, arrayList0);
-					getPushMessages2();
-					break;
-				case 2:
-					swtFmDo(arg0, isDeteled, false, arrayList1);
-					getPushMessages1();
+					case 0:
+						swtFmDo(arg0, isDeteled, false, arrayList);
+						getPushMessages();
+						break;
+					case 1:
+						swtFmDo(arg0, isDeteled, false, arrayList0);
+						getPushMessages2();
+						break;
+					case 2:
+						swtFmDo(arg0, isDeteled, false, arrayList1);
+						getPushMessages1();
 
-					break;
-				case 3:
-					swtFmDo(arg0, isDeteled, false, mDatas);
-					getShowMessages();
+						break;
+					case 3:
+						swtFmDo(arg0, isDeteled, false, mDatas);
+						getShowMessages();
 
-					break;
+						break;
 				}
 			}
 
@@ -132,36 +130,35 @@ public class InfoDetailsActivity extends BaseActivity {
 	}
 
 	private void swtFmDo(int arg0, boolean isD, boolean isDel,
-			ArrayList<InfoMessageBean> cuArrayList) {
+						 ArrayList<InfoMessageBean> cuArrayList) {
 		switch (arg0) {
-		case POSITION0:
-			if (allMessageFragment != null) {
-				allMessageFragment.doSomething(isD, isDel, cuArrayList);
-			}
+			case POSITION0:
+				if (allMessageFragment != null) {
+					allMessageFragment.doSomething(isD, isDel, cuArrayList);
+				}
 
-			break;
-		case POSITION1:
+				break;
+			case POSITION1:
 
-			if (sMessageFragment != null) {
-				sMessageFragment.doSomething(isD, isDel, cuArrayList);
-			}
-			break;
-		case POSITION2:
-			if (orderMessageFragment != null) {
-				orderMessageFragment.doSomething(isD, isDel, cuArrayList);
-			}
-			break;
-		case POSITION3:
-			if (leavemessagefragment != null) {
-				leavemessagefragment.doSomething(isD, isDel, mDatas);
-			}
-			break;
+				if (sMessageFragment != null) {
+					sMessageFragment.doSomething(isD, isDel, cuArrayList);
+				}
+				break;
+			case POSITION2:
+				if (orderMessageFragment != null) {
+					orderMessageFragment.doSomething(isD, isDel, cuArrayList);
+				}
+				break;
+			case POSITION3:
+				if (leavemessagefragment != null) {
+					leavemessagefragment.doSomething(isD, isDel, mDatas);
+				}
+				break;
 		}
 	}
 
 	/**
-	 * 
-	 * 查询所有待审核的留言
+	 * 留言
 	 */
 	private void getShowMessages() {
 		okHttpsImp.getShowMessages(new MyResultCallback<String>() {
@@ -204,9 +201,8 @@ public class InfoDetailsActivity extends BaseActivity {
 	}
 
 	/**
-	 * 4.13 查询推送消息
+	 * 待接单
 	 */
-
 	private void getPushMessages() {
 		okHttpsImp.getPushMessages(new MyResultCallback<String>() {
 
@@ -222,11 +218,9 @@ public class InfoDetailsActivity extends BaseActivity {
 						ArrayList<InfoMessageBean> pullMessage = (ArrayList<InfoMessageBean>) JSON
 								.parseArray(reString, InfoMessageBean.class);
 
-						for (int i = 0; i < pullMessage.size(); i++) {
-
-						}
 						arrayList.addAll(pullMessage);
 						swtFmDo(POSITION0, false, false, arrayList);
+
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}
@@ -258,10 +252,8 @@ public class InfoDetailsActivity extends BaseActivity {
 						arrayList0.clear();
 						ArrayList<InfoMessageBean> pullMessage = (ArrayList<InfoMessageBean>) JSON
 								.parseArray(reString, InfoMessageBean.class);
-						for (int i = 0; i < pullMessage.size(); i++) {
-
-						}
 						arrayList0.addAll(pullMessage);
+
 						swtFmDo(POSITION1, false, false, arrayList0);
 
 					} catch (JSONException e) {
@@ -295,11 +287,9 @@ public class InfoDetailsActivity extends BaseActivity {
 						arrayList1.clear();
 						ArrayList<InfoMessageBean> pullMessage = (ArrayList<InfoMessageBean>) JSON
 								.parseArray(reString, InfoMessageBean.class);
-						for (int i = 0; i < pullMessage.size(); i++) {
-							/* pullMessage.get(i).setOrder("呼叫买单了"); */
-						}
 
 						arrayList1.addAll(pullMessage);
+
 						swtFmDo(POSITION2, false, false, arrayList1);
 
 					} catch (JSONException e) {
@@ -316,59 +306,9 @@ public class InfoDetailsActivity extends BaseActivity {
 
 	}
 
-	private void getMessageList(boolean b) {
-		// getShowMessages();
-		// new Handler().postDelayed(new Runnable() {
-		//
-		// @Override
-		// public void run() {
-		// for (int i = 0; i < 20; i++) {
-		// InfoMessageBean data = new InfoMessageBean();
-		// data.setTablenum(i + "号桌");
-		// data.setStatus(i % 2);
-		// data.setOrder("有新订单");
-		// data.setTime("10:00");
-		// arrayList.add(data);
-		// }
-		// for (int i = 0; i < 20; i++) {
-		// InfoMessageBean data = new InfoMessageBean();
-		// data.setTablenum(i + "号桌");
-		// data.setStatus(1);
-		// data.setOrder("呼叫服务");
-		// data.setTime("10:00");
-		// arrayList0.add(data);
-		// }
-		// for (int i = 0; i < 20; i++) {
-		// InfoMessageBean data = new InfoMessageBean();
-		// data.setTablenum(i + "号桌");
-		// data.setStatus(1);
-		// data.setOrder("呼叫买单啦");
-		// data.setTime("10:00");
-		// arrayList1.add(data);
-		// }
-		// for (int i = 0; i < 20; i++) {
-		// InfoMessageBean data = new InfoMessageBean();
-		// data.setStatus(1);
-		// /*data.setTablenum(i + "号桌" + "炒饭很好吃");
-		// data.setTime("10:00");*/
-		// arrayList2.add(data);
-		// }
-		// swtFmDo(POSITION0, false, false, arrayList);
-		// swtFmDo(POSITION1, false, false, arrayList0);
-		// swtFmDo(POSITION2, false, false, arrayList1);
-		// swtFmDo(POSITION3, false, false, arrayList2);
-		//
-		// }
-		// }, 80);
-
-	}
-
 	/**
 	 * 修改推送消息状态
-	 * 
-	 * @param id
 	 */
-
 	public void changStatus(String id) {
 		okHttpsImp.postChangeStatus(new MyResultCallback<String>() {
 
@@ -388,12 +328,10 @@ public class InfoDetailsActivity extends BaseActivity {
 	}
 
 	/**
-	 * 删除审核消息
-	 * 
-	 * @param ids
-	 *            消息id
+	 * 删除或审核留言信息
 	 */
 	public void delteMsg(ArrayList<String> ids, boolean status) {
+
 		StringBuffer sb = new StringBuffer();
 		int s = ids.size();
 		if (s > 0) {
@@ -418,7 +356,7 @@ public class InfoDetailsActivity extends BaseActivity {
 					ContentUtils.showMsg(InfoDetailsActivity.this, "删除留言成功");
 					// 刷新页面
 					getShowMessages();
-					
+
 				}
 
 				@Override
@@ -435,8 +373,9 @@ public class InfoDetailsActivity extends BaseActivity {
 				public void onResponseResult(Result result) {
 
 					ContentUtils.showMsg(InfoDetailsActivity.this, "审核留言成功");
+					// 刷新页面
 					getShowMessages();
-                      
+
 				}
 
 				@Override
@@ -447,6 +386,72 @@ public class InfoDetailsActivity extends BaseActivity {
 
 		}
 	}
+
+
+	/**
+	 * 已读或删除 待接单 服务 买单信息
+	 */
+	public void delteMsg1(ArrayList<String> ids, boolean status1) {
+		StringBuffer sb = new StringBuffer();
+		int s = ids.size();
+		if (s > 0) {
+			for (int i = 0; i < s; i++) {
+				if (i == (s - 1)) {
+					sb.append(ids.get(i));
+				} else {
+					sb.append(ids.get(i) + ",");
+
+				}
+			}
+		} else {
+			return;
+		}
+
+		if (status1) {
+
+			okHttpsImp.modifyPushDelSts(new MyResultCallback<String>() {
+
+				@Override
+				public void onResponseResult(Result result) {
+
+					ContentUtils.showMsg(InfoDetailsActivity.this, "删除成功");
+					// 刷新页面
+					getPushMessages();
+					getPushMessages1();
+					getPushMessages2();
+				}
+
+				@Override
+				public void onResponseFailed(String msg) {
+
+				}
+			}, BaseActivity.userShopInfoBean.getBusinessId(), sb.toString());
+
+		}
+
+		else {
+
+			okHttpsImp.modifyPushMessage(new MyResultCallback<String>() {
+
+				@Override
+				public void onResponseResult(Result result) {
+
+					ContentUtils.showMsg(InfoDetailsActivity.this, "成功");
+					getPushMessages();
+					getPushMessages1();
+					getPushMessages2();
+
+				}
+
+				@Override
+				public void onResponseFailed(String msg) {
+
+				}
+			}, BaseActivity.userShopInfoBean.getBusinessId(), sb.toString());
+
+		}
+	}
+
 
 	public class MyAdapter extends FragmentPagerAdapter {
 		String[] _titles;
@@ -469,26 +474,26 @@ public class InfoDetailsActivity extends BaseActivity {
 		@Override
 		public Fragment getItem(int position) {
 			switch (position) {
-			case POSITION0:
-				if (allMessageFragment == null) {
-					allMessageFragment = new InfoMessageFragment();
-				}
-				return allMessageFragment;
-			case POSITION1:
-				if (sMessageFragment == null) {
-					sMessageFragment = new InfoMessageFragment();
-				}
-				return sMessageFragment;
-			case POSITION2:
-				if (orderMessageFragment == null) {
-					orderMessageFragment = new InfoMessageFragment();
-				}
-				return orderMessageFragment;
-			case POSITION3:
-				if (leavemessagefragment == null) {
-					leavemessagefragment = new LeaveMessageFragment();
-				}
-				return leavemessagefragment;
+				case POSITION0:
+					if (allMessageFragment == null) {
+						allMessageFragment = new InfoMessageFragment();
+					}
+					return allMessageFragment;
+				case POSITION1:
+					if (sMessageFragment == null) {
+						sMessageFragment = new InfoMessageFragment();
+					}
+					return sMessageFragment;
+				case POSITION2:
+					if (orderMessageFragment == null) {
+						orderMessageFragment = new InfoMessageFragment();
+					}
+					return orderMessageFragment;
+				case POSITION3:
+					if (leavemessagefragment == null) {
+						leavemessagefragment = new LeaveMessageFragment();
+					}
+					return leavemessagefragment;
 			}
 			return null;
 		}

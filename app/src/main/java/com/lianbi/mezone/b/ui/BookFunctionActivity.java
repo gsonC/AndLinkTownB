@@ -43,7 +43,6 @@ public class BookFunctionActivity extends BaseActivity {
 		ButterKnife.bind(this);
 		setPageTitle("预约");
 		setListen();
-		initData();
 	}
 
 	private void setListen() {
@@ -69,30 +68,24 @@ public class BookFunctionActivity extends BaseActivity {
 	}
 
 	/**
-	 * 初始化Data
-	 */
-	private void initData() {
-	}
-
-	/**
-	 * 跳转WebActivity(在H5加入对应字段否则返回失效)
+	 * 跳转WebActivity(在webactivity加入对应字段否则返回失效)
 	 */
 	public void JumpWebActivity(int type) {
-		Intent intent_web = new Intent(this, H5WebActivty.class);
+		Intent intent_web = new Intent(this, BookWebActivity.class);
 		intent_web.putExtra("Re", true);
 		intent_web.putExtra(Constants.NEDDLOGIN, false);
 		intent_web.putExtra("NEEDNOTTITLE", false);
 		if (1 == type) {
 			if(null!=getUrl(type)&& !TextUtils.isEmpty(getUrl(type))){
-				intent_web.putExtra(H5WebActivty.U, getUrl(type));
+				intent_web.putExtra(BookWebActivity.U, getUrl(type));
 			}
 		} else if (2 == type) {
 			if(null!=getUrl(type)&& !TextUtils.isEmpty(getUrl(type))){
-				intent_web.putExtra(H5WebActivty.U, getUrl(type));
+				intent_web.putExtra(BookWebActivity.U, getUrl(type));
 			}
 		} else if (3 == type) {
 			if(null!=getUrl(type)&& !TextUtils.isEmpty(getUrl(type))){
-			intent_web.putExtra(H5WebActivty.U, getUrl(type));
+			intent_web.putExtra(BookWebActivity.U, getUrl(type));
 			}
 		} else {
 		}
@@ -106,13 +99,15 @@ public class BookFunctionActivity extends BaseActivity {
 	public String getUrl(int type) {
 		String bussniessId = userShopInfoBean.getBusinessId();
 		switch (type) {
-			case 1:
-				return "https://www.baidu.com/";
-			case 2:
-				String url = API.TOSTORESERVICE + "/wcm/productType/queryTypeList/" + bussniessId;
-				return "https://www.hao123.com/?1467686742";
-			case 3:
-				return "https://www.baidu.com/";
+			case 1://产品分类 Product
+				String productitemurl = API.TOSTORESERVICE + "/wcm/productType/queryTypeList/" + bussniessId;
+				return productitemurl;
+			case 2://产品库
+				String url = API.TOSTORESERVICE + "/wcm/rss/product/" + bussniessId+"/productsList";
+				return url;
+			case 3://预约订单
+				String bookurl = API.HOST_BOOK_MALL + "storeId=" + bussniessId + "&&flag=wl";
+				return bookurl;
 		}
 		return "";
 	}

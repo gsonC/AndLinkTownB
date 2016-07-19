@@ -5,24 +5,19 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import cn.com.hgh.swipe.ArraySwipeAdapter;
+import com.alibaba.fastjson.JSONObject;
+import com.lianbi.mezone.b.app.Constants;
+import com.lianbi.mezone.b.bean.DataObjecte;
+import com.lianbi.mezone.b.httpresponse.API;
+import com.xizhi.mezone.b.R;
+
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.CryptTool;
 import cn.com.hgh.utils.JumpIntent;
 
-import com.alibaba.fastjson.JSONObject;
-import com.baidu.mapapi.common.SysOSUtil;
-import com.lianbi.mezone.b.bean.ShouyeServiceBean;
-import com.xizhi.mezone.b.R;
-import com.lianbi.mezone.b.app.Constants;
-import com.lianbi.mezone.b.bean.DataObjecte;
-import com.lianbi.mezone.b.httpresponse.API;
-
-import java.util.ArrayList;
-
 public class ChoiceDingdanInfoWayActivity extends BaseActivity {
 
-	private LinearLayout llt_app_dingdanway, llt_weixin_dingdanway, llt_huoyuan_dingdanway;
+	private LinearLayout llt_app_dingdanway, llt_weixin_dingdanway, llt_huoyuan_dingdanway,llt_book_dingdanway;
 	private boolean re = false;
 
 	@Override
@@ -37,6 +32,7 @@ public class ChoiceDingdanInfoWayActivity extends BaseActivity {
 		llt_app_dingdanway.setOnClickListener(this);
 		llt_weixin_dingdanway.setOnClickListener(this);
 		llt_huoyuan_dingdanway.setOnClickListener(this);
+		llt_book_dingdanway.setOnClickListener(this);
 	}
 
 	private void initView() {
@@ -44,11 +40,14 @@ public class ChoiceDingdanInfoWayActivity extends BaseActivity {
 		llt_app_dingdanway = (LinearLayout) findViewById(R.id.llt_app_dingdanway);
 		llt_weixin_dingdanway = (LinearLayout) findViewById(R.id.llt_weixin_dingdanway);
 		llt_huoyuan_dingdanway = (LinearLayout) findViewById(R.id.llt_huoyuan_dingdanway);
+		llt_book_dingdanway = (LinearLayout) findViewById(R.id.llt_book_dingdanway);
 
 		String DDFU = ContentUtils.getSharePreString(this,
 				Constants.SHARED_PREFERENCE_NAME, Constants.DDFW);
 		String HHPF = ContentUtils.getSharePreString(this,
 				Constants.SHARED_PREFERENCE_NAME, Constants.HHPF);
+		String YYDD = ContentUtils.getSharePreString(this,
+				Constants.SHARED_PREFERENCE_NAME, Constants.YYDD);
 
 		if (!"1".equals(DDFU)) {
 			llt_weixin_dingdanway.setVisibility(View.GONE);
@@ -57,7 +56,9 @@ public class ChoiceDingdanInfoWayActivity extends BaseActivity {
 		if (!"3".equals(HHPF)) {
 			llt_huoyuan_dingdanway.setVisibility(View.GONE);
 		}
-
+		if (!"4".equals(YYDD)) {
+			llt_book_dingdanway.setVisibility(View.GONE);
+		}
 	}
 
 	@Override
@@ -94,10 +95,27 @@ public class ChoiceDingdanInfoWayActivity extends BaseActivity {
 					startActivity(intent_web);
 				}
 				break;
+			case R.id.llt_book_dingdanway:
+				re = JumpIntent.jumpLogin_addShop(isLogin,API.ORDERDETAIL, this);
+				if(re){
+					Intent intent_web = new Intent(this,WebActivty.class);
+					intent_web.putExtra(Constants.NEDDLOGIN, false);
+					intent_web.putExtra("NEEDNOTTITLE", false);
+					intent_web.putExtra("Re", true);
+					intent_web.putExtra(WebActivty.U, getbooksUrl());
+					startActivity(intent_web);
+				}
+				break;
 		}
 	}
 
-	public String getSupplygoodsUrl(){
+	private String getbooksUrl() {
+		String bussniessId = userShopInfoBean.getBusinessId();
+		String url = API.HOST_BOOK_MALL + "storeId=" + bussniessId + "&&flag=wl";
+		return url;
+	}
+
+	private String getSupplygoodsUrl(){
 		String bussniessId = userShopInfoBean.getBusinessId();
 		String url = API.HOST_SUPPLYGOODS_MALL+"storeId="+bussniessId+"&orderStatus=1&sourceType=sws&flag=wl";
 		return url;
@@ -105,7 +123,7 @@ public class ChoiceDingdanInfoWayActivity extends BaseActivity {
 	}
 
 
-	public String getWechatMallUrl() {
+	private String getWechatMallUrl() {
 		String bussniessId = userShopInfoBean.getBusinessId();
 		String status = "1";
 		String url = API.HOST_WECHAT_MALL;

@@ -8,14 +8,16 @@ android {
         applicationId "com.xizhi.mezone.b"
         minSdkVersion 11
         targetSdkVersion 21
-        versionCode 81
-        versionName "1.0.2"
+        versionCode 82
+        versionName "1.0.3"
     }
 
     buildTypes {
         release {
             debuggable false
             shrinkResources true//去掉不用资源
+            //Zipalign优化
+            zipAlignEnabled true
             minifyEnabled false//是否进行代码混淆
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }

@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -388,7 +387,7 @@ public class AddShopActivity extends BaseActivity {
 //		}
 		if (TextUtils.isEmpty(userShopInfoBean.getUserId())
 				|| null==userShopInfoBean.getUserId()) {
-			ContentUtils.showMsg(AddShopActivity.this, "为了保证您的数据安全请退出重新登录");
+			ContentUtils.showMsg(AddShopActivity.this, "数据异常,为了您的数据安全,请退出重新登陆");
 			return;
 		}
 		addBusinessByB();

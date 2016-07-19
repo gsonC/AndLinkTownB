@@ -54,8 +54,10 @@ import com.bumptech.glide.Glide;
  */
 public class BaseAdapterHelper {
 
+
 	/** Views indexed with their IDs */
 	private final SparseArray<View> views;
+
 
 	private final Context context;
 

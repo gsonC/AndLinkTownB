@@ -58,7 +58,7 @@
             android:padding="5dp"
             android:singleLine="true"
             android:textColorHint="@color/colores_news_13"
-            android:textSize="16dp"
+            android:textSize="@dimen/h16"
             android:visibility="gone" />
 
         <ImageView

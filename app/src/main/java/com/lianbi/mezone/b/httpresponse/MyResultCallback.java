@@ -1,15 +1,17 @@
 package com.lianbi.mezone.b.httpresponse;
 
-import okhttp3.Call;
-import okhttp3.Request;
 import android.content.Context;
 import android.text.TextUtils;
+
+import com.alibaba.fastjson.JSON;
+import com.xizhi.mezone.b.R;
+import com.zhy.http.okhttp.callback.StringCallback;
+
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.view.HttpDialog;
-
-import com.alibaba.fastjson.JSON;
-import com.zhy.http.okhttp.callback.StringCallback;
+import okhttp3.Call;
+import okhttp3.Request;
 
 public abstract class MyResultCallback<T> extends StringCallback {
 	/**
@@ -65,7 +67,8 @@ public abstract class MyResultCallback<T> extends StringCallback {
 	public void onError(Call call, Exception e) {
 		if (isShow) {
 			isShow = false;
-			// ContentUtils.showMsg(context, "请求超时！");
+			ContentUtils.showMsg(context,context.getResources().getString(R.string.requesttimeout));
+			e.printStackTrace();
 		}
 		onResponseFailed("ERROR");
 	}

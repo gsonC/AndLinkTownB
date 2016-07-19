@@ -5,7 +5,6 @@ import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -15,10 +14,8 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.bumptech.glide.Glide;
-import com.lianbi.mezone.b.app.Constants;
 import com.lianbi.mezone.b.bean.ServiceMallBean;
 import com.lianbi.mezone.b.bean.WebProductManagementBean;
-import com.lianbi.mezone.b.httpresponse.API;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.xizhi.mezone.b.R;
 
@@ -31,6 +28,7 @@ import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.QuickAdapter;
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.CryptTool;
+import cn.com.hgh.utils.JumpIntent;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.utils.WebEncryptionUtil;
 import cn.com.hgh.view.HttpDialog;
@@ -106,45 +104,7 @@ public class ServiceMallActivity extends BaseActivity {
 								final String  serviceId=String.valueOf(item.getId());
 								int primaryID = item.getId();
 								mServiceMallBean=item;
-								if(isfdownload.equals("Y")){
-//									iv_store_service
-//									.setBackgroundResource(R.drawable.icon_storservice);
-									switch (primaryID) {
-									case 1:
-										
-										        Intent intent = new Intent(
-												ServiceMallActivity.this,
-												TableSetActivity.class);
-										        startActivity(intent);
-//									        	finish();
-										
-										
-										break;
-				                    case 2:
-				                    	Intent intent_web = new Intent(ServiceMallActivity.this,
-												H5WebActivty.class);
-										intent_web.putExtra(Constants.NEDDLOGIN, false);
-										intent_web.putExtra("NEEDNOTTITLE", false);
-										intent_web.putExtra("Re", true);
-										intent_web.putExtra(WebActivty.T, "产品管理");
-										intent_web.putExtra(WebActivty.U, getUrl(API.TOSTORE_PRODUCT_MANAGEMENT));
-										startActivity(intent_web);
-										break;
-
-									case 3:
-											Intent intent_web2 = new Intent(ServiceMallActivity.this,
-													H5WebActivty.class);
-										intent_web2.putExtra(Constants.NEDDLOGIN, false);
-										intent_web2.putExtra("NEEDNOTTITLE", false);
-										intent_web2.putExtra("Re", true);
-										intent_web2.putExtra(WebActivty.T, "货源批发");
-										intent_web2.putExtra(WebActivty.U, getUrl(API.TOSTORE_Supply_Wholesale+
-												"storeId="+
-												userShopInfoBean.getBusinessId()));
-										startActivity(intent_web2);
-										break;
-									}
-								}else if(isfdownload.equals("N")){
+								 if(isfdownload.equals("N")){
 									dialog.setMessage("下载中...");
 									dialog.show();
 									new Handler().postDelayed(new Runnable() {
@@ -153,7 +113,7 @@ public class ServiceMallActivity extends BaseActivity {
 										public void run() {
 											
 										 goDownloadMall(serviceId,mServiceMallBean);
-										
+
 										}
 									}, 2000);
 									
@@ -166,46 +126,33 @@ public class ServiceMallActivity extends BaseActivity {
 
 							@Override
 							public void onClick(View v) {
-				                final String  serviceId=String.valueOf(item.getId());
+								final String  serviceId=String.valueOf(item.getId());
+								boolean isLogin = ContentUtils.getLoginStatus(ServiceMallActivity.this);
 								int primaryID = item.getId();
-				                String  introduceurl=item.getIntroduceUrl();
+								String  introduceurl=item.getIntroduceUrl();
 								String  isfdownload=item.getDownload();
+								String  isappname=item.getAppName();
 								if(isfdownload.equals("Y")){
 //									iv_store_service
 //									.setBackgroundResource(R.drawable.icon_storservice);
 									switch (primaryID) {
-									case 1:
-										
-										        Intent intent = new Intent(
+										case 1:
+										Intent intent = new Intent(
 												ServiceMallActivity.this,
 												TableSetActivity.class);
-										        startActivity(intent);
+										startActivity(intent);
 //									        	finish();
-										
-										
 										break;
-				                    case 2:
-				                    	Intent intent_web = new Intent(ServiceMallActivity.this,
-												H5WebActivty.class);
-										intent_web.putExtra(Constants.NEDDLOGIN, false);
-										intent_web.putExtra("NEEDNOTTITLE", false);
-										intent_web.putExtra("Re", true);
-										intent_web.putExtra(WebActivty.T, "产品管理");
-										intent_web.putExtra(WebActivty.U, getUrl(API.TOSTORE_PRODUCT_MANAGEMENT));
-										startActivity(intent_web);
-										break;
-									case 3:
-										Intent intent_web2 = new Intent(ServiceMallActivity.this,
-													H5WebActivty.class);
-										intent_web2.putExtra(Constants.NEDDLOGIN, false);
-										intent_web2.putExtra("NEEDNOTTITLE", false);
-										intent_web2.putExtra("Re", true);
-										intent_web2.putExtra(WebActivty.T, "货源批发");
-										intent_web2.putExtra(WebActivty.U, getUrl(API.TOSTORE_Supply_Wholesale+
-												"storeId="+
-														userShopInfoBean.getBusinessId())
-										);
-										startActivity(intent_web2);
+										case 4:
+											Intent intentBookFunction = new Intent(
+													ServiceMallActivity.this,
+													BookFunctionActivity.class);
+											startActivity(intentBookFunction);
+											break;
+										default:
+
+										JumpIntent.jumpH5WebActivty(isLogin,primaryID,isappname,
+													ServiceMallActivity.this);
 										break;
 									}
 							        
@@ -299,6 +246,11 @@ public class ServiceMallActivity extends BaseActivity {
 		url = encryptionUrl(url, dataJson);
 		return url;
 	}
+	public String getSupplyWholesaleUrl(String address) {
+		String bussniessId = BaseActivity.userShopInfoBean.getBusinessId();
+		return address + "storeId=" + bussniessId;
+	}
+
 	/**
 	 * 加密
 	 */
