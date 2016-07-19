@@ -38,12 +38,14 @@
                 android:layout_height="20dp"
                 android:src="@mipmap/phone" />
 
-            <EditText
+            <cn.com.hgh.view.ClearEditText
                 android:id="@+id/edit_login_phone"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:layout_marginRight="10dp"
                 android:background="@null"
+                android:drawableRight="@drawable/delete_selector"
                 android:hint="@string/telphone"
                 android:inputType="number"
                 android:maxLength="11"
@@ -71,13 +73,15 @@
                 android:layout_height="20dp"
                 android:src="@mipmap/lock" />
 
-            <EditText
+            <cn.com.hgh.view.ClearEditText
                 android:id="@+id/edit_login_pwd"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@null"
                 android:hint="@string/pwd"
+                android:layout_marginRight="10dp"
+                android:drawableRight="@drawable/delete_selector"
                 android:inputType="textPassword"
                 android:maxLength="18"
                 android:paddingLeft="15dp"

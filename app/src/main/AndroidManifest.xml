@@ -163,10 +163,16 @@
             android:windowSoftInputMode="stateHidden"/>
         <activity
             android:name="com.lianbi.mezone.b.ui.RegisterActivity"
-            android:windowSoftInputMode="stateHidden"/>
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"
+            />
         <activity
             android:name="com.lianbi.mezone.b.ui.ForgetPassWordActivty"
-            android:windowSoftInputMode="stateHidden"/>
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"
+            />
         <activity android:name="com.lianbi.mezone.b.ui.WebActivty"/>
         <activity android:name="com.lianbi.mezone.b.ui.H5WebActivty"/>
         <!-- 百度地图 key -->

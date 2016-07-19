@@ -4,7 +4,16 @@
     android:layout_height="match_parent"
     android:background="@color/colores_news_14"
     android:orientation="vertical" >
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -236,5 +245,6 @@
             android:layout_height="wrap_content"
             android:textColor="@color/color_007aff" />
     </LinearLayout>
-
+</LinearLayout>
+    </ScrollView>
 </LinearLayout>
