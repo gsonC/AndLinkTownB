@@ -99,7 +99,8 @@ public class H5WebActivty extends BaseActivity {
 	protected void onDestroy() {
 		super.onDestroy();
 		web_webactivty.loadUrl("javascript:clearCache();");
-
+		web_webactivty.removeAllViews();
+		web_webactivty.destroy();
 	}
 
 	//base64字符串转化成图片

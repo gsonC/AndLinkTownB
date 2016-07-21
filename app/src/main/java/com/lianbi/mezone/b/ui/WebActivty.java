@@ -10,14 +10,14 @@ import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Toast;
-import cn.com.hgh.utils.WebViewInit;
-import cn.com.hgh.view.HttpDialog;
 
-import com.xizhi.mezone.b.R;
 import com.lianbi.mezone.b.app.Constants;
 import com.lianbi.mezone.b.bean.LoginBackBean;
 import com.lianbi.mezone.b.httpresponse.API;
+import com.xizhi.mezone.b.R;
+
+import cn.com.hgh.utils.WebViewInit;
+import cn.com.hgh.view.HttpDialog;
 
 /**
  * 简单通用web
@@ -71,7 +71,8 @@ public class WebActivty extends BaseActivity {
 	protected void onDestroy() {
 		super.onDestroy();
 		web_webactivty.loadUrl("javascript:clearCache();");
-
+		web_webactivty.removeAllViews();
+		web_webactivty.destroy();
 	}
 
 	/**
