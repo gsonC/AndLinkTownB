@@ -8,7 +8,6 @@ import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -19,6 +18,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 
 import cn.com.hgh.utils.ContentUtils;
+import cn.com.hgh.utils.ScreenUtils;
 
 public class ErWeMaDialog extends Dialog implements  View.OnClickListener,
 		View.OnLongClickListener {
@@ -47,9 +47,10 @@ public class ErWeMaDialog extends Dialog implements  View.OnClickListener,
 
 		dialog_ll = (LinearLayout) findViewById(R.id.dialog_ll);
 //		mImageView = (ImageView) findViewById(R.id.image);
-		WindowManager wm = (WindowManager) getContext()
-				.getSystemService(Context.WINDOW_SERVICE);
-		int screenWidth = wm.getDefaultDisplay().getWidth();// 获取屏幕宽度
+	//	WindowManager wm = (WindowManager) getContext()
+	//			.getSystemService(Context.WINDOW_SERVICE);
+	//	int screenWidth = wm.getDefaultDisplay().getWidth();// 获取屏幕宽度
+		int screenWidth = ScreenUtils.getScreenWidth(context);
 		mImageView = new ImageView(context);  //创建imageview
 		mImageView.setLayoutParams(new RelativeLayout.LayoutParams(screenWidth*5/6,screenWidth*5/6));
 		mImageView.setScaleType(ImageView.ScaleType.FIT_XY);
