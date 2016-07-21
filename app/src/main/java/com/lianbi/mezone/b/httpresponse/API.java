@@ -41,10 +41,10 @@ public class API {
 	 * ENVIRONMENTAL = "http://172.16.103.153:8080"; //测试
 	 * http://front.xylbn.cn:9003/lincombFront/; //线上
 	 */
-		public static final String ENVIRONMENTAL = "http://front.xylbn.cn:9003";
-		public static final String TOSTORESERVICE = "http://mall.xylbn.cn:9005";//到店服务
-	//	public static final String ENVIRONMENTAL = "http://uat.xylbn.cn";
-	//	public static final String TOSTORESERVICE = "http://uat.xylbn.cn";//到店服务
+	//	public static final String ENVIRONMENTAL = "http://front.xylbn.cn:9003";
+	//	public static final String TOSTORESERVICE = "http://mall.xylbn.cn:9005";//到店服务
+		public static final String ENVIRONMENTAL = "http://uat.xylbn.cn";
+		public static final String TOSTORESERVICE = "http://uat.xylbn.cn";//到店服务
 	//	public static final String ENVIRONMENTAL = "http://172.16.103.153:8080";
 	//	public static final String TOSTORESERVICE = "http://172.16.103.153:8085";//到店服务
 	/**
@@ -54,8 +54,8 @@ public class API {
 	 */
 	//public static final String PAYQR = ENVIRONMENTAL+"/lincombFront/toOrderPay.do?state=";
 	//http://172.16.103.153:8080/lincombFront/toOrderPay.do
-	//public static final String PAYQR = ENVIRONMENTAL+"/lincombFront/toOrderPay.do?state=";
-	  public static final String PAYQR = "http://www.xylbn.cn/weixin/toOrderPay?state=";
+	public static final String PAYQR = ENVIRONMENTAL+"/lincombFront/toOrderPay.do?state=";
+	//  public static final String PAYQR = "http://www.xylbn.cn/weixin/toOrderPay?state=";
 	/**
 	 * 总入口
 	 */
@@ -562,4 +562,8 @@ public class API {
 	 * 每日收入明细
 	 */
 	public static final String EVERYDAYINCOME = "finance/queryAccountDailyIncomeDetail.do";
+	/**
+	 * 冻结中金额
+	 */
+	public static final String FREEZINGAMOUNT = "";
 }

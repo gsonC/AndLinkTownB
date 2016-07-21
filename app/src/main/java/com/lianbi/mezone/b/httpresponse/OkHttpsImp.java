@@ -2085,6 +2085,25 @@ public enum OkHttpsImp {
 	}
 
 	/**
+	 * 冻结中金额
+	 */
+	public void getFreezingAmount(String md5_key, String serNum, String source,
+								  String reqTime, String accountNo,
+								  MyResultCallback<String> myResultCallback)throws Exception{
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("accountNo", accountNo);
+
+		params.put("reqTime", reqTime);
+		params.put("serNum", serNum);
+		params.put("source", source);
+
+		String sign = getSign(md5_key, params);
+		params.put("sign", sign);
+		String url = getAbsoluteUrl(API.FREEZINGAMOUNT);
+		getNoProgressResponse(myResultCallback, params, url);
+	}
+
+	/**
 	 * 签名方法
 	 */
 	private static String getSign(String md5_key, Map<String, String> dataMap)

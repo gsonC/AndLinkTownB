@@ -13,15 +13,8 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import cn.com.hgh.utils.AbDateUtil;
-import cn.com.hgh.utils.AbStrUtil;
-import cn.com.hgh.utils.ContentUtils;
-import cn.com.hgh.utils.JumpIntent;
-import cn.com.hgh.utils.MathExtend;
-import cn.com.hgh.utils.Result;
 
 import com.alibaba.fastjson.JSON;
-import com.xizhi.mezone.b.R;
 import com.lianbi.mezone.b.app.Constants;
 import com.lianbi.mezone.b.bean.BankBoundInfo;
 import com.lianbi.mezone.b.httpresponse.API;
@@ -32,6 +25,16 @@ import com.lianbi.mezone.b.ui.BaseActivity;
 import com.lianbi.mezone.b.ui.MainActivity;
 import com.lianbi.mezone.b.ui.ShouRuHActivity;
 import com.lianbi.mezone.b.ui.WithdrawDepositActivity;
+import com.xizhi.mezone.b.R;
+
+import cn.com.hgh.utils.AbDateUtil;
+import cn.com.hgh.utils.AbStrUtil;
+import cn.com.hgh.utils.AbViewUtil;
+import cn.com.hgh.utils.ContentUtils;
+import cn.com.hgh.utils.JumpIntent;
+import cn.com.hgh.utils.MathExtend;
+import cn.com.hgh.utils.Result;
+import cn.com.hgh.utils.ScreenUtils;
 
 /**
  * 
@@ -47,10 +50,10 @@ public class FinancialOfficeFragment extends Fragment implements
 	private ImageView iv_recharge, iv_withdrawalsdetails, iv_withdrawals,
 			iv_bankcard;
 	private TextView tv_totalaccount, tv_shopaccount, tv_availablebalance,
-			tv_takeinmoney, tv_shopincometoday;
-
+			tv_takeinmoney, tv_shopincometoday,tv_freezingamount;
+	private TextView tv_dongjiejine,tv_keyongyue,tv_tixianzhongyue,tv_dianpujinrishouru;
 	public double totalaccount = 0, shopaccount = 0, availablebalance = 0,
-			takeinmoney = 0, shopincometoday = 0;
+			takeinmoney = 0, shopincometoday = 0,freezingamount=0;
 
 	/**
 	 * 刷新fm数据
@@ -153,8 +156,6 @@ public class FinancialOfficeFragment extends Fragment implements
 			mMainActivity.getCount();
 		}
 		
-		
-		
 	}
 
 	/**
@@ -168,29 +169,49 @@ public class FinancialOfficeFragment extends Fragment implements
 				.findViewById(R.id.iv_withdrawalsdetails);// 体现明细
 		iv_withdrawals = (ImageView) view.findViewById(R.id.iv_withdrawals);// 提现
 		iv_bankcard = (ImageView) view.findViewById(R.id.iv_bankcard);// 银行卡
-		tv_totalaccount = (TextView) view.findViewById(R.id.tv_totalaccount);// 账户总额
-		tv_shopaccount = (TextView) view.findViewById(R.id.tv_shopaccount);// 店铺总额
+		tv_totalaccount = (TextView) view.findViewById(R.id.tv_totalaccount);// 账户总额(数字)
+		tv_shopaccount = (TextView) view.findViewById(R.id.tv_shopaccount);// 店铺总额(数字)
+
+		tv_freezingamount = (TextView) view.findViewById(R.id.tv_freezingamount);//冻结金额(数字)
 		tv_availablebalance = (TextView) view
-				.findViewById(R.id.tv_availablebalance);// 可用余额
-		tv_takeinmoney = (TextView) view.findViewById(R.id.tv_takeinmoney);// 提现中余额
+				.findViewById(R.id.tv_availablebalance);// 可用余额(数字)
+		tv_takeinmoney = (TextView) view.findViewById(R.id.tv_takeinmoney);// 提现中余额(数字)
 		tv_shopincometoday = (TextView) view
-				.findViewById(R.id.tv_shopincometoday);// 店铺今日收入
+				.findViewById(R.id.tv_shopincometoday);// 店铺今日收入(数字)
+
+		tv_dongjiejine = (TextView) view
+				.findViewById(R.id.tv_dongjiejine);// 冻结金额
+		tv_keyongyue = (TextView) view
+				.findViewById(R.id.tv_keyongyue);// 可用余额
+		tv_tixianzhongyue = (TextView) view
+				.findViewById(R.id.tv_tixianzhongyue);// 提现中余额
+		tv_dianpujinrishouru = (TextView) view
+				.findViewById(R.id.tv_dianpujinrishouru);// 店铺今日收入
+
+		textAdaptation();
+
 	   swipe_caiwushi = (SwipeRefreshLayout) view.findViewById(R.id.swipe_caiwushi);
 	   swipe_caiwushi.setColorSchemeResources(R.color.colores_news_01,R.color.black);
 	   swipe_caiwushi.setOnRefreshListener(new OnRefreshListener() {
 		
 		@Override
 		public void onRefresh() {
-//			new Thread( new Runnable() {
-				
-//				@Override
-//				public void run() {
 					mMainActivity.getCount();
 					swipe_caiwushi.setRefreshing(false);
-//				}
-//			}).start();
 		}
 	});
+	}
+
+	private void textAdaptation() {
+		tv_dongjiejine.setTextSize(AbViewUtil.px2sp(mMainActivity, (int)(24*ScreenUtils.getBaseSizeOn720(mMainActivity))));
+		tv_keyongyue.setTextSize(AbViewUtil.px2sp(mMainActivity, (int)(24*ScreenUtils.getBaseSizeOn720(mMainActivity))));
+		tv_tixianzhongyue.setTextSize(AbViewUtil.px2sp(mMainActivity, (int)(24*ScreenUtils.getBaseSizeOn720(mMainActivity))));
+		tv_dianpujinrishouru.setTextSize(AbViewUtil.px2sp(mMainActivity, (int)(24*ScreenUtils.getBaseSizeOn720(mMainActivity))));
+
+		tv_freezingamount.setTextSize(AbViewUtil.px2sp(mMainActivity, (int)(26*ScreenUtils.getBaseSizeOn720(mMainActivity))));
+		tv_shopincometoday.setTextSize(AbViewUtil.px2sp(mMainActivity, (int)(26*ScreenUtils.getBaseSizeOn720(mMainActivity))));
+		tv_takeinmoney.setTextSize(AbViewUtil.px2sp(mMainActivity, (int)(26*ScreenUtils.getBaseSizeOn720(mMainActivity))));
+		tv_availablebalance.setTextSize(AbViewUtil.px2sp(mMainActivity, (int)(26*ScreenUtils.getBaseSizeOn720(mMainActivity))));
 	}
 
 	/**
@@ -218,7 +239,10 @@ public class FinancialOfficeFragment extends Fragment implements
 			this.shopincometoday = money;
 			tv_shopincometoday.setText(MathExtend.roundNew(money, 2));
 			break;
-
+		case 5:
+			this.freezingamount = money;
+			tv_freezingamount.setText(MathExtend.roundNew(money, 2));
+			break;
 		}
 	}
 

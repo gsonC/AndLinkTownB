@@ -97,7 +97,9 @@ public class BookWebActivity extends BaseActivity {
 	protected void onDestroy() {
 		super.onDestroy();
 		web_webactivty.loadUrl("javascript:clearCache();");
-
+		web_webactivty.stopLoading();
+		web_webactivty.removeAllViews();
+		web_webactivty.destroy();
 	}
 
 	//	public String getString(String str,String str1 ){

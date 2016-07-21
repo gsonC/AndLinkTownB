@@ -368,7 +368,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 	}
 
 	public double mTotalAccount = 0, mShopAccount = 0, mAvailableBalance = 0,
-			mTakeinMoney        = 0, mShopinComeToday = 0;
+			mTakeinMoney        = 0, mShopinComeToday = 0,mFreezingAmount = 0;
 
 	/**
 	 * 获取财务室各项收入
@@ -378,10 +378,47 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 			if (!TextUtils.isEmpty(userShopInfoBean.getBusinessId())) {// 获取店铺id是否为空
 				getUserAccount();// 账户总额
 				getShopAccount();// 店铺总额
+				getFreezingAmount();//冻结中金额
 				getBalance();// 可用余额
 				getAmountinCash();// 提现中金额
 				getShopAccountToday();// 店铺今日收入
 			}
+		}
+	}
+
+	/**
+	 * 冻结中金额
+	 */
+	private void getFreezingAmount() {
+		String reqTime = AbDateUtil.getDateTimeNow();
+		String uuid = AbStrUtil.getUUID();
+		try {
+			// 用okHttpsImp.getFreezingAmount替换
+			okHttpsImp.getMyAmount(OkHttpsImp.md5_key, uuid, "app", reqTime,
+					userShopInfoBean.getUserId(),
+
+					new MyResultCallback<String>() {
+
+						@Override
+						public void onResponseResult(Result result) {
+							String reString = result.getData();
+							if (!TextUtils.isEmpty(reString)) {
+								mFreezingAmount = BigDecimal
+										.valueOf(Long.valueOf(result.getData()))
+										.divide(new BigDecimal(100))
+										.doubleValue();
+								// 填充布局
+							}
+							((FinancialOfficeFragment) fm_caiwushi)
+									.setPriceTotal(mFreezingAmount, 5);
+						}
+
+						@Override
+						public void onResponseFailed(String msg) {
+						}
+					});
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 

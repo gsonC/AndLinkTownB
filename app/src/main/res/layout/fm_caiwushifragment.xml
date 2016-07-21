@@ -67,7 +67,9 @@
                     android:baselineAligned="false"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:padding="10dp" >
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                     >
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -77,9 +79,41 @@
                         android:orientation="vertical" >
 
                         <TextView
+                            android:id="@+id/tv_dongjiejine"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
+                            android:text="@string/freezingamount"
+                            android:textSize="11sp"
+                            android:textColor="@color/white" />
+
+                        <TextView
+                            android:id="@+id/tv_freezingamount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/initial"
+                            android:textColor="@color/white"
+                            android:textSize="20sp" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="@dimen/line"
+                        android:layout_height="match_parent"
+                        android:background="@color/colores_news_14" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            android:id="@+id/tv_keyongyue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:textSize="11sp"
                             android:text="@string/availablebalance"
                             android:textColor="@color/white" />
 
@@ -105,10 +139,12 @@
                         android:orientation="vertical" >
 
                         <TextView
+                            android:id="@+id/tv_tixianzhongyue"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:text="@string/takeinmoney"
+                            android:textSize="11sp"
                             android:textColor="@color/white" />
 
                         <TextView
@@ -133,9 +169,11 @@
                         android:orientation="vertical" >
 
                         <TextView
+                            android:id="@+id/tv_dianpujinrishouru"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
+                            android:textSize="11sp"
                             android:text="@string/shopincometoday"
                             android:textColor="@color/white" />
 
