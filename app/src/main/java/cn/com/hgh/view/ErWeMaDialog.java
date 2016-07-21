@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -49,7 +50,9 @@ public class ErWeMaDialog extends Dialog implements  View.OnClickListener,
 //		mImageView = (ImageView) findViewById(R.id.image);
 		WindowManager wm = (WindowManager) getContext()
 				.getSystemService(Context.WINDOW_SERVICE);
-		int screenWidth = wm.getDefaultDisplay().getWidth();// 获取屏幕宽度
+		DisplayMetrics outMetrics = new DisplayMetrics();
+		wm.getDefaultDisplay().getMetrics(outMetrics);
+		int screenWidth = outMetrics.widthPixels;
 		mImageView = new ImageView(context);  //创建imageview
 		mImageView.setLayoutParams(new RelativeLayout.LayoutParams(screenWidth*5/6,screenWidth*5/6));
 		mImageView.setScaleType(ImageView.ScaleType.FIT_XY);
