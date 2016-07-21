@@ -145,7 +145,8 @@ public class TableSetActivity extends BaseActivity implements
 								mIntentSearch.addAll(inBusinessList);
 								if(isSearchback==true){
 									mSearchRsult.clear();
-									for (int i = 0; i < inBusinessList.size(); i++) {
+									int  iblsize=inBusinessList.size();
+									for (int i = 0; i < iblsize; i++) {
 										if (inBusinessList.get(i).getTableName()
 												.contains(tablname)) {
 											mSearchRsult.add(inBusinessList.get(i));
@@ -168,7 +169,8 @@ public class TableSetActivity extends BaseActivity implements
 								mIntentSearch.addAll(inRestDatasList);
 								if(isSearchback==true){	
 									mSearchRsult.clear();
-									for (int i = 0; i < inRestDatasList.size(); i++) {
+									int  irdlsize=inRestDatasList.size();
+									for (int i = 0; i < irdlsize; i++) {
 										if (inRestDatasList.get(i).getTableName()
 												.contains(tablname)) {
 											mSearchRsult.add(inRestDatasList.get(i));
@@ -305,7 +307,8 @@ public class TableSetActivity extends BaseActivity implements
 			startActivity(intent4);
 			break;
 		case R.id.tv_batchprocessing:// 批量处理
-			for (int i = 0; i < mInBusinessData.size(); i++) {
+			int  ibdsize=mInBusinessData.size();
+			for (int i = 0; i < ibdsize; i++) {
 				mInBusinessData.get(i).setTableStatus(1);
 			}
 			if (curPosition != POSITION1) {
@@ -397,7 +400,8 @@ public class TableSetActivity extends BaseActivity implements
 				if (data != null) {
 					tablname = data.getStringExtra("searchresult");
 					mSearchRsult.clear();
-					for (int i = 0; i < mInBusinessData.size(); i++) {
+					int  ibdsize=mInBusinessData.size();
+					for (int i = 0; i < ibdsize; i++) {
 						if (mInBusinessData.get(i).getTableName()
 								.contains(tablname)) {
 							mSearchRsult.add(mInBusinessData.get(i));
