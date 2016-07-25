@@ -35,6 +35,7 @@ public class LeaveMessageFragment extends Fragment {
 	private LinearLayout tv_info;
     private TextView tv_chshenhe;
 	private RelativeLayout ray_choice;
+	public static final int LEAVINGMESSAGE  = 101;//代表留言界面
 
 	/**
 	 * 是否删除
@@ -42,9 +43,8 @@ public class LeaveMessageFragment extends Fragment {
 	boolean isDeted;
 	private InfoDetailsActivity mActivity;
 	// private OkHttpsImp okHttpsImp;
-	private TextView tv_deletemessage, tv_toexamine, tv_seleteall;
+//	private TextView tv_deletemessage, tv_toexamine, tv_seleteall;
   
-	private boolean isSeleteAll = false;
 
 	// private ListView listView;
 	@Override
@@ -64,91 +64,113 @@ public class LeaveMessageFragment extends Fragment {
 
 		fm_messagefragment_iv_empty = (ImageView) view
 				.findViewById(R.id.fm_messagefragment_iv_empty);
-		tv_deletemessage = (TextView) view.findViewById(R.id.tv_deletemessage);// 删除
-		tv_toexamine = (TextView) view.findViewById(R.id.tv_toexamine);// 审核
-		iv_selectall = (ImageView) view.findViewById(R.id.iv_selectall);// 全选
-		tv_seleteall = (TextView) view.findViewById(R.id.tv_seleteall);// 全选
-		ray_choice= (RelativeLayout) view.findViewById(R.id.ray_choice);
+//		tv_deletemessage = (TextView) view.findViewById(R.id.tv_deletemessage);// 删除
+//		tv_toexamine = (TextView) view.findViewById(R.id.tv_toexamine);// 审核
+//		iv_selectall = (ImageView) view.findViewById(R.id.iv_selectall);// 全选
+//		tv_seleteall = (TextView) view.findViewById(R.id.tv_seleteall);// 全选
+//		ray_choice= (RelativeLayout) view.findViewById(R.id.ray_choice);
 
 	}
+	public void afterToexamine(){
+		for(int i=0;i<mDatas.size();i++){
+			if(!"0".equals(mDatas.get(i).getAuditStatus())){
+				tv_tablename.setTextColor(Color.RED);
+				tv_leavemessage.setTextColor(Color.RED);
+				time.setTextColor(Color.RED);
+			}
+		}
 
+	}
+	public  void   upDateFragment(boolean isSeleteAll ){
+		if(isSeleteAll){
+			for(int i=0;i<mDatas.size();i++){
+				mDatas.get(i).setS(true);
+			}
+			mAdapter.replaceAll(mDatas);
+		}else{
+			for(int i=0;i<mDatas.size();i++){
+				mDatas.get(i).setS(false);
+			}
+			mAdapter.replaceAll(mDatas);
+		}
+	}
 	private void listen() {
-		ray_choice.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-
-				if (isSeleteAll) {
-					isSeleteAll = false;
-					iv_selectall
-							.setBackgroundResource(R.mipmap.message_unchecked);
-					tv_seleteall.setText("全选");
-					for (int i = 0; i < mDatas.size(); i++) {
-						mDatas.get(i).setS(false);
-					}
-					mAdapter.replaceAll(mDatas);
-				} else {
-					isSeleteAll = true;
-					iv_selectall
-							.setBackgroundResource(R.mipmap.message_checked);
-					tv_seleteall.setText("全不选");
-					for (int i = 0; i < mDatas.size(); i++) {
-						mDatas.get(i).setS(true);
-					}
-					mAdapter.replaceAll(mDatas);
-				}
-
-			}
-		});
-		tv_deletemessage.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				setExamineAndDelete(true);
-			
-			}
-			
-		});
-		
-		
-				
-		tv_toexamine.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				for(int i=0;i<mDatas.size();i++){
-					if(!"0".equals(mDatas.get(i).getAuditStatus())){
-						tv_tablename.setTextColor(Color.RED);
-						tv_leavemessage.setTextColor(Color.RED);
-						time.setTextColor(Color.RED);
-					}
-				}
-				setExamineAndDelete(false);
-			
-			}
-		});
+//		ray_choice.setOnClickListener(new OnClickListener() {
+//
+//			@Override
+//			public void onClick(View v) {
+//
+//				if (isSeleteAll) {
+//					isSeleteAll = false;
+//					iv_selectall
+//							.setBackgroundResource(R.mipmap.message_unchecked);
+//					tv_seleteall.setText("全选");
+//					for (int i = 0; i < mDatas.size(); i++) {
+//						mDatas.get(i).setS(false);
+//					}
+//					mAdapter.replaceAll(mDatas);
+//				} else {
+//					isSeleteAll = true;
+//					iv_selectall
+//							.setBackgroundResource(R.mipmap.message_checked);
+//					tv_seleteall.setText("全不选");
+//					for (int i = 0; i < mDatas.size(); i++) {
+//						mDatas.get(i).setS(true);
+//					}
+//					mAdapter.replaceAll(mDatas);
+//				}
+//
+//			}
+//		});
+//		tv_deletemessage.setOnClickListener(new OnClickListener() {
+//
+//			@Override
+//			public void onClick(View v) {
+//				setExamineAndDelete(true);
+//
+//			}
+//
+//		});
+//
+//
+//
+//		tv_toexamine.setOnClickListener(new OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				for(int i=0;i<mDatas.size();i++){
+//					if(!"0".equals(mDatas.get(i).getAuditStatus())){
+//						tv_tablename.setTextColor(Color.RED);
+//						tv_leavemessage.setTextColor(Color.RED);
+//						time.setTextColor(Color.RED);
+//					}
+//				}
+//				setExamineAndDelete(false);
+//
+//			}
+//		});
 		}
 	
 
 
-	private void setExamineAndDelete(boolean status) {
-		int s = mDatas.size();
-		ArrayList<String> ids = new ArrayList<String>();
-		for (int i = 0; i < s; i++) {
-			if (mDatas.get(i).isS()) {
-				ids.add(mDatas.get(i).getId() + "");
-			}
-		}
-		if (status) {// 删除
-			mActivity.delteMsg(ids, status);
-			iv_selectall
-			.setBackgroundResource(R.mipmap.message_unchecked);
-		} else {// 审核
-			mActivity.delteMsg(ids, status);
-			iv_selectall
-			.setBackgroundResource(R.mipmap.message_unchecked);
-			tv_seleteall.setText("全选");
-		}
-	}
+//	private void setExamineAndDelete(boolean status) {
+//		int s = mDatas.size();
+//		ArrayList<String> ids = new ArrayList<String>();
+//		for (int i = 0; i < s; i++) {
+//			if (mDatas.get(i).isS()) {
+//				ids.add(mDatas.get(i).getId() + "");
+//			}
+//		}
+//		if (status) {// 删除
+//			mActivity.delteMsg(ids, status);
+//			iv_selectall
+//			.setBackgroundResource(R.mipmap.message_unchecked);
+//		} else {// 审核
+//			mActivity.delteMsg(ids, status);
+//			iv_selectall
+//			.setBackgroundResource(R.mipmap.message_unchecked);
+//			tv_seleteall.setText("全选");
+//		}
+//	}
 
 
 	public static void setListViewHeightBasedOnChildren(ListView listView) {
@@ -215,7 +237,7 @@ public class LeaveMessageFragment extends Fragment {
 								mAdapter.replaceAll(mDatas);
 								ArrayList<String> ids = new ArrayList<String>();
 								ids.add(String.valueOf(item.getId()));
-								mActivity.delteMsg(ids,true);
+								mActivity.delteLeaveMsg(ids,true);
 							} 
 						});
 				if ("1".equals(item.getAuditStatus())) {
@@ -240,7 +262,7 @@ public class LeaveMessageFragment extends Fragment {
 									mAdapter.replaceAll(mDatas);
 									ArrayList<String> ids = new ArrayList<String>();
 									ids.add(String.valueOf(item.getId()));
-									mActivity.delteMsg(ids,false);
+									mActivity.delteLeaveMsg(ids,false);
 									
 								}
 							});

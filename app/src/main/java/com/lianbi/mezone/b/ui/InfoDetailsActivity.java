@@ -6,7 +6,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.lianbi.mezone.b.bean.InfoMessageBean;
@@ -28,16 +32,24 @@ public class InfoDetailsActivity extends BaseActivity {
 	private ViewPager pager;
 	private PagerSlidingTabStrip tabs;
 	private LinearLayout ll_top_tabs;
+	private RelativeLayout ray_choice;
+
+	private TextView tv_toexamine;
+	private TextView tv_deletemessage;
+	private TextView tv_seleteall;
+	private ImageView iv_selectall;
+	private boolean isSeleteAll = false;
 	public static final int POSITION0 = 0;
 	public static final int POSITION1 = 1;
 	public static final int POSITION2 = 2;
 	public static final int POSITION3 = 3;
+	public static final int READ  = 100;//代表前三个界面
+	public static final int LEAVINGMESSAGE  = 101;//代表留言界面
 	final String[] titles = { "待接单", "服务", "买单", "留言" };
 	InfoMessageFragment allMessageFragment;
 	InfoMessageFragment sMessageFragment;
 	InfoMessageFragment orderMessageFragment;
 	LeaveMessageFragment leavemessagefragment;
-
 	/**
 	 * 数据列表
 	 */
@@ -45,6 +57,9 @@ public class InfoDetailsActivity extends BaseActivity {
 	ArrayList<InfoMessageBean> arrayList0 = new ArrayList<InfoMessageBean>();
 	ArrayList<InfoMessageBean> arrayList1 = new ArrayList<InfoMessageBean>();
 	ArrayList<InfoMessageBean> arrayList2 = new ArrayList<InfoMessageBean>();
+
+	ArrayList<InfoMessageBean> currentList = new ArrayList<InfoMessageBean>();
+
 	/**
 	 * 当前位置
 	 */
@@ -60,7 +75,81 @@ public class InfoDetailsActivity extends BaseActivity {
 		listen();
 		getJumpInfo();
 		getPushMessages();
+		bottomlisten();
+	}
+	public void bottomlisten(){
+		ray_choice.setOnClickListener(this);
+		tv_toexamine.setOnClickListener(this);
+		tv_deletemessage.setOnClickListener(this);
+	}
+	public void  seleteallState(){
+		if (isSeleteAll) {
+			isSeleteAll = false;
+			iv_selectall
+					.setBackgroundResource(R.mipmap.message_unchecked);
+			tv_seleteall.setText("全不选");
 
+		} else {
+			isSeleteAll = true;
+			iv_selectall
+					.setBackgroundResource(R.mipmap.message_checked);
+			tv_seleteall.setText("全选");
+		}
+	}
+	private void whichFragment(int arg0,boolean  isSeleteAll
+						 ) {
+		switch (arg0) {
+			case POSITION0:
+				if (allMessageFragment != null) {
+					allMessageFragment.upDateFragment(isSeleteAll);;
+				}
+
+				break;
+			case POSITION1:
+
+				if (sMessageFragment != null) {
+					sMessageFragment.upDateFragment(isSeleteAll);;
+				}
+				break;
+			case POSITION2:
+				if (orderMessageFragment != null) {
+					orderMessageFragment.upDateFragment(isSeleteAll);;
+				}
+				break;
+			case POSITION3:
+				if (leavemessagefragment != null) {
+					leavemessagefragment.upDateFragment(isSeleteAll);;
+				}
+				break;
+		}
+	}
+	@Override
+	protected void onChildClick(View view) {
+		super.onChildClick(view);
+		switch (view.getId()) {
+			case R.id.ray_choice:
+				seleteallState();
+				whichFragment(curPosition,isSeleteAll);
+			break;
+			case R.id.tv_toexamine:
+				if(curPosition==POSITION3){
+					leavemessagefragment.afterToexamine();
+					setExamineAndDelete(false,currentList,LEAVINGMESSAGE);
+				}else{
+					setExamineAndDelete(false,currentList,READ);
+				}
+
+			break;
+			case R.id.tv_deletemessage:
+				if(curPosition==POSITION3){
+					leavemessagefragment.upDateFragment(isSeleteAll);
+					setExamineAndDelete(true,currentList,LEAVINGMESSAGE);
+				}else{
+					setExamineAndDelete(true,currentList,READ);
+				}
+
+			break;
+		}
 	}
 
 	private void getJumpInfo() {
@@ -78,6 +167,11 @@ public class InfoDetailsActivity extends BaseActivity {
 
 	private void initView() {
 		setPageTitle("信息详情");
+		iv_selectall= (ImageView) findViewById(R.id.iv_selectall);
+		tv_seleteall= (TextView) findViewById(R.id.tv_seleteall);
+		ray_choice= (RelativeLayout) findViewById(R.id.ray_choice);
+		tv_toexamine= (TextView) findViewById(R.id.tv_toexamine);
+		tv_deletemessage= (TextView) findViewById(R.id.tv_deletemessage);
 		ll_top_tabs = (LinearLayout) findViewById(R.id.ll_top_tabs);
 		tabs = (PagerSlidingTabStrip) findViewById(R.id.ps_tabs_act_infodetails);
 		pager = (ViewPager) findViewById(R.id.pager_act_infodetails);
@@ -88,6 +182,12 @@ public class InfoDetailsActivity extends BaseActivity {
 	boolean isDeteled = false;
 	String position;
 
+	private void initTabs(ArrayList<InfoMessageBean> currentList,
+	                      String  showtext
+	){
+       this.currentList=currentList;
+	   tv_toexamine.setText(showtext);
+	}
 	private void listen() {
 		tabs.setOnPageChangeListener(new OnPageChangeListener() {
 
@@ -97,19 +197,23 @@ public class InfoDetailsActivity extends BaseActivity {
 				position = String.valueOf(arg0);
 				switch (arg0) {
 					case 0:
+						initTabs(arrayList,"已读");
 						swtFmDo(arg0, isDeteled, false, arrayList);
 						getPushMessages();
 						break;
 					case 1:
+						initTabs(arrayList0,"已读");
 						swtFmDo(arg0, isDeteled, false, arrayList0);
 						getPushMessages2();
 						break;
 					case 2:
+						initTabs(arrayList1,"已读");
 						swtFmDo(arg0, isDeteled, false, arrayList1);
 						getPushMessages1();
 
 						break;
 					case 3:
+						initTabs(mDatas,"审核");
 						swtFmDo(arg0, isDeteled, false, mDatas);
 						getShowMessages();
 
@@ -128,7 +232,28 @@ public class InfoDetailsActivity extends BaseActivity {
 			}
 		});
 	}
-
+	private void setExamineAndDelete(boolean status,ArrayList<InfoMessageBean>  currentList,
+       int type
+	) {
+		int s = currentList.size();
+		ArrayList<String> ids = new ArrayList<String>();
+		for (int i = 0; i < s; i++) {
+			if (currentList.get(i).isS()) {
+				ids.add(currentList.get(i).getPushId() + "");
+			}
+		}
+		switch (type){
+			case READ:
+			delteAboutOrderMsg(ids, status);
+			break;
+			case LEAVINGMESSAGE:
+			delteLeaveMsg(ids, status);
+			break;
+		}
+		iv_selectall
+				.setBackgroundResource(R.mipmap.message_unchecked);
+		tv_seleteall.setText("全选");
+	}
 	private void swtFmDo(int arg0, boolean isD, boolean isDel,
 						 ArrayList<InfoMessageBean> cuArrayList) {
 		switch (arg0) {
@@ -330,7 +455,7 @@ public class InfoDetailsActivity extends BaseActivity {
 	/**
 	 * 删除或审核留言信息
 	 */
-	public void delteMsg(ArrayList<String> ids, boolean status) {
+	public void delteLeaveMsg(ArrayList<String> ids, boolean status) {
 
 		StringBuffer sb = new StringBuffer();
 		int s = ids.size();
@@ -391,7 +516,7 @@ public class InfoDetailsActivity extends BaseActivity {
 	/**
 	 * 已读或删除 待接单 服务 买单信息
 	 */
-	public void delteMsg1(ArrayList<String> ids, boolean status1) {
+	public void delteAboutOrderMsg(ArrayList<String> ids, boolean status1) {
 		StringBuffer sb = new StringBuffer();
 		int s = ids.size();
 		if (s > 0) {

@@ -12,7 +12,6 @@
             android:id="@+id/fm_messagefragment_listView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="60dp"
             android:layout_weight="1"
             android:background="#fff4f7f9"
             android:cacheColorHint="#00000000"
@@ -39,7 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/line"
         android:background="@color/colores_news_14" />-->
-    <LinearLayout
+  <!--  <LinearLayout
         android:id="@+id/fm_bottom"
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -120,7 +119,7 @@
                 android:textColor="@color/colores_news_10"
                 android:textSize="16sp" />
         </LinearLayout>
-    </LinearLayout>
+    </LinearLayout>-->
     <View
         android:id="@+id/v_01"
         android:layout_above="@id/fm_bottom"
