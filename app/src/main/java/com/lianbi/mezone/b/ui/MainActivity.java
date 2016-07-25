@@ -178,6 +178,9 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 		}
 	}
 
+	/**
+	 * 根据用户下载服务对应订单管理显示对应订单项
+	 */
 	private void typeUserDownload(ArrayList<ShouyeServiceBean> datas) {
 		ContentUtils.putSharePre(MainActivity.this,
 				Constants.SHARED_PREFERENCE_NAME,
@@ -206,6 +209,9 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 
 	}
 
+	/**
+	 * 用户已下载服务添加收款和服务商城
+	 */
 	public void filltheseats() {
 		mDatas.clear();
 		ShouyeServiceBean service = new ShouyeServiceBean();
@@ -213,8 +219,6 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 		service.setAppName("收款");
 		service.setId(99);
 		mDatas.add(service);
-
-		//测试提交到主分支
 
 		ShouyeServiceBean endservie = new ShouyeServiceBean();
 		endservie.setIcoUrl("http");
@@ -253,6 +257,9 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 		}
 	}
 
+	/**
+	 * 个推服务初始化
+	 */
 	private void initGetui() {
 		PushManager.getInstance().initialize(this.getApplicationContext());
 
@@ -282,6 +289,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 							final AppUpDataBean uB = com.alibaba.fastjson.JSONObject
 									.parseObject(result.getData(),
 											AppUpDataBean.class);
+
 							String status = uB.getCoerceModify();
 
 							if (status.equals("Y")) {
@@ -754,7 +762,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 				// case MYSHOPACTIVITY_CODE:// 我的商户回调
 				// refreshFMData();
 				// break;
-				case SERVICEMALLSHOP_CODE:
+				case SERVICEMALLSHOP_CODE: //服务商城返回
 					getServiceMall();
 					break;
 			}
@@ -962,29 +970,21 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 		setShoyYeTitle();
 		setPageRightText("切换店铺");
 		setPageRightTextColor(R.color.color_6bb4ff);
-		// setPageRightTextSize(AbViewUtil.px2sp(this, 37));
 		tv_title_left.setText("切换店铺");
-		// tv_title_left.setTextSize(AbViewUtil.px2sp(this, 37));
 		tv_title_left.setVisibility(View.INVISIBLE);
 	}
 
 	private void setShoyYeTitle() {
 		if (ContentUtils.getLoginStatus(this)) {
-			if (!(TextUtils.isEmpty(userShopInfoBean.getShopName()) || null == userShopInfoBean
-					.getShopName())) {
+			if (!TextUtils.isEmpty(userShopInfoBean.getShopName()) && null != userShopInfoBean
+					.getShopName()) {
 				setPageTitle(userShopInfoBean.getShopName());
+			}else{
+				setPageTitle("首页");
 			}
 		} else {
 			setPageTitle("首页");
 		}
-		// System.out.println("userShopInfoBean.getShopName()---"+userShopInfoBean.getShopName());
-		// if (TextUtils.isEmpty(userShopInfoBean.getShopName())
-		// || null == userShopInfoBean.getShopName()) {
-		// setPageTitle("首页");
-		// } else {
-		// setPageTitle(userShopInfoBean.getShopName());
-		// }
-
 	}
 
 	/**

@@ -7,9 +7,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.DisplayMetrics;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -20,6 +18,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 
 import cn.com.hgh.utils.ContentUtils;
+import cn.com.hgh.utils.ScreenUtils;
 
 public class ErWeMaDialog extends Dialog implements  View.OnClickListener,
 		View.OnLongClickListener {
@@ -48,13 +47,9 @@ public class ErWeMaDialog extends Dialog implements  View.OnClickListener,
 
 		dialog_ll = (LinearLayout) findViewById(R.id.dialog_ll);
 //		mImageView = (ImageView) findViewById(R.id.image);
-		WindowManager wm = (WindowManager) getContext()
-				.getSystemService(Context.WINDOW_SERVICE);
-		DisplayMetrics outMetrics = new DisplayMetrics();
-		wm.getDefaultDisplay().getMetrics(outMetrics);
-		int screenWidth = outMetrics.widthPixels;
+		int screenWidth = ScreenUtils.getScreenWidth(context)*5/6;
 		mImageView = new ImageView(context);  //创建imageview
-		mImageView.setLayoutParams(new RelativeLayout.LayoutParams(screenWidth*5/6,screenWidth*5/6));
+		mImageView.setLayoutParams(new RelativeLayout.LayoutParams(screenWidth,screenWidth));
 		mImageView.setScaleType(ImageView.ScaleType.FIT_XY);
 		dialog_ll.addView(mImageView);  //添加到布局容器中，显示图片。
 	}

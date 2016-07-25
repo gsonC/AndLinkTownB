@@ -35,6 +35,7 @@ import com.lianbi.mezone.b.ui.H5WebActivty;
 import com.lianbi.mezone.b.ui.MainActivity;
 import com.lianbi.mezone.b.ui.ServiceMallActivity;
 import com.lianbi.mezone.b.ui.TableSetActivity;
+import com.lianbi.mezone.b.ui.WIFIWebActivity;
 import com.lianbi.mezone.b.ui.WebActivty;
 import com.xizhi.mezone.b.R;
 
@@ -238,7 +239,7 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 							intent_web.putExtra("NEEDNOTTITLE", false);
 							intent_web.putExtra("Re", true);
 							intent_web.putExtra(WebActivty.T, "微信商城");
-							intent_web.putExtra(WebActivty.U, getUrl(API.TOSTORE_PRODUCT_MANAGEMENT));
+							intent_web.putExtra(WebActivty.U, getSAUrl(API.TOSTORE_PRODUCT_MANAGEMENT,1));
 							mActivity.startActivity(intent_web);
 						}
 						break;
@@ -250,7 +251,7 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 							intent_web.putExtra("NEEDNOTTITLE", false);
 							intent_web.putExtra("Re", true);
 							intent_web.putExtra(WebActivty.T, "货源批发");
-							intent_web.putExtra(WebActivty.U, getSupplyWholesaleUrl(API.TOSTORE_Supply_Wholesale));
+							intent_web.putExtra(WebActivty.U, getSAUrl(API.TOSTORE_Supply_Wholesale,2));
 							mActivity.startActivity(intent_web);
 						}
 						break;
@@ -258,6 +259,17 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 						if(isLogin){//预约界面
 							Intent intent = new Intent(mActivity, BookFunctionActivity.class);
 							startActivity(intent);
+						}
+						break;
+					case 5:
+						if(isLogin){
+							Intent intent_web = new Intent(mActivity,
+									WIFIWebActivity.class);
+							intent_web.putExtra(Constants.NEDDLOGIN, false);
+							intent_web.putExtra("NEEDNOTTITLE", false);
+							intent_web.putExtra("Re", true);
+							intent_web.putExtra(WebActivty.U, getSAUrl("",3));
+							mActivity.startActivity(intent_web);
 						}
 						break;
 					case 99:
@@ -284,21 +296,22 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 		});
 	}
 
-	public String getSupplyWholesaleUrl(String address) {
+	private String getSAUrl(String address,int type){
 		String bussniessId = BaseActivity.userShopInfoBean.getBusinessId();
-		return address + "storeId=" + bussniessId;
-	}
-
-
-	public String getUrl(String address) {
-		String bussniessId = BaseActivity.userShopInfoBean.getBusinessId();
-		String url = address;
-		WebProductManagementBean data = new WebProductManagementBean();
-		data.setBusinessId(bussniessId);
-		String dataJson = com.alibaba.fastjson.JSONObject.toJSON(data)
-				.toString();
-		url = encryptionUrl(url, dataJson);
-		return url;
+		switch (type){
+			case 1:
+				WebProductManagementBean data = new WebProductManagementBean();
+				data.setBusinessId(bussniessId);
+				String dataJson = com.alibaba.fastjson.JSONObject.toJSON(data)
+						.toString();
+				String url = encryptionUrl(address, dataJson);
+				return url;
+			case 2:
+				return address + "storeId=" + bussniessId;
+			case 3:
+				return "http://172.16.103.151:8090/wcmv2/routerApplication/wifiIndex?businessId="+bussniessId;
+		}
+		return "";
 	}
 
 	/**

@@ -202,6 +202,9 @@ public class FinancialOfficeFragment extends Fragment implements
 	});
 	}
 
+	/**
+	 * 文字适配
+	 */
 	private void textAdaptation() {
 		tv_dongjiejine.setTextSize(AbViewUtil.px2sp(mMainActivity, (int)(24*ScreenUtils.getBaseSizeOn720(mMainActivity))));
 		tv_keyongyue.setTextSize(AbViewUtil.px2sp(mMainActivity, (int)(24*ScreenUtils.getBaseSizeOn720(mMainActivity))));
