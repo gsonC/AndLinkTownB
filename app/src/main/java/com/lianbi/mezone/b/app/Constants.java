@@ -96,4 +96,11 @@ public class Constants {
 	 * 预约订单
 	 */
 	public static final String YYDD = "yydd";
+	/**
+	 * 跳转h5界面传参
+	 */
+	public static final String WEBURL= "url";
+	public static final String NEEDNOTTITLE= "NEEDNOTTITLE";
+	public static final String RE= "Re";
+	public static final String TITLE= "title";
 }

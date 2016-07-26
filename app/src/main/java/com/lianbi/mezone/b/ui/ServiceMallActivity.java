@@ -16,6 +16,7 @@ import com.alibaba.fastjson.JSON;
 import com.bumptech.glide.Glide;
 import com.lianbi.mezone.b.bean.ServiceMallBean;
 import com.lianbi.mezone.b.bean.WebProductManagementBean;
+import com.lianbi.mezone.b.httpresponse.API;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.xizhi.mezone.b.R;
 
@@ -42,12 +43,24 @@ public class ServiceMallActivity extends BaseActivity {
 	private ArrayList<ServiceMallBean> mData = new ArrayList<ServiceMallBean>();
 	// private GridViewAdapter mAdapter;
 	HttpDialog dialog;
+	Intent intent;
 	private static final int REQUEST_CODE_RESULT = 1000;
 	private QuickAdapter<ServiceMallBean> mAdapter;
 //	private GridView gridview;
 	private ListView  listview_service;
 	ImageView iv_store_service,iv_servicemall_empty;
 	ServiceMallBean  mServiceMallBean;
+	//桌位设置
+	public static final int   TABLESETTING=1;
+	//微信商城
+	public static final int  WECHATMALL =2;
+	//货源批发
+	public static final int  SUPPLYWHOLESALE =3;
+	//预约
+	public static final int  RESERVATION =4;
+    //智能wifi
+	public static final int   INTELLIGENTWIFI=5;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -55,11 +68,15 @@ public class ServiceMallActivity extends BaseActivity {
 		setContentView(R.layout.act_servicemallactivity, NOTYPE);
 		initView();
 		initListAdapter();
+		intent=new Intent();
 		dialog = new HttpDialog(this);
 		dialog.show();
 		getCandownloadMall();// 获取可供下载服务商城列表
 	}
-
+	private void  simpleJump(Class activity){
+		intent.setClass(ServiceMallActivity.this,activity);
+		startActivity(intent);
+	}
 	private void initListAdapter() {
 		mAdapter = new QuickAdapter<ServiceMallBean>(ServiceMallActivity.this,
 				R.layout.item_servicemall_list, mDatas) {
@@ -133,27 +150,31 @@ public class ServiceMallActivity extends BaseActivity {
 								String  isfdownload=item.getDownload();
 								String  isappname=item.getAppName();
 								if(isfdownload.equals("Y")){
-//									iv_store_service
-//									.setBackgroundResource(R.drawable.icon_storservice);
 									switch (primaryID) {
-										case 1:
-										Intent intent = new Intent(
-												ServiceMallActivity.this,
-												TableSetActivity.class);
-										startActivity(intent);
-//									        	finish();
+										case TABLESETTING:
+											simpleJump(TableSetActivity.class);
 										break;
-										case 4:
-											Intent intentBookFunction = new Intent(
-													ServiceMallActivity.this,
-													BookFunctionActivity.class);
-											startActivity(intentBookFunction);
+										case WECHATMALL:
+											JumpIntent.jumpWebActivty
+													(ServiceMallActivity.this,H5WebActivty.class,
+													isLogin,API.TOSTORE_PRODUCT_MANAGEMENT,WECHATMALL,
+													false,false,true,isappname);
 											break;
-										default:
-
-										JumpIntent.jumpH5WebActivty(isLogin,primaryID,isappname,
-													ServiceMallActivity.this);
-										break;
+										case SUPPLYWHOLESALE:
+											JumpIntent.jumpWebActivty
+													(ServiceMallActivity.this,H5WebActivty.class,
+															isLogin,API.TOSTORE_Supply_Wholesale,SUPPLYWHOLESALE,
+															false,false,true,isappname);
+											break;
+										case RESERVATION:
+											simpleJump(BookFunctionActivity.class);
+											break;
+										case INTELLIGENTWIFI:
+											JumpIntent.jumpWebActivty
+													(ServiceMallActivity.this,WIFIWebActivity.class,
+															isLogin,API.INTELLIGENT_WIFI,INTELLIGENTWIFI,
+															false,false,true,isappname);
+											break;
 									}
 							        
 								}else if(isfdownload.equals("N")){
