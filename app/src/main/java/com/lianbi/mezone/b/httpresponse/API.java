@@ -88,7 +88,8 @@ public class API {
 	/**
 	 * 智能WIFI
 	 */
-	public static final String INTELLIGENT_WIFI = "http://172.16.103.151:8090/wcmv2/routerApplication/wifiIndex?businessId=";
+	//public static final String INTELLIGENT_WIFI = "http://172.16.103.151:8090/wcmv2/routerApplication/wifiIndex?businessId=";
+	public static final String INTELLIGENT_WIFI =TOSTORESERVICE+"/wcmv2/routerApplication/wifiIndex?businessId=";
 	/**
 	 * webURL介绍 clerk - 店员管理 finance - 财务管理 financialTransactions - 我要理财 manage
 	 * - 经营收入 material - 我的资料 mySource - 我的货源 news - 我的资料 other - 其他功能 product -
