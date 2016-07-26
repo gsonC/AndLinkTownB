@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -87,13 +88,13 @@ public class InfoDetailsActivity extends BaseActivity {
 			isSeleteAll = false;
 			iv_selectall
 					.setBackgroundResource(R.mipmap.message_unchecked);
-			tv_seleteall.setText("全不选");
+			tv_seleteall.setText("全选");
 
 		} else {
 			isSeleteAll = true;
 			iv_selectall
 					.setBackgroundResource(R.mipmap.message_checked);
-			tv_seleteall.setText("全选");
+			tv_seleteall.setText("全不选");
 		}
 	}
 	private void whichFragment(int arg0,boolean  isSeleteAll
@@ -134,6 +135,9 @@ public class InfoDetailsActivity extends BaseActivity {
 			case R.id.tv_toexamine:
 				if(curPosition==POSITION3){
 					leavemessagefragment.afterToexamine();
+//					currentList.clear();
+//					currentList=leavemessagefragment.getLeaveMessage();
+					Log.i("tag","140--->"+currentList.size());
 					setExamineAndDelete(false,currentList,LEAVINGMESSAGE);
 				}else{
 					setExamineAndDelete(false,currentList,READ);
@@ -142,7 +146,8 @@ public class InfoDetailsActivity extends BaseActivity {
 			break;
 			case R.id.tv_deletemessage:
 				if(curPosition==POSITION3){
-					leavemessagefragment.upDateFragment(isSeleteAll);
+//					currentList.clear();
+//					currentList=leavemessagefragment.getLeaveMessage();
 					setExamineAndDelete(true,currentList,LEAVINGMESSAGE);
 				}else{
 					setExamineAndDelete(true,currentList,READ);
@@ -185,6 +190,9 @@ public class InfoDetailsActivity extends BaseActivity {
 	private void initTabs(ArrayList<InfoMessageBean> currentList, String  showtext){
        this.currentList=currentList;
 	   tv_toexamine.setText(showtext);
+	    iv_selectall
+				.setBackgroundResource(R.mipmap.message_unchecked);
+		tv_seleteall.setText("全选");
 	}
 	private void listen() {
 		tabs.setOnPageChangeListener(new OnPageChangeListener() {
@@ -234,12 +242,25 @@ public class InfoDetailsActivity extends BaseActivity {
        int type
 	) {
 		int s = currentList.size();
+		Log.i("tag","选取的个数--->"+s);
 		ArrayList<String> ids = new ArrayList<String>();
-		for (int i = 0; i < s; i++) {
-			if (currentList.get(i).isS()) {
-				ids.add(currentList.get(i).getPushId() + "");
-			}
+		switch (type){
+			case READ:
+				for (int i = 0; i < s; i++) {
+					if (currentList.get(i).isS()) {
+						ids.add(currentList.get(i).getPushId() + "");
+					}
+				}
+				break;
+			case LEAVINGMESSAGE:
+				for (int i = 0; i < s; i++) {
+			    if (currentList.get(i).isS()) {
+				ids.add(currentList.get(i).getId() + "");
+			    }
+		        }
+				break;
 		}
+
 		switch (type){
 			case READ:
 			delteAboutOrderMsg(ids, status);
@@ -326,7 +347,7 @@ public class InfoDetailsActivity extends BaseActivity {
 	/**
 	 * 待接单
 	 */
-	private void getPushMessages() {
+	private void  getPushMessages() {
 		okHttpsImp.getPushMessages(new MyResultCallback<String>() {
 
 			@Override
@@ -466,6 +487,8 @@ public class InfoDetailsActivity extends BaseActivity {
 
 				}
 			}
+			Log.i("tag","审核留言-475-----》"+sb.toString());
+			ContentUtils.showMsg(InfoDetailsActivity.this, sb.toString());
 		} else {
 			return;
 		}
@@ -620,5 +643,10 @@ public class InfoDetailsActivity extends BaseActivity {
 			}
 			return null;
 		}
+	}
+
+	public void setCurrentList(ArrayList<InfoMessageBean> currentList) {
+		currentList.clear();
+		this.currentList = currentList;
 	}
 }

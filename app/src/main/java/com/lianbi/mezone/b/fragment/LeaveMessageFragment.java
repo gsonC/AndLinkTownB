@@ -57,6 +57,10 @@ public class LeaveMessageFragment extends Fragment {
 		initListAdapter();
 		return view;
 	}
+	public ArrayList<InfoMessageBean> getLeaveMessage(){
+
+		return  mDatas;
+	}
 	private void initView(View view) {
 		fm_messagefragment_listView = (SlideListView2) view
 				.findViewById(R.id.fm_messagefragment_listView);
@@ -72,13 +76,13 @@ public class LeaveMessageFragment extends Fragment {
 
 	}
 	public void afterToexamine(){
-		for(int i=0;i<mDatas.size();i++){
-			if(!"0".equals(mDatas.get(i).getAuditStatus())){
-				tv_tablename.setTextColor(Color.BLACK);
-				tv_leavemessage.setTextColor(Color.BLACK);
-				time.setTextColor(Color.BLACK);
-			}
-		}
+//		for(int i=0;i<mDatas.size();i++){
+//			if(!"0".equals(mDatas.get(i).getAuditStatus())){
+//				tv_tablename.setTextColor(Color.BLACK);
+//				tv_leavemessage.setTextColor(Color.BLACK);
+//				time.setTextColor(Color.BLACK);
+//			}
+//		}
 
 	}
 	public  void   upDateFragment(boolean isSeleteAll ){
@@ -293,6 +297,7 @@ public class LeaveMessageFragment extends Fragment {
 							item.setS(true);
 							mAdapter.replaceAll(mDatas);
 						}
+//						mActivity.setCurrentList(mDatas);
 					}
 				});
 				
