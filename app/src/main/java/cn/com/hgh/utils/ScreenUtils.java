@@ -129,4 +129,12 @@ public class ScreenUtils
 		float baseSizeOn720 = (float) getScreenWidth(context)/720;
 		return baseSizeOn720;
 	}
+
+	/**
+	 * 以1080分辨率为基础计算文字适配基数大小
+	 */
+	public static float getBaseSizeOn1080(Context context){
+		float baseSizeOn720 = (float) getScreenWidth(context)/1080;
+		return baseSizeOn720;
+	}
 }

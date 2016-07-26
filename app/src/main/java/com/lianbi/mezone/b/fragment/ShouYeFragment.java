@@ -268,7 +268,7 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 							intent_web.putExtra(Constants.NEDDLOGIN, false);
 							intent_web.putExtra("NEEDNOTTITLE", false);
 							intent_web.putExtra("Re", true);
-							intent_web.putExtra(WebActivty.U, getSAUrl("",3));
+							intent_web.putExtra(WebActivty.U, getSAUrl(API.INTELLIGENT_WIFI,3));
 							mActivity.startActivity(intent_web);
 						}
 						break;
@@ -299,17 +299,17 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 	private String getSAUrl(String address,int type){
 		String bussniessId = BaseActivity.userShopInfoBean.getBusinessId();
 		switch (type){
-			case 1:
+			case 1://微信商城
 				WebProductManagementBean data = new WebProductManagementBean();
 				data.setBusinessId(bussniessId);
 				String dataJson = com.alibaba.fastjson.JSONObject.toJSON(data)
 						.toString();
 				String url = encryptionUrl(address, dataJson);
 				return url;
-			case 2:
+			case 2://货源批发
 				return address + "storeId=" + bussniessId;
-			case 3:
-				return "http://172.16.103.151:8090/wcmv2/routerApplication/wifiIndex?businessId="+bussniessId;
+			case 3://智能WIFI
+				return address+bussniessId;
 		}
 		return "";
 	}
