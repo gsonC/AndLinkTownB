@@ -1,8 +1,5 @@
 package com.lianbi.mezone.b.ui;
 
-import java.io.File;
-import java.util.ArrayList;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -16,21 +13,11 @@ import android.widget.FrameLayout.LayoutParams;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import cn.com.hgh.utils.AbDateUtil;
-import cn.com.hgh.utils.AbStrUtil;
-import cn.com.hgh.utils.AbViewUtil;
-import cn.com.hgh.utils.ContentUtils;
-import cn.com.hgh.utils.FilePathGet;
-import cn.com.hgh.utils.FuzzyUtil;
-import cn.com.hgh.utils.Picture_Base64;
-import cn.com.hgh.utils.Result;
-import cn.com.hgh.view.ErWeMaDialog;
 
 import com.alibaba.fastjson.JSON;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
-import com.xizhi.mezone.b.R;
 import com.lianbi.mezone.b.bean.MyShopInfoBean;
 import com.lianbi.mezone.b.bean.ShopIntroduceImageBean;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
@@ -38,6 +25,18 @@ import com.lianbi.mezone.b.impl.MyShopChange;
 import com.lianbi.mezone.b.photo.FileUtils;
 import com.lianbi.mezone.b.photo.PhotoUtills;
 import com.lianbi.mezone.b.photo.PickImageDescribe;
+import com.xizhi.mezone.b.R;
+
+import java.io.File;
+import java.util.ArrayList;
+
+import cn.com.hgh.utils.AbDateUtil;
+import cn.com.hgh.utils.AbStrUtil;
+import cn.com.hgh.utils.AbViewUtil;
+import cn.com.hgh.utils.ContentUtils;
+import cn.com.hgh.utils.FilePathGet;
+import cn.com.hgh.utils.Picture_Base64;
+import cn.com.hgh.utils.Result;
 
 /**
  * 我的商铺
@@ -287,7 +286,7 @@ public class MyShopActivity extends BaseActivity {
 			break;
 		case R.id.llt_my_shop_address:// 店铺地址
 			Intent intent_address = new Intent(this, MapActivity.class);
-			intent_address.putExtra("isUpdte", true);
+		//	intent_address.putExtra("isUpdte", true);
 			if (TextUtils.isEmpty(myShopInfoBean.getAddress())) {
 				return;
 			}
@@ -295,7 +294,7 @@ public class MyShopActivity extends BaseActivity {
 			// myShopInfoBean.getLatitude());
 			// intent_address.putExtra("longitude",
 			// myShopInfoBean.getLongitude());
-			intent_address.putExtra("address", myShopInfoBean.getAddress());
+		//	intent_address.putExtra("address", myShopInfoBean.getAddress());
 			startActivityForResult(intent_address, REQUEST_ADDRESS);
 			break;
 		case R.id.img_my_shop_qrcode:// 点击放大二维码

@@ -129,7 +129,7 @@ public class AddShopActivity extends BaseActivity {
 			intent_type.putExtra("isMyShop", false);
 			startActivityForResult(intent_type, REQUEST_TYPE);
 			break;
-		case R.id.llt_my_shop_address1:
+		case R.id.llt_my_shop_address1://商铺地址
 			Intent intent_map = new Intent(this, MapActivity.class);
 			startActivityForResult(intent_map, REQUEST_ADDRESS);
 			break;

@@ -76,7 +76,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:orientation="vertical" >
+                        android:orientation="vertical"
+                        android:visibility="gone">
 
                         <TextView
                             android:id="@+id/tv_dongjiejine"
@@ -99,7 +100,8 @@
                     <View
                         android:layout_width="@dimen/line"
                         android:layout_height="match_parent"
-                        android:background="@color/colores_news_14" />
+                        android:background="@color/colores_news_14"
+                        android:visibility="gone"/>
 
                     <LinearLayout
                         android:layout_width="0dp"

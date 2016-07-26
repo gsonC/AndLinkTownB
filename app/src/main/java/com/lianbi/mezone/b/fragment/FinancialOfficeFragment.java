@@ -207,14 +207,14 @@ public class FinancialOfficeFragment extends Fragment implements
 	 */
 	private void textAdaptation() {
 		tv_dongjiejine.setTextSize(AbViewUtil.px2sp(mMainActivity, (int)(24*ScreenUtils.getBaseSizeOn720(mMainActivity))));
-		tv_keyongyue.setTextSize(AbViewUtil.px2sp(mMainActivity, (int)(24*ScreenUtils.getBaseSizeOn720(mMainActivity))));
-		tv_tixianzhongyue.setTextSize(AbViewUtil.px2sp(mMainActivity, (int)(24*ScreenUtils.getBaseSizeOn720(mMainActivity))));
-		tv_dianpujinrishouru.setTextSize(AbViewUtil.px2sp(mMainActivity, (int)(24*ScreenUtils.getBaseSizeOn720(mMainActivity))));
+		tv_keyongyue.setTextSize(AbViewUtil.px2sp(mMainActivity, (int)(25*ScreenUtils.getBaseSizeOn720(mMainActivity))));
+		tv_tixianzhongyue.setTextSize(AbViewUtil.px2sp(mMainActivity, (int)(25*ScreenUtils.getBaseSizeOn720(mMainActivity))));
+		tv_dianpujinrishouru.setTextSize(AbViewUtil.px2sp(mMainActivity, (int)(25*ScreenUtils.getBaseSizeOn720(mMainActivity))));
 
 		tv_freezingamount.setTextSize(AbViewUtil.px2sp(mMainActivity, (int)(26*ScreenUtils.getBaseSizeOn720(mMainActivity))));
-		tv_shopincometoday.setTextSize(AbViewUtil.px2sp(mMainActivity, (int)(26*ScreenUtils.getBaseSizeOn720(mMainActivity))));
-		tv_takeinmoney.setTextSize(AbViewUtil.px2sp(mMainActivity, (int)(26*ScreenUtils.getBaseSizeOn720(mMainActivity))));
-		tv_availablebalance.setTextSize(AbViewUtil.px2sp(mMainActivity, (int)(26*ScreenUtils.getBaseSizeOn720(mMainActivity))));
+		tv_shopincometoday.setTextSize(AbViewUtil.px2sp(mMainActivity, (int)(27*ScreenUtils.getBaseSizeOn720(mMainActivity))));
+		tv_takeinmoney.setTextSize(AbViewUtil.px2sp(mMainActivity, (int)(27*ScreenUtils.getBaseSizeOn720(mMainActivity))));
+		tv_availablebalance.setTextSize(AbViewUtil.px2sp(mMainActivity, (int)(27*ScreenUtils.getBaseSizeOn720(mMainActivity))));
 	}
 
 	/**
