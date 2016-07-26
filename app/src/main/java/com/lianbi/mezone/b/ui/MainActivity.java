@@ -206,7 +206,17 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 						Constants.YYDD, "4");
 			}
 		}
-
+		for(int i = 0; i<datas.size(); i++){
+			ShouyeServiceBean bean = datas.get(i);
+			if(bean != null
+					&& !TextUtils.isEmpty(bean.getHasProduct())
+					&& bean.getHasProduct().equals("Y")){
+				ContentUtils.putSharePre(MainActivity.this,
+						Constants.SHARED_PREFERENCE_NAME,
+						Constants.HAS_PRODUCT, true);
+				break;
+			}
+		}
 	}
 
 	/**

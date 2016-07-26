@@ -97,6 +97,10 @@ public class Constants {
 	 */
 	public static final String YYDD = "yydd";
 	/**
+	 * 是否有产品，有则跳转到产品管理，没有则跳转到服务商城
+	 */
+	public static final String HAS_PRODUCT = "has_product";
+	/**
 	 * 跳转h5界面传参
 	 */
 	public static final String WEBURL= "url";
