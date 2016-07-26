@@ -1,11 +1,5 @@
 package cn.com.hgh.utils;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Hashtable;
-import java.util.Random;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -25,6 +19,12 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import com.lianbi.mezone.b.app.Constants;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Hashtable;
+import java.util.Random;
 
 /**
  * 操作文件sharedpreference的工具类
@@ -214,8 +214,8 @@ public final class ContentUtils {
 	/**
 	 * Toast的封装
 	 * 
-	 * @param mContext
-	 *            上下文，来区别哪一个activity调用的
+	 * @param
+	 *         ，来区别哪一个activity调用的
 	 * @param msg
 	 *            你希望显示的值。
 	 */

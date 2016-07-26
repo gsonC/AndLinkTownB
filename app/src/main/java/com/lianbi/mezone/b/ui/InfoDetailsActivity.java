@@ -182,9 +182,7 @@ public class InfoDetailsActivity extends BaseActivity {
 	boolean isDeteled = false;
 	String position;
 
-	private void initTabs(ArrayList<InfoMessageBean> currentList,
-	                      String  showtext
-	){
+	private void initTabs(ArrayList<InfoMessageBean> currentList, String  showtext){
        this.currentList=currentList;
 	   tv_toexamine.setText(showtext);
 	}

@@ -1,25 +1,26 @@
 package com.lianbi.mezone.b.ui;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.widget.ImageView;
+
+import com.alibaba.fastjson.JSON;
+import com.lianbi.mezone.b.app.Constants;
+import com.lianbi.mezone.b.bean.LoginBackBean;
+import com.lianbi.mezone.b.bean.MyShopInfoBean;
+import com.lianbi.mezone.b.httpresponse.MyResultCallback;
+import com.xizhi.mezone.b.R;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import cn.com.hgh.utils.AbDateUtil;
 import cn.com.hgh.utils.AbStrUtil;
 import cn.com.hgh.utils.AbViewUtil;
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.Result;
-
-import com.alibaba.fastjson.JSON;
-import com.xizhi.mezone.b.R;
-import com.lianbi.mezone.b.app.Constants;
-import com.lianbi.mezone.b.bean.LoginBackBean;
-import com.lianbi.mezone.b.bean.MyShopInfoBean;
-import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 
 /**
  * 启动页

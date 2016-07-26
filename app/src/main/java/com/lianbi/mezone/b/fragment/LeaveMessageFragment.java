@@ -74,9 +74,9 @@ public class LeaveMessageFragment extends Fragment {
 	public void afterToexamine(){
 		for(int i=0;i<mDatas.size();i++){
 			if(!"0".equals(mDatas.get(i).getAuditStatus())){
-				tv_tablename.setTextColor(Color.RED);
-				tv_leavemessage.setTextColor(Color.RED);
-				time.setTextColor(Color.RED);
+				tv_tablename.setTextColor(Color.BLACK);
+				tv_leavemessage.setTextColor(Color.BLACK);
+				time.setTextColor(Color.BLACK);
 			}
 		}
 

@@ -13,16 +13,17 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import cn.com.hgh.indexscortlist.ClearEditText;
-import cn.com.hgh.utils.AbAppUtil;
-import cn.com.hgh.utils.ContentUtils;
-import cn.com.hgh.utils.ScrollerUtills;
 
-import com.xizhi.mezone.b.R;
 import com.lianbi.mezone.b.app.ActivityManager;
 import com.lianbi.mezone.b.bean.UserShopInfoBean;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
+import com.xizhi.mezone.b.R;
+
+import cn.com.hgh.indexscortlist.ClearEditText;
+import cn.com.hgh.utils.AbAppUtil;
+import cn.com.hgh.utils.ContentUtils;
+import cn.com.hgh.utils.ScrollerUtills;
 
 public class BaseActivity extends FragmentActivity implements OnClickListener {
 	private LinearLayout lltTitle;

@@ -88,7 +88,7 @@
                 android:layout_weight="1.0"
                 android:layout_gravity="center_vertical"
                 android:singleLine="true"
-                android:text="审核"
+                android:text="已读"
                 android:padding="8dp"
                 android:gravity="center"
                 android:textColor="@color/colores_news_10"
