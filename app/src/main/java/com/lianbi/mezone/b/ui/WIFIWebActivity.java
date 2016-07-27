@@ -150,7 +150,6 @@ public class WIFIWebActivity extends BaseActivity {
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {
 				view.loadUrl(url);
 				return true;
-
 			}
 
 			@Override
@@ -309,7 +308,7 @@ public class WIFIWebActivity extends BaseActivity {
 			web_webactivty.loadUrl(url);//返回一级目录
 		} else if (gobackurl.contains("viewMyAuthenticationMsg")) {
 			web_webactivty.loadUrl(MyMsg);//返回指定页面
-		} else if (gobackurl.contains("wifiIndex")) {
+		} else if (gobackurl.contains("wifiIndex")||gobackurl.contains("saveRouterApply")) {
 			finish();//退出
 		} else {
 			web_webactivty.goBack();//正常返回

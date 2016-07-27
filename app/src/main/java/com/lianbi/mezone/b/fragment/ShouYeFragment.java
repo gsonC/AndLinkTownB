@@ -268,7 +268,7 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 							intent_web.putExtra(Constants.NEDDLOGIN, false);
 							intent_web.putExtra("NEEDNOTTITLE", false);
 							intent_web.putExtra("Re", true);
-							intent_web.putExtra(WebActivty.U, getSAUrl(API.INTELLIGENT_WIFI,3));
+							intent_web.putExtra(WIFIWebActivity.U, getSAUrl(API.INTELLIGENT_WIFI,3));
 							mActivity.startActivity(intent_web);
 						}
 						break;

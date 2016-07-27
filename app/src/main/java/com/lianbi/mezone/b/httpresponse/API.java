@@ -41,23 +41,23 @@ public class API {
 	 * 公网211.95.25.36
 	 * 内网172.16.103.164:9003 172.16.103.164:9005 172.16.103.165:8090 172.16.103.165:8090
 	 */
-	public static final String ENVIRONMENTAL = "http://211.95.25.36";//前置UAT
-	public static final String TOSTORESERVICE = "http://211.95.25.36";//到店服务UAT
-	//	public static final String ENVIRONMENTAL = "http://172.16.103.164:9003";//前置TEST
-	//	public static final String TOSTORESERVICE = "http://172.16.103.165:9005";//到店服务TEST
-	//	public static final String INTELLIGENT_WIFI = "http://172.16.103.165:8090/wcmv2/routerApplication/wifiIndex?businessId=";//智能WIFI_TEST
+	//	public static final String ENVIRONMENTAL = "http://211.95.25.36";//前置UAT
+	//	public static final String TOSTORESERVICE = "http://211.95.25.36";//到店服务UAT
+		public static final String ENVIRONMENTAL = "http://172.16.103.164:9003";//前置TEST
+		public static final String TOSTORESERVICE = "http://172.16.103.165:9005";//到店服务TEST
 	/**
-	 * UAT二维码支付http://uat.xylbn.cn/
-	 * 测试二维码支付http://172.16.103.152/
-	 * 线上二维码支付http://www.xylbn.cn/
+	 * 支付二维码
 	 */
 	public static final String PAYQR = ENVIRONMENTAL+"/lincombFront/toOrderPay.do?state=";
-	//  public static final String PAYQR = "http://www.xylbn.cn/weixin/toOrderPay?state=";
+	/**
+	 * 智能WIFI
+	 */
+	public static final String INTELLIGENT_WIFI = "http://172.16.103.165:8090/wcmv2/routerApplication/wifiIndex?businessId=";//智能WIFI_TEST
+	//public static final String INTELLIGENT_WIFI =ENVIRONMENTAL+"/wcmv2/routerApplication/wifiIndex?businessId=";
 	/**
 	 * 总入口
 	 */
 	public static final String HOST = ENVIRONMENTAL + "/lincombFront/";
-
 	/**
 	 * 发布产品
 	 */
@@ -82,11 +82,7 @@ public class API {
 	 * 预约订单
 	 */
 	public static final String HOST_BOOK_MALL = TOSTORESERVICE+"/wcm/rss/showOrderDetl?";
-	/**
-	 * 智能WIFI
-	 */
-	//public static final String INTELLIGENT_WIFI = "http://172.16.103.151:8090/wcmv2/routerApplication/wifiIndex?businessId=";
-	public static final String INTELLIGENT_WIFI =ENVIRONMENTAL+"/wcmv2/routerApplication/wifiIndex?businessId=";
+
 	/**
 	 * webURL介绍 clerk - 店员管理 finance - 财务管理 financialTransactions - 我要理财 manage
 	 * - 经营收入 material - 我的资料 mySource - 我的货源 news - 我的资料 other - 其他功能 product -
