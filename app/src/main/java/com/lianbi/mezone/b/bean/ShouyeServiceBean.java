@@ -12,6 +12,7 @@ public class ShouyeServiceBean implements Serializable {
 	String appCode;
 	String appName;
 	String createTime;
+	String hasProduct;
 	String icoUrl;
 	int id;
 	int isVaild;
@@ -99,4 +100,11 @@ public class ShouyeServiceBean implements Serializable {
 		this.modifyTime = modifyTime;
 	}
 
+	public String getHasProduct() {
+		return hasProduct;
+	}
+
+	public void setHasProduct(String hasProduct) {
+		this.hasProduct = hasProduct;
+	}
 }

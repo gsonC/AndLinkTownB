@@ -6,10 +6,8 @@ import android.text.TextUtils;
 
 import com.lianbi.mezone.b.app.Constants;
 import com.lianbi.mezone.b.bean.WebProductManagementBean;
-import com.lianbi.mezone.b.httpresponse.API;
 import com.lianbi.mezone.b.ui.AddShopActivity;
 import com.lianbi.mezone.b.ui.BaseActivity;
-import com.lianbi.mezone.b.ui.H5WebActivty;
 import com.lianbi.mezone.b.ui.MainActivity;
 import com.lianbi.mezone.b.ui.WebActivty;
 
@@ -25,6 +23,12 @@ public class JumpIntent {
 	 *            class 跳转的类
 	 * @param at
 	 */
+	//微信商城
+	public static final int  WECHATMALL =2;
+	//货源批发
+	public static final int  SUPPLYWHOLESALE =3;
+	//智能wifi
+	public static final int   INTELLIGENTWIFI=5;
 	public static boolean jumpLogin_addShop(boolean isLogin, String type,
 			Activity at) {
 		if (isLogin) {
@@ -78,65 +82,56 @@ public class JumpIntent {
 	 *            是否登录
 	 * @param
 	 *
-	 * @param at
+	 * @param oldactivity
 	 *            class 跳转的类
+	 *             allWebActivity(Class activity,
+	Boolean neddlogin,
+	Boolean neednottitle,
+	Boolean re,
+	String t,
+	String u
 	 */
-	public static boolean jumpH5WebActivty(boolean isLogin, int primaryID,String  title,
-											 Activity at) {
+	public  static  boolean jumpWebActivty
+	       (Activity oldactivity,Class newactivity,
+			boolean isLogin,
+			String   urladdress,int type,
+			boolean neddlogin,
+			boolean neednottitle,
+			boolean re,
+			String  title
+			) {
 		if (!isLogin) {
 			return isLogin;
 		} else {
-			Intent intent_web = new Intent(at,
-					H5WebActivty.class);
-			intent_web.putExtra(Constants.NEDDLOGIN, false);
-			intent_web.putExtra("NEEDNOTTITLE", false);
-			intent_web.putExtra("Re", true);
-			intent_web.putExtra(WebActivty.T, title);
-			intent_web.putExtra(WebActivty.U, setSupplyUrl(primaryID));
-			at.startActivity(intent_web);
-
+			String weburl=getSAUrl(urladdress,type);
+			Intent intent_web = new Intent(oldactivity,
+					newactivity);
+			intent_web.putExtra(Constants.NEDDLOGIN, neddlogin);
+			intent_web.putExtra(Constants.NEEDNOTTITLE, neednottitle);
+			intent_web.putExtra(Constants.RE, re);
+			intent_web.putExtra(Constants.TITLE, title);
+			intent_web.putExtra(Constants.WEBURL,weburl);
+			oldactivity.startActivity(intent_web);
 		}
 		return false;
 	}
-
-	public  static String  setSupplyUrl(int primaryID){
-            String   supplyurl="";
-
-		switch (primaryID){
-				case  2:
-                //微信商城
-				supplyurl=getUrl(API.TOSTORE_PRODUCT_MANAGEMENT);
-				break;
-				case  3:
-				//货源批发
-				supplyurl=getSupplyWholesaleUrl(API.TOSTORE_Supply_Wholesale);
-				break;
-				case  4:
-				//预约
-//				supplyurl=getUrl(API.TOSTORE_PRODUCT_MANAGEMENT);
-				break;
-				case  5:
-				//智能wifi
-//				supplyurl=getUrl(API.TOSTORE_PRODUCT_MANAGEMENT);
-				break;
-			}
-            return  supplyurl;
-	}
-	public static String getUrl(String address) {
+	public static  String getSAUrl(String urladdress,int type){
 		String bussniessId = BaseActivity.userShopInfoBean.getBusinessId();
-		String url = address;
-		WebProductManagementBean data = new WebProductManagementBean();
-		data.setBusinessId(bussniessId);
-		String dataJson = com.alibaba.fastjson.JSONObject.toJSON(data)
-				.toString();
-		url = encryptionUrl(url, dataJson);
-		return url;
+		switch (type){
+			case WECHATMALL://微信商城
+				WebProductManagementBean data = new WebProductManagementBean();
+				data.setBusinessId(bussniessId);
+				String dataJson = com.alibaba.fastjson.JSONObject.toJSON(data)
+						.toString();
+				String url = encryptionUrl(urladdress, dataJson);
+				return url;
+			case SUPPLYWHOLESALE://货源批发
+				return urladdress + "storeId=" + bussniessId;
+			case INTELLIGENTWIFI://智能WIFI
+				return urladdress+bussniessId;
+		}
+		return "";
 	}
-	public static String getSupplyWholesaleUrl(String address) {
-		String bussniessId = BaseActivity.userShopInfoBean.getBusinessId();
-		return address + "storeId=" + bussniessId;
-	}
-
 	/**
 	 * 加密
 	 */

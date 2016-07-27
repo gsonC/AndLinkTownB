@@ -56,11 +56,12 @@ import com.lianbi.mezone.b.ui.ChoiceDingdanInfoWayActivity;
 import com.lianbi.mezone.b.ui.H5WebActivty;
 import com.lianbi.mezone.b.ui.InfoDetailsActivity;
 import com.lianbi.mezone.b.ui.MainActivity;
+import com.lianbi.mezone.b.ui.ServiceMallActivity;
 import com.lianbi.mezone.b.ui.WebActivty;
 import com.xizhi.mezone.b.R;
 
 /**
- * 
+ *
  * @author guanghui.han
  * @category管理中心
  */
@@ -332,7 +333,7 @@ public class JiaoYiGuanLiFragment extends Fragment implements
 		swipe_jiaoyiguanli = (SwipeRefreshLayout) view.findViewById(R.id.swipe_jiaoyiguanli);
 		swipe_jiaoyiguanli.setColorSchemeResources(R.color.colores_news_01,R.color.black);
 		swipe_jiaoyiguanli.setOnRefreshListener(new OnRefreshListener() {
-			
+
 			@Override
 			public void onRefresh() {
 				getAadver();
@@ -364,25 +365,35 @@ public class JiaoYiGuanLiFragment extends Fragment implements
 		switch (view.getId()) {
 		case R.id.GLZX_iv_cpgl:// 订单管理
 			re = JumpIntent.jumpLogin_addShop(isLogin, API.VIP, mMainActivity);
-			
+
 			if (re) {
 				startActivity(new Intent(mMainActivity,
 						ChoiceDingdanInfoWayActivity.class));
 			}
 			break;
 		case R.id.GLZX_iv_dygl:// 产品管理
-			
+
 			re = JumpIntent
 					.jumpLogin_addShop(isLogin, API.TRADE, mMainActivity);
 			if (re) {
-				Intent intent_web = new Intent(mMainActivity,
-						H5WebActivty.class);
-				intent_web.putExtra(Constants.NEDDLOGIN, false);
-				intent_web.putExtra("NEEDNOTTITLE", false);
-				intent_web.putExtra("Re", true);
-				intent_web.putExtra(WebActivty.T, "产品管理");
-				intent_web.putExtra(WebActivty.U, getUrl());
-				mMainActivity.startActivity(intent_web);
+				boolean hasProduct = ContentUtils.getSharePreBoolean(getContext(),
+						Constants.SHARED_PREFERENCE_NAME,
+						Constants.HAS_PRODUCT);
+				if(hasProduct){
+					Intent intent_web = new Intent(mMainActivity,
+							H5WebActivty.class);
+					intent_web.putExtra(Constants.NEDDLOGIN, false);
+					intent_web.putExtra("NEEDNOTTITLE", false);
+					intent_web.putExtra("Re", true);
+					intent_web.putExtra(WebActivty.T, "产品管理");
+					intent_web.putExtra(WebActivty.U, getUrl());
+					mMainActivity.startActivity(intent_web);
+				} else {
+					Intent intent_more = new Intent(mMainActivity,
+							ServiceMallActivity.class);
+					mMainActivity.startActivityForResult(intent_more,
+                            mMainActivity.SERVICEMALLSHOP_CODE);
+				}
 			}
 			break;
 		case R.id.iv_jygl_memberma:// 会员管理

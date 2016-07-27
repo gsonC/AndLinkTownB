@@ -61,17 +61,17 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 		MyShopChange {
 	FrameLayout fm_funcpage0, fm_funcpage1, fm_funcpage2, fm_funcpage3;
 	RadioButton rb_shouye, rb_jiaoyiguanli, rb_caiwushi, rb_mine;
-	private ImageView               img_main_red;
+	private ImageView img_main_red;
 	private OnCheckedChangeListener checkListener;
-	public static final int     POSITION0   = 0;
-	public static final int     POSITION1   = 1;
-	public static final int     POSITION2   = 2;
-	public static final int     POSITION3   = 3;
-	public static       boolean isChangSHpe = false;
+	public static final int POSITION0 = 0;
+	public static final int POSITION1 = 1;
+	public static final int POSITION2 = 2;
+	public static final int POSITION3 = 3;
+	public static boolean isChangSHpe = false;
 	/**
 	 * 当前的位置
 	 */
-	public              int     curPosition = -1;
+	public int curPosition = -1;
 	Fragment fm_shouye, fm_jiaoyiguanli, fm_caiwushi, fm_mine;
 	/**
 	 * 店铺位置经纬度
@@ -107,8 +107,8 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 		getUpData();
 	}
 
-	public void postCID(){
-		if(ContentUtils.getLoginStatus(this)){
+	public void postCID() {
+		if (ContentUtils.getLoginStatus(this)) {
 			postClientId();
 		}
 	}
@@ -191,22 +191,35 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 		ContentUtils.putSharePre(MainActivity.this,
 				Constants.SHARED_PREFERENCE_NAME,
 				Constants.YYDD, "0");
-		for(int i=0;i<datas.size();i++){
-			if(1==datas.get(i).getId()){
+		ContentUtils.putSharePre(MainActivity.this,
+				Constants.SHARED_PREFERENCE_NAME,
+				Constants.HAS_PRODUCT, false);
+		for (int i = 0; i < datas.size(); i++) {
+			if (1 == datas.get(i).getId()) {
 				ContentUtils.putSharePre(MainActivity.this,
 						Constants.SHARED_PREFERENCE_NAME,
 						Constants.DDFW, "1");
-			}else if(3==datas.get(i).getId()){
+			} else if (3 == datas.get(i).getId()) {
 				ContentUtils.putSharePre(MainActivity.this,
 						Constants.SHARED_PREFERENCE_NAME,
 						Constants.HHPF, "3");
-			}else if(4==datas.get(i).getId()){
+			} else if (4 == datas.get(i).getId()) {
 				ContentUtils.putSharePre(MainActivity.this,
 						Constants.SHARED_PREFERENCE_NAME,
 						Constants.YYDD, "4");
 			}
 		}
-
+		for(int i = 0; i<datas.size(); i++){
+			ShouyeServiceBean bean = datas.get(i);
+			if(bean != null
+					&& !TextUtils.isEmpty(bean.getHasProduct())
+					&& bean.getHasProduct().equals("Y")){
+				ContentUtils.putSharePre(MainActivity.this,
+						Constants.SHARED_PREFERENCE_NAME,
+						Constants.HAS_PRODUCT, true);
+				break;
+			}
+		}
 	}
 
 	/**
@@ -378,7 +391,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 	}
 
 	public double mTotalAccount = 0, mShopAccount = 0, mAvailableBalance = 0,
-			mTakeinMoney        = 0, mShopinComeToday = 0,mFreezingAmount = 0;
+			mTakeinMoney = 0, mShopinComeToday = 0, mFreezingAmount = 0;
 
 	/**
 	 * 获取财务室各项收入
@@ -388,7 +401,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 			if (!TextUtils.isEmpty(userShopInfoBean.getBusinessId())) {// 获取店铺id是否为空
 				getUserAccount();// 账户总额
 				getShopAccount();// 店铺总额
-		//		getFreezingAmount();//冻结中金额
+				//		getFreezingAmount();//冻结中金额
 				getBalance();// 可用余额
 				getAmountinCash();// 提现中金额
 				getShopAccountToday();// 店铺今日收入
@@ -735,11 +748,11 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 		}
 	}
 
-	public static final int REQUEST_CHANKAN          = 12453;
-	private final       int OTHERACTIVITY_CODE       = 3002;
-	public final        int SERVICESHOPACTIVITY_CODE = 30089;
-	public static final int MYSHOPACTIVITY_CODE      = 2004;
-	public final        int SERVICEMALLSHOP_CODE     = 30726;
+	public static final int REQUEST_CHANKAN = 12453;
+	private final int OTHERACTIVITY_CODE = 3002;
+	public final int SERVICESHOPACTIVITY_CODE = 30089;
+	public static final int MYSHOPACTIVITY_CODE = 2004;
+	public final int SERVICEMALLSHOP_CODE = 30726;
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -976,10 +989,9 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 
 	private void setShoyYeTitle() {
 		if (ContentUtils.getLoginStatus(this)) {
-			if (!TextUtils.isEmpty(userShopInfoBean.getShopName()) && null != userShopInfoBean
-					.getShopName()) {
+			try {
 				setPageTitle(userShopInfoBean.getShopName());
-			}else{
+			} catch (Exception e) {
 				setPageTitle("首页");
 			}
 		} else {
