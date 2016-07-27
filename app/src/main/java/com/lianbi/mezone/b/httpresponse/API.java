@@ -37,18 +37,15 @@ public class API {
 	 */
 	public static final String TEMPLATE = "template/serveMarket/list.html?userId=";
 	/**
-	 * ENVIRONMENTAL = "http://uat.xylbn.cn";//UAT
-	 * ENVIRONMENTAL = "http://172.16.103.153:8080"; //测试
-	 * http://front.xylbn.cn:9003/lincombFront/; //线上
+	 * 线上
+	 * 公网211.95.25.36
+	 * 内网172.16.103.164:9003 172.16.103.164:9005 172.16.103.165:8090 172.16.103.165:8090
 	 */
-	//	public static final String ENVIRONMENTAL = "http://front.xylbn.cn:9003";
-	//	public static final String TOSTORESERVICE = "http://mall.xylbn.cn:9005";//到店服务
-	//	public static final String ENVIRONMENTAL = "http://uat.xylbn.cn";
-	//	public static final String TOSTORESERVICE = "http://uat.xylbn.cn";//到店服务
-	//	public static final String ENVIRONMENTAL = "http://172.16.103.153:8080";
-	//	public static final String TOSTORESERVICE = "http://172.16.103.153:8085";//到店服务
-		public static final String ENVIRONMENTAL = "http://172.16.103.164:9003";
-		public static final String TOSTORESERVICE = "http://172.16.103.165:9005";//到店服务
+	public static final String ENVIRONMENTAL = "http://211.95.25.36";//前置UAT
+	public static final String TOSTORESERVICE = "http://211.95.25.36";//到店服务UAT
+	//	public static final String ENVIRONMENTAL = "http://172.16.103.164:9003";//前置TEST
+	//	public static final String TOSTORESERVICE = "http://172.16.103.165:9005";//到店服务TEST
+	//	public static final String INTELLIGENT_WIFI = "http://172.16.103.165:8090/wcmv2/routerApplication/wifiIndex?businessId=";//智能WIFI_TEST
 	/**
 	 * UAT二维码支付http://uat.xylbn.cn/
 	 * 测试二维码支付http://172.16.103.152/
@@ -89,7 +86,7 @@ public class API {
 	 * 智能WIFI
 	 */
 	//public static final String INTELLIGENT_WIFI = "http://172.16.103.151:8090/wcmv2/routerApplication/wifiIndex?businessId=";
-	public static final String INTELLIGENT_WIFI =TOSTORESERVICE+"/wcmv2/routerApplication/wifiIndex?businessId=";
+	public static final String INTELLIGENT_WIFI =ENVIRONMENTAL+"/wcmv2/routerApplication/wifiIndex?businessId=";
 	/**
 	 * webURL介绍 clerk - 店员管理 finance - 财务管理 financialTransactions - 我要理财 manage
 	 * - 经营收入 material - 我的资料 mySource - 我的货源 news - 我的资料 other - 其他功能 product -
