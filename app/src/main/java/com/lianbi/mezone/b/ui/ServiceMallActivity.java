@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.bumptech.glide.Glide;
 import com.lianbi.mezone.b.bean.ServiceMallBean;
-import com.lianbi.mezone.b.bean.WebProductManagementBean;
 import com.lianbi.mezone.b.httpresponse.API;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.xizhi.mezone.b.R;
@@ -28,10 +27,8 @@ import java.util.ArrayList;
 import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.QuickAdapter;
 import cn.com.hgh.utils.ContentUtils;
-import cn.com.hgh.utils.CryptTool;
 import cn.com.hgh.utils.JumpIntent;
 import cn.com.hgh.utils.Result;
-import cn.com.hgh.utils.WebEncryptionUtil;
 import cn.com.hgh.view.HttpDialog;
 
 /**
@@ -41,15 +38,12 @@ public class ServiceMallActivity extends BaseActivity {
 
 	private ArrayList<ServiceMallBean> mDatas = new ArrayList<ServiceMallBean>();
 	private ArrayList<ServiceMallBean> mData = new ArrayList<ServiceMallBean>();
-	// private GridViewAdapter mAdapter;
 	HttpDialog dialog;
-	Intent intent;
 	private static final int REQUEST_CODE_RESULT = 1000;
 	private QuickAdapter<ServiceMallBean> mAdapter;
-//	private GridView gridview;
 	private ListView  listview_service;
-	ImageView iv_store_service,iv_servicemall_empty;
-	ServiceMallBean  mServiceMallBean;
+	private ImageView iv_store_service,iv_servicemall_empty;
+	private ServiceMallBean  mServiceMallBean;
 	//桌位设置
 	public static final int   TABLESETTING=1;
 	//微信商城
@@ -68,12 +62,12 @@ public class ServiceMallActivity extends BaseActivity {
 		setContentView(R.layout.act_servicemallactivity, NOTYPE);
 		initView();
 		initListAdapter();
-		intent=new Intent();
 		dialog = new HttpDialog(this);
 		dialog.show();
 		getCandownloadMall();// 获取可供下载服务商城列表
 	}
 	private void  simpleJump(Class activity){
+		Intent intent=new Intent();
 		intent.setClass(ServiceMallActivity.this,activity);
 		startActivity(intent);
 	}
@@ -145,7 +139,7 @@ public class ServiceMallActivity extends BaseActivity {
 							public void onClick(View v) {
 								final String  serviceId=String.valueOf(item.getId());
 								boolean isLogin = ContentUtils.getLoginStatus(ServiceMallActivity.this);
-								int primaryID = item.getId();
+								int     primaryID = item.getId();
 								String  introduceurl=item.getIntroduceUrl();
 								String  isfdownload=item.getDownload();
 								String  isappname=item.getAppName();
@@ -173,7 +167,7 @@ public class ServiceMallActivity extends BaseActivity {
 											JumpIntent.jumpWebActivty
 													(ServiceMallActivity.this,WIFIWebActivity.class,
 															isLogin,API.INTELLIGENT_WIFI,INTELLIGENTWIFI,
-															false,false,true,isappname);
+															false,false,true,"");
 											break;
 									}
 							        
@@ -196,104 +190,8 @@ public class ServiceMallActivity extends BaseActivity {
 
 	private void initView() {
 		setPageTitle("服务商城");
-//		gridview = (GridView) findViewById(R.id.gview);
 		listview_service= (ListView) findViewById(R.id.activity_servicemall_list);
 		iv_servicemall_empty = (ImageView) findViewById(R.id.iv_servicemall_empty);
-		// mAdapter = new GridViewAdapter(this);
-		// gridview.setAdapter(mAdapter);
-//		gridview.setOnItemClickListener(new OnItemClickListener() {
-//
-//			private ImageView iv_store_service;
-//
-//			@Override
-//			public void onItemClick(AdapterView<?> parent, View view,
-//					final int position, long id) {
-//				iv_store_service = (ImageView) view
-//						.findViewById(R.id.iv_store_service);
-//				String  isfdownload=mDatas.get(position).getDownload();
-//				final String  serviceId=String.valueOf(mDatas.get(position).getId());
-//				int primaryID = mDatas.get(position).getId();
-//				mServiceMallBean=mDatas.get(position);
-//				if(isfdownload.equals("Y")){
-////					iv_store_service
-////					.setBackgroundResource(R.drawable.icon_storservice);
-//					switch (primaryID) {
-//					case 1:
-//						
-//						        Intent intent = new Intent(
-//								ServiceMallActivity.this,
-//								TableSetActivity.class);
-//						        startActivity(intent);
-////					        	finish();
-//						
-//						
-//						break;
-//                    case 2:
-//                    	Intent intent_web = new Intent(ServiceMallActivity.this,
-//								H5WebActivty.class);
-//						intent_web.putExtra(Constants.NEDDLOGIN, false);
-//						intent_web.putExtra("NEEDNOTTITLE", false);
-//						intent_web.putExtra("Re", true);
-//						intent_web.putExtra(WebActivty.T, "产品管理");
-//						intent_web.putExtra(WebActivty.U, getUrl());
-//						startActivity(intent_web);
-//						break;
-//					}
-//			        
-//				}else if(isfdownload.equals("N")){
-//					dialog.setMessage("下载中...");
-//					dialog.show();
-//					new Handler().postDelayed(new Runnable() {
-//
-//						@Override
-//						public void run() {
-//							
-//						 goDownloadMall(serviceId,mServiceMallBean);
-//						
-//						}
-//					}, 2000);
-//					
-//				}
-//			}
-//		});
-	}
-	public String getUrl(String address) {
-		String bussniessId = BaseActivity.userShopInfoBean.getBusinessId();
-		String url = address;
-		WebProductManagementBean data = new WebProductManagementBean();
-		data.setBusinessId(bussniessId);
-		String dataJson = com.alibaba.fastjson.JSONObject.toJSON(data)
-				.toString();
-		url = encryptionUrl(url, dataJson);
-		return url;
-	}
-	public String getSupplyWholesaleUrl(String address) {
-		String bussniessId = BaseActivity.userShopInfoBean.getBusinessId();
-		return address + "storeId=" + bussniessId;
-	}
-
-	/**
-	 * 加密
-	 */
-	private String encryptionUrl(String url, String dataJson) {
-		try {
-			// 获得的明文数据
-			String desStr = dataJson;
-			// 转成字节数组
-			byte src_byte[] = desStr.getBytes();
-
-			// MD5摘要
-			byte[] md5Str = WebEncryptionUtil.md5Digest(src_byte);
-			// 生成最后的SIGN
-			String SING = WebEncryptionUtil.byteArrayToHexString(md5Str);
-
-			desStr = CryptTool.getBASE64(dataJson);
-			// http://localhost:8080/order/orderContler/?sing=key&data=密文
-			return url + "sing=" + SING + "&&data=" + desStr + "&&auth=wcm";
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-		return "";
 	}
 
 	private void  goDownloadMall(String  serviceId,final ServiceMallBean  mServiceMallBean){
