@@ -152,7 +152,7 @@ public class ServiceMallActivity extends BaseActivity {
 											JumpIntent.jumpWebActivty
 													(ServiceMallActivity.this,H5WebActivty.class,
 													isLogin,API.TOSTORE_PRODUCT_MANAGEMENT,WECHATMALL,
-													false,false,true,isappname);
+													false,false,true,"");
 											break;
 										case SUPPLYWHOLESALE:
 											JumpIntent.jumpWebActivty
