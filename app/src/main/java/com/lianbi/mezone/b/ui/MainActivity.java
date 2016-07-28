@@ -23,6 +23,7 @@ import com.alibaba.fastjson.JSON;
 import com.igexin.sdk.PushManager;
 import com.lianbi.mezone.b.app.Constants;
 import com.lianbi.mezone.b.bean.AppUpDataBean;
+import com.lianbi.mezone.b.bean.FinancialOfficeAmountBean;
 import com.lianbi.mezone.b.bean.ShouyeServiceBean;
 import com.lianbi.mezone.b.fragment.FinancialOfficeFragment;
 import com.lianbi.mezone.b.fragment.GlzxPagerFragment;
@@ -209,11 +210,11 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 						Constants.YYDD, "4");
 			}
 		}
-		for(int i = 0; i<datas.size(); i++){
+		for (int i = 0; i < datas.size(); i++) {
 			ShouyeServiceBean bean = datas.get(i);
-			if(bean != null
+			if (bean != null
 					&& !TextUtils.isEmpty(bean.getHasProduct())
-					&& bean.getHasProduct().equals("Y")){
+					&& bean.getHasProduct().equals("Y")) {
 				ContentUtils.putSharePre(MainActivity.this,
 						Constants.SHARED_PREFERENCE_NAME,
 						Constants.HAS_PRODUCT, true);
@@ -399,13 +400,47 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 	public void getCount() {
 		if (ContentUtils.getLoginStatus(this)) {// 获取登陆状态
 			if (!TextUtils.isEmpty(userShopInfoBean.getBusinessId())) {// 获取店铺id是否为空
-				getUserAccount();// 账户总额
-				getShopAccount();// 店铺总额
+					getUserAccount();// 账户总额
+					getShopAccount();// 店铺总额
 				//		getFreezingAmount();//冻结中金额
-				getBalance();// 可用余额
-				getAmountinCash();// 提现中金额
-				getShopAccountToday();// 店铺今日收入
+					getBalance();// 可用余额
+					getAmountinCash();// 提现中金额
+					getShopAccountToday();// 店铺今日收入
+				//getFinancialOfficeAmount();//财务室所有金额
 			}
+		}
+	}
+
+	/**
+	 * 财务室所有金额
+	 */
+	private void getFinancialOfficeAmount() {
+		String reqTime = AbDateUtil.getDateTimeNow();
+		String uuid = AbStrUtil.getUUID();
+		try {
+			okHttpsImp.getFinancialOfficeAmount(OkHttpsImp.md5_key, uuid, "app", reqTime,
+					userShopInfoBean.getUserId(), userShopInfoBean.getBusinessId(), new MyResultCallback<String>() {
+						@Override
+						public void onResponseResult(Result result) {
+							String reString = result.getData();
+							if(!TextUtils.isEmpty(reString)) {
+								FinancialOfficeAmountBean financialOfficeAmountBean = JSON.parseObject(reString,
+										FinancialOfficeAmountBean.class);
+								if (null != financialOfficeAmountBean) {
+									((FinancialOfficeFragment) fm_caiwushi)
+											.setFinancialOfficeAmount(financialOfficeAmountBean);
+								}
+							}
+						}
+
+						@Override
+						public void onResponseFailed(String msg) {
+
+						}
+
+					});
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -856,12 +891,15 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 
 	}
 
+	private int clickPosition = 5;
+
 	/**
 	 * 切换页面
 	 *
 	 * @param position
 	 */
 	public void changeFuncPage(int position) {
+		this.clickPosition = position;
 		if (position < POSITION0)
 			return;
 		if (position == POSITION0) {
@@ -990,7 +1028,9 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 	private void setShoyYeTitle() {
 		if (ContentUtils.getLoginStatus(this)) {
 			try {
-				setPageTitle(userShopInfoBean.getShopName());
+				if(0==clickPosition){
+					setPageTitle(userShopInfoBean.getShopName());
+				}
 			} catch (Exception e) {
 				setPageTitle("首页");
 			}
