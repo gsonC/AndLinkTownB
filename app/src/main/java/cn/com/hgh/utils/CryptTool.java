@@ -6,8 +6,6 @@ import javax.crypto.spec.SecretKeySpec;
 
 import cn.com.hgh.base64.EncodeBase64;
 
-import com.alibaba.fastjson.JSONObject;
-
 
 /**
  * @Description 封装了一些加密工具方法, 包括 3DES, MD5 等.
@@ -206,7 +204,7 @@ public class CryptTool {
 	/**
 	 * 3DES加密
 	 * @param key 加密密钥,密钥要求24位，如果不足24位，补0，多余24位，截取前24位
-	 * @param 需要被加密的字符串
+	 * @param //需要被加密的字符串
 	 * @return 3DES加密，并且转换成16进制字符串
 	 * */
 	public static String desEncrypt(String key,String src) {
@@ -316,9 +314,40 @@ public class CryptTool {
             return null; 
 
         return (new EncodeBase64()).encode( s.getBytes() ); 
-    } 
+    }
 
-    
+	/**
+	 * 加密
+	 */
+	public static String encryptionUrl(String url, String dataJson) {
+		try {
+			// 获得的明文数据
+			String desStr = dataJson;
+			// 转成字节数组
+			byte src_byte[] = desStr.getBytes();
+
+			// MD5摘要
+			byte[] md5Str = WebEncryptionUtil.md5Digest(src_byte);
+			// 生成最后的SIGN
+			String SING = WebEncryptionUtil.byteArrayToHexString(md5Str);
+
+			desStr = CryptTool.getBASE64(dataJson);
+			// http://localhost:8080/order/orderContler/?sing=key&data=密文
+			StringBuffer str = new StringBuffer();
+			str.append(url);
+			str.append("sing=");
+			str.append(SING);
+			str.append("&&data=");
+			str.append(desStr);
+			str.append("&&auth=wcm");
+			return  str.toString();
+//			return url + "sing=" + SING + "&&data=" + desStr + "&&auth=wcm";
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return "";
+	}
+
 	/** Test crypt */
 	public static void main(String[] args) throws Exception{
 //		try {		

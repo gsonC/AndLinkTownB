@@ -123,7 +123,7 @@ public class JumpIntent {
 				data.setBusinessId(bussniessId);
 				String dataJson = com.alibaba.fastjson.JSONObject.toJSON(data)
 						.toString();
-				String url = encryptionUrl(urladdress, dataJson);
+				String url = CryptTool.encryptionUrl(urladdress, dataJson);
 				return url;
 			case SUPPLYWHOLESALE://货源批发
 				return urladdress + "storeId=" + bussniessId;
@@ -132,27 +132,5 @@ public class JumpIntent {
 		}
 		return "";
 	}
-	/**
-	 * 加密
-	 */
-	private static String encryptionUrl(String url, String dataJson) {
-		try {
-			// 获得的明文数据
-			String desStr = dataJson;
-			// 转成字节数组
-			byte src_byte[] = desStr.getBytes();
 
-			// MD5摘要
-			byte[] md5Str = WebEncryptionUtil.md5Digest(src_byte);
-			// 生成最后的SIGN
-			String SING = WebEncryptionUtil.byteArrayToHexString(md5Str);
-
-			desStr = CryptTool.getBASE64(dataJson);
-			// http://localhost:8080/order/orderContler/?sing=key&data=密文
-			return url + "sing=" + SING + "&&data=" + desStr + "&&auth=wcm";
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-		return "";
-	}
 }
