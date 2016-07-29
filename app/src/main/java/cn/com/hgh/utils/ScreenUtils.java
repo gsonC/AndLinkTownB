@@ -138,7 +138,7 @@ public class ScreenUtils {
 	}
 
 	/**
-	 * TextView适配720分辨率
+	 * TextView适配480分辨率
 	 */
 	public static void textAdaptationOn480(TextView textView, Context context, int textSize) {
 		textView.setTextSize(AbViewUtil.px2sp(context, (int) (textSize * ScreenUtils.getBaseSizeOn480(context))));
@@ -152,7 +152,7 @@ public class ScreenUtils {
 	}
 
 	/**
-	 * TextView适配720分辨率
+	 * TextView适配1080分辨率
 	 */
 	public static void textAdaptationOn1080(TextView textView, Context context, int textSize) {
 		textView.setTextSize(AbViewUtil.px2sp(context, (int) (textSize * ScreenUtils.getBaseSizeOn1080(context))));
