@@ -7,28 +7,25 @@ import android.graphics.Rect;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 /**
  * 获得屏幕相关的辅助类
- * 
+ *
  * @author zhy
- * 
  */
-public class ScreenUtils
-{
-	private ScreenUtils()
-	{
+public class ScreenUtils {
+	private ScreenUtils() {
 		throw new UnsupportedOperationException("cannot be instantiated");
 	}
 
 	/**
 	 * 获得屏幕宽度
-	 * 
+	 *
 	 * @param context
 	 * @return
 	 */
-	public static int getScreenWidth(Context context)
-	{
+	public static int getScreenWidth(Context context) {
 		WindowManager wm = (WindowManager) context
 				.getSystemService(Context.WINDOW_SERVICE);
 		DisplayMetrics outMetrics = new DisplayMetrics();
@@ -38,12 +35,11 @@ public class ScreenUtils
 
 	/**
 	 * 获得屏幕高度
-	 * 
+	 *
 	 * @param context
 	 * @return
 	 */
-	public static int getScreenHeight(Context context)
-	{
+	public static int getScreenHeight(Context context) {
 		WindowManager wm = (WindowManager) context
 				.getSystemService(Context.WINDOW_SERVICE);
 		DisplayMetrics outMetrics = new DisplayMetrics();
@@ -53,23 +49,20 @@ public class ScreenUtils
 
 	/**
 	 * 获得状态栏的高度
-	 * 
+	 *
 	 * @param context
 	 * @return
 	 */
-	public static int getStatusHeight(Context context)
-	{
+	public static int getStatusHeight(Context context) {
 
 		int statusHeight = -1;
-		try
-		{
+		try {
 			Class<?> clazz = Class.forName("com.android.internal.R$dimen");
 			Object object = clazz.newInstance();
 			int height = Integer.parseInt(clazz.getField("status_bar_height")
 					.get(object).toString());
 			statusHeight = context.getResources().getDimensionPixelSize(height);
-		} catch (Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return statusHeight;
@@ -77,12 +70,11 @@ public class ScreenUtils
 
 	/**
 	 * 获取当前屏幕截图，包含状态栏
-	 * 
+	 *
 	 * @param activity
 	 * @return
 	 */
-	public static Bitmap snapShotWithStatusBar(Activity activity)
-	{
+	public static Bitmap snapShotWithStatusBar(Activity activity) {
 		View view = activity.getWindow().getDecorView();
 		view.setDrawingCacheEnabled(true);
 		view.buildDrawingCache();
@@ -98,12 +90,11 @@ public class ScreenUtils
 
 	/**
 	 * 获取当前屏幕截图，不包含状态栏
-	 * 
+	 *
 	 * @param activity
 	 * @return
 	 */
-	public static Bitmap snapShotWithoutStatusBar(Activity activity)
-	{
+	public static Bitmap snapShotWithoutStatusBar(Activity activity) {
 		View view = activity.getWindow().getDecorView();
 		view.setDrawingCacheEnabled(true);
 		view.buildDrawingCache();
@@ -123,18 +114,47 @@ public class ScreenUtils
 	}
 
 	/**
+	 * 以480分辨率为基础计算文字适配基数大小
+	 */
+	public static float getBaseSizeOn480(Context context) {
+		float baseSizeOn720 = (float) getScreenWidth(context) / 480;
+		return baseSizeOn720;
+	}
+
+	/**
 	 * 以720分辨率为基础计算文字适配基数大小
 	 */
-	public static float getBaseSizeOn720(Context context){
-		float baseSizeOn720 = (float) getScreenWidth(context)/720;
+	public static float getBaseSizeOn720(Context context) {
+		float baseSizeOn720 = (float) getScreenWidth(context) / 720;
 		return baseSizeOn720;
 	}
 
 	/**
 	 * 以1080分辨率为基础计算文字适配基数大小
 	 */
-	public static float getBaseSizeOn1080(Context context){
-		float baseSizeOn720 = (float) getScreenWidth(context)/1080;
+	public static float getBaseSizeOn1080(Context context) {
+		float baseSizeOn720 = (float) getScreenWidth(context) / 1080;
 		return baseSizeOn720;
+	}
+
+	/**
+	 * TextView适配480分辨率
+	 */
+	public static void textAdaptationOn480(TextView textView, Context context, int textSize) {
+		textView.setTextSize(AbViewUtil.px2sp(context, (int) (textSize * ScreenUtils.getBaseSizeOn480(context))));
+	}
+
+	/**
+	 * TextView适配720分辨率
+	 */
+	public static void textAdaptationOn720(TextView textView, Context context, int textSize) {
+		textView.setTextSize(AbViewUtil.px2sp(context, (int) (textSize * ScreenUtils.getBaseSizeOn720(context))));
+	}
+
+	/**
+	 * TextView适配1080分辨率
+	 */
+	public static void textAdaptationOn1080(TextView textView, Context context, int textSize) {
+		textView.setTextSize(AbViewUtil.px2sp(context, (int) (textSize * ScreenUtils.getBaseSizeOn1080(context))));
 	}
 }

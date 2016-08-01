@@ -38,13 +38,18 @@ public class API {
 	public static final String TEMPLATE = "template/serveMarket/list.html?userId=";
 	/**
 	 * 线上
-	 * 公网211.95.25.36
-	 * 内网172.16.103.164:9003 172.16.103.164:9005 172.16.103.165:8090 172.16.103.165:8090
+	 * UAT 内网http://172.16.103.164:9003 http://172.16.103.165:9005
+	 * 	   外网http://211.95.25.36 http://211.95.25.36
+	 * 测试 http://172.16.103.153:8080 http://172.16.103.153:8085
 	 */
-	//	public static final String ENVIRONMENTAL = "http://211.95.25.36";//前置UAT
-	//	public static final String TOSTORESERVICE = "http://211.95.25.36";//到店服务UAT
-		public static final String ENVIRONMENTAL = "http://172.16.103.164:9003";//前置TEST
-		public static final String TOSTORESERVICE = "http://172.16.103.165:9005";//到店服务TEST
+	//	public static final String ENVIRONMENTAL = "http://front.xylbn.cn:9003";
+	//	public static final String TOSTORESERVICE = "http://mall.xylbn.cn:9005";//到店服务
+	//	public static final String ENVIRONMENTAL = "http://211.95.25.36";//前置UAT外网
+	//	public static final String TOSTORESERVICE = "http://211.95.25.36";//到店服务UAT外网
+	//	public static final String ENVIRONMENTAL = "http://172.16.103.164:9003";//前置UAT内网
+	//	public static final String TOSTORESERVICE = "http://172.16.103.165:9005";//到店服务UAT内网
+		public static final String ENVIRONMENTAL = "http://172.16.103.153:8080";//前置TEST
+		public static final String TOSTORESERVICE = "http://172.16.103.153:8085";//到店服务TEST
 	/**
 	 * 支付二维码
 	 */
@@ -564,4 +569,8 @@ public class API {
 	 * 冻结中金额
 	 */
 	public static final String FREEZINGAMOUNT = "";
+	/**
+	 * 冻结中金额
+	 */
+	public static final String FINANCIALOFFICEAMOUNT = "finance/queryFinIncomeInfo.do";
 }

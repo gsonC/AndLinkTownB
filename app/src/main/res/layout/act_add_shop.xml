@@ -16,7 +16,6 @@
             >
     <cn.com.hgh.view.ContainsEmojiEditText
         android:id="@+id/edt_add_shop_name"
-        android:maxLength="7"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"

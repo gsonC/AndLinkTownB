@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.lianbi.mezone.b.app.Constants;
 import com.lianbi.mezone.b.bean.BankBoundInfo;
+import com.lianbi.mezone.b.bean.FinancialOfficeAmountBean;
 import com.lianbi.mezone.b.httpresponse.API;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
@@ -27,9 +28,10 @@ import com.lianbi.mezone.b.ui.ShouRuHActivity;
 import com.lianbi.mezone.b.ui.WithdrawDepositActivity;
 import com.xizhi.mezone.b.R;
 
+import java.math.BigDecimal;
+
 import cn.com.hgh.utils.AbDateUtil;
 import cn.com.hgh.utils.AbStrUtil;
-import cn.com.hgh.utils.AbViewUtil;
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.JumpIntent;
 import cn.com.hgh.utils.MathExtend;
@@ -206,15 +208,28 @@ public class FinancialOfficeFragment extends Fragment implements
 	 * 文字适配
 	 */
 	private void textAdaptation() {
-		tv_dongjiejine.setTextSize(AbViewUtil.px2sp(mMainActivity, (int)(24*ScreenUtils.getBaseSizeOn720(mMainActivity))));
-		tv_keyongyue.setTextSize(AbViewUtil.px2sp(mMainActivity, (int)(25*ScreenUtils.getBaseSizeOn720(mMainActivity))));
-		tv_tixianzhongyue.setTextSize(AbViewUtil.px2sp(mMainActivity, (int)(25*ScreenUtils.getBaseSizeOn720(mMainActivity))));
-		tv_dianpujinrishouru.setTextSize(AbViewUtil.px2sp(mMainActivity, (int)(25*ScreenUtils.getBaseSizeOn720(mMainActivity))));
+		ScreenUtils.textAdaptationOn720(tv_dongjiejine,mMainActivity,25);
+		ScreenUtils.textAdaptationOn720(tv_keyongyue,mMainActivity,25);
+		ScreenUtils.textAdaptationOn720(tv_tixianzhongyue,mMainActivity,25);
+		ScreenUtils.textAdaptationOn720(tv_dianpujinrishouru,mMainActivity,25);
 
-		tv_freezingamount.setTextSize(AbViewUtil.px2sp(mMainActivity, (int)(26*ScreenUtils.getBaseSizeOn720(mMainActivity))));
-		tv_shopincometoday.setTextSize(AbViewUtil.px2sp(mMainActivity, (int)(27*ScreenUtils.getBaseSizeOn720(mMainActivity))));
-		tv_takeinmoney.setTextSize(AbViewUtil.px2sp(mMainActivity, (int)(27*ScreenUtils.getBaseSizeOn720(mMainActivity))));
-		tv_availablebalance.setTextSize(AbViewUtil.px2sp(mMainActivity, (int)(27*ScreenUtils.getBaseSizeOn720(mMainActivity))));
+		ScreenUtils.textAdaptationOn720(tv_freezingamount,mMainActivity,27);
+		ScreenUtils.textAdaptationOn720(tv_shopincometoday,mMainActivity,27);
+		ScreenUtils.textAdaptationOn720(tv_takeinmoney,mMainActivity,27);
+		ScreenUtils.textAdaptationOn720(tv_availablebalance,mMainActivity,27);
+	}
+
+	/**
+	 * 设置财务室信息
+	 */
+	public void setFinancialOfficeAmount(FinancialOfficeAmountBean financialOfficeAmountBean){
+
+		tv_totalaccount.setText(MathExtend.roundNew(financialOfficeAmountBean.getAccountTotalIncome().divide(new BigDecimal(100)).doubleValue(), 2));// 账户总额
+		tv_shopaccount.setText(MathExtend.roundNew(financialOfficeAmountBean.getStoreTotalIncome().divide(new BigDecimal(100)).doubleValue(), 2));// 店铺总额
+		tv_availablebalance.setText(MathExtend.roundNew(financialOfficeAmountBean.getStoreBalance().divide(new BigDecimal(100)).doubleValue(), 2));// 可用余额
+		tv_shopincometoday.setText(MathExtend.roundNew(financialOfficeAmountBean.getStoreTodayIncome().divide(new BigDecimal(100)).doubleValue(), 2));// 店铺今日收入
+		tv_freezingamount.setText(MathExtend.roundNew(financialOfficeAmountBean.getSotreFrozenAmount().divide(new BigDecimal(100)).doubleValue(), 2));// 冻结中金额
+		tv_takeinmoney.setText(MathExtend.roundNew(financialOfficeAmountBean.getStoreWithdrawAmount().divide(new BigDecimal(100)).doubleValue(), 2));// 提现中余额
 	}
 
 	/**
