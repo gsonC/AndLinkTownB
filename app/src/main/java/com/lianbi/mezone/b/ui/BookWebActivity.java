@@ -12,13 +12,14 @@ package com.lianbi.mezone.b.ui;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.content.ClipData;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.JavascriptInterface;
@@ -29,10 +30,14 @@ import android.webkit.WebViewClient;
 
 import com.lianbi.mezone.b.app.Constants;
 import com.lianbi.mezone.b.httpresponse.API;
+import com.lianbi.mezone.b.photo.FileUtils;
 import com.lianbi.mezone.b.photo.PhotoUtills;
+import com.lianbi.mezone.b.photo.PickImageDescribe;
 import com.xizhi.mezone.b.R;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.WebViewInit;
@@ -60,6 +65,8 @@ public class BookWebActivity extends BaseActivity {
 	protected HttpDialog dialog;
 	String url;
 	Boolean isSave = false;
+	private MyPhotoUtills photoUtills;
+	private List<File> files;
 
 	/**
 	 * 需要登陆
@@ -77,6 +84,8 @@ public class BookWebActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.act_webactivty, NOTYPE);
+		photoUtills = new MyPhotoUtills(this);
+		files = new ArrayList<File>();
 		isNeedTitle = getIntent().getBooleanExtra("NEEDNOTTITLE", false);
 		Re = getIntent().getBooleanExtra("Re", false);
 		needLogin = getIntent().getBooleanExtra(Constants.NEDDLOGIN, false);
@@ -183,12 +192,14 @@ public class BookWebActivity extends BaseActivity {
 											 ValueCallback<Uri[]> filePathCallback,
 											 FileChooserParams fileChooserParams) {
 				mFilePathCallback = filePathCallback;
-				Intent i = new Intent(Intent.ACTION_GET_CONTENT);
-				i.addCategory(Intent.CATEGORY_OPENABLE);
-				i.setType("*/*");
-				startActivityForResult(Intent.createChooser(i, "File Browser"),
-						20000);
-				return true;
+				photoUtills.pickImage();
+
+//				Intent i = new Intent(Intent.ACTION_GET_CONTENT);
+//				i.addCategory(Intent.CATEGORY_OPENABLE);
+//				i.setType("*/*");
+//				startActivityForResult(Intent.createChooser(i, "File Browser"),
+//						20000);
+				return false;
 			}
 
 			@Override
@@ -259,6 +270,7 @@ public class BookWebActivity extends BaseActivity {
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
 		super.onActivityResult(requestCode, resultCode, intent);
+
 		if (requestCode == FILECHOOSER_RESULTCODE) {
 			if (null == mUploadMessage)
 				return;
@@ -279,35 +291,68 @@ public class BookWebActivity extends BaseActivity {
 			mUploadMessage.onReceiveValue(result);
 			mUploadMessage = null;
 		}
-		if (requestCode != 20000 || mFilePathCallback == null) {
-			return;
-		}
+//		if (requestCode != 20000 || mFilePathCallback == null) {
+//			return;
+//		}
 		Uri[] results = null;
 		if (resultCode == Activity.RESULT_OK
 				&& Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 			if (intent == null) {
 			} else {
-				String dataString = intent.getDataString();
-				ClipData clipData = intent.getClipData();
-				if (clipData != null) {
-					results = new Uri[clipData.getItemCount()];
-					for (int i = 0; i < clipData.getItemCount(); i++) {
-						ClipData.Item item = clipData.getItemAt(i);
-						results[i] = item.getUri();
-					}
+				switch (requestCode) {
+					case PhotoUtills.REQUEST_IMAGE_FROM_ALBUM_AND_CROP:
+						Uri uri = intent.getData();
+						String filePath = PhotoUtills.getPath(this, uri);
+						FileUtils.copyFile(filePath,
+								PhotoUtills.photoCurrentFile.toString(), true);
+						photoUtills.startCropImage();
+						break;
+
+					case PhotoUtills.REQUEST_IMAGE_FROM_CAMERA_AND_CROP:
+						photoUtills.startCropImage();
+						break;
+					case PhotoUtills.REQUEST_IMAGE_CROP:
+//						Bitmap bm = PhotoUtills.getBitmap(200, 150);
+//						String dataString= Picture_Base64.GetImageStr(photoUtills.photoCurrentFile.toString());
+					    String dataString =photoUtills.photoCurrentFile.toString();
+//						ClipData clipData = intent.getClipData();
+//						if (clipData != null) {
+//							results = new Uri[clipData.getItemCount()];
+//							for (int i = 0; i < clipData.getItemCount(); i++) {
+//								ClipData.Item item = clipData.getItemAt(i);
+//								results[i] = item.getUri();
+//							}
+//						}
+						results = new Uri[]{Uri.parse(dataString)};
+						mFilePathCallback.onReceiveValue(results);
+//						mFilePathCallback = null;
+//						files.add(photoUtills.photoCurrentFile);
+						break;
 				}
-				if (dataString != null)
-					results = new Uri[]{Uri.parse(dataString)};
+//				String dataString = intent.getDataString();
+//				ClipData clipData = intent.getClipData();
+//				if (clipData != null) {
+//					results = new Uri[clipData.getItemCount()];
+//					for (int i = 0; i < clipData.getItemCount(); i++) {
+//						ClipData.Item item = clipData.getItemAt(i);
+//						results[i] = item.getUri();
+//					}
+//				}
+//				if (dataString != null)
+//					results = new Uri[]{Uri.parse(dataString)};
 			}
 		}
-		mFilePathCallback.onReceiveValue(results);
-		mFilePathCallback = null;
+//		mFilePathCallback.onReceiveValue(results);
+//		mFilePathCallback = null;
 	}
 
 	class MyJs {
 		@JavascriptInterface
 		public void getData(String type) {
-
+//          web_webactivty.evaluateJavascript(window.
+//				  wechatAlert({
+//				  content:"请选择商品！"
+//			      });
 		}
 	}
 
@@ -332,5 +377,32 @@ public class BookWebActivity extends BaseActivity {
 		// finish();
 		// }
 	}
+	/**
+	 * 图像裁剪实现类
+	 *
+	 * @author guanghui.han
+	 *
+	 */
+	class MyPhotoUtills extends PhotoUtills {
 
+		public MyPhotoUtills(Context ct) {
+			super(ct);
+			super.initPickView();
+		}
+
+		@Override
+		protected PickImageDescribe getPickImageDescribe() {
+			if (defaultImageDescribe == null) {
+				defaultImageDescribe = new PickImageDescribe();
+			}
+			// 设置页设置头像，裁剪比例1:1
+			defaultImageDescribe.setFile(photoCurrentFile);
+			defaultImageDescribe.setOutputX(480);
+			defaultImageDescribe.setOutputY(360);
+			defaultImageDescribe.setAspectX(4);
+			defaultImageDescribe.setAspectY(3);
+			defaultImageDescribe.setOutputFormat(DEFAULT_IMG_FORMAT);
+			return defaultImageDescribe;
+		}
+	}
 }
