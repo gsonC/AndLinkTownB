@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ClipData;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -22,7 +23,9 @@ import android.webkit.WebViewClient;
 
 import com.lianbi.mezone.b.app.Constants;
 import com.lianbi.mezone.b.httpresponse.API;
+import com.lianbi.mezone.b.photo.FileUtils;
 import com.lianbi.mezone.b.photo.PhotoUtills;
+import com.lianbi.mezone.b.photo.PickImageDescribe;
 import com.xizhi.mezone.b.R;
 
 import java.io.File;
@@ -31,6 +34,7 @@ import java.io.OutputStream;
 
 import Decoder.BASE64Decoder;
 import cn.com.hgh.utils.ContentUtils;
+import cn.com.hgh.utils.Picture_Base64;
 import cn.com.hgh.utils.WebViewInit;
 import cn.com.hgh.view.HttpDialog;
 
@@ -41,7 +45,7 @@ import cn.com.hgh.view.HttpDialog;
  */
 
 @SuppressLint("ResourceAsColor")
-public class H5WebActivty extends BaseActivity {
+public class H5WebActivty extends BaseActivity{
 	/**
 	 * 传进来的标题
 	 */
@@ -69,6 +73,7 @@ public class H5WebActivty extends BaseActivity {
 	boolean needLogin = false;
 	private final static int REQUEST_LOGIN = 4563;
 	private WebViewClient webs;
+	private MyPhotoUtills photoUtills;
 	private ValueCallback<Uri> mUploadMessage;
 	private ValueCallback<Uri[]> mFilePathCallback;
 	private final static int FILECHOOSER_RESULTCODE = 1;
@@ -85,6 +90,8 @@ public class H5WebActivty extends BaseActivity {
 		url = getIntent().getStringExtra(U);
 		title = getIntent().getStringExtra(T);
 		webs = new WebViewClient();
+		photoUtills = new MyPhotoUtills(this);
+
 		initView();
 
 		initListener();
@@ -155,6 +162,11 @@ public class H5WebActivty extends BaseActivity {
 //		int index = str1.indexOf(str); //str1是想要开始截取的字符。str是被截取的字符。
 //		return str.substring(index+1,str.length());
 //	}
+	void  CallMethod(WebView  web_webactivty){
+
+      String call = "javascript:openPhotoAlbum()";
+	  web_webactivty.loadUrl(call);
+	}
 	/**
 	 * 初始化视图控件
 	 */
@@ -186,6 +198,7 @@ public class H5WebActivty extends BaseActivity {
 			@Override
 			public void onPageFinished(WebView view, String url) {
 				setPageTitle(view.getTitle());
+//				CallMethod(web_webactivty);
 				dialog.dismiss();
 			}
 
@@ -242,6 +255,7 @@ public class H5WebActivty extends BaseActivity {
 				i.setType("*/*");
 				startActivityForResult(Intent.createChooser(i, "File Browser"),
 						20000);
+
 				return true;
 			}
 
@@ -343,35 +357,67 @@ public class H5WebActivty extends BaseActivity {
 			mUploadMessage.onReceiveValue(result);
 			mUploadMessage = null;
 		}
-		if (requestCode != 20000 || mFilePathCallback == null) {
-			return;
-		}
+//		if (requestCode != 20000 || mFilePathCallback == null) {
+//			return;
+//		}
 		Uri[] results = null;
 		if (resultCode == Activity.RESULT_OK
 				&& Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 			if (intent == null) {
 			} else {
-				String dataString = intent.getDataString();
-				ClipData clipData = intent.getClipData();
-				if (clipData != null) {
-					results = new Uri[clipData.getItemCount()];
-					for (int i = 0; i < clipData.getItemCount(); i++) {
-						ClipData.Item item = clipData.getItemAt(i);
-						results[i] = item.getUri();
-					}
+				switch (requestCode) {
+
+					case PhotoUtills.REQUEST_IMAGE_FROM_ALBUM_AND_CROP:
+						Uri uri = intent.getData();
+						String filePath = PhotoUtills.getPath(this, uri);
+						FileUtils.copyFile(filePath,
+								PhotoUtills.photoCurrentFile.toString(), true);
+						photoUtills.startCropImage();
+						break;
+
+					case PhotoUtills.REQUEST_IMAGE_CROP:
+						String photocurrentpath =photoUtills.photoCurrentFile.toString();
+						final  String base64= Picture_Base64.GetImageStr(photocurrentpath);
+						web_webactivty.post(new Runnable() {
+							@Override
+							public void run() {
+							web_webactivty.loadUrl("javascript:getScreenshot('"+base64+"')");
+							}
+						});
+
+						break;
+					default:
+						String dataString = intent.getDataString();
+						ClipData clipData = intent.getClipData();
+						if (clipData != null) {
+							results = new Uri[clipData.getItemCount()];
+							for (int i = 0; i < clipData.getItemCount(); i++) {
+								ClipData.Item item = clipData.getItemAt(i);
+								results[i] = item.getUri();
+							}
+						}
+						if (dataString != null)
+							results = new Uri[]{Uri.parse(dataString)};
+						mFilePathCallback.onReceiveValue(results);
+						mFilePathCallback = null;
+						break;
 				}
-				if (dataString != null)
-					results = new Uri[]{Uri.parse(dataString)};
+
 			}
 		}
-		mFilePathCallback.onReceiveValue(results);
-		mFilePathCallback = null;
+
 	}
 
 	class MyJs {
+//		@JavascriptInterface
+//		public void getData(String type) {}
 		@JavascriptInterface
-		public void getData(String type) {
-
+		public void  photoAlbumcut(boolean  flag)
+		{
+		    if(flag==true) {
+				photoUtills.startPickPhotoFromAlbumWithCrop();
+			}else{
+			}
 		}
 	}
 
@@ -399,6 +445,36 @@ public class H5WebActivty extends BaseActivity {
 		// } else {
 		// finish();
 		// }
+	}
+	/**
+	 * 图像裁剪实现类
+	 *
+	 * @author guanghui.han
+	 *
+	 */
+	class MyPhotoUtills extends PhotoUtills {
+
+		public MyPhotoUtills(Context ct) {
+			super(ct);
+			super.initPickView();
+		}
+
+		@Override
+		protected PickImageDescribe getPickImageDescribe() {
+			if (defaultImageDescribe == null) {
+				defaultImageDescribe = new PickImageDescribe();
+			}
+			// 设置页设置头像，裁剪比例1:1
+			defaultImageDescribe.setFile(photoCurrentFile);
+//			defaultImageDescribe.setOutputX(480);
+//			defaultImageDescribe.setOutputY(360);
+			defaultImageDescribe.setOutputX(640);
+			defaultImageDescribe.setOutputY(435);
+			defaultImageDescribe.setAspectX(4);
+			defaultImageDescribe.setAspectY(3);
+			defaultImageDescribe.setOutputFormat(DEFAULT_IMG_FORMAT);
+			return defaultImageDescribe;
+		}
 	}
 
 }

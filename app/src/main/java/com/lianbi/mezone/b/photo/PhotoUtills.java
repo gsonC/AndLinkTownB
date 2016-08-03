@@ -1,10 +1,5 @@
 package com.lianbi.mezone.b.photo;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.util.Date;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ContentUris;
@@ -25,9 +20,15 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.PopupWindow;
-import cn.com.hgh.utils.ContentUtils;
 
 import com.xizhi.mezone.b.R;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.Date;
+
+import cn.com.hgh.utils.ContentUtils;
 
 @SuppressLint("NewApi")
 public class PhotoUtills {
@@ -270,7 +271,7 @@ public class PhotoUtills {
 	/**
 	 * 照相并裁剪
 	 */
-	protected void startPickPhotoFromCameraWithCrop() {
+	public void startPickPhotoFromCameraWithCrop() {
 		if (!isSDCardAvaliable) {
 			ContentUtils.showMsg(mContext, "当前您的SD卡不可用，您将无法使用相册/拍照上传功能");
 			return;
@@ -284,7 +285,7 @@ public class PhotoUtills {
 	/**
 	 * 相册选择并裁剪
 	 */
-	protected void startPickPhotoFromAlbumWithCrop() {
+	public void startPickPhotoFromAlbumWithCrop() {
 		if (!isSDCardAvaliable) {
 			ContentUtils.showMsg(mContext, "当前您的SD卡不可用，您将无法使用相册/拍照上传功能");
 			return;

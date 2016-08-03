@@ -12,6 +12,7 @@ package com.lianbi.mezone.b.ui;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -29,7 +30,6 @@ import android.webkit.WebViewClient;
 
 import com.lianbi.mezone.b.app.Constants;
 import com.lianbi.mezone.b.httpresponse.API;
-import com.lianbi.mezone.b.photo.FileUtils;
 import com.lianbi.mezone.b.photo.PhotoUtills;
 import com.lianbi.mezone.b.photo.PickImageDescribe;
 import com.xizhi.mezone.b.R;
@@ -192,14 +192,14 @@ public class BookWebActivity extends BaseActivity {
 											 ValueCallback<Uri[]> filePathCallback,
 											 FileChooserParams fileChooserParams) {
 				mFilePathCallback = filePathCallback;
-				photoUtills.pickImage();
+//				photoUtills.pickImage();
 
-				//				Intent i = new Intent(Intent.ACTION_GET_CONTENT);
-				//				i.addCategory(Intent.CATEGORY_OPENABLE);
-				//				i.setType("*/*");
-				//				startActivityForResult(Intent.createChooser(i, "File Browser"),
-				//						20000);
-				return false;
+								Intent i = new Intent(Intent.ACTION_GET_CONTENT);
+								i.addCategory(Intent.CATEGORY_OPENABLE);
+								i.setType("*/*");
+								startActivityForResult(Intent.createChooser(i, "File Browser"),
+										20000);
+				return true;
 			}
 
 			@Override
@@ -299,51 +299,51 @@ public class BookWebActivity extends BaseActivity {
 				&& Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 			if (intent == null) {
 			} else {
-				switch (requestCode) {
-					case PhotoUtills.REQUEST_IMAGE_FROM_ALBUM_AND_CROP:
-						Uri uri = intent.getData();
-						String filePath = PhotoUtills.getPath(this, uri);
-						FileUtils.copyFile(filePath,
-								PhotoUtills.photoCurrentFile.toString(), true);
-						photoUtills.startCropImage();
-						break;
-
-					case PhotoUtills.REQUEST_IMAGE_FROM_CAMERA_AND_CROP:
-						photoUtills.startCropImage();
-						break;
-					case PhotoUtills.REQUEST_IMAGE_CROP:
-						//						Bitmap bm = PhotoUtills.getBitmap(200, 150);
-						//						String dataString= Picture_Base64.GetImageStr(photoUtills.photoCurrentFile.toString());
-						String dataString = photoUtills.photoCurrentFile.toString();
-						//						ClipData clipData = intent.getClipData();
-						//						if (clipData != null) {
-						//							results = new Uri[clipData.getItemCount()];
-						//							for (int i = 0; i < clipData.getItemCount(); i++) {
-						//								ClipData.Item item = clipData.getItemAt(i);
-						//								results[i] = item.getUri();
-						//							}
-						//						}
-						results = new Uri[]{Uri.parse(dataString)};
-						mFilePathCallback.onReceiveValue(results);
-						//						mFilePathCallback = null;
-						//						files.add(photoUtills.photoCurrentFile);
-						break;
-				}
-				//				String dataString = intent.getDataString();
-				//				ClipData clipData = intent.getClipData();
-				//				if (clipData != null) {
-				//					results = new Uri[clipData.getItemCount()];
-				//					for (int i = 0; i < clipData.getItemCount(); i++) {
-				//						ClipData.Item item = clipData.getItemAt(i);
-				//						results[i] = item.getUri();
-				//					}
-				//				}
-				//				if (dataString != null)
-				//					results = new Uri[]{Uri.parse(dataString)};
+//				switch (requestCode) {
+//					case PhotoUtills.REQUEST_IMAGE_FROM_ALBUM_AND_CROP:
+//						Uri uri = intent.getData();
+//						String filePath = PhotoUtills.getPath(this, uri);
+//						FileUtils.copyFile(filePath,
+//								PhotoUtills.photoCurrentFile.toString(), true);
+//						photoUtills.startCropImage();
+//						break;
+//
+//					case PhotoUtills.REQUEST_IMAGE_FROM_CAMERA_AND_CROP:
+//						photoUtills.startCropImage();
+//						break;
+//					case PhotoUtills.REQUEST_IMAGE_CROP:
+//						//						Bitmap bm = PhotoUtills.getBitmap(200, 150);
+//						//						String dataString= Picture_Base64.GetImageStr(photoUtills.photoCurrentFile.toString());
+//						String dataString = photoUtills.photoCurrentFile.toString();
+//						//						ClipData clipData = intent.getClipData();
+//						//						if (clipData != null) {
+//						//							results = new Uri[clipData.getItemCount()];
+//						//							for (int i = 0; i < clipData.getItemCount(); i++) {
+//						//								ClipData.Item item = clipData.getItemAt(i);
+//						//								results[i] = item.getUri();
+//						//							}
+//						//						}
+//						results = new Uri[]{Uri.parse(dataString)};
+//						mFilePathCallback.onReceiveValue(results);
+//						//						mFilePathCallback = null;
+//						//						files.add(photoUtills.photoCurrentFile);
+//						break;
+//				}
+								String dataString = intent.getDataString();
+								ClipData clipData = intent.getClipData();
+								if (clipData != null) {
+									results = new Uri[clipData.getItemCount()];
+									for (int i = 0; i < clipData.getItemCount(); i++) {
+										ClipData.Item item = clipData.getItemAt(i);
+										results[i] = item.getUri();
+									}
+								}
+								if (dataString != null)
+									results = new Uri[]{Uri.parse(dataString)};
 			}
 		}
-		//		mFilePathCallback.onReceiveValue(results);
-		//		mFilePathCallback = null;
+				mFilePathCallback.onReceiveValue(results);
+				mFilePathCallback = null;
 	}
 
 	class MyJs {
