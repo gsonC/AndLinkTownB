@@ -1,9 +1,5 @@
 package com.lianbi.mezone.b.ui;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,6 +20,17 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
+
+import com.alibaba.fastjson.JSON;
+import com.lianbi.mezone.b.bean.SalesClerklist;
+import com.lianbi.mezone.b.bean.SalesMan;
+import com.lianbi.mezone.b.httpresponse.MyResultCallback;
+import com.xizhi.mezone.b.R;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import cn.com.hgh.indexscortlist.CharacterParser;
 import cn.com.hgh.indexscortlist.ClearEditText;
 import cn.com.hgh.indexscortlist.PinyinComparator;
@@ -34,12 +41,6 @@ import cn.com.hgh.utils.AbAppUtil;
 import cn.com.hgh.utils.AbViewUtil;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.view.EasyDialog;
-
-import com.alibaba.fastjson.JSON;
-import com.xizhi.mezone.b.R;
-import com.lianbi.mezone.b.bean.SalesClerklist;
-import com.lianbi.mezone.b.bean.SalesMan;
-import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 
 /**
  * 店员管理
@@ -331,7 +332,7 @@ public class EmployeeManageActivity extends BaseActivity {
 	/**
 	 * 为ListView填充数据
 	 * 
-	 * @param date
+	 * @param
 	 * @return
 	 */
 

@@ -400,13 +400,13 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 	public void getCount() {
 		if (ContentUtils.getLoginStatus(this)) {// 获取登陆状态
 			if (!TextUtils.isEmpty(userShopInfoBean.getBusinessId())) {// 获取店铺id是否为空
-					getUserAccount();// 账户总额
-					getShopAccount();// 店铺总额
+				//	getUserAccount();// 账户总额
+				//	getShopAccount();// 店铺总额
 				//		getFreezingAmount();//冻结中金额
-					getBalance();// 可用余额
-					getAmountinCash();// 提现中金额
-					getShopAccountToday();// 店铺今日收入
-				//getFinancialOfficeAmount();//财务室所有金额
+				//	getBalance();// 可用余额
+				//	getAmountinCash();// 提现中金额
+				//	getShopAccountToday();// 店铺今日收入
+				getFinancialOfficeAmount();//财务室所有金额
 			}
 		}
 	}

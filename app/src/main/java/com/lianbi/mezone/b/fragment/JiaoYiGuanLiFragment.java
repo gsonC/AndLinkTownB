@@ -1,15 +1,5 @@
 package com.lianbi.mezone.b.fragment;
 
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -25,21 +15,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import cn.com.hgh.playview.BaseSliderView;
-import cn.com.hgh.playview.BaseSliderView.OnSliderClickListener;
-import cn.com.hgh.playview.SliderLayout;
-import cn.com.hgh.playview.imp.TextSliderView;
-import cn.com.hgh.utils.AbDateUtil;
-import cn.com.hgh.utils.AbStrUtil;
-import cn.com.hgh.utils.AbViewUtil;
-import cn.com.hgh.utils.ContentUtils;
-import cn.com.hgh.utils.CryptTool;
-import cn.com.hgh.utils.JumpIntent;
-import cn.com.hgh.utils.Result;
-import cn.com.hgh.utils.ScreenUtils;
-import cn.com.hgh.utils.WebEncryptionUtil;
-import cn.com.hgh.view.ErWeMaDialog;
-import cn.com.hgh.view.GifView;
 
 import com.alibaba.fastjson.JSON;
 import com.bumptech.glide.Glide;
@@ -59,6 +34,31 @@ import com.lianbi.mezone.b.ui.MainActivity;
 import com.lianbi.mezone.b.ui.ServiceMallActivity;
 import com.lianbi.mezone.b.ui.WebActivty;
 import com.xizhi.mezone.b.R;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+
+import cn.com.hgh.playview.BaseSliderView;
+import cn.com.hgh.playview.BaseSliderView.OnSliderClickListener;
+import cn.com.hgh.playview.SliderLayout;
+import cn.com.hgh.playview.imp.TextSliderView;
+import cn.com.hgh.utils.AbDateUtil;
+import cn.com.hgh.utils.AbStrUtil;
+import cn.com.hgh.utils.AbViewUtil;
+import cn.com.hgh.utils.ContentUtils;
+import cn.com.hgh.utils.CryptTool;
+import cn.com.hgh.utils.JumpIntent;
+import cn.com.hgh.utils.Result;
+import cn.com.hgh.utils.ScreenUtils;
+import cn.com.hgh.utils.WebEncryptionUtil;
+import cn.com.hgh.view.ErWeMaDialog;
 
 /**
  *

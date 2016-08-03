@@ -34,7 +34,6 @@ import com.xizhi.mezone.b.R;
 
 import java.io.File;
 
-import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.WebViewInit;
 import cn.com.hgh.view.HttpDialog;
 
@@ -116,14 +115,13 @@ public class WIFIWebActivity extends BaseActivity {
 			}
 		}
 
-		try {
-			if (url.contains("storeId")) {
-				String bb[] = url.split("storeId");
-				MyMsg = API.TOSTORESERVICE + "/wcm/sws/businessInfo/goBusinessInfo?storeId" + bb[1];
+		/*try {
+			if (gobackurl.contains("routerApplication/viewRouter?")) {
+				MyMsg =gobackurl;
 			}
 		} catch (Exception e) {
 			ContentUtils.showMsg(this, "数据异常,为了您的数据安全,请退出重新登陆");
-		}
+		}*/
 
 		dialog = new HttpDialog(this);
 		web_webactivty = (WebView) findViewById(R.id.web_webactivty);
@@ -155,6 +153,11 @@ public class WIFIWebActivity extends BaseActivity {
 			@Override
 			public void onPageStarted(WebView view, String url, Bitmap favicon) {
 				gobackurl = url;
+
+				if (url.contains("routerApplication/viewRouter?")) {
+					MyMsg = url;
+				}
+
 				dialog.show();
 			}
 
@@ -306,9 +309,9 @@ public class WIFIWebActivity extends BaseActivity {
 	protected void onTitleLeftClick() {
 		if (gobackurl.contains("showRssCreateProduct")) {
 			web_webactivty.loadUrl(url);//返回一级目录
-		} else if (gobackurl.contains("viewMyAuthenticationMsg")) {
+		} else if (gobackurl.contains("wifiBanner/saveWifiBanner")) {
 			web_webactivty.loadUrl(MyMsg);//返回指定页面
-		} else if (gobackurl.contains("wifiIndex")||gobackurl.contains("saveRouterApply")) {
+		} else if (gobackurl.contains("wifiIndex") || gobackurl.contains("saveRouterApply") || gobackurl.contains("routerApplication/viewRouter?")) {
 			finish();//退出
 		} else {
 			web_webactivty.goBack();//正常返回
