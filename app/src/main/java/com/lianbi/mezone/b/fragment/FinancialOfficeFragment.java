@@ -208,15 +208,15 @@ public class FinancialOfficeFragment extends Fragment implements
 	 * 文字适配
 	 */
 	private void textAdaptation() {
-		ScreenUtils.textAdaptationOn720(tv_dongjiejine,mMainActivity,25);
-		ScreenUtils.textAdaptationOn720(tv_keyongyue,mMainActivity,25);
-		ScreenUtils.textAdaptationOn720(tv_tixianzhongyue,mMainActivity,25);
-		ScreenUtils.textAdaptationOn720(tv_dianpujinrishouru,mMainActivity,25);
+		ScreenUtils.textAdaptationOn720(tv_dongjiejine,mMainActivity,24);
+		ScreenUtils.textAdaptationOn720(tv_keyongyue,mMainActivity,24);
+		ScreenUtils.textAdaptationOn720(tv_tixianzhongyue,mMainActivity,24);
+		ScreenUtils.textAdaptationOn720(tv_dianpujinrishouru,mMainActivity,24);
 
-		ScreenUtils.textAdaptationOn720(tv_freezingamount,mMainActivity,27);
-		ScreenUtils.textAdaptationOn720(tv_shopincometoday,mMainActivity,27);
-		ScreenUtils.textAdaptationOn720(tv_takeinmoney,mMainActivity,27);
-		ScreenUtils.textAdaptationOn720(tv_availablebalance,mMainActivity,27);
+		ScreenUtils.textAdaptationOn720(tv_freezingamount,mMainActivity,26);
+		ScreenUtils.textAdaptationOn720(tv_shopincometoday,mMainActivity,26);
+		ScreenUtils.textAdaptationOn720(tv_takeinmoney,mMainActivity,26);
+		ScreenUtils.textAdaptationOn720(tv_availablebalance,mMainActivity,26);
 	}
 
 	/**
