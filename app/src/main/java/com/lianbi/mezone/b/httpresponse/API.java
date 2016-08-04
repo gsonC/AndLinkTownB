@@ -44,12 +44,14 @@ public class API {
 	 */
 	//	public static final String ENVIRONMENTAL = "http://front.xylbn.cn:9003";
 	//	public static final String TOSTORESERVICE = "http://mall.xylbn.cn:9005";//到店服务
-		public static final String ENVIRONMENTAL = "http://211.95.25.36";//前置UAT外网
-		public static final String TOSTORESERVICE = "http://211.95.25.36";//到店服务UAT外网
+	//	public static final String ENVIRONMENTAL = "http://211.95.25.36";//前置UAT外网
+	//	public static final String TOSTORESERVICE = "http://211.95.25.36";//到店服务UAT外网
 	//	public static final String ENVIRONMENTAL = "http://172.16.103.164:9003";//前置UAT内网
 	//	public static final String TOSTORESERVICE = "http://172.16.103.165:9005";//到店服务UAT内网
 	//	public static final String ENVIRONMENTAL = "http://172.16.103.153:8080";//前置TEST
 	//	public static final String TOSTORESERVICE = "http://172.16.103.153:8085";//到店服务TEST
+		public static final String ENVIRONMENTAL = "http://test.xylbn.cn";//前置TEST
+		public static final String TOSTORESERVICE = "http://172.16.103.153:9005";//到店服务TEST
 	/**
 	 * 支付二维码
 	 */

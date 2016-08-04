@@ -175,7 +175,6 @@ public class BookWebActivity extends BaseActivity {
 			@Override
 			public void onPageStarted(WebView view, String url, Bitmap favicon) {
 				gobackurl = url;
-
 				dialog.show();
 			}
 
@@ -366,7 +365,7 @@ public class BookWebActivity extends BaseActivity {
 			web_webactivty.loadUrl(url);//返回一级目录
 		} else if (gobackurl.contains("viewMyAuthenticationMsg")) {
 			web_webactivty.loadUrl(MyMsg);//返回指定页面
-		} else if (gobackurl.contains("rss/product/" + userShopInfoBean.getBusinessId() + "/productsList") || gobackurl.contains("rss/showOrderDetl?") || gobackurl.contains("/productType/queryTypeList/")) {
+		} else if (gobackurl.contains("rss/product/" + userShopInfoBean.getBusinessId() + "/productsList") || gobackurl.contains("rss/showOrderDetl") || gobackurl.contains("/productType/queryTypeList/")) {
 			finish();//退出
 		} else {
 			web_webactivty.goBack();//正常返回

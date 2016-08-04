@@ -60,6 +60,7 @@ public class ServiceMallActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setResult(RESULT_OK);
 		setContentView(R.layout.act_servicemallactivity, NOTYPE);
+		Glide.get(this).clearMemory();
 		initView();
 		initListAdapter();
 		dialog = new HttpDialog(this);
@@ -97,12 +98,12 @@ public class ServiceMallActivity extends BaseActivity {
 				tv_newprice.setText("¥"+String.valueOf(item.getPresentPrice())+String.valueOf(item.getUnit()));
 				tv_servicename.setText(item.getAppName());
 				if(item.getDownload().equals("N")){
-				  Glide.with(ServiceMallActivity.this).load(item.getIcoUrl()).error(R.mipmap.about_us).into(img_itemmall);
+				  Glide.with(ServiceMallActivity.this).load(item.getIcoUrl()).error(R.mipmap.default_head).into(img_itemmall);
 				  tv_download.setVisibility(View.VISIBLE);
 				  img_right.setVisibility(View.INVISIBLE);
 				}else 
 			    if(item.getDownload().equals("Y")){
-				  Glide.with(ServiceMallActivity.this).load(item.getIcoUrl()).error(R.mipmap.about_us).into(img_itemmall);
+				  Glide.with(ServiceMallActivity.this).load(item.getIcoUrl()).error(R.mipmap.default_head).into(img_itemmall);
 				  tv_download.setVisibility(View.GONE);
 				  img_right.setVisibility(View.VISIBLE);
 				}
