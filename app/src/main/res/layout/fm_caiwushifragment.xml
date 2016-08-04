@@ -311,6 +311,7 @@
                         android:src="@mipmap/withdrawalsdetails" />
                 </LinearLayout>
             </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 

@@ -31,6 +31,7 @@ import cn.com.hgh.view.PagerSlidingTabStrip;
 
 public class InfoDetailsActivity extends BaseActivity {
 	private ViewPager pager;
+
 	private PagerSlidingTabStrip tabs;
 	private LinearLayout ll_top_tabs;
 	private RelativeLayout ray_choice;
@@ -102,7 +103,7 @@ public class InfoDetailsActivity extends BaseActivity {
 		switch (arg0) {
 			case POSITION0:
 				if (allMessageFragment != null) {
-					allMessageFragment.upDateFragment(isSeleteAll);;
+					allMessageFragment.upDateFragment(isSeleteAll);
 				}
 
 				break;
@@ -134,7 +135,7 @@ public class InfoDetailsActivity extends BaseActivity {
 			break;
 			case R.id.tv_toexamine:
 				if(curPosition==POSITION3){
-					leavemessagefragment.afterToexamine();
+	//				leavemessagefragment.afterToexamine();
 //					currentList.clear();
 //					currentList=leavemessagefragment.getLeaveMessage();
 					Log.i("tag","140--->"+currentList.size());
@@ -238,6 +239,7 @@ public class InfoDetailsActivity extends BaseActivity {
 			}
 		});
 	}
+	
 	private void setExamineAndDelete(boolean status,ArrayList<InfoMessageBean>  currentList,
        int type
 	) {

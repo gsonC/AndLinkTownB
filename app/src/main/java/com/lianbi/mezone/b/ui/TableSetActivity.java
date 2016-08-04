@@ -127,6 +127,7 @@ public class TableSetActivity extends BaseActivity implements
 			@Override
 			public void onResponseResult(Result result) {
 				String reString = result.getData();
+
 				int isfbusiness;
 				if (reString != null) {
 					JSONObject jsonObject;

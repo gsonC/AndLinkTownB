@@ -1,7 +1,5 @@
 package com.lianbi.mezone.b.ui;
 
-import java.io.File;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +11,21 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+
+import com.alibaba.fastjson.JSON;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.lianbi.mezone.b.app.Constants;
+import com.lianbi.mezone.b.bean.LoginBackBean;
+import com.lianbi.mezone.b.httpresponse.MyResultCallback;
+import com.lianbi.mezone.b.photo.FileUtils;
+import com.lianbi.mezone.b.photo.PhotoUtills;
+import com.lianbi.mezone.b.photo.PickImageDescribe;
+import com.xizhi.mezone.b.R;
+
+import java.io.File;
+
 import cn.com.hgh.utils.AbDateUtil;
 import cn.com.hgh.utils.AbStrUtil;
 import cn.com.hgh.utils.ContentUtils;
@@ -21,18 +34,6 @@ import cn.com.hgh.utils.Picture_Base64;
 import cn.com.hgh.utils.REGX;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.view.CircularImageView;
-
-import com.alibaba.fastjson.JSON;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.xizhi.mezone.b.R;
-import com.lianbi.mezone.b.app.Constants;
-import com.lianbi.mezone.b.bean.LoginBackBean;
-import com.lianbi.mezone.b.httpresponse.MyResultCallback;
-import com.lianbi.mezone.b.photo.FileUtils;
-import com.lianbi.mezone.b.photo.PhotoUtills;
-import com.lianbi.mezone.b.photo.PickImageDescribe;
 
 /**
  * 我的资料页面

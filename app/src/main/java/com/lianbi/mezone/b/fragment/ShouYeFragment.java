@@ -205,9 +205,13 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 		// .getLayoutParams();
 		// layoutParamsTitle.width = ScreenUtils.getScreenWidth(mActivity);
 		// layoutParamsTitle.height = ScreenUtils.getScreenWidth(mActivity) / 4;
+		gv_shouyeservice.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+			}
+		});
 	}
-
 	private void listen() {
 		gv_shouyeservice.setOnItemClickListener(new OnItemClickListener() {
 

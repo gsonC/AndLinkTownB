@@ -303,7 +303,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 							final AppUpDataBean uB = com.alibaba.fastjson.JSONObject
 									.parseObject(result.getData(),
 											AppUpDataBean.class);
-
+							System.out.println("result.getData()........."+result.getData());
 							String status = uB.getCoerceModify();
 
 							if (status.equals("Y")) {
