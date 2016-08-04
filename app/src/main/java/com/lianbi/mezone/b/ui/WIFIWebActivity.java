@@ -307,11 +307,11 @@ public class WIFIWebActivity extends BaseActivity {
 
 	@Override
 	protected void onTitleLeftClick() {
-		if (gobackurl.contains("showRssCreateProduct")) {
+		if (gobackurl.contains("showRssCreateProduct") || gobackurl.contains("routerApplication/viewRouter?")) {
 			web_webactivty.loadUrl(url);//返回一级目录
 		} else if (gobackurl.contains("wifiBanner/saveWifiBanner")) {
 			web_webactivty.loadUrl(MyMsg);//返回指定页面
-		} else if (gobackurl.contains("wifiIndex") || gobackurl.contains("saveRouterApply") || gobackurl.contains("routerApplication/viewRouter?")) {
+		} else if (gobackurl.contains("wifiIndex") || gobackurl.contains("saveRouterApply")) {
 			finish();//退出
 		} else {
 			web_webactivty.goBack();//正常返回

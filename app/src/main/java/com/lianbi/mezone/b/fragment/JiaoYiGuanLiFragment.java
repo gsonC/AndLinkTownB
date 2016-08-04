@@ -393,6 +393,7 @@ public class JiaoYiGuanLiFragment extends Fragment implements
 							ServiceMallActivity.class);
 					mMainActivity.startActivityForResult(intent_more,
                             mMainActivity.SERVICEMALLSHOP_CODE);
+					ContentUtils.showMsg(mMainActivity,"请下载对应模块进行产品编辑");
 				}
 			}
 			break;
