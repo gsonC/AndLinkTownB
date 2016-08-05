@@ -65,7 +65,6 @@ public class H5WebActivty extends BaseActivity{
 	WebView web_webactivty;
 	protected HttpDialog dialog;
 	String url;
-	Boolean   isSave=false;
 
 	/**
 	 * 需要登陆
@@ -152,8 +151,8 @@ public class H5WebActivty extends BaseActivity{
 			// 最后通知图库更新
 			sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
 					Uri.fromFile(new File(file.getPath()))));
-			ContentUtils.showMsg(H5WebActivty.this, "保存图片成功");
-			isSave=true;
+			ContentUtils.showMsg(H5WebActivty.this, "已保存");
+
 		}
 		catch (Exception e)
 		{
@@ -195,6 +194,7 @@ public class H5WebActivty extends BaseActivity{
 		dialog = new HttpDialog(this);
 		web_webactivty = (WebView) findViewById(R.id.web_webactivty);
 		WebViewInit.WebSettingInit(web_webactivty, this);
+		web_webactivty.getSettings().setJavaScriptEnabled(true);
 		web_webactivty.addJavascriptInterface(new MyJs(), "LinktownB");
 		web_webactivty.setWebViewClient(new WebViewClient() {
 			@Override
@@ -223,12 +223,7 @@ public class H5WebActivty extends BaseActivity{
 								substring(str.indexOf(",")+1,
 										str.length());
 //					GenerateImage(jieguo+"8Agnx+0");
-					if(isSave==true){
-						ContentUtils.showMsg(H5WebActivty.this, "已保存");
-					}else {
-						GenerateImage(jieguo);
-					}
-
+					GenerateImage(jieguo);
 				}
 				return true;
 			}
@@ -371,8 +366,9 @@ public class H5WebActivty extends BaseActivity{
 //			return;
 //		}
 		Uri[] results = null;
-		if (resultCode == Activity.RESULT_OK
-				&& Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//		&& Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
+		if (resultCode == Activity.RESULT_OK)
+		{
 			if (intent == null) {
 			} else {
 				switch (requestCode) {
