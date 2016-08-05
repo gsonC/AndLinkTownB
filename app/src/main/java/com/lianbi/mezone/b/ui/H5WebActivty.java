@@ -80,7 +80,7 @@ public class H5WebActivty extends BaseActivity{
 	private boolean isNeedTitle = false;
 	private String MyMsg;
 	private String MyOtherURL;
-
+	private String ShowProTypeList;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -239,6 +239,9 @@ public class H5WebActivty extends BaseActivity{
 				System.out.println(url);
 				if(url.contains("productsList?msec")){
 					MyOtherURL = url;
+				}
+				if(url.contains("allTypeProduct/showProTypeList?")){
+					ShowProTypeList = url;
 				}
 				dialog.show();
 			}
@@ -446,8 +449,6 @@ public class H5WebActivty extends BaseActivity{
 			web_webactivty.loadUrl(url);//返回一级目录
 		} else if (gobackurl.contains("viewMyAuthenticationMsg")) {
 			web_webactivty.loadUrl(MyMsg);
-		}else if(gobackurl.contains("product/showRssAppointment?")){
-			web_webactivty.loadUrl(MyOtherURL);
 		}
 		else if (gobackurl.contains("product/enterIntoProductManager?") || gobackurl.contains("showMenu")) {
 			finish();//退出
