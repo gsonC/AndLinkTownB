@@ -79,6 +79,8 @@ public class H5WebActivty extends BaseActivity{
 	private final static int FILECHOOSER_RESULTCODE = 1;
 	private boolean isNeedTitle = false;
 	private String MyMsg;
+	private String MyOtherURL;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -234,6 +236,10 @@ public class H5WebActivty extends BaseActivity{
 			@Override
 			public void onPageStarted(WebView view, String url, Bitmap favicon) {
 				gobackurl = url;
+				System.out.println(url);
+				if(url.contains("productsList?msec")){
+					MyOtherURL = url;
+				}
 				dialog.show();
 			}
 
@@ -431,13 +437,16 @@ public class H5WebActivty extends BaseActivity{
 		if (gobackurl.contains("getAllBannerInfo")
 				|| gobackurl.contains("getAllProduct")
 				|| gobackurl.contains("addProduct")
-				|| gobackurl.contains("getProductById") || gobackurl.contains("sws/showOrderDetl") || gobackurl.contains("productsList")
+				|| gobackurl.contains("getProductById") || gobackurl.contains("sws/showOrderDetl")
 				|| gobackurl.contains("goInvite") || gobackurl.contains("goBusinessInfo")) {
 			web_webactivty.loadUrl(url);//返回一级目录
 		} else if (gobackurl.contains("viewMyAuthenticationMsg")) {
 			web_webactivty.loadUrl(MyMsg);
-		} else if (gobackurl.contains("enterIntoProductManager") || gobackurl.contains("showMenu")) {
-			//finish();//退出
+		}else if(gobackurl.contains("product/showRssAppointment?")){
+			web_webactivty.loadUrl(MyOtherURL);
+		}
+		else if (gobackurl.contains("product/enterIntoProductManager?") || gobackurl.contains("showMenu")) {
+			finish();//退出
 		} else {
 			web_webactivty.goBack();//返回
 		}
