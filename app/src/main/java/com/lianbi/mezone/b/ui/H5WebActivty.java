@@ -343,6 +343,7 @@ public class H5WebActivty extends BaseActivity{
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
 		super.onActivityResult(requestCode, resultCode, intent);
+
 		if (requestCode == FILECHOOSER_RESULTCODE) {
 			if (null == mUploadMessage)
 				return;
@@ -404,14 +405,17 @@ public class H5WebActivty extends BaseActivity{
 						}
 						if (dataString != null)
 							results = new Uri[]{Uri.parse(dataString)};
-
 						break;
 				}
 
 			}
 		}
-		mFilePathCallback.onReceiveValue(results);
-		mFilePathCallback = null;
+        if(requestCode!=PhotoUtills.REQUEST_IMAGE_FROM_ALBUM_AND_CROP&&
+				requestCode!=PhotoUtills.REQUEST_IMAGE_CROP
+		) {
+			mFilePathCallback.onReceiveValue(results);
+			mFilePathCallback = null;
+		}
 
 	}
 
