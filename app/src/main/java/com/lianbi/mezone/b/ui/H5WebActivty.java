@@ -18,6 +18,7 @@ import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -195,7 +196,11 @@ public class H5WebActivty extends BaseActivity{
 		dialog = new HttpDialog(this);
 		web_webactivty = (WebView) findViewById(R.id.web_webactivty);
 		WebViewInit.WebSettingInit(web_webactivty, this);
-		web_webactivty.getSettings().setJavaScriptEnabled(true);
+		WebSettings settings = web_webactivty.getSettings();
+		settings.setJavaScriptEnabled(true);
+		settings.setJavaScriptCanOpenWindowsAutomatically(true);//js和android交互
+		settings.setAllowFileAccess(true); // 允许访问文件
+//		settings.setAppCacheEnabled(false); //设置H5的缓存关闭
 		web_webactivty.addJavascriptInterface(new MyJs(), "LinktownB");
 		web_webactivty.setWebViewClient(new WebViewClient() {
 			@Override
