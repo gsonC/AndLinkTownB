@@ -103,6 +103,7 @@ public class H5WebActivty extends BaseActivity{
 		// webs.onPageStarted(view, url, favicon);
 	}
 
+	
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
