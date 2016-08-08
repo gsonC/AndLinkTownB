@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.JavascriptInterface;
@@ -81,7 +82,7 @@ public class H5WebActivty extends BaseActivity{
 	private String MyMsg;
 	private String MyOtherURL;
 	private String ShowProTypeList;
-
+	private String  base64="";
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -173,6 +174,8 @@ public class H5WebActivty extends BaseActivity{
 	/**
 	 * 初始化视图控件
 	 */
+	@SuppressLint({ "SetJavaScriptEnabled", "JavascriptInterface" })
+	@JavascriptInterface
 	void initView() {
 		if (isNeedTitle) {
 			setPageTitleVisibility(View.GONE);
@@ -197,11 +200,13 @@ public class H5WebActivty extends BaseActivity{
 		web_webactivty = (WebView) findViewById(R.id.web_webactivty);
 		WebViewInit.WebSettingInit(web_webactivty, this);
 		WebSettings settings = web_webactivty.getSettings();
+		settings.setDefaultTextEncodingName("utf-8");
 		settings.setJavaScriptEnabled(true);
+
 		settings.setJavaScriptCanOpenWindowsAutomatically(true);//js和android交互
 		settings.setAllowFileAccess(true); // 允许访问文件
 //		settings.setAppCacheEnabled(false); //设置H5的缓存关闭
-		web_webactivty.addJavascriptInterface(new MyJs(), "LinktownB");
+		web_webactivty.addJavascriptInterface(new MyJavascript(), "LinktownB");
 		web_webactivty.setWebViewClient(new WebViewClient() {
 			@Override
 			public void onPageFinished(WebView view, String url) {
@@ -223,14 +228,14 @@ public class H5WebActivty extends BaseActivity{
 			@Override
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {
 				view.loadUrl(url);
-				if(indexOfString(Uri.parse(url).toString(),"data:image/octet-stream")){
-					String  str=Uri.parse(url).toString();
-					String jieguo = str.
-								substring(str.indexOf(",")+1,
-										str.length());
-//					GenerateImage(jieguo+"8Agnx+0");
-					GenerateImage(jieguo);
-				}
+//				if(indexOfString(Uri.parse(url).toString(),"data:image/octet-stream")){
+//					String  str=Uri.parse(url).toString();
+//					String jieguo = str.
+//								substring(str.indexOf(",")+1,
+//										str.length());
+////					GenerateImage(jieguo+"8Agnx+0");
+//					GenerateImage(jieguo);
+//				}
 				return true;
 			}
 
@@ -389,14 +394,20 @@ public class H5WebActivty extends BaseActivity{
 
 					case PhotoUtills.REQUEST_IMAGE_CROP:
 						String photocurrentpath =photoUtills.photoCurrentFile.toString();
-						final  String base64= Picture_Base64.GetImageStr(photocurrentpath);
-						web_webactivty.post(new Runnable() {
-							@Override
-							public void run() {
-							web_webactivty.loadUrl("javascript:getScreenshot('"+base64+"')");
-							}
-						});
+//						final  String base64= Picture_Base64.GetImageStr(photocurrentpath);
+             			base64= Picture_Base64.GetImageStr(photocurrentpath);
+						int currentapiVersion=android.os.Build.VERSION.SDK_INT;
+						if(currentapiVersion>19){
+							web_webactivty.post(new Runnable() {
+								@Override
+								public void run() {
+								web_webactivty.loadUrl("javascript:getScreenshot('"+base64+"')");
+								}
+							});
 
+						}else{
+							web_webactivty.loadUrl("javascript:getScreenshot()");
+						}
 						break;
 					default:
 						String dataString = intent.getDataString();
@@ -418,13 +429,13 @@ public class H5WebActivty extends BaseActivity{
         if(requestCode!=PhotoUtills.REQUEST_IMAGE_FROM_ALBUM_AND_CROP&&
 				requestCode!=PhotoUtills.REQUEST_IMAGE_CROP
 		) {
+			Log.i("tag","439----->"+results);
 			mFilePathCallback.onReceiveValue(results);
 			mFilePathCallback = null;
 		}
 
 	}
-
-	class MyJs {
+	class MyJavascript {
 //		@JavascriptInterface
 //		public void getData(String type) {}
 		@JavascriptInterface
@@ -434,6 +445,28 @@ public class H5WebActivty extends BaseActivity{
 				photoUtills.startPickPhotoFromAlbumWithCrop();
 			}else{
 			}
+		}
+		//			web_webactivty.loadUrl("javascript:getScreenshot()");
+		@JavascriptInterface
+		public String  getBase64()
+		{
+
+			return  base64;
+
+		}
+		@JavascriptInterface
+		public void  saveQrcode(String  url)
+		{
+			if(indexOfString(Uri.parse(url).toString(),"data:image/")){
+				Log.i("tag","469---->");
+				String  str=Uri.parse(url).toString();
+				String jieguo = str.
+						substring(str.indexOf(",")+1,
+								str.length());
+//					GenerateImage(jieguo+"8Agnx+0");
+				GenerateImage(jieguo);
+			}
+
 		}
 	}
 
