@@ -83,6 +83,7 @@ public class H5WebActivty extends BaseActivity{
 	private String MyOtherURL;
 	private String ShowProTypeList;
 	private String  base64="";
+	private final  int  OPENIMAGEFILE=20000;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -269,7 +270,7 @@ public class H5WebActivty extends BaseActivity{
 				i.addCategory(Intent.CATEGORY_OPENABLE);
 				i.setType("*/*");
 				startActivityForResult(Intent.createChooser(i, "File Browser"),
-						20000);
+						OPENIMAGEFILE);
 
 				return true;
 			}
@@ -373,9 +374,14 @@ public class H5WebActivty extends BaseActivity{
 			mUploadMessage.onReceiveValue(result);
 			mUploadMessage = null;
 		}
-//		if (requestCode != 20000 || mFilePathCallback == null) {
-//			return;
-//		}
+		if (requestCode != OPENIMAGEFILE|| mFilePathCallback == null) {
+			if(requestCode==PhotoUtills.REQUEST_IMAGE_FROM_ALBUM_AND_CROP||
+					requestCode==PhotoUtills.REQUEST_IMAGE_CROP
+					){
+			}else{
+				return;
+			}
+		}
 		Uri[] results = null;
 //		&& Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
 		if (resultCode == Activity.RESULT_OK)
@@ -409,7 +415,7 @@ public class H5WebActivty extends BaseActivity{
 							web_webactivty.loadUrl("javascript:getScreenshot()");
 						}
 						break;
-					default:
+					case OPENIMAGEFILE:
 						String dataString = intent.getDataString();
 						ClipData clipData = intent.getClipData();
 						if (clipData != null) {
@@ -429,7 +435,6 @@ public class H5WebActivty extends BaseActivity{
         if(requestCode!=PhotoUtills.REQUEST_IMAGE_FROM_ALBUM_AND_CROP&&
 				requestCode!=PhotoUtills.REQUEST_IMAGE_CROP
 		) {
-			Log.i("tag","439----->"+results);
 			mFilePathCallback.onReceiveValue(results);
 			mFilePathCallback = null;
 		}
@@ -438,6 +443,10 @@ public class H5WebActivty extends BaseActivity{
 	class MyJavascript {
 //		@JavascriptInterface
 //		public void getData(String type) {}
+		/**
+		 * 打开相册
+		 * @param flag
+         */
 		@JavascriptInterface
 		public void  photoAlbumcut(boolean  flag)
 		{
@@ -446,7 +455,10 @@ public class H5WebActivty extends BaseActivity{
 			}else{
 			}
 		}
-		//			web_webactivty.loadUrl("javascript:getScreenshot()");
+		/**
+		 * 返回base64
+		 *
+		 */
 		@JavascriptInterface
 		public String  getBase64()
 		{
@@ -454,16 +466,18 @@ public class H5WebActivty extends BaseActivity{
 			return  base64;
 
 		}
+		/**
+		 * 保存邀请码
+		 *
+		 */
 		@JavascriptInterface
 		public void  saveQrcode(String  url)
 		{
 			if(indexOfString(Uri.parse(url).toString(),"data:image/")){
-				Log.i("tag","469---->");
 				String  str=Uri.parse(url).toString();
 				String jieguo = str.
 						substring(str.indexOf(",")+1,
 								str.length());
-//					GenerateImage(jieguo+"8Agnx+0");
 				GenerateImage(jieguo);
 			}
 
