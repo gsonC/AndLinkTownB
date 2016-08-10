@@ -2,6 +2,7 @@
 <resources>
 
     <string-array name="acpda_name">
+        <item>智能wifi</item>
         <item>到店服务</item>
         <item>微信商城</item>
         <item>货源批发</item>
@@ -17,6 +18,7 @@
         <item>其他功能</item>
     </string-array>
     <string-array name="acpda_content">
+        <item>一键上网，智能管理，客流统计，二次营销，量化运营</item>
         <item>商家发布并管理产品及查看呼叫信息，顾客能够自助点餐并选择所需服务及查看消费订单</item>
         <item>商家可以随时查看并管理产品及设置广告，顾客可以查看产品并选购及查看订单</item>
         <item>批发商可以查看并管理产品，发布阶梯报价，进货商可以查看商品并选购及查看订单</item>

@@ -290,9 +290,9 @@ public class BookWebActivity extends BaseActivity {
 			mUploadMessage.onReceiveValue(result);
 			mUploadMessage = null;
 		}
-		//		if (requestCode != 20000 || mFilePathCallback == null) {
-		//			return;
-		//		}
+		if (requestCode != 20000 || mFilePathCallback == null) {
+			return;
+		}
 		Uri[] results = null;
 		if (resultCode == Activity.RESULT_OK
 				&& Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
