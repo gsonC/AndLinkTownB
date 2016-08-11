@@ -163,13 +163,6 @@
         </LinearLayout>
 
     </LinearLayout>
-    <View
-        android:id="@+id/v_02"
-        android:layout_below="@id/lay_tagnum"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#cccccc"
-        />
     <TextView
         android:id="@+id/txt_buymsm"
         android:layout_below="@id/lay_smspackage"
