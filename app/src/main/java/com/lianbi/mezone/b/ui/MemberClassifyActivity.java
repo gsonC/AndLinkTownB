@@ -5,6 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +24,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.com.hgh.baseadapter.recyclerViewadapter.CommonRecyclerViewAdapter;
 import cn.com.hgh.baseadapter.recyclerViewadapter.CommonRecyclerViewHolder;
+import cn.com.hgh.baseadapter.recyclerViewadapter.RecycleViewDivider;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.view.HttpDialog;
 
@@ -45,21 +47,26 @@ public class MemberClassifyActivity extends BaseActivity {
     TextView tvIntegralratio;
     @Bind(R.id.rlv_actclassify)
     RecyclerView rlvActclassify;
-    CommonRecyclerViewAdapter  mRecyclerViewAdapter;
+    CommonRecyclerViewAdapter mRecyclerViewAdapter;
+    @Bind(R.id.lay_top)
+    LinearLayout layTop;
+    @Bind(R.id.text_newcategory)
+    TextView textNewcategory;
     private ArrayList<ServiceMallBean> mData = new ArrayList<ServiceMallBean>();
     private ArrayList<ServiceMallBean> mDatas = new ArrayList<ServiceMallBean>();
     HttpDialog dialog;
 
     @OnClick({R.id.tv_membernum})
-    public  void OnClick(View  v){
-         switch (v.getId()){
-             case  R.id.tv_membernum:
+    public void OnClick(View v) {
+        switch (v.getId()) {
+            case R.id.tv_membernum:
 
 
-             break;
+            break;
 
-         }
+        }
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,8 +84,8 @@ public class MemberClassifyActivity extends BaseActivity {
 //        listviewData();
         getCandownloadMall();
     }
+
     private void listviewData(ArrayList<ServiceMallBean> mData) {
-        //展示的数据造假
 
         //创建一个线性的布局管理器并设置
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -95,7 +102,7 @@ public class MemberClassifyActivity extends BaseActivity {
 //                } else {
 //                    h.setText(R.id.tv_name, entity.getName());
 //                }
-               int itemViewType = 1;
+                int itemViewType = 1;
                 if (itemViewType == 1) {
                     h.setText(R.id.tv_memberclassify, entity.getAppName());
                     h.setText(R.id.tv_memebernum, entity.getAppName());
@@ -119,6 +126,7 @@ public class MemberClassifyActivity extends BaseActivity {
                 return 1;
             }
         };
+        rlvActclassify.addItemDecoration(new RecycleViewDivider(MemberClassifyActivity.this, LinearLayoutManager.HORIZONTAL));
         //设置适配器
         rlvActclassify.setAdapter(mRecyclerViewAdapter);
         //只针对显示name的Item
@@ -140,7 +148,7 @@ public class MemberClassifyActivity extends BaseActivity {
 
     }
 
-    private void  getCandownloadMall(){
+    private void getCandownloadMall() {
         okHttpsImp.getCandownloadServerMall(new MyResultCallback<String>() {
 
             @Override
@@ -174,7 +182,6 @@ public class MemberClassifyActivity extends BaseActivity {
         }, userShopInfoBean.getBusinessId());
 
     }
-
 
 
 }

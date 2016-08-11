@@ -1,15 +1,17 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/colores_news_14"
-    android:orientation="vertical" >
+     >
 
     <LinearLayout
+        android:id="@+id/lay_top"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="7dp"
-        android:layout_marginRight="20dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
         android:background="@color/white"
         android:gravity="center_vertical"
         android:orientation="horizontal" >
@@ -67,12 +69,17 @@
     </LinearLayout>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rlv_actclassify"
+        android:layout_below="@id/lay_top"
         android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_height="wrap_content"
         android:background="#ffffff"
+        android:divider="@color/colores_news_14"
+        android:dividerHeight="1dp"
      />
     <TextView
-        android:id="@+id/text_login"
+        android:id="@+id/text_newcategory"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="14dp"
@@ -85,4 +92,4 @@
         android:text="@string/newaddcategory"
         android:textColor="@color/white"
         android:textSize="17sp" />
-</LinearLayout>
+</RelativeLayout>

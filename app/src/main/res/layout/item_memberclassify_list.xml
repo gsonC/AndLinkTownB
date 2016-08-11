@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
-    android:orientation="vertical" >
+    >
 
    <LinearLayout
                 android:id="@+id/llt_memberclass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="30dp"
                 android:background="@color/white"
                 android:clickable="true"
                 android:gravity="center_vertical"
@@ -22,21 +23,21 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="15dp"
                     android:layout_weight="1"
-                    android:gravity="center_vertical"
+                    android:gravity="center"
                     android:singleLine="true"
-                    android:text="会员级别"
+                    android:text="0"
                     android:textColor="@color/colores_news_10"
                     android:textSize="15sp" />
               <TextView
                     android:id="@+id/tv_memebernum"
-                     android:layout_width="0dp"
-                     android:layout_weight="1.0"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.0"
                     android:layout_height="25dp"
                     android:layout_marginLeft="10dp"
                     android:gravity="center"
                     android:padding="3dp"
                     android:singleLine="true"
-                    android:text="会员数"
+                    android:text="123"
                     android:textColor="@color/color_6bb4ff"
                     android:textSize="14sp"
                      />
@@ -49,31 +50,33 @@
                     android:gravity="center"
                     android:padding="3dp"
                     android:singleLine="true"
-                    android:text="会员折扣"
+                    android:text="3"
                     android:textColor="@color/colores_news_04"
                     android:textSize="14sp"
                      />   
                  
                   <TextView
                     android:id="@+id/tv_memberratio"
-                      android:layout_width="0dp"
-                      android:layout_weight="1.0"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.0"
                     android:layout_height="25dp"
                     android:layout_marginLeft="10dp"
                     android:gravity="center"
                     android:padding="3dp"
                     android:singleLine="true"
-                    android:text="会员比例"
+                    android:text="5:3"
                     android:textColor="@color/colores_news_11"
                     android:textSize="14sp"
                      />
-              <ImageView
-                    android:id="@+id/img_right"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:scaleType="centerInside"
-                    android:layout_marginLeft="10dp"
-                    android:src="@mipmap/service_new_right" />
-             </LinearLayout>
 
-</LinearLayout>
+             </LinearLayout>
+    <ImageView
+        android:id="@+id/img_right"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:scaleType="centerInside"
+        android:layout_marginLeft="10dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:src="@mipmap/service_new_right" />
+</RelativeLayout>
