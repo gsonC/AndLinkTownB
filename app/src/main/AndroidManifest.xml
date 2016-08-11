@@ -85,6 +85,8 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <activity android:name="com.lianbi.mezone.b.ui.MemberClassifyActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.WIFIWebActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.BookWebActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.BookFunctionActivity"/>
