@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/colores_news_14"
+              android:orientation="vertical">
+
+    <cn.com.hgh.view.ContainsEmojiEditText
+        android:id="@+id/edit_memberaddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:background="@color/white"
+        android:gravity="top"
+        android:hint="会员地址"
+        android:inputType="textMultiLine"
+        android:maxLength="200"
+        android:minHeight="80dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="15dp"
+        android:textColor="@color/colores_news_10"
+        android:textColorHint="@color/colores_news_12"
+        android:textSize="15sp"/>
+
+</LinearLayout>

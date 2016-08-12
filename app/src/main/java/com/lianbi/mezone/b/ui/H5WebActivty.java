@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.JavascriptInterface;
@@ -243,7 +242,6 @@ public class H5WebActivty extends BaseActivity{
 			@Override
 			public void onPageStarted(WebView view, String url, Bitmap favicon) {
 				gobackurl = url;
-				System.out.println(url);
 				if(url.contains("productsList?msec")){
 					MyOtherURL = url;
 				}
@@ -494,7 +492,7 @@ public class H5WebActivty extends BaseActivity{
 				|| gobackurl.contains("getAllProduct")
 				|| gobackurl.contains("addProduct")
 				|| gobackurl.contains("getProductById") || gobackurl.contains("sws/showOrderDetl")
-				|| gobackurl.contains("goInvite") || gobackurl.contains("goBusinessInfo")) {
+				|| gobackurl.contains("goInvite") || gobackurl.contains("goBusinessInfo")|| gobackurl.contains("/sws/backproduct/productsList")) {
 			web_webactivty.loadUrl(url);//返回一级目录
 		} else if (gobackurl.contains("viewMyAuthenticationMsg")) {
 			web_webactivty.loadUrl(MyMsg);
