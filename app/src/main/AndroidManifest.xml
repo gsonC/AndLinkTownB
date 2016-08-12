@@ -170,6 +170,11 @@
             android:name="com.lianbi.mezone.b.ui.OrderProductActivity"
             android:windowSoftInputMode="stateHidden"/>
         <activity android:name="com.lianbi.mezone.b.ui.GuiderActivity"/>
+        <activity android:name="com.lianbi.mezone.b.ui.MemberAddCategoryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"
+            />
         <activity
             android:name="com.lianbi.mezone.b.ui.LoginActivity"
             android:windowSoftInputMode="stateHidden"/>
