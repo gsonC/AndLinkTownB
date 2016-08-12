@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.lianbi.mezone.b.ui.YouhuiquanManagerActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:id="@+id/all_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/colores_news_01">
+
+            <TextView
+                android:id="@+id/all"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginBottom="1dp"
+                android:background="@color/colores_news_14"
+                android:gravity="center"
+                android:text="全部"
+                android:textColor="@color/colores_news_01"
+                android:textSize="@dimen/h17" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/valid_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/colores_news_14">
+
+            <TextView
+                android:id="@+id/valid"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginBottom="1dp"
+                android:background="@color/colores_news_14"
+                android:gravity="center"
+                android:text="有效"
+                android:textColor="@color/colores_news_10"
+                android:textSize="@dimen/h17" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/invalid_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/colores_news_14">
+
+            <TextView
+                android:id="@+id/invalid"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginBottom="1dp"
+                android:background="@color/colores_news_14"
+                android:gravity="center"
+                android:text="已失效"
+                android:textColor="@color/colores_news_10"
+                android:textSize="@dimen/h17" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/activity_youhuiquan_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1"
+        android:divider="@color/color_e3e3e3"
+        android:dividerHeight="1dp"
+        android:scrollbars="none" />
+
+    <TextView
+        android:id="@+id/add"
+        android:layout_width="202dp"
+        android:layout_height="28dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/shape_add_youhuiquan"
+        android:gravity="center"
+        android:text="发送新优惠券"
+        android:textColor="@color/white"
+        android:textSize="@dimen/h15" />
+</LinearLayout>
