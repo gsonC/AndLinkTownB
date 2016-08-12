@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ray_itemmemberify"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    >
+
+   <LinearLayout
+                android:id="@+id/llt_memberclass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="30dp"
+                android:background="@color/white"
+                android:clickable="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10dp" >
+
+
+                <TextView
+                    android:id="@+id/tv_memberclassify"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="0"
+                    android:textColor="@color/color_4b4b4b"
+                    android:textSize="15sp" />
+              <TextView
+                    android:id="@+id/tv_memebernum"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.0"
+                    android:layout_height="25dp"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
+                    android:padding="3dp"
+                    android:singleLine="true"
+                    android:text="123"
+                    android:textColor="@color/color_4b4b4b"
+                    android:textSize="14sp"
+                     />
+               <TextView
+                    android:id="@+id/tv_memberdiscount"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.0"
+                    android:layout_height="25dp"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
+                    android:padding="3dp"
+                    android:singleLine="true"
+                    android:text="3"
+                    android:textColor="@color/color_4b4b4b"
+                    android:textSize="14sp"
+                     />   
+                 
+                  <TextView
+                    android:id="@+id/tv_memberratio"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.0"
+                    android:layout_height="25dp"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
+                    android:padding="3dp"
+                    android:singleLine="true"
+                    android:text="5:3"
+                    android:textColor="@color/color_4b4b4b"
+                    android:textSize="14sp"
+                     />
+
+             </LinearLayout>
+    <ImageView
+        android:id="@+id/img_right"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:scaleType="centerInside"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="5dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:src="@mipmap/service_new_right" />
+</RelativeLayout>
