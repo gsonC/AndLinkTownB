@@ -93,6 +93,12 @@
         <activity android:name="com.lianbi.mezone.b.ui.MarketingMsgGlActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.MarketingSelectMemberActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.MemberClassifyActivity"/>
+        <activity android:name="com.lianbi.mezone.b.ui.IntegralRecordActivity"/>
+        <activity android:name="com.lianbi.mezone.b.ui.RecordsOfConsumptionActivity"/>
+        <activity android:name="com.lianbi.mezone.b.ui.MemberAdressActivity"/>
+        <activity android:name="com.lianbi.mezone.b.ui.MemberRemarksActivity"/>
+        <activity android:name="com.lianbi.mezone.b.ui.AddNewMembersActivity"/>
+        <activity android:name="com.lianbi.mezone.b.ui.MembersListActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.WIFIWebActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.BookWebActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.BookFunctionActivity"/>
@@ -172,11 +178,6 @@
             android:windowSoftInputMode="stateHidden"/>
         <activity
             android:name="com.lianbi.mezone.b.ui.RegisterActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"
-            />
-        <activity android:name="com.lianbi.mezone.b.ui.MemberAddCategoryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden"

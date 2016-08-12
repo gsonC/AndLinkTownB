@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/colores_news_14"
+              android:orientation="vertical">
+
+    <cn.com.hgh.indexscortlist.ClearEditText
+        android:id="@+id/act_member_list_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/search_bar_edit_selector"
+        android:drawableLeft="@mipmap/search_bar_icon_normal"
+        android:drawablePadding="10dp"
+        android:hint="搜索人员名字"
+        android:imeOptions="actionSearch"
+        android:padding="5dp"
+        android:singleLine="true"
+        android:textSize="15.0dip"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line"
+        android:background="@color/colores_news_14"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        >
+
+        <TextView
+            android:id="@+id/tv_newaddmember"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="本周新增会员:20"
+            android:textColor="@color/colores_news_11"/>
+
+        <TextView
+            android:id="@+id/tv_cumulativemember"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="累计会员数:100"
+            android:textColor="@color/colores_news_11"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line"
+        android:background="@color/colores_news_14"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        >
+
+        <TextView
+            android:id="@+id/tv_memberphone"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="会员电话"
+            android:textColor="@color/colores_news_10"
+            />
+
+        <TextView
+            android:id="@+id/tv_membercategory"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="类别"
+            android:textColor="@color/colores_news_10"
+            />
+
+        <TextView
+            android:id="@+id/tv_membersource"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="来源"
+            android:textColor="@color/colores_news_10"
+            />
+
+        <TextView
+            android:id="@+id/tv_memberlable"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="标签"
+            android:textColor="@color/colores_news_10"
+            />
+
+        <LinearLayout
+            android:id="@+id/llt_integral"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/tv_integral"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableRight="@mipmap/tma_up"
+                android:gravity="center"
+                android:text="积分"
+                android:textColor="@color/colores_news_10"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line"
+        android:background="@color/colores_news_14"/>
+
+    <cn.com.hgh.view.AbPullToRefreshView
+        android:id="@+id/act_addmembers_abpulltorefreshview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <ListView
+            android:id="@+id/act_addmembers_listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@null"
+            android:listSelector="@color/transparent"
+            android:scrollbars="none">
+        </ListView>
+    </cn.com.hgh.view.AbPullToRefreshView>
+
+    <ImageView
+        android:id="@+id/img_ememberslist_empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="center"
+        android:src="@mipmap/iv_empty"
+        android:visibility="gone"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line"
+        android:background="@color/colores_news_14"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:layout_gravity="bottom">
+
+        <TextView
+            android:id="@+id/tv_addnewmember"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="80dp"
+            android:layout_marginRight="80dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/shape_addnewmember"
+            android:clickable="true"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="新增会员"
+            android:textColor="@color/colores_news_18"
+            android:textSize="15sp"/>
+    </LinearLayout>
+
+</LinearLayout>

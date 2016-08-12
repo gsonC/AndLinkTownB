@@ -6,7 +6,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -138,7 +137,6 @@ public class InfoDetailsActivity extends BaseActivity {
 	//				leavemessagefragment.afterToexamine();
 //					currentList.clear();
 //					currentList=leavemessagefragment.getLeaveMessage();
-					Log.i("tag","140--->"+currentList.size());
 					setExamineAndDelete(false,currentList,LEAVINGMESSAGE);
 				}else{
 					setExamineAndDelete(false,currentList,READ);
@@ -244,7 +242,6 @@ public class InfoDetailsActivity extends BaseActivity {
        int type
 	) {
 		int s = currentList.size();
-		Log.i("tag","选取的个数--->"+s);
 		ArrayList<String> ids = new ArrayList<String>();
 		switch (type){
 			case READ:
@@ -489,7 +486,6 @@ public class InfoDetailsActivity extends BaseActivity {
 
 				}
 			}
-			Log.i("tag","审核留言-475-----》"+sb.toString());
 			ContentUtils.showMsg(InfoDetailsActivity.this, sb.toString());
 		} else {
 			return;
