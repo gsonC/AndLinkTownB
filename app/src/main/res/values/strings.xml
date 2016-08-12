@@ -149,6 +149,6 @@
     <string name="productlibrary">产品库</string>
     <string name="productclassification">产品分类</string>
     <string name="freezingamount">冻结金额</string>
-    <string name="newaddcategory">新增分类</string>
+    <string name="newaddcategory">添加会员分类</string>
 
 </resources>

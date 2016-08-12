@@ -85,7 +85,8 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name="com.lianbi.mezone.b.ui.MemberAddCategoryActivity"/>
+
+        <activity android:name="com.lianbi.mezone.b.ui.MarketingSMSexampleActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.MarketingBuySMSActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.MarketingMsgBulidActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.MarketingMsgDetailActivity"/>
@@ -171,6 +172,11 @@
             android:windowSoftInputMode="stateHidden"/>
         <activity
             android:name="com.lianbi.mezone.b.ui.RegisterActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"
+            />
+        <activity android:name="com.lianbi.mezone.b.ui.MemberAddCategoryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden"

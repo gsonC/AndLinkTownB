@@ -1,5 +1,6 @@
 package com.lianbi.mezone.b.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -21,6 +22,7 @@ import butterknife.OnClick;
  * @date
  */
 public class MemberAddCategoryActivity extends BaseActivity {
+
 
     @Bind(R.id.tv_memberclassify)
     TextView tvMemberclassify;
@@ -76,13 +78,13 @@ public class MemberAddCategoryActivity extends BaseActivity {
     RelativeLayout rayIntegral;
     @Bind(R.id.lay_main)
     LinearLayout layMain;
-    @Bind(R.id.text_newcategory)
-    TextView textNewcategory;
-
-    @OnClick({R.id.text_newcategory})
+    @Bind(R.id.tv_addmembercategory)
+    TextView tvAddmembercategory;
+    Intent getIntent;
+    @OnClick({R.id.tv_addmembercategory})
     public void OnClick(View v) {
         switch (v.getId()) {
-            case R.id.text_newcategory:
+            case R.id.tv_addmembercategory:
 
 
                 break;
@@ -102,7 +104,9 @@ public class MemberAddCategoryActivity extends BaseActivity {
      * 初始化View
      */
     private void initViewAndData() {
-        setPageTitle("新增分类");
+        getIntent=getIntent();
+        String nametype=getIntent.getStringExtra("type");
+        setPageTitle(nametype);
 
     }
 

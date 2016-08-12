@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -38,14 +39,31 @@ import cn.com.hgh.view.MyListView;
  */
 public class MarketingMsgDetailActivity extends BaseActivity {
 
+
+    @Bind(R.id.txt_time)
+    TextView txtTime;
     @Bind(R.id.txt_sendtime)
     TextView txtSendtime;
+    @Bind(R.id.txt_num)
+    TextView txtNum;
     @Bind(R.id.txt_sendnum)
     TextView txtSendnum;
+    @Bind(R.id.ray_top)
+    RelativeLayout rayTop;
     @Bind(R.id.txt_sendcontext)
     TextView txtSendcontext;
-    @Bind(R.id.btn_sendobject)
-    TextView btnSendobject;
+    @Bind(R.id.ray_msgcontext)
+    RelativeLayout rayMsgcontext;
+    @Bind(R.id.txt_memberphone)
+    TextView txtMemberphone;
+    @Bind(R.id.txt_membergrade)
+    TextView txtMembergrade;
+    @Bind(R.id.txt_membertag)
+    TextView txtMembertag;
+    @Bind(R.id.lay_listtmenu)
+    LinearLayout layListtmenu;
+    @Bind(R.id.v_01)
+    View v01;
     @Bind(R.id.lv_actmarketdetail)
     MyListView lvActmarketdetail;
     @Bind(R.id.sv_marketdetail)
@@ -55,13 +73,13 @@ public class MarketingMsgDetailActivity extends BaseActivity {
     HttpDialog dialog;
     private QuickAdapter<ServiceMallBean> mAdapter;
 
-    @OnClick({R.id.rlv_actmarketing})
+    @OnClick({R.id.txt_sendcontext})
     public void OnClick(View v) {
         switch (v.getId()) {
-            case R.id.rlv_actmarketing:
+            case R.id.txt_sendcontext:
 
 
-                break;
+            break;
 
         }
     }
@@ -105,16 +123,15 @@ public class MarketingMsgDetailActivity extends BaseActivity {
                         .getView(R.id.tv_oldprice);
                 ImageView img_right = helper
                         .getView(R.id.img_right);
-                tv_oldprice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG );
-                tv_oldprice.setText("¥"+String.valueOf(item.getOriginalPrice())+String.valueOf(item.getUnit()));
-                tv_newprice.setText("¥"+String.valueOf(item.getPresentPrice())+String.valueOf(item.getUnit()));
+                tv_oldprice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+                tv_oldprice.setText("¥" + String.valueOf(item.getOriginalPrice()) + String.valueOf(item.getUnit()));
+                tv_newprice.setText("¥" + String.valueOf(item.getPresentPrice()) + String.valueOf(item.getUnit()));
                 tv_servicename.setText(item.getAppName());
-                if(item.getDownload().equals("N")){
+                if (item.getDownload().equals("N")) {
                     Glide.with(MarketingMsgDetailActivity.this).load(item.getIcoUrl()).error(R.mipmap.default_head).into(img_itemmall);
                     tv_download.setVisibility(View.VISIBLE);
                     img_right.setVisibility(View.INVISIBLE);
-                }else
-                if(item.getDownload().equals("Y")){
+                } else if (item.getDownload().equals("Y")) {
                     Glide.with(MarketingMsgDetailActivity.this).load(item.getIcoUrl()).error(R.mipmap.default_head).into(img_itemmall);
                     tv_download.setVisibility(View.GONE);
                     img_right.setVisibility(View.VISIBLE);
@@ -144,7 +161,7 @@ public class MarketingMsgDetailActivity extends BaseActivity {
                                     .parseArray(reString,
                                             ServiceMallBean.class);
                             mData.addAll(downloadListMall);
-//                            updateView(mData);
+                            updateView(mData);
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -160,6 +177,7 @@ public class MarketingMsgDetailActivity extends BaseActivity {
         }, userShopInfoBean.getBusinessId());
 
     }
+
     protected void updateView(ArrayList<ServiceMallBean> arrayList) {
         mDatas.clear();
         mDatas.addAll(arrayList);

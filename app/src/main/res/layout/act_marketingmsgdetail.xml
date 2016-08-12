@@ -8,6 +8,8 @@
         android:id="@+id/ray_top"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
         android:gravity="center_vertical"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
@@ -18,7 +20,9 @@
          android:layout_height="wrap_content"
          android:layout_centerVertical="true"
          android:layout_marginLeft="5dp"
-         android:text="发送时间"
+         android:text="发送时间:"
+         android:textColor="@color/color_4b4b4b"
+         android:textSize="@dimen/h15"
         />
         <TextView
          android:id="@+id/txt_sendtime"
@@ -28,54 +32,114 @@
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
          android:text="2015 06  08"
+         android:textColor="@color/color_4b4b4b"
+         android:textSize="@dimen/h15"
+         />
+        <TextView
+         android:id="@+id/txt_num"
+         android:layout_toRightOf="@+id/txt_sendtime"
+         android:layout_centerVertical="true"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginLeft="20dp"
+         android:text="发送条数:"
+         android:textSize="@dimen/h15"
+         android:textColor="@color/color_4b4b4b"
+         />
+        <TextView
+         android:id="@+id/txt_sendnum"
+         android:layout_toRightOf="@id/txt_num"
+         android:layout_marginLeft="5dp"
+         android:layout_centerVertical="true"
+         android:layout_marginRight="5dp"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:textColor="@color/color_4b4b4b"
+         android:text="22"
+         android:textSize="@dimen/h15"
          />
 
-        <TextView
-            android:id="@+id/txt_sendnum"
-            android:layout_alignParentRight="true"
-            android:layout_marginLeft="5dp"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="5dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="22"
-            />
-        <TextView
-            android:id="@+id/txt_num"
-            android:layout_toLeftOf="@+id/txt_sendnum"
-            android:layout_centerVertical="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:text="发送条数"
-            />
     </RelativeLayout>
-    <TextView
-        android:id="@+id/txt_sendcontext"
+    <RelativeLayout
+        android:id="@+id/ray_msgcontext"
         android:layout_below="@id/ray_top"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:text="已发送短信内容"
-        android:paddingTop="5dp"
-        android:paddingLeft="5dp"
-        />
-    <TextView
-        android:id="@+id/btn_sendobject"
-        android:layout_below="@id/txt_sendcontext"
-        android:layout_marginLeft="5dp"
-        android:layout_alignParentLeft="true"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:text="发送对象"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="20dp"
+        >
+    <TextView
+        android:id="@+id/txt_sendcontext"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:hint="已发送短信内容"
+        android:background="@drawable/shap_hollow_grey"
+        android:textColorHint="@color/colores_news_11"
+        android:paddingTop="10dp"
+        android:paddingLeft="10dp"
         />
+    </RelativeLayout>
+    <LinearLayout
+       android:id="@+id/lay_listtmenu"
+       android:layout_below="@id/ray_msgcontext"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="horizontal"
+       android:background="@color/white"
+       android:layout_marginTop="10dp"
+       android:paddingLeft="15dp"
+       android:paddingRight="15dp"
+       android:paddingTop="5dp"
+       android:paddingBottom="5dp"
+       >
+        <TextView
+            android:id="@+id/txt_memberphone"
+            android:layout_width="0dp"
+            android:layout_weight="1.3"
+            android:layout_height="wrap_content"
+            android:text="发送会员电话"
+            android:textColor="@color/color_4b4b4b"
+            android:padding="5dp"
+            android:gravity="left"
+            />
+        <TextView
+            android:id="@+id/txt_membergrade"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="会员等级"
+            android:textColor="@color/color_4b4b4b"
+            android:padding="5dp"
+            android:gravity="left"
+            />
+        <TextView
+            android:id="@+id/txt_membertag"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="会员标签"
+            android:textColor="@color/color_4b4b4b"
+            android:padding="5dp"
+            android:gravity="left"
+            />
+    </LinearLayout>
+    <View
+        android:id="@+id/v_01"
+        android:layout_below="@id/lay_listtmenu"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colores_news_14" />
     <ScrollView
         android:id="@+id/sv_marketdetail"
-        android:layout_below="@id/btn_sendobject"
+        android:layout_below="@id/v_01"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
         android:scrollbars="none"
         >
     <LinearLayout

@@ -1,5 +1,6 @@
 package com.lianbi.mezone.b.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -7,7 +8,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.lianbi.mezone.b.bean.ServiceMallBean;
@@ -56,17 +56,22 @@ public class MemberClassifyActivity extends BaseActivity {
     private ArrayList<ServiceMallBean> mDatas = new ArrayList<ServiceMallBean>();
     HttpDialog dialog;
 
-    @OnClick({R.id.tv_membernum})
+    @OnClick({R.id.text_newcategory})
     public void OnClick(View v) {
         switch (v.getId()) {
-            case R.id.tv_membernum:
 
-
+            case R.id.text_newcategory:
+                simpleJump(MemberAddCategoryActivity.class,"新增分类");
             break;
 
         }
     }
-
+    private void  simpleJump(Class activity,String type){
+        Intent intent=new Intent();
+        intent.setClass(MemberClassifyActivity.this,activity);
+        intent.putExtra("type",type);
+        startActivity(intent);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,7 +86,7 @@ public class MemberClassifyActivity extends BaseActivity {
     private void initViewAndData() {
         setPageTitle("会员分类");
         dialog = new HttpDialog(this);
-//        listviewData();
+//      listviewData();
         getCandownloadMall();
     }
 
@@ -129,22 +134,30 @@ public class MemberClassifyActivity extends BaseActivity {
         rlvActclassify.addItemDecoration(new RecycleViewDivider(MemberClassifyActivity.this, LinearLayoutManager.HORIZONTAL));
         //设置适配器
         rlvActclassify.setAdapter(mRecyclerViewAdapter);
+                //全部的item都起作用
+        mRecyclerViewAdapter.setOnRecyclerViewItemClickListener(new CommonRecyclerViewAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+//                Toast.makeText(MemberClassifyActivity.this, "你点击了第" + position + "全部的item都起作用", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         //只针对显示name的Item
         mRecyclerViewAdapter.setOnRecyclerViewItemClickListener(new CommonRecyclerViewAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
-                Toast.makeText(MemberClassifyActivity.this, "你点击了第" + position + "个item", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(MemberClassifyActivity.this, "你点击了第" + position + "只针对显示name的Item", Toast.LENGTH_SHORT).show();
             }
-        }, 2);
+        }, 1);
 
-//        //添加item中控件监听
-//        mRecyclerViewAdapter.setOnViewInItemClickListener(new CommonRecyclerViewAdapter.OnViewInItemClickListener() {
-//            @Override
-//            public void onViewInItemClick(View v, int position) {
-//                DemoEntity demoEntity = data.get(position);
-//                Toast.makeText(MultiLayoutActivity.this, "你点击了第" + position + "个item,name = " + demoEntity.getName(), Toast.LENGTH_SHORT).show();
-//            }
-//        }, R.id.bt);
+        //添加item中控件监听
+        mRecyclerViewAdapter.setOnViewInItemClickListener(new CommonRecyclerViewAdapter.OnViewInItemClickListener() {
+            @Override
+            public void onViewInItemClick(View v, int position) {
+//                Toast.makeText(MemberClassifyActivity.this, "你点击了第添加item中控件监听", Toast.LENGTH_SHORT).show();
+                simpleJump(MemberAddCategoryActivity.class,"分类详情");
+            }
+        }, R.id.llt_memberclass,R.id.img_right);
 
     }
 

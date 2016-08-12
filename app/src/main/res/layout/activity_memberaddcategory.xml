@@ -1,23 +1,28 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@color/colores_news_14"
      >
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        >
     <LinearLayout
         android:id="@+id/lay_main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginTop="7dp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:background="@color/white"
         android:gravity="center_vertical"
         android:orientation="vertical" >
      <RelativeLayout
          android:id="@+id/ray_membercategory"
          android:layout_width="wrap_content"
+         android:background="@color/white"
          android:layout_height="55dp"
+         android:paddingLeft="20dp"
+         android:paddingRight="20dp"
          >
      <TextView
          android:id="@+id/tv_memberclassify"
@@ -49,8 +54,11 @@
          android:id="@+id/lay_discountrate"
          android:layout_width="match_parent"
          android:layout_height="55dp"
+         android:background="@color/white"
          android:gravity="center_vertical"
          android:orientation="horizontal"
+         android:paddingLeft="20dp"
+         android:paddingRight="20dp"
          >
          <TextView
              android:id="@+id/tv_discountradio"
@@ -103,6 +111,9 @@
          android:id="@+id/ray_integralratio"
          android:layout_width="match_parent"
          android:layout_height="55dp"
+         android:paddingLeft="20dp"
+         android:paddingRight="20dp"
+         android:background="@color/white"
          android:gravity="center_vertical"
          android:orientation="horizontal"
          >
@@ -163,7 +174,10 @@
          android:id="@+id/ray_required"
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
+         android:background="@color/white"
          android:orientation="vertical"
+         android:paddingLeft="20dp"
+         android:paddingRight="20dp"
          >
      <TextView
          android:id="@+id/tv_required"
@@ -244,6 +258,9 @@
          android:id="@+id/ray_integral"
          android:gravity="center_vertical"
          android:layout_width="match_parent"
+         android:background="@color/white"
+         android:paddingLeft="20dp"
+         android:paddingRight="20dp"
          android:layout_height="55dp">
          <TextView
              android:id="@+id/tv_integral"
@@ -300,72 +317,30 @@
              android:layout_centerVertical="true"
              android:textSize="16sp" />
      </RelativeLayout>
-
-        <!--<TextView-->
-            <!--android:id="@+id/tv_memberclassify"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="1"-->
-            <!--android:gravity="center"-->
-            <!--android:text="会员类别"-->
-            <!--android:textSize="16sp" />-->
-
-        <!--<View-->
-            <!--android:layout_width="@dimen/line"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:background="@color/colores_news_14" />-->
-
-        <!--<TextView-->
-            <!--android:id="@+id/tv_membernum"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="1"-->
-            <!--android:gravity="center"-->
-            <!--android:text="会员数"-->
-            <!--android:textSize="16sp" />-->
-
-        <!--<View-->
-            <!--android:layout_width="@dimen/line"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:background="@color/colores_news_14" />-->
-
-        <!--<TextView-->
-            <!--android:id="@+id/tv_memberdiscount"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="1"-->
-            <!--android:gravity="center"-->
-            <!--android:text="会员折扣"-->
-            <!--android:textSize="16sp" />-->
-
-        <!--<View-->
-            <!--android:layout_width="@dimen/line"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:background="@color/colores_news_14" />-->
-
-        <!--<TextView-->
-            <!--android:id="@+id/tv_integralratio"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="1"-->
-            <!--android:gravity="center"-->
-            <!--android:text="积分比例"-->
-            <!--android:textSize="16sp" />-->
     </LinearLayout>
-    <TextView
-        android:id="@+id/text_newcategory"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="20dp"
+    </ScrollView>
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="14dp"
-        android:layout_marginRight="14dp"
-        android:layout_marginTop="25dp"
-        android:background="@drawable/shape_login"
-        android:clickable="true"
-        android:gravity="center"
-        android:padding="10dp"
-        android:text="添加此分类会员"
-        android:textColor="@color/white"
-        android:textSize="17sp" />
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        >
+        <TextView
+            android:id="@+id/tv_addmembercategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@drawable/shap_hollow_red"
+            android:clickable="true"
+            android:gravity="center"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:text="添加此分类会员"
+            android:textColor="@color/color_ff6351"
+            android:textSize="17sp" />
+    </RelativeLayout>
 </RelativeLayout>
