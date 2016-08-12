@@ -1,30 +1,32 @@
 package com.lianbi.mezone.b.ui;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.alibaba.fastjson.JSON;
+import com.bumptech.glide.Glide;
+import com.igexin.sdk.PushManager;
+import com.lianbi.mezone.b.app.Constants;
+import com.lianbi.mezone.b.bean.LoginBackBean;
+import com.lianbi.mezone.b.bean.MyShopInfoBean;
+import com.lianbi.mezone.b.httpresponse.MyResultCallback;
+import com.xizhi.mezone.b.R;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import cn.com.hgh.utils.AbDateUtil;
 import cn.com.hgh.utils.AbStrUtil;
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.REGX;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.view.CircularImageView;
-
-import com.alibaba.fastjson.JSON;
-import com.bumptech.glide.Glide;
-import com.igexin.sdk.PushManager;
-import com.xizhi.mezone.b.R;
-import com.lianbi.mezone.b.app.Constants;
-import com.lianbi.mezone.b.bean.LoginBackBean;
-import com.lianbi.mezone.b.bean.MyShopInfoBean;
-import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 
 @SuppressLint("ResourceAsColor")
 public class LoginActivity extends BaseActivity {
@@ -136,6 +138,7 @@ public class LoginActivity extends BaseActivity {
 				@Override
 				public void onResponseResult(Result result) {
 					String reString = result.getData();
+					Log.i("taag","log........."+result);
 					ContentUtils.putSharePre(LoginActivity.this,
 							Constants.SHARED_PREFERENCE_NAME,
 							Constants.LOGINED_IN, true);

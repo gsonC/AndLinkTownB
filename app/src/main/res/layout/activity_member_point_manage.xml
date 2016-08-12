@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <cn.com.hgh.view.SlideListView2
+            android:id="@+id/fm_messagefragment_listView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#fff4f7f9"
+            android:cacheColorHint="#00000000"
+            android:divider="#dddbdb"
+            android:dividerHeight="1.0px"
+            android:drawSelectorOnTop="false"
+            android:listSelector="#00000000"
+            android:scrollbars="none" >
+        </cn.com.hgh.view.SlideListView2>
+
+
+    </FrameLayout>
+    <ImageView
+        android:id="@+id/imaa"
+        android:layout_width="match_parent"
+        android:layout_height="14dp"
+        android:background="#b4b4b4"/>
+
+    <RelativeLayout
+        android:id="@+id/rela_tab"
+        android:layout_width="match_parent"
+        android:layout_height="83dp"
+        android:gravity="center_vertical"
+        >
+
+        <cn.com.hgh.view.ContainsEmojiEditText
+            android:id="@+id/tv_search"
+            android:layout_width="676dp"
+            android:layout_height="55dp"
+            android:background="@drawable/shape_search_date_edt_bg_new"
+            android:drawableLeft="@mipmap/icon_search"
+            android:drawablePadding="5dp"
+            android:gravity="center_vertical"
+            android:hint="搜索"
+            android:textColor="#FF909090"
+            android:textSize="14sp"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/showM"
+        android:layout_width="match_parent"
+        android:layout_height="63dp"
+        android:layout_below="@id/rela_tab"
+        android:layout_marginLeft="39dp"
+        android:gravity="center"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="39dp"
+            android:layout_gravity="center_vertical"
+            android:text="积分商品积分商品将在微店展示"
+            android:textColor="@color/showcolor"
+            android:textSize="14sp"
+            />
+    </RelativeLayout>
+   <ImageView
+       android:layout_width="match_parent"
+       android:layout_height="1dp"
+       android:background="#e3e3e3"/>
+
+
+
+
+    <RelativeLayout
+        android:id="@+id/pointbuju"
+        android:layout_width="match_parent"
+        android:layout_height="97dp"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_vertical"
+        >
+
+        <TextView
+
+            android:id="@+id/tv_searchtag"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/shape_search_date_edt_bg_new"
+            android:drawablePadding="5dp"
+            android:gravity="center"
+            android:hint="新增积分商品"
+            android:padding="5dp"
+            android:textColor="#FF909090"
+            android:textSize="23sp"
+
+            />
+
+        <TextView
+            android:id="@+id/bt_sure"
+            android:layout_width="50dp"
+            android:layout_height="55dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@id/tv_searchtag"
+            android:background="@drawable/shape_search_date_edt_bg_new"
+            android:drawablePadding="5dp"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="从微信商城产品库选择"
+            android:textColor="#FF909090"
+            android:textSize="23dp"
+            />
+    </RelativeLayout>
+    <ListView
+        android:layout_above="@id/pointbuju"
+        android:layout_below="@id/showM"
+        android:id="@+id/fm_tag_listView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@null"
+        android:listSelector="@color/transparent"
+        android:scrollbars="none"
+        ></ListView>
+</RelativeLayout>
