@@ -28,6 +28,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Random;
 
+import cn.com.hgh.utils.ScreenUtils;
 import cn.com.hgh.view.PagerSlidingTabStrip;
 
 public class IntegralRecordActivity extends BaseActivity {
@@ -189,11 +190,23 @@ public class IntegralRecordActivity extends BaseActivity {
 		pager = (ViewPager) findViewById(R.id.pager_act_integralrecord);
 		pager.setAdapter(new MyAdapter(getSupportFragmentManager(), titles));
 		tabs.setViewPager(pager);
+		viewAdapter();
+
 	}
 
+	private void viewAdapter() {
+		ArrayList<TextView> tvs25 = new ArrayList<>();
+		tvs25.add(mTvIntegralIntegralrecord);
+		tvs25.add(mTvIntegralMemberfile);
+		tvs25.add(mTvIntegralRecordsofconsumption);
+		tvs25.add(mTvTotalintegral);
+		tvs25.add(mTvConsumptionintegral);
+		tvs25.add(mTvSurplusintegral);
+		ScreenUtils.textAdaptationOn720(tvs25,this,25);
+
+	}
 
 	String position;
-
 	/**
 	 * 添加监听
 	 */

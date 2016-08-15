@@ -100,7 +100,20 @@ public class RecordsOfConsumptionActivity extends BaseActivity {
 		mActRecordAbpulltorefreshview = (AbPullToRefreshView) findViewById(R.id.act_record_abpulltorefreshview);
 		mActRecordListview = (ListView) findViewById(R.id.act_record_listview);
 		mImgRecordEmpty = (ImageView) findViewById(R.id.img_record_empty);
+		viewAdapter();
+	}
 
+	/**
+	 * 文字适配
+	 */
+	private void viewAdapter() {
+		ArrayList<TextView> tvs25 = new ArrayList<>();
+		tvs25.add((TextView)findViewById(R.id.tv_record_recordsofconsumption));
+		tvs25.add(mTvRecordMemberfile);
+		tvs25.add(mTvRecordRecordsofconsumption);
+		tvs25.add(mTvOrdernum);
+		tvs25.add(mTvOrdermuch);
+		ScreenUtils.textAdaptationOn720(tvs25,this,25);
 	}
 
 

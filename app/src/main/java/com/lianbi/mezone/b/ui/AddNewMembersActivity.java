@@ -24,11 +24,14 @@ import com.lianbi.mezone.b.bean.MemberInfoBean;
 import com.lianbi.mezone.b.photo.PopupWindowHelper;
 import com.xizhi.mezone.b.R;
 
+import java.util.ArrayList;
+
 import cn.com.hgh.timeselector.TimeSelectorE;
 import cn.com.hgh.utils.AbDateUtil;
 import cn.com.hgh.utils.AbStrUtil;
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.REGX;
+import cn.com.hgh.utils.ScreenUtils;
 import cn.com.hgh.view.ClearEditText;
 import cn.com.hgh.view.ContainsEmojiEditText;
 
@@ -55,6 +58,11 @@ public class AddNewMembersActivity extends BaseActivity {
 	private View mPickSexView;
 	private PopupWindow pw = null;
 	private TextView mTvAddmembertag;
+	private TextView mEditAddmemberPhone1;
+	private TextView mTvMembertype;
+	private TextView mTvAddmemberDiscount;
+	private TextView mTvAddmemberMax;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -109,11 +117,15 @@ public class AddNewMembersActivity extends BaseActivity {
 		View view_line1 = findViewById(R.id.view_line1);
 		boolean isShow = getIntent().getBooleanExtra("isShow", false);
 		setPageRightText("保存");
-		mTvMemberfile = (TextView) findViewById(R.id.tv_file_memberfile);//会员记录
+		mTvMemberfile = (TextView) findViewById(R.id.tv_file_memberfile);//会员档案
 		mTvMemberfile.setTextColor(AddNewMembersActivity.this.getResources().getColor(R.color.color_ff8208));
 		mTvRecordsofconsumption = (TextView) findViewById(R.id.tv_file_recordsofconsumption);//消费记录
 		mTvIntegralrecord = (TextView) findViewById(R.id.tv_file_integralrecord);//积分记录
 		mEditAddmemberPhone = (ClearEditText) findViewById(R.id.edit_addmember_phone);//手机号码
+		mEditAddmemberPhone1 = (TextView) findViewById(R.id.edit_addmember_phone1);//手机号码
+		mTvMembertype = (TextView) findViewById(R.id.tv_membertype);//会员折扣
+		mTvAddmemberMax = (TextView) findViewById(R.id.tv_addmember_max);//单笔最高折扣
+		mTvAddmemberDiscount = (TextView) findViewById(R.id.tv_addmember_discount);
 		mTvAddmembertag = (TextView) findViewById(R.id.tv_addmembertag);//会员标签
 		mEditMembername = (ContainsEmojiEditText) findViewById(R.id.edit_membername);//会员姓名
 		mTvAddmemberSex = (TextView) findViewById(R.id.tv_addmember_sex);//会员性别
@@ -142,6 +154,69 @@ public class AddNewMembersActivity extends BaseActivity {
 			mViewVisibale.setVisibility(View.GONE);
 			llt_line.setVisibility(View.GONE);
 		}
+		viewAdapter();
+	}
+
+	/**
+	 * 适配
+	 */
+	private void viewAdapter() {
+		ArrayList<TextView> tvs20 = new ArrayList<>();
+		tvs20.add((TextView)findViewById(R.id.tv_membertype2));//类别解释
+		tvs20.add((TextView)findViewById(R.id.edit_addmember_phone2));//必填
+
+		ArrayList<TextView> tvs25 = new ArrayList<>();
+		tvs25.add((TextView)findViewById(R.id.tv_file_memberfile));//会员档案
+		tvs25.add((TextView)findViewById(R.id.tv_file_recordsofconsumption));//消费记录
+		tvs25.add((TextView)findViewById(R.id.tv_file_integralrecord));//积分记录
+
+		ArrayList<TextView> tvs = new ArrayList<>();
+		tvs.add((TextView)findViewById(R.id.edit_addmember_phone1));//手机号码
+		tvs.add((TextView)findViewById(R.id.edit_addmember_phone));//手机号码ET
+
+		tvs.add((TextView)findViewById(R.id.tv_membertype1));//会员类别
+		tvs.add((TextView)findViewById(R.id.tv_membertype));//普通会员
+
+
+		tvs.add((TextView)findViewById(R.id.tv_memberdiscount1));//会员折扣
+		tvs.add((TextView)findViewById(R.id.tv_addmember_discount));//无
+		tvs.add((TextView)findViewById(R.id.tv_addmember_max1));//单笔最高折扣
+		tvs.add((TextView)findViewById(R.id.tv_addmember_max));//无
+		tvs.add((TextView)findViewById(R.id.tv_addmember_integral));//0
+		tvs.add((TextView)findViewById(R.id.tv_addmember_integral1));//会员积分
+
+		tvs.add((TextView)findViewById(R.id.tv_addmember_type1));//会员标签
+		tvs.add((TextView)findViewById(R.id.tv_addmembertag));//标签内容
+
+		tvs.add((TextView)findViewById(R.id.tv_addmember_name));//会员姓名
+		tvs.add((TextView)findViewById(R.id.edit_membername));//姓名内容
+
+		tvs.add((TextView)findViewById(R.id.tv_addmember_sex1));//会员性别
+		tvs.add((TextView)findViewById(R.id.tv_addmember_sex));//男女
+
+		tvs.add((TextView)findViewById(R.id.tv_member_bir));//会员生日
+		tvs.add((TextView)findViewById(R.id.et_memberbirthday));//生日日期
+
+		tvs.add((TextView)findViewById(R.id.tv_addmember_careID));//会员卡号
+		tvs.add((TextView)findViewById(R.id.edit_membercardnumber));//卡号number
+
+		tvs.add((TextView)findViewById(R.id.tv_membercardtermofvalidity));//会员卡有效期
+		tvs.add((TextView)findViewById(R.id.et_membercardtermofvalidity));//有效期时间
+
+		tvs.add((TextView)findViewById(R.id.tv_IDnumber));//身份证号
+		tvs.add((TextView)findViewById(R.id.edit_IDnumber));//身份证number
+
+		tvs.add((TextView)findViewById(R.id.tv_munberadress_visable1));//联系地址
+		tvs.add((TextView)findViewById(R.id.tv_munberadress_visable));//地址内容
+		tvs.add((TextView)findViewById(R.id.tv_munberadress));//联系地址
+
+		tvs.add((TextView)findViewById(R.id.tv_munberremarks_visable1));//备注
+		tvs.add((TextView)findViewById(R.id.tv_munberremarks_visable));//备注
+		tvs.add((TextView)findViewById(R.id.tv_remarks));//备注
+
+		ScreenUtils.textAdaptationOn720(tvs20,this,20);
+		ScreenUtils.textAdaptationOn720(tvs25,this,25);
+		ScreenUtils.textAdaptationOn720(tvs,this,27);
 	}
 
 	/**
