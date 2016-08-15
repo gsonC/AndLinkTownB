@@ -90,5 +90,8 @@
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowBackground">@color/white</item>
     </style>
-
+    <!-- *********************************************************************** -->
+    <style name="RadioButtonStyles">
+        <item name="android:button">@drawable/rb_selected</item>
+    </style>
 </resources>
