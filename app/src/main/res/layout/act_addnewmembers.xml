@@ -34,6 +34,7 @@
                 android:id="@+id/tv_file_memberfile"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:textColor="@color/colores_news_19"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="会员档案"/>
@@ -42,6 +43,7 @@
                 android:id="@+id/tv_file_recordsofconsumption"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:textColor="@color/colores_news_19"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="消费记录"/>
@@ -50,6 +52,7 @@
                 android:id="@+id/tv_file_integralrecord"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:textColor="@color/colores_news_19"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="积分记录"/>
@@ -244,10 +247,14 @@
                 />
 
             <TextView
+                android:id="@+id/tv_addmembertag"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="30dp"
                 android:layout_weight="1"
+                android:singleLine="true"
+                android:maxEms="15"
+                android:ellipsize="end"
                 android:hint="请选择会员标签"
                 android:textColor="@color/colores_news_10"
                 android:textColorHint="@color/colores_news_11"
@@ -255,7 +262,6 @@
                 />
 
             <ImageView
-                android:id="@+id/img_memberlabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:scaleType="centerInside"
@@ -324,6 +330,7 @@
                 />
 
             <TextView
+                android:id="@+id/tv_addmember_sex"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="30dp"

@@ -85,7 +85,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
+        <activity android:name="com.lianbi.mezone.b.ui.SelectTagActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.MarketingSMSexampleActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.MarketingBuySMSActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.MarketingMsgBulidActivity"/>
@@ -98,7 +98,8 @@
         <activity android:name="com.lianbi.mezone.b.ui.MemberAdressActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.MemberRemarksActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.AddNewMembersActivity"/>
-        <activity android:name="com.lianbi.mezone.b.ui.MembersListActivity"/>
+        <activity android:name="com.lianbi.mezone.b.ui.MembersListActivity"
+                  android:launchMode="singleTask"/>
         <activity android:name="com.lianbi.mezone.b.ui.WIFIWebActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.BookWebActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.BookFunctionActivity"/>

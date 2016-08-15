@@ -2,7 +2,7 @@ package com.lianbi.mezone.b.ui;
 /*
  * @创建者     Administrator
  * @创建时间   2016/8/11 9:21
- * @描述       ${TODO}
+ * @描述       会员列表
  *
  * @更新者     $Author$ 
  * @更新时间   $Date$

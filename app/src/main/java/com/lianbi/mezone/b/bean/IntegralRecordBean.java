@@ -9,6 +9,7 @@ package com.lianbi.mezone.b.bean;/*
  */
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 public class IntegralRecordBean implements Serializable {
 
@@ -17,7 +18,16 @@ public class IntegralRecordBean implements Serializable {
 	private String recordTime;
 	private String recordThing;
 	private String recordWhrer;
-	private String recordInteger;
+	private BigDecimal recordInteger;
+	private int type;
+
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
+	}
 
 	public String getRecordTime() {
 		return recordTime;
@@ -43,11 +53,11 @@ public class IntegralRecordBean implements Serializable {
 		this.recordWhrer = recordWhrer;
 	}
 
-	public String getRecordInteger() {
+	public BigDecimal getRecordInteger() {
 		return recordInteger;
 	}
 
-	public void setRecordInteger(String recordInteger) {
+	public void setRecordInteger(BigDecimal recordInteger) {
 		this.recordInteger = recordInteger;
 	}
 }

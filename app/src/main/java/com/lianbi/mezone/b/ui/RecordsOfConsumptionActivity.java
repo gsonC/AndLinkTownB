@@ -53,6 +53,7 @@ public class RecordsOfConsumptionActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.act_recordofconsumption, HAVETYPE);
 		mMemberInfoBean = (MemberInfoBean) getIntent().getSerializableExtra("memberInfo");
+		System.out.println("memberInfo" + mMemberInfoBean.getMemberPhone());
 		initView();
 		setLisenter();
 		initAdapter();
@@ -76,7 +77,7 @@ public class RecordsOfConsumptionActivity extends BaseActivity {
 				tv_rc_time.setText(item.getConsumptionTime() + "");
 				tv_rc_thing.setText(item.getConsumptionThing() + "");
 				tv_rc_where.setText(item.getConsumptionWhere() + "");
-				tv_rc_much.setText(MathExtend.roundNew(item.getConsumptionMuch().divide(new BigDecimal(100)).doubleValue(), 2) + "");// 账户总额
+				tv_rc_much.setText(MathExtend.roundNew(item.getConsumptionMuch().divide(new BigDecimal(100)).doubleValue(), 2) + "");
 
 			}
 		};
@@ -87,7 +88,7 @@ public class RecordsOfConsumptionActivity extends BaseActivity {
 	 * 初始化View
 	 */
 	private void initView() {
-		setPageTitle("消费记录");
+		setPageTitle("会员详情");
 		mTvRecordMemberfile = (TextView) findViewById(R.id.tv_record_memberfile);//会员档案
 		mTvRecordRecordsofconsumption = (TextView) findViewById(R.id.tv_record_recordsofconsumption);//消费记录
 		mTvRecordRecordsofconsumption.setTextColor(RecordsOfConsumptionActivity.this.getResources().getColor(R.color.color_ff8208));
@@ -190,5 +191,12 @@ public class RecordsOfConsumptionActivity extends BaseActivity {
 		AbPullHide.hideRefreshView(isResh, mActRecordAbpulltorefreshview);
 		mAdapter.replaceAll(mDatas);
 
+	}
+
+	@Override
+	protected void onTitleLeftClick() {
+		super.onTitleLeftClick();
+		startActivity(new Intent(RecordsOfConsumptionActivity.this,MembersListActivity.class));
+		finish();
 	}
 }
