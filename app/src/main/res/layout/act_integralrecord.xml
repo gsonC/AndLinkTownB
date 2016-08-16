@@ -25,9 +25,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="@color/colores_news_19"
             android:gravity="center"
-            android:text="会员档案"/>
+            android:text="会员档案"
+            android:textColor="@color/colores_news_19"/>
 
         <TextView
             android:id="@+id/tv_integral_recordsofconsumption"
@@ -35,17 +35,17 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:textColor="@color/colores_news_19"
-            android:text="消费记录"/>
+            android:text="消费记录"
+            android:textColor="@color/colores_news_19"/>
 
         <TextView
             android:id="@+id/tv_integral_integralrecord"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="@color/colores_news_19"
             android:gravity="center"
-            android:text="积分记录"/>
+            android:text="积分记录"
+            android:textColor="@color/colores_news_19"/>
     </LinearLayout>
 
     <LinearLayout
@@ -131,29 +131,69 @@
         />
 
     <LinearLayout
-        android:id="@+id/ll_integral_tabs"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1.0"
-        android:background="@color/colores_news_14"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:padding="7dp"
+        >
 
-        <cn.com.hgh.view.PagerSlidingTabStrip
-            android:id="@+id/ps_tabs_act_infodetails"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@android:color/white"
-            app:pstsDividerColor="@color/transparent"
-            app:pstsIndicatorColor="@color/colores_news_01"
-            app:pstsIndicatorHeight="3dp"
-            app:pstsShouldExpand="true"
-            app:pstsTabBackground="@drawable/background_tab"
-            app:pstsUnderlineHeight="3dp"
-            app:selectedTabTextColor="@color/colores_news_01"/>
+        <TextView
+            android:id="@+id/tv_allrecord"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="1"
+            android:background="@drawable/member_record_pressed"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="全部记录"
+            android:textColor="@color/colores_news_19"/>
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/pager_act_integralrecord"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+        <TextView
+            android:id="@+id/tv_accessrecord"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="1"
+            android:background="@drawable/member_record"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="获取记录"
+            android:textColor="@color/colores_news_19"/>
+
+        <TextView
+            android:id="@+id/tv_userecord"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="1"
+            android:background="@drawable/member_record"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="使用记录"
+            android:textColor="@color/colores_news_19"/>
     </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/colores_news_14"
+        />
+    <ListView
+        android:id="@+id/act_memberrecord_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@null"
+        android:listSelector="@color/transparent"
+        android:scrollbars="none">
+    </ListView>
+
+    <ImageView
+        android:id="@+id/act_memberrecord_iv_empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerInside"
+        android:src="@mipmap/iv_empty"
+        android:visibility="gone" />
+
 </LinearLayout>

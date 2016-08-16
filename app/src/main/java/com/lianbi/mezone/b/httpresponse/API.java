@@ -40,9 +40,9 @@ public class API {
      *  生产环境url
      */
 //    	public static final String ENVIRONMENTAL = "http://front.xylbn.cn:9003";
-//    	public static final String TOSTORESERVICE = "http://mall.xylbn.cn:9005";//到店服务
-//    	public static final String PAYQR = ENVIRONMENTAL+"/lincombFront/toOrderPay.do?state=";/**支付二维码**/
-//    	public static final String INTELLIGENT_WIFI ="http://www.xylbn.cn/wcmv2/routerApplication/wifiIndex?businessId=";//智能wifi
+ //   	public static final String TOSTORESERVICE = "http://mall.xylbn.cn:9005";//到店服务
+   // 	public static final String PAYQR = ENVIRONMENTAL+"/lincombFront/toOrderPay.do?state=";/**支付二维码**/
+    //	public static final String INTELLIGENT_WIFI ="http://www.xylbn.cn/wcmv2/routerApplication/wifiIndex?businessId=";//智能wifi
 	/**
 	 *  uat环境url
 	 */

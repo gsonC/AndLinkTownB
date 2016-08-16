@@ -76,6 +76,7 @@ public class MembersListActivity extends BaseActivity {
 	private TextView mTvMembercategory;
 	private TextView mTvMembersource;
 	private TextView mTvMemberlable;
+	private Drawable mDrawableinitial;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +92,8 @@ public class MembersListActivity extends BaseActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		mDrawableinitial.setBounds(0, 0, mDrawableinitial.getMinimumWidth(), mDrawableinitial.getMinimumHeight());
+		mTvIntegral.setCompoundDrawables(null, null, mDrawableinitial, null);
 		getMembersList(true);
 	}
 
@@ -142,6 +145,7 @@ public class MembersListActivity extends BaseActivity {
 		viewAdapter();
 		mDrawableDowm = ContextCompat.getDrawable(this, R.mipmap.tma_down);
 		mDrawableUp = ContextCompat.getDrawable(this, R.mipmap.tma_up);
+		mDrawableinitial = ContextCompat.getDrawable(this, R.mipmap.tma_initialdown);
 	}
 
 	/**
@@ -343,6 +347,7 @@ public class MembersListActivity extends BaseActivity {
 			switch (requestCode) {
 				case REQUEST_ADDMEMBER://添加会员返回
 				//	getMembersList(true);
+
 					break;
 
 			}

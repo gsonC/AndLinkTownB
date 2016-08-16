@@ -11,25 +11,23 @@ package com.lianbi.mezone.b.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.lianbi.mezone.b.bean.IntegralRecordBean;
 import com.lianbi.mezone.b.bean.MemberInfoBean;
-import com.lianbi.mezone.b.fragment.IntegralRecordFragment;
 import com.xizhi.mezone.b.R;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Random;
 
+import cn.com.hgh.baseadapter.BaseAdapterHelper;
+import cn.com.hgh.baseadapter.QuickAdapter;
+import cn.com.hgh.utils.MathExtend;
 import cn.com.hgh.utils.ScreenUtils;
-import cn.com.hgh.view.PagerSlidingTabStrip;
 
 public class IntegralRecordActivity extends BaseActivity {
 
@@ -39,18 +37,18 @@ public class IntegralRecordActivity extends BaseActivity {
 	private TextView mTvTotalintegral;
 	private TextView mTvConsumptionintegral;
 	private TextView mTvSurplusintegral;
-	final String[] titles = {"全部记录", "获取记录", "使用记录"};
-	private PagerSlidingTabStrip tabs;
-	private ViewPager pager;
-	IntegralRecordFragment allRecordFragment;
-	IntegralRecordFragment obtainRecordFragment;
-	IntegralRecordFragment useRecordFragment;
 	public int curPosition = 0;
 	private MemberInfoBean mMemberInfoBean;
 	public static final int POSITION0 = 0;
 	public static final int POSITION1 = 1;
 	public static final int POSITION2 = 2;
-
+	private TextView mTvAllrecord;
+	private TextView mTvAccessrecord;
+	private TextView mTvUserecord;
+	private ListView mActMemberrecordListview;
+	private ImageView mActMemberrecordIvEmpty;
+	private QuickAdapter<IntegralRecordBean> mAdapter;
+	private ArrayList<IntegralRecordBean> mDatas = new ArrayList<>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -60,116 +58,81 @@ public class IntegralRecordActivity extends BaseActivity {
 		System.out.println("memberInfo" + mMemberInfoBean.getMemberPhone());
 		initView();
 		setLisenter();
+		initAdapter();
 		getIntegralRecord(true);
+	}
+
+	private void initAdapter() {
+		System.out.println("arrayList=="+arrayList.size());
+		mAdapter = new QuickAdapter<IntegralRecordBean>(this, R.layout.item_consumption, arrayList) {
+			@Override
+			protected void convert(BaseAdapterHelper helper, IntegralRecordBean item) {
+				TextView tv_rc_time = helper.getView(R.id.tv_rc_time);
+				TextView tv_rc_thing = helper.getView(R.id.tv_rc_thing);
+				TextView tv_rc_where = helper.getView(R.id.tv_rc_where);
+				TextView tv_rc_much = helper.getView(R.id.tv_rc_much);
+
+				ScreenUtils.textAdaptationOn720(tv_rc_time, IntegralRecordActivity.this, 24);//消费时间
+				ScreenUtils.textAdaptationOn720(tv_rc_thing, IntegralRecordActivity.this, 24);//消费内容
+				ScreenUtils.textAdaptationOn720(tv_rc_where, IntegralRecordActivity.this, 24);//消费地点
+				ScreenUtils.textAdaptationOn720(tv_rc_much, IntegralRecordActivity.this, 24);//消费金额
+
+				tv_rc_time.setText(item.getRecordTime() + "");
+				tv_rc_thing.setText(item.getRecordThing() + "");
+				tv_rc_where.setText(item.getRecordWhrer() + "");
+				tv_rc_much.setText(MathExtend.roundNew(item.getRecordInteger().divide(new BigDecimal(100)).doubleValue(), 2) + "");
+			}
+		};
+		mActMemberrecordListview.setAdapter(mAdapter);
 	}
 
 	private int page = 0;
 
-	ArrayList<IntegralRecordBean> arrayList = new ArrayList<IntegralRecordBean>();
-	ArrayList<IntegralRecordBean> arrayList0 = new ArrayList<IntegralRecordBean>();
-	ArrayList<IntegralRecordBean> arrayList1 = new ArrayList<IntegralRecordBean>();
+	ArrayList<IntegralRecordBean> arrayList = new ArrayList<>();
+	ArrayList<IntegralRecordBean> arrayList0 = new ArrayList<>();
+	ArrayList<IntegralRecordBean> arrayList1 = new ArrayList<>();
 
 	/**
 	 * 获取消费记录
 	 */
 	public void getIntegralRecord(final boolean isResh) {
+		ArrayList<IntegralRecordBean> mDatasL = new ArrayList<>();
 
-		new Handler().postDelayed(new Runnable() {
-			@Override
-			public void run() {
-				ArrayList<IntegralRecordBean> mDatasL = new ArrayList<IntegralRecordBean>();
-				if (isResh) {
-					page = 0;
+		if (isResh) {
+			page = 0;
+		}
+		page++;
+
+		for (int i = 0; i < 50; i++) {
+			IntegralRecordBean bean = new IntegralRecordBean();
+			bean.setRecordTime("2016-08-12 12:1" + i);
+			bean.setRecordThing("饮料*" + i);
+			bean.setRecordWhrer("微店");
+			bean.setRecordInteger(new BigDecimal(1000 + i));
+			bean.setType(new Random().nextInt(2));
+			mDatasL.add(bean);
+		}
+
+		if (isResh) {
+			arrayList.clear();
+			arrayList0.clear();
+			arrayList1.clear();
+		}
+		arrayList.addAll(mDatasL);
+		if (arrayList.size() > 0) {
+			for (IntegralRecordBean ir : arrayList) {
+				switch (ir.getType()) {
+					case POSITION0:
+						arrayList0.add(ir);
+						break;
+					case POSITION1:
+						arrayList1.add(ir);
+						break;
 				}
-				page++;
-
-				for (int i = 0; i < 50; i++) {
-					IntegralRecordBean bean = new IntegralRecordBean();
-					bean.setRecordTime("2016-08-12 12:1" + i);
-					bean.setRecordThing("饮料*" + i);
-					bean.setRecordWhrer("微店");
-					bean.setRecordInteger(new BigDecimal(1000 + i));
-					bean.setType(new Random().nextInt(2));
-					mDatasL.add(bean);
-				}
-
-				if (isResh) {
-					arrayList.clear();
-					arrayList0.clear();
-					arrayList1.clear();
-				}
-				arrayList.addAll(mDatasL);
-				if (arrayList.size() > 0) {
-					for (IntegralRecordBean ir : arrayList) {
-						switch (ir.getType()) {
-							case POSITION0:
-								arrayList0.add(ir);
-								break;
-							case POSITION1:
-								arrayList1.add(ir);
-								break;
-						}
-					}
-				}
-
-				swtFmDo(POSITION0,false,arrayList);
-				swtFmDo(POSITION1,false,arrayList0);
-				swtFmDo(POSITION2,false,arrayList1);
-
-				swtFmHide(curPosition, isResh);
 			}
-		},80);
-
-
-	}
-
-	/**
-	 * fm隐藏
-	 */
-	private void swtFmHide(int arg0, boolean isD) {
-		switch (arg0){
-			case POSITION0:
-				if(allRecordFragment!=null){
-					allRecordFragment.hidle(isD);
-				}
-				break;
-			case POSITION1:
-				if(obtainRecordFragment!=null){
-					obtainRecordFragment.hidle(isD);
-				}
-				break;
-			case POSITION2:
-				if(useRecordFragment!=null){
-					useRecordFragment.hidle(isD);
-				}
-				break;
 		}
-	}
+		mAdapter.replaceAll(arrayList);
 
-	/**
-	 * fm做一些事
-	 */
-	private void swtFmDo(int arg0, boolean reserve, ArrayList<IntegralRecordBean> cuArrayList) {
-		switch (arg0){
-			case POSITION0:
-				if(allRecordFragment !=null){
-					System.out.println("cuArrayList++"+cuArrayList.size());
-					allRecordFragment.doSomething(reserve,cuArrayList);
-				}
-				break;
-			case POSITION1:
-				if(obtainRecordFragment!=null){
-					System.out.println("cuArrayList++"+cuArrayList.size());
-					obtainRecordFragment.doSomething(reserve,cuArrayList);
-				}
-				break;
-			case POSITION2:
-				if(useRecordFragment!=null){
-					System.out.println("cuArrayList++"+cuArrayList.size());
-					useRecordFragment.doSomething(reserve,cuArrayList);
-				}
-				break;
-		}
 	}
 
 	/**
@@ -186,12 +149,12 @@ public class IntegralRecordActivity extends BaseActivity {
 		mTvTotalintegral = (TextView) findViewById(R.id.tv_totalintegral);
 		mTvConsumptionintegral = (TextView) findViewById(R.id.tv_consumptionintegral);
 		mTvSurplusintegral = (TextView) findViewById(R.id.tv_surplusintegral);
-		tabs = (PagerSlidingTabStrip) findViewById(R.id.ps_tabs_act_infodetails);
-		pager = (ViewPager) findViewById(R.id.pager_act_integralrecord);
-		pager.setAdapter(new MyAdapter(getSupportFragmentManager(), titles));
-		tabs.setViewPager(pager);
+		mTvAllrecord = (TextView) findViewById(R.id.tv_allrecord);
+		mTvAccessrecord = (TextView) findViewById(R.id.tv_accessrecord);
+		mTvUserecord = (TextView) findViewById(R.id.tv_userecord);
+		mActMemberrecordListview = (ListView) findViewById(R.id.act_memberrecord_listview);
+		mActMemberrecordIvEmpty = (ImageView) findViewById(R.id.act_memberrecord_iv_empty);
 		viewAdapter();
-
 	}
 
 	private void viewAdapter() {
@@ -202,42 +165,21 @@ public class IntegralRecordActivity extends BaseActivity {
 		tvs25.add(mTvTotalintegral);
 		tvs25.add(mTvConsumptionintegral);
 		tvs25.add(mTvSurplusintegral);
-		ScreenUtils.textAdaptationOn720(tvs25,this,25);
+		ScreenUtils.textAdaptationOn720(tvs25, this, 25);
 
 	}
 
 	String position;
+
 	/**
 	 * 添加监听
 	 */
 	private void setLisenter() {
 		mTvIntegralMemberfile.setOnClickListener(this);
 		mTvIntegralRecordsofconsumption.setOnClickListener(this);
-		tabs.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-			@Override
-			public void onPageSelected(int arg0) {
-				curPosition = arg0;
-				position = String.valueOf(arg0);
-				switch (arg0) {
-					case 0:
-						break;
-					case 1:
-						break;
-					case 2:
-						break;
-				}
-			}
-
-			@Override
-			public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-			}
-
-			@Override
-			public void onPageScrollStateChanged(int state) {
-
-			}
-		});
+		mTvAllrecord.setOnClickListener(this);
+		mTvAccessrecord.setOnClickListener(this);
+		mTvUserecord.setOnClickListener(this);
 	}
 
 	@Override
@@ -255,56 +197,32 @@ public class IntegralRecordActivity extends BaseActivity {
 				records_intent.putExtra("memberInfo", mMemberInfoBean);
 				startActivity(records_intent);
 				break;
-
+			case R.id.tv_allrecord://全部记录
+				mTvAllrecord.setBackgroundResource(R.drawable.member_record_pressed);
+				mTvAccessrecord.setBackgroundResource(R.drawable.member_record);
+				mTvUserecord.setBackgroundResource(R.drawable.member_record);
+				mAdapter.replaceAll(arrayList);
+				break;
+			case R.id.tv_accessrecord://获取记录
+				mTvAllrecord.setBackgroundResource(R.drawable.member_record);
+				mTvAccessrecord.setBackgroundResource(R.drawable.member_record_pressed);
+				mTvUserecord.setBackgroundResource(R.drawable.member_record);
+				mAdapter.replaceAll(arrayList0);
+				break;
+			case R.id.tv_userecord://使用记录
+				mTvAllrecord.setBackgroundResource(R.drawable.member_record);
+				mTvAccessrecord.setBackgroundResource(R.drawable.member_record);
+				mTvUserecord.setBackgroundResource(R.drawable.member_record_pressed);
+				mAdapter.replaceAll(arrayList1);
+				break;
 		}
-	}
-
-	public class MyAdapter extends FragmentPagerAdapter {
-		String[] _titles;
-
-		public MyAdapter(FragmentManager fm, String[] titles) {
-			super(fm);
-			_titles = titles;
-		}
-
-		@Override
-		public CharSequence getPageTitle(int position) {
-			return _titles[position];
-		}
-
-		@Override
-		public int getCount() {
-			return _titles.length;
-		}
-
-		@Override
-		public Fragment getItem(int position) {
-			switch (position) {
-				case POSITION0:
-					if (allRecordFragment == null) {
-						allRecordFragment = new IntegralRecordFragment();
-					}
-					return allRecordFragment;
-				case POSITION1:
-					if (obtainRecordFragment == null) {
-						obtainRecordFragment = new IntegralRecordFragment();
-					}
-					return obtainRecordFragment;
-				case POSITION2:
-					if (useRecordFragment == null) {
-						useRecordFragment = new IntegralRecordFragment();
-					}
-					return useRecordFragment;
-			}
-			return null;
-		}
-
 	}
 
 	@Override
 	protected void onTitleLeftClick() {
 		super.onTitleLeftClick();
-		startActivity(new Intent(IntegralRecordActivity.this,MembersListActivity.class));
+		startActivity(new Intent(IntegralRecordActivity.this, MembersListActivity.class));
 		finish();
 	}
+
 }

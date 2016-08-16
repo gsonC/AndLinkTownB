@@ -35,5 +35,6 @@ dependencies {
     compile "com.android.support:design:$LIBRARY_VERSION"
     compile  'com.jakewharton:butterknife:7.0.0'
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.google.android.gms:play-services-appindexing:8.1.0'
 }
 

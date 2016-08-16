@@ -62,6 +62,7 @@ public class AddNewMembersActivity extends BaseActivity {
 	private TextView mTvMembertype;
 	private TextView mTvAddmemberDiscount;
 	private TextView mTvAddmemberMax;
+	private TextView mTvAddmemberIntegral;
 
 
 	@Override
@@ -123,9 +124,10 @@ public class AddNewMembersActivity extends BaseActivity {
 		mTvIntegralrecord = (TextView) findViewById(R.id.tv_file_integralrecord);//积分记录
 		mEditAddmemberPhone = (ClearEditText) findViewById(R.id.edit_addmember_phone);//手机号码
 		mEditAddmemberPhone1 = (TextView) findViewById(R.id.edit_addmember_phone1);//手机号码
-		mTvMembertype = (TextView) findViewById(R.id.tv_membertype);//会员折扣
+		mTvMembertype = (TextView) findViewById(R.id.tv_membertype);//会员类别
+		mTvAddmemberDiscount = (TextView) findViewById(R.id.tv_addmember_discount);//会员折扣
 		mTvAddmemberMax = (TextView) findViewById(R.id.tv_addmember_max);//单笔最高折扣
-		mTvAddmemberDiscount = (TextView) findViewById(R.id.tv_addmember_discount);
+		mTvAddmemberIntegral = (TextView) findViewById(R.id.tv_addmember_integral);//会员积分
 		mTvAddmembertag = (TextView) findViewById(R.id.tv_addmembertag);//会员标签
 		mEditMembername = (ContainsEmojiEditText) findViewById(R.id.edit_membername);//会员姓名
 		mTvAddmemberSex = (TextView) findViewById(R.id.tv_addmember_sex);//会员性别
@@ -162,68 +164,94 @@ public class AddNewMembersActivity extends BaseActivity {
 	 */
 	private void viewAdapter() {
 		ArrayList<TextView> tvs20 = new ArrayList<>();
-		tvs20.add((TextView)findViewById(R.id.tv_membertype2));//类别解释
-		tvs20.add((TextView)findViewById(R.id.edit_addmember_phone2));//必填
+		tvs20.add((TextView) findViewById(R.id.tv_membertype2));//类别解释
+		tvs20.add((TextView) findViewById(R.id.edit_addmember_phone2));//必填
 
 		ArrayList<TextView> tvs25 = new ArrayList<>();
-		tvs25.add((TextView)findViewById(R.id.tv_file_memberfile));//会员档案
-		tvs25.add((TextView)findViewById(R.id.tv_file_recordsofconsumption));//消费记录
-		tvs25.add((TextView)findViewById(R.id.tv_file_integralrecord));//积分记录
+		tvs25.add((TextView) findViewById(R.id.tv_file_memberfile));//会员档案
+		tvs25.add((TextView) findViewById(R.id.tv_file_recordsofconsumption));//消费记录
+		tvs25.add((TextView) findViewById(R.id.tv_file_integralrecord));//积分记录
 
 		ArrayList<TextView> tvs = new ArrayList<>();
-		tvs.add((TextView)findViewById(R.id.edit_addmember_phone1));//手机号码
-		tvs.add((TextView)findViewById(R.id.edit_addmember_phone));//手机号码ET
+		tvs.add((TextView) findViewById(R.id.edit_addmember_phone1));//手机号码
+		tvs.add((TextView) findViewById(R.id.edit_addmember_phone));//手机号码ET
 
-		tvs.add((TextView)findViewById(R.id.tv_membertype1));//会员类别
-		tvs.add((TextView)findViewById(R.id.tv_membertype));//普通会员
+		tvs.add((TextView) findViewById(R.id.tv_membertype1));//会员类别
+		tvs.add((TextView) findViewById(R.id.tv_membertype));//普通会员
 
 
-		tvs.add((TextView)findViewById(R.id.tv_memberdiscount1));//会员折扣
-		tvs.add((TextView)findViewById(R.id.tv_addmember_discount));//无
-		tvs.add((TextView)findViewById(R.id.tv_addmember_max1));//单笔最高折扣
-		tvs.add((TextView)findViewById(R.id.tv_addmember_max));//无
-		tvs.add((TextView)findViewById(R.id.tv_addmember_integral));//0
-		tvs.add((TextView)findViewById(R.id.tv_addmember_integral1));//会员积分
+		tvs.add((TextView) findViewById(R.id.tv_memberdiscount1));//会员折扣
+		tvs.add((TextView) findViewById(R.id.tv_addmember_discount));//无
+		tvs.add((TextView) findViewById(R.id.tv_addmember_max1));//单笔最高折扣
+		tvs.add((TextView) findViewById(R.id.tv_addmember_max));//无
+		tvs.add((TextView) findViewById(R.id.tv_addmember_integral));//0
+		tvs.add((TextView) findViewById(R.id.tv_addmember_integral1));//会员积分
 
-		tvs.add((TextView)findViewById(R.id.tv_addmember_type1));//会员标签
-		tvs.add((TextView)findViewById(R.id.tv_addmembertag));//标签内容
+		tvs.add((TextView) findViewById(R.id.tv_addmember_type1));//会员标签
+		tvs.add((TextView) findViewById(R.id.tv_addmembertag));//标签内容
 
-		tvs.add((TextView)findViewById(R.id.tv_addmember_name));//会员姓名
-		tvs.add((TextView)findViewById(R.id.edit_membername));//姓名内容
+		tvs.add((TextView) findViewById(R.id.tv_addmember_name));//会员姓名
+		tvs.add((TextView) findViewById(R.id.edit_membername));//姓名内容
 
-		tvs.add((TextView)findViewById(R.id.tv_addmember_sex1));//会员性别
-		tvs.add((TextView)findViewById(R.id.tv_addmember_sex));//男女
+		tvs.add((TextView) findViewById(R.id.tv_addmember_sex1));//会员性别
+		tvs.add((TextView) findViewById(R.id.tv_addmember_sex));//男女
 
-		tvs.add((TextView)findViewById(R.id.tv_member_bir));//会员生日
-		tvs.add((TextView)findViewById(R.id.et_memberbirthday));//生日日期
+		tvs.add((TextView) findViewById(R.id.tv_member_bir));//会员生日
+		tvs.add((TextView) findViewById(R.id.et_memberbirthday));//生日日期
 
-		tvs.add((TextView)findViewById(R.id.tv_addmember_careID));//会员卡号
-		tvs.add((TextView)findViewById(R.id.edit_membercardnumber));//卡号number
+		tvs.add((TextView) findViewById(R.id.tv_addmember_careID));//会员卡号
+		tvs.add((TextView) findViewById(R.id.edit_membercardnumber));//卡号number
 
-		tvs.add((TextView)findViewById(R.id.tv_membercardtermofvalidity));//会员卡有效期
-		tvs.add((TextView)findViewById(R.id.et_membercardtermofvalidity));//有效期时间
+		tvs.add((TextView) findViewById(R.id.tv_membercardtermofvalidity));//会员卡有效期
+		tvs.add((TextView) findViewById(R.id.et_membercardtermofvalidity));//有效期时间
 
-		tvs.add((TextView)findViewById(R.id.tv_IDnumber));//身份证号
-		tvs.add((TextView)findViewById(R.id.edit_IDnumber));//身份证number
+		tvs.add((TextView) findViewById(R.id.tv_IDnumber));//身份证号
+		tvs.add((TextView) findViewById(R.id.edit_IDnumber));//身份证number
 
-		tvs.add((TextView)findViewById(R.id.tv_munberadress_visable1));//联系地址
-		tvs.add((TextView)findViewById(R.id.tv_munberadress_visable));//地址内容
-		tvs.add((TextView)findViewById(R.id.tv_munberadress));//联系地址
+		tvs.add((TextView) findViewById(R.id.tv_munberadress_visable1));//联系地址
+		tvs.add((TextView) findViewById(R.id.tv_munberadress_visable));//地址内容
+		tvs.add((TextView) findViewById(R.id.tv_munberadress));//联系地址
 
-		tvs.add((TextView)findViewById(R.id.tv_munberremarks_visable1));//备注
-		tvs.add((TextView)findViewById(R.id.tv_munberremarks_visable));//备注
-		tvs.add((TextView)findViewById(R.id.tv_remarks));//备注
+		tvs.add((TextView) findViewById(R.id.tv_munberremarks_visable1));//备注
+		tvs.add((TextView) findViewById(R.id.tv_munberremarks_visable));//备注
+		tvs.add((TextView) findViewById(R.id.tv_remarks));//备注
 
-		ScreenUtils.textAdaptationOn720(tvs20,this,20);
-		ScreenUtils.textAdaptationOn720(tvs25,this,25);
-		ScreenUtils.textAdaptationOn720(tvs,this,27);
+		ScreenUtils.textAdaptationOn720(tvs20, this, 20);
+		ScreenUtils.textAdaptationOn720(tvs25, this, 25);
+		ScreenUtils.textAdaptationOn720(tvs, this, 27);
 	}
 
 	/**
 	 * 填充布局
 	 */
 	private void fillView(MemberInfoBean memberInfoBean) {
+		if (memberInfoBean != null) {
+			mEditAddmemberPhone.setText(memberInfoBean.getMemberPhone());
+			//	mTvMembertype.setText();
+			//	mTvAddmemberDiscount.setText();
+			//	mTvAddmemberMax.setText();
+			//	mTvAddmemberIntegral.setText();
+			wordsAdapter("", "请选择会员标签", mTvAddmembertag);
+			wordsAdapter("", "请输入会员姓名", mEditMembername);
+			//	mTvAddmemberSex.setText();
+			wordsAdapter("", "点击设置会员生日", mEtMemberbirthday);
+			wordsAdapter("", "请输入会员卡号", mEditMembercardnumber);
+			wordsAdapter("", "点击设置有效期", mEtMembercardtermofvalidity);
+			wordsAdapter("", "请输入身份证号", mEditIDnumber);
+			wordsAdapter("", "请输入联系地址", mTvMunberadressVisable);
+			wordsAdapter("", "请输入备注说明", mTvMunberremarksVisable);
+		}
+	}
 
+	/**
+	 * 添加会员文字展现
+	 */
+	private void wordsAdapter(String memberAttribute, String hintwords, TextView tvs) {
+		if (!AbStrUtil.isEmpty(memberAttribute)) {
+			tvs.setText(memberAttribute + "");
+		} else {
+			tvs.setHint(hintwords + "");
+		}
 	}
 
 	/**
@@ -243,7 +271,7 @@ public class AddNewMembersActivity extends BaseActivity {
 
 	private final int REQUEST_REMARKS = 4862;
 	private final int REQUEST_ADDRESS = 4863;
-	private final int REQUEST_TAG= 4864;
+	private final int REQUEST_TAG = 4864;
 	private final String ENDTIME = "2030-01-01 00:00";
 
 	@Override
@@ -304,8 +332,8 @@ public class AddNewMembersActivity extends BaseActivity {
 
 				break;
 			case R.id.tv_addmembertag://会员标签
-				Intent member_tag = new Intent(this,SelectTagActivity.class);
-				startActivityForResult(member_tag,REQUEST_TAG);
+				Intent member_tag = new Intent(this, SelectTagActivity.class);
+				startActivityForResult(member_tag, REQUEST_TAG);
 				break;
 			case R.id.llt_addmemberaddress://会员地址
 				Intent shop_address = new Intent(this, MemberAdressActivity.class);
@@ -328,9 +356,9 @@ public class AddNewMembersActivity extends BaseActivity {
 				case REQUEST_TAG:
 					String tagContent = data.getStringExtra("tagContent");
 					String tagID = data.getStringExtra("tagID");
-					if(!AbStrUtil.isEmpty(tagContent)&&!AbStrUtil.isEmpty(tagID)){
+					if (!AbStrUtil.isEmpty(tagContent) && !AbStrUtil.isEmpty(tagID)) {
 						mTvAddmembertag.setText(tagContent);
-					}else{
+					} else {
 						mTvAddmembertag.setHint("请选择会员标签");
 					}
 					break;
@@ -388,7 +416,6 @@ public class AddNewMembersActivity extends BaseActivity {
 			ContentUtils.showMsg(AddNewMembersActivity.this, "请输入手机号码");
 			return;
 		}
-
 
 		System.out.println("会员电话--" + memberPhone);
 		System.out.println("会员标签--" + memberTag);

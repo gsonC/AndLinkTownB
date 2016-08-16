@@ -266,7 +266,7 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 						}
 						break;
 					case 5:
-						if(isLogin){
+						if(isLogin){//智能WIFI
 							Intent intent_web = new Intent(mActivity,
 									WIFIWebActivity.class);
 							intent_web.putExtra(Constants.NEDDLOGIN, false);

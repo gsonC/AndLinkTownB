@@ -116,7 +116,7 @@
                 android:id="@+id/tv_integral"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableRight="@mipmap/tma_up"
+                android:drawableRight="@mipmap/tma_initialdown"
                 android:gravity="center"
                 android:text="积分"
                 android:textColor="@color/colores_news_10"/>
