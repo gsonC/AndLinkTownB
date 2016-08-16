@@ -68,17 +68,21 @@ public class MarketingMsgGlActivity extends BaseActivity {
     private ArrayList<ServiceMallBean> mDatas = new ArrayList<ServiceMallBean>();
     HttpDialog dialog;
 
-    @OnClick({R.id.rlv_actmarketing})
+    @OnClick({R.id.text_newmakemsg})
     public void OnClick(View v) {
         switch (v.getId()) {
-            case R.id.rlv_actmarketing:
-
+            case R.id.text_newmakemsg:
+                simpleJump(MarketingMsgBulidActivity.class);
 
                 break;
 
         }
     }
-
+    private void  simpleJump(Class activity){
+        Intent intent=new Intent();
+        intent.setClass(MarketingMsgGlActivity.this,activity);
+        startActivity(intent);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="短信模板"
-            android:drawablePadding="5dp"
+            android:drawablePadding="10dp"
             android:textColor="@color/color_4b4b4b"
             android:textSize="@dimen/h16" />
     </RelativeLayout>
@@ -33,6 +33,7 @@
            android:layout_marginRight="15dp"
            android:layout_marginTop="10dp"
            android:maxLength="150"
+           android:textColor="@color/color_4b4b4b"
            android:hint="可编辑"
            android:paddingTop="10dp"
            android:paddingLeft="15dp"

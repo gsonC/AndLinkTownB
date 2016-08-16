@@ -1,5 +1,6 @@
 package com.lianbi.mezone.b.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -35,6 +36,8 @@ public class MarketingMsgBulidActivity extends BaseActivity {
     TextView txtRemainsendnum;
     @Bind(R.id.btn_msgpay)
     TextView btnMsgpay;
+    @Bind(R.id.tv_choicetemplate)
+    TextView tv_choicetemplate;
     @Bind(R.id.et_sendcontext)
     EditText etSendcontext;
     @Bind(R.id.btn_sendobject)
@@ -55,17 +58,27 @@ public class MarketingMsgBulidActivity extends BaseActivity {
     private ArrayList<ServiceMallBean> mDatas = new ArrayList<ServiceMallBean>();
     HttpDialog dialog;
 
-    @OnClick({R.id.txt_sendmsg})
+    @OnClick({R.id.txt_sendmsg,R.id.tv_choicetemplate})
     public void OnClick(View v) {
         switch (v.getId()) {
             case R.id.txt_sendmsg:
 
 
+
+            break;
+            case R.id.tv_choicetemplate:
+
+            simpleJump(MarketingSMSexampleActivity.class);
+
             break;
 
         }
     }
-
+    private void  simpleJump(Class activity){
+        Intent intent=new Intent();
+        intent.setClass(MarketingMsgBulidActivity.this,activity);
+        startActivity(intent);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

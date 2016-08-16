@@ -343,17 +343,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:layout_gravity="center_vertical"
                 android:text="本分类现有会员数："
-                android:layout_centerVertical="true"
-                android:textSize="16sp" /> Specific figures
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/tv_specificfigures"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:layout_gravity="center_vertical"
                 android:text="100000"
-                android:layout_centerVertical="true"
                 android:textSize="16sp" />
             <EditText
                 android:id="@+id/tv_membership"
@@ -364,8 +364,8 @@
                 android:padding="5dp"
                 android:layout_marginLeft="5dp"
                 android:background="@drawable/shap_hollow_grey"
-                android:layout_centerVertical="true"
                 android:text="本分类会员详情"
+                android:layout_gravity="center_vertical"
                 android:textSize="14sp" />
         </LinearLayout>
     </LinearLayout>
