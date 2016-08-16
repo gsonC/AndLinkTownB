@@ -93,7 +93,9 @@
 
         <activity android:name="com.lianbi.mezone.b.ui.MembersManagementActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.RevisionsActivity"/>
-        <activity android:name="com.lianbi.mezone.b.ui.NewIntegralGoodsActivity"/>
+        <activity android:name="com.lianbi.mezone.b.ui.NewIntegralGoodsActivity"
+                  android:windowSoftInputMode="stateHidden|stateUnchanged"
+            />
         <activity android:name="com.lianbi.mezone.b.ui.MarketingBuySMSActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.SelectTagActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.MarketingSMSexampleActivity"/>

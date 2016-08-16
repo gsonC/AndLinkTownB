@@ -3,180 +3,190 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-   >
-  <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:orientation="vertical">
-
-      <ImageView
-          android:layout_width="match_parent"
-          android:layout_height="11dp"
-          android:background="@color/foodcolor"/>
-   
-     <TextView
-         android:layout_width="match_parent"
-         android:layout_height="45dp"
-         android:text="积分商品"
-         android:textSize="16sp"
-         android:textColor="@color/showcolor"
-         android:gravity="center_vertical"
-
-         />
-      <ImageView
-          android:layout_width="match_parent"
-          android:layout_height="11dp"
-          android:background="@color/color_ededed"/>
-
-      <TextView
-          android:layout_width="match_parent"
-          android:layout_height="45dp"
-          android:text="水杯"
-          android:textSize="16sp"
-          android:textColor="@color/foodcolor"
-          android:gravity="center_vertical"
-
-          />
-      <ImageView
-          android:layout_width="match_parent"
-          android:layout_height="0.5dp"
-          android:background="@color/color_ededed"/>
-      <TextView
-          android:layout_width="match_parent"
-          android:layout_height="45dp"
-          android:text="陶瓷水杯"
-          android:textSize="16sp"
-          android:textColor="@color/foodcolor"
-          android:gravity="center_vertical"
-
-          />
-      <ImageView
-          android:layout_width="match_parent"
-          android:layout_height="0.5dp"
-          android:background="@color/color_ededed"/>
-
-      <TextView
-          android:layout_width="match_parent"
-          android:layout_height="45dp"
-          android:text="请输入兑换所需积分"
-          android:textSize="16sp"
-          android:textColor="@color/foodcolor"
-          android:gravity="center_vertical"
-          />
-      <ImageView
-          android:layout_width="match_parent"
-          android:layout_height="0.5dp"
-          android:background="@color/color_ededed"/>
-
-      <RelativeLayout
-          android:layout_width="match_parent"
-          android:layout_height="320dp"
-          >
-
-          <ImageView
-              android:layout_width="288dp"
-              android:layout_height="288dp"
-              android:layout_centerInParent="true"
-
-              />
-          <ImageView
-              android:layout_width="48dp"
-              android:layout_height="48dp"
-              android:layout_centerInParent="true"
-              android:src="@mipmap/add2"
-              />
-      </RelativeLayout>
-
-      <ImageView
-          android:layout_width="match_parent"
-          android:layout_height="11dp"
-          android:background="@color/color_e3e3e3"/>
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="75dp"
-    android:orientation="horizontal"
     >
-    <ImageView
-        android:layout_weight="1"
 
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_centerInParent="true"
-        android:src="@mipmap/add2"
-        android:layout_marginLeft="18dp"
-        android:paddingTop="13dp"
-        android:paddingBottom="13dp"
-        android:paddingRight="21dp"
-        android:layout_gravity="center_vertical"
-        />
-    <ImageView
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_centerInParent="true"
-        android:src="@mipmap/add2"
-        android:layout_marginLeft="18dp"
-        android:paddingTop="13dp"
-        android:paddingBottom="13dp"
-        android:paddingRight="21dp"
-        android:layout_gravity="center_vertical"
-        android:layout_weight="1"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        />
-    <ImageView
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_centerInParent="true"
-        android:src="@mipmap/add2"
-        android:layout_marginLeft="18dp"
-        android:paddingTop="13dp"
-        android:paddingBottom="13dp"
-        android:paddingRight="21dp"
-        android:layout_gravity="center_vertical"
-        android:layout_weight="1"
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="11dp"
+            android:background="@color/foodcolor"/>
 
-        />
-    <ImageView
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_centerInParent="true"
-        android:src="@mipmap/add2"
-        android:layout_marginLeft="18dp"
-        android:paddingTop="13dp"
-        android:paddingBottom="13dp"
-        android:paddingRight="21dp"
-        android:layout_gravity="center_vertical"
-        android:layout_weight="1"
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:gravity="center_vertical"
+            android:text="积分商品"
+            android:textColor="@color/showcolor"
+            android:textSize="16sp"
 
-        />
-    <ImageView
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_centerInParent="true"
-        android:src="@mipmap/add2"
-        android:layout_marginLeft="18dp"
-        android:paddingTop="13dp"
-        android:paddingBottom="13dp"
-        android:paddingRight="21dp"
-        android:layout_gravity="center_vertical"
-        android:layout_weight="1"
+            />
 
-        />
-</LinearLayout>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="11dp"
+            android:background="@color/color_ededed"/>
 
-      <TextView
-          android:layout_gravity="center"
-          android:paddingTop="44dp"
-          android:id="@+id/bt_sure"
-          android:layout_width="203dp"
-          android:layout_height="29dp"
-          android:background="@drawable/shape_search_date_edt_bg_new2"
-          android:drawablePadding="5dp"
-          android:gravity="center"
-          android:textSize="16dp"
-          android:textColor="@color/color_fff"
-          android:text="确定"
-          />
+        <EditText
+            android:id="@+id/ed_Cup"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:gravity="center_vertical"
+            android:hint="水杯"
+            android:textColor="@color/foodcolor"
+            android:textSize="16sp"
 
-  </LinearLayout>
+            />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/color_e3e3e3"/>
+
+        <EditText
+            android:id="@+id/ed_CeramicCup"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:gravity="center_vertical"
+            android:hint="陶瓷水杯"
+            android:textColor="@color/foodcolor"
+            android:textSize="16sp"
+
+            />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/color_e3e3e3"/>
+
+        <EditText
+            android:id="@+id/ed_ExchangeIntegral"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:gravity="center_vertical"
+            android:hint="请输入兑换所需积分"
+            android:textColor="@color/foodcolor"
+            android:textSize="16sp"
+            />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/color_e3e3e3"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="320dp"
+            >
+
+            <ImageView
+                android:id="@+id/ima_bigima"
+                android:layout_width="288dp"
+                android:layout_height="288dp"
+                android:layout_centerInParent="true"
+
+                />
+
+            <ImageView
+                android:id="@+id/ima_Smallima"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/add2"
+
+                />
+        </RelativeLayout>
+
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="11dp"
+            android:background="@color/foodcolor"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:orientation="horizontal"
+            >
+
+            <ImageView
+                android:id="@+id/small_imaOne"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="18dp"
+                android:layout_marginTop="14dp"
+                android:layout_weight="1"
+                android:src="@mipmap/add2"
+                />
+
+            <ImageView
+                android:id="@+id/small_imaTwo"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="21dp"
+                android:layout_marginTop="14dp"
+                android:layout_weight="1"
+                android:src="@mipmap/add2"
+
+                />
+
+            <ImageView
+                android:id="@+id/small_imaThree"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="21dp"
+                android:layout_marginTop="14dp"
+                android:layout_weight="1"
+                android:src="@mipmap/add2"
+
+                />
+
+            <ImageView
+                android:id="@+id/small_imaFour"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="21dp"
+                android:layout_marginTop="14dp"
+                android:layout_weight="1"
+                android:src="@mipmap/add2"
+
+                />
+
+            <ImageView
+                android:id="@+id/small_imaFive"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="21dp"
+                android:layout_marginTop="14dp"
+                android:layout_weight="1"
+                android:src="@mipmap/add2"
+
+                />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/bt_sure"
+            android:layout_width="203dp"
+            android:layout_height="28dp"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:background="@drawable/shape_login"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="确定"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:layout_marginTop="44dp"
+            />
+
+    </LinearLayout>
 
 </RelativeLayout>

@@ -26,8 +26,6 @@ public class MembersManagementActivity extends BaseActivity {
 	ExpandableListView expandListView;
 
 
-
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -175,9 +173,9 @@ public class MembersManagementActivity extends BaseActivity {
 
 			// 将默认的箭头修改到右边显示:
 			if (isExpanded) {
-				expand_ima.setBackgroundResource(R.mipmap.icon_back);
+				expand_ima.setBackgroundResource(R.mipmap.down12);
 			} else {
-				expand_ima.setBackgroundResource(R.mipmap.icon_back);
+				expand_ima.setBackgroundResource(R.mipmap.up2);
 			}
 
 			return convertView;
