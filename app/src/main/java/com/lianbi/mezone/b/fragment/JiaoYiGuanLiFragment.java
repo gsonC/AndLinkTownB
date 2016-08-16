@@ -31,7 +31,6 @@ import com.lianbi.mezone.b.ui.ChoiceDingdanInfoWayActivity;
 import com.lianbi.mezone.b.ui.H5WebActivty;
 import com.lianbi.mezone.b.ui.InfoDetailsActivity;
 import com.lianbi.mezone.b.ui.MainActivity;
-import com.lianbi.mezone.b.ui.MembersManagementActivity;
 import com.lianbi.mezone.b.ui.ServiceMallActivity;
 import com.lianbi.mezone.b.ui.WebActivty;
 import com.xizhi.mezone.b.R;
@@ -402,8 +401,8 @@ public class JiaoYiGuanLiFragment extends Fragment implements
 			/*Intent intent_more = new Intent(mMainActivity,
 					ServiceMallActivity.class);*/
 		//	ContentUtils.showMsg(mMainActivity, "正在建设中");
-			Intent intent=new Intent(mMainActivity, MembersManagementActivity.class);
-			startActivity(intent);
+			/*Intent intent=new Intent(mMainActivity, MembersManagementActivity.class);
+			startActivity(intent);*/
 			break;
 		case R.id.iv_jygl_baristasma:// 店员管理
 			ContentUtils.showMsg(mMainActivity, "正在建设中");
