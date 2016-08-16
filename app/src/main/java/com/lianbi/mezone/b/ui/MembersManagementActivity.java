@@ -103,22 +103,28 @@ public class MembersManagementActivity extends BaseActivity {
 			tv.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
+					//会员列表
 					if(groupPosition==0&&childPosition==0) {
 
 					}
+					//会员分类
 					if(groupPosition==0&&childPosition==1) {
 
 					}
+					//标签管理
 					if(groupPosition==0&&childPosition==2){
 						Intent intent=new Intent(MembersManagementActivity.this,TagManagerActivity.class);
 						startActivity(intent);
 					}
+					//优惠券管理
 					if(groupPosition==1&&childPosition==0) {
 
 					}
+					//营销短信管理
 					if(groupPosition==1&&childPosition==1) {
 
 					}
+					//积分商城管理
 					if(groupPosition==1&&childPosition==2) {
 						Intent intent=new Intent(MembersManagementActivity.this,MemberPointManage.class);
 						startActivity(intent);
