@@ -36,7 +36,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="会员档案"/>
+                android:text="会员档案"
+                android:textColor="@color/colores_news_19"/>
 
             <TextView
                 android:id="@+id/tv_file_recordsofconsumption"
@@ -44,7 +45,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="消费记录"/>
+                android:text="消费记录"
+                android:textColor="@color/colores_news_19"/>
 
             <TextView
                 android:id="@+id/tv_file_integralrecord"
@@ -52,7 +54,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="积分记录"/>
+                android:text="积分记录"
+                android:textColor="@color/colores_news_19"/>
         </LinearLayout>
 
         <LinearLayout
@@ -66,8 +69,8 @@
                 android:id="@+id/view_line1"
                 android:layout_width="0dp"
                 android:layout_height="2dp"
-                android:layout_weight="1"
                 android:layout_marginLeft="20dp"
+                android:layout_weight="1"
                 android:background="@color/color_ff8208"
                 android:visibility="invisible"/>
 
@@ -75,8 +78,8 @@
                 android:id="@+id/view_line2"
                 android:layout_width="0dp"
                 android:layout_height="2dp"
-                android:layout_weight="1"
                 android:layout_marginLeft="20dp"
+                android:layout_weight="1"
                 android:background="@color/color_ff8208"
                 android:visibility="invisible"/>
 
@@ -84,9 +87,9 @@
                 android:id="@+id/view_line3"
                 android:layout_width="0dp"
                 android:layout_height="2dp"
-                android:layout_weight="1"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
+                android:layout_weight="1"
                 android:background="@color/color_ff8208"
                 android:visibility="invisible"/>
 
@@ -102,12 +105,12 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:gravity="center"
             android:orientation="horizontal"
             android:padding="10dp">
 
             <TextView
+                android:id="@+id/edit_addmember_phone1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="手机号码:"
@@ -130,6 +133,7 @@
                 android:textSize="15sp"/>
 
             <TextView
+                android:id="@+id/edit_addmember_phone2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="(必填)"
@@ -144,19 +148,19 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:orientation="horizontal"
             android:padding="10dp">
 
             <TextView
+                android:id="@+id/tv_membertype1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="会员类别:"
                 android:textColor="@color/colores_news_19"
-
                 />
 
             <TextView
+                android:id="@+id/tv_membertype"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -164,6 +168,7 @@
                 android:textColor="@color/colores_news_10"/>
 
             <TextView
+                android:id="@+id/tv_membertype2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -185,6 +190,7 @@
             >
 
             <TextView
+                android:id="@+id/tv_memberdiscount1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -192,6 +198,7 @@
                 android:textColor="@color/colores_news_19"/>
 
             <TextView
+                android:id="@+id/tv_addmember_discount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -199,6 +206,7 @@
                 android:textColor="@color/colores_news_10"/>
 
             <TextView
+                android:id="@+id/tv_addmember_max1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
@@ -207,6 +215,7 @@
                 android:textColor="@color/colores_news_19"/>
 
             <TextView
+                android:id="@+id/tv_addmember_max"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -214,6 +223,7 @@
                 android:textColor="@color/colores_news_10"/>
 
             <TextView
+                android:id="@+id/tv_addmember_integral1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
@@ -222,12 +232,18 @@
                 android:textColor="@color/colores_news_19"/>
 
             <TextView
+                android:id="@+id/tv_addmember_integral"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="0"
                 android:textColor="@color/colores_news_10"/>
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line"
+            android:background="@color/colores_news_14"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -236,6 +252,7 @@
             android:padding="10dp">
 
             <TextView
+                android:id="@+id/tv_addmember_type1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -244,18 +261,21 @@
                 />
 
             <TextView
+                android:id="@+id/tv_addmembertag"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="30dp"
                 android:layout_weight="1"
+                android:ellipsize="end"
                 android:hint="请选择会员标签"
+                android:maxEms="15"
+                android:singleLine="true"
                 android:textColor="@color/colores_news_10"
                 android:textColorHint="@color/colores_news_11"
                 android:textSize="15sp"
                 />
 
             <ImageView
-                android:id="@+id/img_memberlabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:scaleType="centerInside"
@@ -275,6 +295,7 @@
             android:padding="10dp">
 
             <TextView
+                android:id="@+id/tv_addmember_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="会员姓名:"
@@ -317,6 +338,7 @@
             android:padding="10dp">
 
             <TextView
+                android:id="@+id/tv_addmember_sex1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="性别:"
@@ -324,6 +346,7 @@
                 />
 
             <TextView
+                android:id="@+id/tv_addmember_sex"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="30dp"
@@ -352,6 +375,7 @@
             android:padding="10dp">
 
             <TextView
+                android:id="@+id/tv_member_bir"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="会员生日:"
@@ -393,6 +417,7 @@
             android:padding="10dp">
 
             <TextView
+                android:id="@+id/tv_addmember_careID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="会员卡号:"
@@ -427,6 +452,7 @@
             android:padding="10dp">
 
             <TextView
+                android:id="@+id/tv_membercardtermofvalidity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="会员卡有效期:"
@@ -467,6 +493,7 @@
             android:padding="10dp">
 
             <TextView
+                android:id="@+id/tv_IDnumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="身份证号:"
@@ -502,6 +529,7 @@
             android:padding="10dp">
 
             <TextView
+                android:id="@+id/tv_munberadress_visable1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
@@ -549,6 +577,7 @@
             android:padding="10dp">
 
             <TextView
+                android:id="@+id/tv_munberremarks_visable1"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"

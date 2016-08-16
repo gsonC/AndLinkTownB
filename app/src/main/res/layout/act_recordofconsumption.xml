@@ -102,16 +102,15 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
             android:textColor="@color/colores_news_10"
-            android:text="累计下单次数  18单"/>
+            android:text="累计下单次数  18次"/>
 
         <TextView
             android:id="@+id/tv_ordermuch"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:layout_weight="1"
-            android:gravity="center"
             android:textColor="@color/colores_news_10"
             android:text="累计消费金额  180元"/>
     </LinearLayout>

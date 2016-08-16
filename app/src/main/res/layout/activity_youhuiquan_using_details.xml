@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.lianbi.mezone.b.ui.YouhuiquanUsingDetailsActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10.5dp"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/all_"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/colores_news_01">
+
+            <TextView
+                android:id="@+id/all"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginBottom="1dp"
+                android:background="@color/colores_news_14"
+                android:gravity="center"
+                android:text="全部"
+                android:textColor="@color/colores_news_01"
+                android:textSize="@dimen/h17" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/been_used_"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/colores_news_14">
+
+            <TextView
+                android:id="@+id/been_used"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginBottom="1dp"
+                android:background="@color/colores_news_14"
+                android:gravity="center"
+                android:text="已使用"
+                android:textColor="@color/colores_news_10"
+                android:textSize="@dimen/h17" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/unused_"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/colores_news_14">
+
+            <TextView
+                android:id="@+id/unused"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginBottom="1dp"
+                android:background="@color/colores_news_14"
+                android:gravity="center"
+                android:text="未使用"
+                android:textColor="@color/colores_news_10"
+                android:textSize="@dimen/h17" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/invalid_"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/colores_news_14">
+
+            <TextView
+                android:id="@+id/invalid"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginBottom="1dp"
+                android:background="@color/colores_news_14"
+                android:gravity="center"
+                android:text="已失效"
+                android:textColor="@color/colores_news_10"
+                android:textSize="@dimen/h17" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45.5dp"
+        android:layout_marginTop="10.5dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.8"
+            android:gravity="center_horizontal"
+            android:text="会员电话"
+            android:textColor="#4b4b4b"
+            android:textSize="15.5sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.6"
+            android:gravity="center_horizontal"
+            android:text="消费金额"
+            android:textColor="#4b4b4b"
+            android:textSize="15.5sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="使用时间"
+            android:textColor="#4b4b4b"
+            android:textSize="15.5sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.6"
+            android:gravity="center_horizontal"
+            android:text="卡券状态"
+            android:textColor="#4b4b4b"
+            android:textSize="15.5sp" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/youhuiquan_using_detail_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="@color/color_e3e3e3"
+        android:dividerHeight="1dp"
+        android:scrollbars="none" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="33.5dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="全部发送："
+                android:textColor="#4b4b4b"
+                android:textSize="@dimen/h10" />
+
+            <TextView
+                android:id="@+id/all_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#4b4b4b"
+                android:textSize="@dimen/h10" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="张"
+                android:textColor="#4b4b4b"
+                android:textSize="@dimen/h10" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="33.5dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="已使用："
+                android:textColor="#4b4b4b"
+                android:textSize="@dimen/h10" />
+
+            <TextView
+                android:id="@+id/used_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#4b4b4b"
+                android:textSize="@dimen/h10" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="张"
+                android:textColor="#4b4b4b"
+                android:textSize="@dimen/h10" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="33.5dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="未使用："
+                android:textColor="#4b4b4b"
+                android:textSize="@dimen/h10" />
+
+            <TextView
+                android:id="@+id/unused_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#4b4b4b"
+                android:textSize="@dimen/h10" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="张"
+                android:textColor="#4b4b4b"
+                android:textSize="@dimen/h10" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="33.5dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="已失效："
+                android:textColor="#4b4b4b"
+                android:textSize="@dimen/h10" />
+
+            <TextView
+                android:id="@+id/invalid_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#4b4b4b"
+                android:textSize="@dimen/h10" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="张"
+                android:textColor="#4b4b4b"
+                android:textSize="@dimen/h10" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

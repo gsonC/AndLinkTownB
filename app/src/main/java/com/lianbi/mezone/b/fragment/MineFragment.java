@@ -263,7 +263,7 @@ public class MineFragment extends Fragment implements OnClickListener,
 					.toString().trim());
 			break;
 		case R.id.llt_mine_about_us:// 关于我们
-	//		startActivity(new Intent(maActivity, AboutUsActivity.class));
+//			startActivity(new Intent(maActivity, AboutUsActivity.class));
 			startActivity(new Intent(maActivity, MembersListActivity.class));
 			break;
 		case R.id.llt_fm_mine_nologin:// 注册| 登录

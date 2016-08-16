@@ -8,34 +8,42 @@
         android:id="@+id/ray_top"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
         android:gravity="center_vertical"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
-       >
-     <TextView
-         android:id="@+id/txt_msg"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_centerVertical="true"
-         android:text="累计发送短信"
-        />
+        >
         <TextView
-         android:id="@+id/txt_alreadysendnum"
-         android:layout_toRightOf="@+id/txt_msg"
-         android:layout_marginLeft="5dp"
-         android:layout_centerVertical="true"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:text="111"
-         />
+            android:id="@+id/txt_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="累计发送短信:"
+            android:textSize="15sp"
+            android:textColor="@color/color_4b4b4b"
+            />
+        <TextView
+            android:id="@+id/txt_alreadysendnum"
+            android:layout_toRightOf="@+id/txt_msg"
+            android:layout_marginLeft="5dp"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_4b4b4b"
+            android:text="111"
+            android:textSize="15sp"
+            />
         <TextView
             android:id="@+id/txt_remainsendmsg"
             android:layout_toRightOf="@+id/txt_alreadysendnum"
             android:layout_centerVertical="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:text="剩余可发送短信"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/color_4b4b4b"
+            android:text="剩余可发送短信:"
+            android:textSize="15sp"
             />
         <TextView
             android:id="@+id/txt_remainsendnum"
@@ -44,7 +52,9 @@
             android:layout_centerVertical="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/color_4b4b4b"
             android:text="111"
+            android:textSize="15sp"
             />
     </RelativeLayout>
     <View
@@ -57,126 +67,64 @@
     <TextView
         android:id="@+id/txt_price"
         android:layout_below="@id/v_01"
-        android:layout_marginLeft="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:text="0.08元/条"
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp"
+        />
+  <!--<ScrollView-->
+        <!--android:id="@+id/sv_buysmslist"-->
+        <!--android:layout_below="@id/txt_price"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:scrollbars="none"-->
+        <!--android:layout_marginBottom="30dp"-->
+        <!--&gt;-->
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="vertical"-->
+            <!--&gt;-->
+   <ListView
+        android:id="@+id/act_buysms_list"
+        android:layout_below="@id/txt_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:text="0.1元/条"
-        />
-    <LinearLayout
-        android:id="@+id/lay_smspackage"
-        android:layout_below="@id/txt_price"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:background="@color/colores_news_14"
+        android:divider="@color/colores_news_14"
+        android:dividerHeight="5dp"
+        android:layout_marginBottom="100dp"
+        android:scrollbars="none"/>
+    <!--</LinearLayout>
+    </ScrollView>-->
+    <View
+        android:id="@+id/v_bottom"
+        android:layout_below="@id/act_buysms_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_height="1dp"
+        android:background="#555555"
+        />
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_alignParentBottom="true"
         >
-        <LinearLayout
-           android:id="@+id/ray_one"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:orientation="horizontal"
-            >
-            <TextView
-                android:id="@+id/btn_one"
-                android:layout_alignParentLeft="true"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="80dp"
-                android:padding="10dp"
-                android:gravity="center"
-                android:text="10元 250条"
-                />
-            <TextView
-                android:id="@+id/btn_two"
-                android:layout_marginLeft="30dp"
-                android:layout_alignParentRight="true"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="80dp"
-                android:padding="10dp"
-                android:gravity="center"
-                android:singleLine="true"
-                android:text="10元 250条"
-                />
-         </LinearLayout>
-        <LinearLayout
-            android:id="@+id/lay_two"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="20dp"
-            >
-            <TextView
-                android:id="@+id/btn_tress"
-                android:layout_alignParentLeft="true"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="80dp"
-                android:padding="10dp"
-                android:gravity="center"
-                android:text="10元 250条"
-                />
-            <TextView
-                android:id="@+id/btn_four"
-                android:layout_marginLeft="30dp"
-                android:layout_alignParentRight="true"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="80dp"
-                android:padding="10dp"
-                android:gravity="center"
-                android:singleLine="true"
-                android:text="10元 250条"
-                />
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/lay_tress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="20dp"
-            >
-            <TextView
-                android:id="@+id/btn_five"
-                android:layout_alignParentLeft="true"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="80dp"
-                android:padding="10dp"
-                android:gravity="center"
-                android:text="10元 250条"
-                />
-            <TextView
-                android:id="@+id/btn_six"
-                android:layout_marginLeft="30dp"
-                android:layout_alignParentRight="true"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="80dp"
-                android:padding="10dp"
-                android:gravity="center"
-                android:singleLine="true"
-                android:text="10元 250条"
-                />
-        </LinearLayout>
-
-    </LinearLayout>
     <TextView
         android:id="@+id/txt_buymsm"
-        android:layout_below="@id/lay_smspackage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="14dp"
-        android:layout_marginRight="14dp"
-        android:layout_marginTop="25dp"
         android:background="@drawable/shape_login"
+        android:layout_centerInParent="true"
         android:clickable="true"
         android:gravity="center"
         android:padding="10dp"
         android:text="购买短信"
         android:textColor="@color/white"
         android:textSize="16sp" />
-
+    </RelativeLayout>
 </RelativeLayout>

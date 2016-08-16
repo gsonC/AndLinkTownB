@@ -48,7 +48,6 @@ public class MemberRemarksActivity extends BaseActivity {
 		}else{
 			mEditMemberremarks.setText("");
 		}
-
 	}
 
 
@@ -90,7 +89,7 @@ public class MemberRemarksActivity extends BaseActivity {
 		String reqTime = AbDateUtil.getDateTimeNow();
 		String uuid = AbStrUtil.getUUID();
 		ContentUtils.showMsg(MemberRemarksActivity.this,
-				"修改成功");
+				"添加成功");
 		Intent intent = new Intent();
 		intent.putExtra("remarks", remarks);
 		setResult(RESULT_OK, intent);

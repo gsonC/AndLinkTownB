@@ -331,6 +331,11 @@ public class MyShopActivity extends BaseActivity {
 					address = data.getStringExtra("address");
 					double lat = data.getDoubleExtra("lat", -1);
 					double lng = data.getDoubleExtra("lng", -1);
+
+					String s = myShopInfoBean.getAddress();
+					if(!s.equals(address)&&!AbStrUtil.isEmpty(address)){
+						postShopAdress(address);
+					}
 					tv_my_shop_connect_address.setText(address);
 					tv_my_shop_address.setText(address);
 					myShopInfoBean.setAddress(address);
@@ -368,6 +373,35 @@ public class MyShopActivity extends BaseActivity {
 		}
 	}
 
+	private void postShopAdress(final String shopAddress) {
+		if (!TextUtils.isEmpty(shopAddress)) {
+			String reqTime = AbDateUtil.getDateTimeNow();
+			String uuid = AbStrUtil.getUUID();
+			try {
+				okHttpsImp.updateBusinessAddress(uuid, "app", reqTime,
+						userShopInfoBean.getBusinessId(), shopAddress,
+						new MyResultCallback<String>() {
+
+							@Override
+							public void onResponseResult(Result result) {
+								ContentUtils.showMsg(MyShopActivity.this,
+										"店铺地址修改成功");
+							}
+
+							@Override
+							public void onResponseFailed(String msg) {
+								ContentUtils.showMsg(MyShopActivity.this,
+										"店铺地址修改失败");
+							}
+						});
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else {
+		}
+	}
+	
 	private void onPickedPhoto(File photoCurrentFile, Bitmap bm) {
 		Glide.clear(img_my_shop_logo);
 		img_my_shop_logo.setImageBitmap(bm);

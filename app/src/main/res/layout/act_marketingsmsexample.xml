@@ -1,0 +1,29 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colores_news_14"
+   >
+   <ScrollView
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:scrollbars="none"
+       >
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="vertical"
+       >
+   <cn.com.hgh.view.MyListView
+        android:id="@+id/act_smsexample_list"
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_height="match_parent"
+        android:background="@color/colores_news_14"
+        android:divider="@color/colores_news_14"
+        android:dividerHeight="10dp"
+        android:scrollbars="none"/>
+   </LinearLayout>
+   </ScrollView>
+
+</RelativeLayout>

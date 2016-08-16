@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="45dp">
+
+    <LinearLayout
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="16.5dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/youhuiquan_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colores_news_10"
+            android:textSize="14.5sp" />
+
+        <TextView
+            android:id="@+id/youhuiquan_tiaojian"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:textColor="@color/colores_news_11"
+            android:textSize="9sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/youxiaoqi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="125dp"
+        android:text="有效期："
+        android:textColor="@color/colores_news_11"
+        android:textSize="11.5sp" />
+
+    <TextView
+        android:id="@+id/youxiaoqi_from"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/youxiaoqi"
+        android:textColor="@color/colores_news_11"
+        android:textSize="11.5sp" />
+
+    <TextView
+        android:id="@+id/lianjiexian"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/youxiaoqi_from"
+        android:text="－"
+        android:textColor="@color/colores_news_11"
+        android:textSize="11.5sp" />
+
+    <TextView
+        android:id="@+id/youxiaoqi_to"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/lianjiexian"
+        android:textColor="@color/colores_news_11"
+        android:textSize="11.5sp" />
+
+    <ImageView
+        android:id="@+id/is_valid"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginTop="5.5dp"
+        android:layout_toRightOf="@id/youxiaoqi_to"
+        android:scaleType="fitXY" />
+
+    <ImageView
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="15dp"
+        android:scaleType="fitXY"
+        android:src="@mipmap/service_new_right" />
+</RelativeLayout>

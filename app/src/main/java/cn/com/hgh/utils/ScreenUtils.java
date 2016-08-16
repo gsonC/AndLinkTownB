@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 /**
  * 获得屏幕相关的辅助类
  *
@@ -156,5 +158,15 @@ public class ScreenUtils {
 	 */
 	public static void textAdaptationOn1080(TextView textView, Context context, int textSize) {
 		textView.setTextSize(AbViewUtil.px2sp(context, (int) (textSize * ScreenUtils.getBaseSizeOn1080(context))));
+	}
+
+	/**
+	 * TextView适配720分辨率
+	 */
+	public static void textAdaptationOn720(ArrayList<TextView> textViews, Context context, int textSize) {
+		int s = textViews.size();
+		for (int i = 0; i < s; i++) {
+			textViews.get(i).setTextSize(AbViewUtil.px2sp(context, (int) (textSize * ScreenUtils.getBaseSizeOn720(context))));
+		}
 	}
 }
