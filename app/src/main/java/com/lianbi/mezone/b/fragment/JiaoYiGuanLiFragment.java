@@ -400,7 +400,7 @@ public class JiaoYiGuanLiFragment extends Fragment implements
 		case R.id.iv_jygl_memberma:// 会员管理
 			/*Intent intent_more = new Intent(mMainActivity,
 					ServiceMallActivity.class);*/
-		//	ContentUtils.showMsg(mMainActivity, "正在建设中");
+			ContentUtils.showMsg(mMainActivity, "正在建设中");
 			/*Intent intent=new Intent(mMainActivity, MembersManagementActivity.class);
 			startActivity(intent);*/
 			break;
