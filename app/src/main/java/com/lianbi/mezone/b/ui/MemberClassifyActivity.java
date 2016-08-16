@@ -61,7 +61,7 @@ public class MemberClassifyActivity extends BaseActivity {
         switch (v.getId()) {
 
             case R.id.text_newcategory:
-                simpleJump(MemberAddCategoryActivity.class,"新增分类");
+//                simpleJump(MemberAddCategoryActivity.class,"新增分类");
             break;
 
         }
@@ -155,7 +155,7 @@ public class MemberClassifyActivity extends BaseActivity {
             @Override
             public void onViewInItemClick(View v, int position) {
 //                Toast.makeText(MemberClassifyActivity.this, "你点击了第添加item中控件监听", Toast.LENGTH_SHORT).show();
-                simpleJump(MemberAddCategoryActivity.class,"分类详情");
+//                simpleJump(MemberAddCategoryActivity.class,"分类详情");
             }
         }, R.id.llt_memberclass,R.id.img_right);
 

@@ -24,6 +24,7 @@ import butterknife.OnClick;
 public class MemberAddCategoryActivity extends BaseActivity {
 
 
+    Intent getIntent;
     @Bind(R.id.tv_memberclassify)
     TextView tvMemberclassify;
     @Bind(R.id.tv_classifyvalue)
@@ -34,18 +35,28 @@ public class MemberAddCategoryActivity extends BaseActivity {
     TextView tvDiscountradio;
     @Bind(R.id.tv_radiovalue)
     EditText tvRadiovalue;
+    @Bind(R.id.tv_sale)
+    TextView tvSale;
+    @Bind(R.id.tv_rangebetween)
+    TextView tvRangebetween;
+    @Bind(R.id.lay_discountrate)
+    LinearLayout layDiscountrate;
     @Bind(R.id.tv_maxidiscount)
     TextView tvMaxidiscount;
     @Bind(R.id.tv_maxidiscountvalue)
     EditText tvMaxidiscountvalue;
-    @Bind(R.id.lay_discountrate)
-    LinearLayout layDiscountrate;
+    @Bind(R.id.tv_rmb)
+    TextView tvRmb;
+    @Bind(R.id.lay_singlediscount)
+    LinearLayout laySinglediscount;
     @Bind(R.id.tv_integralradio)
     TextView tvIntegralradio;
     @Bind(R.id.tv_whatmoney)
     EditText tvWhatmoney;
     @Bind(R.id.tv_whatintegral)
     EditText tvWhatintegral;
+    @Bind(R.id.ray_integralratio1)
+    LinearLayout rayIntegralratio1;
     @Bind(R.id.ray_integralratio)
     LinearLayout rayIntegralratio;
     @Bind(R.id.tv_required)
@@ -64,23 +75,11 @@ public class MemberAddCategoryActivity extends BaseActivity {
     RelativeLayout layRequired;
     @Bind(R.id.ray_required)
     LinearLayout rayRequired;
-    @Bind(R.id.tv_integral)
-    TextView tvIntegral;
-    @Bind(R.id.et_integralvalue)
-    EditText etIntegralvalue;
-    @Bind(R.id.tv_integralbetween)
-    TextView tvIntegralbetween;
-    @Bind(R.id.et_integralafter)
-    EditText etIntegralafter;
-    @Bind(R.id.et_elementintegral)
-    TextView etElementintegral;
-    @Bind(R.id.ray_integral)
-    RelativeLayout rayIntegral;
     @Bind(R.id.lay_main)
     LinearLayout layMain;
     @Bind(R.id.tv_addmembercategory)
     TextView tvAddmembercategory;
-    Intent getIntent;
+
     @OnClick({R.id.tv_addmembercategory})
     public void OnClick(View v) {
         switch (v.getId()) {
@@ -104,8 +103,8 @@ public class MemberAddCategoryActivity extends BaseActivity {
      * 初始化View
      */
     private void initViewAndData() {
-        getIntent=getIntent();
-        String nametype=getIntent.getStringExtra("type");
+        getIntent = getIntent();
+        String nametype = getIntent.getStringExtra("type");
         setPageTitle(nametype);
 
     }

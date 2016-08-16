@@ -8,7 +8,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@mipmap/bg_bugsms"
+        android:background="@mipmap/bg_buysms"
         android:orientation="horizontal"
     >
         <LinearLayout
