@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="color_fff">#fff</color>
     <color name="color_ededed">#ededed</color>
     <color name="pointcolor">#ff7e00</color>
     <color name="foodcolor">#b4b4b4</color>

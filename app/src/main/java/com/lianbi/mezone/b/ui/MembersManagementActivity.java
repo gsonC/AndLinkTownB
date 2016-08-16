@@ -100,6 +100,7 @@ public class MembersManagementActivity extends BaseActivity {
 			}
 			ImageView child_ima=(ImageView)convertView.findViewById(R.id.child_ima);
 			//child_ima.setBackgroundResource(R.mipmap.icon_back);
+
 			TextView tv = (TextView) convertView.findViewById(R.id.second_textview);
 			tv.setText(info);
 			tv.setOnClickListener(new OnClickListener() {

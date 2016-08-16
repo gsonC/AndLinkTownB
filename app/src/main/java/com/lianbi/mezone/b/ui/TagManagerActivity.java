@@ -100,6 +100,8 @@ public class TagManagerActivity extends BaseActivity {
 								//Toast.makeText(mActivity, "删除", 0).show();
 								mAdapter.replaceAll(mDatas);
 								ArrayList<String> ids = new ArrayList<String>();
+								/*ids.add(String.valueOf(item.getId()));
+								mActivity.delteLeaveMsg(ids,true);*/
 
 
 							}
