@@ -63,7 +63,7 @@ public class MarketingSMSexampleActivity extends BaseActivity {
      * 初始化View
      */
     private void initViewAndData() {
-        setPageTitle("请选择要发送的会员");
+        setPageTitle("选择短信模板");
         dialog = new HttpDialog(this);
         listviewData();
         getCandownloadMall();
