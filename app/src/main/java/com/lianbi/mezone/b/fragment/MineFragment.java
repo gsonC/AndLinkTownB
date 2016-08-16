@@ -22,11 +22,11 @@ import com.lianbi.mezone.b.httpresponse.API;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
 import com.lianbi.mezone.b.impl.MyShopChange;
+import com.lianbi.mezone.b.ui.AboutUsActivity;
 import com.lianbi.mezone.b.ui.ActionProduceActivity;
 import com.lianbi.mezone.b.ui.BaseActivity;
 import com.lianbi.mezone.b.ui.LoginActivity;
 import com.lianbi.mezone.b.ui.MainActivity;
-import com.lianbi.mezone.b.ui.MembersListActivity;
 import com.lianbi.mezone.b.ui.MineMsgActivity;
 import com.lianbi.mezone.b.ui.MineTextInfoActivity;
 import com.lianbi.mezone.b.ui.MyShopActivity;
@@ -263,8 +263,8 @@ public class MineFragment extends Fragment implements OnClickListener,
 					.toString().trim());
 			break;
 		case R.id.llt_mine_about_us:// 关于我们
-//			startActivity(new Intent(maActivity, AboutUsActivity.class));
-			startActivity(new Intent(maActivity, MembersListActivity.class));
+			startActivity(new Intent(maActivity, AboutUsActivity.class));
+//			startActivity(new Intent(maActivity, MembersListActivity.class));
 			break;
 		case R.id.llt_fm_mine_nologin:// 注册| 登录
 			maActivity.startActivityForResult(new Intent(maActivity,
