@@ -98,6 +98,8 @@ public class MembersManagementActivity extends BaseActivity {
 				LayoutInflater inflater = (LayoutInflater) MembersManagementActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 				convertView = inflater.inflate(R.layout.layout_children, null);
 			}
+			ImageView child_ima=(ImageView)convertView.findViewById(R.id.child_ima);
+			//child_ima.setBackgroundResource(R.mipmap.icon_back);
 			TextView tv = (TextView) convertView.findViewById(R.id.second_textview);
 			tv.setText(info);
 			tv.setOnClickListener(new OnClickListener() {
@@ -105,29 +107,27 @@ public class MembersManagementActivity extends BaseActivity {
 				public void onClick(View v) {
 					//会员列表
 					if(groupPosition==0&&childPosition==0) {
-
+						startActivity(new Intent(MembersManagementActivity.this,MembersListActivity.class));
 					}
 					//会员分类
 					if(groupPosition==0&&childPosition==1) {
-
+						startActivity(new Intent(MembersManagementActivity.this,MemberClassifyActivity.class));
 					}
 					//标签管理
 					if(groupPosition==0&&childPosition==2){
-						Intent intent=new Intent(MembersManagementActivity.this,TagManagerActivity.class);
-						startActivity(intent);
+						startActivity(new Intent(MembersManagementActivity.this,TagManagerActivity.class));
 					}
 					//优惠券管理
 					if(groupPosition==1&&childPosition==0) {
-
+						startActivity(new Intent(MembersManagementActivity.this,YouhuiquanManagerActivity.class));
 					}
 					//营销短信管理
 					if(groupPosition==1&&childPosition==1) {
-
+						startActivity(new Intent(MembersManagementActivity.this,MarketingMsgGlActivity.class));
 					}
 					//积分商城管理
 					if(groupPosition==1&&childPosition==2) {
-						Intent intent=new Intent(MembersManagementActivity.this,MemberPointManage.class);
-						startActivity(intent);
+						startActivity(new Intent(MembersManagementActivity.this,MemberPointManage.class));
 					}
 
 				}
