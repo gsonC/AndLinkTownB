@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <color name="color_ededed">#ededed</color>
+    <color name="pointcolor">#ff7e00</color>
+    <color name="foodcolor">#b4b4b4</color>
+    <color name="showcolor">#262626</color>
+    <color name="point">#ff3c25</color>
+    <color name="tag_sure">#ff3c25</color>
+    <color name="tag_mask">#262626</color>
     <color name="viewfinder_mask">#60000000</color>
     <color name="result_view">#b0000000</color>
     <color name="possible_result_points">#c0ffff00</color>
