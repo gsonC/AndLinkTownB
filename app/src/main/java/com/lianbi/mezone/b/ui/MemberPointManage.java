@@ -3,49 +3,23 @@ package com.lianbi.mezone.b.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.lianbi.mezone.b.bean.TagMessage;
 import com.xizhi.mezone.b.R;
-
 import java.util.ArrayList;
-
-import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.QuickAdapter;
-import cn.com.hgh.view.ContainsEmojiEditText;
 import cn.com.hgh.view.SlideListView2;
 
-public class MemberPointManage extends BaseActivity {
+public class MemberPointManage extends BaseActivity implements OnClickListener {
 	ArrayList<TagMessage> mDatas = new ArrayList<TagMessage>();
-	@Bind(R.id.fm_messagefragment_listView)
-	SlideListView2 fmMessagefragmentListView;
-	@Bind(R.id.imaa)
-	ImageView imaa;
-	@Bind(R.id.tv_search)
-	ContainsEmojiEditText tvSearch;
-	@Bind(R.id.rela_tab)
-	RelativeLayout relaTab;
-	@Bind(R.id.showM)
-	RelativeLayout showM;
-	@Bind(R.id.tv_searchtag)
-	TextView tvSearchtag;
-	@Bind(R.id.bt_sure)
-	TextView btSure;
-	@Bind(R.id.pointbuju)
-	RelativeLayout pointbuju;
-	@Bind(R.id.fm_tag_listView)
-	ListView fmTagListView;
-	@Bind(R.id.choose_from_weixin)
-	TextView chooseFromWeixin;
-	@Bind(R.id.tv_increaseProduct)
-	TextView tvIncreaseProduct;
-	private TextView tv_tag, point_goodsName, rated, trated, goodsPoint, pullgoods, pushgoods, changegoods,
-			tv_increaseProduct, choose_from_weixin;
+
+	private TextView tv_tag, point_goodsName, rated, trated, goodsPoint, pullgoods, pushgoods,
+			changegoods, tv_increaseProduct, choose_from_weixin;
 	private SlideListView2 fm_messagefragment_listView;
 	ImageView point_ima, pullgoodsIma;
 	ListView fm_tag_listView;
@@ -57,7 +31,7 @@ public class MemberPointManage extends BaseActivity {
 		ButterKnife.bind(this);
 		initView();
 		initListAdapter();
-
+		setListen();
 	}
 
 	private void initView() {
@@ -65,10 +39,32 @@ public class MemberPointManage extends BaseActivity {
 		fm_messagefragment_listView = (SlideListView2) findViewById(R.id.fm_messagefragment_listView);
 		fm_messagefragment_listView.initSlideMode(SlideListView2.MOD_RIGHT);
 		fm_tag_listView = (ListView) findViewById(R.id.fm_tag_listView);
-		changegoods.setOnClickListener(this);
+
+		tv_increaseProduct = (TextView) findViewById(R.id.tv_increaseProduct);
+		choose_from_weixin = (TextView) findViewById(R.id.choose_from_weixin);
+	}
+
+	private void setListen() {
+		//changegoods.setOnClickListener(this);
 		tv_increaseProduct.setOnClickListener(this);
 		choose_from_weixin.setOnClickListener(this);
 	}
+
+	@Override
+	public void onClick(View v) {
+		super.onClick(v);
+		switch (v.getId()) {
+			//新增积分商品
+			case R.id.tv_increaseProduct:
+				startActivity(new Intent(MemberPointManage.this, NewIntegralGoodsActivity.class));
+				break;
+			//从微信商城产品库选择
+			case R.id.choose_from_weixin:
+				startActivity(new Intent(MemberPointManage.this, ChooseFromWeixinActivity.class));
+				break;
+		}
+	}
+
 
 
 //初始化适配器
@@ -80,7 +76,7 @@ public class MemberPointManage extends BaseActivity {
 
 			@Override
 			protected void convert(final BaseAdapterHelper helper, final TagMessage item) {
-
+                   changegoods = helper.getView(R.id.changegoods);
 				point_ima = helper.getView(R.id.point_ima);
 				point_goodsName = helper.getView(R.id.point_goodsName);
 				rated = helper.getView(R.id.rated);
@@ -91,13 +87,19 @@ public class MemberPointManage extends BaseActivity {
 				pushgoods = helper.getView(R.id.pushgoods);
 				changegoods = helper.getView(R.id.changegoods);
 				tv_tag = helper.getView(R.id.tv_tag);
-
-
 				tv_tag.setText(item.getTv_tagmessage());
 
-
+				//修改点击事件
+				changegoods.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						startActivity(new Intent(MemberPointManage.this, RevisionsActivity.class));
+					}
+				});
+               /*侧滑的点击事件
+                */
 				helper.getView(R.id.tv_chdelete).setOnClickListener(// 删除
-						new View.OnClickListener() {
+						new OnClickListener() {
 
 							@Override
 							public void onClick(View v) {
@@ -120,19 +122,5 @@ public class MemberPointManage extends BaseActivity {
 		fm_tag_listView.setAdapter(mAdapter);
 	}
 
-
-	private void listen(View v) {
-		switch (v.getId()) {
-			case R.id.changegoods:
-				startActivity(new Intent(MemberPointManage.this, RevisionsActivity.class));
-				break;
-			case R.id.tv_increaseProduct:
-				startActivity(new Intent(MemberPointManage.this, NewIntegralGoodsActivity.class));
-				break;
-			case R.id.choose_from_weixin:
-				startActivity(new Intent(MemberPointManage.this, ChooseFromWeixinActivity.class));
-				break;
-		}
-	}
 
 }
