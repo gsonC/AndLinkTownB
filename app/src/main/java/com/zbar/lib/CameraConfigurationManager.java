@@ -26,6 +26,8 @@ public final class CameraConfigurationManager {
 	// 相机分辨率
 	private Point cameraResolution;
 
+
+
 	public CameraConfigurationManager(Context context) {
 		this.context = context;
 	}
