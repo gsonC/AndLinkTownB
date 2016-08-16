@@ -20,7 +20,7 @@
          android:layout_height="wrap_content"
          android:layout_centerVertical="true"
          android:text="累计发送短信:"
-         android:textSize="15sp"
+         android:textSize="14sp"
          android:textColor="@color/color_4b4b4b"
         />
         <TextView
@@ -32,7 +32,7 @@
          android:layout_height="wrap_content"
          android:textColor="@color/color_4b4b4b"
          android:text="111"
-         android:textSize="15sp"
+         android:textSize="14sp"
             />
         <TextView
             android:id="@+id/txt_remainsendmsg"
@@ -43,7 +43,7 @@
             android:layout_marginLeft="10dp"
             android:textColor="@color/color_4b4b4b"
             android:text="剩余可发送短信:"
-            android:textSize="15sp"
+            android:textSize="14sp"
             />
         <TextView
             android:id="@+id/txt_remainsendnum"
@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/color_4b4b4b"
             android:text="111"
-            android:textSize="15sp"
+            android:textSize="14sp"
             />
         <TextView
             android:id="@+id/btn_msgpay"
@@ -156,7 +156,7 @@
             android:padding="5dp"
             android:singleLine="true"
             android:textColor="@color/color_4b4b4b"
-            android:text="选择要发送的会员"
+            android:text="可选会员"
             />
     </LinearLayout>
     <LinearLayout

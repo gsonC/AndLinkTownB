@@ -326,10 +326,52 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/colores_news_14" />
+        <LinearLayout
+            android:id="@+id/lay_numofmembers"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            >
 
+            <TextView
+                android:id="@+id/tv_numofmembers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="本分类现有会员数："
+                android:layout_centerVertical="true"
+                android:textSize="16sp" /> Specific figures
+
+            <TextView
+                android:id="@+id/tv_specificfigures"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="100000"
+                android:layout_centerVertical="true"
+                android:textSize="16sp" />
+            <EditText
+                android:id="@+id/tv_membership"
+                android:layout_width="wrap_content"
+                android:singleLine="true"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="5dp"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/shap_hollow_grey"
+                android:layout_centerVertical="true"
+                android:text="本分类会员详情"
+                android:textSize="14sp" />
+        </LinearLayout>
     </LinearLayout>
     </ScrollView>
     <RelativeLayout
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"

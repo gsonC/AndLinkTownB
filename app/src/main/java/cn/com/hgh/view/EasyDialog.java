@@ -1,8 +1,5 @@
 package cn.com.hgh.view;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
@@ -28,6 +25,11 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.xizhi.mezone.b.R;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import cn.com.hgh.utils.AbViewUtil;
 
 /**
  * 要你命3000
@@ -589,5 +591,29 @@ public class EasyDialog
     {
         dialog.setCancelable(cancelable);
         return this;
+    }
+    /**
+     * 设置弹框
+     * */
+    public static  EasyDialog showDioag(Context context, View arg1, View layout) {
+        EasyDialog es = new EasyDialog(context)
+                .setLayout(layout)
+                .setBackgroundColor(
+                        context.getResources().getColor(
+                                R.color.white))
+                .setLocationByAttachedView(arg1)
+                .setAnimationTranslationShow(EasyDialog.DIRECTION_Y, 1000,
+                        -AbViewUtil.dip2px(context, 1000), 100, -50, 50, 0)
+                .setAnimationTranslationDismiss(EasyDialog.DIRECTION_Y, 500, 0,
+                        -AbViewUtil.dip2px(context, 1000))
+                .setGravity(EasyDialog.GRAVITY_TOP)
+                .setTouchOutsideDismiss(true)
+                .setMatchParent(false)
+                .setMarginLeftAndRight(24, 24)
+                .setOutsideColor(
+                        context.getResources().getColor(
+                                R.color.color_8000)).show();
+        return es;
+
     }
 }

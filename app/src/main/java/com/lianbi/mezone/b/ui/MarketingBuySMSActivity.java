@@ -1,5 +1,6 @@
 package com.lianbi.mezone.b.ui;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -46,12 +47,14 @@ public class MarketingBuySMSActivity extends BaseActivity {
     TextView txtRemainsendnum;
     @Bind(R.id.ray_top)
     RelativeLayout rayTop;
-    @Bind(R.id.v_01)
-    View v01;
     @Bind(R.id.txt_price)
     TextView txtPrice;
     @Bind(R.id.act_buysms_list)
     ListView actBuysmsList;
+    @Bind(R.id.txt_buymsm)
+    TextView txtBuymsm;
+    private AlertDialog wxpayDiaLog;
+    TextView  tv_delete_cancle,tv_delete_ok,tv_price;
     private ArrayList<ServiceMallBean> mData = new ArrayList<ServiceMallBean>();
     private ArrayList<ServiceMallBean> mDatas = new ArrayList<ServiceMallBean>();
     HttpDialog dialog;
@@ -61,7 +64,7 @@ public class MarketingBuySMSActivity extends BaseActivity {
     public void OnClick(View v) {
         switch (v.getId()) {
             case R.id.txt_buymsm:
-
+                wxpayDialog();
 
             break;
 
@@ -172,6 +175,30 @@ public class MarketingBuySMSActivity extends BaseActivity {
         mDatas.clear();
         mDatas.addAll(arrayList);
         mAdapter.replaceAll(mDatas);
+    }
+    protected void wxpayDialog() {
+        wxpayDiaLog=new AlertDialog.Builder(MarketingBuySMSActivity.this).create();
+        wxpayDiaLog.show();
+        wxpayDiaLog.setContentView(R.layout.dialog_wxpay);
+        wxpayDiaLog.setCanceledOnTouchOutside(true);
+        tv_price=(TextView)wxpayDiaLog.findViewById(R.id.tv_price);
+        tv_delete_cancle=(TextView)wxpayDiaLog.findViewById(R.id.tv_delete_cancle);
+        tv_delete_ok=(TextView)wxpayDiaLog.findViewById(R.id.tv_delete_ok);
+        tv_price.setText("0.01");
+        tv_delete_cancle.setOnClickListener(new   View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                wxpayDiaLog.dismiss();
+            }
+        });
+        tv_delete_ok.setOnClickListener(new  View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                wxpayDiaLog.dismiss();
+
+            }
+        });
+
     }
 }
 

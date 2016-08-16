@@ -80,13 +80,15 @@ public class MemberAddCategoryActivity extends BaseActivity {
     @Bind(R.id.tv_addmembercategory)
     TextView tvAddmembercategory;
 
+    @Bind(R.id.lay_numofmembers)
+    LinearLayout lay_numofmembers;
     @OnClick({R.id.tv_addmembercategory})
     public void OnClick(View v) {
         switch (v.getId()) {
             case R.id.tv_addmembercategory:
 
 
-                break;
+            break;
 
         }
     }
@@ -106,9 +108,20 @@ public class MemberAddCategoryActivity extends BaseActivity {
         getIntent = getIntent();
         String nametype = getIntent.getStringExtra("type");
         setPageTitle(nametype);
+        if (nametype.equals("分类详情")) {
+            setPageRightText("修改");
+            lay_numofmembers.setVerticalGravity(View.VISIBLE);
+        }else if(nametype.equals("新增分类")){
+            setPageRightText("保存");
+            lay_numofmembers.setVerticalGravity(View.GONE);
+        }
 
     }
-
+    @Override
+    protected void onTitleRightClickTv() {
+        super.onTitleRightClickTv();
+        finish();
+    }
 
 }
 

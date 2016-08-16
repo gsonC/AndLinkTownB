@@ -8,34 +8,42 @@
         android:id="@+id/ray_top"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
         android:gravity="center_vertical"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
-       >
-     <TextView
-         android:id="@+id/txt_msg"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_centerVertical="true"
-         android:text="累计发送短信"
-        />
+        >
         <TextView
-         android:id="@+id/txt_alreadysendnum"
-         android:layout_toRightOf="@+id/txt_msg"
-         android:layout_marginLeft="5dp"
-         android:layout_centerVertical="true"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:text="111"
-         />
+            android:id="@+id/txt_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="累计发送短信:"
+            android:textSize="14sp"
+            android:textColor="@color/color_4b4b4b"
+            />
+        <TextView
+            android:id="@+id/txt_alreadysendnum"
+            android:layout_toRightOf="@+id/txt_msg"
+            android:layout_marginLeft="5dp"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_4b4b4b"
+            android:text="111"
+            android:textSize="14sp"
+            />
         <TextView
             android:id="@+id/txt_remainsendmsg"
             android:layout_toRightOf="@+id/txt_alreadysendnum"
             android:layout_centerVertical="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:text="剩余可发送短信"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/color_4b4b4b"
+            android:text="剩余可发送短信:"
+            android:textSize="14sp"
             />
         <TextView
             android:id="@+id/txt_remainsendnum"
@@ -44,7 +52,9 @@
             android:layout_centerVertical="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/color_4b4b4b"
             android:text="111"
+            android:textSize="14sp"
             />
         <TextView
             android:id="@+id/btn_msgpay"
@@ -53,7 +63,10 @@
             android:layout_centerVertical="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="10dp"
+            android:background="@drawable/shap_hollow_red"
+            android:padding="5dp"
+            android:textColor="@color/colores_news_01"
+            android:textSize="@dimen/h15"
             android:text="短信购买"
             />
     </RelativeLayout>
@@ -67,8 +80,10 @@
     <LinearLayout
         android:id="@+id/lay_tag"
         android:layout_below="@id/v_01"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:background="@color/white"
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
@@ -117,25 +132,29 @@
         android:layout_below="@id/v_02"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="100dp"
         android:background="#ffffff"
         android:divider="@color/colores_news_14"
         android:dividerHeight="1dp"
      />
-    <TextView
-        android:id="@+id/text_newmakemsg"
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="14dp"
-        android:layout_marginRight="14dp"
-        android:layout_marginTop="25dp"
-        android:background="@drawable/shape_login"
-        android:clickable="true"
-        android:gravity="center"
-        android:padding="10dp"
-        android:text="新建营销短信"
-        android:textColor="@color/white"
-        android:textSize="17sp" />
-
+        >
+        <TextView
+            android:id="@+id/text_newmakemsg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_login"
+            android:layout_centerInParent="true"
+            android:clickable="true"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="新建营销短信"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+    </RelativeLayout>
 </RelativeLayout>
