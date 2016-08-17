@@ -1,12 +1,12 @@
 package com.lianbi.mezone.b.ui;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -20,7 +20,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnItemClick;
 
-public class YouhuiquanManagerActivity extends BaseActivity implements AdapterView.OnItemClickListener {
+public class CouponManagerActivity extends BaseActivity implements AdapterView.OnItemClickListener {
     @Bind(R.id.all_container)
     FrameLayout all_container;
     @Bind(R.id.all)
@@ -33,15 +33,17 @@ public class YouhuiquanManagerActivity extends BaseActivity implements AdapterVi
     FrameLayout invalid_container;
     @Bind(R.id.invalid)
     TextView invalid;
-    @Bind(R.id.activity_youhuiquan_list)
+    @Bind(R.id.activity_coupon_list)
     ListView listView;
+    @Bind(R.id.iv_empty_act_coupon_detail)
+    ImageView iv_empty_act_coupon_detail;
     @Bind(R.id.add)
     TextView add;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_youhuiquan_manager, NOTYPE);
+        setContentView(R.layout.activity_coupon_manager, NOTYPE);
         ButterKnife.bind(this);
         setPageTitle("优惠券管理");
         List<String> data = new ArrayList<String>();
@@ -49,15 +51,15 @@ public class YouhuiquanManagerActivity extends BaseActivity implements AdapterVi
         data.add("测试数据2");
         data.add("测试数据3");
         data.add("测试数据4");
-        listView.setAdapter(new ArrayAdapter<>(YouhuiquanManagerActivity.this,
+        listView.setAdapter(new ArrayAdapter<>(CouponManagerActivity.this,
                 android.R.layout.simple_list_item_1,
                 data));
     }
 
     @Override
-    @OnItemClick({R.id.activity_youhuiquan_list})
+    @OnItemClick({R.id.activity_coupon_list})
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        startActivity(new Intent(YouhuiquanManagerActivity.this, YouhuiquanUsingDetailsActivity.class));
+        startActivity(new Intent(CouponManagerActivity.this, CouponUsingDetailsActivity.class));
     }
 
     @Override
@@ -67,30 +69,30 @@ public class YouhuiquanManagerActivity extends BaseActivity implements AdapterVi
         switch (view.getId()) {
             case R.id.all_container:
                 all_container.setBackgroundColor(getResources().getColor(R.color.colores_news_01));
-                all.setTextColor(Color.parseColor("#ff3c25"));
+                all.setTextColor(getResources().getColor(R.color.colores_news_01));
                 valid_container.setBackgroundColor(getResources().getColor(R.color.colores_news_14));
-                valid.setTextColor(Color.parseColor("#ededed"));
+                valid.setTextColor(getResources().getColor(R.color.colores_news_10));
                 invalid_container.setBackgroundColor(getResources().getColor(R.color.colores_news_14));
-                invalid.setTextColor(Color.parseColor("#ededed"));
+                invalid.setTextColor(getResources().getColor(R.color.colores_news_10));
                 break;
             case R.id.valid_container:
                 all_container.setBackgroundColor(getResources().getColor(R.color.colores_news_14));
-                all.setTextColor(Color.parseColor("#ededed"));
+                all.setTextColor(getResources().getColor(R.color.colores_news_10));
                 valid_container.setBackgroundColor(getResources().getColor(R.color.colores_news_01));
-                valid.setTextColor(Color.parseColor("#ff3c25"));
+                valid.setTextColor(getResources().getColor(R.color.colores_news_01));
                 invalid_container.setBackgroundColor(getResources().getColor(R.color.colores_news_14));
-                invalid.setTextColor(Color.parseColor("#ededed"));
+                invalid.setTextColor(getResources().getColor(R.color.colores_news_10));
                 break;
             case R.id.invalid_container:
                 all_container.setBackgroundColor(getResources().getColor(R.color.colores_news_14));
-                all.setTextColor(Color.parseColor("#ededed"));
+                all.setTextColor(getResources().getColor(R.color.colores_news_10));
                 valid_container.setBackgroundColor(getResources().getColor(R.color.colores_news_14));
-                valid.setTextColor(Color.parseColor("#ededed"));
+                valid.setTextColor(getResources().getColor(R.color.colores_news_10));
                 invalid_container.setBackgroundColor(getResources().getColor(R.color.colores_news_01));
-                invalid.setTextColor(Color.parseColor("#ff3c25"));
+                invalid.setTextColor(getResources().getColor(R.color.colores_news_01));
                 break;
             case R.id.add:
-                startActivity(new Intent(YouhuiquanManagerActivity.this, SendNewYouhuiquanActivity.class));
+                startActivity(new Intent(CouponManagerActivity.this, SendNewCouponActivity.class));
                 break;
         }
     }

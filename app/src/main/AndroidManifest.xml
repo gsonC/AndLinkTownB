@@ -294,9 +294,9 @@
         </activity>
         <activity android:name="com.lianbi.mezone.b.ui.AboutUsActivity"/>
         <activity android:name="com.lianbi.mezone.b.wxapi.WXPayEntryActivity"/>
-        <activity android:name="com.lianbi.mezone.b.ui.YouhuiquanManagerActivity" />
-        <activity android:name="com.lianbi.mezone.b.ui.YouhuiquanUsingDetailsActivity" />
-        <activity android:name="com.lianbi.mezone.b.ui.SendNewYouhuiquanActivity"/>
+        <activity android:name="com.lianbi.mezone.b.ui.CouponManagerActivity" />
+        <activity android:name="com.lianbi.mezone.b.ui.CouponUsingDetailsActivity" />
+        <activity android:name="com.lianbi.mezone.b.ui.SendNewCouponActivity"/>
 
         <!-- 个推SDK配置开始 -->
         <!-- 配置的第三方参数属性 -->

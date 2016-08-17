@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.lianbi.mezone.b.ui.YouhuiquanUsingDetailsActivity">
+    tools:context="com.lianbi.mezone.b.ui.CouponUsingDetailsActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -133,14 +133,27 @@
             android:textSize="15.5sp" />
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/youhuiquan_using_detail_list"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:divider="@color/color_e3e3e3"
-        android:dividerHeight="1dp"
-        android:scrollbars="none" />
+        android:layout_weight="1">
+
+        <ListView
+            android:id="@+id/coupon_using_detail_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@color/color_e3e3e3"
+            android:dividerHeight="1dp"
+            android:scrollbars="none" />
+
+        <ImageView
+            android:id="@+id/iv_empty_act_coupon_using_detail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerInside"
+            android:src="@mipmap/iv_empty"
+            android:visibility="gone" />
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
