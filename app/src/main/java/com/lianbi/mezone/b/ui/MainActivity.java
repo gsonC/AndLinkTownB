@@ -289,7 +289,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 	/**
 	 * status 1:已更新；2：自定义更新；3：必须更新
 	 */
-	private void getUpData() {
+	public void getUpData() {
 		final String vName = AbAppUtil.getAppVersionName(this);
 		String reqTime = AbDateUtil.getDateTimeNow();
 		String uuid = AbStrUtil.getUUID();
@@ -303,8 +303,11 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 							final AppUpDataBean uB = com.alibaba.fastjson.JSONObject
 									.parseObject(result.getData(),
 											AppUpDataBean.class);
-							System.out.println("result.getData()........."+result.getData());
 							String status = uB.getCoerceModify();
+
+							ContentUtils.putSharePre(MainActivity.this,
+									Constants.SHARED_PREFERENCE_NAME,
+									Constants.UPDATERED, true);
 
 							if (status.equals("Y")) {
 								mustUp = true;
@@ -779,7 +782,22 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 					startActivity(intent_more);
 				}
 				break;
+			case POSITION3:
+				if (ContentUtils.getLoginStatus(this)) {
+					ContentUtils.putSharePre(MainActivity.this,
+							Constants.SHARED_PREFERENCE_NAME, Constants.USERHEADURL,
+							userShopInfoBean.getPersonHeadUrl());
 
+					ContentUtils.putSharePre(MainActivity.this,
+							Constants.SHARED_PREFERENCE_NAME, Constants.LOGINED_IN,
+							false);
+					userShopInfoBean = null;
+					refreshFMData();
+					ContentUtils.showMsg(this,"已退出登录");
+				}else{
+					ContentUtils.showMsg(this,"请先登录");
+				}
+				break;
 		}
 	}
 
@@ -941,12 +959,18 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 			getFinancialOfficeClick();// 刷新财务室价格
 		} else if (position == POSITION3) {
 			curPosition = POSITION3;
-			setPageRightTextVisibility(View.GONE);
+	//		setPageRightTextVisibility(View.GONE);
 			((MineFragment) fm_mine).refreshFMData();
 			setPageTitle("我的");
-			tv_title_left.setVisibility(View.GONE);
+			setPageRightText("退出登录");
+			setPageRightTextColor(R.color.black);
+			tv_title_left.setText("退出登录");
+			tv_title_left.setVisibility(View.INVISIBLE);
 			setPageBackVisibility(View.INVISIBLE);
-			setPageRightResource(R.mipmap.more_other);
+			setPageRightImageVisibility();
+	//		tv_title_left.setVisibility(View.GONE);
+	//		setPageBackVisibility(View.INVISIBLE);
+	//		setPageRightResource(R.mipmap.more_other);
 			rb_mine.setChecked(true);
 			fm_funcpage2.setVisibility(View.GONE);
 			fm_funcpage0.setVisibility(View.GONE);
