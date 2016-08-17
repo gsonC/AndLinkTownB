@@ -784,16 +784,32 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 				break;
 			case POSITION3:
 				if (ContentUtils.getLoginStatus(this)) {
-					ContentUtils.putSharePre(MainActivity.this,
-							Constants.SHARED_PREFERENCE_NAME, Constants.USERHEADURL,
-							userShopInfoBean.getPersonHeadUrl());
+					DialogCommon dialog = new DialogCommon(MainActivity.this) {
+						@Override
+						public void onCheckClick() {
+							dismiss();
+						}
 
-					ContentUtils.putSharePre(MainActivity.this,
-							Constants.SHARED_PREFERENCE_NAME, Constants.LOGINED_IN,
-							false);
-					userShopInfoBean = null;
-					refreshFMData();
-					ContentUtils.showMsg(this,"已退出登录");
+						@Override
+						public void onOkClick() {
+							ContentUtils.putSharePre(MainActivity.this,
+									Constants.SHARED_PREFERENCE_NAME, Constants.USERHEADURL,
+									userShopInfoBean.getPersonHeadUrl());
+
+							ContentUtils.putSharePre(MainActivity.this,
+									Constants.SHARED_PREFERENCE_NAME, Constants.LOGINED_IN,
+									false);
+							userShopInfoBean = null;
+							refreshFMData();
+							dismiss();
+							ContentUtils.showMsg(MainActivity.this,"已退出登录");
+						}
+					};
+					dialog.setTextTitle("是否退出");
+					dialog.setTv_dialog_common_ok("退出");
+					dialog.setTv_dialog_common_cancel("取消");
+					dialog.show();
+
 				}else{
 					ContentUtils.showMsg(this,"请先登录");
 				}
@@ -1052,7 +1068,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 	private void setShoyYeTitle() {
 		if (ContentUtils.getLoginStatus(this)) {
 			try {
-				if(0==clickPosition){
+				if(POSITION0==clickPosition){
 					setPageTitle(userShopInfoBean.getShopName());
 				}
 			} catch (Exception e) {
