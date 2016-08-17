@@ -24,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginBottom="1dp"
-                android:background="@color/colores_news_14"
+                android:background="@color/white"
                 android:gravity="center"
                 android:text="全部"
                 android:textColor="@color/colores_news_01"
@@ -36,14 +36,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/colores_news_14">
+            android:background="@color/white">
 
             <TextView
                 android:id="@+id/valid"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginBottom="1dp"
-                android:background="@color/colores_news_14"
+                android:background="@color/white"
                 android:gravity="center"
                 android:text="有效"
                 android:textColor="@color/colores_news_10"
@@ -55,14 +55,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/colores_news_14">
+            android:background="@color/white">
 
             <TextView
                 android:id="@+id/invalid"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginBottom="1dp"
-                android:background="@color/colores_news_14"
+                android:background="@color/white"
                 android:gravity="center"
                 android:text="已失效"
                 android:textColor="@color/colores_news_10"
@@ -70,17 +70,22 @@
         </FrameLayout>
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/color_e3e3e3" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginBottom="20dp"
         android:layout_weight="1">
 
         <ListView
             android:id="@+id/activity_coupon_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="10dp"
             android:divider="@color/color_e3e3e3"
             android:dividerHeight="1dp"
             android:scrollbars="none" />

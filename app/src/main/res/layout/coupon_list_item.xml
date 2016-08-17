@@ -1,29 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="45dp">
+    android:layout_height="45dp"
+    android:background="@color/white">
 
     <LinearLayout
-        android:layout_width="110dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginLeft="16.5dp"
+        android:gravity="center_horizontal"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/youhuiquan_name"
+            android:id="@+id/coupon_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/colores_news_10"
             android:textSize="14.5sp" />
 
-        <TextView
-            android:id="@+id/youhuiquan_tiaojian"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:textColor="@color/colores_news_11"
-            android:textSize="9sp" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(满"
+                android:textColor="@color/colores_news_11"
+                android:textSize="9sp" />
+
+            <TextView
+                android:id="@+id/coupon_tiaojian"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colores_news_11"
+                android:textSize="9sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="元可用)"
+                android:textColor="@color/colores_news_11"
+                android:textSize="9sp" />
+        </LinearLayout>
     </LinearLayout>
 
     <TextView
