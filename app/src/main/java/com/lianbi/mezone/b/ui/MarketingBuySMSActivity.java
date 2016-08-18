@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -105,6 +106,9 @@ public class MarketingBuySMSActivity extends BaseActivity {
             @Override
             protected void convert(final BaseAdapterHelper helper,
                                    final ServiceMallBean item) {
+
+                LinearLayout lay_buysms= helper
+                        .getView(R.id.lay_buysms);
                 TextView tv_price = helper
                         .getView(R.id.tv_price);
                 TextView tv_priceunit = helper
@@ -118,6 +122,15 @@ public class MarketingBuySMSActivity extends BaseActivity {
 
                 tv_totalnumber.setText(item.getAppName());
                 tv_numberofgifts.setText(item.getAppName());
+                helper.getView(R.id.lay_buysms).setOnClickListener(
+                        new  View.OnClickListener(){
+                            @Override
+                            public void onClick(View v) {
+                                index=helper.getPosition();
+                                notifyDataSetChanged();
+                            }
+                        }
+                );
                 helper.getView(R.id.cb_choice).setOnClickListener(
                 new  View.OnClickListener(){
                             @Override

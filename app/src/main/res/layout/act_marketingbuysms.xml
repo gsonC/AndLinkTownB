@@ -74,6 +74,7 @@
         android:layout_marginTop="10dp"
         android:background="@color/white"
         android:text="0.08元/条"
+        android:textColor="@color/color_4b4b4b"
         android:gravity="center_vertical"
         android:paddingLeft="15dp"
         />
