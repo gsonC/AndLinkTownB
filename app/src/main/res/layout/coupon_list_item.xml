@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="45dp"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="90dp"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="16.5dp"
+        android:layout_marginLeft="10dp"
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
@@ -16,8 +17,9 @@
             android:id="@+id/coupon_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:lines="1"
             android:textColor="@color/colores_news_10"
-            android:textSize="14.5sp" />
+            android:textSize="14sp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -41,65 +43,68 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:lines="1"
                 android:text="元可用)"
                 android:textColor="@color/colores_news_11"
                 android:textSize="9sp" />
         </LinearLayout>
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/youxiaoqi"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="125dp"
-        android:text="有效期："
-        android:textColor="@color/colores_news_11"
-        android:textSize="11.5sp" />
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_weight="1"
+        android:gravity="center_horizontal|top"
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/youxiaoqi_from"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@id/youxiaoqi"
-        android:textColor="@color/colores_news_11"
-        android:textSize="11.5sp" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/lianjiexian"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@id/youxiaoqi_from"
-        android:text="－"
-        android:textColor="@color/colores_news_11"
-        android:textSize="11.5sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="有效期："
+                android:textColor="@color/colores_news_11"
+                android:textSize="11sp" />
 
-    <TextView
-        android:id="@+id/youxiaoqi_to"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@id/lianjiexian"
-        android:textColor="@color/colores_news_11"
-        android:textSize="11.5sp" />
+            <TextView
+                android:id="@+id/youxiaoqi_from"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colores_news_11"
+                android:textSize="11sp" />
 
-    <ImageView
-        android:id="@+id/is_valid"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_marginLeft="2dp"
-        android:layout_marginTop="5.5dp"
-        android:layout_toRightOf="@id/youxiaoqi_to"
-        android:scaleType="fitXY" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="－"
+                android:textColor="@color/colores_news_11"
+                android:textSize="11sp" />
+
+            <TextView
+                android:id="@+id/youxiaoqi_to"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colores_news_11"
+                android:textSize="11sp" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/is_valid"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginTop="5.5dp"
+            android:scaleType="fitXY" />
+    </LinearLayout>
 
     <ImageView
         android:layout_width="16dp"
         android:layout_height="16dp"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="15dp"
+        android:layout_marginRight="10dp"
         android:scaleType="fitXY"
         android:src="@mipmap/service_new_right" />
-</RelativeLayout>
+</LinearLayout>

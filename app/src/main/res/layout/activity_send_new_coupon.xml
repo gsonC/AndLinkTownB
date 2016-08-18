@@ -45,7 +45,7 @@
                 android:background="@drawable/shape_radius_4dp"
                 android:gravity="center"
                 android:hint="10"
-                android:inputType="numberDecimal"
+                android:inputType="number"
                 android:textColor="@color/colores_news_11"
                 android:textSize="@dimen/h15" />
 
@@ -104,7 +104,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="0.5dp"
                         android:background="@color/white"
-                        android:inputType="numberDecimal"
+                        android:inputType="number"
                         android:text="1000"
                         android:textColor="#4b4b4b"
                         android:textSize="12.5sp" />
@@ -239,7 +239,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="11.5dp"
                 android:checked="true"
-                android:paddingLeft="5dp"
                 android:text="同时发送营销短信"
                 android:textColor="#4b4b4b"
                 android:textSize="12.5sp" />
