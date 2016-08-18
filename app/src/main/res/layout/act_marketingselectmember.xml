@@ -125,16 +125,17 @@
         <!--android:dividerHeight="1dp"-->
      <!--/>-->
 
-        <android.support.v7.widget.RecyclerView
+        <cn.com.hgh.baseadapter.recyclerViewadapter.pullrefreshrecyclerview.PullRefreshRecyclerView
             android:id="@+id/rlv_actmarketingselect"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/v_02"
+            android:layout_marginBottom="50dp"
             android:divider="@null"
             android:background="@color/white"
             android:listSelector="@color/transparent"
             android:scrollbars="none">
-        </android.support.v7.widget.RecyclerView>
+        </cn.com.hgh.baseadapter.recyclerViewadapter.pullrefreshrecyclerview.PullRefreshRecyclerView>
 
    <RelativeLayout
        android:id="@+id/ray_bottom"

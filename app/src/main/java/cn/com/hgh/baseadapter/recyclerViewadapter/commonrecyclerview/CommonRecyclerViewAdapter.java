@@ -1,4 +1,4 @@
-package cn.com.hgh.baseadapter.recyclerViewadapter;
+package cn.com.hgh.baseadapter.recyclerViewadapter.commonrecyclerview;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

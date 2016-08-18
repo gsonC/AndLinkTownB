@@ -22,9 +22,9 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.com.hgh.baseadapter.recyclerViewadapter.CommonRecyclerViewAdapter;
-import cn.com.hgh.baseadapter.recyclerViewadapter.CommonRecyclerViewHolder;
-import cn.com.hgh.baseadapter.recyclerViewadapter.RecycleViewDivider;
+import cn.com.hgh.baseadapter.recyclerViewadapter.commonrecyclerview.CommonRecyclerViewAdapter;
+import cn.com.hgh.baseadapter.recyclerViewadapter.commonrecyclerview.CommonRecyclerViewHolder;
+import cn.com.hgh.baseadapter.recyclerViewadapter.commonrecyclerview.RecycleViewDivider;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.view.HttpDialog;
 
