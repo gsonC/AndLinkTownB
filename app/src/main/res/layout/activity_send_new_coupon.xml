@@ -31,6 +31,8 @@
                 android:layout_marginRight="13dp"
                 android:background="@drawable/shape_radius_4dp"
                 android:hint="请输入优惠券名称"
+                android:lines="1"
+                android:maxLength="14"
                 android:textColor="@color/colores_news_11"
                 android:textSize="@dimen/h13">
 
