@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +38,8 @@ import cn.com.hgh.view.HttpDialog;
  */
 public class MarketingMsgGlActivity extends BaseActivity {
 
+
+    CommonRecyclerViewAdapter mRecyclerViewAdapter;
     @Bind(R.id.txt_msg)
     TextView txtMsg;
     @Bind(R.id.txt_alreadysendnum)
@@ -50,7 +51,9 @@ public class MarketingMsgGlActivity extends BaseActivity {
     @Bind(R.id.btn_msgpay)
     TextView btnMsgpay;
     @Bind(R.id.ray_top)
-    RelativeLayout rayTop;
+    LinearLayout rayTop;
+    @Bind(R.id.v_01)
+    View v01;
     @Bind(R.id.btn_sendmsg)
     TextView btnSendmsg;
     @Bind(R.id.btn_sendobject)
@@ -59,30 +62,37 @@ public class MarketingMsgGlActivity extends BaseActivity {
     TextView btnSendnum;
     @Bind(R.id.lay_tag)
     LinearLayout layTag;
+    @Bind(R.id.v_02)
+    View v02;
     @Bind(R.id.rlv_actmarketing)
-    RecyclerView rlv_actmarketing;
+    RecyclerView rlvActmarketing;
     @Bind(R.id.text_newmakemsg)
     TextView textNewmakemsg;
-    CommonRecyclerViewAdapter mRecyclerViewAdapter;
     private ArrayList<ServiceMallBean> mData = new ArrayList<ServiceMallBean>();
     private ArrayList<ServiceMallBean> mDatas = new ArrayList<ServiceMallBean>();
     HttpDialog dialog;
 
-    @OnClick({R.id.text_newmakemsg})
+    @OnClick({R.id.text_newmakemsg, R.id.btn_msgpay})
     public void OnClick(View v) {
         switch (v.getId()) {
             case R.id.text_newmakemsg:
                 simpleJump(MarketingMsgBulidActivity.class);
 
                 break;
+            case R.id.btn_msgpay:
+
+                simpleJump(MarketingBuySMSActivity.class);
+                break;
 
         }
     }
-    private void  simpleJump(Class activity){
-        Intent intent=new Intent();
-        intent.setClass(MarketingMsgGlActivity.this,activity);
+
+    private void simpleJump(Class activity) {
+        Intent intent = new Intent();
+        intent.setClass(MarketingMsgGlActivity.this, activity);
         startActivity(intent);
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,7 +116,7 @@ public class MarketingMsgGlActivity extends BaseActivity {
         //创建一个线性的布局管理器并设置
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        rlv_actmarketing.setLayoutManager(layoutManager);
+        rlvActmarketing.setLayoutManager(layoutManager);
         mRecyclerViewAdapter = new CommonRecyclerViewAdapter<ServiceMallBean>(this, mData) {
 
             @Override
@@ -141,9 +151,9 @@ public class MarketingMsgGlActivity extends BaseActivity {
                 return 1;
             }
         };
-        rlv_actmarketing.addItemDecoration(new RecycleViewDivider(MarketingMsgGlActivity.this, LinearLayoutManager.HORIZONTAL));
+        rlvActmarketing.addItemDecoration(new RecycleViewDivider(MarketingMsgGlActivity.this, LinearLayoutManager.HORIZONTAL));
         //设置适配器
-        rlv_actmarketing.setAdapter(mRecyclerViewAdapter);
+        rlvActmarketing.setAdapter(mRecyclerViewAdapter);
         //只针对显示name的Item
         mRecyclerViewAdapter.setOnRecyclerViewItemClickListener(new CommonRecyclerViewAdapter.OnRecyclerViewItemClickListener() {
             @Override
@@ -156,17 +166,19 @@ public class MarketingMsgGlActivity extends BaseActivity {
         mRecyclerViewAdapter.setOnViewInItemClickListener(new CommonRecyclerViewAdapter.OnViewInItemClickListener() {
             @Override
             public void onViewInItemClick(View v, int position) {
-                simpleJump(MarketingMsgDetailActivity.class,"");
+                simpleJump(MarketingMsgDetailActivity.class, "");
             }
-        }, R.id.llt_marketingmsgl,R.id.img_right);
+        }, R.id.llt_marketingmsgl, R.id.img_right);
 
     }
-    private void  simpleJump(Class activity,String type){
-        Intent intent=new Intent();
-        intent.setClass(MarketingMsgGlActivity.this,activity);
-        intent.putExtra("type",type);
+
+    private void simpleJump(Class activity, String type) {
+        Intent intent = new Intent();
+        intent.setClass(MarketingMsgGlActivity.this, activity);
+        intent.putExtra("type", type);
         startActivity(intent);
     }
+
     private void getCandownloadMall() {
         okHttpsImp.getCandownloadServerMall(new MyResultCallback<String>() {
 

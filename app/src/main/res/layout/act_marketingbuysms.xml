@@ -7,8 +7,10 @@
     <RelativeLayout
         android:id="@+id/ray_top"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         android:background="@color/white"
         android:gravity="center_vertical"
         android:paddingLeft="15dp"
@@ -20,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="累计发送短信:"
-            android:textSize="15sp"
+            android:textSize="@dimen/regularfont"
             android:textColor="@color/color_4b4b4b"
             />
         <TextView
@@ -32,7 +34,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/color_4b4b4b"
             android:text="111"
-            android:textSize="15sp"
+            android:textSize="@dimen/regularfont"
             />
         <TextView
             android:id="@+id/txt_remainsendmsg"
@@ -43,7 +45,7 @@
             android:layout_marginLeft="10dp"
             android:textColor="@color/color_4b4b4b"
             android:text="剩余可发送短信:"
-            android:textSize="15sp"
+            android:textSize="@dimen/regularfont"
             />
         <TextView
             android:id="@+id/txt_remainsendnum"
@@ -54,7 +56,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/color_4b4b4b"
             android:text="111"
-            android:textSize="15sp"
+            android:textSize="@dimen/regularfont"
             />
     </RelativeLayout>
     <View
@@ -96,7 +98,7 @@
         android:background="@color/colores_news_14"
         android:divider="@color/colores_news_14"
         android:dividerHeight="5dp"
-        android:layout_marginBottom="100dp"
+        android:layout_marginBottom="60dp"
         android:scrollbars="none"/>
     <!--</LinearLayout>
     </ScrollView>-->
@@ -108,23 +110,27 @@
         android:background="#555555"
         />
     <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="100dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
-        android:layout_alignParentBottom="true"
-        >
-    <TextView
-        android:id="@+id/txt_buymsm"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/shape_login"
-        android:layout_centerInParent="true"
-        android:clickable="true"
-        android:gravity="center"
-        android:padding="10dp"
-        android:text="购买短信"
-        android:textColor="@color/white"
-        android:textSize="16sp" />
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        >
+        <TextView
+            android:id="@+id/txt_buymsm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@drawable/shap_hollow_red"
+            android:clickable="true"
+            android:gravity="center"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:text="购买短信"
+            android:textColor="@color/color_ff6351"
+            android:textSize="17sp" />
     </RelativeLayout>
 </RelativeLayout>

@@ -2,6 +2,7 @@ package com.lianbi.mezone.b.ui;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -72,9 +73,10 @@ public class MarketingSMSexampleActivity extends BaseActivity {
     private void listviewData() {
         mAdapter = new QuickAdapter<ServiceMallBean>(MarketingSMSexampleActivity.this,
                 R.layout.item_marketingsmsexample_list, mDatas) {
+            private int index = -1;
 
             @Override
-            protected void convert(BaseAdapterHelper helper,
+            protected void convert(final BaseAdapterHelper helper,
                                    final ServiceMallBean item) {
                 RelativeLayout ray_choice = helper
                         .getView(R.id.ray_choice);
@@ -84,6 +86,20 @@ public class MarketingSMSexampleActivity extends BaseActivity {
                         .getView(R.id.et_smstemplate);
 
                 et_smstemplate.setText(item.getAppName());
+                helper.getView(R.id.cb_smstemplate).setOnClickListener(
+                        new  View.OnClickListener(){
+                            @Override
+                            public void onClick(View v) {
+                                index=helper.getPosition();
+                                notifyDataSetChanged();
+                            }
+                        }
+                );
+                if (index == helper.getPosition()) {// 选中的条目和当前的条目是否相等
+                    cb_smstemplate.setChecked(true);
+                } else {
+                    cb_smstemplate.setChecked(false);
+                }
             }
         };
         // 设置适配器
