@@ -87,6 +87,7 @@ public class MembersListActivity extends BaseActivity {
 		initView();
 		setLisenter();
 		initAdapter();
+		getMembersList(true);
 	}
 
 	@Override
@@ -94,7 +95,6 @@ public class MembersListActivity extends BaseActivity {
 		super.onResume();
 		mDrawableinitial.setBounds(0, 0, mDrawableinitial.getMinimumWidth(), mDrawableinitial.getMinimumHeight());
 		mTvIntegral.setCompoundDrawables(null, null, mDrawableinitial, null);
-		getMembersList(true);
 	}
 
 	private void initAdapter() {
@@ -108,11 +108,11 @@ public class MembersListActivity extends BaseActivity {
 				TextView tv_mb_source = helper.getView(R.id.tv_mb_source);//来源
 				TextView tv_mb_label = helper.getView(R.id.tv_mb_label);//标签
 				TextView tv_mb_integral = helper.getView(R.id.tv_mb_integral);//积分
-				ScreenUtils.textAdaptationOn720(tv_mb_phone,MembersListActivity.this,24);//本周新增会员
-				ScreenUtils.textAdaptationOn720(tv_mb_category,MembersListActivity.this,24);//本周新增会员
-				ScreenUtils.textAdaptationOn720(tv_mb_source,MembersListActivity.this,24);//本周新增会员
-				ScreenUtils.textAdaptationOn720(tv_mb_label,MembersListActivity.this,24);//本周新增会员
-				ScreenUtils.textAdaptationOn720(tv_mb_integral,MembersListActivity.this,24);//本周新增会员
+				ScreenUtils.textAdaptationOn720(tv_mb_phone, MembersListActivity.this, 24);//本周新增会员
+				ScreenUtils.textAdaptationOn720(tv_mb_category, MembersListActivity.this, 24);//本周新增会员
+				ScreenUtils.textAdaptationOn720(tv_mb_source, MembersListActivity.this, 24);//本周新增会员
+				ScreenUtils.textAdaptationOn720(tv_mb_label, MembersListActivity.this, 24);//本周新增会员
+				ScreenUtils.textAdaptationOn720(tv_mb_integral, MembersListActivity.this, 24);//本周新增会员
 				tv_mb_phone.setText(item.getMemberPhone() + "");
 				tv_mb_category.setText(item.getMemberCategory() + "");
 				tv_mb_source.setText(item.getMemberSource() + "");
@@ -152,19 +152,20 @@ public class MembersListActivity extends BaseActivity {
 	 * View适配
 	 */
 	private void viewAdapter() {
-		ScreenUtils.textAdaptationOn720(mTv_newaddmember,this,25);//本周新增会员
-		ScreenUtils.textAdaptationOn720(mTv_cumulativemember,this,25);//累计会员数
-		ScreenUtils.textAdaptationOn720(mTvMemberphone,this,32);//会员电话
-		ScreenUtils.textAdaptationOn720(mTvMembercategory,this,32);//类别
-		ScreenUtils.textAdaptationOn720(mTvMembersource,this,32);//来源
-		ScreenUtils.textAdaptationOn720(mTvMemberlable,this,32);//标签
-		ScreenUtils.textAdaptationOn720(mTvIntegral,this,32);//积分
+		ScreenUtils.textAdaptationOn720(mTv_newaddmember, this, 25);//本周新增会员
+		ScreenUtils.textAdaptationOn720(mTv_cumulativemember, this, 25);//累计会员数
+		ScreenUtils.textAdaptationOn720(mTvMemberphone, this, 32);//会员电话
+		ScreenUtils.textAdaptationOn720(mTvMembercategory, this, 32);//类别
+		ScreenUtils.textAdaptationOn720(mTvMembersource, this, 32);//来源
+		ScreenUtils.textAdaptationOn720(mTvMemberlable, this, 32);//标签
+		ScreenUtils.textAdaptationOn720(mTvIntegral, this, 32);//积分
 	}
 
 	/**
 	 * 获取会员列表
 	 */
 	private void getMembersList(final boolean isResh) {
+		System.out.println("getMembersList");
 		ArrayList<MemberInfoBean> mDatasL = new ArrayList<MemberInfoBean>();
 
 		if (isResh) {
@@ -179,10 +180,10 @@ public class MembersListActivity extends BaseActivity {
 
 		for (int i = 0; i < 20; i++) {
 			MemberInfoBean bean = new MemberInfoBean();
-			bean.setMemberPhone("1305422353"+i);
-			bean.setMemberCategory("普通"+i);
-			bean.setMemberSource("微店"+i);
-			bean.setMemberLabel("重要客户"+i);
+			bean.setMemberPhone("1305422353" + i);
+			bean.setMemberCategory("普通" + i);
+			bean.setMemberSource("微店" + i);
+			bean.setMemberLabel("重要客户" + i);
 			bean.setMemberIntegral(new Random().nextInt(100));
 			mDatasL.add(bean);
 		}
@@ -274,10 +275,10 @@ public class MembersListActivity extends BaseActivity {
 					public void onItemClick(AdapterView<?> parent, View view,
 											int position, long id) {
 						//点击传值
-						Intent file_intent = new Intent(MembersListActivity.this,AddNewMembersActivity.class);
-						file_intent.putExtra("memberInfo",mDatas.get(position));
-						file_intent.putExtra("isShow",true);
-						startActivity(file_intent);
+						Intent file_intent = new Intent(MembersListActivity.this, AddNewMembersActivity.class);
+						file_intent.putExtra("memberInfo", mDatas.get(position));
+						file_intent.putExtra("isShow", true);
+						startActivityForResult(file_intent, REQUEST_CHANGMEMBERINFO);
 
 					}
 				});
@@ -287,6 +288,7 @@ public class MembersListActivity extends BaseActivity {
 	}
 
 	private final int REQUEST_ADDMEMBER = 1357;
+	private final int REQUEST_CHANGMEMBERINFO = 1538;
 	boolean isSort = false;
 
 
@@ -346,10 +348,11 @@ public class MembersListActivity extends BaseActivity {
 		if (resultCode == RESULT_OK) {
 			switch (requestCode) {
 				case REQUEST_ADDMEMBER://添加会员返回
-				//	getMembersList(true);
-
+					getMembersList(true);
 					break;
-
+				case REQUEST_CHANGMEMBERINFO://修改会员信息返回
+					getMembersList(true);
+					break;
 			}
 		}
 	}
