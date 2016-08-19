@@ -6,6 +6,7 @@
    >
 
     <LinearLayout
+        android:id="@+id/lay_buysms"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@mipmap/bg_buysms"
@@ -79,12 +80,12 @@
         </RelativeLayout>
         <CheckBox
             android:id="@+id/cb_choice"
-            style="@style/RadioButtonStyles"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/RadioButtonGreenStyles"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_gravity="bottom"
             android:layout_marginBottom="5dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="6dp"
         />
         </LinearLayout>
     </LinearLayout>

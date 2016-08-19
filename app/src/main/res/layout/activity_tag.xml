@@ -13,7 +13,6 @@
             android:id="@+id/fm_messagefragment_listView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:background="#fff4f7f9"
             android:cacheColorHint="#00000000"
             android:divider="#dddbdb"
@@ -32,6 +31,7 @@
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="57dp"
+        android:background="@color/white"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         >
@@ -68,6 +68,7 @@
     <ListView
         android:layout_above="@id/point_biaoqian"
         android:id="@+id/fm_tag_listView"
+        android:background="@color/colores_news_14"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:divider="@null"

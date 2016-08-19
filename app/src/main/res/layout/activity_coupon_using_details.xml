@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.lianbi.mezone.b.ui.YouhuiquanUsingDetailsActivity">
+    tools:context="com.lianbi.mezone.b.ui.CouponUsingDetailsActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,7 +12,7 @@
         android:layout_marginTop="10.5dp"
         android:orientation="horizontal">
 
-        <RelativeLayout
+        <FrameLayout
             android:id="@+id/all_"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -24,75 +24,76 @@
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
                 android:layout_marginBottom="1dp"
-                android:background="@color/colores_news_14"
+                android:background="@color/white"
                 android:gravity="center"
                 android:text="全部"
                 android:textColor="@color/colores_news_01"
                 android:textSize="@dimen/h17" />
-        </RelativeLayout>
+        </FrameLayout>
 
-        <RelativeLayout
+        <FrameLayout
             android:id="@+id/been_used_"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/colores_news_14">
+            android:background="@color/white">
 
             <TextView
                 android:id="@+id/been_used"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
                 android:layout_marginBottom="1dp"
-                android:background="@color/colores_news_14"
+                android:background="@color/white"
                 android:gravity="center"
                 android:text="已使用"
                 android:textColor="@color/colores_news_10"
                 android:textSize="@dimen/h17" />
-        </RelativeLayout>
+        </FrameLayout>
 
-        <RelativeLayout
+        <FrameLayout
             android:id="@+id/unused_"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/colores_news_14">
+            android:background="@color/white">
 
             <TextView
                 android:id="@+id/unused"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
                 android:layout_marginBottom="1dp"
-                android:background="@color/colores_news_14"
+                android:background="@color/white"
                 android:gravity="center"
                 android:text="未使用"
                 android:textColor="@color/colores_news_10"
                 android:textSize="@dimen/h17" />
-        </RelativeLayout>
+        </FrameLayout>
 
-        <RelativeLayout
+        <FrameLayout
             android:id="@+id/invalid_"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/colores_news_14">
+            android:background="@color/white">
 
             <TextView
                 android:id="@+id/invalid"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
                 android:layout_marginBottom="1dp"
-                android:background="@color/colores_news_14"
+                android:background="@color/white"
                 android:gravity="center"
                 android:text="已失效"
                 android:textColor="@color/colores_news_10"
                 android:textSize="@dimen/h17" />
-        </RelativeLayout>
+        </FrameLayout>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="45.5dp"
         android:layout_marginTop="10.5dp"
+        android:background="@color/white"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -133,24 +134,44 @@
             android:textSize="15.5sp" />
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/youhuiquan_using_detail_list"
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_e3e3e3" />
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:divider="@color/color_e3e3e3"
-        android:dividerHeight="1dp"
-        android:scrollbars="none" />
+        android:layout_weight="1">
+
+        <ListView
+            android:id="@+id/coupon_using_detail_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@color/color_e3e3e3"
+            android:dividerHeight="1dp"
+            android:scrollbars="none" />
+
+        <ImageView
+            android:id="@+id/iv_empty_act_coupon_using_detail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerInside"
+            android:src="@mipmap/iv_empty"
+            android:visibility="gone" />
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="33.5dp"
             android:layout_weight="1"
+            android:background="@color/white"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -180,6 +201,7 @@
             android:layout_width="0dp"
             android:layout_height="33.5dp"
             android:layout_weight="1"
+            android:background="@color/white"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -209,6 +231,7 @@
             android:layout_width="0dp"
             android:layout_height="33.5dp"
             android:layout_weight="1"
+            android:background="@color/white"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -238,6 +261,7 @@
             android:layout_width="0dp"
             android:layout_height="33.5dp"
             android:layout_weight="1"
+            android:background="@color/white"
             android:gravity="center"
             android:orientation="horizontal">
 

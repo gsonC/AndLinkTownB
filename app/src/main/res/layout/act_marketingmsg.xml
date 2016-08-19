@@ -4,15 +4,17 @@
     android:layout_height="wrap_content"
     android:background="@color/colores_news_14"
      >
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/ray_top"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         android:background="@color/white"
         android:gravity="center_vertical"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         >
         <TextView
             android:id="@+id/txt_msg"
@@ -20,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="累计发送短信:"
-            android:textSize="14sp"
+            android:textSize="@dimen/regularfont"
             android:textColor="@color/color_4b4b4b"
             />
         <TextView
@@ -31,8 +33,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/color_4b4b4b"
-            android:text="111"
-            android:textSize="14sp"
+            android:text="999999"
+            android:textSize="@dimen/regularfont"
             />
         <TextView
             android:id="@+id/txt_remainsendmsg"
@@ -43,7 +45,7 @@
             android:layout_marginLeft="10dp"
             android:textColor="@color/color_4b4b4b"
             android:text="剩余可发送短信:"
-            android:textSize="14sp"
+            android:textSize="@dimen/regularfont"
             />
         <TextView
             android:id="@+id/txt_remainsendnum"
@@ -53,23 +55,30 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/color_4b4b4b"
-            android:text="111"
-            android:textSize="14sp"
+            android:text="999999"
+            android:textSize="@dimen/regularfont"
             />
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="right"
+        >
         <TextView
             android:id="@+id/btn_msgpay"
             android:layout_marginLeft="5dp"
-            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/shap_hollow_red"
             android:padding="5dp"
             android:textColor="@color/colores_news_01"
-            android:textSize="@dimen/h15"
+            android:textSize="@dimen/regularfont"
             android:text="短信购买"
             />
-    </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
     <View
         android:id="@+id/v_01"
         android:layout_below="@id/ray_top"

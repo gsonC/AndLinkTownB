@@ -118,7 +118,7 @@ public class MembersManagementActivity extends BaseActivity {
 					}
 					//优惠券管理
 					if(groupPosition==1&&childPosition==0) {
-						startActivity(new Intent(MembersManagementActivity.this,YouhuiquanManagerActivity.class));
+						startActivity(new Intent(MembersManagementActivity.this,CouponManagerActivity.class));
 					}
 					//营销短信管理
 					if(groupPosition==1&&childPosition==1) {

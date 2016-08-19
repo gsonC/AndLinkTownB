@@ -98,7 +98,6 @@
             />
         <activity android:name="com.lianbi.mezone.b.ui.MarketingBuySMSActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.SelectTagActivity"/>
-        <activity android:name="com.lianbi.mezone.b.ui.MarketingSMSexampleActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.ChooseFromWeixinActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.MarketingMsgBulidActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.MarketingMsgDetailActivity"/>
@@ -202,6 +201,11 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden"
             />
+        <activity android:name="com.lianbi.mezone.b.ui.MarketingSMSexampleActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"
+            />
         <activity
             android:name="com.lianbi.mezone.b.ui.ForgetPassWordActivty"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -294,9 +298,9 @@
         </activity>
         <activity android:name="com.lianbi.mezone.b.ui.AboutUsActivity"/>
         <activity android:name="com.lianbi.mezone.b.wxapi.WXPayEntryActivity"/>
-        <activity android:name="com.lianbi.mezone.b.ui.YouhuiquanManagerActivity" />
-        <activity android:name="com.lianbi.mezone.b.ui.YouhuiquanUsingDetailsActivity" />
-        <activity android:name="com.lianbi.mezone.b.ui.SendNewYouhuiquanActivity"/>
+        <activity android:name="com.lianbi.mezone.b.ui.CouponManagerActivity" />
+        <activity android:name="com.lianbi.mezone.b.ui.CouponUsingDetailsActivity" />
+        <activity android:name="com.lianbi.mezone.b.ui.SendNewCouponActivity"/>
 
         <!-- 个推SDK配置开始 -->
         <!-- 配置的第三方参数属性 -->

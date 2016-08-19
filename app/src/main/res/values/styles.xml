@@ -94,4 +94,11 @@
     <style name="RadioButtonStyles">
         <item name="android:button">@drawable/rb_selected</item>
     </style>
+    <style name="RadioButtonGreenStyles">
+        <item name="android:button">@drawable/rb_greenselected</item>
+    </style>
+    <!-- 自定义选择框的Checkbox -->
+    <style name="CustomCheckboxTheme" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/custom_checkbox_style</item>
+    </style>
 </resources>

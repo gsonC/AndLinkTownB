@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colores_news_14"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context="com.lianbi.mezone.b.ui.SendNewCouponActivity">
+
+    <LinearLayout
+        android:layout_width="310dp"
+        android:layout_height="140dp"
+        android:layout_marginTop="21dp"
+        android:background="@drawable/shape_coupon_msg_editor"
+        android:orientation="vertical"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:paddingTop="10dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/input_coupon_name"
+                android:layout_width="121.5dp"
+                android:layout_height="26dp"
+                android:layout_marginRight="13dp"
+                android:background="@drawable/shape_radius_4dp"
+                android:hint="请输入优惠券名称"
+                android:lines="1"
+                android:maxLength="14"
+                android:textColor="@color/colores_news_11"
+                android:textSize="@dimen/h13">
+
+                <requestFocus />
+            </EditText>
+
+            <EditText
+                android:id="@+id/coupon_money_num"
+                android:layout_width="62dp"
+                android:layout_height="26dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/shape_radius_4dp"
+                android:gravity="center"
+                android:hint="10"
+                android:inputType="number"
+                android:textColor="@color/colores_news_11"
+                android:textSize="@dimen/h15" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="元"
+                android:textColor="@color/colores_news_04"
+                android:textSize="@dimen/h15" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10.5dp"
+            android:gravity="top|left"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="使用条件："
+                android:textColor="#4b4b4b"
+                android:textSize="12.5sp" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/changeable_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingExtra="9dp"
+                    android:textColor="#4b4b4b"
+                    android:textSize="12.5sp" />
+
+                <TextView
+                    android:id="@+id/man"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="满"
+                    android:textColor="#4b4b4b"
+                    android:textSize="12.5sp" />
+
+                <FrameLayout
+                    android:id="@+id/minimum_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/man"
+                    android:background="#4b4b4b">
+
+                    <EditText
+                        android:id="@+id/minimum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="0.5dp"
+                        android:background="@color/white"
+                        android:inputType="number"
+                        android:text="1000"
+                        android:textColor="#4b4b4b"
+                        android:textSize="12.5sp" />
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/minimum_container"
+                    android:text="元"
+                    android:textColor="@color/colores_news_04"
+                    android:textSize="12.5sp" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="有效时间："
+                android:textColor="#4b4b4b"
+                android:textSize="12.5sp" />
+
+            <TextView
+                android:id="@+id/valid_period_from"
+                android:layout_width="81dp"
+                android:layout_height="19.5dp"
+                android:background="@drawable/shape_radius_4dp"
+                android:gravity="center"
+                android:hint="年/月/日"
+                android:textColor="#4b4b4b"
+                android:textSize="12.5sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5.5dp"
+                android:layout_marginRight="5.5dp"
+                android:text="---"
+                android:textColor="#4b4b4b"
+                android:textSize="12.5sp" />
+
+            <TextView
+                android:id="@+id/valid_period_to"
+                android:layout_width="81dp"
+                android:layout_height="19.5dp"
+                android:background="@drawable/shape_radius_4dp"
+                android:gravity="center"
+                android:hint="年/月/日"
+                android:textColor="#4b4b4b"
+                android:textSize="12.5sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="281.5dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="9.5dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="发送优惠券到："
+                android:textColor="#4b4b4b"
+                android:textSize="12.5sp" />
+
+            <TextView
+                android:id="@+id/selectable_member"
+                android:layout_width="75.5dp"
+                android:layout_height="20dp"
+                android:background="@drawable/shape_radius_4dp"
+                android:gravity="center"
+                android:text="可选会员"
+                android:textColor="#4b4b4b"
+                android:textSize="12.5sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="19.5dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="预计发送优惠券："
+                android:textColor="#4b4b4b"
+                android:textSize="12.5sp" />
+
+            <TextView
+                android:id="@+id/expected_coupon_send_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#4b4b4b"
+                android:textSize="12.5sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="张"
+                android:textColor="#4b4b4b"
+                android:textSize="12.5sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="19.5dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/is_need_send_sms"
+                style="@style/CustomCheckboxTheme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="11.5dp"
+                android:checked="true"
+                android:text="同时发送营销短信"
+                android:textColor="#4b4b4b"
+                android:textSize="12.5sp" />
+
+            <TextView
+                android:id="@+id/selectable_templet"
+                android:layout_width="75.5dp"
+                android:layout_height="20dp"
+                android:background="@drawable/shape_radius_4dp"
+                android:gravity="center"
+                android:text="可选模板"
+                android:textColor="#4b4b4b"
+                android:textSize="12.5sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/editable_sms_content"
+            android:layout_width="match_parent"
+            android:layout_height="112.5dp"
+            android:layout_marginTop="18.5dp"
+            android:background="@drawable/shape_radius_4dp"
+            android:gravity="center"
+            android:hint="可编辑短信内容"
+            android:textColor="@color/colores_news_11"
+            android:textSize="@dimen/h13" />
+
+        <LinearLayout
+            android:id="@+id/expected_sms_send_num_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="19dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="预计发送短信数："
+                android:textColor="#4b4b4b"
+                android:textSize="12.5sp" />
+
+            <TextView
+                android:id="@+id/expected_sms_send_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#4b4b4b"
+                android:textSize="12.5sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="条"
+                android:textColor="#4b4b4b"
+                android:textSize="12.5sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/send_new_coupon"
+        android:layout_width="202.5dp"
+        android:layout_height="28dp"
+        android:layout_marginTop="25.5dp"
+        android:background="@drawable/shape_send_new_coupon"
+        android:gravity="center"
+        android:text="发送"
+        android:textColor="@color/white"
+        android:textSize="15.5sp" />
+</LinearLayout>

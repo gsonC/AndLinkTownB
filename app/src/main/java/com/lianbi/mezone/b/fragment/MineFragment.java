@@ -13,10 +13,12 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
+import com.lianbi.mezone.b.app.Constants;
 import com.lianbi.mezone.b.bean.MessageBean;
 import com.lianbi.mezone.b.httpresponse.API;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
@@ -25,6 +27,7 @@ import com.lianbi.mezone.b.impl.MyShopChange;
 import com.lianbi.mezone.b.ui.AboutUsActivity;
 import com.lianbi.mezone.b.ui.ActionProduceActivity;
 import com.lianbi.mezone.b.ui.BaseActivity;
+import com.lianbi.mezone.b.ui.FeedBackActivity;
 import com.lianbi.mezone.b.ui.LoginActivity;
 import com.lianbi.mezone.b.ui.MainActivity;
 import com.lianbi.mezone.b.ui.MineMsgActivity;
@@ -45,7 +48,6 @@ import cn.com.hgh.utils.TelPhoneUtills;
 import cn.com.hgh.view.CircularImageView;
 
 /**
- * 
  * @author guanghui.han
  * @category我的
  */
@@ -54,10 +56,11 @@ public class MineFragment extends Fragment implements OnClickListener,
 	CircularImageView circularimageview_fm_mine;
 	LinearLayout llt_fm_mine_nologin, llt_fm_mine_info, llt_mine_message,
 			llt_mine_function, llt_mine_phone_vip, llt_mine_about_us,
-			llt_mine_fm_title_bg;
+			llt_mine_fm_title_bg, llt_feedback;
 	TextView fm_mine_name, fm_mine_vip, fm_mine_adress, mine_fm_tv_num_message,
 			tv_mine_vision_fm, mine_fm_phone_num;
-	ImageView fm_mine_textinfo, fm_mine_bussiness, fm_mine_product_f;
+	ImageView fm_mine_textinfo, fm_mine_bussiness, fm_mine_product_f,img_update_red;
+	RelativeLayout rlt_update;
 
 	private MainActivity maActivity;
 	private final int LOGINACTIVITY_CODE = 2000;
@@ -66,6 +69,7 @@ public class MineFragment extends Fragment implements OnClickListener,
 
 	private final int MYSUPPLYGOODSACTIVITY_CODE = 2005;
 	private SwipeRefreshLayout swipe_mine;
+	private boolean mUpgrade;
 
 	/**
 	 * 刷新fm数据
@@ -140,7 +144,7 @@ public class MineFragment extends Fragment implements OnClickListener,
 
 	@Override
 	public View onCreateView(LayoutInflater inflater,
-			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+							 @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		super.onCreateView(inflater, container, savedInstanceState);
 		maActivity = (MainActivity) getActivity();
 		View view = inflater.inflate(R.layout.fm_minefragment, null);
@@ -155,7 +159,7 @@ public class MineFragment extends Fragment implements OnClickListener,
 			llt_fm_mine_info.setVisibility(View.VISIBLE);
 			if (null == BaseActivity.userShopInfoBean.getName()
 					|| TextUtils.isEmpty(BaseActivity.userShopInfoBean
-							.getName())) {
+					.getName())) {
 				fm_mine_name.setText("您的昵称");
 			} else {
 				fm_mine_name.setText(BaseActivity.userShopInfoBean.getName());
@@ -166,7 +170,7 @@ public class MineFragment extends Fragment implements OnClickListener,
 					.into(circularimageview_fm_mine);
 			if (!TextUtils.isEmpty(BaseActivity.userShopInfoBean
 					.getBusinessId())) {
-//				getMessageList();
+				//				getMessageList();
 			}
 		} else {
 			circularimageview_fm_mine.setImageResource(R.mipmap.defaultpeson);
@@ -187,6 +191,8 @@ public class MineFragment extends Fragment implements OnClickListener,
 		// fm_mine_product_f.setOnClickListener(this);
 		fm_mine_bussiness.setOnClickListener(this);
 		fm_mine_textinfo.setOnClickListener(this);
+		llt_feedback.setOnClickListener(this);
+		rlt_update.setOnClickListener(this);
 	}
 
 	private void initView(View view) {
@@ -223,14 +229,24 @@ public class MineFragment extends Fragment implements OnClickListener,
 		fm_mine_textinfo = (ImageView) view.findViewById(R.id.fm_mine_textinfo);
 		fm_mine_bussiness = (ImageView) view
 				.findViewById(R.id.fm_mine_bussiness);
+		llt_feedback = (LinearLayout) view.findViewById(R.id.llt_feedback);
+		img_update_red = (ImageView)view.findViewById(R.id.img_update_red);
+		rlt_update = (RelativeLayout)view.findViewById(R.id.rlt_update);
+		mUpgrade = ContentUtils.getSharePreBoolean(maActivity,
+				Constants.SHARED_PREFERENCE_NAME, Constants.UPDATERED);
+		if(mUpgrade){
+			img_update_red.setVisibility(View.VISIBLE);
+		}else{
+			img_update_red.setVisibility(View.GONE);
+		}
 		// fm_mine_product_f = (ImageView) view
 		// .findViewById(R.id.fm_mine_product_f);
 		String vName = AbAppUtil.getAppVersionName(maActivity);
 		tv_mine_vision_fm.setText(vName);
 		swipe_mine = (SwipeRefreshLayout) view.findViewById(R.id.swipe_mine);
-		swipe_mine.setColorSchemeResources(R.color.colores_news_01,R.color.black);
+		swipe_mine.setColorSchemeResources(R.color.colores_news_01, R.color.black);
 		swipe_mine.setOnRefreshListener(new OnRefreshListener() {
-			
+
 			@Override
 			public void onRefresh() {
 				swipe_mine.setRefreshing(false);
@@ -243,62 +259,78 @@ public class MineFragment extends Fragment implements OnClickListener,
 		boolean isLogin = ContentUtils.getLoginStatus(maActivity);
 		boolean re = false;
 		switch (arg0.getId()) {
-		case R.id.llt_fm_mine_info:// 切换店铺
+			case R.id.llt_fm_mine_info:// 切换店铺
 
-			break;
-		case R.id.llt_mine_message:// 我的消息
-			re = JumpIntent.jumpLogin_addShop(isLogin, API.NEWS, maActivity);
-			if (re) {
-				startActivityForResult(new Intent(maActivity,
-						MineMsgActivity.class), MINEMSGACTIVITY_CODE);
-			}
-			break;
-		case R.id.llt_mine_function:// 功能介绍
-			startActivity(new Intent(maActivity, ActionProduceActivity.class));
+				break;
+			case R.id.llt_mine_message:// 我的消息
+				re = JumpIntent.jumpLogin_addShop(isLogin, API.NEWS, maActivity);
+				if (re) {
+					startActivityForResult(new Intent(maActivity,
+							MineMsgActivity.class), MINEMSGACTIVITY_CODE);
+				}
+				break;
+			case R.id.llt_mine_function:// 功能介绍
+				startActivity(new Intent(maActivity, ActionProduceActivity.class));
 
-			break;
-		case R.id.llt_mine_phone_vip:// 联系客服
+				break;
+			case R.id.llt_mine_phone_vip:// 联系客服
 
-			TelPhoneUtills.launchPhone(maActivity, mine_fm_phone_num.getText()
-					.toString().trim());
-			break;
-		case R.id.llt_mine_about_us:// 关于我们
-			startActivity(new Intent(maActivity, AboutUsActivity.class));
-//			startActivity(new Intent(maActivity, MembersListActivity.class));
-			break;
-		case R.id.llt_fm_mine_nologin:// 注册| 登录
-			maActivity.startActivityForResult(new Intent(maActivity,
-					LoginActivity.class), MainActivity.REQUEST_CHANKAN);
-			break;
-		case R.id.fm_mine_textinfo:// 我的资料
+				TelPhoneUtills.launchPhone(maActivity, mine_fm_phone_num.getText()
+						.toString().trim());
+				break;
+			case R.id.rlt_update:
+				if(mUpgrade){
+					maActivity.getUpData();
+				}else{
+					ContentUtils.showMsg(maActivity,"已是最新版本!");
+				}
+				break;
+			case R.id.llt_mine_about_us:// 关于我们
+				startActivity(new Intent(maActivity, AboutUsActivity.class));
+				break;
+			case R.id.llt_feedback://意见反馈
 
-			re = JumpIntent.jumpLogin_addShop1(isLogin, API.MATERIAL,
-					maActivity);
-			if (re) {
-				startActivityForResult(new Intent(maActivity,
-						MineTextInfoActivity.class), MINETEXTINFOACTIVITY_CODE);
+				re = JumpIntent.jumpLogin_addShop1(isLogin, API.MATERIAL,
+						maActivity);
+				if (re) {
+					Intent intent = new Intent(maActivity, FeedBackActivity.class);
+					startActivity(intent);
+				}
+				break;
 
-			}
-			break;
-		case R.id.fm_mine_bussiness:// 我的商铺
-			re = JumpIntent.jumpLogin_addShop(isLogin, API.STORE, maActivity);
-			if (re) {
-				MyShopActivity.setMyShopChange(this);
-				maActivity
-						.startActivityForResult(new Intent(maActivity,
-								MyShopActivity.class),
-								MainActivity.MYSHOPACTIVITY_CODE);
-			}
-			break;
-		// case R.id.fm_mine_product_f:// 我的货源
-		// re = JumpIntent
-		// .jumpLogin_addShop(isLogin, API.MYSOURCE, maActivity);
-		// if (re) {
-		// startActivityForResult(new Intent(maActivity,
-		// MySupplyGoodsActivity.class),
-		// MYSUPPLYGOODSACTIVITY_CODE);
-		// }
-		// break;
+			case R.id.llt_fm_mine_nologin:// 注册| 登录
+				maActivity.startActivityForResult(new Intent(maActivity,
+						LoginActivity.class), MainActivity.REQUEST_CHANKAN);
+				break;
+			case R.id.fm_mine_textinfo:// 我的资料
+
+				re = JumpIntent.jumpLogin_addShop1(isLogin, API.MATERIAL,
+						maActivity);
+				if (re) {
+					startActivityForResult(new Intent(maActivity,
+							MineTextInfoActivity.class), MINETEXTINFOACTIVITY_CODE);
+
+				}
+				break;
+			case R.id.fm_mine_bussiness:// 我的商铺
+				re = JumpIntent.jumpLogin_addShop(isLogin, API.STORE, maActivity);
+				if (re) {
+					MyShopActivity.setMyShopChange(this);
+					maActivity
+							.startActivityForResult(new Intent(maActivity,
+											MyShopActivity.class),
+									MainActivity.MYSHOPACTIVITY_CODE);
+				}
+				break;
+			// case R.id.fm_mine_product_f:// 我的货源
+			// re = JumpIntent
+			// .jumpLogin_addShop(isLogin, API.MYSOURCE, maActivity);
+			// if (re) {
+			// startActivityForResult(new Intent(maActivity,
+			// MySupplyGoodsActivity.class),
+			// MYSUPPLYGOODSACTIVITY_CODE);
+			// }
+			// break;
 		}
 
 	}
@@ -309,21 +341,21 @@ public class MineFragment extends Fragment implements OnClickListener,
 		super.onActivityResult(requestCode, resultCode, data);
 		if (resultCode == maActivity.RESULT_OK) {
 			switch (requestCode) {
-			// case LOGINACTIVITY_CODE:// 登录回调
-			// setDataLogin();
-			// break;
-			case MINETEXTINFOACTIVITY_CODE:// 我的资料回调
-				setDataLogin();
-				break;
-			case MINEMSGACTIVITY_CODE:// 我的消息回调
-				setDataLogin();
-				break;
-			// case MYSHOPACTIVITY_CODE:// 我的商户回调
-			// maActivity.refreshFMData();
-			// break;
-			case MYSUPPLYGOODSACTIVITY_CODE:// 我的货源回调
-				setDataLogin();
-				break;
+				// case LOGINACTIVITY_CODE:// 登录回调
+				// setDataLogin();
+				// break;
+				case MINETEXTINFOACTIVITY_CODE:// 我的资料回调
+					setDataLogin();
+					break;
+				case MINEMSGACTIVITY_CODE:// 我的消息回调
+					setDataLogin();
+					break;
+				// case MYSHOPACTIVITY_CODE:// 我的商户回调
+				// maActivity.refreshFMData();
+				// break;
+				case MYSUPPLYGOODSACTIVITY_CODE:// 我的货源回调
+					setDataLogin();
+					break;
 
 			}
 		}

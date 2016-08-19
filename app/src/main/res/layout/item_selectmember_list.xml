@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              android:gravity="center_vertical"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+        <CheckBox
+            android:id="@+id/cb_selectmember"
+            android:drawableLeft="@drawable/rb_selected"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:textColor="@color/color_4b4b4b"
+            android:textSize="@dimen/h16" />
+        <TextView
+            android:id="@+id/tv_mb_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginLeft="10dp"
+            android:singleLine="true"
+            android:text="13054223532"
+            android:textSize="14sp"
+            android:textColor="@color/colores_news_17"
+            />
+
+        <TextView
+            android:id="@+id/tv_mb_category"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="一级会员"
+            android:textSize="14sp"
+            android:textColor="@color/colores_news_17"
+            />
+
+        <TextView
+            android:id="@+id/tv_mb_source"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="微店"
+            android:textSize="14sp"
+            android:textColor="@color/colores_news_17"
+            />
+
+        <TextView
+            android:id="@+id/tv_mb_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxEms="3"
+            android:singleLine="true"
+            android:text="重要客户"
+            android:textSize="14sp"
+            android:textColor="@color/colores_news_17"
+            />
+
+        <TextView
+            android:id="@+id/tv_mb_integral"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="1235600"
+            android:textSize="14sp"
+            android:textColor="@color/colores_news_17"/>
+
+        <ImageView
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:scaleType="centerInside"
+            android:layout_gravity="center_vertical"
+            android:src="@mipmap/service_new_right"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line"
+        android:background="@color/colores_news_14"/>
+</LinearLayout>

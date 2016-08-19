@@ -1,17 +1,14 @@
 package com.lianbi.mezone.b.ui;
 
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
-import com.bumptech.glide.Glide;
 import com.lianbi.mezone.b.bean.ServiceMallBean;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.xizhi.mezone.b.R;
@@ -104,38 +101,24 @@ public class MarketingMsgDetailActivity extends BaseActivity {
 
     private void listviewData() {
         mAdapter = new QuickAdapter<ServiceMallBean>(MarketingMsgDetailActivity.this,
-                R.layout.item_servicemall_list, mDatas) {
+                R.layout.item_marketingmsgdetail_list, mDatas) {
 
             @Override
             protected void convert(BaseAdapterHelper helper,
                                    final ServiceMallBean item) {
-                LinearLayout llt_servicemall = helper
-                        .getView(R.id.llt_servicemall);
-                ImageView img_itemmall = helper
-                        .getView(R.id.img_itemmall);
-                TextView tv_servicename = helper
-                        .getView(R.id.tv_servicename);
-                TextView tv_download = helper
-                        .getView(R.id.tv_download);
-                TextView tv_newprice = helper
-                        .getView(R.id.tv_newprice);
-                TextView tv_oldprice = helper
-                        .getView(R.id.tv_oldprice);
-                ImageView img_right = helper
-                        .getView(R.id.img_right);
-                tv_oldprice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-                tv_oldprice.setText("¥" + String.valueOf(item.getOriginalPrice()) + String.valueOf(item.getUnit()));
-                tv_newprice.setText("¥" + String.valueOf(item.getPresentPrice()) + String.valueOf(item.getUnit()));
-                tv_servicename.setText(item.getAppName());
-                if (item.getDownload().equals("N")) {
-                    Glide.with(MarketingMsgDetailActivity.this).load(item.getIcoUrl()).error(R.mipmap.default_head).into(img_itemmall);
-                    tv_download.setVisibility(View.VISIBLE);
-                    img_right.setVisibility(View.INVISIBLE);
-                } else if (item.getDownload().equals("Y")) {
-                    Glide.with(MarketingMsgDetailActivity.this).load(item.getIcoUrl()).error(R.mipmap.default_head).into(img_itemmall);
-                    tv_download.setVisibility(View.GONE);
-                    img_right.setVisibility(View.VISIBLE);
-                }
+
+                LinearLayout llt_marketingmsgl = helper
+                        .getView(R.id.llt_marketingmsgl);
+                TextView tv_sendingtime = helper
+                        .getView(R.id.tv_sendingtime);
+                TextView tv_sendingobject = helper
+                        .getView(R.id.tv_sendingobject);
+                TextView tv_sendingnum = helper
+                        .getView(R.id.tv_sendingnum);
+                tv_sendingtime.setText(item.getAppName());
+                tv_sendingobject.setText("¥" + String.valueOf(item.getOriginalPrice()) + String.valueOf(item.getUnit()));
+                tv_sendingnum.setText("¥" + String.valueOf(item.getPresentPrice()) + String.valueOf(item.getUnit()));
+
             }
         };
         // 设置适配器

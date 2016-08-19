@@ -5,6 +5,16 @@
     android:background="@color/white"
     android:padding="15dp"
     >
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
     <RelativeLayout
         android:id="@+id/ray_choice"
         android:layout_width="wrap_content"
@@ -14,13 +24,15 @@
         android:layout_marginLeft="12dp"
         android:layout_gravity="center_vertical"
         >
+        <!--style="@style/RadioButtonStyles"-->
         <CheckBox
             android:id="@+id/cb_smstemplate"
-            style="@style/RadioButtonStyles"
+            android:drawableLeft="@drawable/rb_selected"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="短信模板"
-            android:drawablePadding="10dp"
+            android:drawablePadding="5dp"
+            android:button="@null"
             android:textColor="@color/color_4b4b4b"
             android:textSize="@dimen/h16" />
     </RelativeLayout>
@@ -40,6 +52,6 @@
            android:gravity="top"
            android:background="@drawable/shap_hollow_grey"
     />
-
-
+</LinearLayout>
+</ScrollView>
 </RelativeLayout>

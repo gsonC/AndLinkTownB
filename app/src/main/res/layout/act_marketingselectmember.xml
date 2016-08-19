@@ -1,5 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/colores_news_14"
@@ -7,21 +8,23 @@
     <LinearLayout
         android:id="@+id/lay_top"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/white"
+        android:layout_height="55dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         android:gravity="center" >
 
         <TextView
             android:id="@+id/tv_searchtablenum"
-            android:layout_width="200dp"
-            android:layout_height="35dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
             android:background="@drawable/shape_search_date_edt_bg_new"
             android:drawableLeft="@mipmap/icon_search"
             android:drawablePadding="5dp"
             android:padding="5dp"
-            android:text="@string/searchtablenum"
+            android:text="搜索"
+            android:gravity="center"
             android:textColor="#FF909090"
             android:textSize="16sp" />
     </LinearLayout>
@@ -34,21 +37,23 @@
     <LinearLayout
         android:id="@+id/lay_tag"
         android:layout_below="@id/v_top"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:paddingLeft="15dp"
+        android:layout_marginRight="5dp"
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:gravity="center_vertical"
         >
         <TextView
             android:id="@+id/btn_sendmsg"
             android:layout_marginLeft="5dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_width="0dp"
-            android:layout_weight="1.0"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
+            android:singleLine="true"
             android:text="会员电话"
             />
         <TextView
@@ -60,7 +65,7 @@
             android:layout_weight="1.0"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="会员类别"
+            android:text="类别"
             />
         <TextView
             android:id="@+id/txt_membersource"
@@ -71,7 +76,7 @@
             android:layout_weight="1.0"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="会员来源"
+            android:text="来源"
             />
         <TextView
         android:id="@+id/txt_membertag"
@@ -82,30 +87,24 @@
         android:layout_weight="1.0"
         android:layout_height="wrap_content"
         android:padding="10dp"
-        android:text="会员标签"
-        />
-        <TextView
-            android:id="@+id/txt_memberdiscount"
-            android:layout_marginLeft="5dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_width="0dp"
-            android:layout_weight="1.0"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="会员折扣"
+        android:text="标签"
             />
-        <TextView
-            android:id="@+id/txt_memberintegral"
-            android:layout_marginLeft="5dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
+        <LinearLayout
+            android:id="@+id/llt_integral"
             android:layout_width="0dp"
-            android:layout_weight="1.0"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="会员积分"
-            />
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/txt_memberintegral"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableRight="@mipmap/tma_initialdown"
+                android:gravity="center"
+                android:text="积分"
+                android:textColor="@color/colores_news_10"/>
+        </LinearLayout>
     </LinearLayout>
     <View
         android:id="@+id/v_02"
@@ -114,22 +113,38 @@
         android:layout_height="1dp"
         android:background="#cccccc"
         />
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rlv_actmarketingselect"
-        android:layout_below="@id/v_02"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#ffffff"
-        android:divider="@color/colores_news_14"
-        android:dividerHeight="1dp"
-     />
+    <!--<android.support.v7.widget.RecyclerView-->
+
+<!--<com.handmark.pulltorefresh.library.extras.recyclerview.PullToRefreshRecyclerView-->
+        <!--android:id="@+id/rlv_actmarketingselect"-->
+        <!--android:layout_below="@id/v_02"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="#ffffff"-->
+        <!--android:divider="@color/colores_news_14"-->
+        <!--android:dividerHeight="1dp"-->
+     <!--/>-->
+
+        <cn.com.hgh.baseadapter.recyclerViewadapter.pullrefreshrecyclerview.PullRefreshRecyclerView
+            android:id="@+id/rlv_actmarketingselect"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/v_02"
+            android:layout_marginBottom="50dp"
+            android:divider="@null"
+            android:background="@color/white"
+            android:listSelector="@color/transparent"
+            android:scrollbars="none">
+        </cn.com.hgh.baseadapter.recyclerViewadapter.pullrefreshrecyclerview.PullRefreshRecyclerView>
+
    <RelativeLayout
        android:id="@+id/ray_bottom"
        android:layout_alignParentBottom="true"
        android:layout_width="match_parent"
        android:layout_height="50dp"
-       android:layout_marginLeft="20dp"
-       android:layout_marginRight="20dp"
+       android:background="@color/white"
+       android:paddingLeft="15dp"
+       android:paddingRight="15dp"
        android:gravity="center_vertical"
        >
        <RelativeLayout
@@ -138,27 +153,20 @@
            android:layout_height="wrap_content"
            android:paddingTop="5dp"
            android:paddingBottom="5dp"
-           android:layout_marginLeft="12dp"
            android:layout_centerVertical="true"
            >
-           <ImageView
-               android:id="@+id/iv_selectall"
-               android:layout_width="20dp"
-               android:layout_height="20dp"
-               android:layout_gravity="center_vertical"
-               android:scaleType="centerInside"
-               android:src="@mipmap/icon_uncheck" />
-
-           <TextView
-               android:id="@+id/tv_seleteall"
-               android:layout_toRightOf="@id/iv_selectall"
+           <CheckBox
+               android:id="@+id/cb_selectall"
+               android:drawableLeft="@drawable/rb_selected"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
-               android:layout_marginLeft="7dp"
-               android:singleLine="true"
                android:text="全选"
-               android:textColor="@color/colores_news_10"
-               android:textSize="16sp" />
+               android:layout_centerVertical="true"
+               android:drawablePadding="5dp"
+               android:button="@null"
+               android:textColor="@color/color_4b4b4b"
+               android:textSize="@dimen/h16" />
+
        </RelativeLayout>
        <RelativeLayout
            android:id="@+id/ray_people"
@@ -166,7 +174,7 @@
            android:layout_height="wrap_content"
            android:paddingTop="5dp"
            android:paddingBottom="5dp"
-           android:layout_marginLeft="12dp"
+           android:layout_marginLeft="10dp"
            android:layout_centerVertical="true"
            android:layout_toRightOf="@id/ray_choice"
            >
@@ -174,7 +182,7 @@
            android:id="@+id/tv_alreadycheck"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
-           android:layout_marginLeft="30dp"
+           android:layout_marginLeft="10dp"
            android:singleLine="true"
            android:text="已勾选："
            android:layout_centerVertical="true"
@@ -187,31 +195,34 @@
            android:layout_height="wrap_content"
            android:layout_marginLeft="7dp"
            android:singleLine="true"
-           android:text="2 人"
+           android:text="2人"
            android:textColor="@color/colores_news_10"
            android:textSize="16sp" />
         </RelativeLayout>
        <RelativeLayout
            android:id="@+id/ray_sure"
-           android:layout_alignParentRight="true"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:paddingTop="5dp"
            android:paddingBottom="5dp"
+           android:layout_centerVertical="true"
            android:layout_gravity="center_vertical"
            >
            <TextView
                android:id="@+id/tv_sure"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
-               android:layout_marginLeft="30dp"
                android:singleLine="true"
-               android:layout_centerInParent="true"
+               android:layout_alignParentRight="true"
+               android:background="@drawable/shap_red"
                android:text="确定"
-               android:padding="10dp"
+               android:paddingLeft="10dp"
+               android:paddingRight="10dp"
+               android:paddingTop="5dp"
+               android:paddingBottom="5dp"
                android:layout_centerVertical="true"
-               android:textColor="@color/colores_news_10"
-               android:textSize="16sp" />
+               android:textColor="#ffffff"
+               android:textSize="16sp"/>
            </RelativeLayout>
    </RelativeLayout>
 

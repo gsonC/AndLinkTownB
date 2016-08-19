@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.lianbi.mezone.b.bean.ServiceMallBean;
@@ -26,6 +27,7 @@ import cn.com.hgh.view.HttpDialog;
  */
 public class MarketingMsgBulidActivity extends BaseActivity {
 
+
     @Bind(R.id.txt_msg)
     TextView txtMsg;
     @Bind(R.id.txt_alreadysendnum)
@@ -36,8 +38,14 @@ public class MarketingMsgBulidActivity extends BaseActivity {
     TextView txtRemainsendnum;
     @Bind(R.id.btn_msgpay)
     TextView btnMsgpay;
+    @Bind(R.id.ray_top)
+    LinearLayout rayTop;
+    @Bind(R.id.v_01)
+    View v01;
+    @Bind(R.id.tv_editmsg)
+    TextView tvEditmsg;
     @Bind(R.id.tv_choicetemplate)
-    TextView tv_choicetemplate;
+    TextView tvChoicetemplate;
     @Bind(R.id.et_sendcontext)
     EditText etSendcontext;
     @Bind(R.id.btn_sendobject)
@@ -52,33 +60,47 @@ public class MarketingMsgBulidActivity extends BaseActivity {
     TextView btnMsgnum;
     @Bind(R.id.lay_tagnum)
     LinearLayout layTagnum;
+    @Bind(R.id.v_02)
+    View v02;
+    @Bind(R.id.ray_editarea)
+    RelativeLayout rayEditarea;
     @Bind(R.id.txt_sendmsg)
     TextView txtSendmsg;
     private ArrayList<ServiceMallBean> mData = new ArrayList<ServiceMallBean>();
     private ArrayList<ServiceMallBean> mDatas = new ArrayList<ServiceMallBean>();
     HttpDialog dialog;
 
-    @OnClick({R.id.txt_sendmsg,R.id.tv_choicetemplate})
+    @OnClick({R.id.txt_sendmsg, R.id.tv_choicetemplate, R.id.btn_msgpay, R.id.btn_senduser})
     public void OnClick(View v) {
         switch (v.getId()) {
             case R.id.txt_sendmsg:
 
-
-
-            break;
+                break;
             case R.id.tv_choicetemplate:
 
-            simpleJump(MarketingSMSexampleActivity.class);
+                simpleJump(MarketingSMSexampleActivity.class);
 
-            break;
+                break;
+            case R.id.btn_msgpay:
 
+                simpleJump(MarketingBuySMSActivity.class);
+
+
+                break;
+            case R.id.btn_senduser:
+
+                simpleJump(MarketingSelectMemberActivity.class);
+
+                break;
         }
     }
-    private void  simpleJump(Class activity){
-        Intent intent=new Intent();
-        intent.setClass(MarketingMsgBulidActivity.this,activity);
+
+    private void simpleJump(Class activity) {
+        Intent intent = new Intent();
+        intent.setClass(MarketingMsgBulidActivity.this, activity);
         startActivity(intent);
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,7 +116,6 @@ public class MarketingMsgBulidActivity extends BaseActivity {
         setPageTitle("新建营销短信");
         dialog = new HttpDialog(this);
     }
-
 
 
 }

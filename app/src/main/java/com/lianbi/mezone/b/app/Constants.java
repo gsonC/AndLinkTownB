@@ -107,4 +107,8 @@ public class Constants {
 	public static final String NEEDNOTTITLE= "NEEDNOTTITLE";
 	public static final String RE= "Re";
 	public static final String TITLE= "title";
+	/**
+	 * 我的界面升级提示小红点展示与否
+	 */
+	public static final String UPDATERED = "updatered";
 }

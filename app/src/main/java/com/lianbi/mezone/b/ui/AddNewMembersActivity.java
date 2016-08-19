@@ -63,6 +63,7 @@ public class AddNewMembersActivity extends BaseActivity {
 	private TextView mTvAddmemberDiscount;
 	private TextView mTvAddmemberMax;
 	private TextView mTvAddmemberIntegral;
+	private boolean mIsShow;
 
 
 	@Override
@@ -116,7 +117,7 @@ public class AddNewMembersActivity extends BaseActivity {
 		mViewVisibale = findViewById(R.id.view_visibale);
 		LinearLayout llt_line = (LinearLayout) findViewById(R.id.llt_line);
 		View view_line1 = findViewById(R.id.view_line1);
-		boolean isShow = getIntent().getBooleanExtra("isShow", false);
+		mIsShow = getIntent().getBooleanExtra("isShow", false);
 		setPageRightText("保存");
 		mTvMemberfile = (TextView) findViewById(R.id.tv_file_memberfile);//会员档案
 		mTvMemberfile.setTextColor(AddNewMembersActivity.this.getResources().getColor(R.color.color_ff8208));
@@ -141,7 +142,7 @@ public class AddNewMembersActivity extends BaseActivity {
 		mLltAddmemberremarks = (LinearLayout) findViewById(R.id.llt_addmemberremarks);//备注说明
 		mTvMunberadressVisable = (TextView) findViewById(R.id.tv_munberadress_visable);
 		mTvMunberremarksVisable = (TextView) findViewById(R.id.tv_munberremarks_visable);
-		if (isShow) {
+		if (mIsShow) {
 			setPageTitle("会员详情");
 			llt_memberdetails.setVisibility(View.VISIBLE);
 			llt_line.setVisibility(View.VISIBLE);
@@ -429,8 +430,15 @@ public class AddNewMembersActivity extends BaseActivity {
 		System.out.println("会员联系地址--" + MunberAdress);
 		System.out.println("会员备注说明--" + remarks);
 
-		ContentUtils.showMsg(AddNewMembersActivity.this,
-				"添加成功");
+		if(mIsShow){
+			ContentUtils.showMsg(AddNewMembersActivity.this,
+					"修改成功");
+		}else{
+			ContentUtils.showMsg(AddNewMembersActivity.this,
+					"添加成功");
+		}
+
+
 		Intent intent = new Intent();
 		setResult(RESULT_OK, intent);
 		finish();
