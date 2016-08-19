@@ -1,8 +1,10 @@
 package com.lianbi.mezone.b.ui;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,11 +29,12 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.com.hgh.baseadapter.recyclerViewadapter.layoutmanager.CustomLinearLayoutManager;
+import cn.com.hgh.baseadapter.recyclerViewadapter.layoutmanager.DividerGridItemDecoration;
 import cn.com.hgh.baseadapter.recyclerViewadapter.pullrefreshrecyclerview.PullRefreshRecyclerAdapter;
 import cn.com.hgh.baseadapter.recyclerViewadapter.pullrefreshrecyclerview.PullRefreshRecyclerView;
 import cn.com.hgh.baseadapter.recyclerViewadapter.pullrefreshrecyclerview.PullRefreshViewHolder;
-import cn.com.hgh.baseadapter.recyclerViewadapter.layoutmanager.CustomLinearLayoutManager;
-import cn.com.hgh.baseadapter.recyclerViewadapter.layoutmanager.DividerGridItemDecoration;
+import cn.com.hgh.indexscortlist.ClearEditText;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.view.HttpDialog;
 
@@ -44,8 +47,9 @@ import cn.com.hgh.view.HttpDialog;
  */
 public class MarketingSelectMemberActivity extends BaseActivity {
 
-    @Bind(R.id.tv_searchtablenum)
-    TextView tvSearchtablenum;
+
+    @Bind(R.id.et_search)
+    ClearEditText etSearch;
     @Bind(R.id.lay_top)
     LinearLayout layTop;
     @Bind(R.id.v_top)
@@ -60,6 +64,8 @@ public class MarketingSelectMemberActivity extends BaseActivity {
     TextView txtMembertag;
     @Bind(R.id.txt_memberintegral)
     TextView txtMemberintegral;
+    @Bind(R.id.llt_integral)
+    LinearLayout lltIntegral;
     @Bind(R.id.lay_tag)
     LinearLayout layTag;
     @Bind(R.id.v_02)
@@ -87,14 +93,32 @@ public class MarketingSelectMemberActivity extends BaseActivity {
     HttpDialog dialog;
     private DataAdapter mAdapter;
     private Context mContext;
+    boolean isSort = false;
+    private Drawable mDrawableDowm;
+    private Drawable mDrawableUp;
+    private Drawable mDrawableinitial;
 
-    @OnClick({R.id.tv_sure})
+    @OnClick({R.id.tv_sure,R.id.llt_integral})
     public void OnClick(View v) {
         switch (v.getId()) {
             case R.id.tv_sure:
 
 
+
             break;
+            case R.id.llt_integral:
+                if (isSort) {
+                    isSort = false;
+                    mDrawableDowm.setBounds(0, 0, mDrawableDowm.getMinimumWidth(), mDrawableDowm.getMinimumHeight());
+                    txtMemberintegral.setCompoundDrawables(null, null, mDrawableDowm, null);
+//                    startSort(isSort);
+                } else {
+                    isSort = true;
+                    mDrawableUp.setBounds(0, 0, mDrawableUp.getMinimumWidth(), mDrawableUp.getMinimumHeight());
+                    txtMemberintegral.setCompoundDrawables(null, null, mDrawableUp, null);
+//                    startSort(isSort);
+                }
+                break;
 
         }
     }
@@ -102,7 +126,7 @@ public class MarketingSelectMemberActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mContext=this;
+        mContext = this;
         setContentView(R.layout.act_marketingselectmember, HAVETYPE);
         ButterKnife.bind(this);
         initViewAndData();
@@ -114,6 +138,9 @@ public class MarketingSelectMemberActivity extends BaseActivity {
     private void initViewAndData() {
         setPageTitle("请选择要发送的会员");
         dialog = new HttpDialog(this);
+        mDrawableDowm = ContextCompat.getDrawable(this, R.mipmap.tma_down);
+        mDrawableUp = ContextCompat.getDrawable(this, R.mipmap.tma_up);
+        mDrawableinitial = ContextCompat.getDrawable(this, R.mipmap.tma_initialdown);
         listviewData();
 //        getCandownloadMall();
     }
@@ -133,12 +160,13 @@ public class MarketingSelectMemberActivity extends BaseActivity {
         rlvActmarketingselect.setLayoutManager(new CustomLinearLayoutManager(mContext));
         rlvActmarketingselect.addItemDecoration(new DividerGridItemDecoration(mContext));
 
-       initAdapter();
+        initAdapter();
     }
+
     private void initAdapter() {
         mDatas.clear();
-        for (int i = 0; i < 50; i ++) {
-            ServiceMallBean  servicemallbean=new ServiceMallBean();
+        for (int i = 0; i < 50; i++) {
+            ServiceMallBean servicemallbean = new ServiceMallBean();
             servicemallbean.setAppName("AAA");
             servicemallbean.setPresentPrice("150");
             mDatas.add(servicemallbean);
@@ -147,6 +175,7 @@ public class MarketingSelectMemberActivity extends BaseActivity {
         mAdapter.enableLoadMore(true);
         rlvActmarketingselect.setAdapter(mAdapter);
     }
+
     private void onLoadUpMore() {
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -155,7 +184,9 @@ public class MarketingSelectMemberActivity extends BaseActivity {
             }
         }, 2000);
     }
-     int  AAA;
+
+    int AAA;
+
     private void onLoadBottomMore() {
 //        rlvActmarketingselect.onRefreshCompleted();
         new Handler().postDelayed(new Runnable() {
@@ -165,9 +196,9 @@ public class MarketingSelectMemberActivity extends BaseActivity {
                 //Load data
                 int index = mDatas.size();
                 int end = index + 20;
-                AAA=end;
+                AAA = end;
                 for (int i = index; i < 130; i++) {
-                    ServiceMallBean  servicemallbean=new ServiceMallBean();
+                    ServiceMallBean servicemallbean = new ServiceMallBean();
                     servicemallbean.setAppName("MMMM");
                     servicemallbean.setPresentPrice("160");
                     mDatas.add(servicemallbean);
@@ -179,7 +210,6 @@ public class MarketingSelectMemberActivity extends BaseActivity {
             }
         }, 2000);
     }
-
 
 
 //    private void listviewData() {
@@ -278,6 +308,7 @@ public class MarketingSelectMemberActivity extends BaseActivity {
         }, userShopInfoBean.getBusinessId());
 
     }
+
     protected void updateView(ArrayList<ServiceMallBean> arrayList) {
         mDatas.clear();
         mDatas.addAll(arrayList);
@@ -316,10 +347,10 @@ public class MarketingSelectMemberActivity extends BaseActivity {
             @Override
             public void onBindViewHolder(int position) {
 
-              tv_mb_phone.setText(mDatas.get(position).getAppName());
-              tv_mb_category.setText(mDatas.get(position).getPresentPrice());
-              tv_mb_source.setText(mDatas.get(position).getAppName());
-              tv_mb_label.setText(mDatas.get(position).getAppName());
+                tv_mb_phone.setText(mDatas.get(position).getAppName());
+                tv_mb_category.setText(mDatas.get(position).getPresentPrice());
+                tv_mb_source.setText(mDatas.get(position).getAppName());
+                tv_mb_label.setText(mDatas.get(position).getAppName());
 
             }
 

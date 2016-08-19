@@ -12,7 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
-import com.lianbi.mezone.b.bean.ServiceMallBean;
+import com.lianbi.mezone.b.bean.MarketingBuySMS;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.xizhi.mezone.b.R;
 
@@ -26,6 +26,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.QuickAdapter;
+import cn.com.hgh.utils.AbDateUtil;
+import cn.com.hgh.utils.AbStrUtil;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.view.HttpDialog;
 
@@ -56,11 +58,11 @@ public class MarketingBuySMSActivity extends BaseActivity {
     TextView txtBuymsm;
     private AlertDialog wxpayDiaLog;
     TextView  tv_delete_cancle,tv_delete_ok,tv_price;
-    private ArrayList<ServiceMallBean> mData = new ArrayList<ServiceMallBean>();
-    private ArrayList<ServiceMallBean> mDatas = new ArrayList<ServiceMallBean>();
+    private ArrayList<MarketingBuySMS> mData = new ArrayList<MarketingBuySMS>();
+    private ArrayList<MarketingBuySMS> mDatas = new ArrayList<MarketingBuySMS>();
     HttpDialog dialog;
-    QuickAdapter<ServiceMallBean> mAdapter;
-
+    QuickAdapter<MarketingBuySMS> mAdapter;
+    String  strprice="";
     @OnClick({R.id.txt_buymsm})
     public void OnClick(View v) {
         switch (v.getId()) {
@@ -87,11 +89,11 @@ public class MarketingBuySMSActivity extends BaseActivity {
         setPageTitle("短信购买");
         dialog = new HttpDialog(this);
         listviewData();
-        getCandownloadMall();
+        getCanbuysms();
     }
 
     private void listviewData() {
-        mAdapter = new QuickAdapter<ServiceMallBean>(MarketingBuySMSActivity.this,
+        mAdapter = new QuickAdapter<MarketingBuySMS>(MarketingBuySMSActivity.this,
                 R.layout.item_marketingbuysms_list, mDatas) {
 
             private int index = -1;
@@ -105,7 +107,7 @@ public class MarketingBuySMSActivity extends BaseActivity {
 
             @Override
             protected void convert(final BaseAdapterHelper helper,
-                                   final ServiceMallBean item) {
+                                   final MarketingBuySMS item) {
 
                 LinearLayout lay_buysms= helper
                         .getView(R.id.lay_buysms);
@@ -120,12 +122,14 @@ public class MarketingBuySMSActivity extends BaseActivity {
                 CheckBox cb_choice = helper
                         .getView(R.id.cb_choice);
 
-                tv_totalnumber.setText(item.getAppName());
-                tv_numberofgifts.setText(item.getAppName());
+                tv_price.setText(item.getPrice());
+                tv_totalnumber.setText(item.getTotal());
+                tv_numberofgifts.setText(item.getGiveTotal());
                 helper.getView(R.id.lay_buysms).setOnClickListener(
                         new  View.OnClickListener(){
                             @Override
                             public void onClick(View v) {
+                                strprice=String.valueOf(item.getPrice());
                                 index=helper.getPosition();
                                 notifyDataSetChanged();
                             }
@@ -135,6 +139,7 @@ public class MarketingBuySMSActivity extends BaseActivity {
                 new  View.OnClickListener(){
                             @Override
                     public void onClick(View v) {
+                            strprice=String.valueOf(item.getPrice());
                             index=helper.getPosition();
                             notifyDataSetChanged();
                             }
@@ -150,8 +155,10 @@ public class MarketingBuySMSActivity extends BaseActivity {
         actBuysmsList.setAdapter(mAdapter);
     }
 
-    private void getCandownloadMall() {
-        okHttpsImp.getCandownloadServerMall(new MyResultCallback<String>() {
+    private void getCanbuysms() {
+        String reqTime= AbDateUtil.getDateTimeNow();
+        String uuid= AbStrUtil.getUUID();
+        okHttpsImp.getMarketingBuySMS(new MyResultCallback<String>() {
 
             @Override
             public void onResponseResult(Result result) {
@@ -160,12 +167,12 @@ public class MarketingBuySMSActivity extends BaseActivity {
                     JSONObject jsonObject;
                     try {
                         jsonObject = new JSONObject(reString);
-                        reString = jsonObject.getString("appsList");
+                        reString = jsonObject.getString("list");
                         if (!TextUtils.isEmpty(reString)) {
                             mData.clear();
-                            ArrayList<ServiceMallBean> downloadListMall = (ArrayList<ServiceMallBean>) JSON
+                            ArrayList<MarketingBuySMS> downloadListMall = (ArrayList<MarketingBuySMS>) JSON
                                     .parseArray(reString,
-                                            ServiceMallBean.class);
+                                            MarketingBuySMS.class);
                             mData.addAll(downloadListMall);
                             updateView(mData);
                         }
@@ -180,11 +187,11 @@ public class MarketingBuySMSActivity extends BaseActivity {
             public void onResponseFailed(String msg) {
                 dialog.dismiss();
             }
-        }, userShopInfoBean.getBusinessId());
+        }, userShopInfoBean.getBusinessId(),reqTime,uuid);
 
     }
 
-    protected void updateView(ArrayList<ServiceMallBean> arrayList) {
+    protected void updateView(ArrayList<MarketingBuySMS> arrayList) {
         mDatas.clear();
         mDatas.addAll(arrayList);
         mAdapter.replaceAll(mDatas);
@@ -197,7 +204,7 @@ public class MarketingBuySMSActivity extends BaseActivity {
         tv_price=(TextView)wxpayDiaLog.findViewById(R.id.tv_price);
         tv_delete_cancle=(TextView)wxpayDiaLog.findViewById(R.id.tv_delete_cancle);
         tv_delete_ok=(TextView)wxpayDiaLog.findViewById(R.id.tv_delete_ok);
-        tv_price.setText("0.01");
+        tv_price.setText(strprice+"");
         tv_delete_cancle.setOnClickListener(new   View.OnClickListener() {
             @Override
             public void onClick(View arg0) {

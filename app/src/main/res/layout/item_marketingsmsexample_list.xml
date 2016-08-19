@@ -27,7 +27,7 @@
         <!--style="@style/RadioButtonStyles"-->
         <CheckBox
             android:id="@+id/cb_smstemplate"
-            android:drawableLeft="@drawable/rb_selected"
+            android:drawableLeft="@drawable/custom_checkbox_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="短信模板"

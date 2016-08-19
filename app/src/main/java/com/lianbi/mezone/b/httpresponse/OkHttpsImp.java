@@ -532,7 +532,130 @@ public enum OkHttpsImp {
 
 		}
 	}
+///////////////////////////////////////////////////////////会员管理部分接口/////////////////////////////////////////////////////////////////////////////////////
+	/**
+	 *  获取会员分类列表
+	 */
+	public void getMemberCategoryList(
+			MyResultCallback<String> myResultCallback, String storeId,String pageNo,
+			String pageSize,
+			String reqTime,String uuid) throws Exception{
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("storeId", storeId);
+		params.put("pageNo", pageNo);
+		params.put("pageSize", pageSize);
+		params.put("reqTime", reqTime);
+		params.put("uuid", uuid);
+		String sign = getSign(md5_key,params);
+		params.put("sign", sign);
+		String url = getHttpUrl(storeId, "vipTypeList");
+		postProgressResponse(myResultCallback, params, url);
+	}
+	/**
+	 *  添加会员类别
+	 */
+	public void  addMemberCategories(
+			MyResultCallback<String> myResultCallback, String storeId,String typeName,
+			String typeDiscountRatio,String typeMaxDiscount,String typeConditionMin,
+			String typeConditionMax,
+			String reqTime,String uuid) throws Exception {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("storeId", storeId);
+		params.put("typeName", typeName);
+		params.put("typeDiscountRatio", typeDiscountRatio);
+		params.put("typeMaxDiscount", typeMaxDiscount);
+		params.put("typeConditionMin", typeConditionMin);
+		params.put("typeConditionMax", typeConditionMax);
+		params.put("reqTime", reqTime);
+		params.put("uuid", uuid);
+		String sign = getSign(md5_key,params);
+		params.put("sign", sign);
+		String url = getHttpUrl(storeId, "addVipType");
+		postProgressResponse(myResultCallback, params, url);
+	}
+	/**
+	 *  删除会员类别
+	 */
+	public void  delVipType(
+			MyResultCallback<String> myResultCallback, String storeId,String typeId,
+			String reqTime,String uuid) throws Exception {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("storeId", storeId);
+		params.put("typeId", typeId);
+		params.put("reqTime", reqTime);
+		params.put("uuid", uuid);
+		String sign = getSign(md5_key,params);
+		params.put("sign", sign);
+		String url = getHttpUrl(storeId, "delVipType");
+		postProgressResponse(myResultCallback, params, url);
+	}
+	/**
+	 *  营销短信详情接口
+	 */
+	public void querySendMsgDetail(
+			MyResultCallback<String> myResultCallback, String storeId,
+			String batchNo,String startNo,String pageSize,
+			String reqTime,String uuid)  throws Exception {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("storeId", storeId);
+		params.put("batchNo", batchNo);
+		params.put("startNo", startNo);
+		params.put("pageSize", pageSize);
+		params.put("reqTime", reqTime);
+		params.put("uuid", uuid);
+		String sign = getSign(md5_key,params);
+		params.put("sign", sign);
+		String url = getHttpUrl(storeId, "querySendMsgDetail");
+		postProgressResponse(myResultCallback, params, url);
+	}
+	/**
+	 *  营销短信统计接口
+	 */
+	public void querySendMsgStatistic(
+			MyResultCallback<String> myResultCallback, String storeId,
+			String startNo,String pageSize,String sendDate,
+			String reqTime,String uuid)  throws Exception {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("storeId", storeId);
+		params.put("startNo", startNo);
+		params.put("pageSize", pageSize);
+		params.put("sendDate", sendDate);
+		params.put("reqTime", reqTime);
+		params.put("uuid", uuid);
+		String sign = getSign(md5_key,params);
+		params.put("sign", sign);
+		String url = getHttpUrl(storeId, "querySendMsgStatistic");
+		postProgressResponse(myResultCallback, params, url);
+	}
+	/**
+	 *  新建营销短信发送短信
+	 */
+	public void sendShortMessage(
+			MyResultCallback<String> myResultCallback,String  storeId,
+			String msgId,List<String> members,
+			String reqTime,String uuid)throws Exception {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("storeId", storeId);
+		params.put("msgId", msgId);
+		params.put("reqTime", reqTime);
+		params.put("uuid", uuid);
+		String sign = getSign(md5_key,params);
+		params.put("sign", sign);
+		String url = getHttpUrl(storeId, "sendMsg");
+		postProgressResponse(myResultCallback, params, url);
+	}
+	/**
+	 *  获取可供购买的短信套餐
+	 */
+	public void getMarketingBuySMS(
+			MyResultCallback<String> myResultCallback, String storeId,String reqTime,String uuid) {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("storeId", storeId);
+		String url = getHttpUrl(storeId, "msgPackage");
+		postProgressResponse(myResultCallback, params, url);
+	}
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	/**
 	 * 获取用户详细
 	 */

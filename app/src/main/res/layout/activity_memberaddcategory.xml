@@ -20,7 +20,9 @@
          android:id="@+id/ray_membercategory"
          android:layout_width="wrap_content"
          android:background="@color/white"
-         android:layout_height="55dp"
+         android:layout_height="wrap_content"
+         android:paddingTop="8dp"
+         android:paddingBottom="8dp"
          android:paddingLeft="20dp"
          android:paddingRight="20dp"
          >
@@ -30,6 +32,7 @@
          android:layout_height="wrap_content"
          android:gravity="center"
          android:text="会员类别："
+         android:textColor="@color/colores_news_19"
          android:layout_centerVertical="true"
          android:textSize="16sp" />
      <EditText
@@ -43,7 +46,7 @@
          android:paddingTop="5dp"
          android:paddingBottom="5dp"
          android:layout_centerVertical="true"
-         android:text=""
+         android:textColor="@color/showcolor"
          android:textSize="16sp" />
      </RelativeLayout>
      <View
@@ -53,7 +56,9 @@
      <LinearLayout
          android:id="@+id/lay_discountrate"
          android:layout_width="match_parent"
-         android:layout_height="55dp"
+         android:layout_height="wrap_content"
+         android:paddingTop="8dp"
+         android:paddingBottom="8dp"
          android:background="@color/white"
          android:gravity="center_vertical"
          android:orientation="horizontal"
@@ -67,6 +72,7 @@
              android:gravity="center"
              android:layout_centerVertical="true"
              android:text="折扣比例："
+             android:textColor="@color/colores_news_19"
              android:textSize="16sp" />
          <EditText
              android:id="@+id/tv_radiovalue"
@@ -79,7 +85,10 @@
              android:layout_centerVertical="true"
              android:singleLine="true"
              android:text=""
-             android:textSize="16sp" />
+             android:inputType="number"
+             android:textColor="@color/colores_news_04"
+             android:textSize="15sp"
+             />
          <TextView
              android:id="@+id/tv_sale"
              android:layout_width="wrap_content"
@@ -88,6 +97,7 @@
              android:layout_marginLeft="5dp"
              android:layout_centerVertical="true"
              android:text="折"
+             android:textColor="@color/showcolor"
              android:textSize="16sp" />
          <TextView
              android:id="@+id/tv_rangebetween"
@@ -107,7 +117,9 @@
         <LinearLayout
             android:id="@+id/lay_singlediscount"
             android:layout_width="match_parent"
-            android:layout_height="55dp"
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
             android:background="@color/white"
             android:gravity="center_vertical"
             android:orientation="horizontal"
@@ -122,7 +134,9 @@
                 android:gravity="center"
                 android:text="单笔最高优惠："
                 android:layout_centerVertical="true"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:textColor="@color/colores_news_19"
+                />
             <EditText
                 android:id="@+id/tv_maxidiscountvalue"
                 android:layout_width="110dp"
@@ -131,16 +145,20 @@
                 android:singleLine="true"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:inputType="number"
                 android:background="@drawable/shap_hollow_red"
                 android:layout_centerVertical="true"
                 android:text=""
-                android:textSize="16sp" />
+                android:textColor="@color/colores_news_04"
+                android:textSize="15sp"
+                />
             <TextView
                 android:id="@+id/tv_rmb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="元"
+                android:textColor="@color/showcolor"
                 android:layout_marginLeft="3dp"
                 android:layout_centerVertical="true"
                 android:textSize="16sp" />
@@ -174,7 +192,9 @@
          android:gravity="center"
          android:text="积分比例："
          android:layout_centerVertical="true"
-         android:textSize="16sp" />
+         android:textSize="16sp"
+         android:textColor="@color/colores_news_19"
+         />
      <EditText
              android:id="@+id/tv_whatmoney"
              android:layout_width="50dp"
@@ -186,12 +206,14 @@
          android:singleLine="true"
          android:layout_centerVertical="true"
              android:text=""
-             android:textSize="16sp" />
+         android:textColor="@color/showcolor"
+         android:textSize="16sp" />
      <TextView
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:gravity="center"
              android:text="元 ="
+             android:textColor="@color/showcolor"
              android:layout_centerVertical="true"
              android:textSize="16sp" />
      <EditText
@@ -205,12 +227,14 @@
              android:singleLine="true"
              android:layout_centerVertical="true"
              android:text=""
+             android:textColor="@color/showcolor"
              android:textSize="16sp" />
      <TextView
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:gravity="center"
              android:text="积分"
+             android:textColor="@color/showcolor"
              android:layout_centerVertical="true"
              android:textSize="16sp" />
          </LinearLayout>
@@ -223,6 +247,7 @@
              android:paddingRight="20dp"
              android:paddingTop="5dp"
              android:paddingBottom="5dp"
+             android:textColor="@color/showcolor"
              android:text="(不足设定的金额不积分，积分比例不可修改)"
              android:textSize="14sp" />
 
@@ -250,11 +275,15 @@
          android:layout_marginTop="15dp"
          android:text="成为该级别会员所需条件："
          android:layout_centerVertical="true"
-         android:textSize="16sp" />
+         android:textSize="16sp"
+         android:textColor="@color/colores_news_19"
+         />
       <RelativeLayout
           android:id="@+id/lay_required"
           android:layout_width="match_parent"
-          android:layout_height="55dp"
+          android:layout_height="wrap_content"
+          android:paddingTop="8dp"
+          android:paddingBottom="8dp"
           android:layout_marginTop="10dp"
             >
      <TextView
@@ -264,20 +293,25 @@
          android:gravity="center_vertical"
          android:text="累计消费金额："
          android:layout_centerVertical="true"
-         android:textSize="16sp" />
+         android:textSize="15sp"
+         android:textColor="@color/colores_news_19"
+         />
       <EditText
              android:id="@+id/et_rangebefore"
              android:layout_toRightOf="@id/tv_amountpay"
              android:layout_alignBaseline="@id/tv_amountpay"
              android:layout_width="50dp"
-          android:background="@drawable/shap_hollow_red"
-          android:singleLine="true"
-          android:layout_centerVertical="true"
+              android:background="@drawable/shap_hollow_red"
+              android:singleLine="true"
+              android:layout_centerVertical="true"
              android:layout_height="wrap_content"
              android:gravity="center"
+             android:inputType="number"
              android:paddingTop="5dp"
              android:paddingBottom="5dp"
-             android:textSize="16sp" />
+             android:textSize="16sp"
+             android:textColor="@color/colores_news_04"
+          />
        <TextView
              android:id="@+id/tv_between"
              android:layout_toRightOf="@id/et_rangebefore"
@@ -297,10 +331,13 @@
              android:paddingBottom="5dp"
              android:background="@drawable/shap_hollow_red"
              android:singleLine="true"
+             android:inputType="number"
              android:layout_height="wrap_content"
              android:gravity="center"
              android:layout_centerVertical="true"
-             android:textSize="16sp" />
+             android:textSize="15sp"
+             android:textColor="@color/colores_news_04"
+             />
          <TextView
              android:id="@+id/et_element"
              android:layout_toRightOf="@id/et_rangeafter"
@@ -310,6 +347,7 @@
              android:layout_marginLeft="3dp"
              android:gravity="center"
              android:text="元"
+             android:textColor="@color/showcolor"
              android:layout_centerVertical="true"
              android:textSize="16sp" />
      </RelativeLayout>
@@ -320,7 +358,9 @@
              android:gravity="center_vertical"
              android:text="@string/membercategoryhint"
              android:layout_centerVertical="true"
-             android:textSize="16sp" />
+             android:textSize="14sp"
+             android:textColor="@color/showcolor"
+             />
          </LinearLayout>
         <View
             android:layout_width="match_parent"
@@ -329,7 +369,9 @@
         <LinearLayout
             android:id="@+id/lay_numofmembers"
             android:layout_width="match_parent"
-            android:layout_height="55dp"
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
             android:background="@color/white"
             android:gravity="center_vertical"
             android:orientation="horizontal"
@@ -345,17 +387,22 @@
                 android:gravity="center"
                 android:layout_gravity="center_vertical"
                 android:text="本分类现有会员数："
-                android:textSize="16sp" />
+                android:textSize="@dimen/regularfont"
+                android:textColor="@color/colores_news_19"
+                />
 
             <TextView
                 android:id="@+id/tv_specificfigures"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:gravity="left"
                 android:layout_gravity="center_vertical"
                 android:text="100000"
-                android:textSize="16sp" />
-            <EditText
+                android:textColor="@color/showcolor"
+                android:textSize="@dimen/regularfont"
+                />
+            <TextView
                 android:id="@+id/tv_membership"
                 android:layout_width="wrap_content"
                 android:singleLine="true"
@@ -366,7 +413,9 @@
                 android:background="@drawable/shap_hollow_grey"
                 android:text="本分类会员详情"
                 android:layout_gravity="center_vertical"
-                android:textSize="14sp" />
+                android:textSize="@dimen/regularfont"
+                android:textColor="@color/showcolor"
+                />
         </LinearLayout>
     </LinearLayout>
     </ScrollView>

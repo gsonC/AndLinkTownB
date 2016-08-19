@@ -65,8 +65,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="共25条"
-        android:textColor="@color/colores_news_04"
-        android:textSize="@dimen/h20"
+        android:textColor="@color/color_4b4b4b"
+        android:textSize="25sp"
         />
         <TextView
         android:id="@+id/tv_numberofgifts"
@@ -74,8 +74,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="暂无赠送"
-        android:textColor="@color/colores_news_04"
-        android:textSize="@dimen/h20"
+        android:textColor="@color/colores_news_11"
+        android:textSize="16sp"
         />
         </RelativeLayout>
         <CheckBox

@@ -9,13 +9,20 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.lianbi.mezone.b.bean.ServiceMallBean;
+import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.xizhi.mezone.b.R;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.com.hgh.utils.AbDateUtil;
+import cn.com.hgh.utils.AbStrUtil;
+import cn.com.hgh.utils.Result;
 import cn.com.hgh.view.HttpDialog;
 
 /**
@@ -69,17 +76,21 @@ public class MarketingMsgBulidActivity extends BaseActivity {
     private ArrayList<ServiceMallBean> mData = new ArrayList<ServiceMallBean>();
     private ArrayList<ServiceMallBean> mDatas = new ArrayList<ServiceMallBean>();
     HttpDialog dialog;
+    //可选模板
+    private static final int REQUEST_CODE_TEMPLATE_RESULT = 1009;
+    //可选会员
+    private static final int REQUEST_CODE_MEMBER_RESULT = 1010;
 
     @OnClick({R.id.txt_sendmsg, R.id.tv_choicetemplate, R.id.btn_msgpay, R.id.btn_senduser})
     public void OnClick(View v) {
         switch (v.getId()) {
             case R.id.txt_sendmsg:
-
+                sendShortmsg();
                 break;
             case R.id.tv_choicetemplate:
 
-                simpleJump(MarketingSMSexampleActivity.class);
-
+                Intent intenttemplate = new Intent(this, MarketingSMSexampleActivity.class);
+                startActivityForResult(intenttemplate, REQUEST_CODE_TEMPLATE_RESULT);
                 break;
             case R.id.btn_msgpay:
 
@@ -89,12 +100,44 @@ public class MarketingMsgBulidActivity extends BaseActivity {
                 break;
             case R.id.btn_senduser:
 
-                simpleJump(MarketingSelectMemberActivity.class);
-
+                Intent intentmember = new Intent(this, MarketingSelectMemberActivity.class);
+                startActivityForResult(intentmember, REQUEST_CODE_MEMBER_RESULT);
                 break;
         }
     }
+    private  void  sendShortmsg(){
+        String reqTime= AbDateUtil.getDateTimeNow();
+        String uuid= AbStrUtil.getUUID();
+        String msgId="";
+        List<String>  members=new ArrayList<String>();
+        try {
+            okHttpsImp.sendShortMessage(new MyResultCallback<String>() {
 
+                @Override
+                public void onResponseResult(Result result) {
+                    String reString = result.getData();
+                    if (reString != null) {
+                        JSONObject jsonObject;
+                        try {
+
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+                @Override
+                public void onResponseFailed(String msg) {
+
+                }
+            }, userShopInfoBean.getBusinessId(), msgId, members, reqTime, uuid);
+
+
+
+        }catch (Exception e){e.printStackTrace();}
+
+    }
     private void simpleJump(Class activity) {
         Intent intent = new Intent();
         intent.setClass(MarketingMsgBulidActivity.this, activity);
@@ -108,7 +151,23 @@ public class MarketingMsgBulidActivity extends BaseActivity {
         ButterKnife.bind(this);
         initViewAndData();
     }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case REQUEST_CODE_TEMPLATE_RESULT:
 
+
+                    break;
+                case REQUEST_CODE_MEMBER_RESULT:
+
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
     /**
      * 初始化View
      */
