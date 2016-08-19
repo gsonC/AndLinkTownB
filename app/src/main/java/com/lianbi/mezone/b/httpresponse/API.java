@@ -615,4 +615,20 @@ public class API {
 	 * 获取会员标签
 	 */
 	public static final String MEMBERLABELLIST = "vipType/vipLabelList.do";
+	/*
+	* 获取会员优惠券列表
+	* */
+	public static final String COUPONS_LIST = "";
+	/**
+	 * 会员优惠券列表查询
+	 * */
+	public static final String VIPID_COUPONS_LIST = "";
+	/*
+	* 查询店铺优惠券使用详情列表
+	* */
+	public static final String COUPON_USING_DETAIL_LIST = "";
+	/*
+	* 发送优惠券短信
+	* */
+	public static final String SEND_NEW_COUPON = "";
 }

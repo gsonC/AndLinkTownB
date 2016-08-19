@@ -18,6 +18,7 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.com.hgh.view.AbPullToRefreshView;
 
 public class CouponUsingDetailsActivity extends BaseActivity {
     @Bind(R.id.all_)
@@ -36,6 +37,8 @@ public class CouponUsingDetailsActivity extends BaseActivity {
     FrameLayout invalid_;
     @Bind(R.id.invalid)
     TextView invalid;
+    @Bind(R.id.pull_to_refresh_coupon_using_detail_list)
+    AbPullToRefreshView abPullToRefreshView;
     @Bind(R.id.coupon_using_detail_list)
     ListView listView;
     @Bind(R.id.iv_empty_act_coupon_using_detail)

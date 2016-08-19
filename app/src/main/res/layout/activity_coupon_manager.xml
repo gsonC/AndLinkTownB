@@ -76,11 +76,13 @@
         android:layout_marginTop="10dp"
         android:background="@color/color_e3e3e3" />
 
-    <RelativeLayout
+    <cn.com.hgh.view.AbPullToRefreshView
+        android:id="@+id/pull_to_refresh_coupon_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="20dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:orientation="vertical">
 
         <ListView
             android:id="@+id/activity_coupon_list"
@@ -97,7 +99,7 @@
             android:scaleType="centerInside"
             android:src="@mipmap/iv_empty"
             android:visibility="gone" />
-    </RelativeLayout>
+    </cn.com.hgh.view.AbPullToRefreshView>
 
     <TextView
         android:id="@+id/add"

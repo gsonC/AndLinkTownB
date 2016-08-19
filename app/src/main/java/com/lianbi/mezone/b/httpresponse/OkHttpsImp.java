@@ -2341,6 +2341,59 @@ public enum OkHttpsImp {
 	}
 
 
+
+
+	/*
+	* 获取会员优惠券列表
+	*/
+	public void getVipCouponsListByVipId(String serNum, String source, String reqTime,
+										 String vipId, String startNo, String pageSize,
+										 MyResultCallback<String> myResultCallback) throws Exception {
+		Map<String, String> params = new HashMap<>();
+		params.put("reqTime", reqTime);
+		params.put("serNum", serNum);
+		params.put("source", source);
+		params.put("vipId", vipId);
+		params.put("startNo", startNo);
+		params.put("pageSize", pageSize);
+
+		String sign = getSign(md5_key, params);
+		params.put("sign", sign);
+		String url = getAbsoluteUrl(API.VIPID_COUPONS_LIST);
+		postProgressResponse(myResultCallback, params, url);
+	}
+
+	/*
+	* 查询店铺优惠券使用详情列表
+	*/
+	public void getCouponUsingDetailListByCoupId(String serNum, String source, String reqTime,
+												 String coupId, String stote, String startNo,
+												 String pageSize, MyResultCallback<String> myResultCallback) throws Exception {
+		Map<String, String> params = new HashMap<>();
+		params.put("reqTime", reqTime);
+		params.put("serNum", serNum);
+		params.put("source", source);
+		params.put("coupId", coupId);
+		params.put("stote", stote);
+		params.put("startNo", startNo);
+		params.put("pageSize", pageSize);
+
+		String sign = getSign(md5_key, params);
+		params.put("sign", sign);
+		String url = getAbsoluteUrl(API.COUPON_USING_DETAIL_LIST);
+		postProgressResponse(myResultCallback, params, url);
+	}
+
+	/*
+	* 发送优惠券短信
+	* */
+	public void getCouponUsingDetailListByCoupId(String serNum, String source, String reqTime,
+												 String coupName, String coupAmt, String limitAmt,
+												 String beginTime, String endTime,String msgId,
+												 String pageSize, MyResultCallback<String> myResultCallback) throws Exception {
+
+	}
+
 	/**
 	 * 签名方法
 	 */

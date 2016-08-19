@@ -139,10 +139,12 @@
         android:layout_height="1dp"
         android:background="@color/color_e3e3e3" />
 
-    <RelativeLayout
+    <cn.com.hgh.view.AbPullToRefreshView
+        android:id="@+id/pull_to_refresh_coupon_using_detail_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:orientation="vertical">
 
         <ListView
             android:id="@+id/coupon_using_detail_list"
@@ -159,7 +161,7 @@
             android:scaleType="centerInside"
             android:src="@mipmap/iv_empty"
             android:visibility="gone" />
-    </RelativeLayout>
+    </cn.com.hgh.view.AbPullToRefreshView>
 
     <LinearLayout
         android:layout_width="match_parent"

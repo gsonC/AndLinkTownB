@@ -21,6 +21,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnItemClick;
+import cn.com.hgh.view.AbPullToRefreshView;
 
 public class CouponManagerActivity extends BaseActivity implements AdapterView.OnItemClickListener {
     @Bind(R.id.all_container)
@@ -35,6 +36,8 @@ public class CouponManagerActivity extends BaseActivity implements AdapterView.O
     FrameLayout invalid_container;
     @Bind(R.id.invalid)
     TextView invalid;
+    @Bind(R.id.pull_to_refresh_coupon_list)
+    AbPullToRefreshView abPullToRefreshView;
     @Bind(R.id.activity_coupon_list)
     ListView listView;
     @Bind(R.id.iv_empty_act_coupon_detail)
