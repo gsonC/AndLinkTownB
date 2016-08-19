@@ -8,7 +8,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
@@ -62,8 +61,6 @@ public class NewIntegralGoodsActivity extends BaseActivity {
 		setContentView(R.layout.activity_new_integral_goods, NOTYPE);
 		ButterKnife.bind(this);
 		initView();
-		listen();
-
 	}
 
 	private void initView() {
@@ -81,7 +78,7 @@ public class NewIntegralGoodsActivity extends BaseActivity {
 	@Override
 	public void onClick(View view) {
 		super.onClick(view);
-		switch (view.getId()){
+		switch (view.getId()) {
 			case R.id.ima_Smallima:
 				photoUtills.startPickPhotoFromAlbumWithCrop();
 				break;
@@ -101,17 +98,6 @@ public class NewIntegralGoodsActivity extends BaseActivity {
 				photoUtills.startPickPhotoFromAlbumWithCrop();
 				break;
 		}
-	}
-
-	private void listen() {
-		ima_Smallima.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-
-				photoUtills.startPickPhotoFromAlbumWithCrop();
-
-			}
-		});
 	}
 
 	@Override
@@ -153,16 +139,7 @@ public class NewIntegralGoodsActivity extends BaseActivity {
 						FileUtils.copyFile(filePath, PhotoUtills.photoCurrentFile.toString(), true);
 						photoUtills.startCropImage();
 						showImage(filePath);
-						showImageOne(filePath);
-						/*showImageTwo(filePath);
-						showImageThree(filePath);
-						showImageFour(filePath);
-						showImageFive(filePath);*/
-						break;
-
-					case PhotoUtills.REQUEST_IMAGE_CROP:
-						String photocurrentpath = photoUtills.photoCurrentFile.toString();
-//
+						ima_Smallima.setVisibility(View.GONE);
 				}
 
 			}
@@ -174,31 +151,20 @@ public class NewIntegralGoodsActivity extends BaseActivity {
 
 	}
 
+	/*
+	   展示图片
+	 */
 	private void showImage(String filePath) {
 		Bitmap bm = BitmapFactory.decodeFile(filePath);
 		((ImageView) findViewById(R.id.ima_bigima)).setImageBitmap(bm);
-
-	}
-	private void showImageOne(String filePath) {
-		Bitmap bm = BitmapFactory.decodeFile(filePath);
 		((ImageView) findViewById(R.id.small_imaOne)).setImageBitmap(bm);
-	}
-	private void showImageTwo(String filePath) {
-		Bitmap bm = BitmapFactory.decodeFile(filePath);
 		((ImageView) findViewById(R.id.small_imaTwo)).setImageBitmap(bm);
-	}
-	private void showImageThree(String filePath) {
-		Bitmap bm = BitmapFactory.decodeFile(filePath);
 		((ImageView) findViewById(R.id.small_imaThree)).setImageBitmap(bm);
-	}
-	private void showImageFour(String filePath) {
-		Bitmap bm = BitmapFactory.decodeFile(filePath);
 		((ImageView) findViewById(R.id.small_imaFour)).setImageBitmap(bm);
-	}
-	private void showImageFive(String filePath) {
-		Bitmap bm = BitmapFactory.decodeFile(filePath);
 		((ImageView) findViewById(R.id.small_imaFive)).setImageBitmap(bm);
 	}
+
+
 	/**
 	 * 图像裁剪实现类
 	 *
@@ -218,8 +184,6 @@ public class NewIntegralGoodsActivity extends BaseActivity {
 			}
 			// 设置页设置头像，裁剪比例1:1
 			defaultImageDescribe.setFile(photoCurrentFile);
-//			defaultImageDescribe.setOutputX(480);
-//			defaultImageDescribe.setOutputY(360);
 			defaultImageDescribe.setOutputX(640);
 			defaultImageDescribe.setOutputY(435);
 			defaultImageDescribe.setAspectX(4);
