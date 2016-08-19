@@ -1,22 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/colores_news_14"
     >
 
 
 
-    <FrameLayout
+    <cn.com.hgh.indexscortlist.ClearEditText
+        android:id="@+id/tv_memberpoint_search"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/search_bar_edit_selector"
+        android:drawableLeft="@mipmap/search_bar_icon_normal"
+        android:drawablePadding="10dp"
+        android:hint="搜索"
+        android:imeOptions="actionSearch"
+        android:padding="5dp"
+        android:singleLine="true"
+        android:textSize="15.0dip"/>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="10dp"
+        android:text="积分商品(积分商品将在微店展示)"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line"
+        android:background="@color/colores_news_14"/>
+
+    <cn.com.hgh.view.AbPullToRefreshView
+        android:id="@+id/act_memberpoint_abpulltorefreshview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:visibility="visible">
         <cn.com.hgh.view.SlideListView2
             android:id="@+id/fm_messagefragment_listView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1"
             android:background="#fff4f7f9"
             android:cacheColorHint="#00000000"
@@ -26,120 +61,54 @@
             android:listSelector="#00000000"
             android:scrollbars="none">
         </cn.com.hgh.view.SlideListView2>
+    </cn.com.hgh.view.AbPullToRefreshView>
 
-
-    </FrameLayout>
 
     <ImageView
-        android:id="@+id/imaa"
+        android:id="@+id/img_memberpoint_empty"
         android:layout_width="match_parent"
-        android:layout_height="14dp"
-        android:background="#b4b4b4"/>
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scaleType="center"
+        android:src="@mipmap/iv_empty"
+        android:visibility="gone"/>
 
-    <RelativeLayout
-        android:id="@+id/rela_tab"
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="83dp"
-        android:gravity="center_vertical"
-        >
-
-
-        <cn.com.hgh.indexscortlist.ClearEditText
-            android:id="@+id/tv_search"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@drawable/search_bar_edit_selector"
-            android:drawableLeft="@mipmap/search_bar_icon_normal"
-            android:drawablePadding="10dp"
-            android:hint="搜索"
-            android:imeOptions="actionSearch"
-            android:padding="5dp"
-            android:singleLine="true"
-            android:textSize="15.0dip"/>
-            />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/showM"
-        android:layout_width="match_parent"
-        android:layout_height="63dp"
-        android:layout_below="@id/rela_tab"
-        android:layout_marginLeft="39dp"
-        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/white"
         >
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="39dp"
-            android:layout_gravity="center_vertical"
-            android:text="积分商品积分商品将在微店展示"
-            android:textColor="@color/showcolor"
-            android:textSize="14sp"
-            />
-
-    </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/line"
-        android:background="@color/colores_news_14"/>
-
-    <RelativeLayout
-        android:id="@+id/pointbuju"
-        android:layout_width="match_parent"
-        android:layout_height="97dp"
-        android:layout_alignParentBottom="true"
-        android:gravity="center_vertical"
-        >
-
-        <TextView
-
             android:id="@+id/tv_increaseProduct"
-            android:layout_width="wrap_content"
-            android:layout_height="55dp"
-            android:layout_marginLeft="25dp"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/shape_search_date_edt_bg_new"
-            android:drawablePadding="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_width="0dp"
+            android:layout_marginLeft="30dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:background="@drawable/shape_addnewmember"
             android:gravity="center"
-            android:hint="新增积分商品"
-            android:padding="5dp"
-            android:textColor="#FF909090"
-            android:textSize="12sp"
-
-            />
+            android:text="新增积分商品"
+            android:textColor="@color/colores_news_18"/>
 
         <TextView
             android:id="@+id/choose_from_weixin"
-            android:layout_width="50dp"
-            android:layout_height="55dp"
-            android:layout_alignParentRight="true"
+            android:layout_width="0dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:layout_marginLeft="30dp"
-            android:layout_marginRight="10dp"
-            android:layout_toRightOf="@id/tv_increaseProduct"
-            android:background="@drawable/shape_search_date_edt_bg_new"
-            android:drawablePadding="5dp"
+            android:padding="10dp"
+            android:background="@drawable/shape_addnewmember"
             android:gravity="center"
-            android:padding="5dp"
-            android:text="从微信商城产品库选择"
-            android:textColor="#FF909090"
-            android:textSize="12sp"
-            />
-    </RelativeLayout>
+            android:layout_marginRight="30dp"
+            android:text="从微店选择"
+            android:textColor="@color/colores_news_18"/>
+    </LinearLayout>
 
-    <ListView
-        android:id="@+id/fm_tag_listView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/pointbuju"
-        android:layout_below="@id/showM"
-        android:listSelector="@color/transparent"
-        android:scrollbars="none"
-        ></ListView>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/line"
-        android:background="@color/colores_news_14"/>
-</RelativeLayout>
+</LinearLayout>

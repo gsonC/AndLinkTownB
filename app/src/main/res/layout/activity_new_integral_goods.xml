@@ -35,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:gravity="center_vertical"
-            android:hint="水杯"
+            android:hint="商品名称"
             android:textColor="@color/foodcolor"
             android:textSize="16sp"
 
@@ -51,7 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:gravity="center_vertical"
-            android:hint="陶瓷水杯"
+            android:hint="商品介绍"
             android:textColor="@color/foodcolor"
             android:textSize="16sp"
 
@@ -67,7 +67,7 @@
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:gravity="center_vertical"
-            android:hint="请输入兑换所需积分"
+            android:hint="兑换所需积分"
             android:textColor="@color/foodcolor"
             android:textSize="16sp"
             />

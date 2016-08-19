@@ -4,10 +4,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+
 
         <cn.com.hgh.view.SlideListView2
             android:id="@+id/fm_messagefragment_listView"
@@ -22,8 +19,6 @@
             android:scrollbars="none" >
         </cn.com.hgh.view.SlideListView2>
 
-
-    </FrameLayout>
 
     <ImageView
         android:layout_width="match_parent"
@@ -68,13 +63,5 @@
             android:textColor="@color/tag_sure"
             android:textSize="16sp"/>
     </RelativeLayout>
-    <ListView
-        android:layout_above="@id/point_biaoqian"
-        android:id="@+id/fm_tag_listView"
-        android:background="@color/colores_news_14"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:listSelector="@color/transparent"
-        android:scrollbars="none"
-        ></ListView>
+
 </RelativeLayout>

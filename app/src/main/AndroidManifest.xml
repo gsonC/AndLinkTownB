@@ -85,17 +85,17 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name="com.lianbi.mezone.b.ui.MemberPointManage"
-                  android:windowSoftInputMode="stateHidden|stateUnchanged"/>
-
-        <activity android:name="com.lianbi.mezone.b.ui.TagManagerActivity"
-                  android:windowSoftInputMode="stateHidden|stateUnchanged"/>
-
+        <activity
+            android:name="com.lianbi.mezone.b.ui.MemberPointManage"
+            android:windowSoftInputMode="stateHidden|stateUnchanged"/>
+        <activity
+            android:name="com.lianbi.mezone.b.ui.TagManagerActivity"
+            android:windowSoftInputMode="stateHidden|stateUnchanged"/>
         <activity android:name="com.lianbi.mezone.b.ui.MembersManagementActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.RevisionsActivity"/>
-        <activity android:name="com.lianbi.mezone.b.ui.NewIntegralGoodsActivity"
-                  android:windowSoftInputMode="stateHidden|stateUnchanged"
-            />
+        <activity
+            android:name="com.lianbi.mezone.b.ui.NewIntegralGoodsActivity"
+            android:windowSoftInputMode="stateHidden|stateUnchanged"/>
         <activity android:name="com.lianbi.mezone.b.ui.MarketingBuySMSActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.SelectTagActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.ChooseFromWeixinActivity"/>
@@ -187,8 +187,7 @@
             android:name="com.lianbi.mezone.b.ui.MemberAddCategoryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"
-            />
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"/>
         <activity
             android:name="com.lianbi.mezone.b.ui.LoginActivity"
             android:windowSoftInputMode="stateHidden"/>
@@ -199,19 +198,17 @@
             android:name="com.lianbi.mezone.b.ui.RegisterActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"
-            />
-        <activity android:name="com.lianbi.mezone.b.ui.MarketingSMSexampleActivity"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"/>
+        <activity
+            android:name="com.lianbi.mezone.b.ui.MarketingSMSexampleActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"
-            />
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"/>
         <activity
             android:name="com.lianbi.mezone.b.ui.ForgetPassWordActivty"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"
-            />
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"/>
         <activity android:name="com.lianbi.mezone.b.ui.WebActivty"/>
         <activity android:name="com.lianbi.mezone.b.ui.H5WebActivty"/>
         <!-- 百度地图 key -->
@@ -298,8 +295,8 @@
         </activity>
         <activity android:name="com.lianbi.mezone.b.ui.AboutUsActivity"/>
         <activity android:name="com.lianbi.mezone.b.wxapi.WXPayEntryActivity"/>
-        <activity android:name="com.lianbi.mezone.b.ui.CouponManagerActivity" />
-        <activity android:name="com.lianbi.mezone.b.ui.CouponUsingDetailsActivity" />
+        <activity android:name="com.lianbi.mezone.b.ui.CouponManagerActivity"/>
+        <activity android:name="com.lianbi.mezone.b.ui.CouponUsingDetailsActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.SendNewCouponActivity"/>
 
         <!-- 个推SDK配置开始 -->
@@ -413,8 +410,11 @@
 
         <service
             android:name="com.igexin.getuiext.service.GetuiExtService"
-            android:process=":pushservice"/><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
-     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
+            android:process=":pushservice"/>
+        <!--
+ ATTENTION: This was auto-generated to add Google Play services to your project for
+     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
+        -->
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version"/>

@@ -13,6 +13,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
+            android:background="@color/white"
             android:layout_height="150dp"
             android:orientation="horizontal">
 
@@ -44,29 +45,20 @@
                     android:id="@+id/rated"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="16dp"
                     android:text="真好吃的，单"
                     android:textColor="@color/foodcolor"
                     android:textSize="13sp"
+                    android:maxLines="2"
                     />
 
-                <TextView
 
-                    android:id="@+id/trated"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="真好吃的，单位id啊"
-                    android:textColor="@color/foodcolor"
-                    android:textSize="14sp"
-
-                    />
 
                 <TextView
                     android:id="@+id/goodsPoint"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="14dp"
                     android:text="200积分"
                     android:textColor="@color/pointcolor"
                     android:textSize="14sp"

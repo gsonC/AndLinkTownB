@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
@@ -15,6 +16,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
+import com.lianbi.mezone.b.httpresponse.MyResultCallback;
+import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
 import com.lianbi.mezone.b.photo.FileUtils;
 import com.lianbi.mezone.b.photo.PhotoUtills;
 import com.lianbi.mezone.b.photo.PickImageDescribe;
@@ -24,6 +28,10 @@ import java.io.File;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.com.hgh.utils.AbDateUtil;
+import cn.com.hgh.utils.AbStrUtil;
+import cn.com.hgh.utils.Picture_Base64;
+import cn.com.hgh.utils.Result;
 
 public class NewIntegralGoodsActivity extends BaseActivity {
 	private ValueCallback<Uri> mUploadMessage;
@@ -32,6 +40,9 @@ public class NewIntegralGoodsActivity extends BaseActivity {
 	private final int OPENIMAGEFILE = 20000;
 	private ValueCallback<Uri[]> mFilePathCallback;
 	private String base64 = "";
+	private File file;
+	private int img_flag;
+	String imageStr = null;
 	@Bind(R.id.ed_Cup)
 	EditText edCup;
 	@Bind(R.id.ed_CeramicCup)
@@ -54,16 +65,20 @@ public class NewIntegralGoodsActivity extends BaseActivity {
 	ImageView smallImaFive;
 	@Bind(R.id.bt_sure)
 	TextView btSure;
-
+	String productName,productType,productDesc,images,storeId;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_new_integral_goods, NOTYPE);
 		ButterKnife.bind(this);
 		initView();
+
 	}
 
 	private void initView() {
+		productName=edCup.getText().toString();
+		productType=edCeramicCup.getText().toString();
+		productDesc=edExchangeIntegral.getText().toString();
 		setPageTitle("积分商品");
 		photoUtills = new MyPhotoUtills(this);
 		ima_Smallima.setOnClickListener(this);
@@ -72,33 +87,88 @@ public class NewIntegralGoodsActivity extends BaseActivity {
 		smallImaThree.setOnClickListener(this);
 		smallImaFour.setOnClickListener(this);
 		smallImaFive.setOnClickListener(this);
-
+		btSure.setOnClickListener(this);
 	}
 
 	@Override
 	public void onClick(View view) {
 		super.onClick(view);
+
 		switch (view.getId()) {
 			case R.id.ima_Smallima:
+				img_flag = 1;
 				photoUtills.startPickPhotoFromAlbumWithCrop();
 				break;
 			case R.id.small_imaOne:
+				img_flag = 2;
 				photoUtills.startPickPhotoFromAlbumWithCrop();
 				break;
 			case R.id.small_imaTwo:
+				img_flag = 3;
 				photoUtills.startPickPhotoFromAlbumWithCrop();
+
 				break;
 			case R.id.small_imaThree:
+				img_flag = 4;
 				photoUtills.startPickPhotoFromAlbumWithCrop();
 				break;
 			case R.id.small_imaFour:
+				img_flag = 5;
 				photoUtills.startPickPhotoFromAlbumWithCrop();
 				break;
 			case R.id.small_imaFive:
+				img_flag = 6;
 				photoUtills.startPickPhotoFromAlbumWithCrop();
+				break;
+			case R.id.bt_sure:
+				btSure.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						String imageStr = null;
+						if (file != null) {
+							imageStr = Picture_Base64.GetImageStr(file.toString());
+						}
+					}
+				});
 				break;
 		}
 	}
+
+	/**
+	 * 新增产品接口
+	 * @param
+	 * @param
+	 * @param
+	 */
+
+	  private void getProduct() {
+		  String reqTime = AbDateUtil.getDateTimeNow();
+		  String uuid = AbStrUtil.getUUID();
+		  try {
+			  okHttpsImp.addProduct(OkHttpsImp.md5_key,uuid,reqTime,"app",
+			   productName,productType,productDesc,imageStr,
+			   userShopInfoBean.getBusinessId(),
+			   new MyResultCallback<String>() {
+		   @Override
+		   public void onResponseResult(Result result) {
+			 String reString=result.getData();
+			   System.out.println("reString"+reString);
+			   if(reString!=null){
+				   JSONObject jsonObject;
+
+			   }
+		   }
+
+		   @Override
+		   public void onResponseFailed(String msg) {
+
+		   }
+	   });
+		  } catch (Exception e) {
+			  e.printStackTrace();
+		  }
+	  }
+
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
@@ -138,8 +208,31 @@ public class NewIntegralGoodsActivity extends BaseActivity {
 						String filePath = PhotoUtills.getPath(this, uri);
 						FileUtils.copyFile(filePath, PhotoUtills.photoCurrentFile.toString(), true);
 						photoUtills.startCropImage();
-						showImage(filePath);
-						ima_Smallima.setVisibility(View.GONE);
+
+
+						Bitmap bm = BitmapFactory.decodeFile(filePath);
+						file = photoUtills.photoCurrentFile;
+						switch (img_flag){
+							case 1:
+								((ImageView) findViewById(R.id.ima_bigima)).setImageBitmap(bm);
+								ima_Smallima.setVisibility(View.GONE);
+								break;
+							case 2:
+								((ImageView) findViewById(R.id.small_imaOne)).setImageBitmap(bm);
+								break;
+							case 3:
+								((ImageView) findViewById(R.id.small_imaTwo)).setImageBitmap(bm);
+								break;
+							case 4:
+								((ImageView) findViewById(R.id.small_imaThree)).setImageBitmap(bm);
+								break;
+							case 5:
+								((ImageView) findViewById(R.id.small_imaFour)).setImageBitmap(bm);
+								break;
+							case 6:
+								((ImageView) findViewById(R.id.small_imaFive)).setImageBitmap(bm);
+								break;
+						}
 				}
 
 			}
@@ -157,11 +250,31 @@ public class NewIntegralGoodsActivity extends BaseActivity {
 	private void showImage(String filePath) {
 		Bitmap bm = BitmapFactory.decodeFile(filePath);
 		((ImageView) findViewById(R.id.ima_bigima)).setImageBitmap(bm);
+	}
+
+	private void showImage1(String filePath) {
+		Bitmap bm = BitmapFactory.decodeFile(filePath);
 		((ImageView) findViewById(R.id.small_imaOne)).setImageBitmap(bm);
+
+	}
+	private void showImage2(String filePath) {
+		Bitmap bm = BitmapFactory.decodeFile(filePath);
 		((ImageView) findViewById(R.id.small_imaTwo)).setImageBitmap(bm);
+
+	}
+	private void showImage3(String filePath) {
+		Bitmap bm = BitmapFactory.decodeFile(filePath);
 		((ImageView) findViewById(R.id.small_imaThree)).setImageBitmap(bm);
+
+	}
+	private void showImage4(String filePath) {
+		Bitmap bm = BitmapFactory.decodeFile(filePath);
 		((ImageView) findViewById(R.id.small_imaFour)).setImageBitmap(bm);
+
+	}private void showImage5(String filePath) {
+		Bitmap bm = BitmapFactory.decodeFile(filePath);
 		((ImageView) findViewById(R.id.small_imaFive)).setImageBitmap(bm);
+
 	}
 
 

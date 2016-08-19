@@ -14,6 +14,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.lianbi.mezone.b.bean.MemberMessage;
+import com.lianbi.mezone.b.httpresponse.MyResultCallback;
+import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
 import com.xizhi.mezone.b.R;
 
 import java.util.ArrayList;
@@ -22,18 +24,24 @@ import butterknife.ButterKnife;
 import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.QuickAdapter;
 import cn.com.hgh.utils.AbAppUtil;
+import cn.com.hgh.utils.AbDateUtil;
+import cn.com.hgh.utils.AbPullHide;
+import cn.com.hgh.utils.AbStrUtil;
+import cn.com.hgh.utils.Result;
 import cn.com.hgh.utils.ScreenUtils;
+import cn.com.hgh.view.AbPullToRefreshView;
 import cn.com.hgh.view.SlideListView2;
 
 public class MemberPointManage extends BaseActivity implements OnClickListener {
 	ArrayList<MemberMessage> mDatas = new ArrayList<MemberMessage>();
-
+	private AbPullToRefreshView act_memberpoint_abpulltorefreshview;
 	private TextView tv_tag, point_goodsName, rated, trated, goodsPoint, pullgoods, pushgoods,
 			changegoods, tv_increaseProduct, choose_from_weixin;
 	private SlideListView2 fm_messagefragment_listView;
 	ImageView point_ima, pullgoodsIma;
 	ListView fm_tag_listView;
    private EditText tv_search;
+	ImageView img_memberpoint_empty;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -43,19 +51,23 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 		initListAdapter();
 		setListen();
 		setLisenter();
-		getTagList();
+		getTagList(true);
 		viewAdapter();
+		getQueryProduct();
 	}
 
 	private void initView() {
 		setPageTitle("积分商品");
 		fm_messagefragment_listView = (SlideListView2) findViewById(R.id.fm_messagefragment_listView);
 		fm_messagefragment_listView.initSlideMode(SlideListView2.MOD_RIGHT);
-		fm_tag_listView = (ListView) findViewById(R.id.fm_tag_listView);
+	//	fm_tag_listView = (ListView) findViewById(R.id.fm_tag_listView);
 
 		tv_increaseProduct = (TextView) findViewById(R.id.tv_increaseProduct);
 		choose_from_weixin = (TextView) findViewById(R.id.choose_from_weixin);
-		tv_search=(EditText)findViewById(R.id.tv_search);
+		tv_search=(EditText) findViewById(R.id.tv_memberpoint_search);//搜索框
+		act_memberpoint_abpulltorefreshview = (AbPullToRefreshView) findViewById(R.id.act_memberpoint_abpulltorefreshview);//AbPullToRefreshView
+		img_memberpoint_empty = (ImageView) findViewById(R.id.img_memberpoint_empty);//图片
+
 	}
 
 	private void setListen() {
@@ -120,7 +132,25 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 				return false;
 			}
 		});
+		act_memberpoint_abpulltorefreshview.setLoadMoreEnable(true);
+		act_memberpoint_abpulltorefreshview.setPullRefreshEnable(true);
+		act_memberpoint_abpulltorefreshview
+				.setOnHeaderRefreshListener(new AbPullToRefreshView.OnHeaderRefreshListener() {
 
+					@Override
+					public void onHeaderRefresh(AbPullToRefreshView view) {
+						getTagList(true);
+					}
+
+				});
+		act_memberpoint_abpulltorefreshview
+				.setOnFooterLoadListener(new AbPullToRefreshView.OnFooterLoadListener() {
+
+					@Override
+					public void onFooterLoad(AbPullToRefreshView view) {
+						getTagList(false);
+					}
+				});
 	}
 //初始化适配器
 
@@ -135,7 +165,6 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 				point_ima = helper.getView(R.id.point_ima);
 				point_goodsName = helper.getView(R.id.point_goodsName);
 				rated = helper.getView(R.id.rated);
-				trated = helper.getView(R.id.trated);
 				goodsPoint = helper.getView(R.id.goodsPoint);
 				pullgoods = helper.getView(R.id.pullgoods);
 				pullgoodsIma = helper.getView(R.id.pullgoodsIma);
@@ -146,14 +175,13 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 				changegoods.setText(item.getChangegoods() + "");
 				point_goodsName.setText(item.getPoint_goodsName() + "");
 				rated.setText(item.getRated() + "");
-				trated.setText(item.getTrated() + "");
 				goodsPoint.setText(item.getGoodsPoint() + "");
 				pullgoods.setText(item.getPullgoods() + "");
 				pushgoods.setText(item.getPushgoods() + "");
 				changegoods.setText(item.getChangegoods() + "");
 
 
-				adaption();
+				//adaption();
 
 				//修改点击事件
 				changegoods.setOnClickListener(new OnClickListener() {
@@ -185,12 +213,12 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 			}
 
 		};
-		fm_tag_listView.setAdapter(mAdapter);
+		fm_messagefragment_listView.setAdapter(mAdapter);
 	}
 	/**
 	 *
 	 */
-	  private void adaption(){
+	 /* private void adaption(){
 		  ScreenUtils.textAdaptationOn720(point_goodsName,MemberPointManage.this,24);//
 		  ScreenUtils.textAdaptationOn720(rated,MemberPointManage.this,24);//
 		  ScreenUtils.textAdaptationOn720(trated,MemberPointManage.this,24);//
@@ -199,10 +227,10 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 		  ScreenUtils.textAdaptationOn720(pushgoods,MemberPointManage.this,24);//
 		  ScreenUtils.textAdaptationOn720(changegoods,MemberPointManage.this,24);
 		  ScreenUtils.textAdaptationOn720(pullgoods,MemberPointManage.this,24);
-	  }
+	  }*/
 
 
-	private void getTagList() {
+	private void getTagList(final boolean isResh) {
 		ArrayList<MemberMessage> mDatasL = new ArrayList<MemberMessage>();
 		for (int i = 0; i < 20; i++) {
 			MemberMessage bean = new MemberMessage();
@@ -221,8 +249,53 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 		if (mDatasL.size() > 0) {
 			mDatas.addAll(mDatasL);
 		}
+		if (mDatas != null && mDatas.size() > 0) {
+			img_memberpoint_empty.setVisibility(View.GONE);
+			act_memberpoint_abpulltorefreshview.setVisibility(View.VISIBLE);
+		} else {
+			img_memberpoint_empty.setVisibility(View.VISIBLE);
+			act_memberpoint_abpulltorefreshview.setVisibility(View.GONE);
+		}
+		AbPullHide.hideRefreshView(isResh, act_memberpoint_abpulltorefreshview);
 		mAdapter.replaceAll(mDatas);
 
+	}
+
+
+	/**
+	 * 积分商品查询
+	 * @param
+	 * @param
+	 * @param
+	 */
+
+	private void getQueryProduct()  {
+		String reqTime = AbDateUtil.getDateTimeNow();
+		String uuid = AbStrUtil.getUUID();
+
+		try {
+			okHttpsImp.queryProduct(OkHttpsImp.md5_key,
+					uuid,reqTime,"app",
+					userShopInfoBean.getBusinessId(),
+					new MyResultCallback<String>() {
+						@Override
+						public void onResponseResult(Result result) {
+							String reString=result.getData();
+							System.out.println("reString"+reString);
+							if(reString!=null){
+
+
+							}
+						}
+
+						@Override
+						public void onResponseFailed(String msg) {
+
+						}
+					});
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

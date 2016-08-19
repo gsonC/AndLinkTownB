@@ -46,19 +46,19 @@ public class API {
 	/**
 	 *  uat环境url
 	 */
-		public static final String ENVIRONMENTAL = "http://211.95.25.36";//前置UAT外网
-		public static final String TOSTORESERVICE = "http://211.95.25.36";//到店服务UAT外网
-	//	public static final String ENVIRONMENTAL = "http://172.16.103.164:9003";//前置UAT内网
-	//	public static final String TOSTORESERVICE = "http://172.16.103.165:9005";//到店服务UAT内网
+		//public static final String ENVIRONMENTAL = "http://211.95.25.36";//前置UAT外网
+		//public static final String TOSTORESERVICE = "http://211.95.25.36";//到店服务UAT外网
+		public static final String ENVIRONMENTAL = "http://172.16.103.164:9003";//前置UAT内网
+		public static final String TOSTORESERVICE = "http://172.16.103.165:9005";//到店服务UAT内网
 		public static final String PAYQR = ENVIRONMENTAL+"/lincombFront/toOrderPay.do?state=";/*支付二维码*/
 	  public static final String INTELLIGENT_WIFI ="http://uat.xylbn.cn/wcmv2/routerApplication/wifiIndex?businessId=";//智能WIFI
     /*
      *  测试环境url
      */
-//    	public static final String ENVIRONMENTAL = "http://test.xylbn.cn";//前置TEST
- //   	public static final String TOSTORESERVICE = "http://172.16.103.153:9005";//到店服务TEST
-  //  	public static final String PAYQR = ENVIRONMENTAL+"/lincombFront/toOrderPay.do?state=";/**支付二维码**/
-//	    public static final String INTELLIGENT_WIFI = "http://172.16.103.165:8090/wcmv2/routerApplication/wifiIndex?businessId=";//智能WIFI_TEST
+   	//public static final String ENVIRONMENTAL = "http://test.xylbn.cn";//前置TEST
+    	//public static final String TOSTORESERVICE = "http://172.16.103.153:9005";//到店服务TEST
+   //	public static final String PAYQR = ENVIRONMENTAL+"/lincombFront/toOrderPay.do?state=";/**支付二维码**/
+	   // public static final String INTELLIGENT_WIFI = "http://172.16.103.165:8090/wcmv2/routerApplication/wifiIndex?businessId=";//智能WIFI_TEST
   //  	public static final String INTELLIGENT_WIFI ="http://www.xylbn.cn/wcmv2/routerApplication/wifiIndex?businessId=";//智能wifi
 	/**
 	 * 线上
@@ -586,4 +586,17 @@ public class API {
 	 * 冻结中金额
 	 */
 	public static final String FINANCIALOFFICEAMOUNT = "finance/queryFinIncomeInfo.do";
+	/**
+	 * 新增产品
+	 */
+	public static final String AddProduct = "product/add";
+	/**
+	 * 修改产品
+	 */
+	public static final String updateProduct = "product/update";
+	/**
+	 * 修改产品
+	 */
+	public static final String queryProduct = "product/query";
+
 }

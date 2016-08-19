@@ -2164,4 +2164,58 @@ public enum OkHttpsImp {
 			return false;
 		}
 	}
+	/**
+	 * 新增产品
+	 */
+	public void addProduct(String md5_key, String uuid, String reqTime, String app,
+						   String productName, String productType, String productDesc, String images, String storeId,MyResultCallback<String> myResultCallback) throws Exception {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("uuid",uuid);
+		params.put("reqTime",reqTime);
+		params.put("app",app);
+		params.put("productName",productName);
+		params.put("productType",productType);
+		params.put("productDesc", productDesc);
+		params.put("images", images);
+		params.put("storeId",storeId);
+		String sign = getSign(md5_key,params);
+		params.put("sign", sign);
+		String url = getAbsoluteUrl(API.AddProduct);
+		postProgressResponse(myResultCallback, params, url);
+	}
+
+/**
+ * 修改产品
+ *
+ */
+public void updateProduct(String md5_key, String uuid, String reqTime, String app,
+					   String productId,MyResultCallback<String> myResultCallback) throws Exception {
+	Map<String, String> params = new HashMap<String, String>();
+	params.put("uuid",uuid);
+	params.put("reqTime",reqTime);
+	params.put("app",app);
+	params.put("productId",productId);
+	String sign = getSign(md5_key,params);
+	params.put("sign", sign);
+	String url = getAbsoluteUrl(API.updateProduct);
+	postProgressResponse(myResultCallback, params, url);
+}
+
+	/**
+	 * 积分商品查询
+	 *
+	 */
+	public void queryProduct(String md5_key, String uuid, String reqTime, String app,
+							  String storeId,MyResultCallback<String> myResultCallback) throws Exception {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("uuid",uuid);
+		params.put("reqTime",reqTime);
+		params.put("app",app);
+		params.put("storeId",storeId);
+		String sign = getSign(md5_key,params);
+		params.put("sign", sign);
+		String url = getAbsoluteUrl(API.queryProduct);
+		postProgressResponse(myResultCallback, params, url);
+	}
+
 }
