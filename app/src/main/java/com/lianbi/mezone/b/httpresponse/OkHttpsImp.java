@@ -455,6 +455,7 @@ public enum OkHttpsImp {
 	/**
 	 *
 	 * 4.14	修改推送消息已读状态
+	 *
 	 * @param myResultCallback
 	 * @param storeId
 	 * @param pushId
@@ -484,6 +485,7 @@ public enum OkHttpsImp {
 		String url = getHttpUrl(storeId, "modifyPushDelSts");
 		postProgressResponse(myResultCallback, params, url);
 	}
+
 	/**
 	 *  添加二维码显示
 	 */
@@ -531,7 +533,130 @@ public enum OkHttpsImp {
 
 		}
 	}
+///////////////////////////////////////////////////////////会员管理部分接口/////////////////////////////////////////////////////////////////////////////////////
+	/**
+	 *  获取会员分类列表
+	 */
+	public void getMemberCategoryList(
+			MyResultCallback<String> myResultCallback, String storeId,String pageNo,
+			String pageSize,
+			String reqTime,String uuid) throws Exception{
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("storeId", storeId);
+		params.put("pageNo", pageNo);
+		params.put("pageSize", pageSize);
+		params.put("reqTime", reqTime);
+		params.put("uuid", uuid);
+		String sign = getSign(md5_key,params);
+		params.put("sign", sign);
+		String url = getHttpUrl(storeId, "vipTypeList");
+		postProgressResponse(myResultCallback, params, url);
+	}
+	/**
+	 *  添加会员类别
+	 */
+	public void  addMemberCategories(
+			MyResultCallback<String> myResultCallback, String storeId,String typeName,
+			String typeDiscountRatio,String typeMaxDiscount,String typeConditionMin,
+			String typeConditionMax,
+			String reqTime,String uuid) throws Exception {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("storeId", storeId);
+		params.put("typeName", typeName);
+		params.put("typeDiscountRatio", typeDiscountRatio);
+		params.put("typeMaxDiscount", typeMaxDiscount);
+		params.put("typeConditionMin", typeConditionMin);
+		params.put("typeConditionMax", typeConditionMax);
+		params.put("reqTime", reqTime);
+		params.put("uuid", uuid);
+		String sign = getSign(md5_key,params);
+		params.put("sign", sign);
+		String url = getHttpUrl(storeId, "addVipType");
+		postProgressResponse(myResultCallback, params, url);
+	}
+	/**
+	 *  删除会员类别
+	 */
+	public void  delVipType(
+			MyResultCallback<String> myResultCallback, String storeId,String typeId,
+			String reqTime,String uuid) throws Exception {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("storeId", storeId);
+		params.put("typeId", typeId);
+		params.put("reqTime", reqTime);
+		params.put("uuid", uuid);
+		String sign = getSign(md5_key,params);
+		params.put("sign", sign);
+		String url = getHttpUrl(storeId, "delVipType");
+		postProgressResponse(myResultCallback, params, url);
+	}
+	/**
+	 *  营销短信详情接口
+	 */
+	public void querySendMsgDetail(
+			MyResultCallback<String> myResultCallback, String storeId,
+			String batchNo,String startNo,String pageSize,
+			String reqTime,String uuid)  throws Exception {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("storeId", storeId);
+		params.put("batchNo", batchNo);
+		params.put("startNo", startNo);
+		params.put("pageSize", pageSize);
+		params.put("reqTime", reqTime);
+		params.put("uuid", uuid);
+		String sign = getSign(md5_key,params);
+		params.put("sign", sign);
+		String url = getHttpUrl(storeId, "querySendMsgDetail");
+		postProgressResponse(myResultCallback, params, url);
+	}
+	/**
+	 *  营销短信统计接口
+	 */
+	public void querySendMsgStatistic(
+			MyResultCallback<String> myResultCallback, String storeId,
+			String startNo,String pageSize,String sendDate,
+			String reqTime,String uuid)  throws Exception {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("storeId", storeId);
+		params.put("startNo", startNo);
+		params.put("pageSize", pageSize);
+		params.put("sendDate", sendDate);
+		params.put("reqTime", reqTime);
+		params.put("uuid", uuid);
+		String sign = getSign(md5_key,params);
+		params.put("sign", sign);
+		String url = getHttpUrl(storeId, "querySendMsgStatistic");
+		postProgressResponse(myResultCallback, params, url);
+	}
+	/**
+	 *  新建营销短信发送短信
+	 */
+	public void sendShortMessage(
+			MyResultCallback<String> myResultCallback,String  storeId,
+			String msgId,List<String> members,
+			String reqTime,String uuid)throws Exception {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("storeId", storeId);
+		params.put("msgId", msgId);
+		params.put("reqTime", reqTime);
+		params.put("uuid", uuid);
+		String sign = getSign(md5_key,params);
+		params.put("sign", sign);
+		String url = getHttpUrl(storeId, "sendMsg");
+		postProgressResponse(myResultCallback, params, url);
+	}
+	/**
+	 *  获取可供购买的短信套餐
+	 */
+	public void getMarketingBuySMS(
+			MyResultCallback<String> myResultCallback, String storeId,String reqTime,String uuid) {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("storeId", storeId);
+		String url = getHttpUrl(storeId, "msgPackage");
+		postProgressResponse(myResultCallback, params, url);
+	}
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	/**
 	 *  获取用户详细
 	 */
@@ -2123,6 +2248,100 @@ public enum OkHttpsImp {
 	}
 
 	/**
+	 * 获取会员列表
+	 */
+	public void getMembersList(String serNum, String source, String reqTime,
+							   String md5_key, String businessId, String paramLike,
+							   String pageNo, String pageSize,
+							   MyResultCallback<String> myResultCallback) throws Exception {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("businessId", businessId);
+		params.put("pageNo", pageNo);
+		params.put("pageSize", pageSize);
+		params.put("paramLike", paramLike);
+		params.put("reqTime", reqTime);
+		params.put("serNum", serNum);
+		params.put("source", source);
+		String sign = getSign(md5_key, params);
+		params.put("sign", sign);
+		String url = getAbsoluteUrl(API.MEMBERSLIST);
+		getProgressResponse(myResultCallback, params, url);
+	}
+
+	/**
+	 * 添加或修改会员信息
+	 */
+	public void addOrUpdateMember(String serNum, String source, String reqTime, String md5_key,
+								  String submitType, String businessId, String vipPhone, String vipId, String vipName,
+								  String vipSex, String vipType, String vipLabel, String vipIdNo, String vipCardNo,
+								  String vipAddress, String vipRightsInterests, String vipBirthday, String vipIntegral,
+								  String cumulativeAmount, String vipValidityPeriod, String vipRemarks,
+								  String vipSource, MyResultCallback<String> myResultCallback) throws Exception {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("serNum", serNum);
+		params.put("source", source);
+		params.put("reqTime", reqTime);
+		params.put("submitType", submitType);
+		params.put("businessId", businessId);
+		params.put("vipPhone", vipPhone);
+		params.put("vipId", vipId);
+		params.put("vipName", vipName);
+		params.put("vipSex", vipSex);
+		params.put("vipType", vipType);
+		params.put("vipLabel", vipLabel);
+		params.put("vipIdNo", vipIdNo);
+		params.put("vipCardNo", vipCardNo);
+		params.put("vipAddress", vipAddress);
+		params.put("vipRightsInterests", vipRightsInterests);
+		params.put("vipBirthday", vipBirthday);
+		params.put("vipIntegral", vipIntegral);
+		params.put("cumulativeAmount", cumulativeAmount);
+		params.put("vipValidityPeriod", vipValidityPeriod);
+		params.put("vipRemarks", vipRemarks);
+		params.put("vipSource", vipSource);
+		String sign = getSign(md5_key, params);
+		params.put("sign", sign);
+		String url = getAbsoluteUrl(API.ADDORUPDATEMEMBER);
+		postProgressResponse(myResultCallback, params, url);
+	}
+
+	/**
+	 * 获取会员详情
+	 */
+	public void getMemberDetails(String serNum, String source, String reqTime, String md5_key,
+								 String businessId, String vipId, MyResultCallback<String> myResultCallback) throws Exception {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("serNum", serNum);
+		params.put("source", source);
+		params.put("reqTime", reqTime);
+		params.put("businessId", businessId);
+		params.put("vipId", vipId);
+		String sign = getSign(md5_key, params);
+		params.put("sign", sign);
+		String url = getAbsoluteUrl(API.MEMBERDETAILS);
+		getProgressResponse(myResultCallback, params, url);
+	}
+
+	/**
+	 * 获取会员标签
+	 */
+	public void getMemberTag(String serNum, String source, String reqTime, String md5_key,String businessId
+								,String pageNo,String pageSize, MyResultCallback<String> myResultCallback) throws Exception{
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("serNum", serNum);
+		params.put("source", source);
+		params.put("reqTime", reqTime);
+		params.put("businessId", businessId);
+		params.put("pageNo", pageNo);
+		params.put("pageSize", pageSize);
+		String sign = getSign(md5_key, params);
+		params.put("sign", sign);
+		String url = getAbsoluteUrl(API.MEMBERLABELLIST);
+		getProgressResponse(myResultCallback, params, url);
+	}
+
+
+	/**
 	 * 签名方法
 	 */
 	private static String getSign(String md5_key, Map<String, String> dataMap)
@@ -2217,5 +2436,7 @@ public void updateProduct(String md5_key, String uuid, String reqTime, String ap
 		String url = getAbsoluteUrl(API.queryProduct);
 		postProgressResponse(myResultCallback, params, url);
 	}
+
+
 
 }

@@ -14,7 +14,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
@@ -27,14 +26,19 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
+import com.alibaba.fastjson.JSON;
 import com.lianbi.mezone.b.bean.MemberInfoBean;
+import com.lianbi.mezone.b.httpresponse.MyResultCallback;
+import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
 import com.xizhi.mezone.b.R;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Random;
 
 import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.QuickAdapter;
@@ -44,6 +48,7 @@ import cn.com.hgh.utils.AbAppUtil;
 import cn.com.hgh.utils.AbDateUtil;
 import cn.com.hgh.utils.AbPullHide;
 import cn.com.hgh.utils.AbStrUtil;
+import cn.com.hgh.utils.Result;
 import cn.com.hgh.utils.ScreenUtils;
 import cn.com.hgh.view.AbPullToRefreshView;
 
@@ -77,6 +82,7 @@ public class MembersListActivity extends BaseActivity {
 	private TextView mTvMembersource;
 	private TextView mTvMemberlable;
 	private Drawable mDrawableinitial;
+	private String paramLike;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +93,7 @@ public class MembersListActivity extends BaseActivity {
 		initView();
 		setLisenter();
 		initAdapter();
-		getMembersList(true);
+		getMembersList(true, "");
 	}
 
 	@Override
@@ -113,11 +119,11 @@ public class MembersListActivity extends BaseActivity {
 				ScreenUtils.textAdaptationOn720(tv_mb_source, MembersListActivity.this, 24);//本周新增会员
 				ScreenUtils.textAdaptationOn720(tv_mb_label, MembersListActivity.this, 24);//本周新增会员
 				ScreenUtils.textAdaptationOn720(tv_mb_integral, MembersListActivity.this, 24);//本周新增会员
-				tv_mb_phone.setText(item.getMemberPhone() + "");
-				tv_mb_category.setText(item.getMemberCategory() + "");
-				tv_mb_source.setText(item.getMemberSource() + "");
-				tv_mb_label.setText(item.getMemberLabel() + "");
-				tv_mb_integral.setText(item.getMemberIntegral() + "");
+				tv_mb_phone.setText(item.getVipPhone() + "");
+				tv_mb_category.setText(item.getVipType() + "");
+				tv_mb_source.setText(item.getVipSource() + "");
+				tv_mb_label.setText(item.getLabelName() + "");
+				tv_mb_integral.setText(item.getVipIntegral() + "");
 
 			}
 		};
@@ -164,9 +170,7 @@ public class MembersListActivity extends BaseActivity {
 	/**
 	 * 获取会员列表
 	 */
-	private void getMembersList(final boolean isResh) {
-		System.out.println("getMembersList");
-		ArrayList<MemberInfoBean> mDatasL = new ArrayList<MemberInfoBean>();
+	private void getMembersList(final boolean isResh, final String paramLike) {
 
 		if (isResh) {
 			page = 0;
@@ -176,30 +180,61 @@ public class MembersListActivity extends BaseActivity {
 		String reqTime = AbDateUtil.getDateTimeNow();
 		String uuid = AbStrUtil.getUUID();
 
-		page++;
+		try {
+			okHttpsImp.getMembersList(uuid, "app", reqTime, OkHttpsImp.md5_key,
+					userShopInfoBean.getBusinessId(), paramLike, page + "", 20 + "", new MyResultCallback<String>() {
 
-		for (int i = 0; i < 20; i++) {
-			MemberInfoBean bean = new MemberInfoBean();
-			bean.setMemberPhone("1305422353" + i);
-			bean.setMemberCategory("普通" + i);
-			bean.setMemberSource("微店" + i);
-			bean.setMemberLabel("重要客户" + i);
-			bean.setMemberIntegral(new Random().nextInt(100));
-			mDatasL.add(bean);
-		}
-		if (mDatasL.size() > 0) {
-			mDatas.addAll(mDatasL);
+						@Override
+						public void onResponseResult(Result result) {
+							page++;
+							String reString = result.getData();
+							if (!AbStrUtil.isEmpty(reString)) {
+
+								try {
+									JSONObject jsonObject = new JSONObject(reString);
+									reString = jsonObject.getString("businessVipList");
+									ArrayList<MemberInfoBean> mDatasL = (ArrayList<MemberInfoBean>) JSON
+											.parseArray(reString, MemberInfoBean.class);
+									if (mDatasL != null && mDatasL.size() > 0) {
+										mDatas.addAll(mDatasL);
+									}
+									if (mDatas != null && mDatas.size() > 0) {
+										mImg_ememberslist_empty.setVisibility(View.GONE);
+										mAct_addmembers_abpulltorefreshview.setVisibility(View.VISIBLE);
+										mTv_newaddmember.setText("本周新增会员:"+mDatas.get(0).getVipWeekCount());
+										mTv_cumulativemember.setText("累计会员数:"+mDatas.get(0).getVipCount());
+									} else {
+										mImg_ememberslist_empty.setVisibility(View.VISIBLE);
+										mAct_addmembers_abpulltorefreshview.setVisibility(View.GONE);
+										mTv_newaddmember.setText("本周新增会员:0");
+										mTv_cumulativemember.setText("累计会员数:0");
+									}
+									AbPullHide.hideRefreshView(isResh, mAct_addmembers_abpulltorefreshview);
+									mAdapter.replaceAll(mDatas);
+
+								} catch (JSONException e) {
+									e.printStackTrace();
+								}
+
+							}
+						}
+
+						@Override
+						public void onResponseFailed(String msg) {
+							if (isResh) {
+								mImg_ememberslist_empty
+										.setVisibility(View.VISIBLE);
+								mAct_addmembers_abpulltorefreshview
+										.setVisibility(View.GONE);
+							}
+							AbPullHide.hideRefreshView(isResh,
+									mAct_addmembers_abpulltorefreshview);
+						}
+					});
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
-		if (mDatas != null && mDatas.size() > 0) {
-			mImg_ememberslist_empty.setVisibility(View.GONE);
-			mAct_addmembers_abpulltorefreshview.setVisibility(View.VISIBLE);
-		} else {
-			mImg_ememberslist_empty.setVisibility(View.VISIBLE);
-			mAct_addmembers_abpulltorefreshview.setVisibility(View.GONE);
-		}
-		AbPullHide.hideRefreshView(isResh, mAct_addmembers_abpulltorefreshview);
-		mAdapter.replaceAll(mDatas);
 
 	}
 
@@ -215,6 +250,7 @@ public class MembersListActivity extends BaseActivity {
 					public void onTextChanged(CharSequence s, int start,
 											  int before, int count) {
 						// 当输入框里面的值为空，更新为原来的列表，否则为过滤数据列表
+						paramLike = s.toString();
 						filterData(s.toString());
 					}
 
@@ -252,7 +288,8 @@ public class MembersListActivity extends BaseActivity {
 
 					@Override
 					public void onHeaderRefresh(AbPullToRefreshView view) {
-						getMembersList(true);
+						String params = mAct_member_list_edit.getText().toString().trim();
+						getMembersList(true, params);
 					}
 
 				});
@@ -261,7 +298,8 @@ public class MembersListActivity extends BaseActivity {
 
 					@Override
 					public void onFooterLoad(AbPullToRefreshView view) {
-						getMembersList(false);
+						String params = mAct_member_list_edit.getText().toString().trim();
+						getMembersList(false, params);
 					}
 				});
 
@@ -280,6 +318,7 @@ public class MembersListActivity extends BaseActivity {
 						file_intent.putExtra("isShow", true);
 						startActivityForResult(file_intent, REQUEST_CHANGMEMBERINFO);
 
+						mAct_member_list_edit.setText("");
 					}
 				});
 
@@ -314,6 +353,7 @@ public class MembersListActivity extends BaseActivity {
 				Intent intent = new Intent(MembersListActivity.this, AddNewMembersActivity.class);
 				intent.putExtra("isShow", false);
 				startActivityForResult(intent, REQUEST_ADDMEMBER);
+				mAct_member_list_edit.setText("");
 				break;
 
 		}
@@ -328,8 +368,8 @@ public class MembersListActivity extends BaseActivity {
 		Collections.sort(mDatas, new Comparator<MemberInfoBean>() {
 			@Override
 			public int compare(MemberInfoBean lhs, MemberInfoBean rhs) {
-				Integer id1 = lhs.getMemberIntegral();
-				Integer id2 = rhs.getMemberIntegral();
+				Integer id1 = lhs.getVipIntegral();
+				Integer id2 = rhs.getVipIntegral();
 				if (beginsort) {
 					return id1.compareTo(id2);
 				} else {
@@ -348,10 +388,10 @@ public class MembersListActivity extends BaseActivity {
 		if (resultCode == RESULT_OK) {
 			switch (requestCode) {
 				case REQUEST_ADDMEMBER://添加会员返回
-					getMembersList(true);
+					getMembersList(true, "");
 					break;
 				case REQUEST_CHANGMEMBERINFO://修改会员信息返回
-					getMembersList(true);
+					getMembersList(true, "");
 					break;
 			}
 		}
@@ -361,21 +401,28 @@ public class MembersListActivity extends BaseActivity {
 	 * 根据输入条件改变listview
 	 */
 	private void filterData(String filterStr) {
-		List<MemberInfoBean> filterDateList = new ArrayList<MemberInfoBean>();
+		System.out.println("filterStr" + filterStr);
+	/*	List<MemberInfoBean> filterDateList = new ArrayList<MemberInfoBean>();
 		if (TextUtils.isEmpty(filterStr)) {
 			filterDateList = mDatas;
 		} else {
 			filterDateList.clear();
 			for (MemberInfoBean memberInfo : mDatas) {
-				String phone = memberInfo.getMemberPhone();//电话
-				String category = memberInfo.getMemberCategory();//类别
-				String lable = memberInfo.getMemberLabel();//标签
+				String phone = memberInfo.getVipPhone();//电话
+				String category = memberInfo.getVipType();//类别
+				String lable = memberInfo.getLabelName();//标签
 				if (phone.contains(filterStr) || category.contains(filterStr) || lable.contains(filterStr)) {
 					filterDateList.add(memberInfo);
 				}
 			}
 		}
-		mAdapter.replaceAll(filterDateList);
+		mAdapter.replaceAll(filterDateList);*/
+
+		if (!AbStrUtil.isEmpty(filterStr)) {
+			getMembersList(false, filterStr);
+		}
+
+
 	}
 
 }

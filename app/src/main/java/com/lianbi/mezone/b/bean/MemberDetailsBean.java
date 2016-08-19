@@ -1,7 +1,7 @@
 package com.lianbi.mezone.b.bean;/*
  * @创建者     Administrator
- * @创建时间   2016/8/11 17:23
- * @描述       会员信息
+ * @创建时间   2016/8/19 11:27
+ * @描述       会员详情
  *
  * @更新者     $Author$ 
  * @更新时间   $Date$
@@ -10,29 +10,64 @@ package com.lianbi.mezone.b.bean;/*
 
 import java.io.Serializable;
 
-public class MemberInfoBean implements Serializable {
-	private static final long serialVersionUID = -5076976047607374205L;
+public class MemberDetailsBean implements Serializable {
+	private static final long serialVersionUID = -3682072123166665401L;
 	private String vipId;
 	private String businessId;
-	private String vipPhone;
-	private String vipName;
 	private String vipType;
+	private int typeDiscountRatio;
+	private int typeMaxDiscount;
+	private int vipPhone;
+	private String vipName;
 	private String vipSex;
 	private String vipIdNo;
 	private String vipCardNo;
 	private String vipAddress;
 	private String vipRightsInterests;
 	private String vipBirthday;
-	private String vipValidityPeriod;
-	private int cumulativeAmount;
 	private int vipIntegral;
+	private int cumulativeAmount;
+	private String vipValidityPeriod;
 	private String vipRemarks;
-	private String updateTime;
-	private String createTime;
-	private int vipWeekCount;
-	private int vipCount;
-	private String labelName;
-	private String vipSource;
+	private lablelList lablelLists;
+
+	public lablelList getLablelLists() {
+		return lablelLists;
+	}
+
+	public void setLablelLists(lablelList lablelLists) {
+		this.lablelLists = lablelLists;
+	}
+
+	public class lablelList{
+		private String businessId;
+		private String labelId;
+		private String labelName;
+
+		public String getBusinessId() {
+			return businessId;
+		}
+
+		public void setBusinessId(String businessId) {
+			this.businessId = businessId;
+		}
+
+		public String getLabelId() {
+			return labelId;
+		}
+
+		public void setLabelId(String labelId) {
+			this.labelId = labelId;
+		}
+
+		public String getLabelName() {
+			return labelName;
+		}
+
+		public void setLabelName(String labelName) {
+			this.labelName = labelName;
+		}
+	}
 
 	public String getVipId() {
 		return vipId;
@@ -50,11 +85,35 @@ public class MemberInfoBean implements Serializable {
 		this.businessId = businessId;
 	}
 
-	public String getVipPhone() {
+	public String getVipType() {
+		return vipType;
+	}
+
+	public void setVipType(String vipType) {
+		this.vipType = vipType;
+	}
+
+	public int getTypeDiscountRatio() {
+		return typeDiscountRatio;
+	}
+
+	public void setTypeDiscountRatio(int typeDiscountRatio) {
+		this.typeDiscountRatio = typeDiscountRatio;
+	}
+
+	public int getTypeMaxDiscount() {
+		return typeMaxDiscount;
+	}
+
+	public void setTypeMaxDiscount(int typeMaxDiscount) {
+		this.typeMaxDiscount = typeMaxDiscount;
+	}
+
+	public int getVipPhone() {
 		return vipPhone;
 	}
 
-	public void setVipPhone(String vipPhone) {
+	public void setVipPhone(int vipPhone) {
 		this.vipPhone = vipPhone;
 	}
 
@@ -64,14 +123,6 @@ public class MemberInfoBean implements Serializable {
 
 	public void setVipName(String vipName) {
 		this.vipName = vipName;
-	}
-
-	public String getVipType() {
-		return vipType;
-	}
-
-	public void setVipType(String vipType) {
-		this.vipType = vipType;
 	}
 
 	public String getVipSex() {
@@ -122,12 +173,12 @@ public class MemberInfoBean implements Serializable {
 		this.vipBirthday = vipBirthday;
 	}
 
-	public String getVipValidityPeriod() {
-		return vipValidityPeriod;
+	public int getVipIntegral() {
+		return vipIntegral;
 	}
 
-	public void setVipValidityPeriod(String vipValidityPeriod) {
-		this.vipValidityPeriod = vipValidityPeriod;
+	public void setVipIntegral(int vipIntegral) {
+		this.vipIntegral = vipIntegral;
 	}
 
 	public int getCumulativeAmount() {
@@ -138,12 +189,12 @@ public class MemberInfoBean implements Serializable {
 		this.cumulativeAmount = cumulativeAmount;
 	}
 
-	public int getVipIntegral() {
-		return vipIntegral;
+	public String getVipValidityPeriod() {
+		return vipValidityPeriod;
 	}
 
-	public void setVipIntegral(int vipIntegral) {
-		this.vipIntegral = vipIntegral;
+	public void setVipValidityPeriod(String vipValidityPeriod) {
+		this.vipValidityPeriod = vipValidityPeriod;
 	}
 
 	public String getVipRemarks() {
@@ -152,53 +203,5 @@ public class MemberInfoBean implements Serializable {
 
 	public void setVipRemarks(String vipRemarks) {
 		this.vipRemarks = vipRemarks;
-	}
-
-	public String getUpdateTime() {
-		return updateTime;
-	}
-
-	public void setUpdateTime(String updateTime) {
-		this.updateTime = updateTime;
-	}
-
-	public String getCreateTime() {
-		return createTime;
-	}
-
-	public void setCreateTime(String createTime) {
-		this.createTime = createTime;
-	}
-
-	public int getVipWeekCount() {
-		return vipWeekCount;
-	}
-
-	public void setVipWeekCount(int vipWeekCount) {
-		this.vipWeekCount = vipWeekCount;
-	}
-
-	public int getVipCount() {
-		return vipCount;
-	}
-
-	public void setVipCount(int vipCount) {
-		this.vipCount = vipCount;
-	}
-
-	public String getLabelName() {
-		return labelName;
-	}
-
-	public void setLabelName(String labelName) {
-		this.labelName = labelName;
-	}
-
-	public String getVipSource() {
-		return vipSource;
-	}
-
-	public void setVipSource(String vipSource) {
-		this.vipSource = vipSource;
 	}
 }

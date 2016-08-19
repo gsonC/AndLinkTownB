@@ -12,16 +12,51 @@ import java.io.Serializable;
 
 public class SelectTagBean implements Serializable {
 	private static final long serialVersionUID = 48431753712502139L;
-	private String tagContent;
 	private boolean isChecked;
-	private int id;
+	private String labelId;
+	private String businessId;
+	private String labelName;
+	private String createTime;
+	private String updateTime;
 
-	public int getId() {
-		return id;
+	public String getLabelId() {
+		return labelId;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setLabelId(String labelId) {
+		this.labelId = labelId;
+	}
+
+	public String getBusinessId() {
+		return businessId;
+	}
+
+	public void setBusinessId(String businessId) {
+		this.businessId = businessId;
+	}
+
+	public String getLabelName() {
+		return labelName;
+	}
+
+	public void setLabelName(String labelName) {
+		this.labelName = labelName;
+	}
+
+	public String getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(String createTime) {
+		this.createTime = createTime;
+	}
+
+	public String getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(String updateTime) {
+		this.updateTime = updateTime;
 	}
 
 	public boolean isChecked() {
@@ -32,11 +67,5 @@ public class SelectTagBean implements Serializable {
 		isChecked = checked;
 	}
 
-	public String getTagContent() {
-		return tagContent;
-	}
 
-	public void setTagContent(String tagContent) {
-		this.tagContent = tagContent;
-	}
 }
