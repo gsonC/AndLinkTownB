@@ -27,8 +27,8 @@ public enum OkHttpsImp {
 	/**
 	 * md5_key
 	 */
-	public static final  String md5_key      = "d2a57dc1d883fd21fb9951699df71cc7";
-	private static final String SignType     = "MD5";
+	public static final String md5_key = "d2a57dc1d883fd21fb9951699df71cc7";
+	private static final String SignType = "MD5";
 	private static final String inputCharset = "UTF-8";
 
 	/**
@@ -51,6 +51,7 @@ public enum OkHttpsImp {
 
 	/**
 	 * 到店服务Url
+	 *
 	 * @param storeId    店铺ID
 	 * @param methodName 路径
 	 */
@@ -241,7 +242,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  新增员工信息
+	 * 新增员工信息
 	 */
 	public void postAddsalesClerk(MyResultCallback<String> myResultCallback,
 								  String alesclerkName, String businessId, String alesclerkPhone,
@@ -257,7 +258,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  修改员工信息
+	 * 修改员工信息
 	 */
 	public void postUpdateSalesClerkbyid(
 			MyResultCallback<String> myResultCallback, String alesclerkName,
@@ -275,7 +276,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  获取已有服务商城列表
+	 * 获取已有服务商城列表
 	 */
 	public void getMoreServerMall(MyResultCallback<String> myResultCallback,
 								  String storeId) {
@@ -289,7 +290,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  获取可供下载的服务商城列表
+	 * 获取可供下载的服务商城列表
 	 */
 	public void getCandownloadServerMall(
 			MyResultCallback<String> myResultCallback, String storeId) {
@@ -303,7 +304,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  服务商城列表中服务下载
+	 * 服务商城列表中服务下载
 	 */
 	public void getdownloadServer(MyResultCallback<String> myResultCallback,
 								  String storeId, String serverId) {
@@ -330,7 +331,7 @@ public enum OkHttpsImp {
 	//
 
 	/**
-	 *  获取桌位信息
+	 * 获取桌位信息
 	 */
 	public void getTableInfo(MyResultCallback<String> myResultCallback,
 							 String storeId) {
@@ -341,7 +342,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  修改桌位状态
+	 * 修改桌位状态
 	 */
 	public void getModifyTableStatus(MyResultCallback<String> myResultCallback,
 									 String storeId, String tableIds, String tableStatus) {
@@ -354,7 +355,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  修改营业状态
+	 * 修改营业状态
 	 */
 	public void getmodifyBusinessStatus(
 			MyResultCallback<String> myResultCallback, String storeId,
@@ -367,7 +368,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  删除桌位号
+	 * 删除桌位号
 	 */
 	public void getDeleteTableId(MyResultCallback<String> myResultCallback,
 								 String storeId, String tableIds) {
@@ -378,8 +379,8 @@ public enum OkHttpsImp {
 		postProgressResponse(myResultCallback, params, url);
 	}
 
-	 /**
-	 *  添加桌位
+	/**
+	 * 添加桌位
 	 */
 	public void getAddTable(MyResultCallback<String> myResultCallback,
 							String storeId, String tableName) {
@@ -453,14 +454,14 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *
 	 * 4.14	修改推送消息已读状态
+	 *
 	 * @param myResultCallback
 	 * @param storeId
 	 * @param pushId
 	 */
 	public void modifyPushMessage(MyResultCallback<String> myResultCallback,
-								  String storeId,String pushId){
+								  String storeId, String pushId) {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("storeId", storeId);
 		params.put("pushId", pushId);
@@ -469,7 +470,6 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *
 	 * 4.15	修改推送消息删除状态
 	 *
 	 * @param myResultCallback
@@ -477,15 +477,16 @@ public enum OkHttpsImp {
 	 * @param pushId
 	 */
 	public void modifyPushDelSts(MyResultCallback<String> myResultCallback,
-								 String storeId,String pushId){
+								 String storeId, String pushId) {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("storeId", storeId);
 		params.put("pushId", pushId);
 		String url = getHttpUrl(storeId, "modifyPushDelSts");
 		postProgressResponse(myResultCallback, params, url);
 	}
+
 	/**
-	 *  添加二维码显示
+	 * 添加二维码显示
 	 */
 	public void getTableDetail(MyResultCallback<String> myResultCallback,
 							   String storeId, String tableId) {
@@ -533,7 +534,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  获取用户详细
+	 * 获取用户详细
 	 */
 	public void getUseByiId(MyResultCallback<String> myResultCallback,
 							String serNum, String source, String reqTime, String userId)
@@ -550,7 +551,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  修改用户信息
+	 * 修改用户信息
 	 */
 	public void postUpdateUseById(MyResultCallback<String> myResultCallback,
 								  String serNum, String source, String reqTime, String userId,
@@ -587,7 +588,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  查询门店下的所有会员
+	 * 查询门店下的所有会员
 	 */
 	public void getAssociator(MyResultCallback<String> myResultCallback,
 							  String businessId) {
@@ -598,7 +599,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  删除会员
+	 * 删除会员
 	 */
 	public void delAssociator(MyResultCallback<String> myResultCallback,
 							  String id) {
@@ -609,7 +610,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  修改会员
+	 * 修改会员
 	 */
 	public void updateAssociatorr(String id, String phone,
 								  MyResultCallback<String> myResultCallback) {
@@ -621,7 +622,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  根据电话号码检索会员
+	 * 根据电话号码检索会员
 	 */
 	public void getAssociatorByPhone(MyResultCallback<String> myResultCallback,
 									 String currentPageNum, String phone) {
@@ -634,7 +635,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  查询门店下不同等级会员
+	 * 查询门店下不同等级会员
 	 */
 	public void getAssociacorByBusinessAndLevel(String businessId,
 												String currentPageNum, String level,
@@ -724,7 +725,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  修改会员卡等级
+	 * 修改会员卡等级
 	 */
 	public void postUpdateAssociatorLevel(String levelId, String levelName,
 										  String bDiscount, String price, String levelDetail,
@@ -740,7 +741,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  开启关闭会员卡
+	 * 开启关闭会员卡
 	 */
 	public void postOpenOrCloseLevel(String levelId, String status,
 									 MyResultCallback<String> myResultCallback) {
@@ -752,7 +753,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  显示门店信息
+	 * 显示门店信息
 	 */
 	public void getMessageList(boolean isShow, String businessId,
 							   int currentPageNum, int pageSize,
@@ -772,7 +773,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  删除信息
+	 * 删除信息
 	 */
 	public void postDelMessage(String businessId,
 							   MyResultCallback<String> myResultCallback) {
@@ -783,7 +784,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  修改信息状态
+	 * 修改信息状态
 	 */
 	public void updateMessage(String messageId,
 							  MyResultCallback<String> myResultCallback) {
@@ -794,7 +795,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  删除货源
+	 * 删除货源
 	 */
 	public void postDelShop(String productSourceId,
 							MyResultCallback<String> myResultCallback) {
@@ -805,7 +806,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  获取货源列表
+	 * 获取货源列表
 	 */
 	public void getProductSourceList(String cateId, int currentPageNum,
 									 int pageSize, MyResultCallback<String> myResultCallback) {
@@ -818,7 +819,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  新增货源
+	 * 新增货源
 	 */
 	public void addProductSource(String image, String productSourceTitle,
 								 String validEndDate, String vailidStartDate, String industryId,
@@ -857,7 +858,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  审核会员申请状态
+	 * 审核会员申请状态
 	 */
 	public void updateApplyStatus(String associatorId, String status,
 								  MyResultCallback<String> myResultCallback) {
@@ -869,7 +870,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  添加货源线下订单
+	 * 添加货源线下订单
 	 */
 	public void addProductSourceOrder(String productSrouceId,
 									  String businessId, String buyBusinessId, String orderPrice,
@@ -892,7 +893,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  扫一扫 (根据扫出来的编号获取相应的数据)
+	 * 扫一扫 (根据扫出来的编号获取相应的数据)
 	 */
 	public void getSweep(String code, MyResultCallback<String> myResultCallback) {
 		Map<String, String> params = new HashMap<String, String>();
@@ -902,7 +903,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  获取购买的货源记录
+	 * 获取购买的货源记录
 	 */
 	public void getPrductSourceOrderListBubusinessId(String businessId,
 													 int currentPageNum, int pageSize,
@@ -916,7 +917,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  获取货源下单列表
+	 * 获取货源下单列表
 	 */
 	public void getPrductSourceOrderByBusiness(String businessId,
 											   int currentPageNum, int pageSize,
@@ -930,7 +931,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  获取货源详细
+	 * 获取货源详细
 	 */
 	public void getPrductSourcedeById(String productSourceId,
 									  MyResultCallback<String> myResultCallback) {
@@ -941,7 +942,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  查看订单详细
+	 * 查看订单详细
 	 */
 	public void getOrderById(String orderId,
 							 MyResultCallback<String> myResultCallback) {
@@ -952,7 +953,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  获取店铺下的所有产品池数据
+	 * 获取店铺下的所有产品池数据
 	 */
 	public void getProductPoolByBusiness(String useId, String currentPageNum,
 										 MyResultCallback<String> myResultCallback) {
@@ -965,7 +966,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  显示货源联系人列表
+	 * 显示货源联系人列表
 	 */
 	public void getProductSourceContacts(String userId,
 										 MyResultCallback<String> myResultCallback) {
@@ -976,7 +977,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  新增货源联系人
+	 * 新增货源联系人
 	 */
 	public void addProductSourceContacts(String userId, String img,
 										 String phone, String name, String sourceName, String sourceDetail,
@@ -993,7 +994,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  B端修改订单状态---接受订单2，拒绝订单4
+	 * B端修改订单状态---接受订单2，拒绝订单4
 	 */
 	public void upDateOrderStatus(String orderId, String status,
 								  MyResultCallback<String> myResultCallback) {
@@ -1005,7 +1006,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  修改店铺产品池状态－－－修改产品商品服务后会新增一条与该产品一样的商品服务
+	 * 修改店铺产品池状态－－－修改产品商品服务后会新增一条与该产品一样的商品服务
 	 */
 	public void updateProductPoolStatus(String productPoolId,
 										MyResultCallback<String> myResultCallback) {
@@ -1033,7 +1034,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  修改密码
+	 * 修改密码
 	 */
 	public void upDatePassword(String userId, String password,
 							   String newPassword, String serNum, String source, String reqTime,
@@ -1052,7 +1053,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  新增店铺B端
+	 * 新增店铺B端
 	 */
 	public void addBusinessByB(String businessName, String address,
 							   String userId, String industryId, String license,
@@ -1109,7 +1110,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  修改店铺LOGO
+	 * 修改店铺LOGO
 	 */
 	public void updateBusinessLogo(String serNum, String source,
 								   String reqTime, String businessId, String logoUrl,
@@ -1127,7 +1128,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  修改店铺介绍
+	 * 修改店铺介绍
 	 */
 	public void updateBusinessIntroduce(String serNum, String source,
 										String reqTime, String businessId, String introduce,
@@ -1172,7 +1173,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  修改店铺联系人
+	 * 修改店铺联系人
 	 */
 	public void updateBusinessContacts(String serNum, String source,
 									   String reqTime, String businessId, String contactName,
@@ -1190,7 +1191,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  修改店铺联系电话
+	 * 修改店铺联系电话
 	 */
 	public void updateBusinessPhone(String serNum, String source,
 									String reqTime, String businessId, String phone,
@@ -1208,7 +1209,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  修改店铺地址
+	 * 修改店铺地址
 	 */
 	public void updateBusinessAddress(String serNum, String source,
 									  String reqTime, String businessId, String address,
@@ -1283,7 +1284,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  获取店铺下的所有商品
+	 * 获取店铺下的所有商品
 	 */
 	public void getProductListByBusiness(String businessId,
 										 MyResultCallback<String> myResultCallback) {
@@ -1294,7 +1295,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  获取最近完成的十笔交易列表
+	 * 获取最近完成的十笔交易列表
 	 */
 	public void getTenOrderList(String businessId,
 								MyResultCallback<String> myResultCallback) {
@@ -1305,7 +1306,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  获取货源特惠
+	 * 获取货源特惠
 	 */
 	public void getProductSourcePreference(String userId, String businessId,
 										   String industryId, MyResultCallback<String> myResultCallback) {
@@ -1318,7 +1319,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  获取银行卡
+	 * 获取银行卡
 	 */
 	public void getBankList(String md5_key, String accountNo, String product,
 							String serNum, String source, String reqTime,
@@ -1339,7 +1340,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  绑定银行卡
+	 * 绑定银行卡
 	 */
 	public void addBank(String md5_key, String outerOrderId, String bankId,
 						String bankName, String userId, String realName,
@@ -1371,7 +1372,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  修改银行卡密码
+	 * 修改银行卡密码
 	 */
 	public void updateBankPassword(String md5_key, String accountNo,
 								   String product, String oldPassWd, String newPassWd,
@@ -1394,7 +1395,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  删除银行卡
+	 * 删除银行卡
 	 */
 	public void delBank(String md5_key, String outerOrderId, String accountNo,
 						String passWd, String product, String serNum, String source,
@@ -1419,7 +1420,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  获取银行列表
+	 * 获取银行列表
 	 */
 	public void getAllBank(String md5_key, String serNum, String source,
 						   String reqTime, MyResultCallback<String> myResultCallback)
@@ -1436,7 +1437,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  获取否一开通过银行卡信息
+	 * 获取否一开通过银行卡信息
 	 */
 	public void getIsTrue(String md5_key, String accountNo, String product,
 						  String serNum, String source, String reqTime,
@@ -1455,7 +1456,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  获取经营总收入
+	 * 获取经营总收入
 	 */
 	public void getCountByBusiness(String BusinessId, boolean isShow,
 								   MyResultCallback<String> myResultCallback) {
@@ -1470,7 +1471,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  获取某天经营总收入
+	 * 获取某天经营总收入
 	 */
 	public void getCountByDay(String BusinessId, String dateTime, String type,
 							  MyResultCallback<String> myResultCallback) {
@@ -1483,7 +1484,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  获取本年每月收入数据
+	 * 获取本年每月收入数据
 	 */
 	public void getAmountByMonth(String BusinessId,
 								 MyResultCallback<String> myResultCallback) {
@@ -1494,7 +1495,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  获取上周每日收入数据
+	 * 获取上周每日收入数据
 	 */
 	public void getAmountByWeek(String BusinessId,
 								MyResultCallback<String> myResultCallback) {
@@ -1505,7 +1506,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  获取线下经营总收入
+	 * 获取线下经营总收入
 	 */
 	public void getOfflineCountByBusiness(String BusinessId,
 										  MyResultCallback<String> myResultCallback) {
@@ -1516,7 +1517,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  获取线上经营总收入
+	 * 获取线上经营总收入
 	 */
 	public void getOnLineCountByBusiness(String BusinessId,
 										 MyResultCallback<String> myResultCallback) {
@@ -1527,7 +1528,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  获取上周的线上经营总收入
+	 * 获取上周的线上经营总收入
 	 */
 	public void getOnLineLastWeekCount(String BusinessId,
 									   MyResultCallback<String> myResultCallback) {
@@ -1538,7 +1539,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  获取上周的线下经营总收入
+	 * 获取上周的线下经营总收入
 	 */
 	public void getOfflineLastWeekCount(String BusinessId,
 										MyResultCallback<String> myResultCallback) {
@@ -1549,7 +1550,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  获取某月线下经营总收入
+	 * 获取某月线下经营总收入
 	 */
 
 	public void getOffLineCountByMonth(String BusinessId, String datetime,
@@ -1562,7 +1563,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  获取某月线上经营总收入
+	 * 获取某月线上经营总收入
 	 */
 
 	public void getOnLineCountByMonth(String BusinessId, String datetime,
@@ -1575,7 +1576,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  获取在线每天收入明细
+	 * 获取在线每天收入明细
 	 */
 	public void getDetailOnLine(String BusinessId, String datetime,
 								MyResultCallback<String> myResultCallback) {
@@ -1912,7 +1913,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *每日收入明细
+	 * 每日收入明细
 	 */
 	public void getDataOrderInfoById(String serNum, String source,
 									 String reqTime, String md5_key, String accountNo,
@@ -2089,7 +2090,7 @@ public enum OkHttpsImp {
 	 */
 	public void getFreezingAmount(String md5_key, String serNum, String source,
 								  String reqTime, String accountNo,
-								  MyResultCallback<String> myResultCallback)throws Exception{
+								  MyResultCallback<String> myResultCallback) throws Exception {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("accountNo", accountNo);
 
@@ -2107,8 +2108,8 @@ public enum OkHttpsImp {
 	 * 获取财务室各项收入
 	 */
 	public void getFinancialOfficeAmount(String md5_key, String serNum, String source,
-								  String reqTime, String accountNo,String storeNo,
-								  MyResultCallback<String> myResultCallback)throws Exception{
+										 String reqTime, String accountNo, String storeNo,
+										 MyResultCallback<String> myResultCallback) throws Exception {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("accountNo", accountNo);
 
@@ -2121,6 +2122,100 @@ public enum OkHttpsImp {
 		String url = getAbsoluteUrl(API.FINANCIALOFFICEAMOUNT);
 		getNoProgressResponse(myResultCallback, params, url);
 	}
+
+	/**
+	 * 获取会员列表
+	 */
+	public void getMembersList(String serNum, String source, String reqTime,
+							   String md5_key, String businessId, String paramLike,
+							   String pageNo, String pageSize,
+							   MyResultCallback<String> myResultCallback) throws Exception {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("businessId", businessId);
+		params.put("pageNo", pageNo);
+		params.put("pageSize", pageSize);
+		params.put("paramLike", paramLike);
+		params.put("reqTime", reqTime);
+		params.put("serNum", serNum);
+		params.put("source", source);
+		String sign = getSign(md5_key, params);
+		params.put("sign", sign);
+		String url = getAbsoluteUrl(API.MEMBERSLIST);
+		getProgressResponse(myResultCallback, params, url);
+	}
+
+	/**
+	 * 添加或修改会员信息
+	 */
+	public void addOrUpdateMember(String serNum, String source, String reqTime, String md5_key,
+								  String submitType, String businessId, String vipPhone, String vipId, String vipName,
+								  String vipSex, String vipType, String vipLabel, String vipIdNo, String vipCardNo,
+								  String vipAddress, String vipRightsInterests, String vipBirthday, String vipIntegral,
+								  String cumulativeAmount, String vipValidityPeriod, String vipRemarks,
+								  String vipSource, MyResultCallback<String> myResultCallback) throws Exception {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("serNum", serNum);
+		params.put("source", source);
+		params.put("reqTime", reqTime);
+		params.put("submitType", submitType);
+		params.put("businessId", businessId);
+		params.put("vipPhone", vipPhone);
+		params.put("vipId", vipId);
+		params.put("vipName", vipName);
+		params.put("vipSex", vipSex);
+		params.put("vipType", vipType);
+		params.put("vipLabel", vipLabel);
+		params.put("vipIdNo", vipIdNo);
+		params.put("vipCardNo", vipCardNo);
+		params.put("vipAddress", vipAddress);
+		params.put("vipRightsInterests", vipRightsInterests);
+		params.put("vipBirthday", vipBirthday);
+		params.put("vipIntegral", vipIntegral);
+		params.put("cumulativeAmount", cumulativeAmount);
+		params.put("vipValidityPeriod", vipValidityPeriod);
+		params.put("vipRemarks", vipRemarks);
+		params.put("vipSource", vipSource);
+		String sign = getSign(md5_key, params);
+		params.put("sign", sign);
+		String url = getAbsoluteUrl(API.ADDORUPDATEMEMBER);
+		postProgressResponse(myResultCallback, params, url);
+	}
+
+	/**
+	 * 获取会员详情
+	 */
+	public void getMemberDetails(String serNum, String source, String reqTime, String md5_key,
+								 String businessId, String vipId, MyResultCallback<String> myResultCallback) throws Exception {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("serNum", serNum);
+		params.put("source", source);
+		params.put("reqTime", reqTime);
+		params.put("businessId", businessId);
+		params.put("vipId", vipId);
+		String sign = getSign(md5_key, params);
+		params.put("sign", sign);
+		String url = getAbsoluteUrl(API.MEMBERDETAILS);
+		getProgressResponse(myResultCallback, params, url);
+	}
+
+	/**
+	 * 获取会员标签
+	 */
+	public void getMemberTag(String serNum, String source, String reqTime, String md5_key,String businessId
+								,String pageNo,String pageSize, MyResultCallback<String> myResultCallback) throws Exception{
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("serNum", serNum);
+		params.put("source", source);
+		params.put("reqTime", reqTime);
+		params.put("businessId", businessId);
+		params.put("pageNo", pageNo);
+		params.put("pageSize", pageSize);
+		String sign = getSign(md5_key, params);
+		params.put("sign", sign);
+		String url = getAbsoluteUrl(API.MEMBERLABELLIST);
+		getProgressResponse(myResultCallback, params, url);
+	}
+
 
 	/**
 	 * 签名方法
@@ -2164,4 +2259,6 @@ public enum OkHttpsImp {
 			return false;
 		}
 	}
+
+
 }

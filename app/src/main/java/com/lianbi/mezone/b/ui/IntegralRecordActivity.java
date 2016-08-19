@@ -26,8 +26,10 @@ import java.util.Random;
 
 import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.QuickAdapter;
+import cn.com.hgh.utils.AbPullHide;
 import cn.com.hgh.utils.MathExtend;
 import cn.com.hgh.utils.ScreenUtils;
+import cn.com.hgh.view.AbPullToRefreshView;
 
 public class IntegralRecordActivity extends BaseActivity {
 
@@ -49,13 +51,14 @@ public class IntegralRecordActivity extends BaseActivity {
 	private ImageView mActMemberrecordIvEmpty;
 	private QuickAdapter<IntegralRecordBean> mAdapter;
 	private ArrayList<IntegralRecordBean> mDatas = new ArrayList<>();
+	private AbPullToRefreshView mActIntegralrecordAbpulltorefreshview;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.act_integralrecord, NOTYPE);
 		mMemberInfoBean = (MemberInfoBean) getIntent().getSerializableExtra("memberInfo");
-		System.out.println("memberInfo" + mMemberInfoBean.getMemberPhone());
+		System.out.println("memberInfo" + mMemberInfoBean.getVipPhone());
 		initView();
 		setLisenter();
 		initAdapter();
@@ -118,8 +121,14 @@ public class IntegralRecordActivity extends BaseActivity {
 			arrayList0.clear();
 			arrayList1.clear();
 		}
-		arrayList.addAll(mDatasL);
-		if (arrayList.size() > 0) {
+		if(mDatasL != null && mDatasL.size() > 0) {
+			arrayList.addAll(mDatasL);
+		}
+		if (arrayList != null && arrayList.size() > 0) {
+			mActMemberrecordIvEmpty
+					.setVisibility(View.GONE);
+			mActIntegralrecordAbpulltorefreshview
+					.setVisibility(View.VISIBLE);
 			for (IntegralRecordBean ir : arrayList) {
 				switch (ir.getType()) {
 					case POSITION0:
@@ -130,8 +139,26 @@ public class IntegralRecordActivity extends BaseActivity {
 						break;
 				}
 			}
+		}else{
+			mActMemberrecordIvEmpty
+					.setVisibility(View.VISIBLE);
+			mActIntegralrecordAbpulltorefreshview
+					.setVisibility(View.GONE);
 		}
-		mAdapter.replaceAll(arrayList);
+		AbPullHide.hideRefreshView(isResh,
+				mActIntegralrecordAbpulltorefreshview);
+		switch (curPosition){
+			case POSITION0:
+				mAdapter.replaceAll(arrayList);
+				break;
+			case POSITION1:
+				mAdapter.replaceAll(arrayList0);
+				break;
+			case POSITION2:
+				mAdapter.replaceAll(arrayList1);
+				break;
+		}
+
 
 	}
 
@@ -148,6 +175,7 @@ public class IntegralRecordActivity extends BaseActivity {
 		findViewById(R.id.view_line3).setVisibility(View.VISIBLE);
 		mTvTotalintegral = (TextView) findViewById(R.id.tv_totalintegral);
 		mTvConsumptionintegral = (TextView) findViewById(R.id.tv_consumptionintegral);
+		mActIntegralrecordAbpulltorefreshview = (AbPullToRefreshView) findViewById(R.id.act_integralrecord_abpulltorefreshview);
 		mTvSurplusintegral = (TextView) findViewById(R.id.tv_surplusintegral);
 		mTvAllrecord = (TextView) findViewById(R.id.tv_allrecord);
 		mTvAccessrecord = (TextView) findViewById(R.id.tv_accessrecord);
@@ -175,6 +203,24 @@ public class IntegralRecordActivity extends BaseActivity {
 	 * 添加监听
 	 */
 	private void setLisenter() {
+		mActIntegralrecordAbpulltorefreshview.setLoadMoreEnable(true);
+		mActIntegralrecordAbpulltorefreshview.setPullRefreshEnable(true);
+		mActIntegralrecordAbpulltorefreshview
+				.setOnHeaderRefreshListener(new AbPullToRefreshView.OnHeaderRefreshListener() {
+
+					@Override
+					public void onHeaderRefresh(AbPullToRefreshView view) {
+						getIntegralRecord(true);
+					}
+				});
+		mActIntegralrecordAbpulltorefreshview
+				.setOnFooterLoadListener(new AbPullToRefreshView.OnFooterLoadListener() {
+
+					@Override
+					public void onFooterLoad(AbPullToRefreshView view) {
+						getIntegralRecord(false);
+					}
+				});
 		mTvIntegralMemberfile.setOnClickListener(this);
 		mTvIntegralRecordsofconsumption.setOnClickListener(this);
 		mTvAllrecord.setOnClickListener(this);
@@ -198,18 +244,21 @@ public class IntegralRecordActivity extends BaseActivity {
 				startActivity(records_intent);
 				break;
 			case R.id.tv_allrecord://全部记录
+				curPosition = POSITION0;
 				mTvAllrecord.setBackgroundResource(R.drawable.member_record_pressed);
 				mTvAccessrecord.setBackgroundResource(R.drawable.member_record);
 				mTvUserecord.setBackgroundResource(R.drawable.member_record);
 				mAdapter.replaceAll(arrayList);
 				break;
 			case R.id.tv_accessrecord://获取记录
+				curPosition = POSITION1;
 				mTvAllrecord.setBackgroundResource(R.drawable.member_record);
 				mTvAccessrecord.setBackgroundResource(R.drawable.member_record_pressed);
 				mTvUserecord.setBackgroundResource(R.drawable.member_record);
 				mAdapter.replaceAll(arrayList0);
 				break;
 			case R.id.tv_userecord://使用记录
+				curPosition = POSITION2;
 				mTvAllrecord.setBackgroundResource(R.drawable.member_record);
 				mTvAccessrecord.setBackgroundResource(R.drawable.member_record);
 				mTvUserecord.setBackgroundResource(R.drawable.member_record_pressed);

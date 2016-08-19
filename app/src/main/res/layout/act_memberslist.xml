@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="本周新增会员:20"
+            android:text="本周新增会员:0"
             android:textColor="@color/colores_news_11"/>
 
         <TextView
@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="累计会员数:100"
+            android:text="累计会员数:0"
             android:textColor="@color/colores_news_11"/>
     </LinearLayout>
 

@@ -10,6 +10,7 @@ package com.lianbi.mezone.b.ui;/*
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -17,8 +18,14 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.lianbi.mezone.b.bean.SelectTagBean;
+import com.lianbi.mezone.b.httpresponse.MyResultCallback;
+import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
 import com.xizhi.mezone.b.R;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -27,6 +34,7 @@ import cn.com.hgh.baseadapter.QuickAdapter;
 import cn.com.hgh.utils.AbDateUtil;
 import cn.com.hgh.utils.AbPullHide;
 import cn.com.hgh.utils.AbStrUtil;
+import cn.com.hgh.utils.Result;
 import cn.com.hgh.view.AbPullToRefreshView;
 
 public class SelectTagActivity extends BaseActivity {
@@ -67,8 +75,8 @@ public class SelectTagActivity extends BaseActivity {
 		StringBuffer sb1 = new StringBuffer();
 		for (SelectTagBean stb : mDatas) {
 			if (stb.isChecked()) {
-				tagID.add(String.valueOf(stb.getId()));
-				tagContent.add(String.valueOf(stb.getTagContent()));
+				tagID.add(String.valueOf(stb.getLabelId()));
+				tagContent.add(String.valueOf(stb.getLabelName()));
 			}
 		}
 
@@ -132,7 +140,7 @@ public class SelectTagActivity extends BaseActivity {
 				ImageView img_selecttag_check = helper.getView(R.id.img_selecttag_check);
 				TextView tv_selecttag_content = helper.getView(R.id.tv_selecttag_content);
 
-				tv_selecttag_content.setText(item.getTagContent() + "");
+				tv_selecttag_content.setText(item.getLabelName() + "");
 
 				if (item.isChecked()) {
 					helper.setImageResource(R.id.img_selecttag_check, R.mipmap.message_checked);
@@ -158,8 +166,8 @@ public class SelectTagActivity extends BaseActivity {
 		mActSelecttagListview.setAdapter(mAdapter);
 	}
 
-	private void getTag(boolean isResh) {
-		ArrayList<SelectTagBean> mDatasL = new ArrayList<>();
+	private void getTag(final boolean isResh) {
+
 		if (isResh) {
 			page = 0;
 			mDatas.clear();
@@ -167,26 +175,58 @@ public class SelectTagActivity extends BaseActivity {
 		}
 		String reqTime = AbDateUtil.getDateTimeNow();
 		String uuid = AbStrUtil.getUUID();
+		try {
+			okHttpsImp.getMemberTag(uuid, "app", reqTime, OkHttpsImp.md5_key
+					, userShopInfoBean.getBusinessId(), page + "", 20 + "", new MyResultCallback<String>() {
+						@Override
+						public void onResponseResult(Result result) {
+							page++;
+							String reString = result.getData();
+							if(!TextUtils.isEmpty(reString)){
+								try {
+									JSONObject jsonObject = new JSONObject(reString);
+									String vipLabelList = (String) jsonObject
+											.getString("vipLabelList");
+									String dataSize = (String) jsonObject
+											.getString("dataSize");
+									ArrayList<SelectTagBean> mDatasL = (ArrayList<SelectTagBean>) JSON
+											.parseArray(vipLabelList,SelectTagBean.class);
+									if (mDatasL.size() > 0) {
+										mDatas.addAll(mDatasL);
+									}
+									if (mDatas != null && mDatas.size() > 0) {
+										mActSelecttagIvEmpty.setVisibility(View.GONE);
+										mActSelecttagAbpulltorefreshview.setVisibility(View.VISIBLE);
+									} else {
+										mActSelecttagIvEmpty.setVisibility(View.VISIBLE);
+										mActSelecttagAbpulltorefreshview.setVisibility(View.GONE);
+									}
+									AbPullHide.hideRefreshView(isResh, mActSelecttagAbpulltorefreshview);
+									mAdapter.replaceAll(mDatas);
+								} catch (JSONException e) {
+									e.printStackTrace();
+								}
 
-		page++;
+							}
+						}
 
-		for (int i = 0; i < 40; i++) {
-			SelectTagBean bean = new SelectTagBean();
-			bean.setTagContent("脾气不好" + i);
-			bean.setId(i);
-			mDatasL.add(bean);
+						@Override
+						public void onResponseFailed(String msg) {
+							if (isResh) {
+								mActSelecttagIvEmpty
+										.setVisibility(View.VISIBLE);
+								mActSelecttagAbpulltorefreshview
+										.setVisibility(View.GONE);
+							}
+							AbPullHide.hideRefreshView(isResh,
+									mActSelecttagAbpulltorefreshview);
+						}
+					});
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		if (mDatasL.size() > 0) {
-			mDatas.addAll(mDatasL);
-		}
-		if (mDatas != null && mDatas.size() > 0) {
-			mActSelecttagIvEmpty.setVisibility(View.GONE);
-			mActSelecttagAbpulltorefreshview.setVisibility(View.VISIBLE);
-		} else {
-			mActSelecttagIvEmpty.setVisibility(View.VISIBLE);
-			mActSelecttagAbpulltorefreshview.setVisibility(View.GONE);
-		}
-		AbPullHide.hideRefreshView(isResh, mActSelecttagAbpulltorefreshview);
-		mAdapter.replaceAll(mDatas);
+
+
+
 	}
 }

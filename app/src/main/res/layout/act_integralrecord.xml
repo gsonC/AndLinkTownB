@@ -174,11 +174,20 @@
             android:text="使用记录"
             android:textColor="@color/colores_news_19"/>
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="10dp"
         android:background="@color/colores_news_14"
         />
+    <cn.com.hgh.view.AbPullToRefreshView
+        android:id="@+id/act_integralrecord_abpulltorefreshview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:visibility="visible"
+        >
     <ListView
         android:id="@+id/act_memberrecord_listview"
         android:layout_width="match_parent"
@@ -187,13 +196,13 @@
         android:listSelector="@color/transparent"
         android:scrollbars="none">
     </ListView>
-
+    </cn.com.hgh.view.AbPullToRefreshView>
     <ImageView
         android:id="@+id/act_memberrecord_iv_empty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerInside"
         android:src="@mipmap/iv_empty"
-        android:visibility="gone" />
+        android:visibility="gone"/>
 
 </LinearLayout>

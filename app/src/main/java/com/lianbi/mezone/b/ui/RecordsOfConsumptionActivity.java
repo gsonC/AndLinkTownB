@@ -53,7 +53,7 @@ public class RecordsOfConsumptionActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.act_recordofconsumption, HAVETYPE);
 		mMemberInfoBean = (MemberInfoBean) getIntent().getSerializableExtra("memberInfo");
-		System.out.println("memberInfo" + mMemberInfoBean.getMemberPhone());
+		System.out.println("memberInfo" + mMemberInfoBean.getVipPhone());
 		initView();
 		setLisenter();
 		initAdapter();
