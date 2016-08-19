@@ -5,40 +5,30 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.lianbi.mezone.b.bean.TagMessage;
+import com.lianbi.mezone.b.bean.MemberMessage;
+import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.xizhi.mezone.b.R;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.QuickAdapter;
-import cn.com.hgh.view.ContainsEmojiEditText;
+import cn.com.hgh.utils.ContentUtils;
+import cn.com.hgh.utils.Result;
+import cn.com.hgh.utils.ScreenUtils;
 import cn.com.hgh.view.SlideListView2;
 
 public class TagManagerActivity extends BaseActivity {
 
-	@Bind(R.id.fm_messagefragment_listView)
-	SlideListView2 fmMessagefragmentListView;
-	@Bind(R.id.tv_searchtag)
-	ContainsEmojiEditText tvSearchtag;
-	@Bind(R.id.bt_sure)
-	TextView btSure;
-	@Bind(R.id.point_biaoqian)
-	RelativeLayout pointBiaoqian;
-	@Bind(R.id.fm_tag_listView)
-	ListView fmTagListView;
-	private SlideListView2 fm_messagefragment_listView;
-	ArrayList<TagMessage> mDatas = new ArrayList<TagMessage>();
-	private TextView tv_tag;
-	private EditText tv_searchtag;
-	private TextView bt_sure;
-	ListView fm_tag_listView;
 
+	private SlideListView2 fm_messagefragment_listView;
+	ArrayList<MemberMessage> mDatas = new ArrayList<MemberMessage>();
+	private TextView tv_tag,bt_sure;
+	private EditText tv_searchtag;
+   private ListView fm_tag_listView;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -47,15 +37,22 @@ public class TagManagerActivity extends BaseActivity {
 		initview();
 		initListAdapter();
 		listen();
+		getTagList();
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+
 	}
 
 	private void initview() {
 		setPageTitle("标签管理");
+		bt_sure=(TextView)findViewById(R.id.bt_sure);
 		tv_searchtag = (EditText) findViewById(R.id.tv_searchtag);
-		bt_sure = (TextView) findViewById(R.id.bt_sure);
 		fm_messagefragment_listView = (SlideListView2) findViewById(R.id.fm_messagefragment_listView);
 		fm_messagefragment_listView.initSlideMode(SlideListView2.MOD_RIGHT);
-		fm_tag_listView = (ListView) findViewById(R.id.fm_tag_listView);
+		fm_tag_listView=(ListView)findViewById(R.id.fm_tag_listView);
 	}
 
 	private void listen() {
@@ -73,19 +70,16 @@ public class TagManagerActivity extends BaseActivity {
 
 //初始化适配器
 
-	public QuickAdapter<TagMessage> mAdapter;
+	public QuickAdapter<MemberMessage> mAdapter;
 
 	private void initListAdapter() {
-		mAdapter = new QuickAdapter<TagMessage>(TagManagerActivity.this, R.layout.activity_tag_manager, mDatas) {
+		mAdapter = new QuickAdapter<MemberMessage>(TagManagerActivity.this, R.layout.activity_tag_manager, mDatas) {
 
 			@Override
-			protected void convert(final BaseAdapterHelper helper, final TagMessage item) {
-
-
+			protected void convert(BaseAdapterHelper helper, final MemberMessage item) {
 				tv_tag = helper.getView(R.id.tv_tag);
-
-
-				tv_tag.setText(item.getTv_tagmessage());
+				ScreenUtils.textAdaptationOn720(tv_tag, TagManagerActivity.this, 24);
+				tv_tag.setText(item.getTv_tag()+"");
 
 
 				helper.getView(R.id.tv_chdelete).setOnClickListener(// 删除
@@ -100,14 +94,11 @@ public class TagManagerActivity extends BaseActivity {
 								//Toast.makeText(mActivity, "删除", 0).show();
 								mAdapter.replaceAll(mDatas);
 								ArrayList<String> ids = new ArrayList<String>();
-								/*ids.add(String.valueOf(item.getId()));
-								mActivity.delteLeaveMsg(ids,true);*/
-
+								ids.add(String.valueOf(item.getId()));
+							//	delteLeaveMsg(ids,true);
 
 							}
 						});
-
-
 			}
 
 		};
@@ -115,4 +106,63 @@ public class TagManagerActivity extends BaseActivity {
 		fm_tag_listView.setAdapter(mAdapter);
 	}
 
-}
+	/**
+	 *
+	 */
+	private void getTagList() {
+		ArrayList<MemberMessage> mDatasL = new ArrayList<MemberMessage>();
+		for (int i = 0; i < 20; i++) {
+			MemberMessage bean = new MemberMessage();
+			bean.setTv_tag("你好" + i);
+
+			mDatasL.add(bean);
+		}
+		if (mDatasL.size() > 0) {
+			mDatas.addAll(mDatasL);
+		}
+		mAdapter.replaceAll(mDatas);
+
+	}
+	/**
+	 * 删除或审核留言信息
+	 */
+	public void delteLeaveMsg(ArrayList<String> ids, boolean status) {
+
+		StringBuffer sb = new StringBuffer();
+		int s = ids.size();
+		if (s > 0) {
+			for (int i = 0; i < s; i++) {
+				if (i == (s - 1)) {
+					sb.append(ids.get(i));
+				} else {
+					sb.append(ids.get(i) + ",");
+
+				}
+			}
+			ContentUtils.showMsg(TagManagerActivity.this, sb.toString());
+		} else {
+			return;
+		}
+		if (status) {
+
+			okHttpsImp.getDeleteMessages(new MyResultCallback<String>() {
+
+				@Override
+				public void onResponseResult(Result result) {
+
+					ContentUtils.showMsg(TagManagerActivity.this, "删除留言成功");
+					// 刷新页面
+					//getShowMessages();
+
+				}
+
+				@Override
+				public void onResponseFailed(String msg) {
+
+				}
+			}, BaseActivity.userShopInfoBean.getBusinessId(), sb.toString());
+
+		}
+		}
+	}
+

@@ -25,7 +25,10 @@
 
     </FrameLayout>
 
-
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line"
+        android:background="@color/colores_news_14"/>
     <RelativeLayout
         android:id="@+id/point_biaoqian"
         android:layout_alignParentBottom="true"
@@ -70,8 +73,7 @@
         android:id="@+id/fm_tag_listView"
         android:background="@color/colores_news_14"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:divider="@null"
+        android:layout_height="match_parent"
         android:listSelector="@color/transparent"
         android:scrollbars="none"
         ></ListView>

@@ -12,15 +12,16 @@ import java.io.Serializable;
  * @更新时间 ＄Date＄
  * @更新描述 ＄{TOOD}＄
  */
-public class TagMessage implements Serializable {
-
+public class MemberMessage implements Serializable {
+	int id;
 	String tv_tagmessage;
-    ImageView point_ima;
+	ImageView point_ima;
 	ImageView pullgoodsIma;
-
 	String tv_tag;
 	String rated;
+
 	String trated;
+    String point_goodsName;
 	String goodsPoint;
 	String pullgoods;
 	String pushgoods;
@@ -104,5 +105,21 @@ public class TagMessage implements Serializable {
 
 	public void setChangegoods(String changegoods) {
 		this.changegoods = changegoods;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getPoint_goodsName() {
+		return point_goodsName;
+	}
+
+	public void setPoint_goodsName(String point_goodsName) {
+		this.point_goodsName = point_goodsName;
 	}
 }

@@ -3,7 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     >
+
+
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -40,17 +43,20 @@
         android:gravity="center_vertical"
         >
 
-        <cn.com.hgh.view.ContainsEmojiEditText
+
+        <cn.com.hgh.indexscortlist.ClearEditText
             android:id="@+id/tv_search"
-            android:layout_width="676dp"
-            android:layout_height="55dp"
-            android:background="@drawable/shape_search_date_edt_bg_new"
-            android:drawableLeft="@mipmap/icon_search"
-            android:drawablePadding="5dp"
-            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/search_bar_edit_selector"
+            android:drawableLeft="@mipmap/search_bar_icon_normal"
+            android:drawablePadding="10dp"
             android:hint="搜索"
-            android:textColor="#FF909090"
-            android:textSize="14sp"
+            android:imeOptions="actionSearch"
+            android:padding="5dp"
+            android:singleLine="true"
+            android:textSize="15.0dip"/>
             />
 
     </RelativeLayout>
@@ -72,13 +78,13 @@
             android:textColor="@color/showcolor"
             android:textSize="14sp"
             />
+
     </RelativeLayout>
 
-    <ImageView
+    <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#e3e3e3"/>
-
+        android:layout_height="@dimen/line"
+        android:background="@color/colores_news_14"/>
 
     <RelativeLayout
         android:id="@+id/pointbuju"
@@ -126,11 +132,14 @@
     <ListView
         android:id="@+id/fm_tag_listView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_above="@id/pointbuju"
         android:layout_below="@id/showM"
-        android:divider="@null"
         android:listSelector="@color/transparent"
         android:scrollbars="none"
         ></ListView>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line"
+        android:background="@color/colores_news_14"/>
 </RelativeLayout>
