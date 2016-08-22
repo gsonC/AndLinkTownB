@@ -141,29 +141,38 @@
         android:layout_below="@id/v_02"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="100dp"
+        android:layout_marginBottom="60dp"
         android:background="#ffffff"
         android:divider="@color/colores_news_14"
         android:dividerHeight="1dp"
      />
     <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="100dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
         android:layout_alignParentBottom="true"
+        android:background="@color/white"
         >
+        <View
+            android:id="@+id/v_bottom"
+            android:layout_alignParentTop="true"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colores_news_14"
+            />
         <TextView
             android:id="@+id/text_newmakemsg"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/shape_login"
             android:layout_centerInParent="true"
+            android:background="@drawable/shap_hollow_red"
             android:clickable="true"
             android:gravity="center"
-            android:padding="10dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
             android:text="新建营销短信"
-            android:textColor="@color/white"
-            android:textSize="16sp" />
+            android:textColor="@color/color_ff6351"
+            android:textSize="17sp" />
     </RelativeLayout>
 </RelativeLayout>
