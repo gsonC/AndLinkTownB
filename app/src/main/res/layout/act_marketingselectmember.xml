@@ -121,7 +121,7 @@
         <!--android:dividerHeight="1dp"-->
      <!--/>-->
 
-        <cn.com.hgh.baseadapter.recyclerViewadapter.pullrefreshrecyclerview.PullRefreshRecyclerView
+        <!--<cn.com.hgh.baseadapter.recyclerViewadapter.pullrefreshrecyclerview.PullRefreshRecyclerView
             android:id="@+id/rlv_actmarketingselect"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -132,7 +132,17 @@
             android:listSelector="@color/transparent"
             android:scrollbars="none">
         </cn.com.hgh.baseadapter.recyclerViewadapter.pullrefreshrecyclerview.PullRefreshRecyclerView>
-
+     -->
+    <com.lhh.ptrrv.library.PullToRefreshRecyclerView
+        android:id="@+id/ptrrview"
+        android:layout_below="@id/v_02"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginBottom="50dp"
+        android:background="@color/white"
+        >
+    </com.lhh.ptrrv.library.PullToRefreshRecyclerView>
    <RelativeLayout
        android:id="@+id/ray_bottom"
        android:layout_alignParentBottom="true"
@@ -199,11 +209,16 @@
            android:id="@+id/ray_sure"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
-           android:paddingTop="5dp"
-           android:paddingBottom="5dp"
            android:layout_centerVertical="true"
            android:layout_gravity="center_vertical"
            >
+           <View
+               android:id="@+id/v_bottom"
+               android:layout_alignParentTop="true"
+               android:layout_width="match_parent"
+               android:layout_height="1dp"
+               android:background="@color/colores_news_14"
+               />
            <TextView
                android:id="@+id/tv_sure"
                android:layout_width="wrap_content"

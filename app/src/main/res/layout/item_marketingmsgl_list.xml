@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     android:background="@color/white"
     >
+    <!--android:clickable="true"-->
 
    <LinearLayout
                 android:id="@+id/llt_marketingmsgl"
@@ -11,7 +12,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="30dp"
                 android:background="@color/white"
-                android:clickable="true"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:padding="10dp" >
@@ -53,7 +53,7 @@
                     android:gravity="center"
                     android:padding="3dp"
                     android:singleLine="true"
-                    android:text="5:3"
+                    android:text="5"
                     android:textColor="@color/color_4b4b4b"
                     android:textSize="14sp"
                      />
@@ -69,4 +69,15 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:src="@mipmap/service_new_right" />
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/tv_loadedall"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="5dp"
+        android:gravity="center"
+        android:singleLine="true"
+        android:text="已加载全部"
+        android:textColor="@color/colores_news_11"
+        android:textSize="15sp" />
 </RelativeLayout>

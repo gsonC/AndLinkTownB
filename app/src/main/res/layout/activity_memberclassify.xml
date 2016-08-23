@@ -1,9 +1,10 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@color/colores_news_14"
-     >
+    android:orientation="vertical"
+    >
 
     <LinearLayout
         android:id="@+id/lay_top"
@@ -72,10 +73,45 @@
     </LinearLayout>
     <View
         android:id="@+id/v_01"
-        android:layout_below="@id/lay_top"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/colores_news_14" />
+    <!--<cn.com.hgh.baseadapter.recyclerViewadapter.pullrefreshrecyclerview.PullRefreshRecyclerView
+        android:id="@+id/prlv_actmarketingselect"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_below="@id/v_01"
+        android:divider="@null"
+        android:background="@color/white"
+        android:listSelector="@color/transparent"
+        android:scrollbars="none">
+    </cn.com.hgh.baseadapter.recyclerViewadapter.pullrefreshrecyclerview.PullRefreshRecyclerView>-->
+    <com.lhh.ptrrv.library.PullToRefreshRecyclerView
+        android:id="@+id/ptrrv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_below="@id/v_01"
+        >
+
+    </com.lhh.ptrrv.library.PullToRefreshRecyclerView>
+<!--
+    ptr:ptrDrawable="@drawable/android"
+-->
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/tv_nodata"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colores_news_14"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:gravity="center"
+        android:text="没有可以加载的数据了"
+        android:textSize="16sp" />
+<!--
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rlv_actclassify"
         android:layout_below="@id/v_01"
@@ -86,14 +122,20 @@
         android:divider="@color/colores_news_14"
         android:dividerHeight="1dp"
      />
+-->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_alignParentBottom="true"
         android:background="@color/white"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
+        android:layout_gravity="bottom"
         >
+        <View
+            android:id="@+id/v_bottom"
+            android:layout_alignParentTop="true"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colores_news_14"
+            />
     <TextView
         android:id="@+id/text_newcategory"
         android:layout_width="wrap_content"
@@ -110,4 +152,4 @@
         android:textColor="@color/color_ff6351"
         android:textSize="17sp" />
     </RelativeLayout>
-</RelativeLayout>
+</LinearLayout>

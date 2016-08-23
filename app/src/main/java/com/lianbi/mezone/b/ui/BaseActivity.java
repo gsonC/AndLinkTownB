@@ -22,6 +22,8 @@ import com.xizhi.mezone.b.R;
 
 import cn.com.hgh.indexscortlist.ClearEditText;
 import cn.com.hgh.utils.AbAppUtil;
+import cn.com.hgh.utils.AbDateUtil;
+import cn.com.hgh.utils.AbStrUtil;
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.ScrollerUtills;
 
@@ -64,7 +66,8 @@ public class BaseActivity extends FragmentActivity implements OnClickListener {
 
 	public FragmentManager fm;
 	public static UserShopInfoBean userShopInfoBean;
-
+	public String reqTime="";
+	public String uuid="";
 	@Override
 	protected void onNewIntent(Intent intent) {
 		super.onNewIntent(intent);
@@ -78,7 +81,7 @@ public class BaseActivity extends FragmentActivity implements OnClickListener {
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		fm = getSupportFragmentManager();
 		getWindowWH();
-
+        initCommonParameter();
 		ISCONNECTED = AbAppUtil.isNetworkAvailable(this);
 		okHttpsImp = OkHttpsImp.SINGLEOKHTTPSIMP.newInstance(this);
 
@@ -91,7 +94,10 @@ public class BaseActivity extends FragmentActivity implements OnClickListener {
 			userShopInfoBean = new UserShopInfoBean(this);
 		}
 	}
-
+    public  void initCommonParameter(){
+		reqTime= AbDateUtil.getDateTimeNow();
+		uuid= AbStrUtil.getUUID();
+	}
 	@Override
 	protected void onRestart() {
 		super.onRestart();
