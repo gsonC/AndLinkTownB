@@ -83,6 +83,8 @@ public class H5WebActivty extends BaseActivity{
 	private String ShowProTypeList;
 	private String  base64="";
 	private final  int  OPENIMAGEFILE=20000;
+	private String  mImgId;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -405,7 +407,9 @@ public class H5WebActivty extends BaseActivity{
 							web_webactivty.post(new Runnable() {
 								@Override
 								public void run() {
-								web_webactivty.loadUrl("javascript:getScreenshot('"+base64+"')");
+//							web_webactivty.loadUrl("javascript:getScreenshot('"+base64+"')");
+							web_webactivty.loadUrl("javascript:getScreenshot('"+base64+"','"+mImgId+"')");
+
 								}
 							});
 
@@ -446,10 +450,12 @@ public class H5WebActivty extends BaseActivity{
 		 * @param flag
          */
 		@JavascriptInterface
-		public void  photoAlbumcut(boolean  flag)
+		public void  photoAlbumcut(boolean  flag,String  imgId)
 		{
-		    if(flag==true) {
-				photoUtills.startPickPhotoFromAlbumWithCrop();
+
+			if(flag==true) {
+				    mImgId=imgId;
+					photoUtills.startPickPhotoFromAlbumWithCrop();
 			}else{
 			}
 		}
