@@ -158,6 +158,7 @@ public class MarketingBuySMSActivity extends BaseActivity {
     private void getCanbuysms() {
         String reqTime= AbDateUtil.getDateTimeNow();
         String uuid= AbStrUtil.getUUID();
+        try{
         okHttpsImp.getMarketingBuySMS(new MyResultCallback<String>() {
 
             @Override
@@ -187,7 +188,8 @@ public class MarketingBuySMSActivity extends BaseActivity {
             public void onResponseFailed(String msg) {
                 dialog.dismiss();
             }
-        }, userShopInfoBean.getBusinessId(),reqTime,uuid);
+        }, userShopInfoBean.getBusinessId(),reqTime,uuid);}
+        catch (Exception  e){e.printStackTrace();}
 
     }
 
