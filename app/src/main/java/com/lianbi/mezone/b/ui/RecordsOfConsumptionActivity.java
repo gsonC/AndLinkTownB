@@ -17,9 +17,14 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.lianbi.mezone.b.bean.MemberConsumptionBean;
 import com.lianbi.mezone.b.bean.MemberInfoBean;
+import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.xizhi.mezone.b.R;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -30,30 +35,27 @@ import cn.com.hgh.utils.AbDateUtil;
 import cn.com.hgh.utils.AbPullHide;
 import cn.com.hgh.utils.AbStrUtil;
 import cn.com.hgh.utils.MathExtend;
+import cn.com.hgh.utils.Result;
 import cn.com.hgh.utils.ScreenUtils;
 import cn.com.hgh.view.AbPullToRefreshView;
 
 public class RecordsOfConsumptionActivity extends BaseActivity {
 
-	private TextView mTvRecordMemberfile;
-	private TextView mTvRecordRecordsofconsumption;
-	private TextView mTvRecordIntegralrecord;
-	private TextView mTvOrdernum;
-	private TextView mTvOrdermuch;
+	private TextView mTvRecordMemberfile,mTvRecordRecordsofconsumption,mTvRecordIntegralrecord
+			,mTvOrdernum,mTvOrdermuch;
 	private AbPullToRefreshView mActRecordAbpulltorefreshview;
 	private ListView mActRecordListview;
 	private ImageView mImgRecordEmpty;
 	private MemberInfoBean mMemberInfoBean;
-	private int page = 0;
+	private int page = 1;
 	private ArrayList<MemberConsumptionBean> mDatas = new ArrayList<MemberConsumptionBean>();
 	private QuickAdapter<MemberConsumptionBean> mAdapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.act_recordofconsumption, HAVETYPE);
+		setContentView(R.layout.act_recordofconsumption, NOTYPE);
 		mMemberInfoBean = (MemberInfoBean) getIntent().getSerializableExtra("memberInfo");
-		System.out.println("memberInfo" + mMemberInfoBean.getVipPhone());
 		initView();
 		setLisenter();
 		initAdapter();
@@ -74,10 +76,10 @@ public class RecordsOfConsumptionActivity extends BaseActivity {
 				ScreenUtils.textAdaptationOn720(tv_rc_where, RecordsOfConsumptionActivity.this, 24);//消费地点
 				ScreenUtils.textAdaptationOn720(tv_rc_much, RecordsOfConsumptionActivity.this, 24);//消费金额
 
-				tv_rc_time.setText(item.getConsumptionTime() + "");
-				tv_rc_thing.setText(item.getConsumptionThing() + "");
-				tv_rc_where.setText(item.getConsumptionWhere() + "");
-				tv_rc_much.setText(MathExtend.roundNew(item.getConsumptionMuch().divide(new BigDecimal(100)).doubleValue(), 2) + "");
+				tv_rc_time.setText(item.getCreateTime() + "");
+				tv_rc_thing.setText(item.getConsumName() + "");
+				tv_rc_where.setText(item.getConsumSorce() + "");
+				tv_rc_much.setText(MathExtend.roundNew(item.getConsumPrice().divide(new BigDecimal(100)).doubleValue(), 2) + "");
 
 			}
 		};
@@ -108,12 +110,12 @@ public class RecordsOfConsumptionActivity extends BaseActivity {
 	 */
 	private void viewAdapter() {
 		ArrayList<TextView> tvs25 = new ArrayList<>();
-		tvs25.add((TextView)findViewById(R.id.tv_record_recordsofconsumption));
+		tvs25.add((TextView) findViewById(R.id.tv_record_recordsofconsumption));
 		tvs25.add(mTvRecordMemberfile);
 		tvs25.add(mTvRecordRecordsofconsumption);
 		tvs25.add(mTvOrdernum);
 		tvs25.add(mTvOrdermuch);
-		ScreenUtils.textAdaptationOn720(tvs25,this,25);
+		ScreenUtils.textAdaptationOn720(tvs25, this, 25);
 	}
 
 
@@ -172,44 +174,77 @@ public class RecordsOfConsumptionActivity extends BaseActivity {
 	}
 
 	private void getRecordsOfConsumption(final boolean isResh) {
-		ArrayList<MemberConsumptionBean> mDatasL = new ArrayList<MemberConsumptionBean>();
 		if (isResh) {
-			page = 0;
+			page = 1;
 			mDatas.clear();
 			mAdapter.replaceAll(mDatas);
 		}
 		String reqTime = AbDateUtil.getDateTimeNow();
 		String uuid = AbStrUtil.getUUID();
 
-		page++;
+		try {
 
-		for(int i=0;i<20;i++){
-			MemberConsumptionBean bean = new MemberConsumptionBean();
-			bean.setConsumptionTime("2016-08-12 12:"+i);
-			bean.setConsumptionThing("童装"+i);
-			bean.setConsumptionWhere("微店");
-			bean.setConsumptionMuch(new BigDecimal(1000+i));
-			mDatasL.add(bean);
+			okHttpsImp.getRecordsOfConsumptionByID(uuid, "app", reqTime, userShopInfoBean.getBusinessId(),
+					mMemberInfoBean.getVipId(), page + "", 20 + "", new MyResultCallback<String>() {
+						@Override
+						public void onResponseResult(Result result) {
+							page++;
+							String reString = result.getData();
+							if (!AbStrUtil.isEmpty(reString)) {
+								try {
+									JSONObject jsonObject = new JSONObject(reString);
+									int orderCount = jsonObject.getInt("orderCount");
+									BigDecimal consumAmount = new BigDecimal(jsonObject.getInt("consumAmount"));
+									mTvOrdernum.setText("累计下单次数  " + orderCount + "次");
+									if(!consumAmount.equals(BigDecimal.ZERO)){
+										mTvOrdermuch.setText("累计消费金额  " + MathExtend.roundNew(
+												consumAmount.divide(new BigDecimal(100)).doubleValue(), 2) + "0元");
+									}else{
+										mTvOrdermuch.setText("累计消费金额  0元");
+									}
+									reString = jsonObject.getString("consumList");
+									ArrayList<MemberConsumptionBean> mDatasL = (ArrayList<MemberConsumptionBean>)
+											JSON.parseArray(reString, MemberConsumptionBean.class);
+									if (mDatasL != null && mDatasL.size() > 0) {
+										mDatas.addAll(mDatasL);
+									}
+									if (mDatas != null && mDatas.size() > 0) {
+										mImgRecordEmpty.setVisibility(View.GONE);
+										mActRecordAbpulltorefreshview.setVisibility(View.VISIBLE);
+									} else {
+										mImgRecordEmpty.setVisibility(View.VISIBLE);
+										mActRecordAbpulltorefreshview.setVisibility(View.GONE);
+									}
+									AbPullHide.hideRefreshView(isResh, mActRecordAbpulltorefreshview);
+									mAdapter.replaceAll(mDatas);
+								} catch (JSONException e) {
+									e.printStackTrace();
+								}
+							}
+						}
+
+						@Override
+						public void onResponseFailed(String msg) {
+							if (isResh) {
+								mImgRecordEmpty
+										.setVisibility(View.VISIBLE);
+								mActRecordAbpulltorefreshview
+										.setVisibility(View.GONE);
+							}
+							AbPullHide.hideRefreshView(isResh,
+									mActRecordAbpulltorefreshview);
+						}
+					});
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		if(mDatasL.size()>0){
-			mDatas.addAll(mDatasL);
-		}
-		if (mDatas != null && mDatas.size() > 0) {
-			mImgRecordEmpty.setVisibility(View.GONE);
-			mActRecordAbpulltorefreshview.setVisibility(View.VISIBLE);
-		} else {
-			mImgRecordEmpty.setVisibility(View.VISIBLE);
-			mActRecordAbpulltorefreshview.setVisibility(View.GONE);
-		}
-		AbPullHide.hideRefreshView(isResh, mActRecordAbpulltorefreshview);
-		mAdapter.replaceAll(mDatas);
 
 	}
 
 	@Override
 	protected void onTitleLeftClick() {
 		super.onTitleLeftClick();
-		startActivity(new Intent(RecordsOfConsumptionActivity.this,MembersListActivity.class));
+		startActivity(new Intent(RecordsOfConsumptionActivity.this, MembersListActivity.class));
 		finish();
 	}
 }

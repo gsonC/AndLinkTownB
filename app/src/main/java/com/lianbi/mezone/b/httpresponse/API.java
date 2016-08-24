@@ -610,11 +610,11 @@ public class API {
 	/**
 	 * 查询会员详情
 	 */
-	public static final String MEMBERDETAILS = "businessVIP/vipWeekList.do";
+	public static final String MEMBERDETAILS = "businessVIP/vipInfoDetail.do";
 	/**
 	 * 获取会员标签
 	 */
-	public static final String MEMBERLABELLIST = "vipType/vipLabelList.do";
+	public static final String MEMBERLABELLIST = "vipLabel/vipLabelList.do";
 	/*
 	* 获取会员优惠券列表
 	* */
@@ -631,4 +631,12 @@ public class API {
 	* 发送优惠券短信
 	* */
 	public static final String SEND_NEW_COUPON = "";
+	/*
+	* 会员消费记录
+	* */
+	public static final String RECORDSOFCONSUMPTION = "vipConsum/consumList.do";
+	/*
+	* 会员积分记录
+	* */
+	public static final String INTEGRALRECORD = "vipIntegral/vipIntegralList.do";
 }

@@ -27,8 +27,8 @@ public enum OkHttpsImp {
 	/**
 	 * md5_key
 	 */
-	public static final  String md5_key      = "d2a57dc1d883fd21fb9951699df71cc7";
-	private static final String SignType     = "MD5";
+	public static final String md5_key = "d2a57dc1d883fd21fb9951699df71cc7";
+	private static final String SignType = "MD5";
 	private static final String inputCharset = "UTF-8";
 
 	/**
@@ -51,6 +51,7 @@ public enum OkHttpsImp {
 
 	/**
 	 * 到店服务Url
+	 *
 	 * @param storeId    店铺ID
 	 * @param methodName 路径
 	 */
@@ -241,7 +242,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  新增员工信息
+	 * 新增员工信息
 	 */
 	public void postAddsalesClerk(MyResultCallback<String> myResultCallback,
 								  String alesclerkName, String businessId, String alesclerkPhone,
@@ -257,7 +258,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  修改员工信息
+	 * 修改员工信息
 	 */
 	public void postUpdateSalesClerkbyid(
 			MyResultCallback<String> myResultCallback, String alesclerkName,
@@ -275,7 +276,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  获取已有服务商城列表
+	 * 获取已有服务商城列表
 	 */
 	public void getMoreServerMall(MyResultCallback<String> myResultCallback,
 								  String storeId) {
@@ -289,7 +290,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  获取可供下载的服务商城列表
+	 * 获取可供下载的服务商城列表
 	 */
 	public void getCandownloadServerMall(
 			MyResultCallback<String> myResultCallback, String storeId) {
@@ -303,7 +304,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  服务商城列表中服务下载
+	 * 服务商城列表中服务下载
 	 */
 	public void getdownloadServer(MyResultCallback<String> myResultCallback,
 								  String storeId, String serverId) {
@@ -330,7 +331,7 @@ public enum OkHttpsImp {
 	//
 
 	/**
-	 *  获取桌位信息
+	 * 获取桌位信息
 	 */
 	public void getTableInfo(MyResultCallback<String> myResultCallback,
 							 String storeId) {
@@ -341,7 +342,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  修改桌位状态
+	 * 修改桌位状态
 	 */
 	public void getModifyTableStatus(MyResultCallback<String> myResultCallback,
 									 String storeId, String tableIds, String tableStatus) {
@@ -354,7 +355,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  修改营业状态
+	 * 修改营业状态
 	 */
 	public void getmodifyBusinessStatus(
 			MyResultCallback<String> myResultCallback, String storeId,
@@ -367,7 +368,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  删除桌位号
+	 * 删除桌位号
 	 */
 	public void getDeleteTableId(MyResultCallback<String> myResultCallback,
 								 String storeId, String tableIds) {
@@ -378,8 +379,8 @@ public enum OkHttpsImp {
 		postProgressResponse(myResultCallback, params, url);
 	}
 
-	 /**
-	 *  添加桌位
+	/**
+	 * 添加桌位
 	 */
 	public void getAddTable(MyResultCallback<String> myResultCallback,
 							String storeId, String tableName) {
@@ -453,7 +454,6 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *
 	 * 4.14	修改推送消息已读状态
 	 *
 	 * @param myResultCallback
@@ -461,7 +461,7 @@ public enum OkHttpsImp {
 	 * @param pushId
 	 */
 	public void modifyPushMessage(MyResultCallback<String> myResultCallback,
-								  String storeId,String pushId){
+								  String storeId, String pushId) {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("storeId", storeId);
 		params.put("pushId", pushId);
@@ -470,7 +470,6 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *
 	 * 4.15	修改推送消息删除状态
 	 *
 	 * @param myResultCallback
@@ -478,7 +477,7 @@ public enum OkHttpsImp {
 	 * @param pushId
 	 */
 	public void modifyPushDelSts(MyResultCallback<String> myResultCallback,
-								 String storeId,String pushId){
+								 String storeId, String pushId) {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("storeId", storeId);
 		params.put("pushId", pushId);
@@ -487,7 +486,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  添加二维码显示
+	 * 添加二维码显示
 	 */
 	public void getTableDetail(MyResultCallback<String> myResultCallback,
 							   String storeId, String tableId) {
@@ -533,33 +532,35 @@ public enum OkHttpsImp {
 
 		}
 	}
-///////////////////////////////////////////////////////////会员管理部分接口/////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////会员管理部分接口/////////////////////////////////////////////////////////////////////////////////////
+
 	/**
-	 *  获取会员分类列表
+	 * 获取会员分类列表
 	 */
 	public void getMemberCategoryList(
-			MyResultCallback<String> myResultCallback, String storeId,String pageNo,
+			MyResultCallback<String> myResultCallback, String storeId, String pageNo,
 			String pageSize,
-			String reqTime,String uuid) throws Exception{
+			String reqTime, String uuid) throws Exception {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("storeId", storeId);
 		params.put("pageNo", pageNo);
 		params.put("pageSize", pageSize);
 		params.put("reqTime", reqTime);
 		params.put("uuid", uuid);
-		String sign = getSign(md5_key,params);
+		String sign = getSign(md5_key, params);
 		params.put("sign", sign);
 		String url = getHttpUrl(storeId, "vipTypeList");
 		postProgressResponse(myResultCallback, params, url);
 	}
+
 	/**
-	 *  添加会员类别
+	 * 添加会员类别
 	 */
-	public void  addMemberCategories(
-			MyResultCallback<String> myResultCallback, String storeId,String typeName,
-			String typeDiscountRatio,String typeMaxDiscount,String typeConditionMin,
+	public void addMemberCategories(
+			MyResultCallback<String> myResultCallback, String storeId, String typeName,
+			String typeDiscountRatio, String typeMaxDiscount, String typeConditionMin,
 			String typeConditionMax,
-			String reqTime,String uuid) throws Exception {
+			String reqTime, String uuid) throws Exception {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("storeId", storeId);
 		params.put("typeName", typeName);
@@ -569,34 +570,36 @@ public enum OkHttpsImp {
 		params.put("typeConditionMax", typeConditionMax);
 		params.put("reqTime", reqTime);
 		params.put("uuid", uuid);
-		String sign = getSign(md5_key,params);
+		String sign = getSign(md5_key, params);
 		params.put("sign", sign);
 		String url = getHttpUrl(storeId, "addVipType");
 		postProgressResponse(myResultCallback, params, url);
 	}
+
 	/**
-	 *  删除会员类别
+	 * 删除会员类别
 	 */
-	public void  delVipType(
-			MyResultCallback<String> myResultCallback, String storeId,String typeId,
-			String reqTime,String uuid) throws Exception {
+	public void delVipType(
+			MyResultCallback<String> myResultCallback, String storeId, String typeId,
+			String reqTime, String uuid) throws Exception {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("storeId", storeId);
 		params.put("typeId", typeId);
 		params.put("reqTime", reqTime);
 		params.put("uuid", uuid);
-		String sign = getSign(md5_key,params);
+		String sign = getSign(md5_key, params);
 		params.put("sign", sign);
 		String url = getHttpUrl(storeId, "delVipType");
 		postProgressResponse(myResultCallback, params, url);
 	}
+
 	/**
-	 *  营销短信详情接口
+	 * 营销短信详情接口
 	 */
 	public void querySendMsgDetail(
 			MyResultCallback<String> myResultCallback, String storeId,
-			String batchNo,String startNo,String pageSize,
-			String reqTime,String uuid)  throws Exception {
+			String batchNo, String startNo, String pageSize,
+			String reqTime, String uuid) throws Exception {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("storeId", storeId);
 		params.put("batchNo", batchNo);
@@ -604,18 +607,19 @@ public enum OkHttpsImp {
 		params.put("pageSize", pageSize);
 		params.put("reqTime", reqTime);
 		params.put("uuid", uuid);
-		String sign = getSign(md5_key,params);
+		String sign = getSign(md5_key, params);
 		params.put("sign", sign);
 		String url = getHttpUrl(storeId, "querySendMsgDetail");
 		postProgressResponse(myResultCallback, params, url);
 	}
+
 	/**
-	 *  营销短信统计接口
+	 * 营销短信统计接口
 	 */
 	public void querySendMsgStatistic(
 			MyResultCallback<String> myResultCallback, String storeId,
-			String startNo,String pageSize,String sendDate,
-			String reqTime,String uuid)  throws Exception {
+			String startNo, String pageSize, String sendDate,
+			String reqTime, String uuid) throws Exception {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("storeId", storeId);
 		params.put("startNo", startNo);
@@ -623,42 +627,45 @@ public enum OkHttpsImp {
 		params.put("sendDate", sendDate);
 		params.put("reqTime", reqTime);
 		params.put("uuid", uuid);
-		String sign = getSign(md5_key,params);
+		String sign = getSign(md5_key, params);
 		params.put("sign", sign);
 		String url = getHttpUrl(storeId, "querySendMsgStatistic");
 		postProgressResponse(myResultCallback, params, url);
 	}
+
 	/**
-	 *  新建营销短信发送短信
+	 * 新建营销短信发送短信
 	 */
 	public void sendShortMessage(
-			MyResultCallback<String> myResultCallback,String  storeId,
-			String msgId,List<String> members,
-			String reqTime,String uuid)throws Exception {
+			MyResultCallback<String> myResultCallback, String storeId,
+			String msgId, List<String> members,
+			String reqTime, String uuid) throws Exception {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("storeId", storeId);
 		params.put("msgId", msgId);
 		params.put("reqTime", reqTime);
 		params.put("uuid", uuid);
-		String sign = getSign(md5_key,params);
+		String sign = getSign(md5_key, params);
 		params.put("sign", sign);
 		String url = getHttpUrl(storeId, "sendMsg");
 		postProgressResponse(myResultCallback, params, url);
 	}
+
 	/**
-	 *  获取可供购买的短信套餐
+	 * 获取可供购买的短信套餐
 	 */
 	public void getMarketingBuySMS(
-			MyResultCallback<String> myResultCallback, String storeId,String reqTime,String uuid) {
+			MyResultCallback<String> myResultCallback, String storeId, String reqTime, String uuid) {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("storeId", storeId);
 		String url = getHttpUrl(storeId, "msgPackage");
 		postProgressResponse(myResultCallback, params, url);
 	}
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 	/**
-	 *  获取用户详细
+	 * 获取用户详细
 	 */
 	public void getUseByiId(MyResultCallback<String> myResultCallback,
 							String serNum, String source, String reqTime, String userId)
@@ -675,7 +682,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  修改用户信息
+	 * 修改用户信息
 	 */
 	public void postUpdateUseById(MyResultCallback<String> myResultCallback,
 								  String serNum, String source, String reqTime, String userId,
@@ -712,7 +719,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  查询门店下的所有会员
+	 * 查询门店下的所有会员
 	 */
 	public void getAssociator(MyResultCallback<String> myResultCallback,
 							  String businessId) {
@@ -723,7 +730,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  删除会员
+	 * 删除会员
 	 */
 	public void delAssociator(MyResultCallback<String> myResultCallback,
 							  String id) {
@@ -734,7 +741,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  修改会员
+	 * 修改会员
 	 */
 	public void updateAssociatorr(String id, String phone,
 								  MyResultCallback<String> myResultCallback) {
@@ -746,7 +753,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  根据电话号码检索会员
+	 * 根据电话号码检索会员
 	 */
 	public void getAssociatorByPhone(MyResultCallback<String> myResultCallback,
 									 String currentPageNum, String phone) {
@@ -759,7 +766,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  查询门店下不同等级会员
+	 * 查询门店下不同等级会员
 	 */
 	public void getAssociacorByBusinessAndLevel(String businessId,
 												String currentPageNum, String level,
@@ -849,7 +856,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  修改会员卡等级
+	 * 修改会员卡等级
 	 */
 	public void postUpdateAssociatorLevel(String levelId, String levelName,
 										  String bDiscount, String price, String levelDetail,
@@ -865,7 +872,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  开启关闭会员卡
+	 * 开启关闭会员卡
 	 */
 	public void postOpenOrCloseLevel(String levelId, String status,
 									 MyResultCallback<String> myResultCallback) {
@@ -877,7 +884,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  显示门店信息
+	 * 显示门店信息
 	 */
 	public void getMessageList(boolean isShow, String businessId,
 							   int currentPageNum, int pageSize,
@@ -897,7 +904,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  删除信息
+	 * 删除信息
 	 */
 	public void postDelMessage(String businessId,
 							   MyResultCallback<String> myResultCallback) {
@@ -908,7 +915,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  修改信息状态
+	 * 修改信息状态
 	 */
 	public void updateMessage(String messageId,
 							  MyResultCallback<String> myResultCallback) {
@@ -919,7 +926,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  删除货源
+	 * 删除货源
 	 */
 	public void postDelShop(String productSourceId,
 							MyResultCallback<String> myResultCallback) {
@@ -930,7 +937,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  获取货源列表
+	 * 获取货源列表
 	 */
 	public void getProductSourceList(String cateId, int currentPageNum,
 									 int pageSize, MyResultCallback<String> myResultCallback) {
@@ -943,7 +950,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  新增货源
+	 * 新增货源
 	 */
 	public void addProductSource(String image, String productSourceTitle,
 								 String validEndDate, String vailidStartDate, String industryId,
@@ -982,7 +989,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  审核会员申请状态
+	 * 审核会员申请状态
 	 */
 	public void updateApplyStatus(String associatorId, String status,
 								  MyResultCallback<String> myResultCallback) {
@@ -994,7 +1001,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  添加货源线下订单
+	 * 添加货源线下订单
 	 */
 	public void addProductSourceOrder(String productSrouceId,
 									  String businessId, String buyBusinessId, String orderPrice,
@@ -1017,7 +1024,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  扫一扫 (根据扫出来的编号获取相应的数据)
+	 * 扫一扫 (根据扫出来的编号获取相应的数据)
 	 */
 	public void getSweep(String code, MyResultCallback<String> myResultCallback) {
 		Map<String, String> params = new HashMap<String, String>();
@@ -1027,7 +1034,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  获取购买的货源记录
+	 * 获取购买的货源记录
 	 */
 	public void getPrductSourceOrderListBubusinessId(String businessId,
 													 int currentPageNum, int pageSize,
@@ -1041,7 +1048,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  获取货源下单列表
+	 * 获取货源下单列表
 	 */
 	public void getPrductSourceOrderByBusiness(String businessId,
 											   int currentPageNum, int pageSize,
@@ -1055,7 +1062,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  获取货源详细
+	 * 获取货源详细
 	 */
 	public void getPrductSourcedeById(String productSourceId,
 									  MyResultCallback<String> myResultCallback) {
@@ -1066,7 +1073,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  查看订单详细
+	 * 查看订单详细
 	 */
 	public void getOrderById(String orderId,
 							 MyResultCallback<String> myResultCallback) {
@@ -1077,7 +1084,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  获取店铺下的所有产品池数据
+	 * 获取店铺下的所有产品池数据
 	 */
 	public void getProductPoolByBusiness(String useId, String currentPageNum,
 										 MyResultCallback<String> myResultCallback) {
@@ -1090,7 +1097,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  显示货源联系人列表
+	 * 显示货源联系人列表
 	 */
 	public void getProductSourceContacts(String userId,
 										 MyResultCallback<String> myResultCallback) {
@@ -1101,7 +1108,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  新增货源联系人
+	 * 新增货源联系人
 	 */
 	public void addProductSourceContacts(String userId, String img,
 										 String phone, String name, String sourceName, String sourceDetail,
@@ -1118,7 +1125,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  B端修改订单状态---接受订单2，拒绝订单4
+	 * B端修改订单状态---接受订单2，拒绝订单4
 	 */
 	public void upDateOrderStatus(String orderId, String status,
 								  MyResultCallback<String> myResultCallback) {
@@ -1130,7 +1137,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  修改店铺产品池状态－－－修改产品商品服务后会新增一条与该产品一样的商品服务
+	 * 修改店铺产品池状态－－－修改产品商品服务后会新增一条与该产品一样的商品服务
 	 */
 	public void updateProductPoolStatus(String productPoolId,
 										MyResultCallback<String> myResultCallback) {
@@ -1158,7 +1165,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  修改密码
+	 * 修改密码
 	 */
 	public void upDatePassword(String userId, String password,
 							   String newPassword, String serNum, String source, String reqTime,
@@ -1177,7 +1184,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  新增店铺B端
+	 * 新增店铺B端
 	 */
 	public void addBusinessByB(String businessName, String address,
 							   String userId, String industryId, String license,
@@ -1234,7 +1241,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  修改店铺LOGO
+	 * 修改店铺LOGO
 	 */
 	public void updateBusinessLogo(String serNum, String source,
 								   String reqTime, String businessId, String logoUrl,
@@ -1252,7 +1259,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  修改店铺介绍
+	 * 修改店铺介绍
 	 */
 	public void updateBusinessIntroduce(String serNum, String source,
 										String reqTime, String businessId, String introduce,
@@ -1297,7 +1304,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  修改店铺联系人
+	 * 修改店铺联系人
 	 */
 	public void updateBusinessContacts(String serNum, String source,
 									   String reqTime, String businessId, String contactName,
@@ -1315,7 +1322,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  修改店铺联系电话
+	 * 修改店铺联系电话
 	 */
 	public void updateBusinessPhone(String serNum, String source,
 									String reqTime, String businessId, String phone,
@@ -1333,7 +1340,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  修改店铺地址
+	 * 修改店铺地址
 	 */
 	public void updateBusinessAddress(String serNum, String source,
 									  String reqTime, String businessId, String address,
@@ -1408,7 +1415,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  获取店铺下的所有商品
+	 * 获取店铺下的所有商品
 	 */
 	public void getProductListByBusiness(String businessId,
 										 MyResultCallback<String> myResultCallback) {
@@ -1419,7 +1426,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  获取最近完成的十笔交易列表
+	 * 获取最近完成的十笔交易列表
 	 */
 	public void getTenOrderList(String businessId,
 								MyResultCallback<String> myResultCallback) {
@@ -1430,7 +1437,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  获取货源特惠
+	 * 获取货源特惠
 	 */
 	public void getProductSourcePreference(String userId, String businessId,
 										   String industryId, MyResultCallback<String> myResultCallback) {
@@ -1443,7 +1450,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  获取银行卡
+	 * 获取银行卡
 	 */
 	public void getBankList(String md5_key, String accountNo, String product,
 							String serNum, String source, String reqTime,
@@ -1464,7 +1471,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  绑定银行卡
+	 * 绑定银行卡
 	 */
 	public void addBank(String md5_key, String outerOrderId, String bankId,
 						String bankName, String userId, String realName,
@@ -1496,7 +1503,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  修改银行卡密码
+	 * 修改银行卡密码
 	 */
 	public void updateBankPassword(String md5_key, String accountNo,
 								   String product, String oldPassWd, String newPassWd,
@@ -1519,7 +1526,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  删除银行卡
+	 * 删除银行卡
 	 */
 	public void delBank(String md5_key, String outerOrderId, String accountNo,
 						String passWd, String product, String serNum, String source,
@@ -1544,7 +1551,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  获取银行列表
+	 * 获取银行列表
 	 */
 	public void getAllBank(String md5_key, String serNum, String source,
 						   String reqTime, MyResultCallback<String> myResultCallback)
@@ -1561,7 +1568,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  获取否一开通过银行卡信息
+	 * 获取否一开通过银行卡信息
 	 */
 	public void getIsTrue(String md5_key, String accountNo, String product,
 						  String serNum, String source, String reqTime,
@@ -1580,7 +1587,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  获取经营总收入
+	 * 获取经营总收入
 	 */
 	public void getCountByBusiness(String BusinessId, boolean isShow,
 								   MyResultCallback<String> myResultCallback) {
@@ -1595,7 +1602,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  获取某天经营总收入
+	 * 获取某天经营总收入
 	 */
 	public void getCountByDay(String BusinessId, String dateTime, String type,
 							  MyResultCallback<String> myResultCallback) {
@@ -1608,7 +1615,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  获取本年每月收入数据
+	 * 获取本年每月收入数据
 	 */
 	public void getAmountByMonth(String BusinessId,
 								 MyResultCallback<String> myResultCallback) {
@@ -1619,7 +1626,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  获取上周每日收入数据
+	 * 获取上周每日收入数据
 	 */
 	public void getAmountByWeek(String BusinessId,
 								MyResultCallback<String> myResultCallback) {
@@ -1630,7 +1637,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  获取线下经营总收入
+	 * 获取线下经营总收入
 	 */
 	public void getOfflineCountByBusiness(String BusinessId,
 										  MyResultCallback<String> myResultCallback) {
@@ -1641,7 +1648,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  获取线上经营总收入
+	 * 获取线上经营总收入
 	 */
 	public void getOnLineCountByBusiness(String BusinessId,
 										 MyResultCallback<String> myResultCallback) {
@@ -1652,7 +1659,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  获取上周的线上经营总收入
+	 * 获取上周的线上经营总收入
 	 */
 	public void getOnLineLastWeekCount(String BusinessId,
 									   MyResultCallback<String> myResultCallback) {
@@ -1663,7 +1670,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  获取上周的线下经营总收入
+	 * 获取上周的线下经营总收入
 	 */
 	public void getOfflineLastWeekCount(String BusinessId,
 										MyResultCallback<String> myResultCallback) {
@@ -1674,7 +1681,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  获取某月线下经营总收入
+	 * 获取某月线下经营总收入
 	 */
 
 	public void getOffLineCountByMonth(String BusinessId, String datetime,
@@ -1687,7 +1694,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  获取某月线上经营总收入
+	 * 获取某月线上经营总收入
 	 */
 
 	public void getOnLineCountByMonth(String BusinessId, String datetime,
@@ -1700,7 +1707,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *  获取在线每天收入明细
+	 * 获取在线每天收入明细
 	 */
 	public void getDetailOnLine(String BusinessId, String datetime,
 								MyResultCallback<String> myResultCallback) {
@@ -2037,7 +2044,7 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 *每日收入明细
+	 * 每日收入明细
 	 */
 	public void getDataOrderInfoById(String serNum, String source,
 									 String reqTime, String md5_key, String accountNo,
@@ -2214,7 +2221,7 @@ public enum OkHttpsImp {
 	 */
 	public void getFreezingAmount(String md5_key, String serNum, String source,
 								  String reqTime, String accountNo,
-								  MyResultCallback<String> myResultCallback)throws Exception{
+								  MyResultCallback<String> myResultCallback) throws Exception {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("accountNo", accountNo);
 
@@ -2232,8 +2239,8 @@ public enum OkHttpsImp {
 	 * 获取财务室各项收入
 	 */
 	public void getFinancialOfficeAmount(String md5_key, String serNum, String source,
-								  String reqTime, String accountNo,String storeNo,
-								  MyResultCallback<String> myResultCallback)throws Exception{
+										 String reqTime, String accountNo, String storeNo,
+										 MyResultCallback<String> myResultCallback) throws Exception {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("accountNo", accountNo);
 
@@ -2271,39 +2278,65 @@ public enum OkHttpsImp {
 	/**
 	 * 添加或修改会员信息
 	 */
-	public void addOrUpdateMember(String serNum, String source, String reqTime, String md5_key,
-								  String submitType, String businessId, String vipPhone, String vipId, String vipName,
-								  String vipSex, String vipType, String vipLabel, String vipIdNo, String vipCardNo,
-								  String vipAddress, String vipRightsInterests, String vipBirthday, String vipIntegral,
-								  String cumulativeAmount, String vipValidityPeriod, String vipRemarks,
-								  String vipSource, MyResultCallback<String> myResultCallback) throws Exception {
+	public void addOrUpdateMember(String serNum, String source, String reqTime,String md5_key,
+								  String businessId, String vipPhone, String vipId, String vipName,
+								  String vipSex, String vipLabel, String vipIdNo, String vipCardNo,
+								  String vipAddress, String vipBirthday, String vipValidityPeriod, String vipRemarks,
+								  MyResultCallback<String> myResultCallback) throws Exception {
 		Map<String, String> params = new HashMap<String, String>();
+		params.put("businessId", businessId);
+		params.put("reqTime", reqTime);
 		params.put("serNum", serNum);
 		params.put("source", source);
-		params.put("reqTime", reqTime);
-		params.put("submitType", submitType);
-		params.put("businessId", businessId);
-		params.put("vipPhone", vipPhone);
-		params.put("vipId", vipId);
-		params.put("vipName", vipName);
-		params.put("vipSex", vipSex);
-		params.put("vipType", vipType);
-		params.put("vipLabel", vipLabel);
-		params.put("vipIdNo", vipIdNo);
-		params.put("vipCardNo", vipCardNo);
+		params.put("submitType", "updateVip");
 		params.put("vipAddress", vipAddress);
-		params.put("vipRightsInterests", vipRightsInterests);
 		params.put("vipBirthday", vipBirthday);
-		params.put("vipIntegral", vipIntegral);
-		params.put("cumulativeAmount", cumulativeAmount);
-		params.put("vipValidityPeriod", vipValidityPeriod);
+		params.put("vipCardNo", vipCardNo);
+		params.put("vipId", vipId);
+		params.put("vipIdNo", vipIdNo);
+		params.put("vipLabel", vipLabel);
+		params.put("vipName", vipName);
+		params.put("vipPhone", vipPhone);
 		params.put("vipRemarks", vipRemarks);
-		params.put("vipSource", vipSource);
+		params.put("vipSex", vipSex);
+		params.put("vipValidityPeriod", vipValidityPeriod);
 		String sign = getSign(md5_key, params);
 		params.put("sign", sign);
 		String url = getAbsoluteUrl(API.ADDORUPDATEMEMBER);
-		postProgressResponse(myResultCallback, params, url);
+		getProgressResponse(myResultCallback, params, url);
 	}
+
+	/**
+	 * 添加新会员
+	 */
+	public void addNewMemberByID(String serNum, String source, String reqTime,String md5_key,
+								 String businessId, String vipPhone, String vipName,
+								 String vipSex, String vipLabel, String vipIdNo, String vipCardNo,
+								 String vipAddress, String vipBirthday, String vipValidityPeriod, String vipRemarks,
+								 MyResultCallback<String> myResultCallback) throws Exception{
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("businessId", businessId);
+		params.put("reqTime", reqTime);
+		params.put("serNum", serNum);
+		params.put("source", source);
+		params.put("submitType", "addVip");
+		params.put("vipAddress", vipAddress);
+		params.put("vipBirthday", vipBirthday);
+		params.put("vipCardNo", vipCardNo);
+		params.put("vipIdNo", vipIdNo);
+		params.put("vipLabel", vipLabel);
+		params.put("vipName", vipName);
+		params.put("vipPhone", vipPhone);
+		params.put("vipRemarks", vipRemarks);
+		params.put("vipSex", vipSex);
+		params.put("vipValidityPeriod", vipValidityPeriod);
+		String sign = getSign(md5_key, params);
+		params.put("sign", sign);
+		String url = getAbsoluteUrl(API.ADDORUPDATEMEMBER);
+		getProgressResponse(myResultCallback, params, url);
+	}
+
+
 
 	/**
 	 * 获取会员详情
@@ -2311,10 +2344,10 @@ public enum OkHttpsImp {
 	public void getMemberDetails(String serNum, String source, String reqTime, String md5_key,
 								 String businessId, String vipId, MyResultCallback<String> myResultCallback) throws Exception {
 		Map<String, String> params = new HashMap<String, String>();
+		params.put("businessId", businessId);
+		params.put("reqTime", reqTime);
 		params.put("serNum", serNum);
 		params.put("source", source);
-		params.put("reqTime", reqTime);
-		params.put("businessId", businessId);
 		params.put("vipId", vipId);
 		String sign = getSign(md5_key, params);
 		params.put("sign", sign);
@@ -2325,22 +2358,20 @@ public enum OkHttpsImp {
 	/**
 	 * 获取会员标签
 	 */
-	public void getMemberTag(String serNum, String source, String reqTime, String md5_key,String businessId
-								,String pageNo,String pageSize, MyResultCallback<String> myResultCallback) throws Exception{
+	public void getMemberTag(String serNum, String source, String reqTime, String md5_key, String businessId
+			, String pageNo, String pageSize, MyResultCallback<String> myResultCallback) throws Exception {
 		Map<String, String> params = new HashMap<String, String>();
-		params.put("serNum", serNum);
-		params.put("source", source);
-		params.put("reqTime", reqTime);
 		params.put("businessId", businessId);
 		params.put("pageNo", pageNo);
 		params.put("pageSize", pageSize);
+		params.put("reqTime", reqTime);
+		params.put("serNum", serNum);
+		params.put("source", source);
 		String sign = getSign(md5_key, params);
 		params.put("sign", sign);
 		String url = getAbsoluteUrl(API.MEMBERLABELLIST);
 		getProgressResponse(myResultCallback, params, url);
 	}
-
-
 
 
 	/*
@@ -2389,8 +2420,60 @@ public enum OkHttpsImp {
 	* */
 	public void getCouponUsingDetailListByCoupId(String serNum, String source, String reqTime,
 												 String coupName, String coupAmt, String limitAmt,
-												 String beginTime, String endTime,String msgId,
+												 String beginTime, String endTime, String msgId,
 												 String pageSize, MyResultCallback<String> myResultCallback) throws Exception {
+
+	}
+
+	/**
+	 * 会员消费列表
+	 */
+	public void getRecordsOfConsumptionByID(String serNum, String source, String reqTime, String businessId,
+											String vipId, String pageNo, String pageSize,
+											MyResultCallback<String> myResultCallback) throws Exception {
+		Map<String, String> params = new HashMap<>();
+		params.put("businessId", businessId);
+		params.put("pageNo", pageNo);
+		params.put("pageSize", pageSize);
+		params.put("reqTime", reqTime);
+		params.put("serNum", serNum);
+		params.put("source", source);
+		params.put("vipId", vipId);
+		String sign = getSign(md5_key, params);
+		params.put("sign", sign);
+		String url = getAbsoluteUrl(API.RECORDSOFCONSUMPTION);
+		getProgressResponse(myResultCallback, params, url);
+	}
+
+	/**
+	 * 会员积分记录
+	 */
+	public void getIntegralRecordByID(String serNum, String source, String reqTime, String businessId,
+									  String vipId, int type, String pageNo, String pageSize,
+									  MyResultCallback<String> myResultCallback) throws Exception {
+		Map<String, String> params = new HashMap<>();
+		params.put("businessId", businessId);
+		switch (type) {
+			case 1:
+				params.put("integralType", "all");
+				break;
+			case 2:
+				params.put("integralType", "got");
+				break;
+			case 3:
+				params.put("integralType", "used");
+				break;
+		}
+		params.put("pageNo", pageNo);
+		params.put("pageSize", pageSize);
+		params.put("reqTime", reqTime);
+		params.put("serNum", serNum);
+		params.put("source", source);
+		params.put("vipId", vipId);
+		String sign = getSign(md5_key, params);
+		params.put("sign", sign);
+		String url = getAbsoluteUrl(API.INTEGRALRECORD);
+		getProgressResponse(myResultCallback, params, url);
 
 	}
 
@@ -2408,6 +2491,7 @@ public enum OkHttpsImp {
 			if (!isChinese(dataMap.get(mapKey))) {
 				builder.append(dataMap.get(mapKey));
 			} else {
+				System.out.println(dataMap.get(mapKey));
 			}
 		}
 		// builder.append("key=").append(md5_key);
@@ -2436,60 +2520,58 @@ public enum OkHttpsImp {
 			return false;
 		}
 	}
+
 	/**
 	 * 新增产品
 	 */
 	public void addProduct(String md5_key, String uuid, String reqTime, String app,
-						   String productName, String productType, String productDesc, String images, String storeId,MyResultCallback<String> myResultCallback) throws Exception {
+						   String productName, String productType, String productDesc, String images, String storeId, MyResultCallback<String> myResultCallback) throws Exception {
 		Map<String, String> params = new HashMap<String, String>();
-		params.put("uuid",uuid);
-		params.put("reqTime",reqTime);
-		params.put("app",app);
-		params.put("productName",productName);
-		params.put("productType",productType);
+		params.put("uuid", uuid);
+		params.put("reqTime", reqTime);
+		params.put("app", app);
+		params.put("productName", productName);
+		params.put("productType", productType);
 		params.put("productDesc", productDesc);
 		params.put("images", images);
-		params.put("storeId",storeId);
-		String sign = getSign(md5_key,params);
+		params.put("storeId", storeId);
+		String sign = getSign(md5_key, params);
 		params.put("sign", sign);
 		String url = getAbsoluteUrl(API.AddProduct);
 		postProgressResponse(myResultCallback, params, url);
 	}
 
-/**
- * 修改产品
- *
- */
-public void updateProduct(String md5_key, String uuid, String reqTime, String app,
-					   String productId,MyResultCallback<String> myResultCallback) throws Exception {
-	Map<String, String> params = new HashMap<String, String>();
-	params.put("uuid",uuid);
-	params.put("reqTime",reqTime);
-	params.put("app",app);
-	params.put("productId",productId);
-	String sign = getSign(md5_key,params);
-	params.put("sign", sign);
-	String url = getAbsoluteUrl(API.updateProduct);
-	postProgressResponse(myResultCallback, params, url);
-}
+	/**
+	 * 修改产品
+	 */
+	public void updateProduct(String md5_key, String uuid, String reqTime, String app,
+							  String productId, MyResultCallback<String> myResultCallback) throws Exception {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("uuid", uuid);
+		params.put("reqTime", reqTime);
+		params.put("app", app);
+		params.put("productId", productId);
+		String sign = getSign(md5_key, params);
+		params.put("sign", sign);
+		String url = getAbsoluteUrl(API.updateProduct);
+		postProgressResponse(myResultCallback, params, url);
+	}
 
 	/**
 	 * 积分商品查询
-	 *
 	 */
 	public void queryProduct(String md5_key, String uuid, String reqTime, String app,
-							  String storeId,MyResultCallback<String> myResultCallback) throws Exception {
+							 String storeId, MyResultCallback<String> myResultCallback) throws Exception {
 		Map<String, String> params = new HashMap<String, String>();
-		params.put("uuid",uuid);
-		params.put("reqTime",reqTime);
-		params.put("app",app);
-		params.put("storeId",storeId);
-		String sign = getSign(md5_key,params);
+		params.put("uuid", uuid);
+		params.put("reqTime", reqTime);
+		params.put("app", app);
+		params.put("storeId", storeId);
+		String sign = getSign(md5_key, params);
 		params.put("sign", sign);
 		String url = getAbsoluteUrl(API.queryProduct);
 		postProgressResponse(myResultCallback, params, url);
 	}
-
 
 
 }

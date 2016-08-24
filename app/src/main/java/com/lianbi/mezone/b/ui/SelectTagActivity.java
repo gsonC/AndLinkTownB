@@ -43,7 +43,7 @@ public class SelectTagActivity extends BaseActivity {
 	private AbPullToRefreshView mActSelecttagAbpulltorefreshview;
 	private ListView mActSelecttagListview;
 	private ImageView mActSelecttagIvEmpty;
-	private int page = 0;
+	private int page = 1;
 	private ArrayList<SelectTagBean> mDatas = new ArrayList<>();
 	private QuickAdapter<SelectTagBean> mAdapter;
 
@@ -79,9 +79,7 @@ public class SelectTagActivity extends BaseActivity {
 				tagContent.add(String.valueOf(stb.getLabelName()));
 			}
 		}
-
 		int s = tagID.size();
-
 		if (s > 0) {
 			for (int i = 0; i < s; i++) {
 				if (i == (s - 1)) {
@@ -169,7 +167,7 @@ public class SelectTagActivity extends BaseActivity {
 	private void getTag(final boolean isResh) {
 
 		if (isResh) {
-			page = 0;
+			page = 1;
 			mDatas.clear();
 			mAdapter.replaceAll(mDatas);
 		}

@@ -11,42 +11,44 @@ package com.lianbi.mezone.b.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.lianbi.mezone.b.bean.IntegralRecordBean;
 import com.lianbi.mezone.b.bean.MemberInfoBean;
+import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.xizhi.mezone.b.R;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Random;
 
 import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.QuickAdapter;
+import cn.com.hgh.utils.AbDateUtil;
 import cn.com.hgh.utils.AbPullHide;
+import cn.com.hgh.utils.AbStrUtil;
 import cn.com.hgh.utils.MathExtend;
+import cn.com.hgh.utils.Result;
 import cn.com.hgh.utils.ScreenUtils;
 import cn.com.hgh.view.AbPullToRefreshView;
 
 public class IntegralRecordActivity extends BaseActivity {
 
-	private TextView mTvIntegralMemberfile;
-	private TextView mTvIntegralRecordsofconsumption;
-	private TextView mTvIntegralIntegralrecord;
-	private TextView mTvTotalintegral;
-	private TextView mTvConsumptionintegral;
-	private TextView mTvSurplusintegral;
+	private TextView mTvIntegralMemberfile,mTvIntegralRecordsofconsumption,mTvIntegralIntegralrecord
+			,mTvTotalintegral,mTvConsumptionintegral,mTvSurplusintegral,mTvAllrecord,mTvAccessrecord
+			,mTvUserecord;
 	public int curPosition = 0;
 	private MemberInfoBean mMemberInfoBean;
 	public static final int POSITION0 = 0;
 	public static final int POSITION1 = 1;
 	public static final int POSITION2 = 2;
-	private TextView mTvAllrecord;
-	private TextView mTvAccessrecord;
-	private TextView mTvUserecord;
 	private ListView mActMemberrecordListview;
 	private ImageView mActMemberrecordIvEmpty;
 	private QuickAdapter<IntegralRecordBean> mAdapter;
@@ -58,15 +60,13 @@ public class IntegralRecordActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.act_integralrecord, NOTYPE);
 		mMemberInfoBean = (MemberInfoBean) getIntent().getSerializableExtra("memberInfo");
-		System.out.println("memberInfo" + mMemberInfoBean.getVipPhone());
 		initView();
 		setLisenter();
 		initAdapter();
-		getIntegralRecord(true);
+		getIntegralRecord(true,1);
 	}
 
 	private void initAdapter() {
-		System.out.println("arrayList=="+arrayList.size());
 		mAdapter = new QuickAdapter<IntegralRecordBean>(this, R.layout.item_consumption, arrayList) {
 			@Override
 			protected void convert(BaseAdapterHelper helper, IntegralRecordBean item) {
@@ -89,7 +89,7 @@ public class IntegralRecordActivity extends BaseActivity {
 		mActMemberrecordListview.setAdapter(mAdapter);
 	}
 
-	private int page = 0;
+	private int page = 1;
 
 	ArrayList<IntegralRecordBean> arrayList = new ArrayList<>();
 	ArrayList<IntegralRecordBean> arrayList0 = new ArrayList<>();
@@ -98,67 +98,75 @@ public class IntegralRecordActivity extends BaseActivity {
 	/**
 	 * 获取消费记录
 	 */
-	public void getIntegralRecord(final boolean isResh) {
-		ArrayList<IntegralRecordBean> mDatasL = new ArrayList<>();
+	public void getIntegralRecord(final boolean isResh,final int type) {
 
 		if (isResh) {
-			page = 0;
-		}
-		page++;
-
-		for (int i = 0; i < 50; i++) {
-			IntegralRecordBean bean = new IntegralRecordBean();
-			bean.setRecordTime("2016-08-12 12:1" + i);
-			bean.setRecordThing("饮料*" + i);
-			bean.setRecordWhrer("微店");
-			bean.setRecordInteger(new BigDecimal(1000 + i));
-			bean.setType(new Random().nextInt(2));
-			mDatasL.add(bean);
+			page = 1;
+			mDatas.clear();
+			mAdapter.replaceAll(mDatas);
 		}
 
-		if (isResh) {
-			arrayList.clear();
-			arrayList0.clear();
-			arrayList1.clear();
-		}
-		if(mDatasL != null && mDatasL.size() > 0) {
-			arrayList.addAll(mDatasL);
-		}
-		if (arrayList != null && arrayList.size() > 0) {
-			mActMemberrecordIvEmpty
-					.setVisibility(View.GONE);
-			mActIntegralrecordAbpulltorefreshview
-					.setVisibility(View.VISIBLE);
-			for (IntegralRecordBean ir : arrayList) {
-				switch (ir.getType()) {
-					case POSITION0:
-						arrayList0.add(ir);
-						break;
-					case POSITION1:
-						arrayList1.add(ir);
-						break;
-				}
-			}
-		}else{
-			mActMemberrecordIvEmpty
-					.setVisibility(View.VISIBLE);
-			mActIntegralrecordAbpulltorefreshview
-					.setVisibility(View.GONE);
-		}
-		AbPullHide.hideRefreshView(isResh,
-				mActIntegralrecordAbpulltorefreshview);
-		switch (curPosition){
-			case POSITION0:
-				mAdapter.replaceAll(arrayList);
-				break;
-			case POSITION1:
-				mAdapter.replaceAll(arrayList0);
-				break;
-			case POSITION2:
-				mAdapter.replaceAll(arrayList1);
-				break;
-		}
+		String reqTime = AbDateUtil.getDateTimeNow();
+		String uuid = AbStrUtil.getUUID();
+		try {
+			okHttpsImp.getIntegralRecordByID(uuid, "app", reqTime, userShopInfoBean.getBusinessId(),
+					mMemberInfoBean.getVipId(), type, page + "", 20 + "",
+					new MyResultCallback<String>() {
+						@Override
+						public void onResponseResult(Result result) {
+							page++;
+							String reString = result.getData();
+							if (!TextUtils.isEmpty(reString)) {
+								try {
+									JSONObject jsonObject = new JSONObject(reString);
+									int totalIntegral = jsonObject.getInt("totalIntegral");
+									int totalConsumption = jsonObject.getInt("totalConsumption");
+									int residualIntegral = jsonObject.getInt("residualIntegral");
+									mTvTotalintegral.setText("获取总积分 "+totalIntegral);
+									mTvConsumptionintegral.setText("总消耗积分 "+totalConsumption);
+									mTvSurplusintegral.setText("剩余积分 "+residualIntegral);
+									reString = jsonObject.getString("intgralList");
+									ArrayList<IntegralRecordBean> mDatasL = (ArrayList<IntegralRecordBean>) JSON
+											.parseArray(reString,IntegralRecordBean.class);
+									if (mDatasL != null && mDatasL.size() > 0) {
+										mDatas.addAll(mDatasL);
+									}
+									if (mDatas != null && mDatas.size() > 0) {
+										mActMemberrecordIvEmpty
+												.setVisibility(View.GONE);
+										mActIntegralrecordAbpulltorefreshview
+												.setVisibility(View.VISIBLE);
+									} else {
+										mActMemberrecordIvEmpty
+												.setVisibility(View.VISIBLE);
+										mActIntegralrecordAbpulltorefreshview
+												.setVisibility(View.GONE);
+									}
+									AbPullHide.hideRefreshView(isResh,
+											mActIntegralrecordAbpulltorefreshview);
+									mAdapter.replaceAll(mDatas);
+								} catch (JSONException e) {
+									e.printStackTrace();
+								}
 
+							}
+						}
+
+						@Override
+						public void onResponseFailed(String msg) {
+							if (isResh) {
+								mActMemberrecordIvEmpty
+										.setVisibility(View.VISIBLE);
+								mActIntegralrecordAbpulltorefreshview
+										.setVisibility(View.GONE);
+							}
+							AbPullHide.hideRefreshView(isResh,
+									mActIntegralrecordAbpulltorefreshview);
+						}
+					});
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 
@@ -173,10 +181,10 @@ public class IntegralRecordActivity extends BaseActivity {
 		mTvIntegralIntegralrecord.setTextColor(IntegralRecordActivity.this.getResources().getColor(R.color.color_ff8208));
 		findViewById(R.id.llt_line).setVisibility(View.VISIBLE);
 		findViewById(R.id.view_line3).setVisibility(View.VISIBLE);
-		mTvTotalintegral = (TextView) findViewById(R.id.tv_totalintegral);
-		mTvConsumptionintegral = (TextView) findViewById(R.id.tv_consumptionintegral);
+		mTvTotalintegral = (TextView) findViewById(R.id.tv_totalintegral);//总积分
+		mTvConsumptionintegral = (TextView) findViewById(R.id.tv_consumptionintegral);//总消耗积分
 		mActIntegralrecordAbpulltorefreshview = (AbPullToRefreshView) findViewById(R.id.act_integralrecord_abpulltorefreshview);
-		mTvSurplusintegral = (TextView) findViewById(R.id.tv_surplusintegral);
+		mTvSurplusintegral = (TextView) findViewById(R.id.tv_surplusintegral);//剩余积分
 		mTvAllrecord = (TextView) findViewById(R.id.tv_allrecord);
 		mTvAccessrecord = (TextView) findViewById(R.id.tv_accessrecord);
 		mTvUserecord = (TextView) findViewById(R.id.tv_userecord);
@@ -210,7 +218,7 @@ public class IntegralRecordActivity extends BaseActivity {
 
 					@Override
 					public void onHeaderRefresh(AbPullToRefreshView view) {
-						getIntegralRecord(true);
+						getIntegralRecord(true,curPosition);
 					}
 				});
 		mActIntegralrecordAbpulltorefreshview
@@ -218,7 +226,7 @@ public class IntegralRecordActivity extends BaseActivity {
 
 					@Override
 					public void onFooterLoad(AbPullToRefreshView view) {
-						getIntegralRecord(false);
+						getIntegralRecord(false,curPosition);
 					}
 				});
 		mTvIntegralMemberfile.setOnClickListener(this);
@@ -248,21 +256,21 @@ public class IntegralRecordActivity extends BaseActivity {
 				mTvAllrecord.setBackgroundResource(R.drawable.member_record_pressed);
 				mTvAccessrecord.setBackgroundResource(R.drawable.member_record);
 				mTvUserecord.setBackgroundResource(R.drawable.member_record);
-				mAdapter.replaceAll(arrayList);
+				getIntegralRecord(true,curPosition);
 				break;
 			case R.id.tv_accessrecord://获取记录
 				curPosition = POSITION1;
 				mTvAllrecord.setBackgroundResource(R.drawable.member_record);
 				mTvAccessrecord.setBackgroundResource(R.drawable.member_record_pressed);
 				mTvUserecord.setBackgroundResource(R.drawable.member_record);
-				mAdapter.replaceAll(arrayList0);
+				getIntegralRecord(true,curPosition);
 				break;
 			case R.id.tv_userecord://使用记录
 				curPosition = POSITION2;
 				mTvAllrecord.setBackgroundResource(R.drawable.member_record);
 				mTvAccessrecord.setBackgroundResource(R.drawable.member_record);
 				mTvUserecord.setBackgroundResource(R.drawable.member_record_pressed);
-				mAdapter.replaceAll(arrayList1);
+				getIntegralRecord(true,curPosition);
 				break;
 		}
 	}

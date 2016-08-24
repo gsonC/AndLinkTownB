@@ -13,40 +13,78 @@ import java.math.BigDecimal;
 
 public class MemberConsumptionBean implements Serializable {
 	private static final long serialVersionUID = -8870942307153826341L;
-	private String consumptionTime;
-	private String consumptionThing;
-	private String consumptionWhere;
-	private BigDecimal consumptionMuch;
 
-	public String getConsumptionTime() {
-		return consumptionTime;
+	private String consumType;
+	private String consumName;
+	private BigDecimal consumPrice;
+	private String consumNum;
+	private String consumDiscount;
+	private String consumAmount;
+	private String createTime;
+	private String consumSorce;
+
+	public String getConsumType() {
+		return consumType;
 	}
 
-	public void setConsumptionTime(String consumptionTime) {
-		this.consumptionTime = consumptionTime;
+	public void setConsumType(String consumType) {
+		this.consumType = consumType;
 	}
 
-	public String getConsumptionThing() {
-		return consumptionThing;
+	public String getConsumName() {
+		return consumName;
 	}
 
-	public void setConsumptionThing(String consumptionThing) {
-		this.consumptionThing = consumptionThing;
+	public void setConsumName(String consumName) {
+		this.consumName = consumName;
 	}
 
-	public String getConsumptionWhere() {
-		return consumptionWhere;
+	public BigDecimal getConsumPrice() {
+		return consumPrice;
 	}
 
-	public void setConsumptionWhere(String consumptionWhere) {
-		this.consumptionWhere = consumptionWhere;
+	public void setConsumPrice(BigDecimal consumPrice) {
+		this.consumPrice = consumPrice;
 	}
 
-	public BigDecimal getConsumptionMuch() {
-		return consumptionMuch;
+	public String getConsumNum() {
+		return consumNum;
 	}
 
-	public void setConsumptionMuch(BigDecimal consumptionMuch) {
-		this.consumptionMuch = consumptionMuch;
+	public void setConsumNum(String consumNum) {
+		this.consumNum = consumNum;
 	}
+
+	public String getConsumDiscount() {
+		return consumDiscount;
+	}
+
+	public void setConsumDiscount(String consumDiscount) {
+		this.consumDiscount = consumDiscount;
+	}
+
+	public String getConsumAmount() {
+		return consumAmount;
+	}
+
+	public void setConsumAmount(String consumAmount) {
+		this.consumAmount = consumAmount;
+	}
+
+	public String getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(String createTime) {
+		this.createTime = createTime;
+	}
+
+	public String getConsumSorce() {
+		return consumSorce;
+	}
+
+	public void setConsumSorce(String consumSorce) {
+		this.consumSorce = consumSorce;
+	}
+
 }

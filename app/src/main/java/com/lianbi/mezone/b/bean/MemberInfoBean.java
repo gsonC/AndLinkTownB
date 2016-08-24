@@ -12,42 +12,57 @@ import java.io.Serializable;
 
 public class MemberInfoBean implements Serializable {
 	private static final long serialVersionUID = -5076976047607374205L;
-	private String vipId;
-	private String businessId;
-	private String vipPhone;
-	private String vipName;
-	private String vipType;
-	private String vipSex;
+
+	/**
+	 * vipIdNo : null
+	 * vipPhone : 13711336075
+	 * vipRemarks : null
+	 * vipPhoto : null
+	 * vipIntegral : 0
+	 * businessId : BD2016072816282300000309
+	 * vipAddress : 北京市朝阳区
+	 * vipBirthday : null
+	 * vipId : VI082016082315240300000310
+	 * updateTime : 1471936978000
+	 * vipSource : 老板娘app
+	 * labels : null
+	 * vipCardNo : null
+	 * vipRightsInterests : null
+	 * vipName : null
+	 * createTime : 1471936978000
+	 * vipTypeObject : null
+	 * cumulativeAmount : 0
+	 * vipValidityPeriod : 253402185600000
+	 * vipSex : null
+	 */
+
 	private String vipIdNo;
-	private String vipCardNo;
-	private String vipAddress;
-	private String vipRightsInterests;
-	private String vipBirthday;
-	private String vipValidityPeriod;
-	private int cumulativeAmount;
-	private int vipIntegral;
+	private String vipPhone;
 	private String vipRemarks;
+	private String vipPhoto;
+	private int vipIntegral;
+	private String businessId;
+	private String vipAddress;
+	private String vipBirthday;
+	private String vipId;
 	private String updateTime;
-	private String createTime;
-	private int vipWeekCount;
-	private int vipCount;
-	private String labelName;
 	private String vipSource;
+	private String labels;
+	private String vipCardNo;
+	private String vipRightsInterests;
+	private String vipName;
+	private String createTime;
+	private String vipTypeObject;
+	private String cumulativeAmount;
+	private String vipValidityPeriod;
+	private int vipSex;
 
-	public String getVipId() {
-		return vipId;
+	public String getVipIdNo() {
+		return vipIdNo;
 	}
 
-	public void setVipId(String vipId) {
-		this.vipId = vipId;
-	}
-
-	public String getBusinessId() {
-		return businessId;
-	}
-
-	public void setBusinessId(String businessId) {
-		this.businessId = businessId;
+	public void setVipIdNo(String vipIdNo) {
+		this.vipIdNo = vipIdNo;
 	}
 
 	public String getVipPhone() {
@@ -58,84 +73,20 @@ public class MemberInfoBean implements Serializable {
 		this.vipPhone = vipPhone;
 	}
 
-	public String getVipName() {
-		return vipName;
+	public String getVipRemarks() {
+		return vipRemarks;
 	}
 
-	public void setVipName(String vipName) {
-		this.vipName = vipName;
+	public void setVipRemarks(String vipRemarks) {
+		this.vipRemarks = vipRemarks;
 	}
 
-	public String getVipType() {
-		return vipType;
+	public String getVipPhoto() {
+		return vipPhoto;
 	}
 
-	public void setVipType(String vipType) {
-		this.vipType = vipType;
-	}
-
-	public String getVipSex() {
-		return vipSex;
-	}
-
-	public void setVipSex(String vipSex) {
-		this.vipSex = vipSex;
-	}
-
-	public String getVipIdNo() {
-		return vipIdNo;
-	}
-
-	public void setVipIdNo(String vipIdNo) {
-		this.vipIdNo = vipIdNo;
-	}
-
-	public String getVipCardNo() {
-		return vipCardNo;
-	}
-
-	public void setVipCardNo(String vipCardNo) {
-		this.vipCardNo = vipCardNo;
-	}
-
-	public String getVipAddress() {
-		return vipAddress;
-	}
-
-	public void setVipAddress(String vipAddress) {
-		this.vipAddress = vipAddress;
-	}
-
-	public String getVipRightsInterests() {
-		return vipRightsInterests;
-	}
-
-	public void setVipRightsInterests(String vipRightsInterests) {
-		this.vipRightsInterests = vipRightsInterests;
-	}
-
-	public String getVipBirthday() {
-		return vipBirthday;
-	}
-
-	public void setVipBirthday(String vipBirthday) {
-		this.vipBirthday = vipBirthday;
-	}
-
-	public String getVipValidityPeriod() {
-		return vipValidityPeriod;
-	}
-
-	public void setVipValidityPeriod(String vipValidityPeriod) {
-		this.vipValidityPeriod = vipValidityPeriod;
-	}
-
-	public int getCumulativeAmount() {
-		return cumulativeAmount;
-	}
-
-	public void setCumulativeAmount(int cumulativeAmount) {
-		this.cumulativeAmount = cumulativeAmount;
+	public void setVipPhoto(String vipPhoto) {
+		this.vipPhoto = vipPhoto;
 	}
 
 	public int getVipIntegral() {
@@ -146,12 +97,36 @@ public class MemberInfoBean implements Serializable {
 		this.vipIntegral = vipIntegral;
 	}
 
-	public String getVipRemarks() {
-		return vipRemarks;
+	public String getBusinessId() {
+		return businessId;
 	}
 
-	public void setVipRemarks(String vipRemarks) {
-		this.vipRemarks = vipRemarks;
+	public void setBusinessId(String businessId) {
+		this.businessId = businessId;
+	}
+
+	public String getVipAddress() {
+		return vipAddress;
+	}
+
+	public void setVipAddress(String vipAddress) {
+		this.vipAddress = vipAddress;
+	}
+
+	public String getVipBirthday() {
+		return vipBirthday;
+	}
+
+	public void setVipBirthday(String vipBirthday) {
+		this.vipBirthday = vipBirthday;
+	}
+
+	public String getVipId() {
+		return vipId;
+	}
+
+	public void setVipId(String vipId) {
+		this.vipId = vipId;
 	}
 
 	public String getUpdateTime() {
@@ -162,6 +137,46 @@ public class MemberInfoBean implements Serializable {
 		this.updateTime = updateTime;
 	}
 
+	public String getVipSource() {
+		return vipSource;
+	}
+
+	public void setVipSource(String vipSource) {
+		this.vipSource = vipSource;
+	}
+
+	public String getLabels() {
+		return labels;
+	}
+
+	public void setLabels(String labels) {
+		this.labels = labels;
+	}
+
+	public String getVipCardNo() {
+		return vipCardNo;
+	}
+
+	public void setVipCardNo(String vipCardNo) {
+		this.vipCardNo = vipCardNo;
+	}
+
+	public String getVipRightsInterests() {
+		return vipRightsInterests;
+	}
+
+	public void setVipRightsInterests(String vipRightsInterests) {
+		this.vipRightsInterests = vipRightsInterests;
+	}
+
+	public String getVipName() {
+		return vipName;
+	}
+
+	public void setVipName(String vipName) {
+		this.vipName = vipName;
+	}
+
 	public String getCreateTime() {
 		return createTime;
 	}
@@ -170,35 +185,35 @@ public class MemberInfoBean implements Serializable {
 		this.createTime = createTime;
 	}
 
-	public int getVipWeekCount() {
-		return vipWeekCount;
+	public String getVipTypeObject() {
+		return vipTypeObject;
 	}
 
-	public void setVipWeekCount(int vipWeekCount) {
-		this.vipWeekCount = vipWeekCount;
+	public void setVipTypeObject(String vipTypeObject) {
+		this.vipTypeObject = vipTypeObject;
 	}
 
-	public int getVipCount() {
-		return vipCount;
+	public String getCumulativeAmount() {
+		return cumulativeAmount;
 	}
 
-	public void setVipCount(int vipCount) {
-		this.vipCount = vipCount;
+	public void setCumulativeAmount(String cumulativeAmount) {
+		this.cumulativeAmount = cumulativeAmount;
 	}
 
-	public String getLabelName() {
-		return labelName;
+	public String getVipValidityPeriod() {
+		return vipValidityPeriod;
 	}
 
-	public void setLabelName(String labelName) {
-		this.labelName = labelName;
+	public void setVipValidityPeriod(String vipValidityPeriod) {
+		this.vipValidityPeriod = vipValidityPeriod;
 	}
 
-	public String getVipSource() {
-		return vipSource;
+	public int getVipSex() {
+		return vipSex;
 	}
 
-	public void setVipSource(String vipSource) {
-		this.vipSource = vipSource;
+	public void setVipSex(int vipSex) {
+		this.vipSex = vipSex;
 	}
 }

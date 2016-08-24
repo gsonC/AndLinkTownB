@@ -17,7 +17,6 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:singleLine="true"
-            android:text="13054223532"
             android:textColor="@color/colores_news_17"
             />
 
@@ -28,7 +27,6 @@
             android:layout_weight="1"
             android:gravity="center"
             android:singleLine="true"
-            android:text="一级会员"
             android:textColor="@color/colores_news_17"
             />
 
@@ -39,7 +37,6 @@
             android:layout_weight="1"
             android:gravity="center"
             android:singleLine="true"
-            android:text="微店"
             android:textColor="@color/colores_news_17"
             />
 
@@ -52,7 +49,6 @@
             android:gravity="center"
             android:maxEms="3"
             android:singleLine="true"
-            android:text="重要客户"
             android:textColor="@color/colores_news_17"
             />
 
@@ -63,7 +59,6 @@
             android:layout_weight="1"
             android:gravity="center"
             android:singleLine="true"
-            android:text="1235600"
             android:textColor="@color/colores_news_17"/>
 
         <ImageView

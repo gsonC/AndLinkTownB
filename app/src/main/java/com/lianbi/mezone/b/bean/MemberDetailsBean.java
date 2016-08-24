@@ -17,9 +17,9 @@ public class MemberDetailsBean implements Serializable {
 	private String vipType;
 	private int typeDiscountRatio;
 	private int typeMaxDiscount;
-	private int vipPhone;
+	private String vipPhone;
 	private String vipName;
-	private String vipSex;
+	private int vipSex;
 	private String vipIdNo;
 	private String vipCardNo;
 	private String vipAddress;
@@ -29,45 +29,25 @@ public class MemberDetailsBean implements Serializable {
 	private int cumulativeAmount;
 	private String vipValidityPeriod;
 	private String vipRemarks;
-	private lablelList lablelLists;
+	private lablelList lablelList;
+	private vipTypeObject vipTypeObject;
 
-	public lablelList getLablelLists() {
-		return lablelLists;
+	public MemberDetailsBean.vipTypeObject getVipTypeObject() {
+		return vipTypeObject;
 	}
 
-	public void setLablelLists(lablelList lablelLists) {
-		this.lablelLists = lablelLists;
+	public void setVipTypeObject(MemberDetailsBean.vipTypeObject vipTypeObject) {
+		this.vipTypeObject = vipTypeObject;
 	}
 
-	public class lablelList{
-		private String businessId;
-		private String labelId;
-		private String labelName;
-
-		public String getBusinessId() {
-			return businessId;
-		}
-
-		public void setBusinessId(String businessId) {
-			this.businessId = businessId;
-		}
-
-		public String getLabelId() {
-			return labelId;
-		}
-
-		public void setLabelId(String labelId) {
-			this.labelId = labelId;
-		}
-
-		public String getLabelName() {
-			return labelName;
-		}
-
-		public void setLabelName(String labelName) {
-			this.labelName = labelName;
-		}
+	public lablelList getLablelList() {
+		return lablelList;
 	}
+
+	public void setLablelList(lablelList lablelList) {
+		this.lablelList = lablelList;
+	}
+
 
 	public String getVipId() {
 		return vipId;
@@ -109,11 +89,11 @@ public class MemberDetailsBean implements Serializable {
 		this.typeMaxDiscount = typeMaxDiscount;
 	}
 
-	public int getVipPhone() {
+	public String getVipPhone() {
 		return vipPhone;
 	}
 
-	public void setVipPhone(int vipPhone) {
+	public void setVipPhone(String vipPhone) {
 		this.vipPhone = vipPhone;
 	}
 
@@ -125,11 +105,11 @@ public class MemberDetailsBean implements Serializable {
 		this.vipName = vipName;
 	}
 
-	public String getVipSex() {
+	public int getVipSex() {
 		return vipSex;
 	}
 
-	public void setVipSex(String vipSex) {
+	public void setVipSex(int vipSex) {
 		this.vipSex = vipSex;
 	}
 
@@ -203,5 +183,127 @@ public class MemberDetailsBean implements Serializable {
 
 	public void setVipRemarks(String vipRemarks) {
 		this.vipRemarks = vipRemarks;
+	}
+
+	public class lablelList {
+		private String businessId;
+		private String labelId;
+		private String labelName;
+
+		public String getBusinessId() {
+			return businessId;
+		}
+
+		public void setBusinessId(String businessId) {
+			this.businessId = businessId;
+		}
+
+		public String getLabelId() {
+			return labelId;
+		}
+
+		public void setLabelId(String labelId) {
+			this.labelId = labelId;
+		}
+
+		public String getLabelName() {
+			return labelName;
+		}
+
+		public void setLabelName(String labelName) {
+			this.labelName = labelName;
+		}
+	}
+	public class vipTypeObject{
+		private String typeId;
+		private String businessId;
+		private String typeName;
+		private Integer typeDiscountRatio;
+		private Integer typeMaxDiscount;
+		private int typeConditionMin;
+		private int typeConditionMax;
+		private int thisTypeCount;
+		private String createTime;
+		private String updateTime;
+
+		public String getTypeId() {
+			return typeId;
+		}
+
+		public void setTypeId(String typeId) {
+			this.typeId = typeId;
+		}
+
+		public String getBusinessId() {
+			return businessId;
+		}
+
+		public void setBusinessId(String businessId) {
+			this.businessId = businessId;
+		}
+
+		public String getTypeName() {
+			return typeName;
+		}
+
+		public void setTypeName(String typeName) {
+			this.typeName = typeName;
+		}
+
+		public Integer getTypeDiscountRatio() {
+			return typeDiscountRatio;
+		}
+
+		public void setTypeDiscountRatio(Integer typeDiscountRatio) {
+			this.typeDiscountRatio = typeDiscountRatio;
+		}
+
+		public Integer getTypeMaxDiscount() {
+			return typeMaxDiscount;
+		}
+
+		public void setTypeMaxDiscount(Integer typeMaxDiscount) {
+			this.typeMaxDiscount = typeMaxDiscount;
+		}
+
+		public int getTypeConditionMin() {
+			return typeConditionMin;
+		}
+
+		public void setTypeConditionMin(int typeConditionMin) {
+			this.typeConditionMin = typeConditionMin;
+		}
+
+		public int getTypeConditionMax() {
+			return typeConditionMax;
+		}
+
+		public void setTypeConditionMax(int typeConditionMax) {
+			this.typeConditionMax = typeConditionMax;
+		}
+
+		public int getThisTypeCount() {
+			return thisTypeCount;
+		}
+
+		public void setThisTypeCount(int thisTypeCount) {
+			this.thisTypeCount = thisTypeCount;
+		}
+
+		public String getCreateTime() {
+			return createTime;
+		}
+
+		public void setCreateTime(String createTime) {
+			this.createTime = createTime;
+		}
+
+		public String getUpdateTime() {
+			return updateTime;
+		}
+
+		public void setUpdateTime(String updateTime) {
+			this.updateTime = updateTime;
+		}
 	}
 }

@@ -55,17 +55,14 @@ import cn.com.hgh.view.AbPullToRefreshView;
 public class MembersListActivity extends BaseActivity {
 
 	private EditText mAct_member_list_edit;
-	private TextView mTv_newaddmember;
-	private TextView mTv_cumulativemember;
+	private TextView mTv_newaddmember,mTv_cumulativemember,mTv_addnewmember,mTvIntegral,
+			mTvMemberphone,mTvMembercategory,mTvMembersource,mTvMemberlable;
 	private AbPullToRefreshView mAct_addmembers_abpulltorefreshview;
 	private ListView mAct_addmembers_listview;
-	private TextView mTv_addnewmember;
 	private ImageView mImg_ememberslist_empty;
 	private LinearLayout mLltIntegral;
-	private TextView mTvIntegral;
-	private Drawable mDrawableDowm;
-	private Drawable mDrawableUp;
-	private int page = 0;
+	private Drawable mDrawableDowm,mDrawableUp,mDrawableinitial;
+	private int page = 1;
 	private ArrayList<MemberInfoBean> mDatas = new ArrayList<MemberInfoBean>();
 	private QuickAdapter<MemberInfoBean> mAdapter;
 	/**
@@ -77,11 +74,6 @@ public class MembersListActivity extends BaseActivity {
 	 * 根据拼音来排雷list数据
 	 */
 	private PinyinComparator mPinyinComparator;
-	private TextView mTvMemberphone;
-	private TextView mTvMembercategory;
-	private TextView mTvMembersource;
-	private TextView mTvMemberlable;
-	private Drawable mDrawableinitial;
 	private String paramLike;
 
 	@Override
@@ -119,10 +111,18 @@ public class MembersListActivity extends BaseActivity {
 				ScreenUtils.textAdaptationOn720(tv_mb_source, MembersListActivity.this, 24);//本周新增会员
 				ScreenUtils.textAdaptationOn720(tv_mb_label, MembersListActivity.this, 24);//本周新增会员
 				ScreenUtils.textAdaptationOn720(tv_mb_integral, MembersListActivity.this, 24);//本周新增会员
-				tv_mb_phone.setText(item.getVipPhone() + "");
-				tv_mb_category.setText(item.getVipType() + "");
-				tv_mb_source.setText(item.getVipSource() + "");
-				tv_mb_label.setText(item.getLabelName() + "");
+				tv_mb_phone.setText(item.getVipPhone());
+				if(!AbStrUtil.isEmpty(item.getVipTypeObject())){
+					tv_mb_category.setText(item.getVipTypeObject());
+				}else{
+					tv_mb_category.setText("无");
+				}
+				tv_mb_source.setText(item.getVipSource());
+				if(!AbStrUtil.isEmpty(item.getLabels())){
+					tv_mb_label.setText(item.getLabels());
+				}else{
+					tv_mb_label.setText("无");
+				}
 				tv_mb_integral.setText(item.getVipIntegral() + "");
 
 			}
@@ -173,7 +173,7 @@ public class MembersListActivity extends BaseActivity {
 	private void getMembersList(final boolean isResh, final String paramLike) {
 
 		if (isResh) {
-			page = 0;
+			page = 1;
 			mDatas.clear();
 			mAdapter.replaceAll(mDatas);
 		}
@@ -193,6 +193,8 @@ public class MembersListActivity extends BaseActivity {
 								try {
 									JSONObject jsonObject = new JSONObject(reString);
 									reString = jsonObject.getString("businessVipList");
+									mTv_newaddmember.setText("本周新增会员:"+jsonObject.getInt("vipWeekCount"));
+									mTv_cumulativemember.setText("累计会员数:"+jsonObject.getInt("vipCount"));
 									ArrayList<MemberInfoBean> mDatasL = (ArrayList<MemberInfoBean>) JSON
 											.parseArray(reString, MemberInfoBean.class);
 									if (mDatasL != null && mDatasL.size() > 0) {
@@ -201,13 +203,9 @@ public class MembersListActivity extends BaseActivity {
 									if (mDatas != null && mDatas.size() > 0) {
 										mImg_ememberslist_empty.setVisibility(View.GONE);
 										mAct_addmembers_abpulltorefreshview.setVisibility(View.VISIBLE);
-										mTv_newaddmember.setText("本周新增会员:"+mDatas.get(0).getVipWeekCount());
-										mTv_cumulativemember.setText("累计会员数:"+mDatas.get(0).getVipCount());
 									} else {
 										mImg_ememberslist_empty.setVisibility(View.VISIBLE);
 										mAct_addmembers_abpulltorefreshview.setVisibility(View.GONE);
-										mTv_newaddmember.setText("本周新增会员:0");
-										mTv_cumulativemember.setText("累计会员数:0");
 									}
 									AbPullHide.hideRefreshView(isResh, mAct_addmembers_abpulltorefreshview);
 									mAdapter.replaceAll(mDatas);
@@ -317,7 +315,6 @@ public class MembersListActivity extends BaseActivity {
 						file_intent.putExtra("memberInfo", mDatas.get(position));
 						file_intent.putExtra("isShow", true);
 						startActivityForResult(file_intent, REQUEST_CHANGMEMBERINFO);
-
 						mAct_member_list_edit.setText("");
 					}
 				});
@@ -381,7 +378,6 @@ public class MembersListActivity extends BaseActivity {
 
 	}
 
-
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
@@ -401,7 +397,6 @@ public class MembersListActivity extends BaseActivity {
 	 * 根据输入条件改变listview
 	 */
 	private void filterData(String filterStr) {
-		System.out.println("filterStr" + filterStr);
 	/*	List<MemberInfoBean> filterDateList = new ArrayList<MemberInfoBean>();
 		if (TextUtils.isEmpty(filterStr)) {
 			filterDateList = mDatas;

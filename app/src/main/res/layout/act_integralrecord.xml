@@ -104,24 +104,28 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:ellipsize="end"
             android:gravity="center"
-            android:text="获取总积分 250"/>
+            android:singleLine="true"
+            android:text="获取总积分 0"/>
 
         <TextView
             android:id="@+id/tv_consumptionintegral"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:ellipsize="end"
             android:gravity="center"
-            android:text="总消耗积分 100"/>
+            android:text="总消耗积分 0"/>
 
         <TextView
             android:id="@+id/tv_surplusintegral"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:ellipsize="end"
             android:gravity="center"
-            android:text="剩余积分 150"/>
+            android:text="剩余积分 0"/>
     </LinearLayout>
 
     <View
@@ -180,6 +184,7 @@
         android:layout_height="10dp"
         android:background="@color/colores_news_14"
         />
+
     <cn.com.hgh.view.AbPullToRefreshView
         android:id="@+id/act_integralrecord_abpulltorefreshview"
         android:layout_width="match_parent"
@@ -188,20 +193,23 @@
         android:orientation="vertical"
         android:visibility="visible"
         >
-    <ListView
-        android:id="@+id/act_memberrecord_listview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:divider="@null"
-        android:listSelector="@color/transparent"
-        android:scrollbars="none">
-    </ListView>
+
+        <ListView
+            android:id="@+id/act_memberrecord_listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@null"
+            android:listSelector="@color/transparent"
+            android:scrollbars="none">
+        </ListView>
     </cn.com.hgh.view.AbPullToRefreshView>
+
     <ImageView
         android:id="@+id/act_memberrecord_iv_empty"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerInside"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scaleType="fitCenter"
         android:src="@mipmap/iv_empty"
         android:visibility="gone"/>
 

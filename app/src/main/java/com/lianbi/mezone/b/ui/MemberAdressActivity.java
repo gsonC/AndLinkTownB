@@ -86,8 +86,8 @@ public class MemberAdressActivity extends BaseActivity {
 		}
 	//	String reqTime = AbDateUtil.getDateTimeNow();
 	//	String uuid = AbStrUtil.getUUID();
-		ContentUtils.showMsg(MemberAdressActivity.this,
-				"添加成功");
+	//	ContentUtils.showMsg(MemberAdressActivity.this,
+	//			"添加成功");
 		Intent intent = new Intent();
 		intent.putExtra("address", remarks);
 		setResult(RESULT_OK, intent);

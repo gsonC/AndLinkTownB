@@ -2,7 +2,7 @@ package com.lianbi.mezone.b.ui;
 /*
  * @创建者     Administrator
  * @创建时间   2016/8/11 9:58
- * @描述       ${TODO}
+ * @描述       添加会员会员信息管理
  *
  * @更新者     $Author$ 
  * @更新时间   $Date$
@@ -28,12 +28,14 @@ import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
 import com.lianbi.mezone.b.photo.PopupWindowHelper;
 import com.xizhi.mezone.b.R;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import cn.com.hgh.timeselector.TimeSelectorE;
 import cn.com.hgh.utils.AbDateUtil;
 import cn.com.hgh.utils.AbStrUtil;
 import cn.com.hgh.utils.ContentUtils;
+import cn.com.hgh.utils.MathExtend;
 import cn.com.hgh.utils.REGX;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.utils.ScreenUtils;
@@ -42,34 +44,17 @@ import cn.com.hgh.view.ContainsEmojiEditText;
 
 public class AddNewMembersActivity extends BaseActivity {
 
-	private ClearEditText mEditAddmemberPhone;
-	private EditText mEtMemberbirthday;
-	private ClearEditText mEditMembercardnumber;
-	private EditText mEtMembercardtermofvalidity;
-	private ClearEditText mEditIDnumber;
-	private TextView mTvMunberadress;
-	private TextView mTvRemarks;
+	private ClearEditText mEditAddmemberPhone, mEditMembercardnumber, mEditIDnumber;
+	private EditText mEtMemberbirthday, mEtMembercardtermofvalidity;
+	private TextView mTvMunberadress, mTvRemarks, mTvMemberfile, mTvRecordsofconsumption, mTvIntegralrecord,
+			mTvMunberadressVisable, mTvMunberremarksVisable, mTvAddmemberSex, mTvAddmembertag, mEditAddmemberPhone1, mTvMembertype, mTvAddmemberDiscount, mTvAddmemberMax, mTvAddmemberIntegral;
 	private ContainsEmojiEditText mEditMembername;
-	private LinearLayout mLltAddmemberaddress;
-	private LinearLayout mLltAddmemberremarks;
-	private TextView mTvMemberfile;
-	private TextView mTvRecordsofconsumption;
-	private TextView mTvIntegralrecord;
+	private LinearLayout mLltAddmemberaddress, mLltAddmemberremarks;
 	private MemberInfoBean mMemberInfoBean;
-	private TextView mTvMunberadressVisable;
-	private TextView mTvMunberremarksVisable;
-	private View mViewVisibale;
-	private TextView mTvAddmemberSex;
-	private View mPickSexView;
+	private View mViewVisibale, mPickSexView;
 	private PopupWindow pw = null;
-	private TextView mTvAddmembertag;
-	private TextView mEditAddmemberPhone1;
-	private TextView mTvMembertype;
-	private TextView mTvAddmemberDiscount;
-	private TextView mTvAddmemberMax;
-	private TextView mTvAddmemberIntegral;
 	private boolean mIsShow;
-	private String mVipLabel;
+	private String mVipLabel = "";
 
 
 	@Override
@@ -104,7 +89,6 @@ public class AddNewMembersActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				pw.dismiss();
-				System.out.println("取消");
 			}
 		});
 		mPickSexView.setOnClickListener(new View.OnClickListener() {
@@ -155,7 +139,6 @@ public class AddNewMembersActivity extends BaseActivity {
 			mViewVisibale.setVisibility(View.VISIBLE);
 			view_line1.setVisibility(View.VISIBLE);
 			mMemberInfoBean = (MemberInfoBean) getIntent().getSerializableExtra("memberInfo");
-			System.out.println("memberInfo" + mMemberInfoBean.getVipPhone());
 			getMemberInfo();
 
 		} else {
@@ -187,7 +170,7 @@ public class AddNewMembersActivity extends BaseActivity {
 
 				@Override
 				public void onResponseFailed(String msg) {
-					ContentUtils.showMsg(AddNewMembersActivity.this,"获取会员信息失败");
+					ContentUtils.showMsg(AddNewMembersActivity.this, "获取会员信息失败");
 				}
 			});
 		} catch (Exception e) {
@@ -262,32 +245,69 @@ public class AddNewMembersActivity extends BaseActivity {
 	 */
 	private void fillView(MemberDetailsBean memberDetails) {
 		if (memberDetails != null) {
-			mEditAddmemberPhone.setText(memberDetails.getVipPhone()+"");
-			mTvMembertype.setText(memberDetails.getVipType()+"");
-			mTvAddmemberDiscount.setText(memberDetails.getTypeDiscountRatio()+"");
-			mTvAddmemberMax.setText(memberDetails.getTypeMaxDiscount()+"");
-			mTvAddmemberIntegral.setText(memberDetails.getVipIntegral()+"");
-			wordsAdapter(memberDetails.getLablelLists().getLabelName(), "请选择会员标签", mTvAddmembertag);
+			wordsAdapter(memberDetails.getVipPhone(), "请输入手机号码", mEditAddmemberPhone);
+			wordsAdapter(memberDetails.getVipTypeObject().getTypeName(), "普通会员", mTvMembertype);
+			Integer typeDiscountRatio = memberDetails.getVipTypeObject().getTypeDiscountRatio();
+			Integer TypeMaxDiscount = memberDetails.getVipTypeObject().getTypeMaxDiscount();
+			int vipIntegral = memberDetails.getVipIntegral();
+			if (typeDiscountRatio != null) {
+				mTvAddmemberDiscount.setText(MathExtend.roundNew(new BigDecimal(typeDiscountRatio)
+						.divide(new BigDecimal(100)).doubleValue(), 1));
+			} else {
+				mTvAddmemberDiscount.setText("无");
+			}
+			if (TypeMaxDiscount != null) {
+				mTvAddmemberMax.setText(MathExtend.roundNew(new BigDecimal(TypeMaxDiscount)
+						.divide(new BigDecimal(100)).doubleValue(), 1));
+			} else {
+				mTvAddmemberMax.setText("无");
+			}
+			if (0 != vipIntegral) {
+				mTvAddmemberIntegral.setText(MathExtend.roundNew(new BigDecimal(vipIntegral)
+						.divide(new BigDecimal(100)).doubleValue(), 1));
+			} else {
+				mTvAddmemberIntegral.setText("0");
+			}
+			//	wordsAdapter(memberDetails.getLablelList().getLabelName(), "请选择会员标签", mTvAddmembertag);
 			wordsAdapter(memberDetails.getVipName(), "请输入会员姓名", mEditMembername);
-			if("2".equals(memberDetails.getVipSex())){
+			if (2 == memberDetails.getVipSex()) {
 				mTvAddmemberSex.setText("女");
-			}else{
+			} else {
 				mTvAddmemberSex.setText("男");
 			}
-			wordsAdapter(memberDetails.getVipBirthday().replaceAll(":","-"), "点击设置会员生日", mEtMemberbirthday);
+			if (!TextUtils.isEmpty(memberDetails.getVipBirthday())) {
+				mEtMemberbirthday.setText(memberDetails.getVipBirthday().replaceAll(":", "-"));
+			} else {
+				mEtMemberbirthday.setHint("点击设置会员生日");
+			}
+			if (!TextUtils.isEmpty(memberDetails.getVipValidityPeriod())) {
+				mEtMembercardtermofvalidity.setText(memberDetails.getVipValidityPeriod().replaceAll(":", "-"));
+			} else {
+				mEtMemberbirthday.setHint("点击设置会员生日");
+			}
 			wordsAdapter(memberDetails.getVipCardNo(), "请输入会员卡号", mEditMembercardnumber);
-			wordsAdapter(memberDetails.getVipValidityPeriod().replaceAll(":","-"), "点击设置有效期", mEtMembercardtermofvalidity);
-			wordsAdapter(memberDetails.getVipId(), "请输入身份证号", mEditIDnumber);
-			wordsAdapter(memberDetails.getVipAddress(), "请输入联系地址", mTvMunberadressVisable);
-			wordsAdapter(memberDetails.getVipRemarks(), "请输入备注说明", mTvMunberremarksVisable);
+			wordsAdapter(memberDetails.getVipIdNo(), "请输入身份证号", mEditIDnumber);
+			if (!TextUtils.isEmpty(memberDetails.getVipAddress())) {
+				mTvMunberadressVisable.setVisibility(View.GONE);
+				mTvMunberadress.setText(memberDetails.getVipAddress());
+			} else {
+				mTvMunberadressVisable.setVisibility(View.VISIBLE);
+			}
+			if (!TextUtils.isEmpty(memberDetails.getVipRemarks())) {
+				mTvMunberremarksVisable.setVisibility(View.GONE);
+				mTvRemarks.setText(memberDetails.getVipRemarks());
+			} else {
+				mTvMunberremarksVisable.setVisibility(View.VISIBLE);
+			}
 		}
+
 	}
 
 	/**
 	 * 添加会员文字展现
 	 */
 	private void wordsAdapter(String memberAttribute, String hintwords, TextView tvs) {
-		if (!AbStrUtil.isEmpty(memberAttribute)) {
+		if (!TextUtils.isEmpty(memberAttribute)) {
 			tvs.setText(memberAttribute + "");
 		} else {
 			tvs.setHint(hintwords + "");
@@ -369,7 +389,6 @@ public class AddNewMembersActivity extends BaseActivity {
 				timeSelectorP.setMode(TimeSelectorE.MODE.YMD);
 				timeSelectorP.setTitle("会员卡有效期");
 				timeSelectorP.show();
-
 				break;
 			case R.id.tv_addmembertag://会员标签
 				Intent member_tag = new Intent(this, SelectTagActivity.class);
@@ -377,12 +396,12 @@ public class AddNewMembersActivity extends BaseActivity {
 				break;
 			case R.id.llt_addmemberaddress://会员地址
 				Intent shop_address = new Intent(this, MemberAdressActivity.class);
-				shop_address.putExtra("address", "");
+				shop_address.putExtra("address", mMemberInfoBean.getVipAddress());
 				startActivityForResult(shop_address, REQUEST_ADDRESS);
 				break;
 			case R.id.llt_addmemberremarks://会员备注
 				Intent shop_connect = new Intent(this, MemberRemarksActivity.class);
-				shop_connect.putExtra("remarks", "");
+				shop_connect.putExtra("remarks", mMemberInfoBean.getVipRemarks());
 				startActivityForResult(shop_connect, REQUEST_REMARKS);
 				break;
 		}
@@ -396,6 +415,7 @@ public class AddNewMembersActivity extends BaseActivity {
 				case REQUEST_TAG:
 					String tagContent = data.getStringExtra("tagContent");
 					mVipLabel = data.getStringExtra("tagID");
+					System.out.println("mVipLabel--"+mVipLabel);
 					if (!AbStrUtil.isEmpty(tagContent) && !AbStrUtil.isEmpty(mVipLabel)) {
 						mTvAddmembertag.setText(tagContent);
 					} else {
@@ -425,11 +445,9 @@ public class AddNewMembersActivity extends BaseActivity {
 		}
 	}
 
-	/**
-	 * 右上角点击事件
-	 */
 	@Override
 	protected void onTitleRightClickTv() {
+		super.onTitleRightClickTv();
 		verify();
 	}
 
@@ -450,10 +468,8 @@ public class AddNewMembersActivity extends BaseActivity {
 			vipSex = "2";
 		}
 		String vipBirthday = mEtMemberbirthday.getText().toString().trim();//会员生日
-		vipBirthday.replaceAll("-", ":");
 		String vipCardNo = mEditMembercardnumber.getText().toString().trim();//会员卡号
 		String vipValidityPeriod = mEtMembercardtermofvalidity.getText().toString().trim();//会员有效期
-		vipValidityPeriod.replaceAll("-", ":");
 		String vipIdNo = mEditIDnumber.getText().toString().trim();//会员身份证
 		String vipAddress = mTvMunberadress.getText().toString().trim();//联系地址
 		String vipRemarks = mTvRemarks.getText().toString().trim();//备注说明
@@ -468,25 +484,26 @@ public class AddNewMembersActivity extends BaseActivity {
 		}
 
 		System.out.println("会员电话--" + vipPhone);
-		System.out.println("会员标签--" + memberTag);
+	//	System.out.println("会员ID--" + mMemberInfoBean.getVipId());
 		System.out.println("会员姓名--" + vipName);
 		System.out.println("会员性别--" + vipSex);
-		System.out.println("会员生日--" + vipBirthday);
-		System.out.println("会员卡号--" + vipCardNo);
-		System.out.println("会员卡有效期--" + vipValidityPeriod);
-		System.out.println("会员卡有效期--" + vipValidityPeriod);
+		System.out.println("会员标签--" + mVipLabel);
 		System.out.println("会员身份证--" + vipIdNo);
+		System.out.println("会员卡号--" + vipCardNo);
 		System.out.println("会员联系地址--" + vipAddress);
+		System.out.println("会员生日--" + vipBirthday);
+		System.out.println("会员卡有效期--" + vipValidityPeriod);
 		System.out.println("会员备注说明--" + vipRemarks);
-
+	//	String reqTime = AbDateUtil.getDateTimeNow();
+	//	String uuid = AbStrUtil.getUUID();
 		if (mIsShow) {
 			String reqTime = AbDateUtil.getDateTimeNow();
 			String uuid = AbStrUtil.getUUID();
 			try {
-				okHttpsImp.addOrUpdateMember(uuid, "app", reqTime, OkHttpsImp.md5_key, "updateVip", userShopInfoBean.getBusinessId(),
-						vipPhone, mMemberInfoBean.getVipId(), vipName, vipSex, null, mVipLabel,
-						vipIdNo, vipCardNo, vipAddress, "", vipBirthday, vipIntegral, "",
-						vipValidityPeriod, vipRemarks, mMemberInfoBean.getVipSource(), new MyResultCallback<String>() {
+				okHttpsImp.addOrUpdateMember(uuid, "app", reqTime, OkHttpsImp.md5_key, userShopInfoBean.getBusinessId(),
+						vipPhone, mMemberInfoBean.getVipId(), vipName, vipSex, mVipLabel,
+						vipIdNo, vipCardNo, vipAddress, vipBirthday,
+						vipValidityPeriod, vipRemarks, new MyResultCallback<String>() {
 							@Override
 							public void onResponseResult(Result result) {
 								ContentUtils.showMsg(AddNewMembersActivity.this,
@@ -505,15 +522,14 @@ public class AddNewMembersActivity extends BaseActivity {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-
 		} else {
 			String reqTime = AbDateUtil.getDateTimeNow();
 			String uuid = AbStrUtil.getUUID();
 			try {
-				okHttpsImp.addOrUpdateMember(uuid, "app", reqTime, OkHttpsImp.md5_key, "addVip", userShopInfoBean.getBusinessId(),
-						vipPhone, mMemberInfoBean.getVipId(), vipName, vipSex, null, mVipLabel,
-						vipIdNo, vipCardNo, vipAddress, "", vipBirthday, vipIntegral, "",
-						vipValidityPeriod, vipRemarks, mMemberInfoBean.getVipSource(), new MyResultCallback<String>() {
+				okHttpsImp.addNewMemberByID(uuid, "app", reqTime, OkHttpsImp.md5_key, userShopInfoBean.getBusinessId(),
+						vipPhone, vipName, vipSex, mVipLabel,
+						vipIdNo, vipCardNo, vipAddress, vipBirthday,
+						vipValidityPeriod, vipRemarks, new MyResultCallback<String>() {
 							@Override
 							public void onResponseResult(Result result) {
 								ContentUtils.showMsg(AddNewMembersActivity.this,
@@ -533,7 +549,10 @@ public class AddNewMembersActivity extends BaseActivity {
 				e.printStackTrace();
 			}
 
+
 		}
+
+
 	}
 
 	@Override
