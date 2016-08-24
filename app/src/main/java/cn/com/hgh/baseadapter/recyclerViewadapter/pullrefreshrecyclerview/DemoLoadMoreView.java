@@ -1,4 +1,4 @@
-package cn.com.hgh.baseadapter.recyclerViewadapter.mypullrefreshrecyclerview;
+package cn.com.hgh.baseadapter.recyclerViewadapter.pullrefreshrecyclerview;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -51,7 +51,7 @@ public class DemoLoadMoreView extends BaseLoadMoreView {
         paint.setStrokeWidth(10);// 画笔宽度
         paint.setStyle(Paint.Style.STROKE);// 中空
         c.drawCircle((right - left) / 2 - mCircleOffset, bottom, mCircleSize, paint);//在中心为（(right - left)/2,bottom）的地方画个半径为mCircleSize的圆，
-        paint.setColor(Color.GREEN);// 设置画笔为绿色
+        paint.setColor(Color.WHITE);// 设置画笔为绿色
         oval.set((right - left) / 2 - mCircleOffset - mCircleSize, bottom - mCircleSize, (right - left) / 2 - mCircleOffset + mCircleSize, bottom + mCircleSize);// 在Circle小于圈圈大小的地方画圆，这样也就保证了半径为mCircleSize
         c.drawArc(oval, -90, ((float) mProgress / 100) * 360, false, paint);// 圆弧，第二个参数为：起始角度，第三个为跨的角度，第四个为true的时候是实心，false的时候为空心
         paint.reset();// 将画笔重置

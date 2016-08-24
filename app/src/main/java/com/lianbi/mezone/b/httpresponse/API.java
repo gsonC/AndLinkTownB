@@ -639,4 +639,20 @@ public class API {
 	* 会员积分记录
 	* */
 	public static final String INTEGRALRECORD = "vipIntegral/vipIntegralList.do";
+///////////////////////////////////////////////////////会员管理部分接口////////////////////////////////////////////////////////////////////////////
+	/*
+		* 会员分类列表
+		* */
+	public static final String MEMBER_CATEGORY_LIST= "vipType/vipTypeList.do";
+	/*
+       * 添加会员类别
+       * */
+	public static final String ADDMEMBER_CATEGORY_LIST = "vipType/addVipType.do";
+	/*
+       * 会员类别详情
+       * */
+	public static final String MEMBER_TYPEDETAIL_LIST = "vipType/detailVipType.do";
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }

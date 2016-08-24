@@ -2,17 +2,23 @@ package com.lianbi.mezone.b.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+import com.lianbi.mezone.b.bean.MemberClassify;
+import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.xizhi.mezone.b.R;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.com.hgh.utils.Result;
+import cn.com.hgh.view.HttpDialog;
 
 /**
  * 新增分类
@@ -69,6 +75,8 @@ public class MemberAddCategoryActivity extends BaseActivity {
     TextView tvBetween;
     @Bind(R.id.et_rangeafter)
     EditText etRangeafter;
+    @Bind(R.id.tv_specificfigures)
+    TextView tvSpecificfigures;
     @Bind(R.id.et_element)
     TextView etElement;
     @Bind(R.id.lay_required)
@@ -82,6 +90,9 @@ public class MemberAddCategoryActivity extends BaseActivity {
 
     @Bind(R.id.lay_numofmembers)
     LinearLayout lay_numofmembers;
+    HttpDialog dialog;
+
+
     @OnClick({R.id.tv_addmembercategory})
     public void OnClick(View v) {
         switch (v.getId()) {
@@ -105,16 +116,69 @@ public class MemberAddCategoryActivity extends BaseActivity {
      * 初始化View
      */
     private void initViewAndData() {
+        dialog = new HttpDialog(this);
         getIntent = getIntent();
+        MemberClassify  memberclassify = (MemberClassify)getIntent.getSerializableExtra("info");
+        String membertypeId=memberclassify.getTypeId();
         String nametype = getIntent.getStringExtra("type");
         setPageTitle(nametype);
         if (nametype.equals("分类详情")) {
             setPageRightText("修改");
-            lay_numofmembers.setVerticalGravity(View.VISIBLE);
+            getMemberTypedetail(membertypeId);
+
         }else if(nametype.equals("新增分类")){
             setPageRightText("保存");
             lay_numofmembers.setVerticalGravity(View.GONE);
         }
+
+    }
+
+    public  void getMemberTypedetail(String membertypeId){
+        try {
+            okHttpsImp.getMemberTypedetaiL(new MyResultCallback<String>() {
+
+                @Override
+                public void onResponseResult(Result result) {
+                    String reString = result.getData();
+                    if (reString != null) {
+                        MemberClassify memberclassify = JSON.parseObject(reString,
+                                MemberClassify.class);
+
+                        if (memberclassify != null) {
+                            if (!TextUtils.isEmpty(memberclassify.getTypeName())) {
+                                tvClassifyvalue.setText(memberclassify.getTypeName());
+                            }
+                            if (!TextUtils.isEmpty(memberclassify.getTypeDiscountRatio())) {
+                                tvRadiovalue.setText(memberclassify.getTypeDiscountRatio());
+                            }
+                            if (!TextUtils.isEmpty(String.valueOf(memberclassify.getTypeMaxDiscount()))) {
+                                tvMaxidiscountvalue.setText(String.valueOf(memberclassify.getTypeMaxDiscount()));
+                            }
+                            if (!TextUtils.isEmpty(String.valueOf(memberclassify.getTypeConditionMin()))) {
+                                etRangebefore.setText(String.valueOf(memberclassify.getTypeConditionMin()));
+                            }
+                            if (!TextUtils.isEmpty(String.valueOf(memberclassify.getTypeConditionMin()))) {
+                                etRangeafter.setText(String.valueOf(memberclassify.getTypeConditionMax()));
+                            }
+                            if (!TextUtils.isEmpty(String.valueOf(memberclassify.getThisTypeCount()))) {
+                                tvSpecificfigures.setText(String.valueOf(memberclassify.getThisTypeCount()));
+                            }
+
+                        }
+                        }
+                    dialog.dismiss();
+                }
+
+                @Override
+                public void onResponseFailed(String msg) {
+                    dialog.dismiss();
+                }
+            }, userShopInfoBean.getBusinessId(),membertypeId, reqTime, uuid);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
 
     }
     @Override
@@ -122,8 +186,8 @@ public class MemberAddCategoryActivity extends BaseActivity {
         super.onTitleRightClickTv();
         finish();
     }
-
 }
+
 
 
 

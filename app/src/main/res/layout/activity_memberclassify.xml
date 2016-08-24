@@ -24,6 +24,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="会员类别"
+            android:textColor="@color/showcolor"
             android:textSize="16sp" />
 
         <View
@@ -39,6 +40,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="会员数"
+            android:textColor="@color/showcolor"
             android:textSize="16sp" />
 
         <View
@@ -54,6 +56,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="会员折扣"
+            android:textColor="@color/showcolor"
             android:textSize="16sp" />
 
         <View
@@ -69,6 +72,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="积分比例"
+            android:textColor="@color/showcolor"
             android:textSize="16sp" />
     </LinearLayout>
     <View

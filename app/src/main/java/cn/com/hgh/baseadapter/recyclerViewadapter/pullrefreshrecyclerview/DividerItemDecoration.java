@@ -1,4 +1,4 @@
-package cn.com.hgh.baseadapter.recyclerViewadapter.mypullrefreshrecyclerview;
+package cn.com.hgh.baseadapter.recyclerViewadapter.pullrefreshrecyclerview;
 
 /*
  * Copyright (C) 2014 The Android Open Source Project
@@ -67,7 +67,7 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
         final int childCount = parent.getChildCount();
         for (int i = 0; i < childCount; i++) {
             final View child = parent.getChildAt(i);
-            android.support.v7.widget.RecyclerView v = new android.support.v7.widget.RecyclerView(parent.getContext());
+            RecyclerView v = new RecyclerView(parent.getContext());
             final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child
                     .getLayoutParams();
             final int top = child.getBottom() + params.bottomMargin;

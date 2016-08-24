@@ -168,7 +168,7 @@ public class MarketingMsgGlActivity extends BaseActivity {
         mPtrrview.getRecyclerView().addItemDecoration(new DividerItemDecoration(this,
                 DividerItemDecoration.VERTICAL_LIST));
 //        mPtrrv.addHeaderView(View.inflate(this, R.layout.header, null));
-//         mPtrrv.setEmptyView(View.inflate(this,R.layout.activity_memberclassify,null));
+      //  mPtrrview.setEmptyView(View.inflate(this,R.layout.act_register,null));
         mPtrrview.setLoadMoreFooter(loadMoreView);
         mPtrrview.getLoadMoreFooter().setOnDrawListener(new BaseLoadMoreView.OnDrawListener() {
             @Override

@@ -10,7 +10,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.lhh.ptrrv.library.PullToRefreshRecyclerView;
@@ -33,12 +31,11 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.com.hgh.baseadapter.recyclerViewadapter.mypullrefreshrecyclerview.DemoLoadMoreView;
-import cn.com.hgh.baseadapter.recyclerViewadapter.mypullrefreshrecyclerview.DividerItemDecoration;
+import cn.com.hgh.baseadapter.recyclerViewadapter.pullrefreshrecyclerview.DemoLoadMoreView;
+import cn.com.hgh.baseadapter.recyclerViewadapter.pullrefreshrecyclerview.DividerItemDecoration;
 import cn.com.hgh.baseadapter.recyclerViewadapter.pullrefreshrecyclerview.PullRefreshRecyclerAdapter;
 import cn.com.hgh.baseadapter.recyclerViewadapter.pullrefreshrecyclerview.PullRefreshViewHolder;
 import cn.com.hgh.utils.Result;
@@ -77,16 +74,19 @@ public class MemberClassifyActivity extends BaseActivity {
     HttpDialog dialog;
     private DataAdapter mAdapter;
     private Context mContext;
-    int AAA;
     int i = 0;
     private RecyclerView mRecyclerView;
-    private static final int DEFAULT_ITEM_SIZE = 20;
-    private static final int ITEM_SIZE_OFFSET = 20;
     private static final int TIME = 1000;
 
     private static final int MSG_CODE_REFRESH = 0;
     private static final int MSG_CODE_LOADMORE = 1;
+    boolean  isLoadMore=false;
 
+    //第几页
+    private int  page=1;
+    //每页个数
+    private String  eachpullnum="10";
+    boolean  Nodata=false;
     @OnClick({R.id.text_newcategory})
     public void OnClick(View v) {
         switch (v.getId()) {
@@ -114,9 +114,7 @@ public class MemberClassifyActivity extends BaseActivity {
         initViewAndData();
 
     }
-    /**
-     * 初始化View
-     */
+
     private void initViewAndData() {
         setPageTitle("会员分类");
         dialog = new HttpDialog(this);
@@ -151,26 +149,14 @@ public class MemberClassifyActivity extends BaseActivity {
         });
         mPtrrv.getRecyclerView().addItemDecoration(new DividerItemDecoration(this,
                 DividerItemDecoration.VERTICAL_LIST));
-//        mPtrrv.addHeaderView(View.inflate(this, R.layout.header, null));
-//         mPtrrv.setEmptyView(View.inflate(this,R.layout.activity_memberclassify,null));
         mPtrrv.setLoadMoreFooter(loadMoreView);
         mPtrrv.getLoadMoreFooter().setOnDrawListener(new BaseLoadMoreView.OnDrawListener() {
             @Override
             public boolean onDrawLoadMore(Canvas c, RecyclerView parent) {
-                Log.i("onDrawLoadMore","draw load more");
-
 
                 return false;
             }
         });
-        for (int i = 0; i < 50; i++) {
-            MemberClassify memberclassify = new MemberClassify();
-            memberclassify.setTypeName("二级会员");
-            memberclassify.setDataSize("101");
-            memberclassify.setTypeDiscountRatio("35");
-            memberclassify.setTypeDiscountRatio("62");
-            mDatas.add(memberclassify);
-        }
         mAdapter = new DataAdapter(this,mDatas);
         mPtrrv.setAdapter(mAdapter);
         mPtrrv.onFinishLoading(true, false);
@@ -184,32 +170,15 @@ public class MemberClassifyActivity extends BaseActivity {
                 mPtrrv.setOnRefreshComplete();
                 mPtrrv.onFinishLoading(true, false);
             } else if (msg.what == MSG_CODE_LOADMORE) {
-                  if(i==3){
-                       Toast.makeText(MemberClassifyActivity.this, "无数据", Toast.LENGTH_SHORT).show();
-                        isshow=true;
+                if(Nodata==true){
                         MemberClassify memberclassify = new MemberClassify();
-                        memberclassify.setTypeName("四级会员");
-                        memberclassify.setDataSize("101");
-                        memberclassify.setTypeDiscountRatio("35");
-                        memberclassify.setTypeDiscountRatio("62");
                         mDatas.add(memberclassify);
                         mAdapter.notifyDataSetChanged();
                         mPtrrv.onFinishLoading(false, false);
 
-                    }else{
-                        isshow=false;
-                        i=i+1;
-                        for (int i = 0; i < 50; i++) {
-                        MemberClassify memberclassify = new MemberClassify();
-                        memberclassify.setTypeName("三级会员");
-                        memberclassify.setDataSize("101");
-                        memberclassify.setTypeDiscountRatio("35");
-                        memberclassify.setTypeDiscountRatio("62");
-                        mDatas.add(memberclassify);
-                            mAdapter.notifyDataSetChanged();
-                            mPtrrv.onFinishLoading(true, false);
-                    }}
-
+                }else{
+                       getMemberCategoryList();
+                }
             }
         }
     };
@@ -221,18 +190,31 @@ public class MemberClassifyActivity extends BaseActivity {
                 @Override
                 public void onResponseResult(Result result) {
                     String reString = result.getData();
+                    String  dataSize;
                     if (reString != null) {
                         JSONObject jsonObject;
                         try {
                             jsonObject = new JSONObject(reString);
                             reString = jsonObject.getString("vipTypeList");
+                            dataSize = jsonObject.getString("dataSize");
+                            if(dataSize.equals("0")){
+                                Nodata=true;
+                                mAdapter.notifyDataSetChanged();
+                                mPtrrv.onFinishLoading(false, false);
+                                return;
+                            }
                             if (!TextUtils.isEmpty(reString)) {
+                                Nodata=false;
                                 mData.clear();
                                 ArrayList<MemberClassify> memberclassifyList = (ArrayList<MemberClassify>) JSON
                                         .parseArray(reString,
                                                 MemberClassify.class);
                                 mData.addAll(memberclassifyList);
                                 updateView(mData);
+                                mAdapter.notifyDataSetChanged();
+                                mPtrrv.onFinishLoading(true, false);
+                                page=page+1;
+
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -244,21 +226,19 @@ public class MemberClassifyActivity extends BaseActivity {
                 @Override
                 public void onResponseFailed(String msg) {
                     dialog.dismiss();
+                    mPtrrv.onFinishLoading(true, false);
+
                 }
-            }, userShopInfoBean.getBusinessId(), "", "", reqTime, uuid);
+            }, userShopInfoBean.getBusinessId(), String.valueOf(page),eachpullnum, reqTime, uuid);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     protected void updateView(ArrayList<MemberClassify> arrayList) {
-        mDatas.clear();
         mDatas.addAll(arrayList);
         mAdapter.notifyDataSetChanged();
     }
-
-    boolean  isshow=false;
-    boolean  isLoadMore=false;
 
     class DataAdapter extends PullRefreshRecyclerAdapter<MemberClassify> {
 
@@ -298,7 +278,7 @@ public class MemberClassifyActivity extends BaseActivity {
 
             @Override
             public void onBindViewHolder(int position) {
-                if(isshow==true&&position==mDatas.size()-1)
+                if(Nodata==true&&position==mDatas.size()-1)
                 {
                     isLoadMore=true;
                     llt_memberclass.setVisibility(View.GONE);
@@ -306,7 +286,7 @@ public class MemberClassifyActivity extends BaseActivity {
                     tv_loadedall.setVisibility(View.VISIBLE);
                  }else{
                     tv_memberclassify.setText(mDatas.get(position).getTypeName());
-                    tv_memebernum.setText(mDatas.get(position).getDataSize());
+                    tv_memebernum.setText(String.valueOf(mDatas.get(position).getThisTypeCount()));
                     tv_memberdiscount.setText(mDatas.get(position).getTypeDiscountRatio());
                     tv_memberratio.setText(mDatas.get(position).getTypeDiscountRatio());
                     tv_loadedall.setVisibility(View.GONE);
@@ -318,8 +298,11 @@ public class MemberClassifyActivity extends BaseActivity {
 
             @Override
             protected void onItemClick(View view, int adapterPosition) {
-                simpleJump(MemberAddCategoryActivity.class, "分类详情");
-                Toast.makeText(mContext, "This is item " + adapterPosition, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent();
+                intent.setClass(MemberClassifyActivity.this,MemberAddCategoryActivity.class);
+                intent.putExtra("type", "分类详情");
+                intent.putExtra("info",mDatas.get(adapterPosition));
+                startActivity(intent);
 
             }
         }
