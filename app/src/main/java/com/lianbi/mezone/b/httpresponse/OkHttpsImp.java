@@ -2,6 +2,7 @@ package com.lianbi.mezone.b.httpresponse;
 
 import android.content.Context;
 import android.os.Environment;
+import android.util.Log;
 import android.widget.ProgressBar;
 
 import com.lianbi.mezone.b.ui.BaseActivity;
@@ -576,8 +577,8 @@ public enum OkHttpsImp {
 	 */
 	public void addMemberCategories(
 			MyResultCallback<String> myResultCallback, String businessId, String typeName,
-			String typeDiscountRatio, String typeMaxDiscount, String typeConditionMin,
-			String typeConditionMax,
+			String typeDiscountRatio, String typeMaxDiscount,
+			String typeConditionMin,String typeConditionMax,
 			String reqTime, String uuid) throws Exception {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("businessId", businessId);
@@ -593,6 +594,34 @@ public enum OkHttpsImp {
 		params.put("sign", sign);
 		String url = getAbsoluteUrl(API.ADDMEMBER_CATEGORY_LIST);
 		postProgressResponse(myResultCallback, params, url);
+	}
+	/**
+	 * 修改会员类别
+	 */
+	public void  upDateMemberCategories(
+			MyResultCallback<String> myResultCallback, String businessId, String typeName,
+			String  typeId,
+			String typeDiscountRatio, String typeMaxDiscount, String typeConditionMin,
+			String typeConditionMax,
+			String reqTime, String uuid) throws Exception {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("businessId", businessId);
+		params.put("typeName", typeName);
+		params.put("typeId", typeId);
+		params.put("typeDiscountRatio", typeDiscountRatio);
+		params.put("typeMaxDiscount", typeMaxDiscount);
+		params.put("typeConditionMin", typeConditionMin);
+		params.put("typeConditionMax", typeConditionMax);
+		params.put("reqTime", reqTime);
+		params.put("serNum", uuid);
+		params.put("source", appsource);
+		String sign = getSign(md5_key, params);
+		params.put("sign", sign);
+		String url = getAbsoluteUrl(API.MEMBER_TYPEUPDATE_LIST);
+		Log.i("tag","okhttp  621----------->"+url);
+		getProgressResponse(myResultCallback, params, url);
+
+//		postProgressResponse(myResultCallback, params, url);
 	}
 
 	/**
@@ -651,10 +680,18 @@ public enum OkHttpsImp {
 		params.put("source", appsource);
 		String sign = getSign(md5_key, params);
 		params.put("sign", sign);
-		String url = getAbsoluteUrl(API.MEMBER_CATEGORY_LIST);
+//		String url = getAbsoluteUrl("TProMsgSendService/querySendMsgStatistic.do");
+		String url =getHttpUrlAAA(businessId,"querySendMsgStatistic");
 		postProgressResponse(myResultCallback, params, url);
 	}
-
+	private String getHttpUrlAAA(String storeId, String methodName) {
+		// return "http://172.16.103.153:8085/wcm/serviceMall/".concat(storeId)
+		// .concat("/").concat(methodName);
+		return API.ENVIRONMENTAL
+				+ "/msg/querySendMsgStatistic/"
+//				.concat(storeId).concat("/")
+				.concat(methodName);
+	}
 	/**
 	 * 新建营销短信发送短信
 	 */

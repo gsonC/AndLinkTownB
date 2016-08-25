@@ -17,6 +17,7 @@ import com.xizhi.mezone.b.R;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.view.HttpDialog;
 
@@ -77,6 +78,8 @@ public class MemberAddCategoryActivity extends BaseActivity {
     EditText etRangeafter;
     @Bind(R.id.tv_specificfigures)
     TextView tvSpecificfigures;
+    @Bind(R.id.tv_membership)
+    TextView tvMembership;
     @Bind(R.id.et_element)
     TextView etElement;
     @Bind(R.id.lay_required)
@@ -91,14 +94,28 @@ public class MemberAddCategoryActivity extends BaseActivity {
     @Bind(R.id.lay_numofmembers)
     LinearLayout lay_numofmembers;
     HttpDialog dialog;
+    String  membertypeId;
+    String  nametype;
 
-
-    @OnClick({R.id.tv_addmembercategory})
+    String  typeName;
+    String  typeId;
+    String  typeDiscountRatio;
+    String  typeMaxDiscount;
+    String  typeConditionMin;
+    String  typeConditionMax;
+    @OnClick({R.id.tv_addmembercategory,R.id.tv_membership})
     public void OnClick(View v) {
         switch (v.getId()) {
             case R.id.tv_addmembercategory:
 
 
+            break;
+            case R.id.tv_membership:
+
+              Intent  intent=new  Intent();
+              intent.setClass(MemberAddCategoryActivity.this,MembersListActivity.class);
+              intent.putExtra("typeId",membertypeId);
+              startActivity(intent);
             break;
 
         }
@@ -118,21 +135,36 @@ public class MemberAddCategoryActivity extends BaseActivity {
     private void initViewAndData() {
         dialog = new HttpDialog(this);
         getIntent = getIntent();
-        MemberClassify  memberclassify = (MemberClassify)getIntent.getSerializableExtra("info");
-        String membertypeId=memberclassify.getTypeId();
-        String nametype = getIntent.getStringExtra("type");
+        nametype = getIntent.getStringExtra("type");
         setPageTitle(nametype);
         if (nametype.equals("分类详情")) {
             setPageRightText("修改");
+            MemberClassify  memberclassify = (MemberClassify)getIntent.getSerializableExtra("info");
+            membertypeId=memberclassify.getTypeId();
+            lay_numofmembers.setVisibility(View.VISIBLE);
+            tvClassifyvalue.setEnabled(false);
+            tvRadiovalue.setEnabled(true);
+            tvMaxidiscountvalue.setEnabled(true);
+            tvWhatmoney.setEnabled(false);
+            tvWhatintegral.setEnabled(false);
+            etRangebefore.setEnabled(true);
+            etRangeafter.setEnabled(true);
             getMemberTypedetail(membertypeId);
-
         }else if(nametype.equals("新增分类")){
             setPageRightText("保存");
-            lay_numofmembers.setVerticalGravity(View.GONE);
+            lay_numofmembers.setVisibility(View.GONE);
+            tvClassifyvalue.setEnabled(true);
+            tvRadiovalue.setEnabled(true);
+            tvMaxidiscountvalue.setEnabled(true);
+            tvWhatmoney.setEnabled(false);
+            tvWhatintegral.setEnabled(false);
+            etRangebefore.setEnabled(true);
+            etRangeafter.setEnabled(true);
         }
 
     }
 
+    /*查询此分类详情**/
     public  void getMemberTypedetail(String membertypeId){
         try {
             okHttpsImp.getMemberTypedetaiL(new MyResultCallback<String>() {
@@ -145,6 +177,9 @@ public class MemberAddCategoryActivity extends BaseActivity {
                                 MemberClassify.class);
 
                         if (memberclassify != null) {
+                            if (!TextUtils.isEmpty(memberclassify.getTypeId())) {
+                            }
+
                             if (!TextUtils.isEmpty(memberclassify.getTypeName())) {
                                 tvClassifyvalue.setText(memberclassify.getTypeName());
                             }
@@ -177,13 +212,86 @@ public class MemberAddCategoryActivity extends BaseActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
-
     }
+    /*修改
+    此分类详情**/
+    public  void getUpDateMemberType(String membertypeId){
+        typeName=tvClassifyvalue.getText().toString();
+        typeDiscountRatio=tvRadiovalue.getText().toString();
+        typeMaxDiscount=tvMaxidiscountvalue.getText().toString();
+        typeConditionMin=etRangebefore.getText().toString();
+        typeConditionMax=etRangeafter.getText().toString();
+
+        try {
+            okHttpsImp.upDateMemberCategories(new MyResultCallback<String>() {
+
+                @Override
+                public void onResponseResult(Result result) {
+                    String reString = result.getData();
+                    ContentUtils.showMsg(MemberAddCategoryActivity.this,"修改成功");
+
+                    if (reString != null) {
+
+
+                    }
+                    dialog.dismiss();
+                }
+
+                @Override
+                public void onResponseFailed(String msg) {
+                    dialog.dismiss();
+                }
+            }, userShopInfoBean.getBusinessId(),typeName,membertypeId,
+                    typeDiscountRatio,typeMaxDiscount,typeConditionMin,typeConditionMax, reqTime, uuid);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    /*添加
+    新的会员分类**/
+    public  void getAddMemberType(){
+        typeName=tvClassifyvalue.getText().toString();
+        typeDiscountRatio=tvRadiovalue.getText().toString();
+        typeMaxDiscount=tvMaxidiscountvalue.getText().toString();
+        typeConditionMin=etRangebefore.getText().toString();
+        typeConditionMax=etRangeafter.getText().toString();
+
+        try {
+            okHttpsImp.addMemberCategories(new MyResultCallback<String>() {
+
+                        @Override
+                        public void onResponseResult(Result result) {
+                            String reString = result.getData();
+                            ContentUtils.showMsg(MemberAddCategoryActivity.this,"添加成功");
+
+                            if (reString != null) {
+
+
+                                     }
+                                     dialog.dismiss();
+                                     }
+
+                                     @Override
+                                     public void onResponseFailed(String msg) {
+                                     dialog.dismiss();
+                                     }
+                                     }, userShopInfoBean.getBusinessId(),typeName,
+                    typeDiscountRatio,typeMaxDiscount,typeConditionMin,typeConditionMax, reqTime, uuid);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     protected void onTitleRightClickTv() {
         super.onTitleRightClickTv();
+        if (nametype.equals("分类详情")) {
+            getUpDateMemberType(membertypeId);
+
+        }else if(nametype.equals("新增分类")){
+            getAddMemberType();
+
+        }
         finish();
     }
 }

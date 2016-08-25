@@ -657,6 +657,9 @@ public class API {
        * */
 	public static final String MEMBER_TYPEDETAIL_LIST = "vipType/detailVipType.do";
 
-
+	/*
+       * 修改会员类别
+       * */
+	public static final String MEMBER_TYPEUPDATE_LIST = "vipType/updVipType.do";
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
