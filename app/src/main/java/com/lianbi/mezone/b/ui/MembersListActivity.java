@@ -86,9 +86,15 @@ public class MembersListActivity extends BaseActivity {
 		initView();
 		setLisenter();
 		initAdapter();
-		getMembersList(true, "","");
+		initGetIntent();
+		getMembersList(true, "",typeID);
 	}
-
+    private   void  initGetIntent(){
+		String typeID=getIntent().getStringExtra("typeId");
+        if(typeID!=null&&!typeID.equals("")){
+			this.typeID=typeID;
+		}
+	}
 	@Override
 	protected void onResume() {
 		super.onResume();
