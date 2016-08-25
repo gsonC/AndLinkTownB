@@ -276,14 +276,18 @@ public class AddNewMembersActivity extends BaseActivity {
 				mTvAddmemberSex.setText("男");
 			}
 			if (!TextUtils.isEmpty(memberDetails.getVipBirthday())) {
-				mEtMemberbirthday.setText(memberDetails.getVipBirthday().replaceAll(":", "-"));
+				String vipBirthday = AbDateUtil.getStringByFormat(Long.valueOf(memberDetails.getVipBirthday())
+						,AbDateUtil.dateFormatYMD);
+				mEtMemberbirthday.setText(vipBirthday);
 			} else {
 				mEtMemberbirthday.setHint("点击设置会员生日");
 			}
 			if (!TextUtils.isEmpty(memberDetails.getVipValidityPeriod())) {
-				mEtMembercardtermofvalidity.setText(memberDetails.getVipValidityPeriod().replaceAll(":", "-"));
+				String vipValidityPeriod = AbDateUtil.getStringByFormat(Long.valueOf(memberDetails.getVipValidityPeriod())
+						,AbDateUtil.dateFormatYMD);
+				mEtMembercardtermofvalidity.setText(vipValidityPeriod);
 			} else {
-				mEtMemberbirthday.setHint("点击设置会员生日");
+				mEtMemberbirthday.setHint("点击设置会员卡有效期");
 			}
 			wordsAdapter(memberDetails.getVipCardNo(), "请输入会员卡号", mEditMembercardnumber);
 			wordsAdapter(memberDetails.getVipIdNo(), "请输入身份证号", mEditIDnumber);
@@ -415,7 +419,6 @@ public class AddNewMembersActivity extends BaseActivity {
 				case REQUEST_TAG:
 					String tagContent = data.getStringExtra("tagContent");
 					mVipLabel = data.getStringExtra("tagID");
-					System.out.println("mVipLabel--"+mVipLabel);
 					if (!AbStrUtil.isEmpty(tagContent) && !AbStrUtil.isEmpty(mVipLabel)) {
 						mTvAddmembertag.setText(tagContent);
 					} else {
@@ -456,10 +459,6 @@ public class AddNewMembersActivity extends BaseActivity {
 	 */
 	private void verify() {
 		String vipPhone = mEditAddmemberPhone.getText().toString().trim();//手机号
-		mTvAddmemberDiscount.getText().toString().trim();//会员折扣
-		mTvAddmemberMax.getText().toString().trim();//会员单笔最高折扣
-		String vipIntegral = mTvAddmemberDiscount.getText().toString().trim();//会员积分
-		String memberTag = mTvAddmembertag.getText().toString().trim();//会员标签
 		String vipName = mEditMembername.getText().toString().trim();//会员姓名
 		String vipSex = mTvAddmemberSex.getText().toString().trim();//会员性别
 		if ("男".equals(vipSex)) {
@@ -468,8 +467,14 @@ public class AddNewMembersActivity extends BaseActivity {
 			vipSex = "2";
 		}
 		String vipBirthday = mEtMemberbirthday.getText().toString().trim();//会员生日
+		if(!AbStrUtil.isEmpty(vipBirthday)){
+			vipBirthday = vipBirthday.replaceAll("-",":");
+		}
 		String vipCardNo = mEditMembercardnumber.getText().toString().trim();//会员卡号
 		String vipValidityPeriod = mEtMembercardtermofvalidity.getText().toString().trim();//会员有效期
+		if(!AbStrUtil.isEmpty(vipValidityPeriod)){
+			vipValidityPeriod = vipValidityPeriod.replaceAll("-",":");
+		}
 		String vipIdNo = mEditIDnumber.getText().toString().trim();//会员身份证
 		String vipAddress = mTvMunberadress.getText().toString().trim();//联系地址
 		String vipRemarks = mTvRemarks.getText().toString().trim();//备注说明
@@ -482,7 +487,6 @@ public class AddNewMembersActivity extends BaseActivity {
 			ContentUtils.showMsg(AddNewMembersActivity.this, "请输入手机号码");
 			return;
 		}
-
 		System.out.println("会员电话--" + vipPhone);
 	//	System.out.println("会员ID--" + mMemberInfoBean.getVipId());
 		System.out.println("会员姓名--" + vipName);
@@ -494,8 +498,6 @@ public class AddNewMembersActivity extends BaseActivity {
 		System.out.println("会员生日--" + vipBirthday);
 		System.out.println("会员卡有效期--" + vipValidityPeriod);
 		System.out.println("会员备注说明--" + vipRemarks);
-	//	String reqTime = AbDateUtil.getDateTimeNow();
-	//	String uuid = AbStrUtil.getUUID();
 		if (mIsShow) {
 			String reqTime = AbDateUtil.getDateTimeNow();
 			String uuid = AbStrUtil.getUUID();

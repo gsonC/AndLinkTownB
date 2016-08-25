@@ -2288,7 +2288,7 @@ public enum OkHttpsImp {
 	 */
 	public void getMembersList(String serNum, String source, String reqTime,
 							   String md5_key, String businessId, String paramLike,
-							   String pageNo, String pageSize,
+							   String typeId,String pageNo, String pageSize,
 							   MyResultCallback<String> myResultCallback) throws Exception {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("businessId", businessId);
@@ -2298,6 +2298,7 @@ public enum OkHttpsImp {
 		params.put("reqTime", reqTime);
 		params.put("serNum", serNum);
 		params.put("source", source);
+		params.put("typeId", typeId);
 		String sign = getSign(md5_key, params);
 		params.put("sign", sign);
 		String url = getAbsoluteUrl(API.MEMBERSLIST);
@@ -2307,7 +2308,7 @@ public enum OkHttpsImp {
 	/**
 	 * 添加或修改会员信息
 	 */
-	public void addOrUpdateMember(String serNum, String source, String reqTime,String md5_key,
+	public void addOrUpdateMember(String serNum, String source, String reqTime, String md5_key,
 								  String businessId, String vipPhone, String vipId, String vipName,
 								  String vipSex, String vipLabel, String vipIdNo, String vipCardNo,
 								  String vipAddress, String vipBirthday, String vipValidityPeriod, String vipRemarks,
@@ -2338,11 +2339,11 @@ public enum OkHttpsImp {
 	/**
 	 * 添加新会员
 	 */
-	public void addNewMemberByID(String serNum, String source, String reqTime,String md5_key,
+	public void addNewMemberByID(String serNum, String source, String reqTime, String md5_key,
 								 String businessId, String vipPhone, String vipName,
 								 String vipSex, String vipLabel, String vipIdNo, String vipCardNo,
 								 String vipAddress, String vipBirthday, String vipValidityPeriod, String vipRemarks,
-								 MyResultCallback<String> myResultCallback) throws Exception{
+								 MyResultCallback<String> myResultCallback) throws Exception {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("businessId", businessId);
 		params.put("reqTime", reqTime);
@@ -2364,7 +2365,6 @@ public enum OkHttpsImp {
 		String url = getAbsoluteUrl(API.ADDORUPDATEMEMBER);
 		getProgressResponse(myResultCallback, params, url);
 	}
-
 
 
 	/**
@@ -2519,8 +2519,6 @@ public enum OkHttpsImp {
 			// .append("&");
 			if (!isChinese(dataMap.get(mapKey))) {
 				builder.append(dataMap.get(mapKey));
-			} else {
-				System.out.println(dataMap.get(mapKey));
 			}
 		}
 		// builder.append("key=").append(md5_key);

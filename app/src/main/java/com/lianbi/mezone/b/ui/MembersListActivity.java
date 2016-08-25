@@ -74,7 +74,8 @@ public class MembersListActivity extends BaseActivity {
 	 * 根据拼音来排雷list数据
 	 */
 	private PinyinComparator mPinyinComparator;
-	private String paramLike;
+	private String paramLike = "";
+	private String typeID = "";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +86,7 @@ public class MembersListActivity extends BaseActivity {
 		initView();
 		setLisenter();
 		initAdapter();
-		getMembersList(true, "");
+		getMembersList(true, "","");
 	}
 
 	@Override
@@ -170,7 +171,7 @@ public class MembersListActivity extends BaseActivity {
 	/**
 	 * 获取会员列表
 	 */
-	private void getMembersList(final boolean isResh, final String paramLike) {
+	private void getMembersList(final boolean isResh, final String paramLike,final String typeId) {
 
 		if (isResh) {
 			page = 1;
@@ -182,7 +183,7 @@ public class MembersListActivity extends BaseActivity {
 
 		try {
 			okHttpsImp.getMembersList(uuid, "app", reqTime, OkHttpsImp.md5_key,
-					userShopInfoBean.getBusinessId(), paramLike, page + "", 20 + "", new MyResultCallback<String>() {
+					userShopInfoBean.getBusinessId(), paramLike,typeId, page + "", 20 + "", new MyResultCallback<String>() {
 
 						@Override
 						public void onResponseResult(Result result) {
@@ -287,7 +288,7 @@ public class MembersListActivity extends BaseActivity {
 					@Override
 					public void onHeaderRefresh(AbPullToRefreshView view) {
 						String params = mAct_member_list_edit.getText().toString().trim();
-						getMembersList(true, params);
+						getMembersList(true, params,typeID);
 					}
 
 				});
@@ -297,7 +298,7 @@ public class MembersListActivity extends BaseActivity {
 					@Override
 					public void onFooterLoad(AbPullToRefreshView view) {
 						String params = mAct_member_list_edit.getText().toString().trim();
-						getMembersList(false, params);
+						getMembersList(false, params,typeID);
 					}
 				});
 
@@ -384,10 +385,10 @@ public class MembersListActivity extends BaseActivity {
 		if (resultCode == RESULT_OK) {
 			switch (requestCode) {
 				case REQUEST_ADDMEMBER://添加会员返回
-					getMembersList(true, "");
+					getMembersList(true, "","");
 					break;
 				case REQUEST_CHANGMEMBERINFO://修改会员信息返回
-					getMembersList(true, "");
+					getMembersList(true, "","");
 					break;
 			}
 		}
@@ -413,9 +414,11 @@ public class MembersListActivity extends BaseActivity {
 		}
 		mAdapter.replaceAll(filterDateList);*/
 
-		if (!AbStrUtil.isEmpty(filterStr)) {
-			getMembersList(false, filterStr);
-		}
+	//	if (!AbStrUtil.isEmpty(filterStr)) {
+			getMembersList(true, filterStr,typeID);
+	//	}else{
+	//		getMembersList(true, "",typeID);
+	//	}
 
 
 	}
