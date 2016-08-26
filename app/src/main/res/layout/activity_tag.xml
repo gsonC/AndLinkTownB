@@ -1,67 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:background="@color/colores_news_14"
+    >
 
-
+    <cn.com.hgh.view.AbPullToRefreshView
+        android:id="@+id/act_Tag_abpulltorefreshview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:visibility="visible">
 
         <cn.com.hgh.view.SlideListView2
-            android:id="@+id/fm_messagefragment_listView"
+            android:id="@+id/fm_Tag_listView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#fff4f7f9"
+            android:background="@color/white"
             android:cacheColorHint="#00000000"
             android:divider="#dddbdb"
             android:dividerHeight="1.0px"
             android:drawSelectorOnTop="false"
             android:listSelector="#00000000"
-            android:scrollbars="none" >
+            android:scrollbars="none">
         </cn.com.hgh.view.SlideListView2>
-
-
+    </cn.com.hgh.view.AbPullToRefreshView>
     <ImageView
+        android:id="@+id/img_tagmanager_empty"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scaleType="center"
+        android:src="@mipmap/iv_empty"
+        android:visibility="gone"/>
+
+    <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/line"
         android:background="@color/colores_news_14"/>
-    <RelativeLayout
-        android:id="@+id/point_biaoqian"
-        android:layout_alignParentBottom="true"
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="57dp"
+        android:layout_height="wrap_content"
         android:background="@color/white"
-        android:gravity="center_vertical"
+        android:gravity="bottom"
         android:orientation="horizontal"
+        android:padding="10dp"
         >
 
-        <cn.com.hgh.view.ContainsEmojiEditText
+        <cn.com.hgh.indexscortlist.ClearEditText
             android:id="@+id/tv_searchtag"
-            android:layout_width="225dp"
-            android:layout_height="34dp"
-            android:layout_marginLeft="20dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:background="@drawable/shape_search_date_edt_bg_new"
-            android:drawablePadding="5dp"
-            android:hint="请输入要添加的会员标签"
-            android:padding="5dp"
-            android:textColor="@color/tag_mask"
+            android:padding="7dp"
+            android:background="@drawable/shape_addnewmember"
+            android:hint="请输入标签"
+            android:textColor="@color/colores_news_10"
             android:textSize="14sp"
+
             />
 
         <TextView
             android:id="@+id/bt_sure"
-            android:layout_width="84dp"
-            android:layout_height="34dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:layout_toRightOf="@id/tv_searchtag"
-            android:background="@drawable/shape_search_date_edt_bg_new"
-            android:drawablePadding="5dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/shape_addnewmember"
             android:gravity="center"
-            android:padding="5dp"
+            android:padding="7dp"
             android:text="确定"
-            android:textColor="@color/tag_sure"
-            android:textSize="16sp"/>
-    </RelativeLayout>
+            android:textColor="@color/colores_news_18"
+            android:textSize="14sp"
+            />
+    </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>
