@@ -73,7 +73,7 @@ public class RecordsOfConsumptionActivity extends BaseActivity {
 
 				ScreenUtils.textAdaptationOn720(tv_rc_time, RecordsOfConsumptionActivity.this, 24);//消费时间
 				ScreenUtils.textAdaptationOn720(tv_rc_thing, RecordsOfConsumptionActivity.this, 24);//消费内容
-				ScreenUtils.textAdaptationOn720(tv_rc_where, RecordsOfConsumptionActivity.this, 24);//消费地点
+				ScreenUtils.textAdaptationOn720(tv_rc_where, RecordsOfConsumptionActivity.this, 24);//消费来源
 				ScreenUtils.textAdaptationOn720(tv_rc_much, RecordsOfConsumptionActivity.this, 24);//消费金额
 
 				tv_rc_time.setText(item.getCreateTime() + "");

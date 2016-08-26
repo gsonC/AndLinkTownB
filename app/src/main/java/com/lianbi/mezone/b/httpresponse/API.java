@@ -56,7 +56,6 @@ public class API {
      *  测试环境url
      */
     	public static final String ENVIRONMENTAL = "http://test.xylbn.cn";//前置TEST
-	//	public static final String ENVIRONMENTAL = "http://localhost:8080";//前置TEST
     	public static final String TOSTORESERVICE = "http://172.16.103.153:9005";//到店服务TEST
     	public static final String PAYQR = ENVIRONMENTAL+"/lincombFront/toOrderPay.do?state=";/**支付二维码**/
 	//    public static final String INTELLIGENT_WIFI = "http://172.16.103.165:8090/wcmv2/routerApplication/wifiIndex?businessId=";//智能WIFI_TEST

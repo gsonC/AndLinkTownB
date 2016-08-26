@@ -33,6 +33,7 @@ import com.lianbi.mezone.b.ui.BaseActivity;
 import com.lianbi.mezone.b.ui.BookFunctionActivity;
 import com.lianbi.mezone.b.ui.H5WebActivty;
 import com.lianbi.mezone.b.ui.MainActivity;
+import com.lianbi.mezone.b.ui.ReceivablesActivity;
 import com.lianbi.mezone.b.ui.ServiceMallActivity;
 import com.lianbi.mezone.b.ui.TableSetActivity;
 import com.lianbi.mezone.b.ui.WIFIWebActivity;
@@ -280,7 +281,8 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 						re = JumpIntent.jumpLogin_addShop(isLogin, API.SWEEP,
 								mActivity);
 						if (re) {
-							MagnifyImg();// 收款二维码放大
+							mActivity.startActivity(new Intent(mActivity, ReceivablesActivity.class));
+	//						MagnifyImg();// 收款二维码放大
 						}
 						break;
 					case 100:

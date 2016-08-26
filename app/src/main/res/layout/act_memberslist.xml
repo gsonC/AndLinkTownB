@@ -13,7 +13,7 @@
         android:background="@drawable/search_bar_edit_selector"
         android:drawableLeft="@mipmap/search_bar_icon_normal"
         android:drawablePadding="10dp"
-        android:hint="搜索人员名字"
+        android:hint="搜索"
         android:imeOptions="actionSearch"
         android:padding="5dp"
         android:singleLine="true"

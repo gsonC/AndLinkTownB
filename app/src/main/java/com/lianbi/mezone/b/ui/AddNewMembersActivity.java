@@ -55,7 +55,7 @@ public class AddNewMembersActivity extends BaseActivity {
 	private PopupWindow pw = null;
 	private boolean mIsShow;
 	private String mVipLabel = "";
-
+	private String vipId = "";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -139,6 +139,7 @@ public class AddNewMembersActivity extends BaseActivity {
 			mViewVisibale.setVisibility(View.VISIBLE);
 			view_line1.setVisibility(View.VISIBLE);
 			mMemberInfoBean = (MemberInfoBean) getIntent().getSerializableExtra("memberInfo");
+			vipId = mMemberInfoBean.getVipId();
 			getMemberInfo();
 
 		} else {
@@ -277,14 +278,14 @@ public class AddNewMembersActivity extends BaseActivity {
 			}
 			if (!TextUtils.isEmpty(memberDetails.getVipBirthday())) {
 				String vipBirthday = AbDateUtil.getStringByFormat(Long.valueOf(memberDetails.getVipBirthday())
-						,AbDateUtil.dateFormatYMD);
+						, AbDateUtil.dateFormatYMD);
 				mEtMemberbirthday.setText(vipBirthday);
 			} else {
 				mEtMemberbirthday.setHint("点击设置会员生日");
 			}
 			if (!TextUtils.isEmpty(memberDetails.getVipValidityPeriod())) {
 				String vipValidityPeriod = AbDateUtil.getStringByFormat(Long.valueOf(memberDetails.getVipValidityPeriod())
-						,AbDateUtil.dateFormatYMD);
+						, AbDateUtil.dateFormatYMD);
 				mEtMembercardtermofvalidity.setText(vipValidityPeriod);
 			} else {
 				mEtMemberbirthday.setHint("点击设置会员卡有效期");
@@ -337,6 +338,7 @@ public class AddNewMembersActivity extends BaseActivity {
 	private final int REQUEST_ADDRESS = 4863;
 	private final int REQUEST_TAG = 4864;
 	private final String ENDTIME = "2030-01-01 00:00";
+	private final String STARTTIME = "1970-01-01 00:00:00";
 
 	@Override
 	protected void onChildClick(View view) {
@@ -369,7 +371,7 @@ public class AddNewMembersActivity extends BaseActivity {
 							public void handle(String time) {
 								mEtMemberbirthday.setText(time);
 							}
-						}, "1970-01-01 00:00:00",
+						}, STARTTIME,
 						ENDTIME);
 				timeSelectorO.setMode(TimeSelectorE.MODE.YMD);
 				timeSelectorO.setTitle("会员生日");
@@ -400,12 +402,16 @@ public class AddNewMembersActivity extends BaseActivity {
 				break;
 			case R.id.llt_addmemberaddress://会员地址
 				Intent shop_address = new Intent(this, MemberAdressActivity.class);
-				shop_address.putExtra("address", mMemberInfoBean.getVipAddress());
+				if (mIsShow) {
+					shop_address.putExtra("address", mMemberInfoBean.getVipAddress());
+				}
 				startActivityForResult(shop_address, REQUEST_ADDRESS);
 				break;
 			case R.id.llt_addmemberremarks://会员备注
 				Intent shop_connect = new Intent(this, MemberRemarksActivity.class);
-				shop_connect.putExtra("remarks", mMemberInfoBean.getVipRemarks());
+				if (mIsShow) {
+					shop_connect.putExtra("remarks", mMemberInfoBean.getVipRemarks());
+				}
 				startActivityForResult(shop_connect, REQUEST_REMARKS);
 				break;
 		}
@@ -467,14 +473,8 @@ public class AddNewMembersActivity extends BaseActivity {
 			vipSex = "2";
 		}
 		String vipBirthday = mEtMemberbirthday.getText().toString().trim();//会员生日
-		if(!AbStrUtil.isEmpty(vipBirthday)){
-			vipBirthday = vipBirthday.replaceAll("-",":");
-		}
 		String vipCardNo = mEditMembercardnumber.getText().toString().trim();//会员卡号
 		String vipValidityPeriod = mEtMembercardtermofvalidity.getText().toString().trim();//会员有效期
-		if(!AbStrUtil.isEmpty(vipValidityPeriod)){
-			vipValidityPeriod = vipValidityPeriod.replaceAll("-",":");
-		}
 		String vipIdNo = mEditIDnumber.getText().toString().trim();//会员身份证
 		String vipAddress = mTvMunberadress.getText().toString().trim();//联系地址
 		String vipRemarks = mTvRemarks.getText().toString().trim();//备注说明
@@ -487,74 +487,41 @@ public class AddNewMembersActivity extends BaseActivity {
 			ContentUtils.showMsg(AddNewMembersActivity.this, "请输入手机号码");
 			return;
 		}
-		System.out.println("会员电话--" + vipPhone);
-	//	System.out.println("会员ID--" + mMemberInfoBean.getVipId());
-		System.out.println("会员姓名--" + vipName);
-		System.out.println("会员性别--" + vipSex);
-		System.out.println("会员标签--" + mVipLabel);
-		System.out.println("会员身份证--" + vipIdNo);
-		System.out.println("会员卡号--" + vipCardNo);
-		System.out.println("会员联系地址--" + vipAddress);
-		System.out.println("会员生日--" + vipBirthday);
-		System.out.println("会员卡有效期--" + vipValidityPeriod);
-		System.out.println("会员备注说明--" + vipRemarks);
-		if (mIsShow) {
-			String reqTime = AbDateUtil.getDateTimeNow();
-			String uuid = AbStrUtil.getUUID();
-			try {
-				okHttpsImp.addOrUpdateMember(uuid, "app", reqTime, OkHttpsImp.md5_key, userShopInfoBean.getBusinessId(),
-						vipPhone, mMemberInfoBean.getVipId(), vipName, vipSex, mVipLabel,
-						vipIdNo, vipCardNo, vipAddress, vipBirthday,
-						vipValidityPeriod, vipRemarks, new MyResultCallback<String>() {
-							@Override
-							public void onResponseResult(Result result) {
+		String reqTime = AbDateUtil.getDateTimeNow();
+		String uuid = AbStrUtil.getUUID();
+		try {
+			okHttpsImp.addOrUpdateMember(uuid, "app", reqTime, OkHttpsImp.md5_key, userShopInfoBean.getBusinessId(),
+					mIsShow, vipPhone, vipId, vipName, vipSex, mVipLabel,
+					vipIdNo, vipCardNo, vipAddress, vipBirthday,
+					vipValidityPeriod, vipRemarks, new MyResultCallback<String>() {
+						@Override
+						public void onResponseResult(Result result) {
+							if (mIsShow) {
 								ContentUtils.showMsg(AddNewMembersActivity.this,
 										"修改成功");
-								Intent intent = new Intent();
-								setResult(RESULT_OK, intent);
-								finish();
-							}
-
-							@Override
-							public void onResponseFailed(String msg) {
-								ContentUtils.showMsg(AddNewMembersActivity.this,
-										"修改失败");
-							}
-						});
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		} else {
-			String reqTime = AbDateUtil.getDateTimeNow();
-			String uuid = AbStrUtil.getUUID();
-			try {
-				okHttpsImp.addNewMemberByID(uuid, "app", reqTime, OkHttpsImp.md5_key, userShopInfoBean.getBusinessId(),
-						vipPhone, vipName, vipSex, mVipLabel,
-						vipIdNo, vipCardNo, vipAddress, vipBirthday,
-						vipValidityPeriod, vipRemarks, new MyResultCallback<String>() {
-							@Override
-							public void onResponseResult(Result result) {
+							} else {
 								ContentUtils.showMsg(AddNewMembersActivity.this,
 										"添加成功");
-								Intent intent = new Intent();
-								setResult(RESULT_OK, intent);
-								finish();
 							}
+							Intent intent = new Intent();
+							setResult(RESULT_OK, intent);
+							finish();
+						}
 
-							@Override
-							public void onResponseFailed(String msg) {
+						@Override
+						public void onResponseFailed(String msg) {
+							if (mIsShow) {
 								ContentUtils.showMsg(AddNewMembersActivity.this,
-										"添加失败");
+										"修改成功");
+							} else {
+								ContentUtils.showMsg(AddNewMembersActivity.this,
+										"添加成功");
 							}
-						});
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
-
+						}
+					});
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-
-
 	}
 
 	@Override

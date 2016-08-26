@@ -39,6 +39,7 @@
     <string name="register">注册</string>
     <string name="click_register_agree">我已阅读并同意</string>
     <string name="click_register_agree1">电子平台合作协议</string>
+    <string name="click_register_agree2">电子支付服务协议</string>
     <string name="click_register_agree_shop">商户使用服务协议</string>
     <string name="confirm_pwd">两次密码输入不一致！</string>
     <string name="input">输入不能为空！</string>
@@ -49,7 +50,7 @@
     <string name="hgh_tixianresult">提现结果</string>
     <string name="hgh_sucess_tixian1">提现已受理</string>
     <string name="hgh_failed_tixian1">提现失败</string>
-    <string name="hgh_sucess_tixian2">3到5个工作日后转账成功</string>
+    <string name="hgh_sucess_tixian2">1到5个工作日后转账成功</string>
     <string name="hgh_sucess_bangding">绑定成功</string>
     <string name="hgh_failed_bangding">绑定失败</string>
     <string name="hgh_sucess_bangding1">银行卡绑定成功</string>

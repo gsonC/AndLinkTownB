@@ -26,7 +26,6 @@ import com.xizhi.mezone.b.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import cn.com.hgh.baseadapter.BaseAdapterHelper;
@@ -34,7 +33,6 @@ import cn.com.hgh.baseadapter.QuickAdapter;
 import cn.com.hgh.utils.AbDateUtil;
 import cn.com.hgh.utils.AbPullHide;
 import cn.com.hgh.utils.AbStrUtil;
-import cn.com.hgh.utils.MathExtend;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.utils.ScreenUtils;
 import cn.com.hgh.view.AbPullToRefreshView;
@@ -80,10 +78,10 @@ public class IntegralRecordActivity extends BaseActivity {
 				ScreenUtils.textAdaptationOn720(tv_rc_where, IntegralRecordActivity.this, 24);//消费地点
 				ScreenUtils.textAdaptationOn720(tv_rc_much, IntegralRecordActivity.this, 24);//消费金额
 
-				tv_rc_time.setText(item.getRecordTime() + "");
-				tv_rc_thing.setText(item.getRecordThing() + "");
-				tv_rc_where.setText(item.getRecordWhrer() + "");
-				tv_rc_much.setText(MathExtend.roundNew(item.getRecordInteger().divide(new BigDecimal(100)).doubleValue(), 2) + "");
+				tv_rc_time.setText(item.getCreateTime());
+				tv_rc_thing.setText(item.getConsumName());
+				tv_rc_where.setText(item.getConsumSorce());
+				tv_rc_much.setText(item.getConsumAmount());
 			}
 		};
 		mActMemberrecordListview.setAdapter(mAdapter);
@@ -125,7 +123,7 @@ public class IntegralRecordActivity extends BaseActivity {
 									mTvTotalintegral.setText("获取总积分 "+totalIntegral);
 									mTvConsumptionintegral.setText("总消耗积分 "+totalConsumption);
 									mTvSurplusintegral.setText("剩余积分 "+residualIntegral);
-									reString = jsonObject.getString("intgralList");
+									reString = jsonObject.getString("integralList");
 									ArrayList<IntegralRecordBean> mDatasL = (ArrayList<IntegralRecordBean>) JSON
 											.parseArray(reString,IntegralRecordBean.class);
 									if (mDatasL != null && mDatasL.size() > 0) {

@@ -2346,7 +2346,7 @@ public enum OkHttpsImp {
 	 * 添加或修改会员信息
 	 */
 	public void addOrUpdateMember(String serNum, String source, String reqTime, String md5_key,
-								  String businessId, String vipPhone, String vipId, String vipName,
+								  String businessId,final boolean mIsShow ,String vipPhone, String vipId, String vipName,
 								  String vipSex, String vipLabel, String vipIdNo, String vipCardNo,
 								  String vipAddress, String vipBirthday, String vipValidityPeriod, String vipRemarks,
 								  MyResultCallback<String> myResultCallback) throws Exception {
@@ -2355,17 +2355,22 @@ public enum OkHttpsImp {
 		params.put("reqTime", reqTime);
 		params.put("serNum", serNum);
 		params.put("source", source);
-		params.put("submitType", "updateVip");
+		if(mIsShow){
+			params.put("submitType", "updateVip");
+			params.put("vipId", vipId);
+		}else{
+			params.put("submitType", "addVip");
+		}
 		params.put("vipAddress", vipAddress);
 		params.put("vipBirthday", vipBirthday);
 		params.put("vipCardNo", vipCardNo);
-		params.put("vipId", vipId);
 		params.put("vipIdNo", vipIdNo);
 		params.put("vipLabel", vipLabel);
 		params.put("vipName", vipName);
 		params.put("vipPhone", vipPhone);
 		params.put("vipRemarks", vipRemarks);
 		params.put("vipSex", vipSex);
+		params.put("vipSource", source);
 		params.put("vipValidityPeriod", vipValidityPeriod);
 		String sign = getSign(md5_key, params);
 		params.put("sign", sign);
@@ -2396,6 +2401,7 @@ public enum OkHttpsImp {
 		params.put("vipPhone", vipPhone);
 		params.put("vipRemarks", vipRemarks);
 		params.put("vipSex", vipSex);
+		params.put("vipSource", source);
 		params.put("vipValidityPeriod", vipValidityPeriod);
 		String sign = getSign(md5_key, params);
 		params.put("sign", sign);
@@ -2418,7 +2424,7 @@ public enum OkHttpsImp {
 		String sign = getSign(md5_key, params);
 		params.put("sign", sign);
 		String url = getAbsoluteUrl(API.MEMBERDETAILS);
-		getProgressResponse(myResultCallback, params, url);
+		getNoProgressResponse(myResultCallback, params, url);
 	}
 
 	/**
@@ -2520,13 +2526,13 @@ public enum OkHttpsImp {
 		Map<String, String> params = new HashMap<>();
 		params.put("businessId", businessId);
 		switch (type) {
-			case 1:
+			case 0:
 				params.put("integralType", "all");
 				break;
-			case 2:
+			case 1:
 				params.put("integralType", "got");
 				break;
-			case 3:
+			case 2:
 				params.put("integralType", "used");
 				break;
 		}

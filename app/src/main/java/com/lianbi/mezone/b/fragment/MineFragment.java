@@ -287,6 +287,7 @@ public class MineFragment extends Fragment implements OnClickListener,
 				break;
 			case R.id.llt_mine_about_us:// 关于我们
 				startActivity(new Intent(maActivity, AboutUsActivity.class));
+
 				break;
 			case R.id.llt_feedback://意见反馈
 

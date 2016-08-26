@@ -98,6 +98,7 @@ public class MembersListActivity extends BaseActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		mAct_member_list_edit.setText("");
 		mDrawableinitial.setBounds(0, 0, mDrawableinitial.getMinimumWidth(), mDrawableinitial.getMinimumHeight());
 		mTvIntegral.setCompoundDrawables(null, null, mDrawableinitial, null);
 	}
@@ -256,7 +257,11 @@ public class MembersListActivity extends BaseActivity {
 											  int before, int count) {
 						// 当输入框里面的值为空，更新为原来的列表，否则为过滤数据列表
 						paramLike = s.toString();
-						filterData(s.toString());
+		//				filterData(s.toString());
+		//				AbAppUtil.showSoftInput(MembersListActivity.this);
+						if("".equals(paramLike)){
+							filterData("");
+						}
 					}
 
 					@Override
@@ -277,9 +282,9 @@ public class MembersListActivity extends BaseActivity {
 												  KeyEvent event) {
 						if (actionId == EditorInfo.IME_ACTION_DONE
 								|| actionId == EditorInfo.IME_ACTION_UNSPECIFIED) {
-							String response = mAct_member_list_edit
+							paramLike = mAct_member_list_edit
 									.getText().toString().trim();
-							filterData(response);
+							filterData(paramLike);
 						}
 						AbAppUtil.closeSoftInput(MembersListActivity.this);
 						return false;
@@ -322,7 +327,7 @@ public class MembersListActivity extends BaseActivity {
 						file_intent.putExtra("memberInfo", mDatas.get(position));
 						file_intent.putExtra("isShow", true);
 						startActivityForResult(file_intent, REQUEST_CHANGMEMBERINFO);
-						mAct_member_list_edit.setText("");
+	//					mAct_member_list_edit.setText("");
 					}
 				});
 
@@ -357,7 +362,7 @@ public class MembersListActivity extends BaseActivity {
 				Intent intent = new Intent(MembersListActivity.this, AddNewMembersActivity.class);
 				intent.putExtra("isShow", false);
 				startActivityForResult(intent, REQUEST_ADDMEMBER);
-				mAct_member_list_edit.setText("");
+		//		mAct_member_list_edit.setText("");
 				break;
 
 		}
@@ -404,28 +409,11 @@ public class MembersListActivity extends BaseActivity {
 	 * 根据输入条件改变listview
 	 */
 	private void filterData(String filterStr) {
-	/*	List<MemberInfoBean> filterDateList = new ArrayList<MemberInfoBean>();
-		if (TextUtils.isEmpty(filterStr)) {
-			filterDateList = mDatas;
-		} else {
-			filterDateList.clear();
-			for (MemberInfoBean memberInfo : mDatas) {
-				String phone = memberInfo.getVipPhone();//电话
-				String category = memberInfo.getVipType();//类别
-				String lable = memberInfo.getLabelName();//标签
-				if (phone.contains(filterStr) || category.contains(filterStr) || lable.contains(filterStr)) {
-					filterDateList.add(memberInfo);
-				}
-			}
-		}
-		mAdapter.replaceAll(filterDateList);*/
-
-	//	if (!AbStrUtil.isEmpty(filterStr)) {
+		if (!AbStrUtil.isEmpty(filterStr)) {
 			getMembersList(true, filterStr,typeID);
-	//	}else{
-	//		getMembersList(true, "",typeID);
-	//	}
-
+		}else{
+			mAdapter.replaceAll(mDatas);
+		}
 
 	}
 
