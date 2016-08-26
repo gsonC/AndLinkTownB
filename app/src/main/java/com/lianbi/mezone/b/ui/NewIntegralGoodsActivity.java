@@ -16,7 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSONObject;
+
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
 import com.lianbi.mezone.b.photo.FileUtils;
@@ -65,7 +65,7 @@ public class NewIntegralGoodsActivity extends BaseActivity {
 	ImageView smallImaFive;
 	@Bind(R.id.bt_sure)
 	TextView btSure;
-	String productName,productType,productDesc,images,storeId;
+	String productName,productType,productDesc,productAmt;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -130,6 +130,8 @@ public class NewIntegralGoodsActivity extends BaseActivity {
 						}
 					}
 				});
+				getProduct();
+				finish();
 				break;
 		}
 	}
@@ -144,19 +146,20 @@ public class NewIntegralGoodsActivity extends BaseActivity {
 	  private void getProduct() {
 		  String reqTime = AbDateUtil.getDateTimeNow();
 		  String uuid = AbStrUtil.getUUID();
+		  String productName=edCup.getText().toString();
+		  String productDesc=edCeramicCup.getText().toString();
+
 		  try {
-			  okHttpsImp.addProduct(OkHttpsImp.md5_key,uuid,reqTime,"app",
-			   productName,productType,productDesc,imageStr,
+			  okHttpsImp.addProduct(OkHttpsImp.md5_key,
+					  uuid, "app", reqTime,
+			   productName,productDesc,imageStr,
 			   userShopInfoBean.getBusinessId(),
 			   new MyResultCallback<String>() {
 		   @Override
 		   public void onResponseResult(Result result) {
 			 String reString=result.getData();
 			   System.out.println("reString"+reString);
-			   if(reString!=null){
-				   JSONObject jsonObject;
 
-			   }
 		   }
 
 		   @Override

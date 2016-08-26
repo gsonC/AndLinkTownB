@@ -593,16 +593,19 @@ public class API {
 	/**
 	 * 新增产品
 	 */
-	public static final String AddProduct = "product/add";
+	public static final String AddProduct = "product/add.do";
 	/**
 	 * 修改产品
 	 */
-	public static final String updateProduct = "product/update";
+	public static final String updateProduct = "product/update.do";
 	/**
 	 * 修改产品
 	 */
-	public static final String queryProduct = "product/query";
-
+	public static final String QueryProduct = "product/query.do";
+/**
+ * 积分商品查询
+ */
+public static final String QProduct = "product/query.do";
 	/**
 	 * 会员列表
 	 */
@@ -619,6 +622,20 @@ public class API {
 	 * 获取会员标签
 	 */
 	public static final String MEMBERLABELLIST = "vipLabel/vipLabelList.do";
+	/**
+	 * 增加会员标签
+	 */
+	public static final String ADDVIPLABEL = "vipLabel/addVipLabel.do";
+	/**
+	 * 删除会员标签
+	 */
+	public static final String DELETELABEL = "vipLabel/delVipLabel.do";
+	/**
+	 * 删除会员标签
+	 */
+	public static final String UPDATEPRODUCT = "updateProduct.do";
+
+//	public static final String MEMBERLABELLIST = "vipLabel/vipLabelList.do";
 	/*
 	* 获取会员优惠券列表
 	* */

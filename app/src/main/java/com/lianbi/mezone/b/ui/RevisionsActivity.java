@@ -15,7 +15,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSONObject;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
 import com.lianbi.mezone.b.photo.FileUtils;
@@ -29,6 +28,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.com.hgh.utils.AbDateUtil;
 import cn.com.hgh.utils.AbStrUtil;
+import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.Picture_Base64;
 import cn.com.hgh.utils.Result;
 
@@ -118,6 +118,8 @@ public class RevisionsActivity extends BaseActivity {
 						String imageStr = null;
 						if (file != null) {
 							imageStr = Picture_Base64.GetImageStr(file.toString());
+							GetupdateProduct();
+							finish();
 						}
 					}
 				});
@@ -131,27 +133,24 @@ public class RevisionsActivity extends BaseActivity {
 	 * @param
 	 * @param
 	 */
-
+	String productId;
 	private void GetupdateProduct(){
 		String reqTime = AbDateUtil.getDateTimeNow();
 		String uuid = AbStrUtil.getUUID();
 		try {
 			okHttpsImp.updateProduct(OkHttpsImp.md5_key,
-					uuid,reqTime,"app","productId",
+					uuid,reqTime,"app",productId,
 					new MyResultCallback<String>() {
 				@Override
 				public void onResponseResult(Result result) {
 					String reString=result.getData();
 					System.out.println("reString"+reString);
-					if(reString!=null){
-						JSONObject jsonObject;
-
-					}
+					ContentUtils.showMsg(RevisionsActivity.this,"修改产品成功");
 				}
 
 				@Override
 				public void onResponseFailed(String msg) {
-
+					ContentUtils.showMsg(RevisionsActivity.this,"修改产品失败");
 				}
 			});
 		} catch (Exception e) {

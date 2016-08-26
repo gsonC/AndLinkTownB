@@ -2544,6 +2544,58 @@ public enum OkHttpsImp {
 	}
 
 	/**
+	 * 添加会员标签
+	 */
+	public void AddMemberTag(String serNum, String source, String reqTime, String md5_key,
+							 String businessId,String labelName/*,String createTime,String updateTime*/,
+							 MyResultCallback<String> myResultCallback) throws Exception{
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("serNum", serNum);
+		params.put("source", source);
+		params.put("reqTime", reqTime);
+		params.put("businessId", businessId);
+		params.put("labelName", labelName);
+		/*params.put("createTime", createTime);
+		params.put("updateTime", updateTime);*/
+		String sign = getSign(md5_key, params);
+		params.put("sign", sign);
+		String url = getAbsoluteUrl(API.ADDVIPLABEL);
+		getProgressResponse(myResultCallback, params, url);
+	}
+	/**
+	 * 删除会员标签
+	 */
+	public void DeleteMemberTag(String serNum, String source, String reqTime, String md5_key,
+							 String businessId,String labelId,
+							 MyResultCallback<String> myResultCallback) throws Exception{
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("serNum", serNum);
+		params.put("source", source);
+		params.put("reqTime", reqTime);
+		params.put("businessId", businessId);
+		params.put("labelId", labelId);
+		String sign = getSign(md5_key, params);
+		params.put("sign", sign);
+		String url = getAbsoluteUrl(API.DELETELABEL);
+		getProgressResponse(myResultCallback, params, url);
+	}
+	/**
+	 * 修改积分商品
+	 */
+	public void UpdateProduct(String serNum, String source, String reqTime, String md5_key,
+								String businessId,
+								MyResultCallback<String> myResultCallback) throws Exception{
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("serNum", serNum);
+		params.put("source", source);
+		params.put("reqTime", reqTime);
+		params.put("businessId", businessId);
+		String sign = getSign(md5_key, params);
+		params.put("sign", sign);
+		String url = getAbsoluteUrl(API.UPDATEPRODUCT);
+		getProgressResponse(myResultCallback, params, url);
+	}
+	/**
 	 * 签名方法
 	 */
 	private static String getSign(String md5_key, Map<String, String> dataMap)
@@ -2588,14 +2640,14 @@ public enum OkHttpsImp {
 	/**
 	 * 新增产品
 	 */
-	public void addProduct(String md5_key, String uuid, String reqTime, String app,
-						   String productName, String productType, String productDesc, String images, String storeId, MyResultCallback<String> myResultCallback) throws Exception {
+	public void addProduct(String md5_key,
+						   String serNum, String source, String reqTime,
+						   String productName, String productDesc,String images, String storeId,MyResultCallback<String> myResultCallback) throws Exception {
 		Map<String, String> params = new HashMap<String, String>();
-		params.put("uuid", uuid);
-		params.put("reqTime", reqTime);
-		params.put("app", app);
-		params.put("productName", productName);
-		params.put("productType", productType);
+		params.put("serNum",serNum);
+		params.put("source",source);
+		params.put("reqTime",reqTime);
+		params.put("productName",productName);
 		params.put("productDesc", productDesc);
 		params.put("images", images);
 		params.put("storeId", storeId);
@@ -2624,16 +2676,17 @@ public enum OkHttpsImp {
 	/**
 	 * 积分商品查询
 	 */
-	public void queryProduct(String md5_key, String uuid, String reqTime, String app,
-							 String storeId, MyResultCallback<String> myResultCallback) throws Exception {
+
+	public void QueryProduct(String md5_key,String serNum, String source, String reqTime,
+							  String storeId,MyResultCallback<String> myResultCallback) throws Exception {
 		Map<String, String> params = new HashMap<String, String>();
-		params.put("uuid", uuid);
-		params.put("reqTime", reqTime);
-		params.put("app", app);
-		params.put("storeId", storeId);
-		String sign = getSign(md5_key, params);
+		params.put("serNum",serNum);
+		params.put("source",source);
+		params.put("reqTime",reqTime);
+		params.put("storeId",storeId);
+		String sign = getSign(md5_key,params);
 		params.put("sign", sign);
-		String url = getAbsoluteUrl(API.queryProduct);
+		String url = getAbsoluteUrl(API.QProduct);
 		postProgressResponse(myResultCallback, params, url);
 	}
 

@@ -12,21 +12,26 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 
+import com.alibaba.fastjson.JSON;
 import com.lianbi.mezone.b.bean.MemberMessage;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
 import com.xizhi.mezone.b.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
-import butterknife.ButterKnife;
 import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.QuickAdapter;
 import cn.com.hgh.utils.AbAppUtil;
 import cn.com.hgh.utils.AbDateUtil;
 import cn.com.hgh.utils.AbPullHide;
 import cn.com.hgh.utils.AbStrUtil;
+import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.utils.ScreenUtils;
 import cn.com.hgh.view.AbPullToRefreshView;
@@ -46,21 +51,19 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_member_point_manage, NOTYPE);
-		ButterKnife.bind(this);
 		initView();
 		initListAdapter();
 		setListen();
 		setLisenter();
-		getTagList(true);
+		//getTagList(true);
+		getQueryProduct(true);
 		viewAdapter();
-		getQueryProduct();
 	}
 
 	private void initView() {
-		setPageTitle("积分商品");
+		setPageTitle("新增积分商品");
 		fm_messagefragment_listView = (SlideListView2) findViewById(R.id.fm_messagefragment_listView);
 		fm_messagefragment_listView.initSlideMode(SlideListView2.MOD_RIGHT);
-	//	fm_tag_listView = (ListView) findViewById(R.id.fm_tag_listView);
 
 		tv_increaseProduct = (TextView) findViewById(R.id.tv_increaseProduct);
 		choose_from_weixin = (TextView) findViewById(R.id.choose_from_weixin);
@@ -81,12 +84,15 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 		switch (v.getId()) {
 			//新增积分商品
 			case R.id.tv_increaseProduct:
-				startActivity(new Intent(MemberPointManage.this, NewIntegralGoodsActivity.class));
+				Intent intent=new Intent(MemberPointManage.this, NewIntegralGoodsActivity.class);
+				startActivityForResult(intent,RESULT_ADDSHOP);
 				break;
 			//从微信商城产品库选择
 			case R.id.choose_from_weixin:
-				startActivity(new Intent(MemberPointManage.this, ChooseFromWeixinActivity.class));
+
+				startActivityForResult(new Intent(MemberPointManage.this, ChooseFromWeixinActivity.class),RESULT_WEIXIN);
 				break;
+
 		}
 	}
 	/**
@@ -120,7 +126,7 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 			public void afterTextChanged(Editable s) {
 			}
 		});
-		tv_search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+		tv_search.setOnEditorActionListener(new OnEditorActionListener() {
 
 			@Override
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -139,7 +145,8 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 
 					@Override
 					public void onHeaderRefresh(AbPullToRefreshView view) {
-						getTagList(true);
+						//getTagList(true);
+						getQueryProduct(true);
 					}
 
 				});
@@ -148,7 +155,8 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 
 					@Override
 					public void onFooterLoad(AbPullToRefreshView view) {
-						getTagList(false);
+						//getTagList(false);
+						getQueryProduct(true);
 					}
 				});
 	}
@@ -187,7 +195,9 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 				changegoods.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						startActivity(new Intent(MemberPointManage.this, RevisionsActivity.class));
+
+						Intent intent=new Intent(MemberPointManage.this, RevisionsActivity.class);
+                        startActivityForResult(intent,RESULT_MENMBERCHANGE);
 					}
 				});
                /*侧滑的点击事件
@@ -215,6 +225,10 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 		};
 		fm_messagefragment_listView.setAdapter(mAdapter);
 	}
+	private final int RESULT_MENMBERCHANGE=1111;
+	private final int RESULT_ADDSHOP=2222;
+	private final int RESULT_WEIXIN=3333;
+
 	/**
 	 *
 	 */
@@ -230,7 +244,7 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 	  }*/
 
 
-	private void getTagList(final boolean isResh) {
+	/*private void getTagList(final boolean isResh) {
 		ArrayList<MemberMessage> mDatasL = new ArrayList<MemberMessage>();
 		for (int i = 0; i < 20; i++) {
 			MemberMessage bean = new MemberMessage();
@@ -259,8 +273,27 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 		AbPullHide.hideRefreshView(isResh, act_memberpoint_abpulltorefreshview);
 		mAdapter.replaceAll(mDatas);
 
-	}
+	}*/
 
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if(resultCode==RESULT_OK){
+			switch (resultCode){
+
+				case RESULT_MENMBERCHANGE:
+					getQueryProduct(true);
+					break;
+				case RESULT_ADDSHOP:
+					getQueryProduct(true);
+					break;
+				case RESULT_WEIXIN:
+					getQueryProduct(true);
+					break;
+
+			}
+		}
+	}
 
 	/**
 	 * 积分商品查询
@@ -269,28 +302,55 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 	 * @param
 	 */
 
-	private void getQueryProduct()  {
+	private void getQueryProduct(final boolean isResh)  {
+		if(isResh){
+			mDatas.clear();
+			mAdapter.replaceAll(mDatas);
+		}
 		String reqTime = AbDateUtil.getDateTimeNow();
 		String uuid = AbStrUtil.getUUID();
 
 		try {
-			okHttpsImp.queryProduct(OkHttpsImp.md5_key,
-					uuid,reqTime,"app",
+			okHttpsImp.QueryProduct(OkHttpsImp.md5_key,
+					uuid, "app", reqTime,
 					userShopInfoBean.getBusinessId(),
 					new MyResultCallback<String>() {
 						@Override
 						public void onResponseResult(Result result) {
 							String reString=result.getData();
-							System.out.println("reString"+reString);
-							if(reString!=null){
+							System.out.println("reString11111"+reString);
+                     if(!AbStrUtil.isEmpty(reString)){
+						 try {
+							 JSONObject jsonObject=new JSONObject(reString);
+							 reString=jsonObject.getString("Data");
+							 ArrayList<MemberMessage> mDatasL= (ArrayList<MemberMessage>) JSON.parseArray(reString,MemberMessage.class);
+						   if(mDatasL!=null&&mDatasL.size()>0){
+								 mDatas.addAll(mDatasL);
 
+						   }if(mDatasL!=null&&mDatas.size()>0){
+								 img_memberpoint_empty.setVisibility(View.GONE);
+								 act_memberpoint_abpulltorefreshview.setVisibility(View.VISIBLE);
 
-							}
+							 }else{
+								 img_memberpoint_empty.setVisibility(View.VISIBLE);
+								 act_memberpoint_abpulltorefreshview.setVisibility(View.GONE);
+							 }
+							 AbPullHide.hideRefreshView(isResh, act_memberpoint_abpulltorefreshview);
+							 mAdapter.replaceAll(mDatas);
+						  } catch (JSONException e) {
+							 e.printStackTrace();
+						 }
+					 }
 						}
 
 						@Override
 						public void onResponseFailed(String msg) {
-
+							if (isResh) {
+								img_memberpoint_empty.setVisibility(View.VISIBLE);
+								act_memberpoint_abpulltorefreshview.setVisibility(View.GONE);
+							}
+							AbPullHide.hideRefreshView(isResh, act_memberpoint_abpulltorefreshview);
+							ContentUtils.showMsg(MemberPointManage.this,"查询积分商品失败");
 						}
 					});
 		} catch (Exception e) {

@@ -27,6 +27,16 @@ public class MemberMessage implements Serializable {
 	String pushgoods;
 	String changegoods;
 
+	String labelName;
+
+	public String getLabelName() {
+		return labelName;
+	}
+
+	public void setLabelName(String labelName) {
+		this.labelName = labelName;
+	}
+
 	public String getTv_tagmessage() {
 		return tv_tagmessage;
 	}

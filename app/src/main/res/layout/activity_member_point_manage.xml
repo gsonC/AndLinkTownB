@@ -51,8 +51,7 @@
         <cn.com.hgh.view.SlideListView2
             android:id="@+id/fm_messagefragment_listView"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="match_parent"
             android:background="#fff4f7f9"
             android:cacheColorHint="#00000000"
             android:divider="#dddbdb"
@@ -93,7 +92,8 @@
             android:background="@drawable/shape_addnewmember"
             android:gravity="center"
             android:text="新增积分商品"
-            android:textColor="@color/colores_news_18"/>
+            android:textColor="@color/colores_news_18"
+            android:textSize="11sp"/>
 
         <TextView
             android:id="@+id/choose_from_weixin"
@@ -108,7 +108,8 @@
             android:gravity="center"
             android:layout_marginRight="30dp"
             android:text="从微店选择"
-            android:textColor="@color/colores_news_18"/>
+            android:textColor="@color/colores_news_18"
+            android:textSize="11sp"/>
     </LinearLayout>
 
 </LinearLayout>
