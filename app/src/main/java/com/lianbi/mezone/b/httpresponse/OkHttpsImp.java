@@ -727,7 +727,60 @@ public enum OkHttpsImp {
 		String url = getAbsoluteUrl(API.MARKETINGSMS_MSGPACKAGE_LIST);
 		postProgressResponse(myResultCallback, params, url);
 	}
-
+	/**
+	 * 获取短信模板
+	 */
+	public void queryAllSMSTemplate(
+			MyResultCallback<String> myResultCallback, String templateMark, String reqTime, String uuid)
+			throws Exception {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("templateMark", templateMark);
+		params.put("serNum", uuid);
+		params.put("source", appsource);
+		params.put("reqTime", reqTime);
+		String sign = getSign(md5_key, params);
+		params.put("sign", sign);
+		String url = getAbsoluteUrl(API.MARKETINGSMS_QUERYTEMPLATE_LIST);
+		postProgressResponse(myResultCallback, params, url);
+	}
+	/**
+	 * 群发短信
+	 */
+	public void smsBulkSend(
+			MyResultCallback<String> myResultCallback,String businessID,
+			String  phone,String  templateMark, String reqTime, String uuid)
+			throws Exception {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("businessID",businessID);
+		params.put("phone",phone);
+		params.put("templateMark",templateMark);
+		params.put("serNum", uuid);
+		params.put("source", appsource);
+		params.put("reqTime", reqTime);
+		String sign = getSign(md5_key, params);
+		params.put("sign", sign);
+		String url = getAbsoluteUrl(API.MARKETINGSMS_BULK_LIST);
+		postProgressResponse(myResultCallback, params, url);
+	}
+	/**
+	 * 群发短信结果查询
+	 */
+	public void queryBulkResult(
+			MyResultCallback<String> myResultCallback,String businessID,
+			String  sendBeginTime,String  sendEndTime, String reqTime, String uuid)
+			throws Exception {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("businessID",businessID);
+		params.put("sendBeginTime",sendBeginTime);
+		params.put("sendEndTime",sendEndTime);
+		params.put("serNum", uuid);
+		params.put("source", appsource);
+		params.put("reqTime", reqTime);
+		String sign = getSign(md5_key, params);
+		params.put("sign", sign);
+		String url = getAbsoluteUrl(API.MARKETINGSMS_QUERYRESULTS_LIST);
+		postProgressResponse(myResultCallback, params, url);
+	}
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	/**

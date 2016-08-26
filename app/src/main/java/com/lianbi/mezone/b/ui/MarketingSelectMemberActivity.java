@@ -13,17 +13,16 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.lhh.ptrrv.library.PullToRefreshRecyclerView;
@@ -37,6 +36,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import butterknife.Bind;
@@ -101,6 +102,8 @@ public class MarketingSelectMemberActivity extends BaseActivity {
     RelativeLayout raySure;
     @Bind(R.id.ray_bottom)
     RelativeLayout rayBottom;
+    @Bind(R.id.img_ememberslist_empty)
+    ImageView img_ememberslist_empty;
     private ArrayList<MemberInfoSelectBean> mData = new ArrayList<MemberInfoSelectBean>();
     private ArrayList<MemberInfoSelectBean> mDatas = new ArrayList<MemberInfoSelectBean>();
     HttpDialog dialog;
@@ -121,6 +124,7 @@ public class MarketingSelectMemberActivity extends BaseActivity {
     int i = 0;
     boolean  isshow=false;
     boolean  isLoadMore=false;
+    boolean  Nodata=false;
 
     @OnClick({R.id.tv_sure, R.id.llt_integral,R.id.cb_selectall})
     public void OnClick(View v) {
@@ -138,16 +142,37 @@ public class MarketingSelectMemberActivity extends BaseActivity {
                     isSort = false;
                     mDrawableDowm.setBounds(0, 0, mDrawableDowm.getMinimumWidth(), mDrawableDowm.getMinimumHeight());
                     txtMemberintegral.setCompoundDrawables(null, null, mDrawableDowm, null);
-//                    startSort(isSort);
+                    startSort(isSort);
                 } else {
                     isSort = true;
                     mDrawableUp.setBounds(0, 0, mDrawableUp.getMinimumWidth(), mDrawableUp.getMinimumHeight());
                     txtMemberintegral.setCompoundDrawables(null, null, mDrawableUp, null);
-//                    startSort(isSort);
+                    startSort(isSort);
                 }
                 break;
 
         }
+    }
+    /**
+     * 排序
+     *
+     * @param beginsort true 从小到大 false 从大到小
+     */
+    private void startSort(final boolean beginsort) {
+        Collections.sort(mDatas, new Comparator<MemberInfoSelectBean>() {
+            @Override
+            public int compare(MemberInfoSelectBean lhs, MemberInfoSelectBean rhs) {
+                Integer id1 = lhs.getVipIntegral();
+                Integer id2 = rhs.getVipIntegral();
+                if (beginsort) {
+                    return id1.compareTo(id2);
+                } else {
+                    return id2.compareTo(id1);
+                }
+            }
+        });
+    mAdapter.notifyDataSetChanged();
+
     }
 
     @Override
@@ -158,7 +183,11 @@ public class MarketingSelectMemberActivity extends BaseActivity {
         ButterKnife.bind(this);
         initViewAndData();
     }
-
+    private void initAccess(){
+        page=1;
+        isLoadMore=false;
+        mDatas.clear();
+    }
     /**
      * 初始化View
      */
@@ -170,7 +199,7 @@ public class MarketingSelectMemberActivity extends BaseActivity {
         mDrawableinitial = ContextCompat.getDrawable(this, R.mipmap.tma_initialdown);
         listviewData();
         setLisenter();
-        getMembersSelsectList();
+        getMembersSelsectList(false);
     }
     private void setLisenter() {
         etSearch
@@ -181,7 +210,7 @@ public class MarketingSelectMemberActivity extends BaseActivity {
                                               int before, int count) {
                         // 当输入框里面的值为空，更新为原来的列表，否则为过滤数据列表
                         paramLike = s.toString();
-                        getMembersSelsectList();
+                        getMembersSelsectList(false);
 
                     }
 
@@ -205,7 +234,7 @@ public class MarketingSelectMemberActivity extends BaseActivity {
                                 || actionId == EditorInfo.IME_ACTION_UNSPECIFIED) {
                             paramLike = etSearch
                                     .getText().toString().trim();
-                            getMembersSelsectList();                        }
+                            getMembersSelsectList(false);                        }
                         AbAppUtil.closeSoftInput(MarketingSelectMemberActivity.this);
                         return false;
                     }
@@ -239,26 +268,14 @@ public class MarketingSelectMemberActivity extends BaseActivity {
         });
         ptrrview.getRecyclerView().addItemDecoration(new DividerItemDecoration(this,
                 DividerItemDecoration.VERTICAL_LIST));
-//        mPtrrv.addHeaderView(View.inflate(this, R.layout.header, null));
-//         mPtrrv.setEmptyView(View.inflate(this,R.layout.activity_memberclassify,null));
         ptrrview.setLoadMoreFooter(loadMoreView);
         ptrrview.getLoadMoreFooter().setOnDrawListener(new BaseLoadMoreView.OnDrawListener() {
             @Override
             public boolean onDrawLoadMore(Canvas c, RecyclerView parent) {
-                Log.i("onDrawLoadMore", "draw load more");
-
 
                 return false;
             }
         });
-        for (int i = 0; i < 50; i++) {
-//            MemberClassify memberclassify = new MemberClassify();
-//            memberclassify.setTypeName("二级会员");
-//            memberclassify.setDataSize("101");
-//            memberclassify.setTypeDiscountRatio("35");
-//            memberclassify.setTypeDiscountRatio("62");
-//            mDatas.add(memberclassify);
-        }
         mAdapter = new DataAdapter(this, mDatas);
         ptrrview.setAdapter(mAdapter);
         ptrrview.onFinishLoading(true, false);
@@ -268,41 +285,21 @@ public class MarketingSelectMemberActivity extends BaseActivity {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             if (msg.what == MSG_CODE_REFRESH) {
-                mAdapter.notifyDataSetChanged();
-                ptrrview.setOnRefreshComplete();
-                ptrrview.onFinishLoading(true, false);
+                getMembersSelsectList(true);
             } else if (msg.what == MSG_CODE_LOADMORE) {
-                if(i==3){
-                    Toast.makeText(MarketingSelectMemberActivity.this, "无数据", Toast.LENGTH_SHORT).show();
-                    isshow=true;
-//                    MemberClassify memberclassify = new MemberClassify();
-//                    memberclassify.setTypeName("四级会员");
-//                    memberclassify.setDataSize("101");
-//                    memberclassify.setTypeDiscountRatio("35");
-//                    memberclassify.setTypeDiscountRatio("62");
-//                    mDatas.add(memberclassify);
+                if(Nodata==true){
+                    MemberInfoSelectBean memberclassify = new MemberInfoSelectBean();
+                    mDatas.add(memberclassify);
                     mAdapter.notifyDataSetChanged();
                     ptrrview.onFinishLoading(false, false);
-
                 }else{
-                    isshow=false;
-                    i=i+1;
-                    for (int i = 0; i < 50; i++) {
-//                        MemberClassify memberclassify = new MemberClassify();
-//                        memberclassify.setTypeName("三级会员");
-//                        memberclassify.setDataSize("101");
-//                        memberclassify.setTypeDiscountRatio("35");
-//                        memberclassify.setTypeDiscountRatio("62");
-//                        mDatas.add(memberclassify);
-                        mAdapter.notifyDataSetChanged();
-                        ptrrview.onFinishLoading(true, false);
-                    }}
-
+                    getMembersSelsectList(false);
+                }
             }
         }
     };
 
-    private void getMembersSelsectList() {
+    private void getMembersSelsectList(final  boolean isResh) {
         try {
             okHttpsImp.getMembersList(uuid, "app", reqTime, OkHttpsImp.md5_key,
                     userShopInfoBean.getBusinessId(), paramLike,"", page + "", 20 + "", new MyResultCallback<String>() {
@@ -310,18 +307,40 @@ public class MarketingSelectMemberActivity extends BaseActivity {
                         @Override
                         public void onResponseResult(Result result) {
                             String reString = result.getData();
+                            String  dataSize;
                             if (reString != null) {
                                 JSONObject jsonObject;
                                 try {
                                     jsonObject = new JSONObject(reString);
                                     reString = jsonObject.getString("businessVipList");
+                                    dataSize = jsonObject.getString("dataSize");
+
+                                    if(dataSize.equals("0")){
+                                        Nodata=true;
+                                        mAdapter.notifyDataSetChanged();
+                                        ptrrview.onFinishLoading(false, false);
+                                        return;
+                                    }
                                     if (!TextUtils.isEmpty(reString)) {
-                                        //                          mData.clear();
+                                        mData.clear();
                                         ArrayList<MemberInfoSelectBean> memberinfoselectList = (ArrayList<MemberInfoSelectBean>) JSON
                                                 .parseArray(reString,
                                                         MemberInfoSelectBean.class);
                                         mData.addAll(memberinfoselectList);
                                         updateView(mData);
+                                        ptrrview.onFinishLoading(true, false);
+                                        page=page+1;
+                                    }
+                                    if(page==1&&mDatas.size()==0){
+                                        ptrrview.setVisibility(View.GONE);
+                                        img_ememberslist_empty.setVisibility(View.VISIBLE);
+                                    }else{
+                                        ptrrview.setVisibility(View.VISIBLE);
+                                        img_ememberslist_empty.setVisibility(View.GONE);
+                                    }
+                                    if(isResh==true){
+                                        ptrrview.setOnRefreshComplete();
+                                        ptrrview.onFinishLoading(true, false);
                                     }
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -333,6 +352,12 @@ public class MarketingSelectMemberActivity extends BaseActivity {
                         @Override
                         public void onResponseFailed(String msg) {
                             dialog.dismiss();
+                            img_ememberslist_empty.setVisibility(View.VISIBLE);
+                            ptrrview.setVisibility(View.GONE);
+                            if(isResh==true){
+                                ptrrview.setOnRefreshComplete();
+                            }
+                            ptrrview.onFinishLoading(true, false);
                         }
                     });
         } catch (Exception e) {

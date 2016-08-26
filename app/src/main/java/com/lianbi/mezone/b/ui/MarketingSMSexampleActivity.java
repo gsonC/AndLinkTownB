@@ -1,5 +1,6 @@
 package com.lianbi.mezone.b.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -90,8 +91,13 @@ public class MarketingSMSexampleActivity extends BaseActivity {
                         new  View.OnClickListener(){
                             @Override
                             public void onClick(View v) {
-                                index=helper.getPosition();
-                                notifyDataSetChanged();
+                                Intent intent=new Intent();
+                                intent.setClass(MarketingSMSexampleActivity.this,MarketingMsgBulidActivity.class);
+                                intent.putExtra("smscontext",item.getAppName());
+                                startActivity(intent);
+//                              index=helper.getPosition();
+//                              notifyDataSetChanged();
+
                             }
                         }
                 );

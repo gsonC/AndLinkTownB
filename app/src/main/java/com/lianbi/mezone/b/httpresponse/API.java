@@ -676,6 +676,14 @@ public static final String QProduct = "product/query.do";
 	public static final String MARKETINGSMS_SENDMSG_LIST= "msg/sendMsg.do";
 	/* 可供购买的短信套餐* */
 	public static final String MARKETINGSMS_MSGPACKAGE_LIST= "msg/msgPackage.do";
+	/* 查询短信模板* */
+	public static final String MARKETINGSMS_QUERYTEMPLATE_LIST= "message/queryAllTemplate.do";
+	/* 群发短信 * */
+	public static final String MARKETINGSMS_BULK_LIST= "message/smsBulkSend.do";
+	/* 群发结果查询**/
+	public static final String MARKETINGSMS_QUERYRESULTS_LIST= "message/queryBulkResult.do";
+
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
