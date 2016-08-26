@@ -2,7 +2,9 @@ package com.lianbi.mezone.b.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -17,6 +19,7 @@ import com.xizhi.mezone.b.R;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.com.hgh.utils.AbStrUtil;
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.view.HttpDialog;
@@ -93,6 +96,7 @@ public class MemberAddCategoryActivity extends BaseActivity {
 
     @Bind(R.id.lay_numofmembers)
     LinearLayout lay_numofmembers;
+    boolean iserrorvalue;
     HttpDialog dialog;
     String  membertypeId;
     String  nametype;
@@ -126,6 +130,7 @@ public class MemberAddCategoryActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_memberaddcategory, HAVETYPE);
         ButterKnife.bind(this);
+        listenDiscountRatio();
         initViewAndData();
     }
 
@@ -164,6 +169,62 @@ public class MemberAddCategoryActivity extends BaseActivity {
 
     }
 
+    public  void  listenDiscountRatio(){
+        tvRadiovalue
+                .addTextChangedListener(new TextWatcher() {
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start,
+                                              int before, int count) {
+
+                    }
+
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start,
+                                                  int count, int after) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        String   strdata=s.toString();
+                        if(!strdata.equals("")&&!AbStrUtil.indexOfString(strdata,".")&&Integer.parseInt(strdata)>10){
+                           iserrorvalue=true;
+
+                           ContentUtils.showMsg(MemberAddCategoryActivity.this, "请输入0.1-10之间的数值");
+                          }else{
+
+                           iserrorvalue=false;
+                          }
+
+                    }
+                });
+
+    }
+
+    public  boolean  verifyData(){
+        if (TextUtils.isEmpty(typeName)) {
+            ContentUtils.showMsg(MemberAddCategoryActivity.this, "请输入会员类别");
+            return  true;
+        }
+        if (TextUtils.isEmpty(typeDiscountRatio)||iserrorvalue==true) {
+            ContentUtils.showMsg(MemberAddCategoryActivity.this, "请输入正确的折扣比例");
+            return  true;
+        }
+        if (TextUtils.isEmpty(typeMaxDiscount)) {
+            ContentUtils.showMsg(MemberAddCategoryActivity.this, "请输入单笔最高优惠");
+            return  true;
+        }
+        if (TextUtils.isEmpty(typeConditionMin)) {
+            ContentUtils.showMsg(MemberAddCategoryActivity.this, "请输入累计消费下限");
+            return  true;
+        }
+        if (TextUtils.isEmpty(typeConditionMax)) {
+            ContentUtils.showMsg(MemberAddCategoryActivity.this, "请输入累计消费上限");
+            return  true;
+        }
+       return  false;
+    }
     /*查询此分类详情**/
     public  void getMemberTypedetail(String membertypeId){
         try {
@@ -184,7 +245,8 @@ public class MemberAddCategoryActivity extends BaseActivity {
                                 tvClassifyvalue.setText(memberclassify.getTypeName());
                             }
                             if (!TextUtils.isEmpty(memberclassify.getTypeDiscountRatio())) {
-                                tvRadiovalue.setText(memberclassify.getTypeDiscountRatio());
+                                double discountratio=Integer.parseInt(memberclassify.getTypeDiscountRatio())*0.1;
+                                tvRadiovalue.setText(String.valueOf(discountratio));
                             }
                             if (!TextUtils.isEmpty(String.valueOf(memberclassify.getTypeMaxDiscount()))) {
                                 tvMaxidiscountvalue.setText(String.valueOf(memberclassify.getTypeMaxDiscount()));
@@ -221,6 +283,14 @@ public class MemberAddCategoryActivity extends BaseActivity {
         typeMaxDiscount=tvMaxidiscountvalue.getText().toString();
         typeConditionMin=etRangebefore.getText().toString();
         typeConditionMax=etRangeafter.getText().toString();
+        if(verifyData()){
+                return;
+            }
+        if(AbStrUtil.indexOfString(typeDiscountRatio,".")){
+            typeDiscountRatio = String.valueOf((int)(Double.parseDouble(typeDiscountRatio)* 10));
+        }else {
+            typeDiscountRatio = String.valueOf(Integer.parseInt(typeDiscountRatio) * 10);
+        }
 
         try {
             okHttpsImp.upDateMemberCategories(new MyResultCallback<String>() {
@@ -229,6 +299,9 @@ public class MemberAddCategoryActivity extends BaseActivity {
                 public void onResponseResult(Result result) {
                     String reString = result.getData();
                     ContentUtils.showMsg(MemberAddCategoryActivity.this,"修改成功");
+                    Intent intent = new Intent(MemberAddCategoryActivity.this,MemberClassify.class);
+                    setResult(RESULT_OK, intent);
+                    finish();
 
                     if (reString != null) {
 
@@ -255,6 +328,14 @@ public class MemberAddCategoryActivity extends BaseActivity {
         typeMaxDiscount=tvMaxidiscountvalue.getText().toString();
         typeConditionMin=etRangebefore.getText().toString();
         typeConditionMax=etRangeafter.getText().toString();
+        if(verifyData()){
+            return;
+        }
+        if(AbStrUtil.indexOfString(typeDiscountRatio,".")){
+            typeDiscountRatio = String.valueOf((int)(Double.parseDouble(typeDiscountRatio)* 10));
+        }else {
+            typeDiscountRatio = String.valueOf(Integer.parseInt(typeDiscountRatio) * 10);
+        }
 
         try {
             okHttpsImp.addMemberCategories(new MyResultCallback<String>() {
@@ -263,19 +344,22 @@ public class MemberAddCategoryActivity extends BaseActivity {
                         public void onResponseResult(Result result) {
                             String reString = result.getData();
                             ContentUtils.showMsg(MemberAddCategoryActivity.this,"添加成功");
+                            Intent intent = new Intent(MemberAddCategoryActivity.this,MemberClassify.class);
+                            setResult(RESULT_OK, intent);
+                            finish();
 
                             if (reString != null) {
 
 
-                                     }
-                                     dialog.dismiss();
-                                     }
+                            }
+                            dialog.dismiss();
+                            }
 
-                                     @Override
-                                     public void onResponseFailed(String msg) {
+                             @Override
+                            public void onResponseFailed(String msg) {
                                      dialog.dismiss();
                                      }
-                                     }, userShopInfoBean.getBusinessId(),typeName,
+                            }, userShopInfoBean.getBusinessId(),typeName,
                     typeDiscountRatio,typeMaxDiscount,typeConditionMin,typeConditionMax, reqTime, uuid);
         } catch (Exception e) {
             e.printStackTrace();
@@ -292,7 +376,6 @@ public class MemberAddCategoryActivity extends BaseActivity {
             getAddMemberType();
 
         }
-        finish();
     }
 }
 

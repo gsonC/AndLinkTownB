@@ -659,7 +659,7 @@ public enum OkHttpsImp {
 		params.put("source", appsource);
 		String sign = getSign(md5_key, params);
 		params.put("sign", sign);
-		String url = getAbsoluteUrl(API.MEMBER_CATEGORY_LIST);
+		String url = getAbsoluteUrl(API.MARKETINGSMS_SENDDETAIL_LIST);
 		postProgressResponse(myResultCallback, params, url);
 	}
 
@@ -680,17 +680,17 @@ public enum OkHttpsImp {
 		params.put("source", appsource);
 		String sign = getSign(md5_key, params);
 		params.put("sign", sign);
-//		String url = getAbsoluteUrl("TProMsgSendService/querySendMsgStatistic.do");
-		String url =getHttpUrlAAA(businessId,"querySendMsgStatistic");
+//		String url = getAbsoluteUrl(API.MARKETINGSMS_STATISTICS_LIST);
+		String url="http://test.xylbn.cnmsg/msg/querySendMsgStatistic";
 		postProgressResponse(myResultCallback, params, url);
 	}
 	private String getHttpUrlAAA(String storeId, String methodName) {
 		// return "http://172.16.103.153:8085/wcm/serviceMall/".concat(storeId)
 		// .concat("/").concat(methodName);
 		return API.ENVIRONMENTAL
-				+ "/msg/querySendMsgStatistic/"
-//				.concat(storeId).concat("/")
-				.concat(methodName);
+				+ "/msg/querySendMsgStatistic/".concat(storeId);
+//				.concat("/")
+//				.concat(methodName);
 	}
 	/**
 	 * 新建营销短信发送短信
@@ -707,7 +707,7 @@ public enum OkHttpsImp {
 		params.put("source", appsource);
 		String sign = getSign(md5_key, params);
 		params.put("sign", sign);
-		String url = getAbsoluteUrl(API.MEMBER_CATEGORY_LIST);
+		String url = getAbsoluteUrl(API.MARKETINGSMS_SENDMSG_LIST);
 		postProgressResponse(myResultCallback, params, url);
 	}
 
@@ -724,7 +724,7 @@ public enum OkHttpsImp {
 		params.put("reqTime", reqTime);
 		String sign = getSign(md5_key, params);
 		params.put("sign", sign);
-		String url = getAbsoluteUrl(API.MEMBER_CATEGORY_LIST);
+		String url = getAbsoluteUrl(API.MARKETINGSMS_MSGPACKAGE_LIST);
 		postProgressResponse(myResultCallback, params, url);
 	}
 

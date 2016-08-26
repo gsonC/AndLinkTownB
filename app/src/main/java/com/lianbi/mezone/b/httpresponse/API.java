@@ -660,22 +660,22 @@ public static final String QProduct = "product/query.do";
 	* */
 	public static final String INTEGRALRECORD = "vipIntegral/vipIntegralList.do";
 ///////////////////////////////////////////////////////会员管理部分接口////////////////////////////////////////////////////////////////////////////
-	/*
-		* 会员分类列表
-		* */
+	/* 会员分类列表* */
 	public static final String MEMBER_CATEGORY_LIST= "vipType/vipTypeList.do";
-	/*
-       * 添加会员类别
-       * */
+	/* 添加会员类别* */
 	public static final String ADDMEMBER_CATEGORY_LIST = "vipType/addVipType.do";
-	/*
-       * 会员类别详情
-       * */
+	/* 会员类别详情* */
 	public static final String MEMBER_TYPEDETAIL_LIST = "vipType/detailVipType.do";
+	/* 修改会员类别* */
+	public static final String MEMBER_TYPEUPDATE_LIST= "vipType/updVipType.do";
+	/* 短信营销管理统计* */
+	public static final String MARKETINGSMS_STATISTICS_LIST= "msg/querySendMsgStatistic.do";
+	/* 短信营销发送详情* */
+	public static final String MARKETINGSMS_SENDDETAIL_LIST= "msg/querySendMsgDetail.do";
+	/* 新建营销短信* */
+	public static final String MARKETINGSMS_SENDMSG_LIST= "msg/sendMsg.do";
+	/* 可供购买的短信套餐* */
+	public static final String MARKETINGSMS_MSGPACKAGE_LIST= "msg/msgPackage.do";
 
-	/*
-       * 修改会员类别
-       * */
-	public static final String MEMBER_TYPEUPDATE_LIST = "vipType/updVipType.do";
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }

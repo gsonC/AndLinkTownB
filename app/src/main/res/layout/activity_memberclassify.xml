@@ -92,6 +92,7 @@
         android:scrollbars="none">
     </cn.com.hgh.baseadapter.recyclerViewadapter.pullrefreshrecyclerview.PullRefreshRecyclerView>-->
     <com.lhh.ptrrv.library.PullToRefreshRecyclerView
+        android:visibility="visible"
         android:id="@+id/ptrrv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -100,6 +101,16 @@
         >
 
     </com.lhh.ptrrv.library.PullToRefreshRecyclerView>
+    <ImageView
+        android:visibility="gone"
+        android:id="@+id/img_ememberslist_empty"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scaleType="fitCenter"
+        android:src="@mipmap/iv_empty"
+        android:layout_below="@id/v_01"
+        />
 <!--
     ptr:ptrDrawable="@drawable/android"
 -->

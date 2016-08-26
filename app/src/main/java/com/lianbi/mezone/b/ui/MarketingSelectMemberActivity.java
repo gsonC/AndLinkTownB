@@ -10,11 +10,15 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -43,6 +47,7 @@ import cn.com.hgh.baseadapter.recyclerViewadapter.pullrefreshrecyclerview.Divide
 import cn.com.hgh.baseadapter.recyclerViewadapter.pullrefreshrecyclerview.PullRefreshRecyclerAdapter;
 import cn.com.hgh.baseadapter.recyclerViewadapter.pullrefreshrecyclerview.PullRefreshViewHolder;
 import cn.com.hgh.indexscortlist.ClearEditText;
+import cn.com.hgh.utils.AbAppUtil;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.view.HttpDialog;
 
@@ -117,11 +122,15 @@ public class MarketingSelectMemberActivity extends BaseActivity {
     boolean  isshow=false;
     boolean  isLoadMore=false;
 
-    @OnClick({R.id.tv_sure, R.id.llt_integral})
+    @OnClick({R.id.tv_sure, R.id.llt_integral,R.id.cb_selectall})
     public void OnClick(View v) {
         switch (v.getId()) {
             case R.id.tv_sure:
 
+
+                break;
+            case R.id.cb_selectall:
+                upDateSeleteAll(true);
 
                 break;
             case R.id.llt_integral:
@@ -160,9 +169,49 @@ public class MarketingSelectMemberActivity extends BaseActivity {
         mDrawableUp = ContextCompat.getDrawable(this, R.mipmap.tma_up);
         mDrawableinitial = ContextCompat.getDrawable(this, R.mipmap.tma_initialdown);
         listviewData();
+        setLisenter();
         getMembersSelsectList();
     }
+    private void setLisenter() {
+        etSearch
+                .addTextChangedListener(new TextWatcher() {
 
+                    @Override
+                    public void onTextChanged(CharSequence s, int start,
+                                              int before, int count) {
+                        // 当输入框里面的值为空，更新为原来的列表，否则为过滤数据列表
+                        paramLike = s.toString();
+                        getMembersSelsectList();
+
+                    }
+
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start,
+                                                  int count, int after) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                    }
+                });
+        etSearch
+                .setOnEditorActionListener(new TextView.OnEditorActionListener() {
+
+                    @Override
+                    public boolean onEditorAction(TextView v, int actionId,
+                                                  KeyEvent event) {
+                        if (actionId == EditorInfo.IME_ACTION_DONE
+                                || actionId == EditorInfo.IME_ACTION_UNSPECIFIED) {
+                            paramLike = etSearch
+                                    .getText().toString().trim();
+                            getMembersSelsectList();                        }
+                        AbAppUtil.closeSoftInput(MarketingSelectMemberActivity.this);
+                        return false;
+                    }
+                });
+
+    }
     private void listviewData() {
         ptrrview.setSwipeEnable(true);//open swipe
         DemoLoadMoreView loadMoreView = new DemoLoadMoreView(this, ptrrview.getRecyclerView());
@@ -297,6 +346,20 @@ public class MarketingSelectMemberActivity extends BaseActivity {
         mAdapter.notifyDataSetChanged();
     }
 
+    public  void   upDateSeleteAll(boolean  isSeleteAll){
+        if(isSeleteAll){
+            for(int i=0;i<mDatas.size();i++){
+                mDatas.get(i).setChecked(true);
+            }
+            mAdapter.notifyDataSetChanged();
+        }else{
+            for(int i=0;i<mDatas.size();i++){
+                mDatas.get(i).setChecked(false);
+            }
+            mAdapter.notifyDataSetChanged();
+        }
+    }
+
     class DataAdapter extends PullRefreshRecyclerAdapter<MemberInfoSelectBean> {
 
 
@@ -353,8 +416,22 @@ public class MarketingSelectMemberActivity extends BaseActivity {
             }
 
             @Override
-            protected void onItemClick(View view, int adapterPosition) {
-                Toast.makeText(mContext, "This is item " + adapterPosition, Toast.LENGTH_SHORT).show();
+            protected void onItemClick(View view, final int adapterPosition) {
+                cb_selectmember.setOnClickListener(new  View.OnClickListener(){
+
+                    @Override
+                    public void onClick(View v) {
+                        if(mDatas.get(adapterPosition).isChecked()){
+                            mDatas.get(adapterPosition).setChecked(false);
+                            mAdapter.notifyDataSetChanged();
+                        }else{
+                            mDatas.get(adapterPosition).setChecked(true);
+                            mAdapter.notifyDataSetChanged();
+                        }
+
+                    }
+                }
+                );
             }
         }
     }
