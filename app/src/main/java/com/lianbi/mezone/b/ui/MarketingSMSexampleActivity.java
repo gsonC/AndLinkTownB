@@ -1,15 +1,30 @@
 package com.lianbi.mezone.b.ui;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
-import com.lianbi.mezone.b.bean.ServiceMallBean;
+import com.lhh.ptrrv.library.PullToRefreshRecyclerView;
+import com.lhh.ptrrv.library.footer.loadmore.BaseLoadMoreView;
+import com.lianbi.mezone.b.bean.SmsTemplate;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.xizhi.mezone.b.R;
 
@@ -17,14 +32,16 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import cn.com.hgh.baseadapter.BaseAdapterHelper;
-import cn.com.hgh.baseadapter.QuickAdapter;
+import cn.com.hgh.baseadapter.recyclerViewadapter.pullrefreshrecyclerview.DemoLoadMoreView;
+import cn.com.hgh.baseadapter.recyclerViewadapter.pullrefreshrecyclerview.DividerItemDecoration;
+import cn.com.hgh.baseadapter.recyclerViewadapter.pullrefreshrecyclerview.PullRefreshRecyclerAdapter;
+import cn.com.hgh.baseadapter.recyclerViewadapter.pullrefreshrecyclerview.PullRefreshViewHolder;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.view.HttpDialog;
-import cn.com.hgh.view.MyListView;
 
 /**
  * 选择短信模板
@@ -36,12 +53,30 @@ import cn.com.hgh.view.MyListView;
 public class MarketingSMSexampleActivity extends BaseActivity {
 
 
-    @Bind(R.id.act_smsexample_list)
-    MyListView actSmsexampleList;
-    private ArrayList<ServiceMallBean> mData = new ArrayList<ServiceMallBean>();
-    private ArrayList<ServiceMallBean> mDatas = new ArrayList<ServiceMallBean>();
+    @Bind(R.id.ptrrv)
+    PullToRefreshRecyclerView mptrrv;
+    @Bind(R.id.img_ememberslist_empty)
+    ImageView img_ememberslist_empty;
+    private ArrayList<SmsTemplate> mData = new ArrayList<SmsTemplate>();
+    private ArrayList<SmsTemplate> mDatas = new ArrayList<SmsTemplate>();
     HttpDialog dialog;
-    QuickAdapter<ServiceMallBean> mAdapter;
+    private DataAdapter mAdapter;
+//    QuickAdapter<SmsTemplate> mAdapter;
+    private static final int TIME = 1000;
+
+    private static final int MSG_CODE_REFRESH = 0;
+    private static final int MSG_CODE_LOADMORE = 1;
+    boolean  isLoadMore=false;
+    boolean  Nodata=false;
+    boolean  isResh;
+    //更新列表
+    private static final int REQUEST_CODE_UPDATA_RESULT = 1009;
+    //    添加会员类别
+    private static final int REQUEST_CODE_ADD_RESULT = 1010;
+    //第几页
+    private int  page=1;
+    //每页个数
+    private String  eachpullnum="10";
 //    @OnClick({R.id.rlv_actmarketing})
 //    public void OnClick(View v) {
 //        switch (v.getId()) {
@@ -67,93 +102,225 @@ public class MarketingSMSexampleActivity extends BaseActivity {
     private void initViewAndData() {
         setPageTitle("选择短信模板");
         dialog = new HttpDialog(this);
-        listviewData();
-        getCandownloadMall();
+        initRecyclerView();
+        queryAllSMSTemplate(true);
     }
-
-    private void listviewData() {
-        mAdapter = new QuickAdapter<ServiceMallBean>(MarketingSMSexampleActivity.this,
-                R.layout.item_marketingsmsexample_list, mDatas) {
-            private int index = -1;
-
+    public void initRecyclerView() {
+        mptrrv.setSwipeEnable(true);//open swipe
+        DemoLoadMoreView loadMoreView = new DemoLoadMoreView(this, mptrrv.getRecyclerView());
+        loadMoreView.setLoadmoreString("加载中");
+        loadMoreView.setLoadMorePadding(100);
+        mptrrv.setLayoutManager(new LinearLayoutManager(this));
+        mptrrv.setPagingableListener(new PullToRefreshRecyclerView.PagingableListener() {
             @Override
-            protected void convert(final BaseAdapterHelper helper,
-                                   final ServiceMallBean item) {
-                RelativeLayout ray_choice = helper
-                        .getView(R.id.ray_choice);
-                CheckBox cb_smstemplate= helper
-                        .getView(R.id.cb_smstemplate);
-                EditText  et_smstemplate= helper
-                        .getView(R.id.et_smstemplate);
+            public void onLoadMoreItems() {
+                if(isLoadMore==true){
 
-                et_smstemplate.setText(item.getAppName());
-                helper.getView(R.id.cb_smstemplate).setOnClickListener(
-                        new  View.OnClickListener(){
-                            @Override
-                            public void onClick(View v) {
-                                Intent intent=new Intent();
-                                intent.setClass(MarketingSMSexampleActivity.this,MarketingMsgBulidActivity.class);
-                                intent.putExtra("smscontext",item.getAppName());
-                                startActivity(intent);
-//                              index=helper.getPosition();
-//                              notifyDataSetChanged();
+                    mptrrv.onFinishLoading(false, false);
 
-                            }
-                        }
-                );
-                if (index == helper.getPosition()) {// 选中的条目和当前的条目是否相等
-                    cb_smstemplate.setChecked(true);
-                } else {
-                    cb_smstemplate.setChecked(false);
+                    return;
+                }else {
+                    mHandler.sendEmptyMessageDelayed(MSG_CODE_LOADMORE, TIME);
                 }
             }
-        };
-        // 设置适配器
-        actSmsexampleList.setAdapter(mAdapter);
-
-
-    }
-
-    private void getCandownloadMall() {
-        okHttpsImp.getCandownloadServerMall(new MyResultCallback<String>() {
-
+        });
+        mptrrv.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onResponseResult(Result result) {
-                String reString = result.getData();
-                if (reString != null) {
-                    JSONObject jsonObject;
-                    try {
-                        jsonObject = new JSONObject(reString);
-                        reString = jsonObject.getString("appsList");
-                        if (!TextUtils.isEmpty(reString)) {
-                            mData.clear();
-                            ArrayList<ServiceMallBean> downloadListMall = (ArrayList<ServiceMallBean>) JSON
-                                    .parseArray(reString,
-                                            ServiceMallBean.class);
-                            mData.addAll(downloadListMall);
-                            updateView(mData);
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-                dialog.dismiss();
+            public void onRefresh() {
+                mHandler.sendEmptyMessageDelayed(MSG_CODE_REFRESH, TIME);
             }
-
+        });
+        mptrrv.getRecyclerView().addItemDecoration(new DividerItemDecoration(this,
+                DividerItemDecoration.VERTICAL_LIST));
+        mptrrv.setLoadMoreFooter(loadMoreView);
+        mptrrv.getLoadMoreFooter().setOnDrawListener(new BaseLoadMoreView.OnDrawListener() {
             @Override
-            public void onResponseFailed(String msg) {
-                dialog.dismiss();
-            }
-        }, userShopInfoBean.getBusinessId());
+            public boolean onDrawLoadMore(Canvas c, RecyclerView parent) {
 
+                return false;
+            }
+        });
+        mAdapter = new DataAdapter(this,mDatas);
+        mptrrv.setAdapter(mAdapter);
+        mptrrv.onFinishLoading(true, false);
     }
-    protected void updateView(ArrayList<ServiceMallBean> arrayList) {
+    private void initAccess(){
+        page=1;
+        Nodata=false;
+        isLoadMore=false;
         mDatas.clear();
-        mDatas.addAll(arrayList);
-        mAdapter.replaceAll(mDatas);
     }
+    Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (msg.what == MSG_CODE_REFRESH) {
 
+                queryAllSMSTemplate(true);
+//              mPtrrv.setOnRefreshComplete();
+//              mPtrrv.onFinishLoading(true, false);
+            } else if (msg.what == MSG_CODE_LOADMORE) {
+                queryAllSMSTemplate(false);
+            }
+        }
+    };
+
+
+    private void queryAllSMSTemplate(final  boolean isResh) {
+        try {
+            okHttpsImp.queryAllSMSTemplate(new MyResultCallback<String>() {
+
+                @Override
+                public void onResponseResult(Result result) {
+                    String reString = result.getData();
+                    Log.i("tag","短信模板返回-125----》"+reString);
+                    if (reString != null) {
+                        JSONObject jsonObject;
+                        try {
+                            jsonObject = new JSONObject(reString);
+                            reString = jsonObject.getString("queryList");
+                            if (!TextUtils.isEmpty(reString)) {
+                                mData.clear();
+                                ArrayList<SmsTemplate> downloadListMall = (ArrayList<SmsTemplate>) JSON
+                                        .parseArray(reString,
+                                                SmsTemplate.class);
+                                mData.addAll(downloadListMall);
+                                updateView(mData);
+                            }
+                            if(mDatas.size()==0){
+                                mptrrv.setVisibility(View.GONE);
+                                img_ememberslist_empty.setVisibility(View.VISIBLE);
+                            }else{
+                                mptrrv.setVisibility(View.VISIBLE);
+                                img_ememberslist_empty.setVisibility(View.GONE);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    dialog.dismiss();
+                }
+
+                @Override
+                public void onResponseFailed(String msg) {
+                    dialog.dismiss();
+                }
+            }, "M",reqTime,uuid);
+        }catch (Exception  e){e.printStackTrace();}
+
+    }
+    protected void updateView(ArrayList<SmsTemplate> arrayList) {
+        mDatas.addAll(arrayList);
+        mAdapter.notifyDataSetChanged();
+    }
+    class DataAdapter extends PullRefreshRecyclerAdapter<SmsTemplate> {
+
+
+        public DataAdapter(Context context, List<SmsTemplate> list) {
+            super(context, list);
+        }
+
+
+        @Override
+        protected PullRefreshViewHolder onCreateNormalViewHolder(ViewGroup parent) {
+            return new DataViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_marketingsmsexample_list, parent, false));
+        }
+
+        class DataViewHolder extends PullRefreshViewHolder {
+            private LinearLayout  lay_sms;
+            private RelativeLayout ray_choice;
+            private CheckBox cb_smstemplate;
+            private EditText  et_smstemplate;
+            private TextView  tv_loadedall;
+
+            public DataViewHolder(View itemView) {
+                super(itemView);
+                lay_sms = (LinearLayout) itemView.findViewById(R.id.lay_sms);
+                ray_choice = (RelativeLayout) itemView.findViewById(R.id.ray_choice);
+                cb_smstemplate = (CheckBox) itemView.findViewById(R.id.cb_smstemplate);
+                et_smstemplate = (EditText) itemView.findViewById(R.id.et_smstemplate);
+                tv_loadedall = (TextView) itemView.findViewById(R.id.tv_loadedall);
+
+            }
+
+
+            @Override
+            public void onBindViewHolder(final int position) {
+                 et_smstemplate.setText(mDatas.get(position).getContent());
+                 tv_loadedall.setVisibility(View.GONE);
+                 lay_sms.setVisibility(View.VISIBLE);
+                 cb_smstemplate.setOnClickListener(new View.OnClickListener() {
+                 @Override
+                 public void onClick(View v) {
+                        if(cb_smstemplate.isChecked()){
+                            mDatas.get(position).setCheck(true);
+                        }else{
+                            mDatas.get(position).setCheck(false);
+                        }
+                        Intent intent = new Intent();
+                        intent.setClass(MarketingSMSexampleActivity.this,MarketingMsgBulidActivity.class);
+                        intent.putExtra("info",mDatas.get(position).getContent());
+                        intent.putExtra("templateID",mDatas.get(position).getTemplateID());
+                        setResult(RESULT_OK, intent);
+                        finish();
+
+                     }
+                });
+            }
+
+            @Override
+            protected void onItemClick(View view, final int adapterPosition) {
+
+
+            }
+
+
+        }
+    }
 }
+    //    private void listviewData() {
+//        mAdapter = new QuickAdapter<SmsTemplate>(MarketingSMSexampleActivity.this,
+//                R.layout.item_marketingsmsexample_list, mDatas) {
+//            private int index = -1;
+//
+//            @Override
+//            protected void convert(final BaseAdapterHelper helper,
+//                                   final SmsTemplate item) {
+//                RelativeLayout ray_choice = helper
+//                        .getView(R.id.ray_choice);
+//                CheckBox cb_smstemplate= helper
+//                        .getView(R.id.cb_smstemplate);
+//                EditText  et_smstemplate= helper
+//                        .getView(R.id.et_smstemplate);
+//
+//                et_smstemplate.setText(item.getContent());
+//                helper.getView(R.id.cb_smstemplate).setOnClickListener(
+//                        new  View.OnClickListener(){
+//                            @Override
+//                            public void onClick(View v) {
+//                                Intent intent=new Intent();
+//                                intent.setClass(MarketingSMSexampleActivity.this,MarketingMsgBulidActivity.class);
+//                                intent.putExtra("smscontext",item.getContent());
+//                                startActivity(intent);
+////                              index=helper.getPosition();
+////                              notifyDataSetChanged();
+//
+//                            }
+//                        }
+//                );
+//                if (index == helper.getPosition()) {// 选中的条目和当前的条目是否相等
+//                    cb_smstemplate.setChecked(true);
+//                } else {
+//                    cb_smstemplate.setChecked(false);
+//                }
+//            }
+//        };
+//        // 设置适配器
+//        actSmsexampleList.setAdapter(mAdapter);
+//
+//
+//    }
+
 
 
 

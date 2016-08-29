@@ -13,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,7 +50,9 @@ import cn.com.hgh.baseadapter.recyclerViewadapter.pullrefreshrecyclerview.PullRe
 import cn.com.hgh.baseadapter.recyclerViewadapter.pullrefreshrecyclerview.PullRefreshViewHolder;
 import cn.com.hgh.indexscortlist.ClearEditText;
 import cn.com.hgh.utils.AbAppUtil;
+import cn.com.hgh.utils.AbStrUtil;
 import cn.com.hgh.utils.Result;
+import cn.com.hgh.utils.ScreenUtils;
 import cn.com.hgh.view.HttpDialog;
 
 /**
@@ -113,7 +116,7 @@ public class MarketingSelectMemberActivity extends BaseActivity {
     private Drawable mDrawableDowm;
     private Drawable mDrawableUp;
     private Drawable mDrawableinitial;
-    private String paramLike;
+    private String paramLike="";
     private int page = 0;
     private static final int DEFAULT_ITEM_SIZE = 20;
     private static final int ITEM_SIZE_OFFSET = 20;
@@ -125,6 +128,9 @@ public class MarketingSelectMemberActivity extends BaseActivity {
     boolean  isshow=false;
     boolean  isLoadMore=false;
     boolean  Nodata=false;
+    boolean  isSeleteAll=false;
+    private int  statisticspeople=0;
+    List<Integer> intlist = new ArrayList<Integer>();
 
     @OnClick({R.id.tv_sure, R.id.llt_integral,R.id.cb_selectall})
     public void OnClick(View v) {
@@ -134,7 +140,7 @@ public class MarketingSelectMemberActivity extends BaseActivity {
 
                 break;
             case R.id.cb_selectall:
-                upDateSeleteAll(true);
+                upDateSeleteAll(isSeleteAll);
 
                 break;
             case R.id.llt_integral:
@@ -197,6 +203,7 @@ public class MarketingSelectMemberActivity extends BaseActivity {
         mDrawableDowm = ContextCompat.getDrawable(this, R.mipmap.tma_down);
         mDrawableUp = ContextCompat.getDrawable(this, R.mipmap.tma_up);
         mDrawableinitial = ContextCompat.getDrawable(this, R.mipmap.tma_initialdown);
+        viewAdapter();
         listviewData();
         setLisenter();
         getMembersSelsectList(false);
@@ -285,6 +292,7 @@ public class MarketingSelectMemberActivity extends BaseActivity {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             if (msg.what == MSG_CODE_REFRESH) {
+                initAccess();
                 getMembersSelsectList(true);
             } else if (msg.what == MSG_CODE_LOADMORE) {
                 if(Nodata==true){
@@ -307,6 +315,7 @@ public class MarketingSelectMemberActivity extends BaseActivity {
                         @Override
                         public void onResponseResult(Result result) {
                             String reString = result.getData();
+                            Log.i("tag","要发送的会员----->"+reString);
                             String  dataSize;
                             if (reString != null) {
                                 JSONObject jsonObject;
@@ -327,6 +336,7 @@ public class MarketingSelectMemberActivity extends BaseActivity {
                                                 .parseArray(reString,
                                                         MemberInfoSelectBean.class);
                                         mData.addAll(memberinfoselectList);
+                                        checkboxRefresh(isResh);
                                         updateView(mData);
                                         ptrrview.onFinishLoading(true, false);
                                         page=page+1;
@@ -364,23 +374,37 @@ public class MarketingSelectMemberActivity extends BaseActivity {
             e.printStackTrace();
         }
     }
+    private   void  checkboxRefresh(boolean  isResh){
+        if(isResh==true){
+            int s=intlist.size();
+            for(int in=0;in<s;in++){
+                mData.get(intlist.get(in)).setChecked(true);
+            }
+        }
 
+
+    }
     protected void updateView(ArrayList<MemberInfoSelectBean> arrayList) {
-        mDatas.clear();
         mDatas.addAll(arrayList);
         mAdapter.notifyDataSetChanged();
     }
 
     public  void   upDateSeleteAll(boolean  isSeleteAll){
         if(isSeleteAll){
-            for(int i=0;i<mDatas.size();i++){
-                mDatas.get(i).setChecked(true);
-            }
-            mAdapter.notifyDataSetChanged();
-        }else{
-            for(int i=0;i<mDatas.size();i++){
+            int total=mDatas.size();
+            for(int i=0;i<total;i++){
                 mDatas.get(i).setChecked(false);
             }
+            cbSelectall.setText("全选");
+            this.isSeleteAll=false;
+            mAdapter.notifyDataSetChanged();
+        }else{
+            int total=mDatas.size();
+            for(int i=0;i<total;i++){
+                mDatas.get(i).setChecked(true);
+            }
+            this.isSeleteAll=true;
+            cbSelectall.setText("全不选");
             mAdapter.notifyDataSetChanged();
         }
     }
@@ -421,45 +445,83 @@ public class MarketingSelectMemberActivity extends BaseActivity {
             }
 
             @Override
-            public void onBindViewHolder(int position) {
+            public void onBindViewHolder(final int position) {
+                ScreenUtils.textAdaptationOn720(tv_mb_phone, MarketingSelectMemberActivity.this, 24);//本周新增会员
+                ScreenUtils.textAdaptationOn720(tv_mb_category, MarketingSelectMemberActivity.this, 24);//本周新增会员
+                ScreenUtils.textAdaptationOn720(tv_mb_source, MarketingSelectMemberActivity.this, 24);//本周新增会员
+                ScreenUtils.textAdaptationOn720(tv_mb_label, MarketingSelectMemberActivity.this, 24);//本周新增会员
+                ScreenUtils.textAdaptationOn720(tv_mb_integral, MarketingSelectMemberActivity.this, 24);//本周新增会员
                 if(isshow==true&&position==mDatas.size()-1)
                 {
                     isLoadMore=true;
                     lay_item.setVisibility(View.GONE);
                     tv_loadedall.setVisibility(View.VISIBLE);
                 }else{
+                    cb_selectmember.setChecked(mDatas.get(position).isChecked());
                     tv_mb_phone.setText(mDatas.get(position).getVipPhone());
-                    tv_mb_category.setText(mDatas.get(position).getVipType());
+                    if(!AbStrUtil.isEmpty(mDatas.get(position).getVipTypeObject())){
+                        tv_mb_category.setText(mDatas.get(position).getVipTypeObject());
+                    }else{
+                        tv_mb_category.setText("无");
+                    }
                     tv_mb_source.setText(mDatas.get(position).getVipSource());
-                    tv_mb_label.setText(mDatas.get(position).getVipRemarks());
-                    tv_mb_integral.setText(mDatas.get(position).getVipIntegral());
+                    if(!AbStrUtil.isEmpty(mDatas.get(position).getLabels())){
+                        tv_mb_label.setText(mDatas.get(position).getLabels());
+                    }else{
+                        tv_mb_label.setText("无");
+                    }
+                    tv_mb_integral.setText(String.valueOf(mDatas.get(position).getVipIntegral()));
                     tv_loadedall.setVisibility(View.GONE);
                     lay_item.setVisibility(View.VISIBLE);
-
                 }
 
-            }
-
-            @Override
-            protected void onItemClick(View view, final int adapterPosition) {
                 cb_selectmember.setOnClickListener(new  View.OnClickListener(){
-
-                    @Override
-                    public void onClick(View v) {
-                        if(mDatas.get(adapterPosition).isChecked()){
-                            mDatas.get(adapterPosition).setChecked(false);
+                                                       @Override
+                                                       public void onClick(View v) {
+                            if(mDatas.get(position).isChecked()){
+                             isSeleteAll=true;
+                             cbSelectall.setText("全不选");
+                            mDatas.get(position).setChecked(false);
                             mAdapter.notifyDataSetChanged();
-                        }else{
-                            mDatas.get(adapterPosition).setChecked(true);
+                                       }else{
+                            mDatas.get(position).setChecked(true);
                             mAdapter.notifyDataSetChanged();
-                        }
+                                       }
+                            }
+                            }
+                );
 
+                int  sum=mDatas.size();
+                int  statisticspeople=-0;
+                intlist.clear();
+                for(int toatl=0;toatl<sum;toatl++){
+                    if(mDatas.get(toatl).isChecked()==true){
+
+                        statisticspeople=statisticspeople+1;
+                        intlist.add(toatl);
                     }
                 }
-                );
+                tvAlreadychecknum.setText(statisticspeople+"人");
+
+
+            }
+            @Override
+            protected void onItemClick(View view, final int adapterPosition) {
+
             }
         }
     }
+    /**
+     * View适配
+     */
+    private void viewAdapter() {
+        ScreenUtils.textAdaptationOn720(btnSendmsg, this, 32);//会员电话
+        ScreenUtils.textAdaptationOn720(txtMemberclass, this, 32);//类别
+        ScreenUtils.textAdaptationOn720(txtMembersource, this, 32);//来源
+        ScreenUtils.textAdaptationOn720(txtMembertag, this, 32);//标签
+        ScreenUtils.textAdaptationOn720(txtMemberintegral, this, 32);//积分
+    }
+
 }
 
 

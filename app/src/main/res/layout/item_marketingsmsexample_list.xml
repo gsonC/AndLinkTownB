@@ -3,17 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
-    android:padding="15dp"
     >
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="none"
-        >
     <LinearLayout
+        android:id="@+id/lay_sms"
+        android:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:padding="15dp"
         >
     <RelativeLayout
         android:id="@+id/ray_choice"
@@ -53,5 +50,15 @@
            android:background="@drawable/shap_hollow_grey"
     />
 </LinearLayout>
-</ScrollView>
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/tv_loadedall"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="5dp"
+        android:gravity="center"
+        android:singleLine="true"
+        android:text="已加载全部"
+        android:textColor="@color/colores_news_11"
+        android:textSize="15sp" />
 </RelativeLayout>

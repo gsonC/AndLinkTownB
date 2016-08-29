@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -291,7 +292,7 @@ public class MemberAddCategoryActivity extends BaseActivity {
         }else {
             typeDiscountRatio = String.valueOf(Integer.parseInt(typeDiscountRatio) * 10);
         }
-
+        Log.i("tag","折扣比例-295------->"+typeDiscountRatio);
         try {
             okHttpsImp.upDateMemberCategories(new MyResultCallback<String>() {
 
@@ -336,6 +337,7 @@ public class MemberAddCategoryActivity extends BaseActivity {
         }else {
             typeDiscountRatio = String.valueOf(Integer.parseInt(typeDiscountRatio) * 10);
         }
+        Log.i("tag","折扣比例-340------->"+typeDiscountRatio);
 
         try {
             okHttpsImp.addMemberCategories(new MyResultCallback<String>() {

@@ -305,7 +305,6 @@ public class MemberClassifyActivity extends BaseActivity {
                 img_right = (ImageView) itemView.findViewById(R.id.img_right);
                 tv_loadedall = (TextView) itemView.findViewById(R.id.tv_loadedall);
             }
-
             @Override
             public void onBindViewHolder(int position) {
                 if(Nodata==true&&position==mDatas.size()-1)

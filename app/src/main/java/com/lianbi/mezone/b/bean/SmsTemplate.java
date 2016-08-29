@@ -12,6 +12,15 @@ public class SmsTemplate implements Serializable {
     String templateMark;
     String projectNo;
     String content;
+    boolean  check;
+
+    public boolean isCheck() {
+        return check;
+    }
+
+    public void setCheck(boolean check) {
+        this.check = check;
+    }
 
     public String getTemplateID() {
         return templateID;

@@ -682,8 +682,7 @@ public enum OkHttpsImp {
 		params.put("source", appsource);
 		String sign = getSign(md5_key, params);
 		params.put("sign", sign);
-//		String url = getAbsoluteUrl(API.MARKETINGSMS_STATISTICS_LIST);
-		String url="http://test.xylbn.cnmsg/msg/querySendMsgStatistic";
+		String url = getAbsoluteUrl(API.MARKETINGSMS_STATISTICS_LIST);
 		postProgressResponse(myResultCallback, params, url);
 	}
 	private String getHttpUrlAAA(String storeId, String methodName) {
@@ -699,11 +698,11 @@ public enum OkHttpsImp {
 	 */
 	public void sendShortMessage(
 			MyResultCallback<String> myResultCallback, String businessId,
-			String msgId, List<String> members,
+			String phone, String members,
 			String reqTime, String uuid) throws Exception {
 		Map<String, String> params = new HashMap<String, String>();
-		params.put("businessId", businessId);
-		params.put("msgId", msgId);
+		params.put("businessID", businessId);
+		params.put("phone", phone);
 		params.put("reqTime", reqTime);
 		params.put("serNum", uuid);
 		params.put("source", appsource);
@@ -742,7 +741,8 @@ public enum OkHttpsImp {
 		params.put("reqTime", reqTime);
 		String sign = getSign(md5_key, params);
 		params.put("sign", sign);
-		String url = getAbsoluteUrl(API.MARKETINGSMS_QUERYTEMPLATE_LIST);
+//		String url = getAbsoluteUrl(API.MARKETINGSMS_QUERYTEMPLATE_LIST);
+		String url = "http://test.xylbn.cn/lincombFront/message/queryAllTemplate.do?";
 		postProgressResponse(myResultCallback, params, url);
 	}
 	/**
