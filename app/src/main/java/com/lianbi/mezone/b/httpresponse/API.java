@@ -638,7 +638,7 @@ public static final String QProduct = "product/query.do";
 	/*
 	* 获取会员优惠券列表
 	* */
-	public static final String COUPONS_LIST = "";
+	public static final String COUPONS_LIST = "coupon/queryStoreCoup.do";
 	/**
 	 * 会员优惠券列表查询
 	 * */

@@ -1,5 +1,6 @@
 package com.lianbi.mezone.b.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -20,7 +21,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.com.hgh.view.AbPullToRefreshView;
 
-public class CouponUsingDetailsActivity extends BaseActivity {
+public class CouponUsingDetailsActivity extends BaseActivity implements
+        AbPullToRefreshView.OnHeaderRefreshListener, AbPullToRefreshView.OnFooterLoadListener {
+    public static final String COUPON_ID = "COUPON_ID";
     @Bind(R.id.all_)
     FrameLayout all_;
     @Bind(R.id.all)
@@ -52,12 +55,20 @@ public class CouponUsingDetailsActivity extends BaseActivity {
     @Bind(R.id.invalid_num)
     TextView invalid_num;
 
+    private String couponId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coupon_using_details, NOTYPE);
         ButterKnife.bind(this);
         setPageTitle("优惠券使用详情");
+
+        couponId = getIntent().getStringExtra(COUPON_ID);
+
+        abPullToRefreshView.setOnHeaderRefreshListener(this);
+        abPullToRefreshView.setOnFooterLoadListener(this);
+
         List<Map<String, String>> data = new ArrayList<>();
         Map<String, String> m0 = new HashMap<>();
         m0.put("member_phone", "1383838438");
@@ -140,5 +151,15 @@ public class CouponUsingDetailsActivity extends BaseActivity {
                 all.setTextColor(getResources().getColor(R.color.colores_news_10));
                 break;
         }
+    }
+
+    @Override
+    public void onFooterLoad(AbPullToRefreshView view) {
+
+    }
+
+    @Override
+    public void onHeaderRefresh(AbPullToRefreshView view) {
+
     }
 }

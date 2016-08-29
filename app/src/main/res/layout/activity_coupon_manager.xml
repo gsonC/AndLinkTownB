@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colores_news_14"
     android:orientation="vertical"
     tools:context="com.lianbi.mezone.b.ui.CouponManagerActivity">
 
@@ -70,22 +71,17 @@
         </FrameLayout>
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/color_e3e3e3" />
-
     <cn.com.hgh.view.AbPullToRefreshView
         android:id="@+id/pull_to_refresh_coupon_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="20dp"
+        android:layout_marginTop="10dp"
         android:layout_weight="1"
         android:orientation="vertical">
 
         <ListView
-            android:id="@+id/activity_coupon_list"
+            android:id="@+id/coupon_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:divider="@color/color_e3e3e3"
@@ -97,8 +93,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerInside"
-            android:src="@mipmap/iv_empty"
-            android:visibility="gone" />
+            android:src="@mipmap/iv_empty" />
     </cn.com.hgh.view.AbPullToRefreshView>
 
     <TextView

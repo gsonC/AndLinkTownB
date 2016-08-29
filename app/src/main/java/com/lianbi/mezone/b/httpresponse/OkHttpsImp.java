@@ -2498,9 +2498,34 @@ public enum OkHttpsImp {
 		getProgressResponse(myResultCallback, params, url);
 	}
 
+	/*
+	* 优惠券管理（-店铺-优惠券表）按优惠券状态筛选店铺所有的优惠券
+	* @param issuedStoreId 商铺ID
+	* @param isValide 优惠券状态
+	* @param startNo 开始行数
+	* @param pageSize 每页显示条数
+	*/
+	public void queryStoreCoupByStoreId(String serNum, String source, String reqTime,
+										String issuedStoreId, String isValide, String startNo, String pageSize,
+										MyResultCallback<String> myResultCallback) throws Exception {
+		Map<String, String> params = new HashMap<>();
+		params.put("reqTime", reqTime);
+		params.put("serNum", serNum);
+		params.put("source", source);
+		params.put("issuedStoreId", issuedStoreId);
+		params.put("isValide", isValide);
+		params.put("startNo", startNo);
+		params.put("pageSize", pageSize);
+
+		String sign = getSign(md5_key, params);
+		params.put("sign", sign);
+		String url = getAbsoluteUrl(API.COUPONS_LIST);
+		postProgressResponse(myResultCallback, params, url);
+	}
 
 	/*
 	* 获取会员优惠券列表
+	* @params vipId 会员ID
 	*/
 	public void getVipCouponsListByVipId(String serNum, String source, String reqTime,
 										 String vipId, String startNo, String pageSize,
