@@ -46,15 +46,32 @@ public class SelectTagActivity extends BaseActivity {
 	private int page = 1;
 	private ArrayList<SelectTagBean> mDatas = new ArrayList<>();
 	private QuickAdapter<SelectTagBean> mAdapter;
+	private String labelId;
+	private String[] labelIds = new String[]{};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.act_selecttag, NOTYPE);
+		getLabelId();
 		initView();
 		setListen();
 		initAdapter();
 		getTag(true);
+	}
+
+	/**
+	 * 获取会员标签
+	 */
+	private void getLabelId() {
+
+	//	labelId = getIntent().getStringExtra("labelId");
+	//	if(!AbStrUtil.isEmpty(labelId)){
+	//		if(labelId.contains(",")){
+	//			labelIds = labelId.split(",");
+	//		}
+	//	}
+	//	System.out.println("labelId"+labelIds.length);
 	}
 
 	private void initView() {

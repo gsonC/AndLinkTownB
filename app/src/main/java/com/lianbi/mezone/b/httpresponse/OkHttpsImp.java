@@ -2522,6 +2522,23 @@ public enum OkHttpsImp {
 		String url = getAbsoluteUrl(API.COUPONS_LIST);
 		postProgressResponse(myResultCallback, params, url);
 	}
+	/**
+	 * 获取会员协议
+	 */
+	public void getMemberAgreement(String serNum, String source, String reqTime,String businessId
+									,MyResultCallback<String> myResultCallback) throws Exception {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("businessId", businessId);
+		params.put("reqTime", reqTime);
+		params.put("serNum", serNum);
+		params.put("source", source);
+		params.put("protocolNo", "CPL-2016-03");
+		params.put("isValue", "Y");
+		String sign = getSign(md5_key, params);
+		params.put("sign", sign);
+		String url = getAbsoluteUrl(API.MEMBERAGREEMENT);
+		getNoProgressResponse(myResultCallback, params, url);
+	}
 
 	/*
 	* 获取会员优惠券列表

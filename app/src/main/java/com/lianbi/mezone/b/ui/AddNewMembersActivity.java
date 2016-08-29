@@ -56,6 +56,7 @@ public class AddNewMembersActivity extends BaseActivity {
 	private boolean mIsShow;
 	private String mVipLabel = "";
 	private String vipId = "";
+	private StringBuffer labelId= new StringBuffer();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -251,45 +252,36 @@ public class AddNewMembersActivity extends BaseActivity {
 			Integer typeDiscountRatio = memberDetails.getVipTypeObject().getTypeDiscountRatio();
 			Integer TypeMaxDiscount = memberDetails.getVipTypeObject().getTypeMaxDiscount();
 			int vipIntegral = memberDetails.getVipIntegral();
-			if (typeDiscountRatio != null) {
-				mTvAddmemberDiscount.setText(MathExtend.roundNew(new BigDecimal(typeDiscountRatio)
-						.divide(new BigDecimal(100)).doubleValue(), 1));
-			} else {
-				mTvAddmemberDiscount.setText("无");
+			memberDiscount(typeDiscountRatio,mTvAddmemberDiscount);
+			memberDiscount(TypeMaxDiscount,mTvAddmemberMax);
+			mTvAddmemberIntegral.setText(vipIntegral+"");
+
+			if(null!=memberDetails.getLabels()&&memberDetails.getLabels().size()>0){
+				int size = memberDetails.getLabels().size();
+				StringBuffer labelName = new StringBuffer();
+				for (int i=0;i<size;i++){
+					if (i == (size - 1)) {
+						labelName.append(memberDetails.getLabels().get(i).getLabelName());
+						labelId.append(memberDetails.getLabels().get(i).getLabelId());
+					} else {
+						labelName.append(memberDetails.getLabels().get(i).getLabelName() + ",");
+						labelId.append(memberDetails.getLabels().get(i).getLabelId() + ",");
+					}
+				}
+				mTvAddmembertag.setText(labelName.toString());
+			}else{
+				mTvAddmembertag.setHint("请选择会员标签");
 			}
-			if (TypeMaxDiscount != null) {
-				mTvAddmemberMax.setText(MathExtend.roundNew(new BigDecimal(TypeMaxDiscount)
-						.divide(new BigDecimal(100)).doubleValue(), 1));
-			} else {
-				mTvAddmemberMax.setText("无");
-			}
-			if (0 != vipIntegral) {
-				mTvAddmemberIntegral.setText(MathExtend.roundNew(new BigDecimal(vipIntegral)
-						.divide(new BigDecimal(100)).doubleValue(), 1));
-			} else {
-				mTvAddmemberIntegral.setText("0");
-			}
-			//	wordsAdapter(memberDetails.getLablelList().getLabelName(), "请选择会员标签", mTvAddmembertag);
 			wordsAdapter(memberDetails.getVipName(), "请输入会员姓名", mEditMembername);
 			if (2 == memberDetails.getVipSex()) {
 				mTvAddmemberSex.setText("女");
 			} else {
 				mTvAddmemberSex.setText("男");
 			}
-			if (!TextUtils.isEmpty(memberDetails.getVipBirthday())) {
-				String vipBirthday = AbDateUtil.getStringByFormat(Long.valueOf(memberDetails.getVipBirthday())
-						, AbDateUtil.dateFormatYMD);
-				mEtMemberbirthday.setText(vipBirthday);
-			} else {
-				mEtMemberbirthday.setHint("点击设置会员生日");
-			}
-			if (!TextUtils.isEmpty(memberDetails.getVipValidityPeriod())) {
-				String vipValidityPeriod = AbDateUtil.getStringByFormat(Long.valueOf(memberDetails.getVipValidityPeriod())
-						, AbDateUtil.dateFormatYMD);
-				mEtMembercardtermofvalidity.setText(vipValidityPeriod);
-			} else {
-				mEtMemberbirthday.setHint("点击设置会员卡有效期");
-			}
+			String vipBirthday = memberDetails.getVipBirthday();
+			String vipValidityPeriod = memberDetails.getVipValidityPeriod();
+			memberDate(vipBirthday,mEtMemberbirthday,1);
+			memberDate(vipValidityPeriod,mEtMembercardtermofvalidity,2);
 			wordsAdapter(memberDetails.getVipCardNo(), "请输入会员卡号", mEditMembercardnumber);
 			wordsAdapter(memberDetails.getVipIdNo(), "请输入身份证号", mEditIDnumber);
 			if (!TextUtils.isEmpty(memberDetails.getVipAddress())) {
@@ -309,7 +301,38 @@ public class AddNewMembersActivity extends BaseActivity {
 	}
 
 	/**
-	 * 添加会员文字展现
+	 * 会员日期填充
+	 */
+	private void memberDate(String dates,TextView tvs,int i){
+		if(!AbStrUtil.isEmpty(dates)){
+			tvs.setText( AbDateUtil.getStringByFormat(Long.valueOf(dates)
+					, AbDateUtil.dateFormatYMD));
+		}else{
+			switch (i){
+				case 1:
+					tvs.setHint("点击设置会员生日");
+					break;
+				case 2:
+					tvs.setHint("点击设置会员卡有效期");
+					break;
+			}
+		}
+	}
+
+	/**
+	 * 会员折扣填充
+	 */
+	private void memberDiscount(Integer discount,TextView tvs){
+		if(discount!=null){
+			tvs.setText(MathExtend.roundNew(new BigDecimal(discount)
+					.divide(new BigDecimal(100)).doubleValue(), 1));
+		}else{
+			tvs.setText("无");
+		}
+	}
+
+	/**
+	 * 会员EditText填充
 	 */
 	private void wordsAdapter(String memberAttribute, String hintwords, TextView tvs) {
 		if (!TextUtils.isEmpty(memberAttribute)) {
@@ -398,6 +421,9 @@ public class AddNewMembersActivity extends BaseActivity {
 				break;
 			case R.id.tv_addmembertag://会员标签
 				Intent member_tag = new Intent(this, SelectTagActivity.class);
+				if(labelId!=null){
+					member_tag.putExtra("labelId",labelId.toString());
+				}
 				startActivityForResult(member_tag, REQUEST_TAG);
 				break;
 			case R.id.llt_addmemberaddress://会员地址

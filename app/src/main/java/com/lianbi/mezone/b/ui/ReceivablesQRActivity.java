@@ -93,7 +93,7 @@ public class ReceivablesQRActivity extends BaseActivity implements View.OnLongCl
 		switch (view.getId()) {
 			case R.id.tv_qr_append:
 				Intent intent = new Intent(this, WebActivty.class);
-				intent.putExtra(WebActivty.U, API.HOST + API.PROTOCOL);
+				intent.putExtra(WebActivty.U, API.HOST + API.PAYAGREEMENT);
 				intent.putExtra("Re", true);
 				startActivity(intent);
 				break;

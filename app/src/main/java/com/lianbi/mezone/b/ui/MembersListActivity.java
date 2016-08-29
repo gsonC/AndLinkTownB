@@ -76,6 +76,9 @@ public class MembersListActivity extends BaseActivity {
 	private PinyinComparator mPinyinComparator;
 	private String paramLike = "";
 	private String typeID = "";
+	private final int REQUEST_ADDMEMBER = 1357;
+	private final int REQUEST_CHANGMEMBERINFO = 1538;
+	boolean isSort = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -93,12 +96,20 @@ public class MembersListActivity extends BaseActivity {
 		String typeID=getIntent().getStringExtra("typeId");
         if(typeID!=null&&!typeID.equals("")){
 			this.typeID=typeID;
+			getMembersList(true, "",typeID);
 		}
 	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		typeID = "";
+	}
+
 	@Override
 	protected void onResume() {
 		super.onResume();
-		mAct_member_list_edit.setText("");
+	//	mAct_member_list_edit.setText("");
 		mDrawableinitial.setBounds(0, 0, mDrawableinitial.getMinimumWidth(), mDrawableinitial.getMinimumHeight());
 		mTvIntegral.setCompoundDrawables(null, null, mDrawableinitial, null);
 	}
@@ -207,6 +218,7 @@ public class MembersListActivity extends BaseActivity {
 											.parseArray(reString, MemberInfoBean.class);
 									if (mDatasL != null && mDatasL.size() > 0) {
 										mDatas.addAll(mDatasL);
+										SourceDateList.addAll(mDatasL);
 									}
 									if (mDatas != null && mDatas.size() > 0) {
 										mImg_ememberslist_empty.setVisibility(View.GONE);
@@ -258,7 +270,6 @@ public class MembersListActivity extends BaseActivity {
 						// 当输入框里面的值为空，更新为原来的列表，否则为过滤数据列表
 						paramLike = s.toString();
 		//				filterData(s.toString());
-		//				AbAppUtil.showSoftInput(MembersListActivity.this);
 						if("".equals(paramLike)){
 							filterData("");
 						}
@@ -298,6 +309,8 @@ public class MembersListActivity extends BaseActivity {
 
 					@Override
 					public void onHeaderRefresh(AbPullToRefreshView view) {
+						mDrawableinitial.setBounds(0, 0, mDrawableinitial.getMinimumWidth(), mDrawableinitial.getMinimumHeight());
+						mTvIntegral.setCompoundDrawables(null, null, mDrawableinitial, null);
 						String params = mAct_member_list_edit.getText().toString().trim();
 						getMembersList(true, params,typeID);
 					}
@@ -308,6 +321,8 @@ public class MembersListActivity extends BaseActivity {
 
 					@Override
 					public void onFooterLoad(AbPullToRefreshView view) {
+						mDrawableinitial.setBounds(0, 0, mDrawableinitial.getMinimumWidth(), mDrawableinitial.getMinimumHeight());
+						mTvIntegral.setCompoundDrawables(null, null, mDrawableinitial, null);
 						String params = mAct_member_list_edit.getText().toString().trim();
 						getMembersList(false, params,typeID);
 					}
@@ -334,11 +349,6 @@ public class MembersListActivity extends BaseActivity {
 		mTv_addnewmember.setOnClickListener(this);
 		mLltIntegral.setOnClickListener(this);
 	}
-
-	private final int REQUEST_ADDMEMBER = 1357;
-	private final int REQUEST_CHANGMEMBERINFO = 1538;
-	boolean isSort = false;
-
 
 	@Override
 	protected void onChildClick(View view) {
@@ -409,11 +419,12 @@ public class MembersListActivity extends BaseActivity {
 	 * 根据输入条件改变listview
 	 */
 	private void filterData(String filterStr) {
-		if (!AbStrUtil.isEmpty(filterStr)) {
+	//	if (!AbStrUtil.isEmpty(filterStr)) {
 			getMembersList(true, filterStr,typeID);
-		}else{
-			mAdapter.replaceAll(mDatas);
-		}
+	//	}else{
+	//		System.out.println("SourceDateList"+SourceDateList.size());
+	//		mAdapter.replaceAll(SourceDateList);
+	//	}
 
 	}
 
