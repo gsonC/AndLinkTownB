@@ -15,13 +15,11 @@ import com.xizhi.mezone.b.R;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.com.hgh.utils.AbDateUtil;
-import cn.com.hgh.utils.AbStrUtil;
+import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.view.HttpDialog;
 
@@ -80,7 +78,8 @@ public class MarketingMsgBulidActivity extends BaseActivity {
     private static final int REQUEST_CODE_TEMPLATE_RESULT = 1009;
     //可选会员
     private static final int REQUEST_CODE_MEMBER_RESULT = 1010;
-
+    private String  smsinfo;
+    private String  templateID;
     @OnClick({R.id.txt_sendmsg, R.id.tv_choicetemplate, R.id.btn_msgpay, R.id.btn_senduser})
     public void OnClick(View v) {
         switch (v.getId()) {
@@ -106,18 +105,16 @@ public class MarketingMsgBulidActivity extends BaseActivity {
         }
     }
     private  void  sendShortmsg(){
-        String reqTime= AbDateUtil.getDateTimeNow();
-        String uuid= AbStrUtil.getUUID();
-        String msgId="";
-        List<String>  members=new ArrayList<String>();
         try {
-            okHttpsImp.sendShortMessage(new MyResultCallback<String>() {
+            okHttpsImp.smsBulkSend(new MyResultCallback<String>() {
 
                 @Override
                 public void onResponseResult(Result result) {
                     String reString = result.getData();
                     if (reString != null) {
                         JSONObject jsonObject;
+                        ContentUtils.showMsg(MarketingMsgBulidActivity.this,"发送成功");
+
                         try {
 
 
@@ -131,7 +128,7 @@ public class MarketingMsgBulidActivity extends BaseActivity {
                 public void onResponseFailed(String msg) {
 
                 }
-            }, userShopInfoBean.getBusinessId(), msgId, members, reqTime, uuid);
+            }, userShopInfoBean.getBusinessId(),templateID, "", reqTime, uuid);
 
 
 
@@ -157,8 +154,11 @@ public class MarketingMsgBulidActivity extends BaseActivity {
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case REQUEST_CODE_TEMPLATE_RESULT:
-
-
+                    if(data!=null) {
+                        smsinfo = data.getStringExtra("info");
+                        etSendcontext.setText(smsinfo);
+                        templateID= data.getStringExtra("templateID");
+                    }
                     break;
                 case REQUEST_CODE_MEMBER_RESULT:
 

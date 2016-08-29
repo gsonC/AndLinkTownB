@@ -234,6 +234,7 @@ public class MineFragment extends Fragment implements OnClickListener,
 		rlt_update = (RelativeLayout)view.findViewById(R.id.rlt_update);
 		mUpgrade = ContentUtils.getSharePreBoolean(maActivity,
 				Constants.SHARED_PREFERENCE_NAME, Constants.UPDATERED);
+		System.out.println("mUpgrade--"+mUpgrade);
 		if(mUpgrade){
 			img_update_red.setVisibility(View.VISIBLE);
 		}else{
@@ -278,7 +279,7 @@ public class MineFragment extends Fragment implements OnClickListener,
 				TelPhoneUtills.launchPhone(maActivity, mine_fm_phone_num.getText()
 						.toString().trim());
 				break;
-			case R.id.rlt_update:
+			case R.id.rlt_update://版本升级
 				if(mUpgrade){
 					maActivity.getUpData();
 				}else{
@@ -287,6 +288,7 @@ public class MineFragment extends Fragment implements OnClickListener,
 				break;
 			case R.id.llt_mine_about_us:// 关于我们
 				startActivity(new Intent(maActivity, AboutUsActivity.class));
+
 				break;
 			case R.id.llt_feedback://意见反馈
 

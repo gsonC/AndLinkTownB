@@ -73,13 +73,17 @@ public class RecordsOfConsumptionActivity extends BaseActivity {
 
 				ScreenUtils.textAdaptationOn720(tv_rc_time, RecordsOfConsumptionActivity.this, 24);//消费时间
 				ScreenUtils.textAdaptationOn720(tv_rc_thing, RecordsOfConsumptionActivity.this, 24);//消费内容
-				ScreenUtils.textAdaptationOn720(tv_rc_where, RecordsOfConsumptionActivity.this, 24);//消费地点
+				ScreenUtils.textAdaptationOn720(tv_rc_where, RecordsOfConsumptionActivity.this, 24);//消费来源
 				ScreenUtils.textAdaptationOn720(tv_rc_much, RecordsOfConsumptionActivity.this, 24);//消费金额
 
 				tv_rc_time.setText(item.getCreateTime() + "");
 				tv_rc_thing.setText(item.getConsumName() + "");
-				tv_rc_where.setText(item.getConsumSorce() + "");
-				tv_rc_much.setText(MathExtend.roundNew(item.getConsumPrice().divide(new BigDecimal(100)).doubleValue(), 2) + "");
+				if(!AbStrUtil.isEmpty(item.getConsumSorce())){
+					tv_rc_where.setText(item.getConsumSorce() + "");
+				}else{
+					tv_rc_where.setText("无");
+				}
+				tv_rc_much.setText(MathExtend.roundNew(item.getConsumPrice().divide(new BigDecimal(100)).doubleValue(), 2) + "元");
 
 			}
 		};
@@ -198,7 +202,7 @@ public class RecordsOfConsumptionActivity extends BaseActivity {
 									mTvOrdernum.setText("累计下单次数  " + orderCount + "次");
 									if(!consumAmount.equals(BigDecimal.ZERO)){
 										mTvOrdermuch.setText("累计消费金额  " + MathExtend.roundNew(
-												consumAmount.divide(new BigDecimal(100)).doubleValue(), 2) + "0元");
+												consumAmount.divide(new BigDecimal(100)).doubleValue(), 2) + "元");
 									}else{
 										mTvOrdermuch.setText("累计消费金额  0元");
 									}

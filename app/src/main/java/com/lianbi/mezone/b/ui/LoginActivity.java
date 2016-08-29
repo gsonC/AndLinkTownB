@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -138,7 +137,6 @@ public class LoginActivity extends BaseActivity {
 				@Override
 				public void onResponseResult(Result result) {
 					String reString = result.getData();
-					Log.i("taag","log........."+result);
 					ContentUtils.putSharePre(LoginActivity.this,
 							Constants.SHARED_PREFERENCE_NAME,
 							Constants.LOGINED_IN, true);

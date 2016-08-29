@@ -96,6 +96,8 @@
         <activity
             android:name="com.lianbi.mezone.b.ui.NewIntegralGoodsActivity"
             android:windowSoftInputMode="stateHidden|stateUnchanged"/>
+        <activity android:name="com.lianbi.mezone.b.ui.ReceivablesQRActivity"/>
+        <activity android:name="com.lianbi.mezone.b.ui.ReceivablesActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.MarketingBuySMSActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.SelectTagActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.ChooseFromWeixinActivity"/>

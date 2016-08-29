@@ -16,6 +16,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cn.com.hgh.utils.AbDateUtil;
+
 public enum OkHttpsImp {
 	/**
 	 * 单例实例
@@ -659,7 +661,7 @@ public enum OkHttpsImp {
 		params.put("source", appsource);
 		String sign = getSign(md5_key, params);
 		params.put("sign", sign);
-		String url = getAbsoluteUrl(API.MEMBER_CATEGORY_LIST);
+		String url = getAbsoluteUrl(API.MARKETINGSMS_SENDDETAIL_LIST);
 		postProgressResponse(myResultCallback, params, url);
 	}
 
@@ -680,34 +682,33 @@ public enum OkHttpsImp {
 		params.put("source", appsource);
 		String sign = getSign(md5_key, params);
 		params.put("sign", sign);
-//		String url = getAbsoluteUrl("TProMsgSendService/querySendMsgStatistic.do");
-		String url =getHttpUrlAAA(businessId,"querySendMsgStatistic");
+		String url = getAbsoluteUrl(API.MARKETINGSMS_STATISTICS_LIST);
 		postProgressResponse(myResultCallback, params, url);
 	}
 	private String getHttpUrlAAA(String storeId, String methodName) {
 		// return "http://172.16.103.153:8085/wcm/serviceMall/".concat(storeId)
 		// .concat("/").concat(methodName);
 		return API.ENVIRONMENTAL
-				+ "/msg/querySendMsgStatistic/"
-//				.concat(storeId).concat("/")
-				.concat(methodName);
+				+ "/msg/querySendMsgStatistic/".concat(storeId);
+//				.concat("/")
+//				.concat(methodName);
 	}
 	/**
 	 * 新建营销短信发送短信
 	 */
 	public void sendShortMessage(
 			MyResultCallback<String> myResultCallback, String businessId,
-			String msgId, List<String> members,
+			String phone, String members,
 			String reqTime, String uuid) throws Exception {
 		Map<String, String> params = new HashMap<String, String>();
-		params.put("businessId", businessId);
-		params.put("msgId", msgId);
+		params.put("businessID", businessId);
+		params.put("phone", phone);
 		params.put("reqTime", reqTime);
 		params.put("serNum", uuid);
 		params.put("source", appsource);
 		String sign = getSign(md5_key, params);
 		params.put("sign", sign);
-		String url = getAbsoluteUrl(API.MEMBER_CATEGORY_LIST);
+		String url = getAbsoluteUrl(API.MARKETINGSMS_SENDMSG_LIST);
 		postProgressResponse(myResultCallback, params, url);
 	}
 
@@ -724,10 +725,64 @@ public enum OkHttpsImp {
 		params.put("reqTime", reqTime);
 		String sign = getSign(md5_key, params);
 		params.put("sign", sign);
-		String url = getAbsoluteUrl(API.MEMBER_CATEGORY_LIST);
+		String url = getAbsoluteUrl(API.MARKETINGSMS_MSGPACKAGE_LIST);
 		postProgressResponse(myResultCallback, params, url);
 	}
-
+	/**
+	 * 获取短信模板
+	 */
+	public void queryAllSMSTemplate(
+			MyResultCallback<String> myResultCallback, String templateMark, String reqTime, String uuid)
+			throws Exception {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("templateMark", templateMark);
+		params.put("serNum", uuid);
+		params.put("source", appsource);
+		params.put("reqTime", reqTime);
+		String sign = getSign(md5_key, params);
+		params.put("sign", sign);
+//		String url = getAbsoluteUrl(API.MARKETINGSMS_QUERYTEMPLATE_LIST);
+		String url = "http://test.xylbn.cn/lincombFront/message/queryAllTemplate.do?";
+		postProgressResponse(myResultCallback, params, url);
+	}
+	/**
+	 * 群发短信
+	 */
+	public void smsBulkSend(
+			MyResultCallback<String> myResultCallback,String businessID,
+			String  phone,String  templateMark, String reqTime, String uuid)
+			throws Exception {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("businessID",businessID);
+		params.put("phone",phone);
+		params.put("templateMark",templateMark);
+		params.put("serNum", uuid);
+		params.put("source", appsource);
+		params.put("reqTime", reqTime);
+		String sign = getSign(md5_key, params);
+		params.put("sign", sign);
+		String url = getAbsoluteUrl(API.MARKETINGSMS_BULK_LIST);
+		postProgressResponse(myResultCallback, params, url);
+	}
+	/**
+	 * 群发短信结果查询
+	 */
+	public void queryBulkResult(
+			MyResultCallback<String> myResultCallback,String businessID,
+			String  sendBeginTime,String  sendEndTime, String reqTime, String uuid)
+			throws Exception {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("businessID",businessID);
+		params.put("sendBeginTime",sendBeginTime);
+		params.put("sendEndTime",sendEndTime);
+		params.put("serNum", uuid);
+		params.put("source", appsource);
+		params.put("reqTime", reqTime);
+		String sign = getSign(md5_key, params);
+		params.put("sign", sign);
+		String url = getAbsoluteUrl(API.MARKETINGSMS_QUERYRESULTS_LIST);
+		postProgressResponse(myResultCallback, params, url);
+	}
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	/**
@@ -2346,7 +2401,7 @@ public enum OkHttpsImp {
 	 * 添加或修改会员信息
 	 */
 	public void addOrUpdateMember(String serNum, String source, String reqTime, String md5_key,
-								  String businessId, String vipPhone, String vipId, String vipName,
+								  String businessId,final boolean mIsShow ,String vipPhone, String vipId, String vipName,
 								  String vipSex, String vipLabel, String vipIdNo, String vipCardNo,
 								  String vipAddress, String vipBirthday, String vipValidityPeriod, String vipRemarks,
 								  MyResultCallback<String> myResultCallback) throws Exception {
@@ -2355,17 +2410,22 @@ public enum OkHttpsImp {
 		params.put("reqTime", reqTime);
 		params.put("serNum", serNum);
 		params.put("source", source);
-		params.put("submitType", "updateVip");
+		if(mIsShow){
+			params.put("submitType", "updateVip");
+			params.put("vipId", vipId);
+		}else{
+			params.put("submitType", "addVip");
+		}
 		params.put("vipAddress", vipAddress);
 		params.put("vipBirthday", vipBirthday);
 		params.put("vipCardNo", vipCardNo);
-		params.put("vipId", vipId);
 		params.put("vipIdNo", vipIdNo);
 		params.put("vipLabel", vipLabel);
 		params.put("vipName", vipName);
 		params.put("vipPhone", vipPhone);
 		params.put("vipRemarks", vipRemarks);
 		params.put("vipSex", vipSex);
+		params.put("vipSource", source);
 		params.put("vipValidityPeriod", vipValidityPeriod);
 		String sign = getSign(md5_key, params);
 		params.put("sign", sign);
@@ -2396,6 +2456,7 @@ public enum OkHttpsImp {
 		params.put("vipPhone", vipPhone);
 		params.put("vipRemarks", vipRemarks);
 		params.put("vipSex", vipSex);
+		params.put("vipSource", source);
 		params.put("vipValidityPeriod", vipValidityPeriod);
 		String sign = getSign(md5_key, params);
 		params.put("sign", sign);
@@ -2418,7 +2479,7 @@ public enum OkHttpsImp {
 		String sign = getSign(md5_key, params);
 		params.put("sign", sign);
 		String url = getAbsoluteUrl(API.MEMBERDETAILS);
-		getProgressResponse(myResultCallback, params, url);
+		getNoProgressResponse(myResultCallback, params, url);
 	}
 
 	/**
@@ -2439,9 +2500,71 @@ public enum OkHttpsImp {
 		getProgressResponse(myResultCallback, params, url);
 	}
 
+	/*
+	* 优惠券管理（-店铺-优惠券表）按优惠券状态筛选店铺所有的优惠券
+	* @param issuedStoreId 商铺ID
+	* @param isValide 优惠券状态
+	* @param startNo 开始行数
+	* @param pageSize 每页显示条数
+	*/
+	public void queryStoreCoupByStoreId(String serNum, String source, String reqTime,
+										String issuedStoreId, String isValide, String startNo, String pageSize,
+										MyResultCallback<String> myResultCallback) throws Exception {
+		Map<String, String> params = new HashMap<>();
+		params.put("reqTime", reqTime);
+		params.put("serNum", serNum);
+		params.put("source", source);
+		params.put("issuedStoreId", issuedStoreId);
+		params.put("isValide", isValide);
+		params.put("startNo", startNo);
+		params.put("pageSize", pageSize);
+
+		String sign = getSign(md5_key, params);
+		params.put("sign", sign);
+		String url = getAbsoluteUrl(API.COUPONS_LIST);
+		postProgressResponse(myResultCallback, params, url);
+	}
+	/**
+	 * 获取会员协议
+	 */
+	public void getMemberAgreement(String serNum, String source, String reqTime,String businessId
+									,MyResultCallback<String> myResultCallback) throws Exception {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("businessId", businessId);
+		params.put("reqTime", reqTime);
+		params.put("serNum", serNum);
+		params.put("source", source);
+		params.put("protocolNo", "CPL-2016-03");
+		params.put("isValue", "Y");
+		String sign = getSign(md5_key, params);
+		params.put("sign", sign);
+		String url = getAbsoluteUrl(API.MEMBERAGREEMENT);
+		getNoProgressResponse(myResultCallback, params, url);
+	}
+
+	/**
+	 * 添加协议
+	 */
+	public void postMemberAgreement(String serNum, String source, String reqTime,String businessId
+									,MyResultCallback<String> myResultCallback) throws Exception {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("businessId", businessId);
+		params.put("reqTime", reqTime);
+		params.put("serNum", serNum);
+		params.put("source", source);
+		params.put("protocolNo", "CPL-2016-03");
+		params.put("isValue", "Y");
+		params.put("proTime", AbDateUtil.getCurrentDate("yyyyMMddHHmmss"));
+		String sign = getSign(md5_key, params);
+		params.put("sign", sign);
+		String url = getAbsoluteUrl(API.ADDMEMBERAGREEMENT);
+		postNoProgressResponse(myResultCallback, params, url);
+	}
+
 
 	/*
 	* 获取会员优惠券列表
+	* @params vipId 会员ID
 	*/
 	public void getVipCouponsListByVipId(String serNum, String source, String reqTime,
 										 String vipId, String startNo, String pageSize,
@@ -2520,13 +2643,13 @@ public enum OkHttpsImp {
 		Map<String, String> params = new HashMap<>();
 		params.put("businessId", businessId);
 		switch (type) {
-			case 1:
+			case 0:
 				params.put("integralType", "all");
 				break;
-			case 2:
+			case 1:
 				params.put("integralType", "got");
 				break;
-			case 3:
+			case 2:
 				params.put("integralType", "used");
 				break;
 		}

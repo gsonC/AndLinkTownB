@@ -33,6 +33,8 @@ import com.lianbi.mezone.b.ui.BaseActivity;
 import com.lianbi.mezone.b.ui.BookFunctionActivity;
 import com.lianbi.mezone.b.ui.H5WebActivty;
 import com.lianbi.mezone.b.ui.MainActivity;
+import com.lianbi.mezone.b.ui.ReceivablesActivity;
+import com.lianbi.mezone.b.ui.ReceivablesQRActivity;
 import com.lianbi.mezone.b.ui.ServiceMallActivity;
 import com.lianbi.mezone.b.ui.TableSetActivity;
 import com.lianbi.mezone.b.ui.WIFIWebActivity;
@@ -280,7 +282,9 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 						re = JumpIntent.jumpLogin_addShop(isLogin, API.SWEEP,
 								mActivity);
 						if (re) {
-							MagnifyImg();// 收款二维码放大
+	//						mActivity.startActivity(new Intent(mActivity, ReceivablesActivity.class));
+	//						MagnifyImg();// 收款二维码放大
+							isAgreeAgreement();
 						}
 						break;
 					case 100:
@@ -298,6 +302,44 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 				}
 			}
 		});
+	}
+
+	/**
+	 * 用户是否同意协议
+	 */
+	private void isAgreeAgreement() {
+		String reqTime = AbDateUtil.getDateTimeNow();
+		String uuid = AbStrUtil.getUUID();
+		String bussniessId = BaseActivity.userShopInfoBean.getBusinessId();
+		try {
+			okHttpsImp.getMemberAgreement(uuid, "app", reqTime, bussniessId, new MyResultCallback<String>() {
+				@Override
+				public void onResponseResult(Result result) {
+					String reString = result.getData();
+					if(!TextUtils.isEmpty(reString)) {
+						try {
+							JSONObject jsonObject = new JSONObject(reString);
+							boolean results = jsonObject.getBoolean("results");
+							if(results){
+								mActivity.startActivity(new Intent(mActivity, ReceivablesQRActivity.class));
+							}else{
+								mActivity.startActivity(new Intent(mActivity, ReceivablesActivity.class));
+							}
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+
+					}
+				}
+
+				@Override
+				public void onResponseFailed(String msg) {
+
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	private String getSAUrl(String address,int type){

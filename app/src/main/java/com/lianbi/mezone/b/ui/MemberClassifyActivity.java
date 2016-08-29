@@ -65,6 +65,8 @@ public class MemberClassifyActivity extends BaseActivity {
     View v01;
     @Bind(R.id.ptrrv)
     PullToRefreshRecyclerView mPtrrv;
+    @Bind(R.id.img_ememberslist_empty)
+    ImageView img_ememberslist_empty;
     @Bind(R.id.tv_nodata)
     TextView tvNodata;
     @Bind(R.id.text_newcategory)
@@ -81,18 +83,26 @@ public class MemberClassifyActivity extends BaseActivity {
     private static final int MSG_CODE_REFRESH = 0;
     private static final int MSG_CODE_LOADMORE = 1;
     boolean  isLoadMore=false;
-
+    //更新列表
+    private static final int REQUEST_CODE_UPDATA_RESULT = 1009;
+//    添加会员类别
+    private static final int REQUEST_CODE_ADD_RESULT = 1010;
     //第几页
     private int  page=1;
     //每页个数
     private String  eachpullnum="10";
     boolean  Nodata=false;
+    boolean  isResh;
     @OnClick({R.id.text_newcategory})
     public void OnClick(View v) {
         switch (v.getId()) {
 
             case R.id.text_newcategory:
-                simpleJump(MemberAddCategoryActivity.class, "新增分类");
+                Intent intent = new Intent();
+                intent.setClass(MemberClassifyActivity.this,MemberAddCategoryActivity.class);
+                intent.putExtra("type", "新增分类");
+                startActivityForResult(intent,REQUEST_CODE_ADD_RESULT);
+
                 break;
 
         }
@@ -114,12 +124,17 @@ public class MemberClassifyActivity extends BaseActivity {
         initViewAndData();
 
     }
-
+    private void initAccess(){
+        page=1;
+        Nodata=false;
+        isLoadMore=false;
+        mDatas.clear();
+    }
     private void initViewAndData() {
         setPageTitle("会员分类");
         dialog = new HttpDialog(this);
         initRecyclerView();
-        getMemberCategoryList();
+        getMemberCategoryList(false);
     }
 
     public void initRecyclerView() {
@@ -166,24 +181,24 @@ public class MemberClassifyActivity extends BaseActivity {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             if (msg.what == MSG_CODE_REFRESH) {
-                mAdapter.notifyDataSetChanged();
-                mPtrrv.setOnRefreshComplete();
-                mPtrrv.onFinishLoading(true, false);
+                initAccess();
+                getMemberCategoryList(true);
+//                mPtrrv.setOnRefreshComplete();
+//                mPtrrv.onFinishLoading(true, false);
             } else if (msg.what == MSG_CODE_LOADMORE) {
                 if(Nodata==true){
                         MemberClassify memberclassify = new MemberClassify();
                         mDatas.add(memberclassify);
                         mAdapter.notifyDataSetChanged();
                         mPtrrv.onFinishLoading(false, false);
-
                 }else{
-                       getMemberCategoryList();
+                       getMemberCategoryList(false);
                 }
             }
         }
     };
 
-    private void getMemberCategoryList() {
+    private void getMemberCategoryList(final  boolean isResh) {
         try {
             okHttpsImp.getMemberCategoryList(new MyResultCallback<String>() {
 
@@ -197,6 +212,7 @@ public class MemberClassifyActivity extends BaseActivity {
                             jsonObject = new JSONObject(reString);
                             reString = jsonObject.getString("vipTypeList");
                             dataSize = jsonObject.getString("dataSize");
+
                             if(dataSize.equals("0")){
                                 Nodata=true;
                                 mAdapter.notifyDataSetChanged();
@@ -211,10 +227,19 @@ public class MemberClassifyActivity extends BaseActivity {
                                                 MemberClassify.class);
                                 mData.addAll(memberclassifyList);
                                 updateView(mData);
-                                mAdapter.notifyDataSetChanged();
                                 mPtrrv.onFinishLoading(true, false);
                                 page=page+1;
-
+                            }
+                            if(page==1&&mDatas.size()==0){
+                                mPtrrv.setVisibility(View.GONE);
+                                img_ememberslist_empty.setVisibility(View.VISIBLE);
+                            }else{
+                                mPtrrv.setVisibility(View.VISIBLE);
+                                img_ememberslist_empty.setVisibility(View.GONE);
+                            }
+                            if(isResh==true){
+                                mPtrrv.setOnRefreshComplete();
+                                mPtrrv.onFinishLoading(true, false);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -226,6 +251,11 @@ public class MemberClassifyActivity extends BaseActivity {
                 @Override
                 public void onResponseFailed(String msg) {
                     dialog.dismiss();
+                    img_ememberslist_empty.setVisibility(View.VISIBLE);
+                    mPtrrv.setVisibility(View.GONE);
+                    if(isResh==true){
+                        mPtrrv.setOnRefreshComplete();
+                    }
                     mPtrrv.onFinishLoading(true, false);
 
                 }
@@ -275,7 +305,6 @@ public class MemberClassifyActivity extends BaseActivity {
                 img_right = (ImageView) itemView.findViewById(R.id.img_right);
                 tv_loadedall = (TextView) itemView.findViewById(R.id.tv_loadedall);
             }
-
             @Override
             public void onBindViewHolder(int position) {
                 if(Nodata==true&&position==mDatas.size()-1)
@@ -287,8 +316,12 @@ public class MemberClassifyActivity extends BaseActivity {
                  }else{
                     tv_memberclassify.setText(mDatas.get(position).getTypeName());
                     tv_memebernum.setText(String.valueOf(mDatas.get(position).getThisTypeCount()));
-                    tv_memberdiscount.setText(mDatas.get(position).getTypeDiscountRatio());
-                    tv_memberratio.setText(mDatas.get(position).getTypeDiscountRatio());
+                    int  a=Integer.parseInt(mDatas.get(position).getTypeDiscountRatio());
+                    double   dou=0.0;
+                    dou=division(a,10);
+//                  double discountratio=Integer.parseInt(mDatas.get(position).getTypeDiscountRatio());
+                    tv_memberdiscount.setText(String.valueOf(dou));
+                    tv_memberratio.setText("1:1");
                     tv_loadedall.setVisibility(View.GONE);
                     llt_memberclass.setVisibility(View.VISIBLE);
                     img_right.setVisibility(View.VISIBLE);
@@ -302,8 +335,34 @@ public class MemberClassifyActivity extends BaseActivity {
                 intent.setClass(MemberClassifyActivity.this,MemberAddCategoryActivity.class);
                 intent.putExtra("type", "分类详情");
                 intent.putExtra("info",mDatas.get(adapterPosition));
-                startActivity(intent);
+                startActivityForResult(intent,REQUEST_CODE_UPDATA_RESULT);
 
+            }
+        }
+    }
+    public  double  division(double a,double b){
+        double  result=0;
+        if(b!=0){
+            result=a/b;
+        }else{
+            result=0;
+        }
+        return    result;
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case REQUEST_CODE_UPDATA_RESULT:
+                    initAccess();
+                    getMemberCategoryList(false);
+
+                break;
+                case REQUEST_CODE_ADD_RESULT:
+                    initAccess();
+                    getMemberCategoryList(false);
+                break;
             }
         }
     }

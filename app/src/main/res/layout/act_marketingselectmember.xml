@@ -1,9 +1,10 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@color/colores_news_14"
+    android:orientation="vertical"
      >
     <LinearLayout
         android:id="@+id/lay_top"
@@ -26,14 +27,12 @@
     </LinearLayout>
     <View
         android:id="@+id/v_top"
-        android:layout_below="@id/lay_top"
         android:layout_width="match_parent"
         android:layout_height="@dimen/line"
         android:background="@color/colores_news_14" />
     <LinearLayout
         android:id="@+id/lay_tag"
-        android:layout_below="@id/v_top"
-        android:paddingLeft="15dp"
+        android:paddingLeft="30dp"
         android:layout_marginRight="5dp"
         android:background="@color/white"
         android:layout_width="match_parent"
@@ -43,48 +42,48 @@
         >
         <TextView
             android:id="@+id/btn_sendmsg"
-            android:layout_marginLeft="5dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
+            android:gravity="center"
             android:singleLine="true"
             android:text="会员电话"
             />
         <TextView
             android:id="@+id/txt_memberclass"
-            android:layout_marginLeft="5dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_width="0dp"
             android:layout_weight="1.0"
             android:layout_height="wrap_content"
             android:padding="10dp"
+            android:gravity="center"
             android:text="类别"
             />
         <TextView
             android:id="@+id/txt_membersource"
-            android:layout_marginLeft="5dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_width="0dp"
             android:layout_weight="1.0"
             android:layout_height="wrap_content"
             android:padding="10dp"
+            android:gravity="center"
             android:text="来源"
             />
         <TextView
         android:id="@+id/txt_membertag"
-        android:layout_marginLeft="5dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_width="0dp"
         android:layout_weight="1.0"
         android:layout_height="wrap_content"
         android:padding="10dp"
+        android:gravity="center"
         android:text="标签"
-            />
+           />
         <LinearLayout
             android:id="@+id/llt_integral"
             android:layout_width="0dp"
@@ -134,25 +133,43 @@
         </cn.com.hgh.baseadapter.recyclerViewadapter.pullrefreshrecyclerview.PullRefreshRecyclerView>
      -->
     <com.lhh.ptrrv.library.PullToRefreshRecyclerView
+        android:visibility="visible"
         android:id="@+id/ptrrview"
-        android:layout_below="@id/v_02"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_weight="1"
         android:layout_marginBottom="50dp"
         android:background="@color/white"
         >
     </com.lhh.ptrrv.library.PullToRefreshRecyclerView>
+    <ImageView
+        android:visibility="gone"
+        android:id="@+id/img_ememberslist_empty"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scaleType="fitCenter"
+        android:layout_marginBottom="50dp"
+        android:src="@mipmap/iv_empty"
+        android:layout_below="@id/v_02"
+        />
+
    <RelativeLayout
        android:id="@+id/ray_bottom"
-       android:layout_alignParentBottom="true"
+       android:layout_gravity="bottom"
        android:layout_width="match_parent"
        android:layout_height="50dp"
        android:background="@color/white"
        android:paddingLeft="15dp"
        android:paddingRight="15dp"
-       android:gravity="center_vertical"
        >
+       <View
+           android:id="@+id/v_bottom"
+           android:layout_alignParentTop="true"
+           android:layout_width="match_parent"
+           android:layout_height="1dp"
+           android:background="@color/colores_news_14"
+           />
        <RelativeLayout
            android:id="@+id/ray_choice"
            android:layout_width="wrap_content"
@@ -212,13 +229,7 @@
            android:layout_centerVertical="true"
            android:layout_gravity="center_vertical"
            >
-           <View
-               android:id="@+id/v_bottom"
-               android:layout_alignParentTop="true"
-               android:layout_width="match_parent"
-               android:layout_height="1dp"
-               android:background="@color/colores_news_14"
-               />
+
            <TextView
                android:id="@+id/tv_sure"
                android:layout_width="wrap_content"
@@ -237,4 +248,4 @@
            </RelativeLayout>
    </RelativeLayout>
 
-</RelativeLayout>
+</LinearLayout>

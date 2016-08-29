@@ -9,55 +9,45 @@ package com.lianbi.mezone.b.bean;/*
  */
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 public class IntegralRecordBean implements Serializable {
 
 	private static final long serialVersionUID = -4417227025478435251L;
 
-	private String recordTime;
-	private String recordThing;
-	private String recordWhrer;
-	private BigDecimal recordInteger;
-	private int type;
+	private String consumName;
+	private String consumSorce;
+	private String consumAmount;
+	private String createTime;
 
-	public int getType() {
-		return type;
+	public String getConsumName() {
+		return consumName;
 	}
 
-	public void setType(int type) {
-		this.type = type;
+	public void setConsumName(String consumName) {
+		this.consumName = consumName;
 	}
 
-	public String getRecordTime() {
-		return recordTime;
+	public String getConsumSorce() {
+		return consumSorce;
 	}
 
-	public void setRecordTime(String recordTime) {
-		this.recordTime = recordTime;
+	public void setConsumSorce(String consumSorce) {
+		this.consumSorce = consumSorce;
 	}
 
-	public String getRecordThing() {
-		return recordThing;
+	public String getConsumAmount() {
+		return consumAmount;
 	}
 
-	public void setRecordThing(String recordThing) {
-		this.recordThing = recordThing;
+	public void setConsumAmount(String consumAmount) {
+		this.consumAmount = consumAmount;
 	}
 
-	public String getRecordWhrer() {
-		return recordWhrer;
+	public String getCreateTime() {
+		return createTime;
 	}
 
-	public void setRecordWhrer(String recordWhrer) {
-		this.recordWhrer = recordWhrer;
-	}
-
-	public BigDecimal getRecordInteger() {
-		return recordInteger;
-	}
-
-	public void setRecordInteger(BigDecimal recordInteger) {
-		this.recordInteger = recordInteger;
+	public void setCreateTime(String createTime) {
+		this.createTime = createTime;
 	}
 }

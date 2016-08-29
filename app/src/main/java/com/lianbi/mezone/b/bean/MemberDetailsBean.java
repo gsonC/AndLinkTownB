@@ -9,6 +9,7 @@ package com.lianbi.mezone.b.bean;/*
  */
 
 import java.io.Serializable;
+import java.util.List;
 
 public class MemberDetailsBean implements Serializable {
 	private static final long serialVersionUID = -3682072123166665401L;
@@ -29,8 +30,16 @@ public class MemberDetailsBean implements Serializable {
 	private int cumulativeAmount;
 	private String vipValidityPeriod;
 	private String vipRemarks;
-	private lablelList lablelList;
 	private vipTypeObject vipTypeObject;
+	private List<labels> labels;
+
+	public List<MemberDetailsBean.labels> getLabels() {
+		return labels;
+	}
+
+	public void setLabels(List<MemberDetailsBean.labels> labels) {
+		this.labels = labels;
+	}
 
 	public MemberDetailsBean.vipTypeObject getVipTypeObject() {
 		return vipTypeObject;
@@ -39,15 +48,6 @@ public class MemberDetailsBean implements Serializable {
 	public void setVipTypeObject(MemberDetailsBean.vipTypeObject vipTypeObject) {
 		this.vipTypeObject = vipTypeObject;
 	}
-
-	public lablelList getLablelList() {
-		return lablelList;
-	}
-
-	public void setLablelList(lablelList lablelList) {
-		this.lablelList = lablelList;
-	}
-
 
 	public String getVipId() {
 		return vipId;
@@ -184,6 +184,37 @@ public class MemberDetailsBean implements Serializable {
 	public void setVipRemarks(String vipRemarks) {
 		this.vipRemarks = vipRemarks;
 	}
+
+	public class labels{
+		private String businessId;
+		private String labelId;
+		private String labelName;
+
+		public String getBusinessId() {
+			return businessId;
+		}
+
+		public void setBusinessId(String businessId) {
+			this.businessId = businessId;
+		}
+
+		public String getLabelId() {
+			return labelId;
+		}
+
+		public void setLabelId(String labelId) {
+			this.labelId = labelId;
+		}
+
+		public String getLabelName() {
+			return labelName;
+		}
+
+		public void setLabelName(String labelName) {
+			this.labelName = labelName;
+		}
+	}
+
 
 	public class lablelList {
 		private String businessId;
