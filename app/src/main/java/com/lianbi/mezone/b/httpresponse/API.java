@@ -646,7 +646,10 @@ public static final String QProduct = "product/query.do";
 	 * 查询会员协议
 	 */
 	public static final String MEMBERAGREEMENT = "business/queryBusProtocol.do";
-
+	/**
+	 * 添加会员协议
+	 */
+	public static final String ADDMEMBERAGREEMENT = "business/addBusProtocol.do";
 //	public static final String MEMBERLABELLIST = "vipLabel/vipLabelList.do";
 	/*
 	* 获取会员优惠券列表

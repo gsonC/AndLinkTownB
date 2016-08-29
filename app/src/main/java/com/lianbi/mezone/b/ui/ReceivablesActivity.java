@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.TextUtils;
 import android.text.style.UnderlineSpan;
 import android.view.View;
 import android.widget.CheckBox;
@@ -22,13 +23,19 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
 
 import com.lianbi.mezone.b.httpresponse.API;
+import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.xizhi.mezone.b.R;
 
+import cn.com.hgh.utils.AbDateUtil;
+import cn.com.hgh.utils.AbStrUtil;
+import cn.com.hgh.utils.ContentUtils;
+import cn.com.hgh.utils.Result;
+
 public class ReceivablesActivity extends BaseActivity implements
-		OnCheckedChangeListener{
+		OnCheckedChangeListener {
 
 	private CheckBox mCbReceivanles;
-	private TextView mTvReceivablesAgree,mTvAgree,mTvReceivablesAppend;
+	private TextView mTvReceivablesAgree, mTvAgree, mTvReceivablesAppend;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +81,7 @@ public class ReceivablesActivity extends BaseActivity implements
 	@Override
 	protected void onChildClick(View view) {
 		super.onChildClick(view);
-		switch (view.getId()){
+		switch (view.getId()) {
 			case R.id.tv_receivables_append:
 				Intent intent = new Intent(this, WebActivty.class);
 				intent.putExtra(WebActivty.U, API.HOST + API.PAYAGREEMENT);
@@ -82,8 +89,36 @@ public class ReceivablesActivity extends BaseActivity implements
 				startActivity(intent);
 				break;
 			case R.id.tv_receivables_agree:
-				startActivity(new Intent(this,ReceivablesQRActivity.class));
+
+				postMemberAgreement();
+
 				break;
+		}
+	}
+
+	/**
+	 * 添加用户协议
+	 */
+	private void postMemberAgreement() {
+		String reqTime = AbDateUtil.getDateTimeNow();
+		String uuid = AbStrUtil.getUUID();
+		try {
+			okHttpsImp.postMemberAgreement(uuid, "app", reqTime, userShopInfoBean.getBusinessId(), new MyResultCallback<String>() {
+				@Override
+				public void onResponseResult(Result result) {
+					String reString = result.getData();
+					if (!TextUtils.isEmpty(reString)) {
+						startActivity(new Intent(ReceivablesActivity.this, ReceivablesQRActivity.class));
+					}
+				}
+
+				@Override
+				public void onResponseFailed(String msg) {
+					ContentUtils.showMsg(ReceivablesActivity.this, "请求失败,请稍后再试");
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 

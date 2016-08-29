@@ -16,6 +16,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cn.com.hgh.utils.AbDateUtil;
+
 public enum OkHttpsImp {
 	/**
 	 * 单例实例
@@ -2539,6 +2541,26 @@ public enum OkHttpsImp {
 		String url = getAbsoluteUrl(API.MEMBERAGREEMENT);
 		getNoProgressResponse(myResultCallback, params, url);
 	}
+
+	/**
+	 * 添加协议
+	 */
+	public void postMemberAgreement(String serNum, String source, String reqTime,String businessId
+									,MyResultCallback<String> myResultCallback) throws Exception {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("businessId", businessId);
+		params.put("reqTime", reqTime);
+		params.put("serNum", serNum);
+		params.put("source", source);
+		params.put("protocolNo", "CPL-2016-03");
+		params.put("isValue", "Y");
+		params.put("proTime", AbDateUtil.getCurrentDate("yyyyMMddHHmmss"));
+		String sign = getSign(md5_key, params);
+		params.put("sign", sign);
+		String url = getAbsoluteUrl(API.ADDMEMBERAGREEMENT);
+		postNoProgressResponse(myResultCallback, params, url);
+	}
+
 
 	/*
 	* 获取会员优惠券列表
