@@ -133,13 +133,13 @@ public class RevisionsActivity extends BaseActivity {
 	 * @param
 	 * @param
 	 */
-	String productId;
+	String id;
 	private void GetupdateProduct(){
 		String reqTime = AbDateUtil.getDateTimeNow();
 		String uuid = AbStrUtil.getUUID();
 		try {
 			okHttpsImp.updateProduct(OkHttpsImp.md5_key,
-					uuid,reqTime,"app",productId,
+					uuid,reqTime,"app",id,
 					new MyResultCallback<String>() {
 				@Override
 				public void onResponseResult(Result result) {

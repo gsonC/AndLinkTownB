@@ -13,28 +13,26 @@ import java.io.Serializable;
  * @更新描述 ＄{TOOD}＄
  */
 public class MemberMessage implements Serializable {
-	int id;
+	String id;
 	String tv_tagmessage;
 	ImageView point_ima;
 	ImageView pullgoodsIma;
-	String tv_tag;
-	String rated;
-
-	String trated;
-    String point_goodsName;
-	String goodsPoint;
-	String pullgoods;
-	String pushgoods;
-	String changegoods;
-
 	String labelName;
+	String storeId;
+	String productType;
+	String productName;
+	String productDesc;
+	String productPrice;
+	String productImgId;
+	String isOnline;
+	String createTime;
 
-	public String getLabelName() {
-		return labelName;
+	public String getId() {
+		return id;
 	}
 
-	public void setLabelName(String labelName) {
-		this.labelName = labelName;
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public String getTv_tagmessage() {
@@ -61,75 +59,75 @@ public class MemberMessage implements Serializable {
 		this.pullgoodsIma = pullgoodsIma;
 	}
 
-	public String getRated() {
-		return rated;
+	public String getLabelName() {
+		return labelName;
 	}
 
-	public void setRated(String rated) {
-		this.rated = rated;
+	public void setLabelName(String labelName) {
+		this.labelName = labelName;
 	}
 
-	public String getTv_tag() {
-		return tv_tag;
+	public String getStoreId() {
+		return storeId;
 	}
 
-	public void setTv_tag(String tv_tag) {
-		this.tv_tag = tv_tag;
+	public void setStoreId(String storeId) {
+		this.storeId = storeId;
 	}
 
-	public String getGoodsPoint() {
-		return goodsPoint;
+	public String getProductType() {
+		return productType;
 	}
 
-	public void setGoodsPoint(String goodsPoint) {
-		this.goodsPoint = goodsPoint;
+	public void setProductType(String productType) {
+		this.productType = productType;
 	}
 
-	public String getTrated() {
-		return trated;
+	public String getProductName() {
+		return productName;
 	}
 
-	public void setTrated(String trated) {
-		this.trated = trated;
+	public void setProductName(String productName) {
+		this.productName = productName;
 	}
 
-	public String getPullgoods() {
-		return pullgoods;
+	public String getProductDesc() {
+		return productDesc;
 	}
 
-	public void setPullgoods(String pullgoods) {
-		this.pullgoods = pullgoods;
+	public void setProductDesc(String productDesc) {
+		this.productDesc = productDesc;
 	}
 
-	public String getPushgoods() {
-		return pushgoods;
+	public String getProductPrice() {
+		return productPrice;
 	}
 
-	public void setPushgoods(String pushgoods) {
-		this.pushgoods = pushgoods;
+	public void setProductPrice(String productPrice) {
+		this.productPrice = productPrice;
 	}
 
-	public String getChangegoods() {
-		return changegoods;
+	public String getProductImgId() {
+		return productImgId;
 	}
 
-	public void setChangegoods(String changegoods) {
-		this.changegoods = changegoods;
+	public void setProductImgId(String productImgId) {
+		this.productImgId = productImgId;
 	}
 
-	public int getId() {
-		return id;
+	public String getIsOnline() {
+		return isOnline;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setIsOnline(String isOnline) {
+		this.isOnline = isOnline;
 	}
 
-	public String getPoint_goodsName() {
-		return point_goodsName;
+	public String getCreateTime() {
+		return createTime;
 	}
 
-	public void setPoint_goodsName(String point_goodsName) {
-		this.point_goodsName = point_goodsName;
+	public void setCreateTime(String createTime) {
+		this.createTime = createTime;
 	}
 }

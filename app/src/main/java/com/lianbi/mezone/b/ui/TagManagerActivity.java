@@ -115,7 +115,7 @@ public class TagManagerActivity extends BaseActivity {
 				tv_tag = helper.getView(R.id.tv_tag);
 				ScreenUtils.textAdaptationOn720(tv_tag, TagManagerActivity.this, 24);
 				tv_tag.setText(item.getLabelName());
-				System.out.println("tv_tag" + tv_tag);
+				System.out.println("item.getLabelName()"+item.getLabelName());
 				labelId = String.valueOf(item.getLabelId());
 				helper.getView(R.id.tv_chdelete).setOnClickListener(// 删除
 						new OnClickListener() {
@@ -164,8 +164,8 @@ public class TagManagerActivity extends BaseActivity {
 						try {
 							JSONObject jsonObject = new JSONObject(reString);
 							reString = jsonObject.getString("vipLabelList");
+							System.out.println("reStringtag"+reString);
 							ArrayList<SelectTagBean> mDatasL = (ArrayList<SelectTagBean>) JSON.parseArray(reString, SelectTagBean.class);
-							System.out.println("mDatasL" + mDatasL);
 							if (mDatasL != null && mDatasL.size() > 0) {
 
 								mDatas.addAll(mDatasL);

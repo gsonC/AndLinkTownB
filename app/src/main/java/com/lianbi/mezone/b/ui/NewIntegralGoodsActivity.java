@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.webkit.ValueCallback;
@@ -15,7 +16,6 @@ import android.webkit.WebView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
@@ -30,6 +30,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.com.hgh.utils.AbDateUtil;
 import cn.com.hgh.utils.AbStrUtil;
+import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.Picture_Base64;
 import cn.com.hgh.utils.Result;
 
@@ -65,7 +66,8 @@ public class NewIntegralGoodsActivity extends BaseActivity {
 	ImageView smallImaFive;
 	@Bind(R.id.bt_sure)
 	TextView btSure;
-	String productName,productType,productDesc,productAmt;
+	 String productName, productDesc, productAmt;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -76,9 +78,9 @@ public class NewIntegralGoodsActivity extends BaseActivity {
 	}
 
 	private void initView() {
-		productName=edCup.getText().toString();
-		productType=edCeramicCup.getText().toString();
-		productDesc=edExchangeIntegral.getText().toString();
+		productName = edCup.getText().toString();
+		productType = edCeramicCup.getText().toString();
+		productAmt = edExchangeIntegral.getText().toString();
 		setPageTitle("积分商品");
 		photoUtills = new MyPhotoUtills(this);
 		ima_Smallima.setOnClickListener(this);
@@ -125,52 +127,69 @@ public class NewIntegralGoodsActivity extends BaseActivity {
 					@Override
 					public void onClick(View v) {
 						String imageStr = null;
-						if (file != null) {
+						if (file != null&&productName!=null&&productType!=null&&productAmt!=null) {
 							imageStr = Picture_Base64.GetImageStr(file.toString());
+							getProduct();
+							finish();
+						}else{
+							ContentUtils.showMsg(NewIntegralGoodsActivity.this,"请完善商品信息");
 						}
 					}
 				});
-				getProduct();
-				finish();
+
+
 				break;
+		}
+	}
+
+	private void pan() {
+		if (TextUtils.isEmpty(productName)){
+			ContentUtils.showMsg(NewIntegralGoodsActivity.this, "请输入商品名称");
+		}
+		if (TextUtils.isEmpty(productType)){
+			ContentUtils.showMsg(NewIntegralGoodsActivity.this, "请输入商品描述");
+		}
+		if (TextUtils.isEmpty(productAmt)){
+			ContentUtils.showMsg(NewIntegralGoodsActivity.this, "请输入商品价格");
+		}else{
+
 		}
 	}
 
 	/**
 	 * 新增产品接口
+	 *
 	 * @param
 	 * @param
 	 * @param
 	 */
+String productType;
+	private void getProduct() {
+		String reqTime = AbDateUtil.getDateTimeNow();
+		String uuid = AbStrUtil.getUUID();
+		String productName = edCup.getText().toString();
+		String productDesc = edCeramicCup.getText().toString();
+        String  productAmt=edExchangeIntegral.getText().toString();
+		try {
+			okHttpsImp.addProduct(OkHttpsImp.md5_key, uuid, "app", reqTime,
+					productName,productType, productDesc, productAmt,imageStr,userShopInfoBean.getBusinessId(),
+					new MyResultCallback<String>() {
+				@Override
+				public void onResponseResult(Result result) {
+					String reString = result.getData();
+					System.out.println("reString" + reString);
+					ContentUtils.showMsg(NewIntegralGoodsActivity.this, "新增成功");
+				}
 
-	  private void getProduct() {
-		  String reqTime = AbDateUtil.getDateTimeNow();
-		  String uuid = AbStrUtil.getUUID();
-		  String productName=edCup.getText().toString();
-		  String productDesc=edCeramicCup.getText().toString();
-
-		  try {
-			  okHttpsImp.addProduct(OkHttpsImp.md5_key,
-					  uuid, "app", reqTime,
-			   productName,productDesc,imageStr,
-			   userShopInfoBean.getBusinessId(),
-			   new MyResultCallback<String>() {
-		   @Override
-		   public void onResponseResult(Result result) {
-			 String reString=result.getData();
-			   System.out.println("reString"+reString);
-
-		   }
-
-		   @Override
-		   public void onResponseFailed(String msg) {
-
-		   }
-	   });
-		  } catch (Exception e) {
-			  e.printStackTrace();
-		  }
-	  }
+				@Override
+				public void onResponseFailed(String msg) {
+					ContentUtils.showMsg(NewIntegralGoodsActivity.this, "新增失败");
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 
 	@Override
@@ -215,7 +234,7 @@ public class NewIntegralGoodsActivity extends BaseActivity {
 
 						Bitmap bm = BitmapFactory.decodeFile(filePath);
 						file = photoUtills.photoCurrentFile;
-						switch (img_flag){
+						switch (img_flag) {
 							case 1:
 								((ImageView) findViewById(R.id.ima_bigima)).setImageBitmap(bm);
 								ima_Smallima.setVisibility(View.GONE);
@@ -260,21 +279,26 @@ public class NewIntegralGoodsActivity extends BaseActivity {
 		((ImageView) findViewById(R.id.small_imaOne)).setImageBitmap(bm);
 
 	}
+
 	private void showImage2(String filePath) {
 		Bitmap bm = BitmapFactory.decodeFile(filePath);
 		((ImageView) findViewById(R.id.small_imaTwo)).setImageBitmap(bm);
 
 	}
+
 	private void showImage3(String filePath) {
 		Bitmap bm = BitmapFactory.decodeFile(filePath);
 		((ImageView) findViewById(R.id.small_imaThree)).setImageBitmap(bm);
 
 	}
+
 	private void showImage4(String filePath) {
 		Bitmap bm = BitmapFactory.decodeFile(filePath);
 		((ImageView) findViewById(R.id.small_imaFour)).setImageBitmap(bm);
 
-	}private void showImage5(String filePath) {
+	}
+
+	private void showImage5(String filePath) {
 		Bitmap bm = BitmapFactory.decodeFile(filePath);
 		((ImageView) findViewById(R.id.small_imaFive)).setImageBitmap(bm);
 

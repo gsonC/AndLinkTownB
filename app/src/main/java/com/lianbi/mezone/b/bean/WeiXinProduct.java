@@ -12,7 +12,7 @@ import java.io.Serializable;
  */
 public class WeiXinProduct implements Serializable {
 	private static final long serialVersionUID = -5076976047607374205L;
-  private   String new_product_ima;
+    private   String new_product_ima;
 	private String new_product_food;
 	private String new_product_rated;
 	private String new_product_price;

@@ -1,5 +1,6 @@
 package com.lianbi.mezone.b.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -50,7 +51,7 @@ public class ChooseFromWeixinActivity extends BaseActivity {
 	private ArrayList<WeiXinProduct> mDatas = new ArrayList<WeiXinProduct>();
 	private QuickAdapter<WeiXinProduct> mAdapter;
 	private AbPullToRefreshView act_memberpoint_abpulltorefreshview;
-
+	private int page = 1;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -128,21 +129,22 @@ public class ChooseFromWeixinActivity extends BaseActivity {
 				TextView new_product_rated = helper.getView(R.id.new_product_rated);
 				TextView new_product_price = helper.getView(R.id.new_product_price);
 				TextView new_product_choose = helper.getView(R.id.new_product_choose);
+
 				ScreenUtils.textAdaptationOn720(new_product_food, ChooseFromWeixinActivity.this, 24);
 				ScreenUtils.textAdaptationOn720(new_product_rated, ChooseFromWeixinActivity.this, 24);
 				ScreenUtils.textAdaptationOn720(new_product_price, ChooseFromWeixinActivity.this, 24);
 				ScreenUtils.textAdaptationOn720(new_product_choose, ChooseFromWeixinActivity.this, 24);
 
-				new_product_food.setText(item.getNew_product_food() + "");
-				new_product_rated.setText(item.getNew_product_rated() + "");
-				new_product_price.setText(item.getNew_product_price() + "");
-				new_product_choose.setText(item.getNew_product_choose() + "");
+				new_product_food.setText(item.getNew_product_food());
+				new_product_rated.setText(item.getNew_product_rated());
+				new_product_price.setText(item.getNew_product_price());
+
 
 				helper.getView(R.id.new_product_choose).setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						getQueryProduct(true);
-					}
+						Intent intent=new Intent(ChooseFromWeixinActivity.this, RevisionsActivity.class);
+						startActivityForResult(intent,RESULT_WEIXIN);					}
 				});
 			}
 
@@ -151,7 +153,7 @@ public class ChooseFromWeixinActivity extends BaseActivity {
 
 		actAddmembersListview.setAdapter(mAdapter);
 	}
-
+private final int RESULT_WEIXIN=4444;
 	/*private void getWeiXinList() {
 		ArrayList<WeiXinProduct> mDatasL = new ArrayList<WeiXinProduct>();
 		for (int i = 0; i < 20; i++) {
@@ -180,8 +182,10 @@ public class ChooseFromWeixinActivity extends BaseActivity {
 	 * @param
 	 */
 
+
 	private void getQueryProduct(final boolean isResh) {
 		if (isResh) {
+			page = 1;
 			mDatas.clear();
 			mAdapter.replaceAll(mDatas);
 		}
@@ -189,15 +193,19 @@ public class ChooseFromWeixinActivity extends BaseActivity {
 		String uuid = AbStrUtil.getUUID();
 
 		try {
-			okHttpsImp.QueryProduct(OkHttpsImp.md5_key, uuid, "app", reqTime, userShopInfoBean.getBusinessId(), new MyResultCallback<String>() {
+			okHttpsImp.QueryProduct(OkHttpsImp.md5_key,
+					uuid, "app", reqTime,
+					/*20 + "",page + "",*/
+					userShopInfoBean.getBusinessId(),
+					new MyResultCallback<String>() {
 				@Override
 				public void onResponseResult(Result result) {
 					String reString = result.getData();
-					System.out.println("reString11111" + reString);
+					System.out.println("reString" + reString);
 					if (!AbStrUtil.isEmpty(reString)) {
 						try {
 							JSONObject jsonObject = new JSONObject(reString);
-							reString = jsonObject.getString("Data");
+							reString = jsonObject.getString("products");
 							ArrayList<MemberMessage> mDatasL = (ArrayList<MemberMessage>) JSON.parseArray(reString, MemberMessage.class);
 							if (mDatasL != null && mDatasL.size() > 0) {
 								//mDatas.addAll(mDatasL);
