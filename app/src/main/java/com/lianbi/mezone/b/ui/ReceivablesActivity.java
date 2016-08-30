@@ -109,6 +109,7 @@ public class ReceivablesActivity extends BaseActivity implements
 					String reString = result.getData();
 					if (!TextUtils.isEmpty(reString)) {
 						startActivity(new Intent(ReceivablesActivity.this, ReceivablesQRActivity.class));
+						finish();
 					}
 				}
 
