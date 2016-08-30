@@ -4,7 +4,6 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
-import com.lianbi.mezone.b.app.Constants;
 import com.xizhi.mezone.b.R;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -53,11 +52,6 @@ public abstract class MyResultCallback<T> extends StringCallback {
 					if (r.getCode() == Result.TWO00) {
 						onResponseResult(r);
 					} else {
-						if("000007".equals(r.getCode())){
-							ContentUtils.putSharePre(context,
-									Constants.SHARED_PREFERENCE_NAME,
-									Constants.UPDATERED, false);
-						}
 						// 返回结果的判断
 						onResponseFailed("RESULTERROR");
 						ContentUtils.showMsg(context, r.getMsg());

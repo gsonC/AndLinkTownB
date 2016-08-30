@@ -18,7 +18,6 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
-import com.lianbi.mezone.b.app.Constants;
 import com.lianbi.mezone.b.bean.MessageBean;
 import com.lianbi.mezone.b.httpresponse.API;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
@@ -59,7 +58,7 @@ public class MineFragment extends Fragment implements OnClickListener,
 			llt_mine_fm_title_bg, llt_feedback;
 	TextView fm_mine_name, fm_mine_vip, fm_mine_adress, mine_fm_tv_num_message,
 			tv_mine_vision_fm, mine_fm_phone_num;
-	ImageView fm_mine_textinfo, fm_mine_bussiness, fm_mine_product_f,img_update_red;
+	ImageView fm_mine_textinfo, fm_mine_bussiness, fm_mine_product_f, img_update_red;
 	RelativeLayout rlt_update;
 
 	private MainActivity maActivity;
@@ -69,13 +68,23 @@ public class MineFragment extends Fragment implements OnClickListener,
 
 	private final int MYSUPPLYGOODSACTIVITY_CODE = 2005;
 	private SwipeRefreshLayout swipe_mine;
-	private boolean mUpgrade;
+	private boolean mUpgrade = false;
+
 
 	/**
 	 * 刷新fm数据
 	 */
 	public void refreshFMData() {
 		setDataLogin();
+	}
+
+	/**
+	 * 设置升级小红点显示与否
+	 */
+	public void setRedDotShow() {
+		mUpgrade =  true;
+		img_update_red.setVisibility(View.VISIBLE);
+	//	img_update_red.setVisibility(View.GONE);
 	}
 
 	/**
@@ -230,16 +239,8 @@ public class MineFragment extends Fragment implements OnClickListener,
 		fm_mine_bussiness = (ImageView) view
 				.findViewById(R.id.fm_mine_bussiness);
 		llt_feedback = (LinearLayout) view.findViewById(R.id.llt_feedback);
-		img_update_red = (ImageView)view.findViewById(R.id.img_update_red);
-		rlt_update = (RelativeLayout)view.findViewById(R.id.rlt_update);
-		mUpgrade = ContentUtils.getSharePreBoolean(maActivity,
-				Constants.SHARED_PREFERENCE_NAME, Constants.UPDATERED);
-		System.out.println("mUpgrade--"+mUpgrade);
-		if(mUpgrade){
-			img_update_red.setVisibility(View.VISIBLE);
-		}else{
-			img_update_red.setVisibility(View.GONE);
-		}
+		img_update_red = (ImageView) view.findViewById(R.id.img_update_red);
+		rlt_update = (RelativeLayout) view.findViewById(R.id.rlt_update);
 		// fm_mine_product_f = (ImageView) view
 		// .findViewById(R.id.fm_mine_product_f);
 		String vName = AbAppUtil.getAppVersionName(maActivity);
@@ -280,11 +281,11 @@ public class MineFragment extends Fragment implements OnClickListener,
 						.toString().trim());
 				break;
 			case R.id.rlt_update://版本升级
-				if(mUpgrade){
-					maActivity.getUpData();
-				}else{
-					ContentUtils.showMsg(maActivity,"已是最新版本!");
-				}
+		//		if (mUpgrade) {
+		//			maActivity.getUpData();
+		//		} else {
+		//			ContentUtils.showMsg(maActivity, "已是最新版本!");
+		//		}
 				break;
 			case R.id.llt_mine_about_us:// 关于我们
 				startActivity(new Intent(maActivity, AboutUsActivity.class));

@@ -449,6 +449,7 @@
                 android:clickable="true"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
+                android:visibility="gone"
                 android:padding="10dp">
 
                 <ImageView
