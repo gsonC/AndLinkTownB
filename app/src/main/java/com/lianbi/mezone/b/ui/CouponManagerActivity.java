@@ -2,7 +2,6 @@ package com.lianbi.mezone.b.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.IntRange;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
@@ -64,7 +63,7 @@ public class CouponManagerActivity extends BaseActivity implements AdapterView.O
     private List<CouponBean> mValideData = new ArrayList<>();
     private List<CouponBean> mInvalideData = new ArrayList<>();
 
-    private int duplicateNum = 0;
+    private int duplicateNum = 0;//重复的条数
     private int pageSize = 20;
     private int startNo = 0;
     /**

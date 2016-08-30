@@ -662,7 +662,7 @@ public static final String QProduct = "product/query.do";
 	/*
 	* 查询店铺优惠券使用详情列表
 	* */
-	public static final String COUPON_USING_DETAIL_LIST = "";
+	public static final String COUPON_USING_DETAIL_LIST = "coupon/queryCoupDetail.do";
 	/*
 	* 发送优惠券短信
 	* */

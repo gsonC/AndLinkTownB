@@ -36,6 +36,9 @@ public class AbDateUtil {
 	/** 时间日期格式化到年月日时分秒. */
 	public static final String dateFormatYMDHMS = "yyyy-MM-dd HH:mm:ss";
 
+	/** 时间日期格式化到年月日时分. */
+	public static final String dateFormatYMDHMNew = "yyyy-MM-dd(HH:mm)";
+
 	/** 时间日期格式化到年月日. */
 	public static final String dateFormatYMD = "yyyy-MM-dd";
 

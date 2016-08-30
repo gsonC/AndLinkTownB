@@ -80,6 +80,13 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
+        <ImageView
+            android:id="@+id/iv_empty_act_coupon_detail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerInside"
+            android:src="@mipmap/iv_empty" />
+
         <ListView
             android:id="@+id/coupon_list"
             android:layout_width="match_parent"
@@ -87,13 +94,6 @@
             android:divider="@color/color_e3e3e3"
             android:dividerHeight="1dp"
             android:scrollbars="none" />
-
-        <ImageView
-            android:id="@+id/iv_empty_act_coupon_detail"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerInside"
-            android:src="@mipmap/iv_empty" />
     </cn.com.hgh.view.AbPullToRefreshView>
 
     <TextView
