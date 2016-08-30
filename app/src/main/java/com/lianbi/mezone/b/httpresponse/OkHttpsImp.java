@@ -756,6 +756,7 @@ public enum OkHttpsImp {
 		params.put("businessID",businessID);
 		params.put("phone",phone);
 		params.put("templateMark",templateMark);
+		params.put("batchNum","");
 		params.put("serNum", uuid);
 		params.put("source", appsource);
 		params.put("reqTime", reqTime);
