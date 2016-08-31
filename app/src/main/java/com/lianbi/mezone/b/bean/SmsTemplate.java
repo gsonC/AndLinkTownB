@@ -8,11 +8,25 @@ import java.io.Serializable;
  */
 public class SmsTemplate implements Serializable {
 
-    String templateID;
-    String templateMark;
-    String projectNo;
-    String content;
-    boolean  check;
+    private static final long serialVersionUID = -7722248124833138228L;
+    private String templateID;
+    private String templateMark;
+    private String projectNo;
+    private String content;
+    private boolean  check;
+    private String templateType;
+
+    public String getTemplateType() {
+        return templateType;
+    }
+
+    public void setTemplateType(String templateType) {
+        this.templateType = templateType;
+    }
+
+    public SmsTemplate() {
+
+    }
 
     public boolean isCheck() {
         return check;
