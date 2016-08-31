@@ -305,7 +305,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 											AppUpDataBean.class);
 							String status = uB.getCoerceModify();
 
-			//				((MineFragment) fm_mine).setRedDotShow();
+							((MineFragment) fm_mine).setRedDotShow();
 
 							if (status.equals("Y")) {
 								mustUp = true;
@@ -973,20 +973,20 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 			getFinancialOfficeClick();// 刷新财务室价格
 		} else if (position == POSITION3) {
 			curPosition = POSITION3;
-			setPageRightTextVisibility(View.GONE);//1
+		//	setPageRightTextVisibility(View.GONE);//1
 			// 		tv_title_left.setVisibility(View.GONE);
 			//		setPageRightResource(R.mipmap.more_other);//1
 			((MineFragment) fm_mine).refreshFMData();
 			setPageTitle("我的");
-			tv_title_left.setVisibility(View.GONE);
+		//	tv_title_left.setVisibility(View.GONE);
 			setPageRightImageVisibility();
-		//	setPageRightText("退出登录");//2
-		//	setPageRightTextColor(R.color.black);//2
-		//	tv_title_left.setText("退出登录");//2
-		//	tv_title_left.setVisibility(View.INVISIBLE);//2
+			setPageRightText("退出登录");//2
+			setPageRightTextColor(R.color.black);//2
+			tv_title_left.setText("退出登录");//2
+			tv_title_left.setVisibility(View.INVISIBLE);//2
 			setPageBackVisibility(View.INVISIBLE);
-			setPageRightResource(R.mipmap.more_other);//1
-		//	setPageRightImageVisibility();//2
+		//	setPageRightResource(R.mipmap.more_other);//1
+			setPageRightImageVisibility();//2
 			rb_mine.setChecked(true);
 			fm_funcpage2.setVisibility(View.GONE);
 			fm_funcpage0.setVisibility(View.GONE);
