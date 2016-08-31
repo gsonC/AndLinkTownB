@@ -147,8 +147,8 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 				goodsPoint.setText(item.getProductPrice());
 				pullgoods.setText(item.getIsOnline());
 				pushgoods.setText(item.getIsOnline());
-				//String  uri=item.getProductImages().get(1).getImgUrl();//图片url
-				//System.out.println(item.getProductImages().get(1).getImgUrl());
+				//String  uri=item.getProductImages().get(2).getImgUrl();//图片url
+				//System.out.println(item.getProductImages().get(2).getImgUrl());
 				//adaption();
 
 				//修改点击事件
@@ -289,7 +289,7 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 
 							}
 
-							//mAdapter.replaceAll(mDatas);
+							mAdapter.replaceAll(mDatas);
 						} catch (JSONException e) {
 							e.printStackTrace();
 						}

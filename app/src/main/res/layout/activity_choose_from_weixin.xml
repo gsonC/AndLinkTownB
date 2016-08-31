@@ -32,7 +32,8 @@
     android:paddingLeft="9dp"
     android:text="新品上市"
     android:textSize="14sp"
-    android:textColor="@color/color_272727"
+    android:background="@color/white"
+
     />
     <View
         android:layout_width="match_parent"
