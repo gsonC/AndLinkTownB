@@ -94,6 +94,7 @@ public class MarketingMsgBulidActivity extends BaseActivity {
             case R.id.tv_choicetemplate:
 
                 Intent intenttemplate = new Intent(this, MarketingSMSexampleActivity.class);
+                intenttemplate.putExtra(MarketingSMSexampleActivity.TEMPLATE_TYPE, "B");
                 startActivityForResult(intenttemplate, REQUEST_CODE_TEMPLATE_RESULT);
                 break;
             case R.id.btn_msgpay:

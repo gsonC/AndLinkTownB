@@ -61,23 +61,23 @@ public class MarketingSMSexampleActivity extends BaseActivity {
     private ArrayList<SmsTemplate> mDatas = new ArrayList<SmsTemplate>();
     HttpDialog dialog;
     private DataAdapter mAdapter;
-//    QuickAdapter<SmsTemplate> mAdapter;
+    //    QuickAdapter<SmsTemplate> mAdapter;
     private static final int TIME = 1000;
 
     private static final int MSG_CODE_REFRESH = 0;
     private static final int MSG_CODE_LOADMORE = 1;
-    boolean  isLoadMore=false;
-    boolean  Nodata=false;
-    boolean  isResh;
+    boolean isLoadMore = false;
+    boolean Nodata = false;
+    boolean isResh;
     //更新列表
     private static final int REQUEST_CODE_UPDATA_RESULT = 1009;
     //    添加会员类别
     private static final int REQUEST_CODE_ADD_RESULT = 1010;
     //第几页
-    private int  page=1;
+    private int page = 1;
     //每页个数
-    private String  eachpullnum="10";
-//    @OnClick({R.id.rlv_actmarketing})
+    private String eachpullnum = "10";
+    //    @OnClick({R.id.rlv_actmarketing})
 //    public void OnClick(View v) {
 //        switch (v.getId()) {
 //            case R.id.rlv_actmarketing:
@@ -87,6 +87,8 @@ public class MarketingSMSexampleActivity extends BaseActivity {
 //
 //        }
 //    }
+    private String templateType;
+    public static final String TEMPLATE_TYPE = "TEMPLATE_TYPE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,11 +102,13 @@ public class MarketingSMSexampleActivity extends BaseActivity {
      * 初始化View
      */
     private void initViewAndData() {
+        templateType = getIntent().getStringExtra(TEMPLATE_TYPE);
         setPageTitle("选择短信模板");
         dialog = new HttpDialog(this);
         initRecyclerView();
         queryAllSMSTemplate(true);
     }
+
     public void initRecyclerView() {
         mptrrv.setSwipeEnable(true);//open swipe
         DemoLoadMoreView loadMoreView = new DemoLoadMoreView(this, mptrrv.getRecyclerView());
@@ -114,12 +118,12 @@ public class MarketingSMSexampleActivity extends BaseActivity {
         mptrrv.setPagingableListener(new PullToRefreshRecyclerView.PagingableListener() {
             @Override
             public void onLoadMoreItems() {
-                if(isLoadMore==true){
+                if (isLoadMore == true) {
 
                     mptrrv.onFinishLoading(false, false);
 
                     return;
-                }else {
+                } else {
                     mHandler.sendEmptyMessageDelayed(MSG_CODE_LOADMORE, TIME);
                 }
             }
@@ -140,17 +144,19 @@ public class MarketingSMSexampleActivity extends BaseActivity {
                 return false;
             }
         });
-        mAdapter = new DataAdapter(this,mDatas);
+        mAdapter = new DataAdapter(this, mDatas);
         mptrrv.setAdapter(mAdapter);
         mptrrv.onFinishLoading(true, false);
     }
-    private void initAccess(){
-        page=1;
-        Nodata=false;
-        isLoadMore=false;
+
+    private void initAccess() {
+        page = 1;
+        Nodata = false;
+        isLoadMore = false;
         mDatas.clear();
     }
-    Handler mHandler = new Handler(){
+
+    Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -166,14 +172,14 @@ public class MarketingSMSexampleActivity extends BaseActivity {
     };
 
 
-    private void queryAllSMSTemplate(final  boolean isResh) {
+    private void queryAllSMSTemplate(final boolean isResh) {
         try {
             okHttpsImp.queryAllSMSTemplate(new MyResultCallback<String>() {
 
                 @Override
                 public void onResponseResult(Result result) {
                     String reString = result.getData();
-                    Log.i("tag","短信模板返回-125----》"+reString);
+                    Log.i("tag", "短信模板返回-125----》" + reString);
                     if (reString != null) {
                         JSONObject jsonObject;
                         try {
@@ -184,13 +190,20 @@ public class MarketingSMSexampleActivity extends BaseActivity {
                                 ArrayList<SmsTemplate> downloadListMall = (ArrayList<SmsTemplate>) JSON
                                         .parseArray(reString,
                                                 SmsTemplate.class);
+                                for (int i = 0; i < downloadListMall.size(); i++) {
+                                    SmsTemplate smsTemplate = downloadListMall.get(i);
+                                    if (!smsTemplate.getTemplateType().trim().equals(templateType)) {
+                                        downloadListMall.remove(i);
+                                        i--;
+                                    }
+                                }
                                 mData.addAll(downloadListMall);
                                 updateView(mData);
                             }
-                            if(mDatas.size()==0){
+                            if (mDatas.size() == 0) {
                                 mptrrv.setVisibility(View.GONE);
                                 img_ememberslist_empty.setVisibility(View.VISIBLE);
-                            }else{
+                            } else {
                                 mptrrv.setVisibility(View.VISIBLE);
                                 img_ememberslist_empty.setVisibility(View.GONE);
                             }
@@ -205,14 +218,18 @@ public class MarketingSMSexampleActivity extends BaseActivity {
                 public void onResponseFailed(String msg) {
                     dialog.dismiss();
                 }
-            }, "M",reqTime,uuid);
-        }catch (Exception  e){e.printStackTrace();}
+            }, "M", reqTime, uuid);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
+
     protected void updateView(ArrayList<SmsTemplate> arrayList) {
         mDatas.addAll(arrayList);
         mAdapter.notifyDataSetChanged();
     }
+
     class DataAdapter extends PullRefreshRecyclerAdapter<SmsTemplate> {
 
 
@@ -227,11 +244,11 @@ public class MarketingSMSexampleActivity extends BaseActivity {
         }
 
         class DataViewHolder extends PullRefreshViewHolder {
-            private LinearLayout  lay_sms;
+            private LinearLayout lay_sms;
             private RelativeLayout ray_choice;
             private CheckBox cb_smstemplate;
-            private EditText  et_smstemplate;
-            private TextView  tv_loadedall;
+            private EditText et_smstemplate;
+            private TextView tv_loadedall;
 
             public DataViewHolder(View itemView) {
                 super(itemView);
@@ -246,25 +263,25 @@ public class MarketingSMSexampleActivity extends BaseActivity {
 
             @Override
             public void onBindViewHolder(final int position) {
-                 et_smstemplate.setText(mDatas.get(position).getContent());
-                 tv_loadedall.setVisibility(View.GONE);
-                 lay_sms.setVisibility(View.VISIBLE);
-                 cb_smstemplate.setOnClickListener(new View.OnClickListener() {
-                 @Override
-                 public void onClick(View v) {
-                        if(cb_smstemplate.isChecked()){
+                et_smstemplate.setText(mDatas.get(position).getContent());
+                tv_loadedall.setVisibility(View.GONE);
+                lay_sms.setVisibility(View.VISIBLE);
+                cb_smstemplate.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (cb_smstemplate.isChecked()) {
                             mDatas.get(position).setCheck(true);
-                        }else{
+                        } else {
                             mDatas.get(position).setCheck(false);
                         }
                         Intent intent = new Intent();
-                        intent.setClass(MarketingSMSexampleActivity.this,MarketingMsgBulidActivity.class);
-                        intent.putExtra("info",mDatas.get(position).getContent());
-                        intent.putExtra("templateID",mDatas.get(position).getTemplateID());
+                        intent.setClass(MarketingSMSexampleActivity.this, MarketingMsgBulidActivity.class);
+                        intent.putExtra("info", mDatas.get(position).getContent());
+                        intent.putExtra("templateID", mDatas.get(position).getTemplateID());
                         setResult(RESULT_OK, intent);
                         finish();
 
-                     }
+                    }
                 });
             }
 
@@ -278,7 +295,7 @@ public class MarketingSMSexampleActivity extends BaseActivity {
         }
     }
 }
-    //    private void listviewData() {
+//    private void listviewData() {
 //        mAdapter = new QuickAdapter<SmsTemplate>(MarketingSMSexampleActivity.this,
 //                R.layout.item_marketingsmsexample_list, mDatas) {
 //            private int index = -1;
