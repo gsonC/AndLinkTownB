@@ -305,9 +305,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 											AppUpDataBean.class);
 							String status = uB.getCoerceModify();
 
-							ContentUtils.putSharePre(MainActivity.this,
-									Constants.SHARED_PREFERENCE_NAME,
-									Constants.UPDATERED, true);
+							((MineFragment) fm_mine).setRedDotShow();
 
 							if (status.equals("Y")) {
 								mustUp = true;
@@ -426,7 +424,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 						@Override
 						public void onResponseResult(Result result) {
 							String reString = result.getData();
-							if(!TextUtils.isEmpty(reString)) {
+							if (!TextUtils.isEmpty(reString)) {
 								FinancialOfficeAmountBean financialOfficeAmountBean = JSON.parseObject(reString,
 										FinancialOfficeAmountBean.class);
 								if (null != financialOfficeAmountBean) {
@@ -802,7 +800,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 							userShopInfoBean = null;
 							refreshFMData();
 							dismiss();
-							ContentUtils.showMsg(MainActivity.this,"已退出登录");
+							ContentUtils.showMsg(MainActivity.this, "已退出登录");
 						}
 					};
 					dialog.setTextTitle("是否退出");
@@ -810,8 +808,8 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 					dialog.setTv_dialog_common_cancel("取消");
 					dialog.show();
 
-				}else{
-					ContentUtils.showMsg(this,"请先登录");
+				} else {
+					ContentUtils.showMsg(this, "请先登录");
 				}
 				break;
 		}
@@ -975,18 +973,20 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 			getFinancialOfficeClick();// 刷新财务室价格
 		} else if (position == POSITION3) {
 			curPosition = POSITION3;
-	//		setPageRightTextVisibility(View.GONE);
+		//	setPageRightTextVisibility(View.GONE);//1
+			// 		tv_title_left.setVisibility(View.GONE);
+			//		setPageRightResource(R.mipmap.more_other);//1
 			((MineFragment) fm_mine).refreshFMData();
 			setPageTitle("我的");
-			setPageRightText("退出登录");
-			setPageRightTextColor(R.color.black);
-			tv_title_left.setText("退出登录");
-			tv_title_left.setVisibility(View.INVISIBLE);
-			setPageBackVisibility(View.INVISIBLE);
+		//	tv_title_left.setVisibility(View.GONE);
 			setPageRightImageVisibility();
-	//		tv_title_left.setVisibility(View.GONE);
-	//		setPageBackVisibility(View.INVISIBLE);
-	//		setPageRightResource(R.mipmap.more_other);
+			setPageRightText("退出登录");//2
+			setPageRightTextColor(R.color.black);//2
+			tv_title_left.setText("退出登录");//2
+			tv_title_left.setVisibility(View.INVISIBLE);//2
+			setPageBackVisibility(View.INVISIBLE);
+		//	setPageRightResource(R.mipmap.more_other);//1
+			setPageRightImageVisibility();//2
 			rb_mine.setChecked(true);
 			fm_funcpage2.setVisibility(View.GONE);
 			fm_funcpage0.setVisibility(View.GONE);
@@ -1068,7 +1068,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 	private void setShoyYeTitle() {
 		if (ContentUtils.getLoginStatus(this)) {
 			try {
-				if(POSITION0==clickPosition){
+				if (POSITION0 == clickPosition) {
 					setPageTitle(userShopInfoBean.getShopName());
 				}
 			} catch (Exception e) {

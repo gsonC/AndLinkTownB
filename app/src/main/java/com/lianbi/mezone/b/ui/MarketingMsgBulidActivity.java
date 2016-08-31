@@ -2,6 +2,7 @@ package com.lianbi.mezone.b.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -80,6 +81,10 @@ public class MarketingMsgBulidActivity extends BaseActivity {
     private static final int REQUEST_CODE_MEMBER_RESULT = 1010;
     private String  smsinfo;
     private String  templateID;
+
+    private String  sendPhones="";
+    private String  sendtotal="";
+
     @OnClick({R.id.txt_sendmsg, R.id.tv_choicetemplate, R.id.btn_msgpay, R.id.btn_senduser})
     public void OnClick(View v) {
         switch (v.getId()) {
@@ -105,6 +110,11 @@ public class MarketingMsgBulidActivity extends BaseActivity {
         }
     }
     private  void  sendShortmsg(){
+        Log.i("tag","113-getBusinessId------>"+userShopInfoBean.getBusinessId());
+        Log.i("tag","113-templateID------>"+templateID);
+        Log.i("tag","114-sendPhones------>"+sendPhones);
+        Log.i("tag","115----reqTime-->"+reqTime);
+        Log.i("tag","116----uuid----->"+uuid);
         try {
             okHttpsImp.smsBulkSend(new MyResultCallback<String>() {
 
@@ -128,7 +138,7 @@ public class MarketingMsgBulidActivity extends BaseActivity {
                 public void onResponseFailed(String msg) {
 
                 }
-            }, userShopInfoBean.getBusinessId(),templateID, "", reqTime, uuid);
+            }, userShopInfoBean.getBusinessId(),templateID,sendPhones, reqTime, uuid);
 
 
 
@@ -161,7 +171,11 @@ public class MarketingMsgBulidActivity extends BaseActivity {
                     }
                     break;
                 case REQUEST_CODE_MEMBER_RESULT:
-
+                    if(data!=null) {
+                        sendPhones = data.getStringExtra("sendphones");
+                        sendtotal= data.getStringExtra("sendtotal");
+                        btnMsgnum.setText(sendtotal);
+                    }
                     break;
                 default:
                     break;

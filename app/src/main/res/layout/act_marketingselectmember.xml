@@ -19,7 +19,7 @@
             android:background="@drawable/search_bar_edit_selector"
             android:drawableLeft="@mipmap/search_bar_icon_normal"
             android:drawablePadding="10dp"
-            android:hint="搜索人员名字"
+            android:hint="搜索"
             android:imeOptions="actionSearch"
             android:padding="5dp"
             android:singleLine="true"
@@ -103,7 +103,6 @@
     </LinearLayout>
     <View
         android:id="@+id/v_02"
-        android:layout_below="@id/lay_tag"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#cccccc"
@@ -138,7 +137,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:layout_marginBottom="50dp"
         android:background="@color/white"
         >
     </com.lhh.ptrrv.library.PullToRefreshRecyclerView>
@@ -149,9 +147,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:scaleType="fitCenter"
-        android:layout_marginBottom="50dp"
         android:src="@mipmap/iv_empty"
-        android:layout_below="@id/v_02"
         />
 
    <RelativeLayout
@@ -218,7 +214,7 @@
            android:layout_height="wrap_content"
            android:layout_marginLeft="7dp"
            android:singleLine="true"
-           android:text="2人"
+           android:text="0人"
            android:textColor="@color/colores_news_10"
            android:textSize="16sp" />
         </RelativeLayout>

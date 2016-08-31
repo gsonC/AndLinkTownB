@@ -10,7 +10,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +22,6 @@ import com.alibaba.fastjson.JSON;
 import com.lhh.ptrrv.library.PullToRefreshRecyclerView;
 import com.lhh.ptrrv.library.footer.loadmore.BaseLoadMoreView;
 import com.lianbi.mezone.b.bean.MarketingMsgGl;
-import com.lianbi.mezone.b.bean.MemberClassify;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.xizhi.mezone.b.R;
 
@@ -84,6 +82,8 @@ public class MarketingMsgGlActivity extends BaseActivity {
     View vBottom;
     @Bind(R.id.text_newmakemsg)
     TextView textNewmakemsg;
+    @Bind(R.id.img_ememberslist_empty)
+    ImageView img_ememberslist_empty;
     private ArrayList<MarketingMsgGl> mData = new ArrayList<MarketingMsgGl>();
     private ArrayList<MarketingMsgGl> mDatas = new ArrayList<MarketingMsgGl>();
     HttpDialog dialog;
@@ -99,6 +99,8 @@ public class MarketingMsgGlActivity extends BaseActivity {
     boolean  isshow=false;
     boolean  isLoadMore=false;
     int i = 0;
+    int  page=1;
+    boolean  Nodata=false;
 
     @OnClick({R.id.text_newmakemsg, R.id.btn_msgpay})
     public void OnClick(View v) {
@@ -125,7 +127,7 @@ public class MarketingMsgGlActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = this;
-        setContentView(R.layout.act_marketingmsg, HAVETYPE);
+        setContentView(R.layout.act_marketingmsg, NOTYPE);
         ButterKnife.bind(this);
         initData();
     }
@@ -137,9 +139,13 @@ public class MarketingMsgGlActivity extends BaseActivity {
         setPageTitle("营销短信管理");
         dialog = new HttpDialog(this);
         initRecyclerView();
-        getMarketingMsgList();
+        getMarketingMsgList(false);
     }
-
+    private void initAccess(){
+        page=1;
+        isLoadMore=false;
+        mDatas.clear();
+    }
     public void initRecyclerView() {
         mPtrrview.setSwipeEnable(true);//open swipe
         DemoLoadMoreView loadMoreView = new DemoLoadMoreView(this, mPtrrview.getRecyclerView());
@@ -173,20 +179,11 @@ public class MarketingMsgGlActivity extends BaseActivity {
         mPtrrview.getLoadMoreFooter().setOnDrawListener(new BaseLoadMoreView.OnDrawListener() {
             @Override
             public boolean onDrawLoadMore(Canvas c, RecyclerView parent) {
-                Log.i("onDrawLoadMore", "draw load more");
 
 
                 return false;
             }
         });
-        for (int i = 0; i < 50; i++) {
-            MarketingMsgGl marketingmsggl = new MarketingMsgGl();
-//            marketingmsggl.setTypeName("二级会员");
-//            marketingmsggl.setDataSize("101");
-//            marketingmsggl.setTypeDiscountRatio("35");
-//            marketingmsggl.setTypeDiscountRatio("62");
-            mDatas.add(marketingmsggl);
-        }
         mAdapter = new DataAdapter(this, mDatas);
         mPtrrview.setAdapter(mAdapter);
         mPtrrview.onFinishLoading(true, false);
@@ -197,35 +194,19 @@ public class MarketingMsgGlActivity extends BaseActivity {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             if (msg.what == MSG_CODE_REFRESH) {
-                mAdapter.notifyDataSetChanged();
-                mPtrrview.setOnRefreshComplete();
-                mPtrrview.onFinishLoading(true, false);
+                initAccess();
+                getMarketingMsgList(true);
+//                mAdapter.notifyDataSetChanged();
+//                mPtrrview.setOnRefreshComplete();
+//                mPtrrview.onFinishLoading(true, false);
             } else if (msg.what == MSG_CODE_LOADMORE) {
-                if (i == 3) {
-                    Toast.makeText(MarketingMsgGlActivity.this, "无数据", Toast.LENGTH_SHORT).show();
-                    isshow = true;
-//                    MemberClassify memberclassify = new MemberClassify();
-//                    memberclassify.setTypeName("四级会员");
-//                    memberclassify.setDataSize("101");
-//                    memberclassify.setTypeDiscountRatio("35");
-//                    memberclassify.setTypeDiscountRatio("62");
-//                    mDatas.add(memberclassify);
+                if(Nodata==true){
+                    MarketingMsgGl marketingmsggl = new MarketingMsgGl();
+                    mDatas.add(marketingmsggl);
                     mAdapter.notifyDataSetChanged();
                     mPtrrview.onFinishLoading(false, false);
-
-                } else {
-                    isshow = false;
-                    i = i + 1;
-                    for (int i = 0; i < 50; i++) {
-                        MemberClassify memberclassify = new MemberClassify();
-                        memberclassify.setTypeName("三级会员");
-                        memberclassify.setDataSize("101");
-                        memberclassify.setTypeDiscountRatio("35");
-                        memberclassify.setTypeDiscountRatio("62");
-//                        mDatas.add(memberclassify);
-                        mAdapter.notifyDataSetChanged();
-                        mPtrrview.onFinishLoading(true, false);
-                    }
+                }else{
+                    getMarketingMsgList(false);
                 }
 
             }
@@ -239,7 +220,7 @@ public class MarketingMsgGlActivity extends BaseActivity {
         startActivity(intent);
     }
 
-    private void getMarketingMsgList() {
+    private void getMarketingMsgList(final  boolean  isResh) {
         String nowtime = AbDateUtil.getDateYearMonthDayNow();
         try {
             okHttpsImp.querySendMsgStatistic(new MyResultCallback<String>() {
@@ -260,6 +241,17 @@ public class MarketingMsgGlActivity extends BaseActivity {
                                 mData.addAll(msgGlsList);
                                 updateView(mData);
                             }
+                            if(page==1&&mDatas.size()==0){
+                                mPtrrview.setVisibility(View.GONE);
+                                img_ememberslist_empty.setVisibility(View.VISIBLE);
+                            }else{
+                                mPtrrview.setVisibility(View.VISIBLE);
+                                img_ememberslist_empty.setVisibility(View.GONE);
+                            }
+                            if(isResh==true){
+                                mPtrrview.setOnRefreshComplete();
+                                mPtrrview.onFinishLoading(true, false);
+                            }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -269,6 +261,12 @@ public class MarketingMsgGlActivity extends BaseActivity {
 
                 @Override
                 public void onResponseFailed(String msg) {
+                    img_ememberslist_empty.setVisibility(View.VISIBLE);
+                    mPtrrview.setVisibility(View.GONE);
+                    if(isResh==true){
+                        mPtrrview.setOnRefreshComplete();
+                    }
+                    mPtrrview.onFinishLoading(true, false);
                     dialog.dismiss();
                 }
             }, userShopInfoBean.getBusinessId(), String.valueOf(mDatas.size()), eachgetnum, nowtime, reqTime, uuid);
@@ -278,7 +276,6 @@ public class MarketingMsgGlActivity extends BaseActivity {
     }
 
     protected void updateView(ArrayList<MarketingMsgGl> arrayList) {
-        mDatas.clear();
         mDatas.addAll(arrayList);
         mAdapter.notifyDataSetChanged();
     }

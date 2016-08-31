@@ -1,6 +1,7 @@
 package com.lianbi.mezone.b.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -107,6 +108,7 @@ public class MarketingSelectMemberActivity extends BaseActivity {
     RelativeLayout rayBottom;
     @Bind(R.id.img_ememberslist_empty)
     ImageView img_ememberslist_empty;
+    ArrayList<String> phones = new ArrayList<String>();
     private ArrayList<MemberInfoSelectBean> mData = new ArrayList<MemberInfoSelectBean>();
     private ArrayList<MemberInfoSelectBean> mDatas = new ArrayList<MemberInfoSelectBean>();
     HttpDialog dialog;
@@ -117,7 +119,7 @@ public class MarketingSelectMemberActivity extends BaseActivity {
     private Drawable mDrawableUp;
     private Drawable mDrawableinitial;
     private String paramLike="";
-    private int page = 0;
+    private int page = 1;
     private static final int DEFAULT_ITEM_SIZE = 20;
     private static final int ITEM_SIZE_OFFSET = 20;
     private static final int TIME = 1000;
@@ -131,12 +133,17 @@ public class MarketingSelectMemberActivity extends BaseActivity {
     boolean  isSeleteAll=false;
     private int  statisticspeople=0;
     List<Integer> intlist = new ArrayList<Integer>();
-
+    String  sendPhones="";
     @OnClick({R.id.tv_sure, R.id.llt_integral,R.id.cb_selectall})
     public void OnClick(View v) {
         switch (v.getId()) {
             case R.id.tv_sure:
-
+                Intent intent = new Intent();
+                intent.setClass(MarketingSelectMemberActivity.this,MarketingMsgBulidActivity.class);
+                intent.putExtra("sendphones",sendPhones);
+                intent.putExtra("sendtotal",statisticspeople+"条");
+                setResult(RESULT_OK, intent);
+                finish();
 
                 break;
             case R.id.cb_selectall:
@@ -184,8 +191,8 @@ public class MarketingSelectMemberActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mContext = this;
-        setContentView(R.layout.act_marketingselectmember, HAVETYPE);
+//        mContext = this;
+        setContentView(R.layout.act_marketingselectmember, NOTYPE);
         ButterKnife.bind(this);
         initViewAndData();
     }
@@ -217,7 +224,11 @@ public class MarketingSelectMemberActivity extends BaseActivity {
                                               int before, int count) {
                         // 当输入框里面的值为空，更新为原来的列表，否则为过滤数据列表
                         paramLike = s.toString();
-                        getMembersSelsectList(false);
+                        if("".equals(paramLike)){
+                            paramLike="";
+                            initAccess();
+                            getMembersSelsectList(false);
+                        }
 
                     }
 
@@ -241,6 +252,7 @@ public class MarketingSelectMemberActivity extends BaseActivity {
                                 || actionId == EditorInfo.IME_ACTION_UNSPECIFIED) {
                             paramLike = etSearch
                                     .getText().toString().trim();
+                            initAccess();
                             getMembersSelsectList(false);                        }
                         AbAppUtil.closeSoftInput(MarketingSelectMemberActivity.this);
                         return false;
@@ -308,6 +320,7 @@ public class MarketingSelectMemberActivity extends BaseActivity {
     };
 
     private void getMembersSelsectList(final  boolean isResh) {
+        Log.i("tag","321-paramLike--->"+paramLike);
         try {
             okHttpsImp.getMembersList(uuid, "app", reqTime, OkHttpsImp.md5_key,
                     userShopInfoBean.getBusinessId(), paramLike,"", page + "", 20 + "", new MyResultCallback<String>() {
@@ -494,13 +507,17 @@ public class MarketingSelectMemberActivity extends BaseActivity {
                 int  sum=mDatas.size();
                 int  statisticspeople=-0;
                 intlist.clear();
+                phones.clear();
                 for(int toatl=0;toatl<sum;toatl++){
                     if(mDatas.get(toatl).isChecked()==true){
 
                         statisticspeople=statisticspeople+1;
                         intlist.add(toatl);
+                        phones.add(mDatas.get(toatl).getVipPhone());
+
                     }
                 }
+                splitPhones(phones,statisticspeople);
                 tvAlreadychecknum.setText(statisticspeople+"人");
 
 
@@ -510,6 +527,25 @@ public class MarketingSelectMemberActivity extends BaseActivity {
 
             }
         }
+    }
+    public void  splitPhones(ArrayList<String> ids,int totalpeople
+                            ) {
+        StringBuffer sb = new StringBuffer();
+        int s = ids.size();
+        if (s > 0) {
+            for (int i = 0; i < s; i++) {
+                if (i == (s - 1)) {
+                    sb.append(ids.get(i));
+                } else {
+                    sb.append(ids.get(i) + ",");
+                }
+            }
+        } else {
+            return;
+        }
+        Log.i("tag","要发送的所有手机号----->"+sb.toString());
+        sendPhones=sb.toString();
+        this.statisticspeople=totalpeople;
     }
     /**
      * View适配

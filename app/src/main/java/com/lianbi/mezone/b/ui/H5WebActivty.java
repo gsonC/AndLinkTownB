@@ -407,8 +407,8 @@ public class H5WebActivty extends BaseActivity{
 							web_webactivty.post(new Runnable() {
 								@Override
 								public void run() {
-//							web_webactivty.loadUrl("javascript:getScreenshot('"+base64+"')");
-							web_webactivty.loadUrl("javascript:getScreenshot('"+base64+"','"+mImgId+"')");
+							web_webactivty.loadUrl("javascript:getScreenshot('"+base64+"')");
+//							web_webactivty.loadUrl("javascript:getScreenshot('"+base64+"','"+mImgId+"')");
 
 								}
 							});
@@ -450,15 +450,25 @@ public class H5WebActivty extends BaseActivity{
 		 * @param flag
          */
 		@JavascriptInterface
-		public void  photoAlbumcut(boolean  flag,String  imgId)
+		public void  photoAlbumcut(boolean  flag)
 		{
 
 			if(flag==true) {
-				    mImgId=imgId;
+//				    mImgId=imgId;
 					photoUtills.startPickPhotoFromAlbumWithCrop();
 			}else{
 			}
 		}
+//		@JavascriptInterface
+//		public void  photoAlbumcut(boolean  flag,String  imgId)
+//		{
+//
+//			if(flag==true) {
+//				mImgId=imgId;
+//				photoUtills.startPickPhotoFromAlbumWithCrop();
+//			}else{
+//			}
+//		}
 		/**
 		 * 返回base64
 		 *
