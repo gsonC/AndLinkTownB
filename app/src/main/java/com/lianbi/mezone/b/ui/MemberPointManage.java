@@ -147,8 +147,8 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 				goodsPoint.setText(item.getProductPrice());
 				pullgoods.setText(item.getIsOnline());
 				pushgoods.setText(item.getIsOnline());
-			//	String  uri=item.getProductImages().get(0).getImgUrl();//图片url
-				//System.out.println(item.getProductImages().get(0).getImgUrl());
+				//String  uri=item.getProductImages().get(1).getImgUrl();//图片url
+				//System.out.println(item.getProductImages().get(1).getImgUrl());
 				//adaption();
 
 				//修改点击事件
@@ -157,12 +157,12 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 					public void onClick(View v) {
 
 						Intent intent = new Intent(MemberPointManage.this, RevisionsActivity.class);
-						intent.putExtra("id",item.getId());
+						intent.putExtra("id", item.getId());
 						startActivityForResult(intent, RESULT_MENMBERCHANGE);
 					}
 				});
 			   /*侧滑的删除点击事件
-                */
+				*/
 				helper.getView(R.id.tv_chdelete).setOnClickListener(// 删除
 						new OnClickListener() {
 
@@ -170,16 +170,9 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 							public void onClick(View v) {
 
 								fm_member_listView.slideBack();
-								// 通知服务器
-								//mDatas.remove(item);
-								//Toast.makeText(mActivity, "删除", 0).show();
-								//mAdapter.replaceAll(mDatas);
-								//ArrayList<String> ids = new ArrayList<String>();
 								Deletemenber(item.getId());
 							}
 						});
-
-
 			}
 
 		};
@@ -279,7 +272,7 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 						try {
 							JSONObject jsonObject = new JSONObject(reString);
 							reString = jsonObject.getString("products");
-						//	String productImages = jsonObject.getString("productImages");
+							//	String productImages = jsonObject.getString("productImages");
 							//Glide.with(MemberPointManage.this).load(uri).into(point_ima);
 							ArrayList<MemberMessage> mDatasL = (ArrayList<MemberMessage>) JSON.parseArray(reString, MemberMessage.class);
 							if (mDatasL != null && mDatasL.size() > 0) {
@@ -296,7 +289,7 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 
 							}
 
-							mAdapter.replaceAll(mDatas);
+							//mAdapter.replaceAll(mDatas);
 						} catch (JSONException e) {
 							e.printStackTrace();
 						}
@@ -307,7 +300,7 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 				public void onResponseFailed(String msg) {
 
 					img_memberpoint_empty.setVisibility(View.VISIBLE);
-
+					fm_member_listView.setVisibility(View.GONE);
 
 					ContentUtils.showMsg(MemberPointManage.this, "查询积分商品失败");
 				}
@@ -327,7 +320,7 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 		String reqTime = AbDateUtil.getDateTimeNow();
 		String uuid = AbStrUtil.getUUID();
 		try {
-			okHttpsImp.DeleteMember(uuid, "app", reqTime, OkHttpsImp.md5_key, "BD2016051910141600000004",productId, new MyResultCallback<String>() {
+			okHttpsImp.DeleteMember(uuid, "app", reqTime, OkHttpsImp.md5_key, "BD2016051910141600000004", productId, new MyResultCallback<String>() {
 				@Override
 				public void onResponseResult(Result result) {
 					getQueryProduct();

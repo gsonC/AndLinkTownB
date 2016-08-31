@@ -4,13 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.ValueCallback;
-import android.webkit.WebChromeClient;
-import android.webkit.WebView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -174,119 +171,57 @@ public class RevisionsActivity extends BaseActivity {
 		imageStr = stringBuilder.toString();
 	}
 
+	@SuppressWarnings("static-access")
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
 		super.onActivityResult(requestCode, resultCode, intent);
 
-		if (requestCode == FILECHOOSER_RESULTCODE) {
-			if (null == mUploadMessage) return;
-			Uri result = intent == null || resultCode != RESULT_OK ? null : intent.getData();
-			if (result == null) {
-				mUploadMessage.onReceiveValue(null);
-				mUploadMessage = null;
-				return;
-			}
-			if ("content".equals(result.getScheme())) {
-				String path = PhotoUtills.getPath(this, result);
-
-				if (path != null) result = Uri.fromFile(new File(path));
-			}
-			mUploadMessage.onReceiveValue(result);
-			mUploadMessage = null;
-		}
-		if (requestCode != OPENIMAGEFILE || mFilePathCallback == null) {
-			if (requestCode == PhotoUtills.REQUEST_IMAGE_FROM_ALBUM_AND_CROP || requestCode == PhotoUtills.REQUEST_IMAGE_CROP) {
-			} else {
-				return;
-			}
-		}
-		Uri[] results = null;
-//		&& Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
 		if (resultCode == Activity.RESULT_OK) {
 			if (intent == null) {
 			} else {
 				switch (requestCode) {
 
-					case PhotoUtills.REQUEST_IMAGE_FROM_ALBUM_AND_CROP:
+					case PhotoUtills.REQUEST_IMAGE_FROM_ALBUM_AND_CROP://相册选择并裁剪
 						Uri uri = intent.getData();
 						String filePath = PhotoUtills.getPath(this, uri);
 						FileUtils.copyFile(filePath, PhotoUtills.photoCurrentFile.toString(), true);
 						photoUtills.startCropImage();
-
-
-						Bitmap bm = BitmapFactory.decodeFile(filePath);
 						//file = photoUtills.photoCurrentFile;
 						file.add(photoUtills.photoCurrentFile);
+						break;
+
+
+					case PhotoUtills.REQUEST_IMAGE_CROP:
+						Bitmap bm = PhotoUtills.getBitmap();
+
 						switch (img_flag) {
 							case 1:
-								((ImageView) findViewById(R.id.ima_bigima)).setImageBitmap(bm);
-								ima_Smallima.setVisibility(View.GONE);
+								imaBigima.setImageBitmap(bm);
 								break;
 							case 2:
-								((ImageView) findViewById(R.id.small_imaOne)).setImageBitmap(bm);
+								smallImaOne.setImageBitmap(bm);
 								break;
 							case 3:
-								((ImageView) findViewById(R.id.small_imaTwo)).setImageBitmap(bm);
+								smallImaTwo.setImageBitmap(bm);
 								break;
 							case 4:
-								((ImageView) findViewById(R.id.small_imaThree)).setImageBitmap(bm);
+								smallImaThree.setImageBitmap(bm);
 								break;
 							case 5:
-								((ImageView) findViewById(R.id.small_imaFour)).setImageBitmap(bm);
+								smallImaFour.setImageBitmap(bm);
 								break;
 							case 6:
-								((ImageView) findViewById(R.id.small_imaFive)).setImageBitmap(bm);
+								smallImaFive.setImageBitmap(bm);
 								break;
+
 						}
 				}
-
 			}
+
 		}
-		if (requestCode != PhotoUtills.REQUEST_IMAGE_FROM_ALBUM_AND_CROP && requestCode != PhotoUtills.REQUEST_IMAGE_CROP) {
-			mFilePathCallback.onReceiveValue(results);
-			mFilePathCallback = null;
-		}
-
 	}
 
-	/*
-	   展示图片
-	 */
-	private void showImage(String filePath) {
-		Bitmap bm = BitmapFactory.decodeFile(filePath);
-		((ImageView) findViewById(R.id.ima_bigima)).setImageBitmap(bm);
-	}
-
-	private void showImage1(String filePath) {
-		Bitmap bm = BitmapFactory.decodeFile(filePath);
-		((ImageView) findViewById(R.id.small_imaOne)).setImageBitmap(bm);
-
-	}
-
-	private void showImage2(String filePath) {
-		Bitmap bm = BitmapFactory.decodeFile(filePath);
-		((ImageView) findViewById(R.id.small_imaTwo)).setImageBitmap(bm);
-
-	}
-
-	private void showImage3(String filePath) {
-		Bitmap bm = BitmapFactory.decodeFile(filePath);
-		((ImageView) findViewById(R.id.small_imaThree)).setImageBitmap(bm);
-
-	}
-
-	private void showImage4(String filePath) {
-		Bitmap bm = BitmapFactory.decodeFile(filePath);
-		((ImageView) findViewById(R.id.small_imaFour)).setImageBitmap(bm);
-
-	}
-
-	private void showImage5(String filePath) {
-		Bitmap bm = BitmapFactory.decodeFile(filePath);
-		((ImageView) findViewById(R.id.small_imaFive)).setImageBitmap(bm);
-
-	}
-
+	String  mImgId;
 
 	/**
 	 * 图像裁剪实现类
@@ -315,6 +250,7 @@ public class RevisionsActivity extends BaseActivity {
 			return defaultImageDescribe;
 		}
 	}
+
 
 	/**
 	 * 修改产品
@@ -345,14 +281,5 @@ public class RevisionsActivity extends BaseActivity {
 		}
 	}
 
-	public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback, WebChromeClient.FileChooserParams fileChooserParams) {
-		mFilePathCallback = filePathCallback;
-		Intent i = new Intent(Intent.ACTION_GET_CONTENT);
-		i.addCategory(Intent.CATEGORY_OPENABLE);
-		i.setType("*/*");
-		startActivityForResult(Intent.createChooser(i, "File Browser"), OPENIMAGEFILE);
-
-		return true;
-	}
 
 }

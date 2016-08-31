@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -14,7 +13,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.lianbi.mezone.b.bean.ShopIntroduceImageBean;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
@@ -81,7 +79,7 @@ public class NewIntegralGoodsActivity extends BaseActivity {
 
 	private void initView() {
 		file = new ArrayList<File>();
-		setPageTitle("修改积分商品");
+		setPageTitle("新增积分商品");
 		photoUtills = new MyPhotoUtills(this);
 		ima_Smallima.setOnClickListener(this);
 		smallImaOne.setOnClickListener(this);
@@ -135,47 +133,47 @@ public class NewIntegralGoodsActivity extends BaseActivity {
 	/**
 	 * 获得图片路径并裁剪
 	 */
-   private void getImageUrl(){
-	   StringBuilder stringBuilder = new StringBuilder();
-	   StringBuilder stringBuilderDel = new StringBuilder();
-	   String delImageUrls = "";
-	   if (imagesDel != null && imagesDel.size() > 0) {
-		   for (int i = 0; i < imagesDel.size(); i++) {
-			   if (i + 1 == imagesDel.size()) {
-				   stringBuilderDel.append(imagesDel.get(i).getImageUrl());
-			   } else {
-				   stringBuilderDel.append(imagesDel.get(i).getImageUrl() + ",");
-			   }
-		   }
-	   }
-	   delImageUrls = stringBuilderDel.toString();
-	   if (file != null && file.size() > 0) {
-		   for (int i = 0; i < file.size(); i++) {
-			   if (i + 1 == file.size()) {
-				   stringBuilder.append(Picture_Base64.GetImageStr(file.get(i).toString()));
-			   } else {
-				   stringBuilder.append(Picture_Base64.GetImageStr(file.get(i).toString()) + ",");
-			   }
-		   }
-	   }
-	   imageStr = stringBuilder.toString();
-	   System.out.println("imageStr" + imageStr);
-	   productName = edCup.getText().toString().trim();
-	   productDesc = edCeramicCup.getText().toString().trim();
-	   productAmt = edExchangeIntegral.getText().toString().trim();
-	   if (TextUtils.isEmpty(productName)) {
-		   ContentUtils.showMsg(NewIntegralGoodsActivity.this, "请输入商品名称");
-		   return;
-	   }
-	   if (TextUtils.isEmpty(productDesc)) {
-		   ContentUtils.showMsg(NewIntegralGoodsActivity.this, "请输入商品简介");
-		   return;
-	   }
-	   if (TextUtils.isEmpty(productAmt)) {
-		   ContentUtils.showMsg(NewIntegralGoodsActivity.this, "请输入商品名价格");
-		   return;
-	   }
-   }
+	private void getImageUrl(){
+		StringBuilder stringBuilder = new StringBuilder();
+		StringBuilder stringBuilderDel = new StringBuilder();
+		String delImageUrls = "";
+		if (imagesDel != null && imagesDel.size() > 0) {
+			for (int i = 0; i < imagesDel.size(); i++) {
+				if (i + 1 == imagesDel.size()) {
+					stringBuilderDel.append(imagesDel.get(i).getImageUrl());
+				} else {
+					stringBuilderDel.append(imagesDel.get(i).getImageUrl() + ",");
+				}
+			}
+		}
+		delImageUrls = stringBuilderDel.toString();
+		if (file != null && file.size() > 0) {
+			for (int i = 0; i < file.size(); i++) {
+				if (i + 1 == file.size()) {
+					stringBuilder.append(Picture_Base64.GetImageStr(file.get(i).toString()));
+				} else {
+					stringBuilder.append(Picture_Base64.GetImageStr(file.get(i).toString()) + ",");
+				}
+			}
+		}
+		imageStr = stringBuilder.toString();
+		System.out.println("imageStr" + imageStr);
+		productName = edCup.getText().toString().trim();
+		productDesc = edCeramicCup.getText().toString().trim();
+		productAmt = edExchangeIntegral.getText().toString().trim();
+		if (TextUtils.isEmpty(productName)) {
+			ContentUtils.showMsg(NewIntegralGoodsActivity.this, "请输入商品名称");
+			return;
+		}
+		if (TextUtils.isEmpty(productDesc)) {
+			ContentUtils.showMsg(NewIntegralGoodsActivity.this, "请输入商品简介");
+			return;
+		}
+		if (TextUtils.isEmpty(productAmt)) {
+			ContentUtils.showMsg(NewIntegralGoodsActivity.this, "请输入商品名价格");
+			return;
+		}
+	}
 
 	/**
 	 * 新增产品接口
@@ -217,35 +215,6 @@ public class NewIntegralGoodsActivity extends BaseActivity {
 	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
 		super.onActivityResult(requestCode, resultCode, intent);
 
-		if (requestCode == FILECHOOSER_RESULTCODE) {
-			if (null == mUploadMessage) return;
-			Uri result = intent == null || resultCode != RESULT_OK ? null : intent.getData();
-			if (result == null) {
-				mUploadMessage.onReceiveValue(null);
-				mUploadMessage = null;
-				return;
-			}
-			if ("content".equals(result.getScheme())) {
-				String path = PhotoUtills.getPath(this, result);
-
-				if (path != null) result = Uri.fromFile(new File(path));
-			}
-			mUploadMessage.onReceiveValue(result);
-			mUploadMessage = null;
-		}
-		if (requestCode != OPENIMAGEFILE || mFilePathCallback == null) {
-			if (requestCode == PhotoUtills.REQUEST_IMAGE_FROM_ALBUM_AND_CROP) {
-
-			} else {
-				return;
-			}
-		}
-		if(requestCode == PhotoUtills.REQUEST_IMAGE_CROP){
-			Glide.with(this).load(file).into(imaBigima);
-			Glide.with(this).load(file).into(smallImaOne);
-		}
-		Uri[] results = null;
-//		&& Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
 		if (resultCode == Activity.RESULT_OK) {
 			if (intent == null) {
 			} else {
@@ -256,51 +225,42 @@ public class NewIntegralGoodsActivity extends BaseActivity {
 						String filePath = PhotoUtills.getPath(this, uri);
 						FileUtils.copyFile(filePath, PhotoUtills.photoCurrentFile.toString(), true);
 						photoUtills.startCropImage();
-
-
-						Bitmap bm = BitmapFactory.decodeFile(filePath);
 						//file = photoUtills.photoCurrentFile;
 						file.add(photoUtills.photoCurrentFile);
+						break;
+
+
+					case PhotoUtills.REQUEST_IMAGE_CROP:
+						Bitmap bm = PhotoUtills.getBitmap();
+
 						switch (img_flag) {
 							case 1:
-								((ImageView) findViewById(R.id.ima_bigima)).setImageBitmap(bm);
-								ima_Smallima.setVisibility(View.GONE);
+								imaBigima.setImageBitmap(bm);
 								break;
 							case 2:
-								((ImageView) findViewById(R.id.small_imaOne)).setImageBitmap(bm);
+								smallImaOne.setImageBitmap(bm);
 								break;
 							case 3:
-								((ImageView) findViewById(R.id.small_imaTwo)).setImageBitmap(bm);
+								smallImaTwo.setImageBitmap(bm);
 								break;
 							case 4:
-								((ImageView) findViewById(R.id.small_imaThree)).setImageBitmap(bm);
+								smallImaThree.setImageBitmap(bm);
 								break;
 							case 5:
-								((ImageView) findViewById(R.id.small_imaFour)).setImageBitmap(bm);
+								smallImaFour.setImageBitmap(bm);
 								break;
 							case 6:
-								((ImageView) findViewById(R.id.small_imaFive)).setImageBitmap(bm);
+								smallImaFive.setImageBitmap(bm);
 								break;
 
-							case PhotoUtills.REQUEST_IMAGE_CROP:
-								Glide.with(this).load(file).into(imaBigima);
-								String photocurrentpath = photoUtills.photoCurrentFile.toString();
-								base64 = Picture_Base64.GetImageStr(photocurrentpath);
-								int currentapiVersion = android.os.Build.VERSION.SDK_INT;
-								break;
 						}
-
 				}
-			}
-			if (requestCode != PhotoUtills.REQUEST_IMAGE_FROM_ALBUM_AND_CROP && requestCode != PhotoUtills.REQUEST_IMAGE_CROP) {
-				mFilePathCallback.onReceiveValue(results);
-				mFilePathCallback = null;
 			}
 
 		}
 	}
 
-	 String  mImgId;
+	String  mImgId;
 
 	/**
 	 * 图像裁剪实现类

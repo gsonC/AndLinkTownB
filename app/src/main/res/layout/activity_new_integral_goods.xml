@@ -7,8 +7,6 @@
     android:background="@color/colores_news_14"
     >
 
-
-
         <View
             android:layout_width="match_parent"
             android:layout_height="11dp"
@@ -68,14 +66,14 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="320dp"
+            android:layout_height="280dp"
             android:background="@color/colores_news_14"
             >
 
             <ImageView
                 android:id="@+id/ima_bigima"
-                android:layout_width="288dp"
-                android:layout_height="288dp"
+                android:layout_width="248dp"
+                android:layout_height="248dp"
                 android:layout_centerInParent="true"
 
                 />
