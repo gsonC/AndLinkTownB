@@ -9,14 +9,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.webkit.ValueCallback;
-import android.webkit.WebChromeClient;
-import android.webkit.WebView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.lianbi.mezone.b.bean.ShopIntroduceImageBean;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
 import com.lianbi.mezone.b.photo.FileUtils;
@@ -25,6 +24,8 @@ import com.lianbi.mezone.b.photo.PickImageDescribe;
 import com.xizhi.mezone.b.R;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -41,9 +42,9 @@ public class NewIntegralGoodsActivity extends BaseActivity {
 	private final int OPENIMAGEFILE = 20000;
 	private ValueCallback<Uri[]> mFilePathCallback;
 	private String base64 = "";
-	private File file;
+	private List<File> file;
 	private int img_flag;
-	String imageStr = null;
+	private ArrayList<ShopIntroduceImageBean> imagesDel = new ArrayList<ShopIntroduceImageBean>();
 	@Bind(R.id.ed_Cup)
 	EditText edCup;
 	@Bind(R.id.ed_CeramicCup)
@@ -66,7 +67,8 @@ public class NewIntegralGoodsActivity extends BaseActivity {
 	ImageView smallImaFive;
 	@Bind(R.id.bt_sure)
 	TextView btSure;
-	 String productName, productDesc, productAmt;
+	String productName, productDesc, productAmt;
+	String imageStr = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -78,10 +80,8 @@ public class NewIntegralGoodsActivity extends BaseActivity {
 	}
 
 	private void initView() {
-		productName = edCup.getText().toString();
-		productType = edCeramicCup.getText().toString();
-		productAmt = edExchangeIntegral.getText().toString();
-		setPageTitle("积分商品");
+		file = new ArrayList<File>();
+		setPageTitle("修改积分商品");
 		photoUtills = new MyPhotoUtills(this);
 		ima_Smallima.setOnClickListener(this);
 		smallImaOne.setOnClickListener(this);
@@ -123,38 +123,59 @@ public class NewIntegralGoodsActivity extends BaseActivity {
 				photoUtills.startPickPhotoFromAlbumWithCrop();
 				break;
 			case R.id.bt_sure:
-				btSure.setOnClickListener(new OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						String imageStr = null;
-						if (file != null&&productName!=null&&productType!=null&&productAmt!=null) {
-							imageStr = Picture_Base64.GetImageStr(file.toString());
-							getProduct();
-							finish();
-						}else{
-							ContentUtils.showMsg(NewIntegralGoodsActivity.this,"请完善商品信息");
-						}
-					}
-				});
+
+				getImageUrl();
+				getProduct();
 
 
 				break;
 		}
 	}
 
-	private void pan() {
-		if (TextUtils.isEmpty(productName)){
-			ContentUtils.showMsg(NewIntegralGoodsActivity.this, "请输入商品名称");
-		}
-		if (TextUtils.isEmpty(productType)){
-			ContentUtils.showMsg(NewIntegralGoodsActivity.this, "请输入商品描述");
-		}
-		if (TextUtils.isEmpty(productAmt)){
-			ContentUtils.showMsg(NewIntegralGoodsActivity.this, "请输入商品价格");
-		}else{
-
-		}
-	}
+	/**
+	 * 获得图片路径并裁剪
+	 */
+   private void getImageUrl(){
+	   StringBuilder stringBuilder = new StringBuilder();
+	   StringBuilder stringBuilderDel = new StringBuilder();
+	   String delImageUrls = "";
+	   if (imagesDel != null && imagesDel.size() > 0) {
+		   for (int i = 0; i < imagesDel.size(); i++) {
+			   if (i + 1 == imagesDel.size()) {
+				   stringBuilderDel.append(imagesDel.get(i).getImageUrl());
+			   } else {
+				   stringBuilderDel.append(imagesDel.get(i).getImageUrl() + ",");
+			   }
+		   }
+	   }
+	   delImageUrls = stringBuilderDel.toString();
+	   if (file != null && file.size() > 0) {
+		   for (int i = 0; i < file.size(); i++) {
+			   if (i + 1 == file.size()) {
+				   stringBuilder.append(Picture_Base64.GetImageStr(file.get(i).toString()));
+			   } else {
+				   stringBuilder.append(Picture_Base64.GetImageStr(file.get(i).toString()) + ",");
+			   }
+		   }
+	   }
+	   imageStr = stringBuilder.toString();
+	   System.out.println("imageStr" + imageStr);
+	   productName = edCup.getText().toString().trim();
+	   productDesc = edCeramicCup.getText().toString().trim();
+	   productAmt = edExchangeIntegral.getText().toString().trim();
+	   if (TextUtils.isEmpty(productName)) {
+		   ContentUtils.showMsg(NewIntegralGoodsActivity.this, "请输入商品名称");
+		   return;
+	   }
+	   if (TextUtils.isEmpty(productDesc)) {
+		   ContentUtils.showMsg(NewIntegralGoodsActivity.this, "请输入商品简介");
+		   return;
+	   }
+	   if (TextUtils.isEmpty(productAmt)) {
+		   ContentUtils.showMsg(NewIntegralGoodsActivity.this, "请输入商品名价格");
+		   return;
+	   }
+   }
 
 	/**
 	 * 新增产品接口
@@ -163,22 +184,22 @@ public class NewIntegralGoodsActivity extends BaseActivity {
 	 * @param
 	 * @param
 	 */
-String productType;
 	private void getProduct() {
 		String reqTime = AbDateUtil.getDateTimeNow();
 		String uuid = AbStrUtil.getUUID();
 		String productName = edCup.getText().toString();
 		String productDesc = edCeramicCup.getText().toString();
-        String  productAmt=edExchangeIntegral.getText().toString();
+		String productAmt = edExchangeIntegral.getText().toString();
 		try {
-			okHttpsImp.addProduct(OkHttpsImp.md5_key, uuid, "app", reqTime,
-					productName,productType, productDesc, productAmt,imageStr,userShopInfoBean.getBusinessId(),
-					new MyResultCallback<String>() {
+			okHttpsImp.addProduct(OkHttpsImp.md5_key, uuid, "app", reqTime, productName, "01", productDesc, productAmt, imageStr, userShopInfoBean.getBusinessId(), new MyResultCallback<String>() {
 				@Override
 				public void onResponseResult(Result result) {
 					String reString = result.getData();
-					System.out.println("reString" + reString);
+					System.out.println("aDDreString220" + reString);
 					ContentUtils.showMsg(NewIntegralGoodsActivity.this, "新增成功");
+					Intent intent = new Intent();
+					setResult(RESULT_OK, intent);
+					finish();
 				}
 
 				@Override
@@ -191,7 +212,7 @@ String productType;
 		}
 	}
 
-
+	@SuppressWarnings("static-access")
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
 		super.onActivityResult(requestCode, resultCode, intent);
@@ -213,10 +234,15 @@ String productType;
 			mUploadMessage = null;
 		}
 		if (requestCode != OPENIMAGEFILE || mFilePathCallback == null) {
-			if (requestCode == PhotoUtills.REQUEST_IMAGE_FROM_ALBUM_AND_CROP || requestCode == PhotoUtills.REQUEST_IMAGE_CROP) {
+			if (requestCode == PhotoUtills.REQUEST_IMAGE_FROM_ALBUM_AND_CROP) {
+
 			} else {
 				return;
 			}
+		}
+		if(requestCode == PhotoUtills.REQUEST_IMAGE_CROP){
+			Glide.with(this).load(file).into(imaBigima);
+			Glide.with(this).load(file).into(smallImaOne);
 		}
 		Uri[] results = null;
 //		&& Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
@@ -225,7 +251,7 @@ String productType;
 			} else {
 				switch (requestCode) {
 
-					case PhotoUtills.REQUEST_IMAGE_FROM_ALBUM_AND_CROP:
+					case PhotoUtills.REQUEST_IMAGE_FROM_ALBUM_AND_CROP://相册选择并裁剪
 						Uri uri = intent.getData();
 						String filePath = PhotoUtills.getPath(this, uri);
 						FileUtils.copyFile(filePath, PhotoUtills.photoCurrentFile.toString(), true);
@@ -233,7 +259,8 @@ String productType;
 
 
 						Bitmap bm = BitmapFactory.decodeFile(filePath);
-						file = photoUtills.photoCurrentFile;
+						//file = photoUtills.photoCurrentFile;
+						file.add(photoUtills.photoCurrentFile);
 						switch (img_flag) {
 							case 1:
 								((ImageView) findViewById(R.id.ima_bigima)).setImageBitmap(bm);
@@ -254,56 +281,26 @@ String productType;
 							case 6:
 								((ImageView) findViewById(R.id.small_imaFive)).setImageBitmap(bm);
 								break;
+
+							case PhotoUtills.REQUEST_IMAGE_CROP:
+								Glide.with(this).load(file).into(imaBigima);
+								String photocurrentpath = photoUtills.photoCurrentFile.toString();
+								base64 = Picture_Base64.GetImageStr(photocurrentpath);
+								int currentapiVersion = android.os.Build.VERSION.SDK_INT;
+								break;
 						}
+
 				}
-
 			}
+			if (requestCode != PhotoUtills.REQUEST_IMAGE_FROM_ALBUM_AND_CROP && requestCode != PhotoUtills.REQUEST_IMAGE_CROP) {
+				mFilePathCallback.onReceiveValue(results);
+				mFilePathCallback = null;
+			}
+
 		}
-		if (requestCode != PhotoUtills.REQUEST_IMAGE_FROM_ALBUM_AND_CROP && requestCode != PhotoUtills.REQUEST_IMAGE_CROP) {
-			mFilePathCallback.onReceiveValue(results);
-			mFilePathCallback = null;
-		}
-
 	}
 
-	/*
-	   展示图片
-	 */
-	private void showImage(String filePath) {
-		Bitmap bm = BitmapFactory.decodeFile(filePath);
-		((ImageView) findViewById(R.id.ima_bigima)).setImageBitmap(bm);
-	}
-
-	private void showImage1(String filePath) {
-		Bitmap bm = BitmapFactory.decodeFile(filePath);
-		((ImageView) findViewById(R.id.small_imaOne)).setImageBitmap(bm);
-
-	}
-
-	private void showImage2(String filePath) {
-		Bitmap bm = BitmapFactory.decodeFile(filePath);
-		((ImageView) findViewById(R.id.small_imaTwo)).setImageBitmap(bm);
-
-	}
-
-	private void showImage3(String filePath) {
-		Bitmap bm = BitmapFactory.decodeFile(filePath);
-		((ImageView) findViewById(R.id.small_imaThree)).setImageBitmap(bm);
-
-	}
-
-	private void showImage4(String filePath) {
-		Bitmap bm = BitmapFactory.decodeFile(filePath);
-		((ImageView) findViewById(R.id.small_imaFour)).setImageBitmap(bm);
-
-	}
-
-	private void showImage5(String filePath) {
-		Bitmap bm = BitmapFactory.decodeFile(filePath);
-		((ImageView) findViewById(R.id.small_imaFive)).setImageBitmap(bm);
-
-	}
-
+	 String  mImgId;
 
 	/**
 	 * 图像裁剪实现类
@@ -331,16 +328,6 @@ String productType;
 			defaultImageDescribe.setOutputFormat(DEFAULT_IMG_FORMAT);
 			return defaultImageDescribe;
 		}
-	}
-
-	public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback, WebChromeClient.FileChooserParams fileChooserParams) {
-		mFilePathCallback = filePathCallback;
-		Intent i = new Intent(Intent.ACTION_GET_CONTENT);
-		i.addCategory(Intent.CATEGORY_OPENABLE);
-		i.setType("*/*");
-		startActivityForResult(Intent.createChooser(i, "File Browser"), OPENIMAGEFILE);
-
-		return true;
 	}
 
 }

@@ -79,7 +79,6 @@ public class TagManagerActivity extends BaseActivity {
 			@Override
 			public void onHeaderRefresh(AbPullToRefreshView view) {
 				getvipLabel(true);
-				//getTagList();
 			}
 
 		});
@@ -88,7 +87,6 @@ public class TagManagerActivity extends BaseActivity {
 			@Override
 			public void onFooterLoad(AbPullToRefreshView view) {
 				getvipLabel(false);
-				//getTagList();
 			}
 		});
 		bt_sure.setOnClickListener(new OnClickListener() {
@@ -115,7 +113,7 @@ public class TagManagerActivity extends BaseActivity {
 				tv_tag = helper.getView(R.id.tv_tag);
 				ScreenUtils.textAdaptationOn720(tv_tag, TagManagerActivity.this, 24);
 				tv_tag.setText(item.getLabelName());
-				System.out.println("item.getLabelName()"+item.getLabelName());
+				System.out.println("item.getLabelName()" + item.getLabelName());
 				labelId = String.valueOf(item.getLabelId());
 				helper.getView(R.id.tv_chdelete).setOnClickListener(// 删除
 						new OnClickListener() {
@@ -164,7 +162,7 @@ public class TagManagerActivity extends BaseActivity {
 						try {
 							JSONObject jsonObject = new JSONObject(reString);
 							reString = jsonObject.getString("vipLabelList");
-							System.out.println("reStringtag"+reString);
+							System.out.println("reStringtag" + reString);
 							ArrayList<SelectTagBean> mDatasL = (ArrayList<SelectTagBean>) JSON.parseArray(reString, SelectTagBean.class);
 							if (mDatasL != null && mDatasL.size() > 0) {
 

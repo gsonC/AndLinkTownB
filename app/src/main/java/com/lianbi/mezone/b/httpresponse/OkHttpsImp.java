@@ -2706,16 +2706,17 @@ public enum OkHttpsImp {
 	 * 删除积分商品
 	 */
 	public void DeleteMember(String serNum, String source, String reqTime, String md5_key,
-								String productId,
+								String storeId,String productId,
 								MyResultCallback<String> myResultCallback) throws Exception{
 		Map<String, String> params = new HashMap<String, String>();
+		params.put("businessId", storeId);
 		params.put("serNum", serNum);
 		params.put("source", source);
 		params.put("reqTime", reqTime);
 		params.put("productId", productId);
 		String sign = getSign(md5_key, params);
 		params.put("sign", sign);
-		String url = getAbsoluteUrl(API.DELETELABEL);
+		String url = getAbsoluteUrl(API.DELETEPRODUCT);
 		getProgressResponse(myResultCallback, params, url);
 	}
 	/**
@@ -2795,7 +2796,7 @@ public enum OkHttpsImp {
 		params.put("storeId", storeId);
 		String sign = getSign(md5_key, params);
 		params.put("sign", sign);
-		String url = getAbsoluteUrl(API.AddProduct);
+		String url = getAbsoluteUrl(API.AddPRODUCTT);
 		postProgressResponse(myResultCallback, params, url);
 	}
 
@@ -2811,7 +2812,7 @@ public enum OkHttpsImp {
 		params.put("productId", productId);
 		String sign = getSign(md5_key, params);
 		params.put("sign", sign);
-		String url = getAbsoluteUrl(API.updateProduct);
+		String url = getAbsoluteUrl(API.CHANGERODUCT);
 		postProgressResponse(myResultCallback, params, url);
 	}
 
@@ -2834,7 +2835,7 @@ public enum OkHttpsImp {
 
 		String sign = getSign(md5_key,params);
 		params.put("sign", sign);
-		String url = getAbsoluteUrl(API.QProduct);
+		String url = getAbsoluteUrl(API.QUERYPOINTPRODUCT);
 		postProgressResponse(myResultCallback, params, url);
 	}
 

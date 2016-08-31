@@ -601,11 +601,11 @@ public class API {
 	/**
 	 * 新增产品
 	 */
-	public static final String AddProduct = "product/add.do";
+	public static final String AddPRODUCTT = "product/addProduct.do";
 	/**
 	 * 修改产品
 	 */
-	public static final String updateProduct = "product/update.do";
+	public static final String CHANGERODUCT= "product/updateProduct.do";
 	/**
 	 * 修改产品
 	 */
@@ -613,7 +613,7 @@ public class API {
 /**
  * 积分商品查询
  */
-public static final String QProduct = "product/query.do";
+public static final String QUERYPOINTPRODUCT = "product/queryProduct.do";
 	/**
 	 * 会员列表
 	 */
@@ -638,6 +638,10 @@ public static final String QProduct = "product/query.do";
 	 * 删除会员标签
 	 */
 	public static final String DELETELABEL = "vipLabel/delVipLabel.do";
+	/**
+	 * 删除积分商品
+	 */
+	public static final String DELETEPRODUCT = "product/deleteProduct.do";
 	/**
 	 * 删除会员标签
 	 */

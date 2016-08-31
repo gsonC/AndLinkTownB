@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colores_news_14"
     >
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
 
-        <ImageView
+
+        <View
             android:layout_width="match_parent"
             android:layout_height="11dp"
             android:background="@color/foodcolor"/>
@@ -25,10 +24,7 @@
 
             />
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="11dp"
-            android:background="@color/color_ededed"/>
+
 
         <EditText
             android:id="@+id/ed_Cup"
@@ -36,15 +32,11 @@
             android:layout_height="45dp"
             android:gravity="center_vertical"
             android:hint="商品名称"
-            android:textColor="@color/foodcolor"
+            android:textColor="@color/showcolor"
             android:textSize="16sp"
 
             />
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/color_e3e3e3"/>
 
         <EditText
             android:id="@+id/ed_CeramicCup"
@@ -52,15 +44,12 @@
             android:layout_height="45dp"
             android:gravity="center_vertical"
             android:hint="商品介绍"
-            android:textColor="@color/foodcolor"
+            android:textColor="@color/showcolor"
             android:textSize="16sp"
 
             />
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/color_e3e3e3"/>
+
 
         <EditText
             android:id="@+id/ed_ExchangeIntegral"
@@ -68,7 +57,7 @@
             android:layout_height="45dp"
             android:gravity="center_vertical"
             android:hint="兑换所需积分"
-            android:textColor="@color/foodcolor"
+            android:textColor="@color/showcolor"
             android:textSize="16sp"
             />
 
@@ -80,6 +69,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="320dp"
+            android:background="@color/colores_news_14"
             >
 
             <ImageView
@@ -189,4 +179,4 @@
 
     </LinearLayout>
 
-</RelativeLayout>
+

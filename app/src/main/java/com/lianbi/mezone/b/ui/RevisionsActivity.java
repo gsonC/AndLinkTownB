@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.lianbi.mezone.b.bean.ShopIntroduceImageBean;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
 import com.lianbi.mezone.b.photo.FileUtils;
@@ -23,6 +24,8 @@ import com.lianbi.mezone.b.photo.PickImageDescribe;
 import com.xizhi.mezone.b.R;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -33,14 +36,16 @@ import cn.com.hgh.utils.Picture_Base64;
 import cn.com.hgh.utils.Result;
 
 public class RevisionsActivity extends BaseActivity {
-
 	private ValueCallback<Uri> mUploadMessage;
 	private final static int FILECHOOSER_RESULTCODE = 1;
 	private MyPhotoUtills photoUtills;
 	private final int OPENIMAGEFILE = 20000;
 	private ValueCallback<Uri[]> mFilePathCallback;
 	private String base64 = "";
-	private File file;
+	private List<File> file;
+	private int img_flag;
+	private ArrayList<ShopIntroduceImageBean> imagesDel = new ArrayList<ShopIntroduceImageBean>();
+	String productId;
 	@Bind(R.id.ed_Cup)
 	EditText edCup;
 	@Bind(R.id.ed_CeramicCup)
@@ -63,7 +68,9 @@ public class RevisionsActivity extends BaseActivity {
 	ImageView smallImaFive;
 	@Bind(R.id.bt_sure)
 	TextView btSure;
-	String productName,productType,productDesc,images,storeId;
+	String productName, productDesc, productAmt;
+	String imageStr = null;
+    String new_food,new_rated,new_price;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -74,9 +81,7 @@ public class RevisionsActivity extends BaseActivity {
 	}
 
 	private void initView() {
-		productName=edCup.getText().toString();
-		productType=edCeramicCup.getText().toString();
-		productDesc=edExchangeIntegral.getText().toString();
+		file = new ArrayList<File>();
 		setPageTitle("修改积分商品");
 		photoUtills = new MyPhotoUtills(this);
 		ima_Smallima.setOnClickListener(this);
@@ -86,79 +91,88 @@ public class RevisionsActivity extends BaseActivity {
 		smallImaFour.setOnClickListener(this);
 		smallImaFive.setOnClickListener(this);
 		btSure.setOnClickListener(this);
-
+		productId = getIntent().getStringExtra("id");
+		new_food=getIntent().getStringExtra("new_product_food");
+		new_rated=getIntent().getStringExtra("new_product_rated");
+		new_price=getIntent().getStringExtra("new_product_price");
+		edCup.setText(new_food);
+		edCeramicCup.setText(new_rated);
+		edExchangeIntegral.setText(new_price);
 	}
 
 	@Override
 	public void onClick(View view) {
 		super.onClick(view);
+
 		switch (view.getId()) {
 			case R.id.ima_Smallima:
+				img_flag = 1;
 				photoUtills.startPickPhotoFromAlbumWithCrop();
 				break;
 			case R.id.small_imaOne:
+				img_flag = 2;
 				photoUtills.startPickPhotoFromAlbumWithCrop();
 				break;
 			case R.id.small_imaTwo:
+				img_flag = 3;
 				photoUtills.startPickPhotoFromAlbumWithCrop();
+
 				break;
 			case R.id.small_imaThree:
+				img_flag = 4;
 				photoUtills.startPickPhotoFromAlbumWithCrop();
 				break;
 			case R.id.small_imaFour:
+				img_flag = 5;
 				photoUtills.startPickPhotoFromAlbumWithCrop();
 				break;
 			case R.id.small_imaFive:
+				img_flag = 6;
 				photoUtills.startPickPhotoFromAlbumWithCrop();
 				break;
 			case R.id.bt_sure:
-				btSure.setOnClickListener(new View.OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						String imageStr = null;
-						if (file != null) {
-							imageStr = Picture_Base64.GetImageStr(file.toString());
-							GetupdateProduct();
-							finish();
-						}
-					}
-				});
+
+
+				Mosaicimage();
+				GetupdateProduct();
+
+
 				break;
 		}
 	}
 
 	/**
-	 * 修改产品
+	 * 拼接图片地址
+	 *
 	 * @param
 	 * @param
 	 * @param
 	 */
-	String id;
-	private void GetupdateProduct(){
-		String reqTime = AbDateUtil.getDateTimeNow();
-		String uuid = AbStrUtil.getUUID();
-		try {
-			okHttpsImp.updateProduct(OkHttpsImp.md5_key,
-					uuid,reqTime,"app",id,
-					new MyResultCallback<String>() {
-				@Override
-				public void onResponseResult(Result result) {
-					String reString=result.getData();
-					System.out.println("reString"+reString);
-					ContentUtils.showMsg(RevisionsActivity.this,"修改产品成功");
+	private void Mosaicimage() {
+		StringBuilder stringBuilder = new StringBuilder();
+		StringBuilder stringBuilderDel = new StringBuilder();
+		String delImageUrls = "";
+		if (imagesDel != null && imagesDel.size() > 0) {
+			for (int i = 0; i < imagesDel.size(); i++) {
+				if (i + 1 == imagesDel.size()) {
+					stringBuilderDel.append(imagesDel.get(i).getImageUrl());
+				} else {
+					stringBuilderDel.append(imagesDel.get(i).getImageUrl() + ",");
 				}
-
-				@Override
-				public void onResponseFailed(String msg) {
-					ContentUtils.showMsg(RevisionsActivity.this,"修改产品失败");
-				}
-			});
-		} catch (Exception e) {
-			e.printStackTrace();
+			}
 		}
+		delImageUrls = stringBuilderDel.toString();
+		if (file != null && file.size() > 0) {
+			for (int i = 0; i < file.size(); i++) {
+				if (i + 1 == file.size()) {
+					stringBuilder.append(Picture_Base64.GetImageStr(file.get(i).toString()));
+				} else {
+					stringBuilder.append(Picture_Base64.GetImageStr(file.get(i).toString()) + ",");
+				}
+			}
+		}
+		imageStr = stringBuilder.toString();
 	}
-
-
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
@@ -198,8 +212,32 @@ public class RevisionsActivity extends BaseActivity {
 						String filePath = PhotoUtills.getPath(this, uri);
 						FileUtils.copyFile(filePath, PhotoUtills.photoCurrentFile.toString(), true);
 						photoUtills.startCropImage();
-						showImage(filePath);
-						ima_Smallima.setVisibility(View.GONE);
+
+
+						Bitmap bm = BitmapFactory.decodeFile(filePath);
+						//file = photoUtills.photoCurrentFile;
+						file.add(photoUtills.photoCurrentFile);
+						switch (img_flag) {
+							case 1:
+								((ImageView) findViewById(R.id.ima_bigima)).setImageBitmap(bm);
+								ima_Smallima.setVisibility(View.GONE);
+								break;
+							case 2:
+								((ImageView) findViewById(R.id.small_imaOne)).setImageBitmap(bm);
+								break;
+							case 3:
+								((ImageView) findViewById(R.id.small_imaTwo)).setImageBitmap(bm);
+								break;
+							case 4:
+								((ImageView) findViewById(R.id.small_imaThree)).setImageBitmap(bm);
+								break;
+							case 5:
+								((ImageView) findViewById(R.id.small_imaFour)).setImageBitmap(bm);
+								break;
+							case 6:
+								((ImageView) findViewById(R.id.small_imaFive)).setImageBitmap(bm);
+								break;
+						}
 				}
 
 			}
@@ -217,11 +255,36 @@ public class RevisionsActivity extends BaseActivity {
 	private void showImage(String filePath) {
 		Bitmap bm = BitmapFactory.decodeFile(filePath);
 		((ImageView) findViewById(R.id.ima_bigima)).setImageBitmap(bm);
+	}
+
+	private void showImage1(String filePath) {
+		Bitmap bm = BitmapFactory.decodeFile(filePath);
 		((ImageView) findViewById(R.id.small_imaOne)).setImageBitmap(bm);
+
+	}
+
+	private void showImage2(String filePath) {
+		Bitmap bm = BitmapFactory.decodeFile(filePath);
 		((ImageView) findViewById(R.id.small_imaTwo)).setImageBitmap(bm);
+
+	}
+
+	private void showImage3(String filePath) {
+		Bitmap bm = BitmapFactory.decodeFile(filePath);
 		((ImageView) findViewById(R.id.small_imaThree)).setImageBitmap(bm);
+
+	}
+
+	private void showImage4(String filePath) {
+		Bitmap bm = BitmapFactory.decodeFile(filePath);
 		((ImageView) findViewById(R.id.small_imaFour)).setImageBitmap(bm);
+
+	}
+
+	private void showImage5(String filePath) {
+		Bitmap bm = BitmapFactory.decodeFile(filePath);
 		((ImageView) findViewById(R.id.small_imaFive)).setImageBitmap(bm);
+
 	}
 
 
@@ -253,6 +316,35 @@ public class RevisionsActivity extends BaseActivity {
 		}
 	}
 
+	/**
+	 * 修改产品
+	 */
+	private void GetupdateProduct() {
+		String reqTime = AbDateUtil.getDateTimeNow();
+		String uuid = AbStrUtil.getUUID();
+		try {
+			okHttpsImp.updateProduct(OkHttpsImp.md5_key, uuid, reqTime, "app", productId, new MyResultCallback<String>() {
+				@Override
+				public void onResponseResult(Result result) {
+					String reString = result.getData();
+					finish();
+					System.out.println("reString" + reString);
+					ContentUtils.showMsg(RevisionsActivity.this, "修改产品成功");
+					Intent intent = new Intent();
+					setResult(RESULT_OK, intent);
+					finish();
+				}
+
+				@Override
+				public void onResponseFailed(String msg) {
+					ContentUtils.showMsg(RevisionsActivity.this, "修改产品失败");
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback, WebChromeClient.FileChooserParams fileChooserParams) {
 		mFilePathCallback = filePathCallback;
 		Intent i = new Intent(Intent.ACTION_GET_CONTENT);
@@ -264,7 +356,3 @@ public class RevisionsActivity extends BaseActivity {
 	}
 
 }
-
-
-
-

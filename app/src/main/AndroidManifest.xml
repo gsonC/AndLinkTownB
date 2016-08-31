@@ -104,9 +104,9 @@
         <activity android:name="com.lianbi.mezone.b.ui.MarketingMsgBulidActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.MarketingMsgDetailActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.MarketingMsgGlActivity"/>
-        <activity android:name="com.lianbi.mezone.b.ui.MarketingSelectMemberActivity"
-            android:windowSoftInputMode="stateHidden"
-            />
+        <activity
+            android:name="com.lianbi.mezone.b.ui.MarketingSelectMemberActivity"
+            android:windowSoftInputMode="stateHidden"/>
         <activity android:name="com.lianbi.mezone.b.ui.MemberClassifyActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.IntegralRecordActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.RecordsOfConsumptionActivity"/>

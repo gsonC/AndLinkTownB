@@ -34,7 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:scaleType="center"
+        android:scaleType="fitCenter"
         android:src="@mipmap/iv_empty"
         android:visibility="gone"/>
 
@@ -64,7 +64,6 @@
             android:hint="请输入标签"
             android:textColor="@color/colores_news_10"
             android:textSize="14sp"
-
             />
 
         <TextView

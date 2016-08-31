@@ -4,9 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/colores_news_14"
    >
     <cn.com.hgh.indexscortlist.ClearEditText
-        android:id="@+id/act_member_list_edit"
+        android:id="@+id/act_weixin_list_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
@@ -18,7 +19,7 @@
         android:padding="5dp"
         android:singleLine="true"
         android:textSize="15.0dip"/>
-    <ImageView
+    <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:background="@color/color_e3e3e3"
@@ -39,7 +40,7 @@
         android:background="@color/color_e3e3e3"
         />
     <cn.com.hgh.view.AbPullToRefreshView
-        android:id="@+id/act_addmembers_abpulltorefreshview"
+        android:id="@+id/act_weixin_abpulltorefreshview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="10dp"
@@ -48,21 +49,21 @@
         android:orientation="vertical"
         android:visibility="visible">
     <ListView
-        android:id="@+id/act_addmembers_listview"
+        android:id="@+id/act_weixin_listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:divider="@null"
         android:listSelector="@color/transparent"
         android:scrollbars="none">
     </ListView>
-        <ImageView
-            android:id="@+id/img_memberpoint_empty"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:scaleType="center"
-            android:src="@mipmap/iv_empty"
-            android:visibility="gone"/>
-    </cn.com.hgh.view.AbPullToRefreshView>
 
+    </cn.com.hgh.view.AbPullToRefreshView>
+    <ImageView
+        android:id="@+id/img_weixinshop_empty"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scaleType="fitCenter"
+        android:src="@mipmap/iv_empty"
+        android:visibility="gone"/>
 </LinearLayout>

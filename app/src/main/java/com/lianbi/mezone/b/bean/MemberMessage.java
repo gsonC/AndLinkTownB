@@ -3,6 +3,7 @@ package com.lianbi.mezone.b.bean;
 import android.widget.ImageView;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * @创建者 Administration
@@ -26,6 +27,33 @@ public class MemberMessage implements Serializable {
 	String productImgId;
 	String isOnline;
 	String createTime;
+	ArrayList<productImages> productImages;
+	String shopSourceId;
+	String updateTime;
+
+	public String getShopSourceId() {
+		return shopSourceId;
+	}
+
+	public void setShopSourceId(String shopSourceId) {
+		this.shopSourceId = shopSourceId;
+	}
+
+	public String getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(String updateTime) {
+		this.updateTime = updateTime;
+	}
+
+	public ArrayList<MemberMessage.productImages> getProductImages() {
+		return productImages;
+	}
+
+	public void setProductImages(ArrayList<MemberMessage.productImages> productImages) {
+		this.productImages = productImages;
+	}
 
 	public String getId() {
 		return id;
@@ -130,4 +158,44 @@ public class MemberMessage implements Serializable {
 	public void setCreateTime(String createTime) {
 		this.createTime = createTime;
 	}
+
+	public class productImages{
+		private String imgDesc;
+		private String imgId;
+		private String imgUrl;
+		private String productId;
+
+		public String getImgDesc() {
+			return imgDesc;
+		}
+
+		public void setImgDesc(String imgDesc) {
+			this.imgDesc = imgDesc;
+		}
+
+		public String getImgId() {
+			return imgId;
+		}
+
+		public void setImgId(String imgId) {
+			this.imgId = imgId;
+		}
+
+		public String getImgUrl() {
+			return imgUrl;
+		}
+
+		public void setImgUrl(String imgUrl) {
+			this.imgUrl = imgUrl;
+		}
+
+		public String getProductId() {
+			return productId;
+		}
+
+		public void setProductId(String productId) {
+			this.productId = productId;
+		}
+	}
+
 }

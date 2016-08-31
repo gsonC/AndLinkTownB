@@ -10,7 +10,6 @@ import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
@@ -29,55 +28,46 @@ import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.QuickAdapter;
 import cn.com.hgh.utils.AbAppUtil;
 import cn.com.hgh.utils.AbDateUtil;
-import cn.com.hgh.utils.AbPullHide;
 import cn.com.hgh.utils.AbStrUtil;
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.utils.ScreenUtils;
-import cn.com.hgh.view.AbPullToRefreshView;
 import cn.com.hgh.view.SlideListView2;
 
 public class MemberPointManage extends BaseActivity implements OnClickListener {
 	ArrayList<MemberMessage> mDatas = new ArrayList<MemberMessage>();
-	private AbPullToRefreshView act_memberpoint_abpulltorefreshview;
-	private TextView tv_tag, point_goodsName, rated, trated, goodsPoint, pullgoods, pushgoods,
-			changegoods, tv_increaseProduct, choose_from_weixin;
-	private SlideListView2 fm_messagefragment_listView;
+	private TextView point_goodsName, rated, goodsPoint, pullgoods, pushgoods, changegoods, tv_increaseProduct, choose_from_weixin;
+	private SlideListView2 fm_member_listView;
 	ImageView point_ima, pullgoodsIma;
-	ListView fm_tag_listView;
 	private int page = 1;
-   private EditText tv_search;
+	private EditText tv_search;
 	ImageView img_memberpoint_empty;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_member_point_manage, NOTYPE);
 		initView();
 		initListAdapter();
-		setListen();
 		setLisenter();
-		//getTagList(true);
-		getQueryProduct(true);
-		viewAdapter();
+		getQueryProduct();
 	}
 
 	private void initView() {
-		setPageTitle("新增积分商品");
-		fm_messagefragment_listView = (SlideListView2) findViewById(R.id.fm_messagefragment_listView);
-		fm_messagefragment_listView.initSlideMode(SlideListView2.MOD_RIGHT);
+		setPageTitle("积分商品");
+		fm_member_listView = (SlideListView2) findViewById(R.id.fm_member_listView);
+		fm_member_listView.initSlideMode(SlideListView2.MOD_RIGHT);
 
 		tv_increaseProduct = (TextView) findViewById(R.id.tv_increaseProduct);
 		choose_from_weixin = (TextView) findViewById(R.id.choose_from_weixin);
-		tv_search=(EditText) findViewById(R.id.tv_memberpoint_search);//搜索框
-		act_memberpoint_abpulltorefreshview = (AbPullToRefreshView) findViewById(R.id.act_memberpoint_abpulltorefreshview);//AbPullToRefreshView
+		tv_search = (EditText) findViewById(R.id.tv_memberpoint_search);//搜索框
 		img_memberpoint_empty = (ImageView) findViewById(R.id.img_memberpoint_empty);//图片
-
-	}
-
-	private void setListen() {
 		tv_increaseProduct.setOnClickListener(this);
 		choose_from_weixin.setOnClickListener(this);
+		ScreenUtils.textAdaptationOn720(tv_increaseProduct, this, 25);//本周新增会员
+		ScreenUtils.textAdaptationOn720(choose_from_weixin, this, 25);//累计会员数
 	}
+
 
 	@Override
 	public void onClick(View v) {
@@ -85,24 +75,17 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 		switch (v.getId()) {
 			//新增积分商品
 			case R.id.tv_increaseProduct:
-				Intent intent=new Intent(MemberPointManage.this, NewIntegralGoodsActivity.class);
-				startActivityForResult(intent,RESULT_ADDSHOP);
+				Intent intent = new Intent(MemberPointManage.this, NewIntegralGoodsActivity.class);
+				startActivityForResult(intent, RESULT_ADDSHOP);
 				break;
 			//从微信商城产品库选择
 			case R.id.choose_from_weixin:
-				startActivityForResult(new Intent(MemberPointManage.this, ChooseFromWeixinActivity.class),RESULT_WEIXIN);
+				startActivityForResult(new Intent(MemberPointManage.this, ChooseFromWeixinActivity.class), RESULT_WEIXIN);
 				break;
 
 		}
 	}
-	/**
-	 * View适配
-	 */
-	private void viewAdapter() {
-		ScreenUtils.textAdaptationOn720(tv_increaseProduct,this,25);//本周新增会员
-		ScreenUtils.textAdaptationOn720(choose_from_weixin,this,25);//累计会员数
 
-	}
 
 	/**
 	 * 添加监听
@@ -138,27 +121,6 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 				return false;
 			}
 		});
-		act_memberpoint_abpulltorefreshview.setLoadMoreEnable(true);
-		act_memberpoint_abpulltorefreshview.setPullRefreshEnable(true);
-		act_memberpoint_abpulltorefreshview
-				.setOnHeaderRefreshListener(new AbPullToRefreshView.OnHeaderRefreshListener() {
-
-					@Override
-					public void onHeaderRefresh(AbPullToRefreshView view) {
-						//getTagList(true);
-						getQueryProduct(true);
-					}
-
-				});
-		act_memberpoint_abpulltorefreshview
-				.setOnFooterLoadListener(new AbPullToRefreshView.OnFooterLoadListener() {
-
-					@Override
-					public void onFooterLoad(AbPullToRefreshView view) {
-						//getTagList(false);
-						getQueryProduct(true);
-					}
-				});
 	}
 //初始化适配器
 
@@ -181,12 +143,12 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 
 				//point_ima.setImageResource();
 				point_goodsName.setText(item.getProductName());
-				System.out.println("item.getProductName()+"+item.getProductName());
 				rated.setText(item.getProductDesc());
 				goodsPoint.setText(item.getProductPrice());
-				//pullgoods.setText(item.isOnline());
-				/*pullgoods.setText("上架");
-				pushgoods.setText("下架");*/
+				pullgoods.setText(item.getIsOnline());
+				pushgoods.setText(item.getIsOnline());
+			//	String  uri=item.getProductImages().get(0).getImgUrl();//图片url
+				//System.out.println(item.getProductImages().get(0).getImgUrl());
 				//adaption();
 
 				//修改点击事件
@@ -194,11 +156,12 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 					@Override
 					public void onClick(View v) {
 
-						Intent intent=new Intent(MemberPointManage.this, RevisionsActivity.class);
-                        startActivityForResult(intent,RESULT_MENMBERCHANGE);
+						Intent intent = new Intent(MemberPointManage.this, RevisionsActivity.class);
+						intent.putExtra("id",item.getId());
+						startActivityForResult(intent, RESULT_MENMBERCHANGE);
 					}
 				});
-               /*侧滑的删除点击事件
+			   /*侧滑的删除点击事件
                 */
 				helper.getView(R.id.tv_chdelete).setOnClickListener(// 删除
 						new OnClickListener() {
@@ -206,13 +169,13 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 							@Override
 							public void onClick(View v) {
 
-								fm_messagefragment_listView.slideBack();
+								fm_member_listView.slideBack();
 								// 通知服务器
-								mDatas.remove(item);
+								//mDatas.remove(item);
 								//Toast.makeText(mActivity, "删除", 0).show();
-								mAdapter.replaceAll(mDatas);
-								ArrayList<String> ids = new ArrayList<String>();
-								Deletemenber();
+								//mAdapter.replaceAll(mDatas);
+								//ArrayList<String> ids = new ArrayList<String>();
+								Deletemenber(item.getId());
 							}
 						});
 
@@ -220,11 +183,12 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 			}
 
 		};
-		fm_messagefragment_listView.setAdapter(mAdapter);
+		fm_member_listView.setAdapter(mAdapter);
 	}
-	private final int RESULT_MENMBERCHANGE=1111;
-	private final int RESULT_ADDSHOP=2222;
-	private final int RESULT_WEIXIN=3333;
+
+	private final int RESULT_MENMBERCHANGE = 1111;
+	private final int RESULT_ADDSHOP = 2222;
+	private final int RESULT_WEIXIN = 3333;
 
 	/**
 	 *
@@ -271,21 +235,20 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 		mAdapter.replaceAll(mDatas);
 
 	}*/
-
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		if(resultCode==RESULT_OK){
-			switch (resultCode){
+		if (resultCode == RESULT_OK) {
+			switch (resultCode) {
 
 				case RESULT_MENMBERCHANGE:
-					getQueryProduct(true);
+					getQueryProduct();
 					break;
 				case RESULT_ADDSHOP:
-					getQueryProduct(true);
+					getQueryProduct();
 					break;
 				case RESULT_WEIXIN:
-					getQueryProduct(true);
+					getQueryProduct();
 					break;
 
 			}
@@ -294,82 +257,80 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 
 	/**
 	 * 积分商品查询
+	 *
 	 * @param
 	 * @param
 	 * @param
 	 */
-	private void getQueryProduct(final boolean isResh)  {
-		if(isResh){
-			page = 1;
-			mDatas.clear();
-			mAdapter.replaceAll(mDatas);
-		}
+
+
+	private void getQueryProduct() {
+
 		String reqTime = AbDateUtil.getDateTimeNow();
 		String uuid = AbStrUtil.getUUID();
 
 		try {
-			okHttpsImp.QueryProduct(
-					uuid, "app", reqTime,OkHttpsImp.md5_key,
-					/*20 + "",page + "",*/"BDP200eWiZ16cbs041217820",
-					new MyResultCallback<String>() {
-						@Override
-						public void onResponseResult(Result result) {
-							String reString=result.getData();
-                     if(reString != null){
-						 try {
-							 JSONObject jsonObject=new JSONObject(reString);
-							 reString=jsonObject.getString("products");
+			okHttpsImp.QueryProduct(uuid, "app", reqTime, OkHttpsImp.md5_key, "BDP200eWiZ16cbs041217820", new MyResultCallback<String>() {
+				@Override
+				public void onResponseResult(Result result) {
+					String reString = result.getData();
+					System.out.println("reString318" + reString);
+					if (reString != null) {
+						try {
+							JSONObject jsonObject = new JSONObject(reString);
+							reString = jsonObject.getString("products");
+						//	String productImages = jsonObject.getString("productImages");
+							//Glide.with(MemberPointManage.this).load(uri).into(point_ima);
+							ArrayList<MemberMessage> mDatasL = (ArrayList<MemberMessage>) JSON.parseArray(reString, MemberMessage.class);
+							if (mDatasL != null && mDatasL.size() > 0) {
+								mDatas.addAll(mDatasL);
 
-							 ArrayList<MemberMessage> mDatasL= (ArrayList<MemberMessage>) JSON.parseArray(reString,MemberMessage.class);
-						   if(mDatasL!=null&&mDatasL.size()>0){
-								 mDatas.addAll(mDatasL);
-
-						   }if(mDatasL!=null&&mDatas.size()>0){
-								 img_memberpoint_empty.setVisibility(View.GONE);
-								 act_memberpoint_abpulltorefreshview.setVisibility(View.VISIBLE);
-
-							 }else{
-								 img_memberpoint_empty.setVisibility(View.VISIBLE);
-								 act_memberpoint_abpulltorefreshview.setVisibility(View.GONE);
-							 }
-							 AbPullHide.hideRefreshView(isResh, act_memberpoint_abpulltorefreshview);
-							 mAdapter.replaceAll(mDatas);
-						  } catch (JSONException e) {
-							 e.printStackTrace();
-						 }
-					 }
-						}
-
-						@Override
-						public void onResponseFailed(String msg) {
-							if (isResh) {
-								img_memberpoint_empty.setVisibility(View.VISIBLE);
-								act_memberpoint_abpulltorefreshview.setVisibility(View.GONE);
 							}
-							AbPullHide.hideRefreshView(isResh, act_memberpoint_abpulltorefreshview);
-							ContentUtils.showMsg(MemberPointManage.this,"查询积分商品失败");
+							if (mDatas != null && mDatas.size() > 0) {
+								img_memberpoint_empty.setVisibility(View.GONE);
+								fm_member_listView.setVisibility(View.VISIBLE);
+
+							} else {
+								img_memberpoint_empty.setVisibility(View.VISIBLE);
+								fm_member_listView.setVisibility(View.GONE);
+
+							}
+
+							mAdapter.replaceAll(mDatas);
+						} catch (JSONException e) {
+							e.printStackTrace();
 						}
-					});
+					}
+				}
+
+				@Override
+				public void onResponseFailed(String msg) {
+
+					img_memberpoint_empty.setVisibility(View.VISIBLE);
+
+
+					ContentUtils.showMsg(MemberPointManage.this, "查询积分商品失败");
+				}
+			});
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-/**
- * 删除积分产品
- */
+
 	/**
-	 * 删除标签
+	 * 删除积分产品
 	 */
 
-	private void Deletemenber() {
+
+	private void Deletemenber(String productId) {
 
 		String reqTime = AbDateUtil.getDateTimeNow();
 		String uuid = AbStrUtil.getUUID();
 		try {
-			okHttpsImp.DeleteMember(uuid, "app", reqTime, OkHttpsImp.md5_key,userShopInfoBean.getBusinessId(), new MyResultCallback<String>() {
+			okHttpsImp.DeleteMember(uuid, "app", reqTime, OkHttpsImp.md5_key, "BD2016051910141600000004",productId, new MyResultCallback<String>() {
 				@Override
 				public void onResponseResult(Result result) {
-					getQueryProduct(true);
+					getQueryProduct();
 					ContentUtils.showMsg(MemberPointManage.this, "删除标签成功");
 				}
 
@@ -380,9 +341,6 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 			});
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-		{
-
 		}
 	}
 
