@@ -567,7 +567,7 @@ public class H5WebActivty extends BaseActivity{
 			defaultImageDescribe.setOutputX(640);
 			defaultImageDescribe.setOutputY(435);
 			defaultImageDescribe.setAspectX(4);
-			defaultImageDescribe.setAspectY(3);
+			defaultImageDescribe.setAspectY(4);
 			defaultImageDescribe.setOutputFormat(DEFAULT_IMG_FORMAT);
 			return defaultImageDescribe;
 		}

@@ -33,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/color_4b4b4b"
-            android:text="999999"
+            android:text="0"
             android:textSize="@dimen/regularfont"
             />
         <TextView
@@ -55,10 +55,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/color_4b4b4b"
-            android:text="999999"
+            android:text="0"
             android:textSize="@dimen/regularfont"
             />
     <LinearLayout
+        android:visibility="gone"
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="wrap_content"
