@@ -387,7 +387,11 @@ public class AddNewMembersActivity extends BaseActivity {
 			case R.id.et_memberbirthday://会员生日
 				//		DateTimePickDialogUtil dateTimePickbirthday = new DateTimePickDialogUtil(AddNewMembersActivity.this, AbDateUtil.getCurrentDate("yyyy年MM月dd日") + "");
 				//		dateTimePickbirthday.dateTimePicKDialog(mEtMemberbirthday);
-
+			//	String birthday = mEtMemberbirthday.getText().toString().trim();
+			//	String choseDate ="";
+			//	if(!TextUtils.isEmpty(birthday)) {
+			//		choseDate = AbDateUtil.getStringByFormat(birthday+" 00:00:00", AbDateUtil.dateFormatYMDHMS);
+			//	}
 				TimeSelectorE timeSelectorO = new TimeSelectorE(this,
 						new TimeSelectorE.ResultHandler() {
 							@Override

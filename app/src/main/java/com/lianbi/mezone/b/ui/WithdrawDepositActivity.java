@@ -1,11 +1,5 @@
 package com.lianbi.mezone.b.ui;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -15,6 +9,15 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.lianbi.mezone.b.bean.WithDrawDeposite;
+import com.lianbi.mezone.b.httpresponse.MyResultCallback;
+import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
+import com.xizhi.mezone.b.R;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+
 import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.QuickAdapter;
 import cn.com.hgh.utils.AbDateUtil;
@@ -23,11 +26,6 @@ import cn.com.hgh.utils.MathExtend;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.utils.SpannableuUtills;
 import cn.com.hgh.view.AbPullToRefreshView;
-
-import com.xizhi.mezone.b.R;
-import com.lianbi.mezone.b.bean.WithDrawDeposite;
-import com.lianbi.mezone.b.httpresponse.MyResultCallback;
-import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
 
 /**
  * 交易明細
@@ -48,13 +46,14 @@ public class WithdrawDepositActivity extends BaseActivity {
 	ImageView iv_empty_act_withdraw;
 	ArrayList<WithDrawDeposite> arrayList = new ArrayList<WithDrawDeposite>();
 	ArrayList<WithDrawDeposite> arrayListCur = new ArrayList<WithDrawDeposite>();
-	private double totalamount;
+	private String totalamount;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_withdraw_deposit, NOTYPE);
-		totalamount = getIntent().getDoubleExtra("totalamount", 0);
+	//	totalamount = getIntent().getDoubleExtra("totalamount", 0);
+		totalamount = getIntent().getStringExtra("totalamount");
 		initView();
 		initAdapter();
 		getBankWithdrawrecord();
@@ -73,12 +72,17 @@ public class WithdrawDepositActivity extends BaseActivity {
 		pull_withdraw_deposit = (AbPullToRefreshView) findViewById(R.id.pull_withdraw_deposit);
 		lv_withdraw_deposit = (ListView) findViewById(R.id.lv_withdraw_deposit);
 		iv_empty_act_withdraw = (ImageView) findViewById(R.id.iv_empty_act_withdraw);
-		String sum_income = MathExtend.roundNew(totalamount, 2);
-		if (null != sum_income) {
-			tv_withdraw_deposit_money.setText(sum_income);
+		if(!TextUtils.isEmpty(totalamount)){
+			tv_withdraw_deposit_money.setText(totalamount);
 		}else{
 			tv_withdraw_deposit_money.setText("0.00");
 		}
+	//	String sum_income = MathExtend.roundNew(totalamount, 2);
+	//	if (null != sum_income) {
+	//		tv_withdraw_deposit_money.setText(sum_income);
+	//	}else{
+	//		tv_withdraw_deposit_money.setText("0.00");
+	//	}
 		initPullView();
 		listen();
 	}

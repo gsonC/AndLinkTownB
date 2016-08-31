@@ -224,6 +224,12 @@ public class FinancialOfficeFragment extends Fragment implements
 	 */
 	public void setFinancialOfficeAmount(FinancialOfficeAmountBean financialOfficeAmountBean){
 
+		this.totalaccount = financialOfficeAmountBean.getAccountTotalIncome().doubleValue();
+		this.shopaccount = financialOfficeAmountBean.getStoreTotalIncome().doubleValue();
+		this.availablebalance = financialOfficeAmountBean.getStoreBalance().doubleValue();
+		this.takeinmoney = financialOfficeAmountBean.getStoreWithdrawAmount().doubleValue();
+		this.freezingamount = financialOfficeAmountBean.getSotreFrozenAmount().doubleValue();
+
 		tv_totalaccount.setText(MathExtend.roundNew(financialOfficeAmountBean.getAccountTotalIncome().divide(new BigDecimal(100)).doubleValue(), 2));// 账户总额
 		tv_shopaccount.setText(MathExtend.roundNew(financialOfficeAmountBean.getStoreTotalIncome().divide(new BigDecimal(100)).doubleValue(), 2));// 店铺总额
 		tv_availablebalance.setText(MathExtend.roundNew(financialOfficeAmountBean.getStoreBalance().divide(new BigDecimal(100)).doubleValue(), 2));// 可用余额
@@ -297,7 +303,7 @@ public class FinancialOfficeFragment extends Fragment implements
 				if (isBand) {
 					Intent intent = new Intent(mMainActivity,
 							WithdrawDepositActivity.class);
-					intent.putExtra("totalamount", availablebalance);
+					intent.putExtra("totalamount", tv_availablebalance.getText().toString().trim());
 					startActivity(intent);
 				} else {
 					ContentUtils.showMsg(mMainActivity, "请您先绑定银行卡!");

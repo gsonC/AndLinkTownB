@@ -71,7 +71,7 @@ public class NewIntegralGoodsActivity extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_new_integral_goods, NOTYPE);
+		setContentView(R.layout.activity_new_integral_goods, HAVETYPE);
 		ButterKnife.bind(this);
 		initView();
 

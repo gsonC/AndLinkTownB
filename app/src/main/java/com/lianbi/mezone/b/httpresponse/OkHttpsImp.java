@@ -2421,7 +2421,7 @@ public enum OkHttpsImp {
 		params.put("vipBirthday", vipBirthday);
 		params.put("vipCardNo", vipCardNo);
 		params.put("vipIdNo", vipIdNo);
-		params.put("vipLabel", vipLabel);
+		params.put("labelName", vipLabel);
 		params.put("vipName", vipName);
 		params.put("vipPhone", vipPhone);
 		params.put("vipRemarks", vipRemarks);

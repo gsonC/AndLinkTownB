@@ -62,7 +62,6 @@ import cn.com.hgh.utils.WebEncryptionUtil;
 import cn.com.hgh.view.ErWeMaDialog;
 
 /**
- *
  * @author guanghui.han
  * @category管理中心
  */
@@ -100,7 +99,7 @@ public class JiaoYiGuanLiFragment extends Fragment implements
 		if (ContentUtils.getLoginStatus(mMainActivity)) {
 			if (BaseActivity.userShopInfoBean != null
 					&& !TextUtils.isEmpty(BaseActivity.userShopInfoBean
-							.getBusinessId())) {
+					.getBusinessId())) {
 
 			} else {
 			}
@@ -113,7 +112,7 @@ public class JiaoYiGuanLiFragment extends Fragment implements
 
 	@Override
 	public View onCreateView(LayoutInflater inflater,
-			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+							 @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		super.onCreateView(inflater, container, savedInstanceState);
 		View view = inflater.inflate(R.layout.fm_jiaoyiguanlifragment, null);
 		jiaoYiGuanLiFragment = this;
@@ -332,7 +331,7 @@ public class JiaoYiGuanLiFragment extends Fragment implements
 		initViewTitle(view);// 裁剪view
 		initSliderView();// 广告条
 		swipe_jiaoyiguanli = (SwipeRefreshLayout) view.findViewById(R.id.swipe_jiaoyiguanli);
-		swipe_jiaoyiguanli.setColorSchemeResources(R.color.colores_news_01,R.color.black);
+		swipe_jiaoyiguanli.setColorSchemeResources(R.color.colores_news_01, R.color.black);
 		swipe_jiaoyiguanli.setOnRefreshListener(new OnRefreshListener() {
 
 			@Override
@@ -364,64 +363,61 @@ public class JiaoYiGuanLiFragment extends Fragment implements
 		boolean isLogin = ContentUtils.getLoginStatus(mMainActivity);
 		boolean re = false;
 		switch (view.getId()) {
-		case R.id.GLZX_iv_cpgl:// 订单管理
-			re = JumpIntent.jumpLogin_addShop(isLogin, API.VIP, mMainActivity);
+			case R.id.GLZX_iv_cpgl:// 订单管理
+				re = JumpIntent.jumpLogin_addShop(isLogin, API.VIP, mMainActivity);
 
-			if (re) {
-				startActivity(new Intent(mMainActivity,
-						ChoiceDingdanInfoWayActivity.class));
-			}
-			break;
-		case R.id.GLZX_iv_dygl:// 产品管理
-
-			re = JumpIntent
-					.jumpLogin_addShop(isLogin, API.TRADE, mMainActivity);
-			if (re) {
-				boolean hasProduct = ContentUtils.getSharePreBoolean(getContext(),
-						Constants.SHARED_PREFERENCE_NAME,
-						Constants.HAS_PRODUCT);
-				if(hasProduct){
-					Intent intent_web = new Intent(mMainActivity,
-							H5WebActivty.class);
-					intent_web.putExtra(Constants.NEDDLOGIN, false);
-					intent_web.putExtra("NEEDNOTTITLE", false);
-					intent_web.putExtra("Re", true);
-					intent_web.putExtra(WebActivty.T, "产品管理");
-					intent_web.putExtra(WebActivty.U, getUrl());
-					mMainActivity.startActivity(intent_web);
-				} else {
-					Intent intent_more = new Intent(mMainActivity,
-							ServiceMallActivity.class);
-					mMainActivity.startActivityForResult(intent_more,
-                            mMainActivity.SERVICEMALLSHOP_CODE);
-					ContentUtils.showMsg(mMainActivity,"请下载对应模块进行产品编辑");
+				if (re) {
+					startActivity(new Intent(mMainActivity,
+							ChoiceDingdanInfoWayActivity.class));
 				}
-			}
-			break;
-		case R.id.iv_jygl_memberma:// 会员管理
-			re = JumpIntent.jumpLogin_addShop1(isLogin, mMainActivity);
-
-			if (re) {
-				startActivity(new Intent(mMainActivity, MembersManagementActivity.class));
-
-			}else{
-				ContentUtils.showMsg(mMainActivity,"不登陆不给进");
-			}
 				break;
-		case R.id.iv_jygl_baristasma:// 店员管理
-			ContentUtils.showMsg(mMainActivity, "正在建设中");
-			break;
-		case R.id.iv_jygl_infoma:// 信息管理
-			re = JumpIntent.jumpLogin_addShop(isLogin, API.INFODETAILS,
-					mMainActivity);
+			case R.id.GLZX_iv_dygl:// 产品管理
 
-			if (re) {
-				startActivity(new Intent(mMainActivity,
-						InfoDetailsActivity.class));
-			}
-			break;
-		case R.id.iv_jygl_more:// 更多
-			break;
+				re = JumpIntent
+						.jumpLogin_addShop(isLogin, API.TRADE, mMainActivity);
+				if (re) {
+					boolean hasProduct = ContentUtils.getSharePreBoolean(getContext(),
+							Constants.SHARED_PREFERENCE_NAME,
+							Constants.HAS_PRODUCT);
+					if (hasProduct) {
+						Intent intent_web = new Intent(mMainActivity,
+								H5WebActivty.class);
+						intent_web.putExtra(Constants.NEDDLOGIN, false);
+						intent_web.putExtra("NEEDNOTTITLE", false);
+						intent_web.putExtra("Re", true);
+						intent_web.putExtra(WebActivty.T, "产品管理");
+						intent_web.putExtra(WebActivty.U, getUrl());
+						mMainActivity.startActivity(intent_web);
+					} else {
+						Intent intent_more = new Intent(mMainActivity,
+								ServiceMallActivity.class);
+						mMainActivity.startActivityForResult(intent_more,
+								mMainActivity.SERVICEMALLSHOP_CODE);
+						ContentUtils.showMsg(mMainActivity, "请下载对应模块进行产品编辑");
+					}
+				}
+				break;
+			case R.id.iv_jygl_memberma:// 会员管理
+				re = JumpIntent.jumpLogin_addShop(isLogin, API.INFODETAILS, mMainActivity);
+
+				if (re) {
+					startActivity(new Intent(mMainActivity, MembersManagementActivity.class));
+				}
+				break;
+			case R.id.iv_jygl_baristasma:// 店员管理
+				ContentUtils.showMsg(mMainActivity, "正在建设中");
+				break;
+			case R.id.iv_jygl_infoma:// 信息管理
+				re = JumpIntent.jumpLogin_addShop(isLogin, API.INFODETAILS,
+						mMainActivity);
+
+				if (re) {
+					startActivity(new Intent(mMainActivity,
+							InfoDetailsActivity.class));
+				}
+				break;
+			case R.id.iv_jygl_more:// 更多
+				break;
 
 		}
 	}
