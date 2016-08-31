@@ -50,6 +50,10 @@ public class API {
  	//  public static final String TOSTORESERVICE = "http://mall.xylbn.cn:9005";//到店服务
     //	public static final String PAYQR = ENVIRONMENTAL+"/lincombFront/toOrderPay.do?state=";/**支付二维码**/
     //	public static final String INTELLIGENT_WIFI ="http://www.xylbn.cn/wcmv2/routerApplication/wifiIndex?businessId=";//智能wifi
+	// 	public static final String ENVIRONMENTAL = "http://front.xylbn.cn:9003";
+	// public static final String TOSTORESERVICE = "http://mall.xylbn.cn:9005";//到店服务
+	//	public static final String PAYQR = ENVIRONMENTAL+"/lincombFront/toOrderPay.do?state=";/**支付二维码**/
+	//	public static final String INTELLIGENT_WIFI ="http://www.xylbn.cn/wcmv2/routerApplication/wifiIndex?businessId=";//智能wifi
 	/**
 	 *  uat环境url
 	 */
@@ -67,13 +71,10 @@ public class API {
 	/*
      *  测试环境url
      */
-    	public static final String ENVIRONMENTAL = "http://test.xylbn.cn";//前置TEST
-    	public static final String TOSTORESERVICE = "http://172.16.103.153:9005";//到店服务TEST
-    	public static final String PAYQR = ENVIRONMENTAL+"/lincombFront/toOrderPay.do?state=";/**支付二维码**/
-	//    public static final String INTELLIGENT_WIFI = "http://172.16.103.165:8090/wcmv2/routerApplication/wifiIndex?businessId=";//智能WIFI_TEST
-    	public static final String INTELLIGENT_WIFI ="http://www.xylbn.cn/wcmv2/routerApplication/wifiIndex?businessId=";//智能wifi
-
-
+	public static final String ENVIRONMENTAL = "http://test.xylbn.cn";//前置TEST
+	public static final String TOSTORESERVICE = "http://172.16.103.153:9005";//到店服务TEST
+	public static final String PAYQR = ENVIRONMENTAL + "/lincombFront/toOrderPay.do?state=";
+	public static final String INTELLIGENT_WIFI = "http://172.16.103.152:8090/wcmv2/routerApplication/wifiIndex?businessId=";//智能WIFI_TEST
 
 	/**
 	 * 线上

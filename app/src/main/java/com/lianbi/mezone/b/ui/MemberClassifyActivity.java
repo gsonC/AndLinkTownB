@@ -119,7 +119,7 @@ public class MemberClassifyActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = this;
-        setContentView(R.layout.activity_memberclassify, HAVETYPE);
+        setContentView(R.layout.activity_memberclassify, NOTYPE);
         ButterKnife.bind(this);
         initViewAndData();
 

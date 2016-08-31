@@ -87,7 +87,7 @@ public class MarketingSMSexampleActivity extends BaseActivity {
 //
 //        }
 //    }
-    private String templateType;
+    private String templateType="";
     public static final String TEMPLATE_TYPE = "TEMPLATE_TYPE";
 
     @Override
@@ -187,17 +187,18 @@ public class MarketingSMSexampleActivity extends BaseActivity {
                             reString = jsonObject.getString("queryList");
                             if (!TextUtils.isEmpty(reString)) {
                                 mData.clear();
-                                ArrayList<SmsTemplate> downloadListMall = (ArrayList<SmsTemplate>) JSON
+                                ArrayList<SmsTemplate> smstemplatelist = (ArrayList<SmsTemplate>) JSON
                                         .parseArray(reString,
                                                 SmsTemplate.class);
-                                for (int i = 0; i < downloadListMall.size(); i++) {
-                                    SmsTemplate smsTemplate = downloadListMall.get(i);
-                                    if (!smsTemplate.getTemplateType().trim().equals(templateType)) {
-                                        downloadListMall.remove(i);
+                                int listsize=smstemplatelist.size();
+                                for (int i = 0; i < listsize; i++) {
+                                    SmsTemplate smsTemplate = smstemplatelist.get(i);
+                                    if (smsTemplate.getTemplateType()!=null&&!smsTemplate.getTemplateType().trim().equals(templateType)) {
+                                        smstemplatelist.remove(i);
                                         i--;
                                     }
                                 }
-                                mData.addAll(downloadListMall);
+                                mData.addAll(smstemplatelist);
                                 updateView(mData);
                             }
                             if (mDatas.size() == 0) {
@@ -206,6 +207,10 @@ public class MarketingSMSexampleActivity extends BaseActivity {
                             } else {
                                 mptrrv.setVisibility(View.VISIBLE);
                                 img_ememberslist_empty.setVisibility(View.GONE);
+                            }
+                            if(isResh==true){
+                                mptrrv.setOnRefreshComplete();
+                                mptrrv.onFinishLoading(true, false);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -217,6 +222,13 @@ public class MarketingSMSexampleActivity extends BaseActivity {
                 @Override
                 public void onResponseFailed(String msg) {
                     dialog.dismiss();
+                    mptrrv.setVisibility(View.GONE);
+                    img_ememberslist_empty.setVisibility(View.VISIBLE);
+                    if(isResh==true){
+                        mptrrv.setOnRefreshComplete();
+                    }
+                    mptrrv.onFinishLoading(true, false);
+
                 }
             }, "M", reqTime, uuid);
         } catch (Exception e) {
@@ -226,6 +238,7 @@ public class MarketingSMSexampleActivity extends BaseActivity {
     }
 
     protected void updateView(ArrayList<SmsTemplate> arrayList) {
+        mDatas.clear();
         mDatas.addAll(arrayList);
         mAdapter.notifyDataSetChanged();
     }
@@ -274,11 +287,19 @@ public class MarketingSMSexampleActivity extends BaseActivity {
                         } else {
                             mDatas.get(position).setCheck(false);
                         }
+                        if(templateType.equals("B")){
                         Intent intent = new Intent();
                         intent.setClass(MarketingSMSexampleActivity.this, MarketingMsgBulidActivity.class);
                         intent.putExtra("info", mDatas.get(position).getContent());
                         intent.putExtra("templateID", mDatas.get(position).getTemplateID());
-                        setResult(RESULT_OK, intent);
+                        setResult(RESULT_OK, intent);}
+                        else
+                        if(templateType.equals("P")){
+                        Intent intent = new Intent();
+                        intent.setClass(MarketingSMSexampleActivity.this, SendNewCouponActivity.class);
+                        intent.putExtra("info", mDatas.get(position).getContent());
+                        intent.putExtra("templateID", mDatas.get(position).getTemplateID());
+                        setResult(RESULT_OK, intent);}
                         finish();
 
                     }

@@ -31,7 +31,7 @@
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
          android:textColor="@color/color_4b4b4b"
-         android:text="111"
+         android:text="0"
          android:textSize="12sp"
             />
         <TextView
@@ -52,7 +52,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/color_4b4b4b"
-            android:text="111"
+            android:text="0"
             android:textSize="12sp"
             />
         <LinearLayout
@@ -63,6 +63,7 @@
             android:gravity="right"
         >
         <TextView
+            android:visibility="gone"
             android:id="@+id/btn_msgpay"
             android:layout_centerVertical="true"
             android:layout_width="wrap_content"
@@ -193,7 +194,7 @@
             android:padding="10dp"
             android:singleLine="true"
             android:textColor="@color/color_4b4b4b"
-            android:text="100条"
+            android:text="0条"
             />
     </LinearLayout>
     <View

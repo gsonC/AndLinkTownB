@@ -251,12 +251,7 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 	/**
 	 * 积分商品查询
 	 *
-	 * @param
-	 * @param
-	 * @param
 	 */
-
-
 	private void getQueryProduct() {
 
 		String reqTime = AbDateUtil.getDateTimeNow();
@@ -298,11 +293,11 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 
 				@Override
 				public void onResponseFailed(String msg) {
-
 					img_memberpoint_empty.setVisibility(View.VISIBLE);
 					fm_member_listView.setVisibility(View.GONE);
 
-					ContentUtils.showMsg(MemberPointManage.this, "查询积分商品失败");
+				//	ContentUtils.showMsg(MemberPointManage.this, "查询积分商品失败");
+				//	fm_member_listView.setVisibility(View.GONE);
 				}
 			});
 		} catch (Exception e) {

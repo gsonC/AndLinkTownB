@@ -49,22 +49,7 @@ public class JumpIntent {
 		}
 		return false;
 	}
-	//不需要api的跳转
-	public static boolean jumpLogin_addShop1(boolean isLogin,
-											Activity at) {
-		if (isLogin) {
-			if (TextUtils
-					.isEmpty(BaseActivity.userShopInfoBean.getBusinessId())) {
-//				ChangeShopActivity.myShopChange = JiaoYiGuanLiFragment.jiaoYiGuanLiFragment;
-				Intent intent_more = new Intent(at, AddShopActivity.class);
-				at.startActivity(intent_more);
-			} else {
 
-				return isLogin;
-			}
-		}
-		return false;
-	}
 	/**
 	 * 跳转介绍1次
 	 * 

@@ -475,7 +475,7 @@ public class MarketingSelectMemberActivity extends BaseActivity {
                     if(!AbStrUtil.isEmpty(mDatas.get(position).getVipTypeObject())){
                         tv_mb_category.setText(mDatas.get(position).getVipTypeObject());
                     }else{
-                        tv_mb_category.setText("无");
+                        tv_mb_category.setText("普通会员");
                     }
                     tv_mb_source.setText(mDatas.get(position).getVipSource());
                     if(!AbStrUtil.isEmpty(mDatas.get(position).getLabels())){
