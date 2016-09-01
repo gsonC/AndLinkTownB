@@ -36,8 +36,8 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.com.hgh.baseadapter.recyclerViewadapter.commonrecyclerview.RecycleViewDivider;
 import cn.com.hgh.baseadapter.recyclerViewadapter.pullrefreshrecyclerview.DemoLoadMoreView;
-import cn.com.hgh.baseadapter.recyclerViewadapter.pullrefreshrecyclerview.DividerItemDecoration;
 import cn.com.hgh.baseadapter.recyclerViewadapter.pullrefreshrecyclerview.PullRefreshRecyclerAdapter;
 import cn.com.hgh.baseadapter.recyclerViewadapter.pullrefreshrecyclerview.PullRefreshViewHolder;
 import cn.com.hgh.utils.Result;
@@ -93,7 +93,7 @@ public class MarketingSMSexampleActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.act_marketingsmsexample, HAVETYPE);
+        setContentView(R.layout.act_marketingsmsexample, NOTYPE);
         ButterKnife.bind(this);
         initViewAndData();
     }
@@ -134,8 +134,10 @@ public class MarketingSMSexampleActivity extends BaseActivity {
                 mHandler.sendEmptyMessageDelayed(MSG_CODE_REFRESH, TIME);
             }
         });
-        mptrrv.getRecyclerView().addItemDecoration(new DividerItemDecoration(this,
-                DividerItemDecoration.VERTICAL_LIST));
+//        mptrrv.getRecyclerView().addItemDecoration(new DividerItemDecoration(this,
+//                DividerItemDecoration.VERTICAL_LIST));
+        mptrrv.getRecyclerView().addItemDecoration(new RecycleViewDivider(
+                this, LinearLayoutManager.VERTICAL, 20, getResources().getColor(R.color.colores_news_14)));
         mptrrv.setLoadMoreFooter(loadMoreView);
         mptrrv.getLoadMoreFooter().setOnDrawListener(new BaseLoadMoreView.OnDrawListener() {
             @Override
