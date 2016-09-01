@@ -65,11 +65,11 @@ public abstract class MyResultCallback<T> extends StringCallback {
 
 	@Override
 	public void onError(Call call, Exception e) {
-		if (isShow) {
+	//	if (isShow) {
 			isShow = false;
 			ContentUtils.showMsg(context,context.getResources().getString(R.string.requesttimeout));
 			e.printStackTrace();
-		}
+	//	}
 		onResponseFailed("ERROR");
 	}
 
