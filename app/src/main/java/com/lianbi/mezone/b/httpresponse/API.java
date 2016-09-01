@@ -663,18 +663,14 @@ public static final String QUERYPOINTPRODUCT = "product/queryProduct.do";
 	* 获取会员优惠券列表
 	* */
 	public static final String COUPONS_LIST = "coupon/queryStoreCoup.do";
-	/**
-	 * 会员优惠券列表查询
-	 * */
-	public static final String VIPID_COUPONS_LIST = "";
 	/*
 	* 查询店铺优惠券使用详情列表
 	* */
-	public static final String COUPON_USING_DETAIL_LIST = "";
+	public static final String COUPON_USING_DETAIL_LIST = "coupon/queryCoupDetail.do";
 	/*
 	* 发送优惠券短信
 	* */
-	public static final String SEND_NEW_COUPON = "";
+	public static final String SEND_NEW_COUPON = "msg/sendCoupMsg.do";
 	/*
 	* 会员消费记录
 	* */
