@@ -84,7 +84,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:drawableLeft="@mipmap/downtwo"
+                    android:drawableRight="@mipmap/downtwo"
                     android:text="上架"
                     android:textColor="@color/pointcolor"
                     android:textSize="14sp"

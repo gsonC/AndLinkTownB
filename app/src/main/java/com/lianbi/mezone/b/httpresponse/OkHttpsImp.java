@@ -2804,13 +2804,20 @@ public enum OkHttpsImp {
 	/**
 	 * 修改产品
 	 */
-	public void updateProduct(String md5_key, String uuid, String reqTime, String app,
-							  String productId, MyResultCallback<String> myResultCallback) throws Exception {
+	public void updateProduct(String md5_key,
+							  String serNum, String source, String reqTime,
+							  String productName,String productDesc,String productAmt,String images,
+							  String productId,String storeId, MyResultCallback<String> myResultCallback) throws Exception {
 		Map<String, String> params = new HashMap<String, String>();
-		params.put("uuid", uuid);
-		params.put("reqTime", reqTime);
-		params.put("app", app);
+		params.put("serNum",serNum);
+		params.put("source",source);
+		params.put("reqTime",reqTime);
+		params.put("productName",productName);
+		params.put("productDesc", productDesc);
+		params.put("productAmt",productAmt);
+		params.put("images",images);
 		params.put("productId", productId);
+		params.put("storeId", storeId);
 		String sign = getSign(md5_key, params);
 		params.put("sign", sign);
 		String url = getAbsoluteUrl(API.CHANGERODUCT);

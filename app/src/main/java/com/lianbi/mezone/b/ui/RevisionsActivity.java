@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.webkit.ValueCallback;
 import android.widget.EditText;
@@ -88,7 +89,8 @@ public class RevisionsActivity extends BaseActivity {
 		smallImaFour.setOnClickListener(this);
 		smallImaFive.setOnClickListener(this);
 		btSure.setOnClickListener(this);
-		productId = getIntent().getStringExtra("id");
+		productId = getIntent().getStringExtra("new_product_id");
+		System.out.println("productId..."+productId);
 		new_food=getIntent().getStringExtra("new_product_food");
 		new_rated=getIntent().getStringExtra("new_product_rated");
 		new_price=getIntent().getStringExtra("new_product_price");
@@ -169,6 +171,23 @@ public class RevisionsActivity extends BaseActivity {
 			}
 		}
 		imageStr = stringBuilder.toString();
+		System.out.println("imageStr" + imageStr);
+		productName = edCup.getText().toString().trim();
+		productDesc = edCeramicCup.getText().toString().trim();
+		productAmt = edExchangeIntegral.getText().toString().trim();
+		if (TextUtils.isEmpty(productName)) {
+			ContentUtils.showMsg(RevisionsActivity.this, "请输入商品名称");
+			return;
+		}
+		if (TextUtils.isEmpty(productDesc)) {
+			ContentUtils.showMsg(RevisionsActivity.this, "请输入商品简介");
+			return;
+		}
+		if (TextUtils.isEmpty(productAmt)) {
+			ContentUtils.showMsg(RevisionsActivity.this, "请输入商品名价格");
+			return;
+		}
+
 	}
 
 	@SuppressWarnings("static-access")
@@ -259,7 +278,10 @@ public class RevisionsActivity extends BaseActivity {
 		String reqTime = AbDateUtil.getDateTimeNow();
 		String uuid = AbStrUtil.getUUID();
 		try {
-			okHttpsImp.updateProduct(OkHttpsImp.md5_key, uuid, reqTime, "app", productId, new MyResultCallback<String>() {
+			okHttpsImp.updateProduct(OkHttpsImp.md5_key,
+					uuid, reqTime, "app",
+					productName, productDesc, productAmt,imageStr,productId,userShopInfoBean.getBusinessId(),
+					new MyResultCallback<String>() {
 				@Override
 				public void onResponseResult(Result result) {
 					String reString = result.getData();

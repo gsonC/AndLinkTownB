@@ -145,6 +145,7 @@ public class ChooseFromWeixinActivity extends BaseActivity {
 					@Override
 					public void onClick(View v) {
 						Intent intent = new Intent(ChooseFromWeixinActivity.this, RevisionsActivity.class);
+						intent.putExtra("new_product_id", item.getId());
 						intent.putExtra("new_product_food", item.getProductName());
 						intent.putExtra("new_product_rated", item.getProductDesc());
 						intent.putExtra("new_product_price", item.getProductPrice());
