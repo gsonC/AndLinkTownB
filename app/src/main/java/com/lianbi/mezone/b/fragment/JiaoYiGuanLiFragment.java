@@ -247,6 +247,7 @@ public class JiaoYiGuanLiFragment extends Fragment implements
 							} else {
 								Glide.with(mMainActivity)
 										.load(mDatas.get(0).getImageUrl())
+										.dontAnimate()
 										.error(R.mipmap.fm_shouye_in)
 										.into(iv_jiaoyiguanli_datu);
 							}

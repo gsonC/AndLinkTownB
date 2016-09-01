@@ -1,4 +1,5 @@
-package com.lianbi.mezone.b.ui;/*
+package com.lianbi.mezone.b.ui;
+/*
  * @创建者     Administrator
  * @创建时间   2016/8/15 12:26
  * @描述       选择标签
@@ -150,6 +151,9 @@ public class SelectTagActivity extends BaseActivity {
 				});
 	}
 
+	/**
+	 * 设置适配器
+	 */
 	private void initAdapter() {
 		mAdapter = new QuickAdapter<SelectTagBean>(this, R.layout.item_selecttag, mDatas) {
 			@Override
@@ -198,6 +202,9 @@ public class SelectTagActivity extends BaseActivity {
 		mActSelecttagListview.setAdapter(mAdapter);
 	}
 
+	/**
+	 * 获取标签
+	 */
 	private void getTag(final boolean isResh) {
 
 		if (isResh) {
