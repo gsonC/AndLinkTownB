@@ -256,7 +256,13 @@ public class AddShopActivity extends BaseActivity {
 	 * 新增店铺B端
 	 */
 	private void addBusinessByB() {
-		String license = Picture_Base64.GetImageStr(file.toString());
+		String license = "";
+		try {
+			license = Picture_Base64.GetImageStr(file.toString());
+		}catch (Exception e){
+			ContentUtils.showMsg(AddShopActivity.this,"图片获取失败,请稍后重试");
+			e.printStackTrace();
+		}
 		String reqTime = AbDateUtil.getDateTimeNow();
 		String uuid = AbStrUtil.getUUID();
 		try {

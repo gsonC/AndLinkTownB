@@ -137,8 +137,8 @@ public class MembersListActivity extends BaseActivity {
 					tv_mb_category.setText("普通会员");
 				}
 				tv_mb_source.setText(item.getVipSource());
-				if(!AbStrUtil.isEmpty(item.getLabels())){
-					tv_mb_label.setText(item.getLabels());
+				if(!AbStrUtil.isEmpty(item.getLabelName())){
+					tv_mb_label.setText(item.getLabelName());
 				}else{
 					tv_mb_label.setText("无");
 				}

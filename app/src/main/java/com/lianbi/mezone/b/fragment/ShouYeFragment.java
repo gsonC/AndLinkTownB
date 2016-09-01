@@ -334,7 +334,7 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 
 				@Override
 				public void onResponseFailed(String msg) {
-
+					ContentUtils.showMsg(mActivity,"连接超时,请稍后再试");
 				}
 			});
 		} catch (Exception e) {
@@ -492,6 +492,7 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 							} else {
 								Glide.with(mActivity)
 										.load(mDatas.get(0).getImageUrl())
+										.dontAnimate()
 										.error(R.mipmap.fm_shouye_in)
 										.into(iv_shouye_datu);
 							}

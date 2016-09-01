@@ -20,7 +20,7 @@
     <string name="okBtn">确定</string>
     <string name="cancelBtn">取消</string>
     <string name="fromPhotoAlbum">相册</string>
-    <string name="requesttimeout">请求超时!</string>
+    <string name="requesttimeout">请求超时,请稍后再试</string>
     <string name="fromCamera">拍照</string>
     <string name="pass_guider">跳过</string>
     <string name="balck_tuichu">再按一次退出程序</string>

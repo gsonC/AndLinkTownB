@@ -21,7 +21,7 @@
 
 
               <TextView
-                    android:id="@+id/tv_sendingtime"
+                    android:id="@+id/tv_sendmobile"
                     android:layout_width="0dp"
                     android:layout_weight="1.0"
                     android:layout_height="25dp"
@@ -33,7 +33,7 @@
                     android:textSize="14sp"
                      />
                <TextView
-                    android:id="@+id/tv_sendingobject"
+                    android:id="@+id/tv_membergrade"
                     android:layout_width="0dp"
                     android:layout_weight="1.0"
                     android:layout_height="25dp"
@@ -47,7 +47,7 @@
                      />   
                  
                   <TextView
-                    android:id="@+id/tv_sendingnum"
+                    android:id="@+id/tv_memberlable"
                     android:layout_width="0dp"
                     android:layout_weight="1.0"
                     android:layout_height="25dp"

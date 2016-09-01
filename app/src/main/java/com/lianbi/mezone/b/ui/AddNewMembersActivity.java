@@ -56,7 +56,6 @@ public class AddNewMembersActivity extends BaseActivity {
 	private boolean mIsShow;
 	private String mVipLabel = "";
 	private String vipId = "";
-	private StringBuffer labelId= new StringBuffer();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -159,7 +158,8 @@ public class AddNewMembersActivity extends BaseActivity {
 		String reqTime = AbDateUtil.getDateTimeNow();
 		String uuid = AbStrUtil.getUUID();
 		try {
-			okHttpsImp.getMemberDetails(uuid, "app", reqTime, OkHttpsImp.md5_key, userShopInfoBean.getBusinessId(), mMemberInfoBean.getVipId(), new MyResultCallback<String>() {
+			okHttpsImp.getMemberDetails(uuid, "app", reqTime, OkHttpsImp.md5_key,
+					userShopInfoBean.getBusinessId(), mMemberInfoBean.getVipId(), new MyResultCallback<String>() {
 				@Override
 				public void onResponseResult(Result result) {
 					String reString = result.getData();
@@ -262,10 +262,8 @@ public class AddNewMembersActivity extends BaseActivity {
 				for (int i=0;i<size;i++){
 					if (i == (size - 1)) {
 						labelName.append(memberDetails.getLabels().get(i).getLabelName());
-						labelId.append(memberDetails.getLabels().get(i).getLabelId());
 					} else {
 						labelName.append(memberDetails.getLabels().get(i).getLabelName() + ",");
-						labelId.append(memberDetails.getLabels().get(i).getLabelId() + ",");
 					}
 				}
 				mTvAddmembertag.setText(labelName.toString());
@@ -425,9 +423,8 @@ public class AddNewMembersActivity extends BaseActivity {
 				break;
 			case R.id.tv_addmembertag://会员标签
 				Intent member_tag = new Intent(this, SelectTagActivity.class);
-				if(labelId!=null){
-					member_tag.putExtra("labelId",labelId.toString());
-				}
+				String lablename =mTvAddmembertag.getText().toString().trim();
+				member_tag.putExtra("tagName",lablename);
 				startActivityForResult(member_tag, REQUEST_TAG);
 				break;
 			case R.id.llt_addmemberaddress://会员地址

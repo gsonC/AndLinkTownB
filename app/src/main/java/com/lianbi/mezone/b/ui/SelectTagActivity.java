@@ -1,4 +1,5 @@
-package com.lianbi.mezone.b.ui;/*
+package com.lianbi.mezone.b.ui;
+/*
  * @创建者     Administrator
  * @创建时间   2016/8/15 12:26
  * @描述       选择标签
@@ -28,6 +29,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.QuickAdapter;
@@ -46,8 +48,8 @@ public class SelectTagActivity extends BaseActivity {
 	private int page = 1;
 	private ArrayList<SelectTagBean> mDatas = new ArrayList<>();
 	private QuickAdapter<SelectTagBean> mAdapter;
-	private String labelId;
-	private String[] labelIds = new String[]{};
+	private String tagName;
+	private List<String> tagNameList = new ArrayList<>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,14 +66,17 @@ public class SelectTagActivity extends BaseActivity {
 	 * 获取会员标签
 	 */
 	private void getLabelId() {
-
-	//	labelId = getIntent().getStringExtra("labelId");
-	//	if(!AbStrUtil.isEmpty(labelId)){
-	//		if(labelId.contains(",")){
-	//			labelIds = labelId.split(",");
-	//		}
-	//	}
-	//	System.out.println("labelId"+labelIds.length);
+		tagName = getIntent().getStringExtra("tagName");
+		if (!AbStrUtil.isEmpty(tagName)) {
+			if (tagName.contains(",")) {
+				String[] arr = tagName.split(",");
+				for (String str : arr) {
+					tagNameList.add(str);
+				}
+			} else {
+				tagNameList.add(tagName);
+			}
+		}
 	}
 
 	private void initView() {
@@ -146,6 +151,9 @@ public class SelectTagActivity extends BaseActivity {
 				});
 	}
 
+	/**
+	 * 设置适配器
+	 */
 	private void initAdapter() {
 		mAdapter = new QuickAdapter<SelectTagBean>(this, R.layout.item_selecttag, mDatas) {
 			@Override
@@ -157,6 +165,14 @@ public class SelectTagActivity extends BaseActivity {
 
 				tv_selecttag_content.setText(item.getLabelName() + "");
 
+				if(tagNameList.size()>0) {
+					for (String tagname : tagNameList) {
+						if(tagname.equals(item.getLabelName())){
+							item.setChecked(true);
+						}
+					}
+				}
+
 				if (item.isChecked()) {
 					helper.setImageResource(R.id.img_selecttag_check, R.mipmap.message_checked);
 				} else {
@@ -167,6 +183,11 @@ public class SelectTagActivity extends BaseActivity {
 					@Override
 					public void onClick(View v) {
 						if (item.isChecked()) {
+						//	for(String tagname : tagNameList){
+						//		if(tagname.equals(item.getLabelName()){
+									tagNameList.remove(item.getLabelName());
+					//			}
+					//		}
 							item.setChecked(false);
 							mAdapter.replaceAll(mDatas);
 						} else {
@@ -181,6 +202,9 @@ public class SelectTagActivity extends BaseActivity {
 		mActSelecttagListview.setAdapter(mAdapter);
 	}
 
+	/**
+	 * 获取标签
+	 */
 	private void getTag(final boolean isResh) {
 
 		if (isResh) {
@@ -197,7 +221,7 @@ public class SelectTagActivity extends BaseActivity {
 						public void onResponseResult(Result result) {
 							page++;
 							String reString = result.getData();
-							if(!TextUtils.isEmpty(reString)){
+							if (!TextUtils.isEmpty(reString)) {
 								try {
 									JSONObject jsonObject = new JSONObject(reString);
 									String vipLabelList = (String) jsonObject
@@ -205,7 +229,7 @@ public class SelectTagActivity extends BaseActivity {
 									String dataSize = (String) jsonObject
 											.getString("dataSize");
 									ArrayList<SelectTagBean> mDatasL = (ArrayList<SelectTagBean>) JSON
-											.parseArray(vipLabelList,SelectTagBean.class);
+											.parseArray(vipLabelList, SelectTagBean.class);
 									if (mDatasL.size() > 0) {
 										mDatas.addAll(mDatasL);
 									}
@@ -240,7 +264,6 @@ public class SelectTagActivity extends BaseActivity {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 
 
 	}

@@ -9,7 +9,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
-import com.lianbi.mezone.b.bean.ServiceMallBean;
+import com.lianbi.mezone.b.bean.MarketingMsgDetail;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.xizhi.mezone.b.R;
 
@@ -65,11 +65,12 @@ public class MarketingMsgDetailActivity extends BaseActivity {
     MyListView lvActmarketdetail;
     @Bind(R.id.sv_marketdetail)
     ScrollView svMarketdetail;
-    private ArrayList<ServiceMallBean> mData = new ArrayList<ServiceMallBean>();
-    private ArrayList<ServiceMallBean> mDatas = new ArrayList<ServiceMallBean>();
+    private ArrayList<MarketingMsgDetail> mData = new ArrayList<MarketingMsgDetail>();
+    private ArrayList<MarketingMsgDetail> mDatas = new ArrayList<MarketingMsgDetail>();
     HttpDialog dialog;
-    private QuickAdapter<ServiceMallBean> mAdapter;
-
+    private QuickAdapter<MarketingMsgDetail> mAdapter;
+    private String pageNo="1";
+    private String pageSize="10";
     @OnClick({R.id.txt_sendcontext})
     public void OnClick(View v) {
         switch (v.getId()) {
@@ -96,29 +97,28 @@ public class MarketingMsgDetailActivity extends BaseActivity {
         setPageTitle("已发送短信详情");
         dialog = new HttpDialog(this);
         listviewData();
-        getCandownloadMall();
+        querySendMsgDetail();
     }
 
     private void listviewData() {
-        mAdapter = new QuickAdapter<ServiceMallBean>(MarketingMsgDetailActivity.this,
+        mAdapter = new QuickAdapter<MarketingMsgDetail>(MarketingMsgDetailActivity.this,
                 R.layout.item_marketingmsgdetail_list, mDatas) {
 
             @Override
             protected void convert(BaseAdapterHelper helper,
-                                   final ServiceMallBean item) {
+                                   final MarketingMsgDetail item) {
 
                 LinearLayout llt_marketingmsgl = helper
                         .getView(R.id.llt_marketingmsgl);
-                TextView tv_sendingtime = helper
-                        .getView(R.id.tv_sendingtime);
-                TextView tv_sendingobject = helper
-                        .getView(R.id.tv_sendingobject);
-                TextView tv_sendingnum = helper
-                        .getView(R.id.tv_sendingnum);
-                tv_sendingtime.setText(item.getAppName());
-                tv_sendingobject.setText("¥" + String.valueOf(item.getOriginalPrice()) + String.valueOf(item.getUnit()));
-                tv_sendingnum.setText("¥" + String.valueOf(item.getPresentPrice()) + String.valueOf(item.getUnit()));
-
+                TextView tv_sendmobile = helper
+                        .getView(R.id.tv_sendmobile);
+                TextView tv_membergrade = helper
+                        .getView(R.id.tv_membergrade);
+                TextView tv_memberlable = helper
+                        .getView(R.id.tv_memberlable);
+                tv_sendmobile.setText(item.getMobile());
+                tv_membergrade.setText(item.getCoupGrade());
+                tv_memberlable.setText(item.getCoupNote());
             }
         };
         // 设置适配器
@@ -127,41 +127,44 @@ public class MarketingMsgDetailActivity extends BaseActivity {
 
     }
 
-    private void getCandownloadMall() {
-        okHttpsImp.getCandownloadServerMall(new MyResultCallback<String>() {
+    private void querySendMsgDetail() {
+        try {
+            okHttpsImp.querySendMsgDetail(new MyResultCallback<String>() {
 
-            @Override
-            public void onResponseResult(Result result) {
-                String reString = result.getData();
-                if (reString != null) {
-                    JSONObject jsonObject;
-                    try {
-                        jsonObject = new JSONObject(reString);
-                        reString = jsonObject.getString("appsList");
-                        if (!TextUtils.isEmpty(reString)) {
-                            mData.clear();
-                            ArrayList<ServiceMallBean> downloadListMall = (ArrayList<ServiceMallBean>) JSON
-                                    .parseArray(reString,
-                                            ServiceMallBean.class);
-                            mData.addAll(downloadListMall);
-                            updateView(mData);
+                @Override
+                public void onResponseResult(Result result) {
+                    String reString = result.getData();
+                    if (reString != null) {
+                        JSONObject jsonObject;
+                        try {
+                            jsonObject = new JSONObject(reString);
+                            reString = jsonObject.getString("appsList");
+                            if (!TextUtils.isEmpty(reString)) {
+                                mData.clear();
+                                ArrayList<MarketingMsgDetail> marketingmsgdetailList = (ArrayList<MarketingMsgDetail>) JSON
+                                        .parseArray(reString,
+                                                MarketingMsgDetail.class);
+                                mData.addAll(marketingmsgdetailList);
+                                updateView(mData);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
                     }
+                    dialog.dismiss();
                 }
-                dialog.dismiss();
-            }
 
-            @Override
-            public void onResponseFailed(String msg) {
-                dialog.dismiss();
-            }
-        }, userShopInfoBean.getBusinessId());
+                @Override
+                public void onResponseFailed(String msg) {
+                    dialog.dismiss();
+                }
+            }, userShopInfoBean.getBusinessId(),"",pageNo,pageSize,reqTime,uuid);
+        }catch (Exception e){e.printStackTrace();}
+
 
     }
 
-    protected void updateView(ArrayList<ServiceMallBean> arrayList) {
+    protected void updateView(ArrayList<MarketingMsgDetail> arrayList) {
         mDatas.clear();
         mDatas.addAll(arrayList);
         mAdapter.replaceAll(mDatas);

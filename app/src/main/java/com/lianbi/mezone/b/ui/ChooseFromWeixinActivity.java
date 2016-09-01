@@ -131,10 +131,10 @@ public class ChooseFromWeixinActivity extends BaseActivity {
 				TextView new_product_price = helper.getView(R.id.new_product_price);
 				TextView new_product_choose = helper.getView(R.id.new_product_choose);
 
-				ScreenUtils.textAdaptationOn720(new_product_food, ChooseFromWeixinActivity.this, 24);
-				ScreenUtils.textAdaptationOn720(new_product_rated, ChooseFromWeixinActivity.this, 24);
-				ScreenUtils.textAdaptationOn720(new_product_price, ChooseFromWeixinActivity.this, 24);
-				ScreenUtils.textAdaptationOn720(new_product_choose, ChooseFromWeixinActivity.this, 24);
+				ScreenUtils.textAdaptationOn720(new_product_food, ChooseFromWeixinActivity.this, 32);
+				ScreenUtils.textAdaptationOn720(new_product_rated, ChooseFromWeixinActivity.this, 23);
+				ScreenUtils.textAdaptationOn720(new_product_price, ChooseFromWeixinActivity.this, 27);
+				ScreenUtils.textAdaptationOn720(new_product_choose, ChooseFromWeixinActivity.this, 23);
 
 				new_product_food.setText(item.getProductName());
 				new_product_rated.setText(item.getProductDesc());

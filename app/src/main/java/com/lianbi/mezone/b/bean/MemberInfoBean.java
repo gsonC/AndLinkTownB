@@ -56,6 +56,15 @@ public class MemberInfoBean implements Serializable {
 	private String cumulativeAmount;
 	private String vipValidityPeriod;
 	private int vipSex;
+	private String labelName;
+
+	public String getLabelName() {
+		return labelName;
+	}
+
+	public void setLabelName(String labelName) {
+		this.labelName = labelName;
+	}
 
 	public String getVipIdNo() {
 		return vipIdNo;
