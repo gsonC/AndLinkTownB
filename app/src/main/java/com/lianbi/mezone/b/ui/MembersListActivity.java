@@ -96,7 +96,6 @@ public class MembersListActivity extends BaseActivity {
 		String typeID=getIntent().getStringExtra("typeId");
         if(typeID!=null&&!typeID.equals("")){
 			this.typeID=typeID;
-			getMembersList(true, "",typeID);
 		}
 	}
 

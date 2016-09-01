@@ -748,11 +748,12 @@ public enum OkHttpsImp {
 	 * 群发短信
 	 */
 	public void smsBulkSend(
-			MyResultCallback<String> myResultCallback,String businessID,
+			MyResultCallback<String> myResultCallback,String businessID,String businessName,
 			String  phone,String  templateMark, String reqTime, String uuid)
 			throws Exception {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("storeId",businessID);
+		params.put("businessName",businessName);
 		params.put("vipPhones",phone);
 		params.put("msgId",templateMark);
 		params.put("batchNum","");

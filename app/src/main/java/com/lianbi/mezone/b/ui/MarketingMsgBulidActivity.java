@@ -126,6 +126,7 @@ public class MarketingMsgBulidActivity extends BaseActivity {
             ContentUtils.showMsg(MarketingMsgBulidActivity.this,"请选择发送会员");
             return;
         }
+        Log.i("tag","129----->"+userShopInfoBean.getShopName());
         try {
             okHttpsImp.smsBulkSend(new MyResultCallback<String>() {
 
@@ -149,7 +150,7 @@ public class MarketingMsgBulidActivity extends BaseActivity {
                 public void onResponseFailed(String msg) {
 
                 }
-            }, userShopInfoBean.getBusinessId(),templateID,sendPhones, reqTime, uuid);
+            }, userShopInfoBean.getBusinessId(),userShopInfoBean.getShopName(),templateID,sendPhones, reqTime, uuid);
 
 
 
