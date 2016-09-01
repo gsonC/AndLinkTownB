@@ -2587,9 +2587,9 @@ public enum OkHttpsImp {
     * 发送优惠券短信
     */
     public void sendNewCoupon(String serNum, String source, String reqTime,
-                              String coupName, String coupAmt, String limitAmt, String vipPhones,
-                              String beginTime, String endTime, String msgId, String storeId,
-                              String vipIds, String coupContent, String remark,
+                              String coupName, String coupAmt, String limitAmt,
+							  String vipPhones, String beginTime, String endTime, String msgId,
+							  String storeId, String coupContent, String remark,
                               MyResultCallback<String> myResultCallback) throws Exception {
         Map<String, String> params = new HashMap<>();
         params.put("reqTime", reqTime);
@@ -2601,7 +2601,6 @@ public enum OkHttpsImp {
         params.put("vipPhones", vipPhones);
         params.put("beginTime", beginTime);
         params.put("endTime", endTime);
-        params.put("vipIds", vipIds);
         params.put("msgId", msgId);
         params.put("storeId", storeId);
         params.put("coupContent", coupContent);
