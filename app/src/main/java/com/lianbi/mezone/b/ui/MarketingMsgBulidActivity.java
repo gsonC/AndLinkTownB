@@ -2,6 +2,7 @@ package com.lianbi.mezone.b.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -116,6 +117,15 @@ public class MarketingMsgBulidActivity extends BaseActivity {
         Log.i("tag","114-sendPhones------>"+sendPhones);
         Log.i("tag","115----reqTime-->"+reqTime);
         Log.i("tag","116----uuid----->"+uuid);
+        if(TextUtils.isEmpty(templateID)){
+            ContentUtils.showMsg(MarketingMsgBulidActivity.this,"请选择短信模板");
+
+            return;
+        }
+        if(TextUtils.isEmpty(sendPhones)){
+            ContentUtils.showMsg(MarketingMsgBulidActivity.this,"请选择发送会员");
+            return;
+        }
         try {
             okHttpsImp.smsBulkSend(new MyResultCallback<String>() {
 

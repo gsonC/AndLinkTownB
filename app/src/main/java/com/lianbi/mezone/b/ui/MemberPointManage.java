@@ -3,6 +3,7 @@ package com.lianbi.mezone.b.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
@@ -36,12 +37,12 @@ import cn.com.hgh.view.SlideListView2;
 
 public class MemberPointManage extends BaseActivity implements OnClickListener {
 	ArrayList<MemberMessage> mDatas = new ArrayList<MemberMessage>();
-	private TextView point_goodsName, rated, goodsPoint, pullgoods, pushgoods, changegoods, tv_increaseProduct, choose_from_weixin;
+	private TextView tv_increaseProduct, choose_from_weixin;
 	private SlideListView2 fm_member_listView;
-	ImageView point_ima, pullgoodsIma;
 	private int page = 1;
 	private EditText tv_search;
 	ImageView img_memberpoint_empty;
+	private String typeID = "";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -114,14 +115,39 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 			@Override
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 				if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_UNSPECIFIED) {
-					String response = tv_search.getText().toString().trim();
+					editSuit();
+					}
 
-				}
 				AbAppUtil.closeSoftInput(MemberPointManage.this);
 				return false;
 			}
 		});
+
+
 	}
+
+	/**
+	 * 匹配输入框
+	 */
+	private void editSuit(){
+		String response = tv_search.getText().toString().trim();
+		ArrayList<MemberMessage> arrayList = new ArrayList<MemberMessage>();
+		if (!TextUtils.isEmpty(response)) {
+			arrayList = mDatas;}
+		else{
+			arrayList.clear();
+
+			for (MemberMessage memberpoint : arrayList) {
+				if ((memberpoint.getLabelName().contains(response)) ||(memberpoint.getProductPrice().contains(response))
+						||(memberpoint.getProductDesc().contains(response))) {
+					arrayList.add(memberpoint);
+				}
+			}
+		}
+		mAdapter.replaceAll(arrayList);
+	}
+
+
 //初始化适配器
 
 	public QuickAdapter<MemberMessage> mAdapter;
@@ -131,25 +157,48 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 
 			@Override
 			protected void convert(final BaseAdapterHelper helper, final MemberMessage item) {
-				changegoods = helper.getView(R.id.changegoods);
-				point_ima = helper.getView(R.id.point_ima);
-				point_goodsName = helper.getView(R.id.point_goodsName);
-				rated = helper.getView(R.id.rated);
-				goodsPoint = helper.getView(R.id.goodsPoint);
-				pullgoods = helper.getView(R.id.pullgoods);
-				//pullgoodsIma = helper.getView(R.id.pullgoodsIma);
-				pushgoods = helper.getView(R.id.pushgoods);
-				changegoods = helper.getView(R.id.changegoods);
-
+				TextView changegoods = helper.getView(R.id.changegoods);
+				ImageView point_ima = helper.getView(R.id.point_ima);
+				TextView point_goodsName = helper.getView(R.id.point_goodsName);
+				TextView rated = helper.getView(R.id.rated);
+				final TextView goodsPoint = helper.getView(R.id.goodsPoint);
+				final TextView pullgoods = helper.getView(R.id.pullgoods);
+				final TextView pushgoods = helper.getView(R.id.pushgoods);
 				//point_ima.setImageResource();
 				point_goodsName.setText(item.getProductName());
 				rated.setText(item.getProductDesc());
 				goodsPoint.setText(item.getProductPrice());
-				pullgoods.setText(item.getIsOnline());
-				pushgoods.setText(item.getIsOnline());
+
+				if (item.getIsOnline().equals("Y")) {
+					pullgoods.setText("上架");
+					pushgoods.setVisibility(View.GONE);
+				} else {
+					pullgoods.setText("下架");
+					pushgoods.setVisibility(View.GONE);
+				}
 				//String  uri=item.getProductImages().get(2).getImgUrl();//图片url
 				//System.out.println(item.getProductImages().get(2).getImgUrl());
 				//adaption();
+				//上架下架的点击事件
+
+				pullgoods.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						pullgoods.setText("上架");
+						pushgoods.setText("下架");
+
+					}
+				});
+
+				pushgoods.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						pullgoods.setText("下架");
+						pushgoods.setVisibility(View.GONE);
+
+					}
+				});
+
 
 				//修改点击事件
 				changegoods.setOnClickListener(new OnClickListener() {
@@ -157,7 +206,10 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 					public void onClick(View v) {
 
 						Intent intent = new Intent(MemberPointManage.this, RevisionsActivity.class);
-						intent.putExtra("id", item.getId());
+						intent.putExtra("new_product_id", item.getId());
+						intent.putExtra("new_product_food", item.getProductName());
+						intent.putExtra("new_product_rated", item.getProductDesc());
+						intent.putExtra("new_product_price", item.getProductPrice());
 						startActivityForResult(intent, RESULT_MENMBERCHANGE);
 					}
 				});
@@ -250,7 +302,6 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 
 	/**
 	 * 积分商品查询
-	 *
 	 */
 	private void getQueryProduct() {
 
@@ -296,8 +347,8 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 					img_memberpoint_empty.setVisibility(View.VISIBLE);
 					fm_member_listView.setVisibility(View.GONE);
 
-				//	ContentUtils.showMsg(MemberPointManage.this, "查询积分商品失败");
-				//	fm_member_listView.setVisibility(View.GONE);
+					//	ContentUtils.showMsg(MemberPointManage.this, "查询积分商品失败");
+					//	fm_member_listView.setVisibility(View.GONE);
 				}
 			});
 		} catch (Exception e) {

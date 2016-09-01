@@ -33,6 +33,7 @@ public class MemberInfoSelectBean implements Serializable {
 	private String cumulativeAmount;
 	private String vipValidityPeriod;
 	private int vipSex;
+	private String labelName;
 
 	public String getVipIdNo() {
 		return vipIdNo;
@@ -200,5 +201,13 @@ public class MemberInfoSelectBean implements Serializable {
 
 	public void setChecked(boolean checked) {
 		isChecked = checked;
+	}
+
+	public String getLabelName() {
+		return labelName;
+	}
+
+	public void setLabelName(String labelName) {
+		this.labelName = labelName;
 	}
 }

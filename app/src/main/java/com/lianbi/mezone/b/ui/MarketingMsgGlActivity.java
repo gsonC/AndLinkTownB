@@ -101,13 +101,17 @@ public class MarketingMsgGlActivity extends BaseActivity {
     int i = 0;
     int  page=1;
     boolean  Nodata=false;
-
+    private String  smstotalSendNum="";
+    private String  remainSendNum="";
     @OnClick({R.id.text_newmakemsg, R.id.btn_msgpay})
     public void OnClick(View v) {
         switch (v.getId()) {
             case R.id.text_newmakemsg:
-                simpleJump(MarketingMsgBulidActivity.class);
-
+                Intent  intent=new Intent();
+                intent.setClass(MarketingMsgGlActivity.this,MarketingMsgBulidActivity.class);
+                intent.putExtra("smstotalSendNum",smstotalSendNum);
+                intent.putExtra("remainSendNum",remainSendNum);
+                startActivity(intent);
                 break;
             case R.id.btn_msgpay:
 
@@ -233,6 +237,10 @@ public class MarketingMsgGlActivity extends BaseActivity {
                         try {
                             jsonObject = new JSONObject(reString);
                             reString = jsonObject.getString("list");
+                            smstotalSendNum=String.valueOf(jsonObject.getInt("totalSendNum"));
+                            remainSendNum=String.valueOf(jsonObject.getInt("remainSendNum"));
+                            txtAlreadysendnum.setText(smstotalSendNum);
+                            txtRemainsendnum.setText(remainSendNum);
                             if (!TextUtils.isEmpty(reString)) {
                                 mData.clear();
                                 ArrayList<MarketingMsgGl> msgGlsList = (ArrayList<MarketingMsgGl>) JSON
