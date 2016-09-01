@@ -245,6 +245,7 @@ public class SendNewCouponActivity extends BaseActivity implements CompoundButto
             return;
         }
 
+        limitAmt = minimum.getText().toString();
         if (AbStrUtil.isEmpty(limitAmt)) {
             minimum.requestFocus();
             resetMinmum();
