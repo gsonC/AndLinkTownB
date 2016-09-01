@@ -2589,6 +2589,7 @@ public enum OkHttpsImp {
                               String coupName, String coupAmt, String limitAmt,
 							  String vipPhones, String beginTime, String endTime, String msgId,
 							  String storeId, String coupContent, String remark,
+							  String sourceCode, String businessName,
                               MyResultCallback<String> myResultCallback) throws Exception {
         Map<String, String> params = new HashMap<>();
         params.put("reqTime", reqTime);
@@ -2604,6 +2605,8 @@ public enum OkHttpsImp {
         params.put("storeId", storeId);
         params.put("coupContent", coupContent);
         params.put("remark", remark);
+		params.put("sourceCode", sourceCode);
+		params.put("businessName", businessName);
         String sign = getSign(md5_key, params);
         params.put("sign", sign);
         String url = getAbsoluteUrl(API.SEND_NEW_COUPON);

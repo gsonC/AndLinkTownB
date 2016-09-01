@@ -130,7 +130,7 @@ public class CouponUsingDetailsActivity extends BaseActivity implements
                     if (useTime.trim().length() > 10)
                         amount_time.setText(AbDateUtil.getStringByFormat(useTime, AbDateUtil.dateFormatYMDHMNew));
                     else
-                        amount_time.setText(AbDateUtil.getStringByFormat(useTime, AbDateUtil.dateFormatYMD));
+                        amount_time.setText(AbDateUtil.getStringByFormat(useTime, AbDateUtil.dateFormatYMDNew));
                 }
                 if (!AbStrUtil.isEmpty(state)) {
                     switch (state) {
@@ -151,8 +151,7 @@ public class CouponUsingDetailsActivity extends BaseActivity implements
     }
 
     private void getDatas() {
-        String reqTime = AbDateUtil.getDateTimeNow();
-        String uuid = AbStrUtil.getUUID();
+        initCommonParameter();
         try {
             okHttpsImp.getCouponUsingDetailListByCoupId(uuid, "app", reqTime, couponId, "",
                     Integer.toString(startNo), Integer.toString(pageSize),
