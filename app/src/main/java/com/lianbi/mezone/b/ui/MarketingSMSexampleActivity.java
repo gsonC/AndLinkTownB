@@ -193,13 +193,13 @@ public class MarketingSMSexampleActivity extends BaseActivity {
                                         .parseArray(reString,
                                                 SmsTemplate.class);
                                 int listsize=smstemplatelist.size();
-                                for (int i = 0; i < listsize; i++) {
-                                    SmsTemplate smsTemplate = smstemplatelist.get(i);
-                                    if (smsTemplate.getTemplateType()!=null&&!smsTemplate.getTemplateType().trim().equals(templateType)) {
-                                        smstemplatelist.remove(i);
-                                        i--;
-                                    }
-                                }
+//                                for (int i = 0; i < listsize; i++) {
+//                                    SmsTemplate smsTemplate = smstemplatelist.get(i);
+//                                    if (smsTemplate.getTemplateType()!=null&&!smsTemplate.getTemplateType().trim().equals(templateType)) {
+//                                        smstemplatelist.remove(i);
+//                                        i--;
+//                                    }
+//                                }
                                 mData.addAll(smstemplatelist);
                                 updateView(mData);
                             }
