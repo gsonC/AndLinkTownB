@@ -334,7 +334,7 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 
 				@Override
 				public void onResponseFailed(String msg) {
-
+					ContentUtils.showMsg(mActivity,"连接超时,请稍后再试");
 				}
 			});
 		} catch (Exception e) {
