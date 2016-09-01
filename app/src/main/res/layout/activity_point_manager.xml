@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
-              android:layout_height="match_parent"
+              android:layout_height="115dp"
               android:orientation="vertical"
               android:paddingRight="-90dp"
-
-
     >
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="115dp"
         >
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="115dp"
             android:background="@color/white"
             android:orientation="horizontal"
             >
@@ -25,12 +23,12 @@
                 android:layout_width="61dp"
                 android:layout_height="61dp"
                 android:layout_marginLeft="14dp"
-                android:layout_marginTop="14dp"
+                android:layout_marginTop="10dp"
                 />
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="136dp"
+                android:layout_height="115dp"
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="15dp"
                 android:layout_weight="1"
@@ -72,7 +70,7 @@
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="150dp"
+                android:layout_height="115dp"
                 android:layout_marginLeft="20dp"
                 android:layout_weight="1"
                 android:orientation="vertical"
@@ -88,6 +86,7 @@
                     android:text="上架"
                     android:textColor="@color/pointcolor"
                     android:textSize="14sp"
+
                     />
 
 
@@ -95,25 +94,32 @@
                     android:id="@+id/pushgoods"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="10dp"
                     android:paddingTop="9dp"
-                    android:text="下架"
                     android:textColor="@color/foodcolor"
                     android:textSize="14sp"
+                    android:visibility="gone"
+
                     />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@null"/>
 
                 <TextView
                     android:id="@+id/changegoods"
                     android:layout_width="60dp"
                     android:layout_height="25dp"
-                    android:layout_gravity="center_vertical"
                     android:layout_marginRight="18dp"
-                    android:layout_marginTop="30dp"
                     android:background="@drawable/shape_search_date_edt_bg_new"
-                    android:gravity="center"
                     android:text="修改"
                     android:textColor="@color/point"
                     android:textSize="14sp"
+                    android:paddingLeft="12dp"
+                    android:paddingBottom="3dp"
+                    android:paddingTop="3dp"
                     />
             </LinearLayout>
 
@@ -122,21 +128,21 @@
         <RelativeLayout
 
             android:layout_width="90dp"
-            android:layout_height="150dp"
+            android:layout_height="115dp"
             android:layout_alignParentRight="true"
             android:clickable="true"
             android:gravity="right">
 
             <LinearLayout
                 android:layout_width="90dp"
-                android:layout_height="150dp"
+                android:layout_height="115dp"
                 android:layout_alignParentRight="true"
                 android:gravity="right">
 
                 <TextView
                     android:id="@+id/tv_chdelete"
                     android:layout_width="90dp"
-                    android:layout_height="150dp"
+                    android:layout_height="115dp"
                     android:background="#ff0000"
                     android:gravity="center"
                     android:text="删除"

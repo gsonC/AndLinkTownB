@@ -64,6 +64,7 @@
             android:hint="请输入标签"
             android:textColor="@color/colores_news_10"
             android:textSize="14sp"
+            android:maxLength="10"
             />
 
         <TextView
