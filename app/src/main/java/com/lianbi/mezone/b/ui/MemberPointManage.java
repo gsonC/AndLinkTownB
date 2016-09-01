@@ -137,7 +137,7 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 				rated = helper.getView(R.id.rated);
 				goodsPoint = helper.getView(R.id.goodsPoint);
 				pullgoods = helper.getView(R.id.pullgoods);
-				pullgoodsIma = helper.getView(R.id.pullgoodsIma);
+				//pullgoodsIma = helper.getView(R.id.pullgoodsIma);
 				pushgoods = helper.getView(R.id.pushgoods);
 				changegoods = helper.getView(R.id.changegoods);
 

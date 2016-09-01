@@ -4,6 +4,8 @@
               android:layout_height="match_parent"
               android:orientation="vertical"
               android:paddingRight="-90dp"
+
+
     >
 
     <RelativeLayout
@@ -13,8 +15,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:background="@color/white"
             android:layout_height="150dp"
+            android:background="@color/white"
             android:orientation="horizontal"
             >
 
@@ -27,11 +29,12 @@
                 />
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="136dp"
-                android:layout_marginTop="15dp"
-                android:orientation="vertical"
                 android:layout_marginLeft="30dp"
+                android:layout_marginTop="15dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
                 >
 
                 <TextView
@@ -48,12 +51,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="真好吃的，单"
+                    android:maxLines="2"
+                    android:text="真好吃的，啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊"
                     android:textColor="@color/foodcolor"
                     android:textSize="13sp"
-                    android:maxLines="2"
                     />
-
 
 
                 <TextView
@@ -67,45 +69,27 @@
 
                     />
             </LinearLayout>
-              <Button
-                  android:layout_width="50dp"
-                  android:layout_height="150dp"
-                  android:background="#00000000"
-                  />
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="150dp"
-                android:orientation="vertical"
-                android:layout_marginLeft="100dp"
-               >
 
-                <LinearLayout
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:layout_marginLeft="20dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                >
+
+
+                <TextView
+                    android:id="@+id/pullgoods"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    >
+                    android:layout_marginTop="15dp"
+                    android:drawableLeft="@mipmap/downtwo"
+                    android:text="上架"
+                    android:textColor="@color/pointcolor"
+                    android:textSize="14sp"
+                    />
 
-                    <TextView
-                        android:id="@+id/pullgoods"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:text="上架"
-                        android:textColor="@color/pointcolor"
-                        android:textSize="14sp"
-                        />
-
-                    <ImageView
-                        android:id="@+id/pullgoodsIma"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="6dp"
-                        android:layout_marginRight="18dp"
-                        android:layout_marginTop="15dp"
-                        android:src="@mipmap/downtwo"
-                        />
-
-                </LinearLayout>
 
                 <TextView
                     android:id="@+id/pushgoods"
@@ -144,8 +128,8 @@
             android:gravity="right">
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="90dp"
+                android:layout_height="150dp"
                 android:layout_alignParentRight="true"
                 android:gravity="right">
 
