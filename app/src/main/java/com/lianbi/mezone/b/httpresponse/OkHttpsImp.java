@@ -649,12 +649,12 @@ public enum OkHttpsImp {
 	 */
 	public void querySendMsgDetail(
 			MyResultCallback<String> myResultCallback, String businessId,
-			String batchNo, String startNo, String pageSize,
+			String batchNo, String pageNo, String pageSize,
 			String reqTime, String uuid) throws Exception {
 		Map<String, String> params = new HashMap<String, String>();
-		params.put("businessId", businessId);
+		params.put("storeId", businessId);
 		params.put("batchNo", batchNo);
-		params.put("startNo", startNo);
+		params.put("pageNo", pageNo);
 		params.put("pageSize", pageSize);
 		params.put("reqTime", reqTime);
 		params.put("serNum", uuid);
@@ -673,7 +673,7 @@ public enum OkHttpsImp {
 			String startNo, String pageSize, String sendDate,
 			String reqTime, String uuid) throws Exception {
 		Map<String, String> params = new HashMap<String, String>();
-		params.put("businessId", businessId);
+		params.put("storeId", businessId);
 		params.put("startNo", startNo);
 		params.put("pageSize", pageSize);
 		params.put("sendDate", sendDate);
@@ -741,8 +741,7 @@ public enum OkHttpsImp {
 		params.put("reqTime", reqTime);
 		String sign = getSign(md5_key, params);
 		params.put("sign", sign);
-//		String url = getAbsoluteUrl(API.MARKETINGSMS_QUERYTEMPLATE_LIST);
-		String url = "http://test.xylbn.cn/lincombFront/message/queryAllTemplate.do?";
+		String url = getAbsoluteUrl(API.MARKETINGSMS_QUERYTEMPLATE_LIST);
 		postProgressResponse(myResultCallback, params, url);
 	}
 	/**
@@ -753,9 +752,9 @@ public enum OkHttpsImp {
 			String  phone,String  templateMark, String reqTime, String uuid)
 			throws Exception {
 		Map<String, String> params = new HashMap<String, String>();
-		params.put("businessID",businessID);
-		params.put("phone",phone);
-		params.put("templateMark",templateMark);
+		params.put("storeId",businessID);
+		params.put("vipPhones",phone);
+		params.put("msgId",templateMark);
 		params.put("batchNum","");
 		params.put("serNum", uuid);
 		params.put("source", appsource);
@@ -773,7 +772,7 @@ public enum OkHttpsImp {
 			String  sendBeginTime,String  sendEndTime, String reqTime, String uuid)
 			throws Exception {
 		Map<String, String> params = new HashMap<String, String>();
-		params.put("businessID",businessID);
+		params.put("storeId",businessID);
 		params.put("sendBeginTime",sendBeginTime);
 		params.put("sendEndTime",sendEndTime);
 		params.put("serNum", uuid);

@@ -478,8 +478,8 @@ public class MarketingSelectMemberActivity extends BaseActivity {
                         tv_mb_category.setText("普通会员");
                     }
                     tv_mb_source.setText(mDatas.get(position).getVipSource());
-                    if(!AbStrUtil.isEmpty(mDatas.get(position).getLabels())){
-                        tv_mb_label.setText(mDatas.get(position).getLabels());
+                    if(!AbStrUtil.isEmpty(mDatas.get(position).getLabelName())){
+                        tv_mb_label.setText(mDatas.get(position).getLabelName());
                     }else{
                         tv_mb_label.setText("无");
                     }
