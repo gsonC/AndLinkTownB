@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -14,6 +15,9 @@ import android.widget.TextView;
 
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.xizhi.mezone.b.R;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -65,6 +69,7 @@ public class SendNewCouponActivity extends BaseActivity implements CompoundButto
     private static final int REQUEST_CODE_TEMPLATE_RESULT = 1009;
     //可选会员
     private static final int REQUEST_CODE_MEMBER_RESULT = 1010;
+    private String businessId;
     private String vipPhones;//要发送的会员手机号码拼接字符串
     private String msgId;//短信模板id
     private String coupName;
@@ -74,14 +79,13 @@ public class SendNewCouponActivity extends BaseActivity implements CompoundButto
     private String endTime;
     private String info;//短信模板
 
-    private Handler mHandler = new Handler();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send_new_coupon, HAVETYPE);
         ButterKnife.bind(this);
         setPageTitle("发送新优惠券");
+        limitAmt = minimum.getText().toString();
         initTextWatcher();
         changeText(minimum.length());
     }
@@ -90,16 +94,22 @@ public class SendNewCouponActivity extends BaseActivity implements CompoundButto
         minimum.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+                Log.e("beforeTextChanged", "s=" + s.toString());
+                Log.e("beforeTextChanged", "start=" + start);
+                Log.e("beforeTextChanged", "count=" + count);
+                Log.e("beforeTextChanged", "after=" + after);
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                Log.e("onTextChanged", "s=" + s.toString());
+                Log.e("onTextChanged", "start=" + start);
+                Log.e("onTextChanged", "count=" + count);
             }
 
             @Override
             public void afterTextChanged(Editable s) {
+                Log.e("afterTextChanged", "s=" + s.toString());
                 limitAmt = s.toString();
                 changeText(s.length());
                 replacingWords();
@@ -118,7 +128,8 @@ public class SendNewCouponActivity extends BaseActivity implements CompoundButto
 
             @Override
             public void afterTextChanged(Editable s) {
-                coupName = s.toString();
+                String ss = s.toString();
+                coupName = ss.endsWith("优惠券") ? ss : ss + "优惠券";
                 replacingWords();
             }
         });
@@ -208,20 +219,22 @@ public class SendNewCouponActivity extends BaseActivity implements CompoundButto
         }
     }
 
-    private void sendNewCoupon() {
-        final String businessId = userShopInfoBean.getBusinessId();
+    @Override
+    protected void onResume() {
+        super.onResume();
+        businessId = userShopInfoBean.getBusinessId();
         if (AbStrUtil.isEmpty(businessId)) {
             DialogCommon dialog = new DialogCommon(SendNewCouponActivity.this) {
                 @Override
                 public void onCheckClick() {
                     dismiss();
+                    finish();
                 }
 
                 @Override
                 public void onOkClick() {
                     startActivity(new Intent(SendNewCouponActivity.this, AddShopActivity.class));
                     dismiss();
-                    finish();
                 }
             };
             dialog.setCancelable(false);
@@ -230,9 +243,10 @@ public class SendNewCouponActivity extends BaseActivity implements CompoundButto
             dialog.setTv_dialog_common_ok("新增商铺");
             dialog.setTv_dialog_common_cancel("  取消  ");
             dialog.show();
-            return;
         }
+    }
 
+    private void sendNewCoupon() {
         if (AbStrUtil.isEmpty(coupName)) {
             input_coupon_name.requestFocus();
             ContentUtils.showMsg(SendNewCouponActivity.this, input_coupon_name.getHint().toString());
@@ -289,12 +303,13 @@ public class SendNewCouponActivity extends BaseActivity implements CompoundButto
                             businessId, "", "", "app", userShopInfoBean.getShopName(), new MyResultCallback<String>() {
                                 @Override
                                 public void onResponseResult(Result result) {
-
+                                    Log.e("Result", result.getMsg());
+                                    ContentUtils.showMsg(SendNewCouponActivity.this, result.getMsg());
                                 }
 
                                 @Override
                                 public void onResponseFailed(String msg) {
-
+                                    Log.e("Failed(String", msg);
                                 }
                             });
                 } catch (Exception e) {
@@ -357,33 +372,28 @@ public class SendNewCouponActivity extends BaseActivity implements CompoundButto
     }
 
     private void replacingWords() {
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                if (!AbStrUtil.isEmpty(info)) {
-                    String businessName = userShopInfoBean.getShopName();
-                    if (info.contains("{businessName}") && !AbStrUtil.isEmpty(businessName))
-                        info = replaceWord("businessName", businessName);
+        if (!AbStrUtil.isEmpty(info)) {
+            String businessName = userShopInfoBean.getShopName();
+            if (info.contains("{businessName}") && !AbStrUtil.isEmpty(businessName))
+                info = replaceWord("businessName", businessName);
 
-                    if (info.contains("{cardName}") && !AbStrUtil.isEmpty(coupName))
-                        info = replaceWord("cardName", coupName.endsWith("优惠券") ? coupName : coupName + "优惠券");
+            if (info.contains("{cardName}") && !AbStrUtil.isEmpty(coupName))
+                info = replaceWord("cardName", coupName);
 
-                    if (info.contains("{value}") && !AbStrUtil.isEmpty(coupAmt))
-                        info = replaceWord("value", coupAmt);
+            if (info.contains("{value}") && !AbStrUtil.isEmpty(coupAmt))
+                info = replaceWord("value", coupAmt);
 
-                    if (info.contains("{condition}") && !AbStrUtil.isEmpty(limitAmt))
-                        info = replaceWord("condition", limitAmt);
+            if (info.contains("{condition}") && !AbStrUtil.isEmpty(limitAmt))
+                info = replaceWord("condition", limitAmt);
 
-                    if (info.contains("{beginTime}") && !AbStrUtil.isEmpty(beginTime))
-                        info = replaceWord("beginTime", beginTime);
+            if (info.contains("{beginTime}") && !AbStrUtil.isEmpty(beginTime))
+                info = replaceWord("beginTime", beginTime);
 
-                    if (info.contains("{endTime}") && !AbStrUtil.isEmpty(endTime))
-                        info = replaceWord("endTime", endTime);
+            if (info.contains("{endTime}") && !AbStrUtil.isEmpty(endTime))
+                info = replaceWord("endTime", endTime);
 
-                    editable_sms_content.setText(info);
-                }
-            }
-        });
+            editable_sms_content.setText(info);
+        }
     }
 
     private String replaceWord(String oldString, String newString) {
