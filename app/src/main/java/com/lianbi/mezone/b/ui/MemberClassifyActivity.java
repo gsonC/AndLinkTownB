@@ -316,7 +316,8 @@ public class MemberClassifyActivity extends BaseActivity {
                  }else{
                     tv_memberclassify.setText(mDatas.get(position).getTypeName());
                     tv_memebernum.setText(String.valueOf(mDatas.get(position).getThisTypeCount()));
-                    int  a=Integer.parseInt(mDatas.get(position).getTypeDiscountRatio());
+//                    int  a=Integer.parseInt(mDatas.get(position).getTypeDiscountRatio());
+                    int  a=mDatas.get(position).getTypeDiscountRatio();
                     double   dou=0.0;
                     dou=division(a,10);
 //                  double discountratio=Integer.parseInt(mDatas.get(position).getTypeDiscountRatio());

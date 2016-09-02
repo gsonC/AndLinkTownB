@@ -673,6 +673,7 @@ public enum OkHttpsImp {
 			String startNo, String pageSize, String sendDate,
 			String reqTime, String uuid) throws Exception {
 		Map<String, String> params = new HashMap<String, String>();
+//		BD2016050621392200000000
 		params.put("storeId", businessId);
 		params.put("startNo", startNo);
 		params.put("pageSize", pageSize);
@@ -693,24 +694,24 @@ public enum OkHttpsImp {
 //				.concat("/")
 //				.concat(methodName);
 	}
-	/**
-	 * 新建营销短信发送短信
-	 */
-	public void sendShortMessage(
-			MyResultCallback<String> myResultCallback, String businessId,
-			String phone, String members,
-			String reqTime, String uuid) throws Exception {
-		Map<String, String> params = new HashMap<String, String>();
-		params.put("businessID", businessId);
-		params.put("phone", phone);
-		params.put("reqTime", reqTime);
-		params.put("serNum", uuid);
-		params.put("source", appsource);
-		String sign = getSign(md5_key, params);
-		params.put("sign", sign);
-		String url = getAbsoluteUrl(API.MARKETINGSMS_SENDMSG_LIST);
-		postProgressResponse(myResultCallback, params, url);
-	}
+//	/**
+//	 * 新建营销短信发送短信
+//	 */
+//	public void sendShortMessage(
+//			MyResultCallback<String> myResultCallback, String businessId,
+//			String phone, String members,
+//			String reqTime, String uuid) throws Exception {
+//		Map<String, String> params = new HashMap<String, String>();
+//		params.put("businessID", businessId);
+//		params.put("phone", phone);
+//		params.put("reqTime", reqTime);
+//		params.put("serNum", uuid);
+//		params.put("source", appsource);
+//		String sign = getSign(md5_key, params);
+//		params.put("sign", sign);
+//		String url = getAbsoluteUrl(API.MARKETINGSMS_SENDMSG_LIST);
+//		postProgressResponse(myResultCallback, params, url);
+//	}
 
 	/**
 	 * 获取可供购买的短信套餐
@@ -749,16 +750,16 @@ public enum OkHttpsImp {
 	 */
 	public void smsBulkSend(
 			MyResultCallback<String> myResultCallback,String businessID,String businessName,
-			String  phone,String  templateMark, String reqTime, String uuid)
+			String  templateMark,String  phone, String reqTime, String uuid)
 			throws Exception {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("storeId",businessID);
 		params.put("businessName",businessName);
-		params.put("vipPhones",phone);
+		params.put("phones",phone);
 		params.put("msgId",templateMark);
-		params.put("batchNum","");
 		params.put("serNum", uuid);
 		params.put("source", appsource);
+		params.put("sourceCode",appsource);
 		params.put("reqTime", reqTime);
 		String sign = getSign(md5_key, params);
 		params.put("sign", sign);

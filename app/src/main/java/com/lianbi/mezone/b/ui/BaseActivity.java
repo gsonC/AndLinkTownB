@@ -66,6 +66,8 @@ public class BaseActivity extends FragmentActivity implements OnClickListener {
 
 	public FragmentManager fm;
 	public static UserShopInfoBean userShopInfoBean;
+	public String BusinessId="";
+	public String ShopName="";
 	public String reqTime="";
 	public String uuid="";
 	@Override
@@ -81,7 +83,6 @@ public class BaseActivity extends FragmentActivity implements OnClickListener {
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		fm = getSupportFragmentManager();
 		getWindowWH();
-        initCommonParameter();
 		ISCONNECTED = AbAppUtil.isNetworkAvailable(this);
 		okHttpsImp = OkHttpsImp.SINGLEOKHTTPSIMP.newInstance(this);
 
@@ -93,10 +94,14 @@ public class BaseActivity extends FragmentActivity implements OnClickListener {
 		if (userShopInfoBean == null) {
 			userShopInfoBean = new UserShopInfoBean(this);
 		}
+		initCommonParameter();
 	}
     public  void initCommonParameter(){
 		reqTime= AbDateUtil.getDateTimeNow();
 		uuid= AbStrUtil.getUUID();
+		BusinessId=userShopInfoBean.getBusinessId();
+		ShopName=userShopInfoBean.getShopName();
+
 	}
 	@Override
 	protected void onRestart() {

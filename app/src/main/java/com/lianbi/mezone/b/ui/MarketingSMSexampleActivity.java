@@ -293,7 +293,7 @@ public class MarketingSMSexampleActivity extends BaseActivity {
                         Intent intent = new Intent();
                         intent.setClass(MarketingSMSexampleActivity.this, MarketingMsgBulidActivity.class);
                         intent.putExtra("info", mDatas.get(position).getContent());
-                        intent.putExtra("templateID", mDatas.get(position).getTemplateID());
+                        intent.putExtra("templateID", mDatas.get(position).getTemplateMark());
                         setResult(RESULT_OK, intent);}
                         else
                         if(templateType.equals("P")){

@@ -112,11 +112,13 @@ public class MarketingMsgBulidActivity extends BaseActivity {
         }
     }
     private  void  sendShortmsg(){
-        Log.i("tag","113-getBusinessId------>"+userShopInfoBean.getBusinessId());
+        Log.i("tag","113-getBusinessId------>"+BusinessId);
         Log.i("tag","113-templateID------>"+templateID);
         Log.i("tag","114-sendPhones------>"+sendPhones);
         Log.i("tag","115----reqTime-->"+reqTime);
         Log.i("tag","116----uuid----->"+uuid);
+        Log.i("tag","129--ShopName--->"+ShopName);
+
         if(TextUtils.isEmpty(templateID)){
             ContentUtils.showMsg(MarketingMsgBulidActivity.this,"请选择短信模板");
 
@@ -126,7 +128,6 @@ public class MarketingMsgBulidActivity extends BaseActivity {
             ContentUtils.showMsg(MarketingMsgBulidActivity.this,"请选择发送会员");
             return;
         }
-        Log.i("tag","129----->"+userShopInfoBean.getShopName());
         try {
             okHttpsImp.smsBulkSend(new MyResultCallback<String>() {
 
@@ -150,7 +151,7 @@ public class MarketingMsgBulidActivity extends BaseActivity {
                 public void onResponseFailed(String msg) {
 
                 }
-            }, userShopInfoBean.getBusinessId(),userShopInfoBean.getShopName(),templateID,sendPhones, reqTime, uuid);
+            },BusinessId,ShopName,templateID,sendPhones, reqTime, uuid);
 
 
 
@@ -200,6 +201,14 @@ public class MarketingMsgBulidActivity extends BaseActivity {
     private void initViewAndData() {
         setPageTitle("新建营销短信");
         dialog = new HttpDialog(this);
+        String smstotalSendNum=getIntent().getStringExtra("smstotalSendNum");
+        String remainSendNum=getIntent().getStringExtra("remainSendNum");
+        if(smstotalSendNum!=null&&!smstotalSendNum.equals("")){
+            txtAlreadysendnum.setText(smstotalSendNum);
+        }
+        if(remainSendNum!=null&&!remainSendNum.equals("")){
+            txtRemainsendnum.setText(remainSendNum);
+        }
     }
 
 
