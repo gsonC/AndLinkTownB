@@ -2,10 +2,8 @@ package com.lianbi.mezone.b.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -17,14 +15,12 @@ import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.xizhi.mezone.b.R;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import butterknife.OnFocusChange;
-import butterknife.OnTextChanged;
 import cn.com.hgh.timeselector.TimeSelectorE;
 import cn.com.hgh.utils.AbDateUtil;
 import cn.com.hgh.utils.AbStrUtil;
@@ -70,6 +66,7 @@ public class SendNewCouponActivity extends BaseActivity implements CompoundButto
     //可选会员
     private static final int REQUEST_CODE_MEMBER_RESULT = 1010;
     private String businessId;
+    private String businessName;
     private String vipPhones;//要发送的会员手机号码拼接字符串
     private String msgId;//短信模板id
     private String coupName;
@@ -77,7 +74,7 @@ public class SendNewCouponActivity extends BaseActivity implements CompoundButto
     private String coupAmt;
     private String beginTime;
     private String endTime;
-    private String info;//短信模板
+    private ArrayList<String> templetSplitedStrs = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,25 +91,17 @@ public class SendNewCouponActivity extends BaseActivity implements CompoundButto
         minimum.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                Log.e("beforeTextChanged", "s=" + s.toString());
-                Log.e("beforeTextChanged", "start=" + start);
-                Log.e("beforeTextChanged", "count=" + count);
-                Log.e("beforeTextChanged", "after=" + after);
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                Log.e("onTextChanged", "s=" + s.toString());
-                Log.e("onTextChanged", "start=" + start);
-                Log.e("onTextChanged", "count=" + count);
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                Log.e("afterTextChanged", "s=" + s.toString());
                 limitAmt = s.toString();
                 changeText(s.length());
-                replacingWords();
+                replacingWords("condition", limitAmt);
             }
         });
         input_coupon_name.addTextChangedListener(new TextWatcher() {
@@ -130,7 +119,7 @@ public class SendNewCouponActivity extends BaseActivity implements CompoundButto
             public void afterTextChanged(Editable s) {
                 String ss = s.toString();
                 coupName = ss.endsWith("优惠券") ? ss : ss + "优惠券";
-                replacingWords();
+                replacingWords("cardName", coupName);
             }
         });
         coupon_money_num.addTextChangedListener(new TextWatcher() {
@@ -147,7 +136,7 @@ public class SendNewCouponActivity extends BaseActivity implements CompoundButto
             @Override
             public void afterTextChanged(Editable s) {
                 coupAmt = s.toString();
-                replacingWords();
+                replacingWords("value", coupAmt);
             }
         });
     }
@@ -178,7 +167,7 @@ public class SendNewCouponActivity extends BaseActivity implements CompoundButto
                             public void handle(String time) {
                                 valid_period_from.setText(time);
                                 beginTime = time;
-                                replacingWords();
+                                replacingWords("beginTime", beginTime);
                             }
                         }, AbDateUtil.getCurrentDate(AbDateUtil.dateFormatYMDHM),
                         ENDTIME);
@@ -194,7 +183,7 @@ public class SendNewCouponActivity extends BaseActivity implements CompoundButto
                             public void handle(String time) {
                                 valid_period_to.setText(time);
                                 endTime = time;
-                                replacingWords();
+                                replacingWords("endTime", endTime);
                             }
                         }, AbDateUtil.getCurrentDate(AbDateUtil.dateFormatYMDHM),
                         ENDTIME);
@@ -223,7 +212,8 @@ public class SendNewCouponActivity extends BaseActivity implements CompoundButto
     protected void onResume() {
         super.onResume();
         businessId = userShopInfoBean.getBusinessId();
-        if (AbStrUtil.isEmpty(businessId)) {
+        businessName = userShopInfoBean.getShopName();
+        if (AbStrUtil.isEmpty(businessId) || AbStrUtil.isEmpty(businessName)) {
             DialogCommon dialog = new DialogCommon(SendNewCouponActivity.this) {
                 @Override
                 public void onCheckClick() {
@@ -300,16 +290,49 @@ public class SendNewCouponActivity extends BaseActivity implements CompoundButto
                     initCommonParameter();
                     okHttpsImp.sendNewCoupon(uuid, "app", reqTime, coupName, coupAmt, limitAmt, vipPhones,
                             beginTime, endTime, is_need_send_sms.isChecked() ? msgId : "",
-                            businessId, "", "", "app", userShopInfoBean.getShopName(), new MyResultCallback<String>() {
+                            businessId, "", "", "app", businessName, new MyResultCallback<String>() {
                                 @Override
                                 public void onResponseResult(Result result) {
-                                    Log.e("Result", result.getMsg());
-                                    ContentUtils.showMsg(SendNewCouponActivity.this, result.getMsg());
+                                    if (result != null && result.getCode() == 0) {
+                                        DialogCommon dialog = new DialogCommon(SendNewCouponActivity.this) {
+                                            @Override
+                                            public void onCheckClick() {
+                                                finish();
+                                            }
+
+                                            @Override
+                                            public void onOkClick() {
+                                                coupName = "";
+                                                input_coupon_name.setText(coupName);
+                                                coupAmt = "";
+                                                coupon_money_num.setText(coupAmt);
+                                                minimum.setText(limitAmt);
+                                                vipPhones = "";
+                                                expected_coupon_send_num.setText("0");
+                                                expected_sms_send_num.setText("0");
+                                                beginTime = "";
+                                                valid_period_from.setText(beginTime);
+                                                endTime = "";
+                                                valid_period_to.setText(endTime);
+                                                msgId = "";
+                                                is_need_send_sms.setChecked(false);
+                                                templetSplitedStrs.clear();
+                                                editable_sms_content.setText("");
+                                                dismiss();
+                                            }
+                                        };
+                                        dialog.setCancelable(false);
+                                        dialog.setCanceledOnTouchOutside(false);
+                                        dialog.setTextTitle("发送成功");
+                                        dialog.setTv_dialog_common_ok("再发一条");
+                                        dialog.setTv_dialog_common_cancel("查看详情");
+                                        dialog.show();
+                                    }
                                 }
 
                                 @Override
                                 public void onResponseFailed(String msg) {
-                                    Log.e("Failed(String", msg);
+                                    ContentUtils.showMsg(SendNewCouponActivity.this, "发送失败，请重试");
                                 }
                             });
                 } catch (Exception e) {
@@ -319,7 +342,7 @@ public class SendNewCouponActivity extends BaseActivity implements CompoundButto
         };
         dialog.setCancelable(false);
         dialog.setCanceledOnTouchOutside(false);
-        dialog.setTextTitle("已确认无误！发送新优惠券？");
+        dialog.setTextTitle("已确认无误？");
         dialog.setTv_dialog_common_ok("确定");
         dialog.setTv_dialog_common_cancel("取消");
         dialog.show();
@@ -354,8 +377,7 @@ public class SendNewCouponActivity extends BaseActivity implements CompoundButto
                 case REQUEST_CODE_TEMPLATE_RESULT:
                     if (data != null) {
                         msgId = data.getStringExtra("templateID");
-                        info = data.getStringExtra("info");
-                        replacingWords();
+                        initTemplate(data.getStringExtra("info"));
                     }
                     break;
                 case REQUEST_CODE_MEMBER_RESULT:
@@ -371,43 +393,61 @@ public class SendNewCouponActivity extends BaseActivity implements CompoundButto
         }
     }
 
-    private void replacingWords() {
-        if (!AbStrUtil.isEmpty(info)) {
-            String businessName = userShopInfoBean.getShopName();
-            if (info.contains("{businessName}") && !AbStrUtil.isEmpty(businessName))
-                info = replaceWord("businessName", businessName);
-
-            if (info.contains("{cardName}") && !AbStrUtil.isEmpty(coupName))
-                info = replaceWord("cardName", coupName);
-
-            if (info.contains("{value}") && !AbStrUtil.isEmpty(coupAmt))
-                info = replaceWord("value", coupAmt);
-
-            if (info.contains("{condition}") && !AbStrUtil.isEmpty(limitAmt))
-                info = replaceWord("condition", limitAmt);
-
-            if (info.contains("{beginTime}") && !AbStrUtil.isEmpty(beginTime))
-                info = replaceWord("beginTime", beginTime);
-
-            if (info.contains("{endTime}") && !AbStrUtil.isEmpty(endTime))
-                info = replaceWord("endTime", endTime);
-
-            editable_sms_content.setText(info);
+    private void initTemplate(String template) {
+        String[] a0 = template.split("\\{");
+        for (int i = 0; i < a0.length; i++) {
+            String[] a1 = a0[i].split("\\}");
+            for (int j = 0; j < a1.length; j++) {
+                templetSplitedStrs.add(a1[j]);
+            }
         }
-    }
-
-    private String replaceWord(String oldString, String newString) {
-        String[] array = info.split(oldString);
-        StringBuilder result = new StringBuilder();
-        for (int i = 0; i < (array.length - 1); i++) {
-            result.append(array[i]).append(newString);
+        StringBuilder sb = new StringBuilder();
+        ArrayList<String> arr = templetSplitedStrs;
+        for (int i = 0; i < arr.size(); i++) {
+            String s = arr.get(i);
+            if (s.equals("businessName") && !AbStrUtil.isEmpty(businessName)) {
+                arr.remove(i);
+                templetSplitedStrs.remove(i);
+                arr.add(i, businessName);
+                templetSplitedStrs.add(i, businessName);
+            }
+            if (s.equals("cardName") && !AbStrUtil.isEmpty(coupName)) {
+                arr.remove(i);
+                arr.add(i, coupName);
+            }
+            if (s.equals("value") && !AbStrUtil.isEmpty(coupAmt)) {
+                arr.remove(i);
+                arr.add(i, coupAmt);
+            }
+            if (s.equals("condition") && !AbStrUtil.isEmpty(limitAmt)) {
+                arr.remove(i);
+                arr.add(i, limitAmt);
+            }
+            if (s.equals("beginTime") && !AbStrUtil.isEmpty(beginTime)) {
+                arr.remove(i);
+                arr.add(i, beginTime);
+            }
+            if (s.equals("endTime") && !AbStrUtil.isEmpty(endTime)) {
+                arr.remove(i);
+                arr.add(i, endTime);
+            }
+            sb.append(s);
         }
-        result.append(array[array.length - 1]);
-        return result.toString();
+        editable_sms_content.setText(sb.toString());
     }
 
     private void resetMinmum() {
         if (0 == minimum.getText().length() || 0 == Integer.parseInt(minimum.getText().toString()))
             minimum.setText("100");
+    }
+
+    private void replacingWords(String befor, String after) {
+        if (templetSplitedStrs == null || templetSplitedStrs.isEmpty())
+            return;
+        StringBuilder sb = new StringBuilder();
+        for (String s : templetSplitedStrs) {
+            sb.append((befor.equals(s) && !AbStrUtil.isEmpty(after)) ? after : s);
+        }
+        editable_sms_content.setText(sb.toString());
     }
 }
