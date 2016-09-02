@@ -54,9 +54,9 @@
                     android:layout_height="26dp"
                     android:layout_marginRight="10dp"
                     android:background="@drawable/shape_radius_4dp"
-                    android:gravity="center"
                     android:hint="优惠券金额"
                     android:inputType="number"
+                    android:paddingLeft="5dp"
                     android:textColor="@color/colores_news_11"
                     android:textSize="@dimen/h13" />
 
@@ -69,6 +69,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/linearLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10.5dp"
@@ -116,7 +117,7 @@
                             android:layout_marginBottom="0.5dp"
                             android:background="@color/white"
                             android:inputType="number"
-                            android:text="1000"
+                            android:text="100"
                             android:textColor="#4b4b4b"
                             android:textSize="12.5sp" />
                     </FrameLayout>
@@ -180,7 +181,8 @@
             android:layout_width="281.5dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="9dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="15dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -225,6 +227,7 @@
                     android:id="@+id/expected_coupon_send_num"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="0"
                     android:textColor="#4b4b4b"
                     android:textSize="12.5sp" />
 
@@ -249,7 +252,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="11.5dp"
-                    android:checked="true"
+                    android:checked="false"
                     android:text="同时发送营销短信"
                     android:textColor="#4b4b4b"
                     android:textSize="12.5sp" />
@@ -262,7 +265,8 @@
                     android:gravity="center"
                     android:text="可选模板"
                     android:textColor="#4b4b4b"
-                    android:textSize="12.5sp" />
+                    android:textSize="12.5sp"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <TextView
@@ -274,16 +278,17 @@
                 android:gravity="center"
                 android:hint="可编辑短信内容"
                 android:textColor="@color/colores_news_11"
-                android:textSize="@dimen/h13" />
+                android:textSize="@dimen/h13"
+                android:visibility="gone" />
 
             <LinearLayout
                 android:id="@+id/expected_sms_send_num_parent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
                 android:layout_marginTop="15dp"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -296,6 +301,7 @@
                     android:id="@+id/expected_sms_send_num"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="0"
                     android:textColor="#4b4b4b"
                     android:textSize="12.5sp" />
 

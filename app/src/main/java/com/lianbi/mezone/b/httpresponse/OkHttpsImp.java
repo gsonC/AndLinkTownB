@@ -748,11 +748,12 @@ public enum OkHttpsImp {
 	 * 群发短信
 	 */
 	public void smsBulkSend(
-			MyResultCallback<String> myResultCallback,String businessID,
+			MyResultCallback<String> myResultCallback,String businessID,String businessName,
 			String  phone,String  templateMark, String reqTime, String uuid)
 			throws Exception {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("storeId",businessID);
+		params.put("businessName",businessName);
 		params.put("vipPhones",phone);
 		params.put("msgId",templateMark);
 		params.put("batchNum","");
@@ -2586,9 +2587,10 @@ public enum OkHttpsImp {
     * 发送优惠券短信
     */
     public void sendNewCoupon(String serNum, String source, String reqTime,
-                              String coupName, String coupAmt, String limitAmt, String vipPhones,
-                              String beginTime, String endTime, String msgId, String storeId,
-                              String vipIds, String coupContent, String remark,
+                              String coupName, String coupAmt, String limitAmt,
+							  String vipPhones, String beginTime, String endTime, String msgId,
+							  String storeId, String coupContent, String remark,
+							  String sourceCode, String businessName,
                               MyResultCallback<String> myResultCallback) throws Exception {
         Map<String, String> params = new HashMap<>();
         params.put("reqTime", reqTime);
@@ -2597,14 +2599,15 @@ public enum OkHttpsImp {
         params.put("coupName", coupName);
         params.put("coupAmt", coupAmt);
         params.put("limitAmt", limitAmt);
-        params.put("vipPhones", vipPhones);
+        params.put("phones", vipPhones);
         params.put("beginTime", beginTime);
         params.put("endTime", endTime);
-        params.put("vipIds", vipIds);
         params.put("msgId", msgId);
         params.put("storeId", storeId);
         params.put("coupContent", coupContent);
         params.put("remark", remark);
+		params.put("sourceCode", sourceCode);
+		params.put("businessName", businessName);
         String sign = getSign(md5_key, params);
         params.put("sign", sign);
         String url = getAbsoluteUrl(API.SEND_NEW_COUPON);

@@ -30,6 +30,7 @@ import cn.com.hgh.utils.AbStrUtil;
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.view.AbPullToRefreshView;
+import cn.com.hgh.view.DialogCommon;
 
 public class CouponManagerActivity extends BaseActivity implements AdapterView.OnItemClickListener,
         AbPullToRefreshView.OnHeaderRefreshListener, AbPullToRefreshView.OnFooterLoadListener {
@@ -84,12 +85,39 @@ public class CouponManagerActivity extends BaseActivity implements AdapterView.O
         currShowingIs = ALL_IS_SHOWING;
         setListener();
         initAdapter();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        startNo = 0;
         getDatas();
     }
 
     private void getDatas() {
-        String reqTime = AbDateUtil.getDateTimeNow();
-        String uuid = AbStrUtil.getUUID();
+        if (AbStrUtil.isEmpty(userShopInfoBean.getBusinessId())) {
+            DialogCommon dialog = new DialogCommon(CouponManagerActivity.this) {
+                @Override
+                public void onCheckClick() {
+                    dismiss();
+                }
+
+                @Override
+                public void onOkClick() {
+                    startActivity(new Intent(CouponManagerActivity.this, AddShopActivity.class));
+                    dismiss();
+                    finish();
+                }
+            };
+            dialog.setCancelable(false);
+            dialog.setCanceledOnTouchOutside(false);
+            dialog.setTextTitle("您还没有自己的商铺，是否去新增商铺？");
+            dialog.setTv_dialog_common_ok("新增商铺");
+            dialog.setTv_dialog_common_cancel("  取消  ");
+            dialog.show();
+            return;
+        }
+        initCommonParameter();
         try {
             okHttpsImp.queryStoreCoupByStoreId(uuid, "app", reqTime, userShopInfoBean.getBusinessId(), "", Integer.toString(startNo), Integer.toString(pageSize),
                     new MyResultCallback<String>() {
@@ -187,8 +215,8 @@ public class CouponManagerActivity extends BaseActivity implements AdapterView.O
 
                 coupon_name.setText(item.getCoupName());
                 coupon_tiaojian.setText(item.getLimitAmt());
-                youxiaoqi_from.setText(AbDateUtil.getStringByFormat(item.getBeginTime(), AbDateUtil.dateFormatYMD));
-                youxiaoqi_to.setText(AbDateUtil.getStringByFormat(item.getEndTime(), AbDateUtil.dateFormatYMD));
+                youxiaoqi_from.setText(AbDateUtil.getStringByFormat(item.getBeginTime(), AbDateUtil.dateFormatYMDNew));
+                youxiaoqi_to.setText(AbDateUtil.getStringByFormat(item.getEndTime(), AbDateUtil.dateFormatYMDNew));
                 if (item.getIsValide().trim().equals("Y")) {
                     is_valid.setImageResource(R.mipmap.effective);
                 } else {
