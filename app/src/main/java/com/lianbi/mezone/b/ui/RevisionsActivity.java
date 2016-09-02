@@ -98,7 +98,7 @@ public class RevisionsActivity extends BaseActivity {
 		edCeramicCup.setText(new_rated);
 		edExchangeIntegral.setText(new_price);
 	}
-
+	String isMain;
 	@Override
 	public void onClick(View view) {
 		super.onClick(view);
@@ -107,6 +107,7 @@ public class RevisionsActivity extends BaseActivity {
 			case R.id.ima_Smallima:
 				img_flag = 1;
 				photoUtills.startPickPhotoFromAlbumWithCrop();
+				isMain="Y";
 				break;
 			case R.id.small_imaOne:
 				img_flag = 2;
@@ -147,10 +148,11 @@ public class RevisionsActivity extends BaseActivity {
 	 * @param
 	 * @param
 	 */
+	String delImageUrls = "";
 	private void Mosaicimage() {
 		StringBuilder stringBuilder = new StringBuilder();
 		StringBuilder stringBuilderDel = new StringBuilder();
-		String delImageUrls = "";
+
 		if (imagesDel != null && imagesDel.size() > 0) {
 			for (int i = 0; i < imagesDel.size(); i++) {
 				if (i + 1 == imagesDel.size()) {
@@ -280,13 +282,13 @@ public class RevisionsActivity extends BaseActivity {
 		try {
 			okHttpsImp.updateProduct(OkHttpsImp.md5_key,
 					uuid, reqTime, "app",
-					productName, productDesc, productAmt,imageStr,productId,userShopInfoBean.getBusinessId(),
+					productName, productDesc, productAmt,userShopInfoBean.getBusinessId(),imageStr,delImageUrls,productId,isMain,
 					new MyResultCallback<String>() {
 				@Override
 				public void onResponseResult(Result result) {
 					String reString = result.getData();
 					finish();
-					System.out.println("reString" + reString);
+					System.out.println("reString291" + reString);
 					ContentUtils.showMsg(RevisionsActivity.this, "修改产品成功");
 					Intent intent = new Intent();
 					setResult(RESULT_OK, intent);

@@ -171,7 +171,7 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 
 				if (item.getIsOnline().equals("Y")) {
 					pullgoods.setText("上架");
-					pushgoods.setVisibility(View.GONE);
+					pushgoods.setVisibility(View.VISIBLE);
 				} else {
 					pullgoods.setText("下架");
 					pushgoods.setVisibility(View.GONE);
@@ -231,9 +231,9 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 		fm_member_listView.setAdapter(mAdapter);
 	}
 
-	private final int RESULT_MENMBERCHANGE = 1111;
-	private final int RESULT_ADDSHOP = 2222;
-	private final int RESULT_WEIXIN = 3333;
+	private final int RESULT_MENMBERCHANGE = 1111;//修改积分产品返回
+	private final int RESULT_ADDSHOP = 2222;//增加店铺后返回
+	private final int RESULT_WEIXIN = 3333;//
 
 	/**
 	 *
@@ -309,7 +309,7 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 		String uuid = AbStrUtil.getUUID();
 
 		try {
-			okHttpsImp.QueryProduct(uuid, "app", reqTime, OkHttpsImp.md5_key, "BDP200eWiZ16cbs041217820", new MyResultCallback<String>() {
+			okHttpsImp.QueryProduct(uuid, "app", reqTime, OkHttpsImp.md5_key, "BD2016051910141600000004", new MyResultCallback<String>() {
 				@Override
 				public void onResponseResult(Result result) {
 					String reString = result.getData();

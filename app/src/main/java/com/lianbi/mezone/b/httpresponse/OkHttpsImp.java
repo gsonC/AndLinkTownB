@@ -2802,8 +2802,8 @@ public enum OkHttpsImp {
 	 */
 	public void updateProduct(String md5_key,
 							  String serNum, String source, String reqTime,
-							  String productName,String productDesc,String productAmt,String images,
-							  String productId,String storeId, MyResultCallback<String> myResultCallback) throws Exception {
+							  String productName,String productDesc,String productAmt,String storeId,String addImages,String deleteImageId,
+							  String productId,String isMain,MyResultCallback<String> myResultCallback) throws Exception {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("serNum",serNum);
 		params.put("source",source);
@@ -2811,9 +2811,11 @@ public enum OkHttpsImp {
 		params.put("productName",productName);
 		params.put("productDesc", productDesc);
 		params.put("productAmt",productAmt);
-		params.put("images",images);
+		params.put("addImages",addImages);
+		params.put("storeId",storeId);
 		params.put("productId", productId);
-		params.put("storeId", storeId);
+		params.put("isMain", isMain);
+		params.put("deleteImageId", deleteImageId);
 		String sign = getSign(md5_key, params);
 		params.put("sign", sign);
 		String url = getAbsoluteUrl(API.CHANGERODUCT);
@@ -2826,7 +2828,7 @@ public enum OkHttpsImp {
 
 	public void QueryProduct(String serNum, String source, String reqTime,String md5_key,
 
-							/*String pageSize,String productId, */String storeId,MyResultCallback<String> myResultCallback) throws Exception {
+							String storeId,MyResultCallback<String> myResultCallback) throws Exception {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("serNum",serNum);
 		params.put("source",source);
