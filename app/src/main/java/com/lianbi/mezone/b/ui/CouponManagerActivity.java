@@ -85,6 +85,12 @@ public class CouponManagerActivity extends BaseActivity implements AdapterView.O
         currShowingIs = ALL_IS_SHOWING;
         setListener();
         initAdapter();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        startNo = 0;
         getDatas();
     }
 

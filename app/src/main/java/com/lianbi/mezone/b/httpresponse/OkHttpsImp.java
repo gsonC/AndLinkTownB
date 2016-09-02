@@ -2599,7 +2599,7 @@ public enum OkHttpsImp {
         params.put("coupName", coupName);
         params.put("coupAmt", coupAmt);
         params.put("limitAmt", limitAmt);
-        params.put("vipPhones", vipPhones);
+        params.put("phones", vipPhones);
         params.put("beginTime", beginTime);
         params.put("endTime", endTime);
         params.put("msgId", msgId);
