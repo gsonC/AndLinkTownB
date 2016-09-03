@@ -105,8 +105,8 @@ public class CouponManagerActivity extends BaseActivity implements AdapterView.O
 
                 @Override
                 public void onOkClick() {
-                    startActivity(new Intent(CouponManagerActivity.this, AddShopActivity.class));
                     dismiss();
+                    startActivity(new Intent(CouponManagerActivity.this, AddShopActivity.class));
                 }
             };
             dialog.setCancelable(false);
