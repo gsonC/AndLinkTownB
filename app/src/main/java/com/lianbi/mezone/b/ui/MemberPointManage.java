@@ -211,13 +211,15 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 					public void onClick(View v) {
 
 						Intent intent = new Intent(MemberPointManage.this, RevisionsActivity.class);
+//						intent.putExtra("membermessage",item);
 						intent.putExtra("new_product_id", item.getId());
 						intent.putExtra("new_product_food", item.getProductName());
 						intent.putExtra("new_product_rated", item.getProductDesc());
 						intent.putExtra("new_product_price", item.getProductPrice());
 						intent.putExtra("new_product_ima", item.getProductImages().get(0).getImgUrl());
 						startActivityForResult(intent, RESULT_MENMBERCHANGE);
-					}
+//				        startActivity(intent);
+						}
 				});
 			   /*侧滑的删除点击事件
 				*/
@@ -282,6 +284,7 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 				@Override
 				public void onResponseResult(Result result) {
 					String reString = result.getData();
+					System.out.println("reString287"+reString);
 					if (reString != null) {
 						try {
 							JSONObject jsonObject = new JSONObject(reString);

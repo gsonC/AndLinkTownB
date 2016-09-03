@@ -690,7 +690,7 @@ public enum OkHttpsImp {
 	/**
 	 * 群发短信
 	 */
-	public void smsBulkSend(MyResultCallback<String> myResultCallback, String businessID, String businessName, String phone, String templateMark, String reqTime, String uuid) throws Exception {
+	//public void smsBulkSend(MyResultCallback<String> myResultCallback, String businessID, String businessName, String phone, String templateMark, String reqTime, String uuid) throws Exception {
 	public void smsBulkSend(
 			MyResultCallback<String> myResultCallback,String businessID,String businessName,
 			String  templateMark,String  phone, String reqTime, String uuid)
@@ -2553,12 +2553,27 @@ public enum OkHttpsImp {
 	/**
 	 * 修改产品
 	 */
-	public void updateProduct(String md5_key, String serNum, String source, String reqTime, String productId, String productName, String productType, String productDesc, String productAmt, String isOnline, String deleteImageId, String addImages, String storeId, String isMain, MyResultCallback<String> myResultCallback) throws Exception {
+	public void updateProduct(String md5_key, String serNum,
+							  String source, String reqTime,
+							  String productId, String productName,
+							  String productType, String productDesc,
+							  String productAmt, String isOnline,
+							  String deleteImageId, String addImages,
+							  String storeId, String isMain,
+							  MyResultCallback<String> myResultCallback) throws Exception {
+//		(OkHttpsImp.md5_key, uuid, "app", reqTime,
+//				productId, productName, "01", productDesc, productAmt, "Y",
+//				delImageUrls, imageStr, userShopInfoBean.getBusinessId(),
+//				isMain, new MyResultCallback<String>()
+
+
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("serNum", serNum);
 		params.put("source", source);
 		params.put("reqTime", reqTime);
 		params.put("productName", productName);
+		params.put("productType", productType);
+		params.put("isOnline", isOnline);
 		params.put("productDesc", productDesc);
 		params.put("productAmt", productAmt);
 		params.put("addImages", addImages);
@@ -2596,7 +2611,7 @@ public enum OkHttpsImp {
 
 	public void QueryFromWinxin(String md5_key, String serNum, String source, String reqTime,
 
-								String storeId, String pageNo, String pageSize, MyResultCallback<String> myResultCallback) throws Exception {
+								String storeId, String pageNo, String pageSize,String shopSourceId, MyResultCallback<String> myResultCallback) throws Exception {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("serNum", serNum);
 		params.put("source", source);
@@ -2604,6 +2619,7 @@ public enum OkHttpsImp {
 		params.put("storeId", storeId);
 		params.put("pageNo", pageNo);
 		params.put("pageSize", pageSize);
+		params.put("shopSourceId", shopSourceId);
 		String sign = getSign(md5_key, params);
 		params.put("sign", sign);
 		String url = getAbsoluteUrl(API.QUERYFROMWEIXINSHOP);

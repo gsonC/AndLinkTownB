@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.webkit.ValueCallback;
 import android.widget.EditText;
@@ -14,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.lianbi.mezone.b.bean.MemberMessage;
 import com.lianbi.mezone.b.bean.ShopIntroduceImageBean;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
@@ -44,9 +46,11 @@ public class RevisionsActivity extends BaseActivity {
 	private String base64 = "";
 	private List<File> file;
 	private int img_flag;
+	private MemberMessage mMembermessage;
 	private ArrayList<ShopIntroduceImageBean> imagesDel = new ArrayList<ShopIntroduceImageBean>();
+	private ArrayList<String>  strimagesDel = new ArrayList<String>();
 	Boolean isSelect = false;
-	String productName, productDesc, productAmt, new_food, new_rated, new_price, a, productId, delImageUrls, isMain;
+	String productName, productDesc, productAmt, new_food="", new_rated, new_price, a, productId, delImageUrls, isMain;
 	String imageStr = null;
 	@Bind(R.id.ed_Cup)
 	EditText edCup;
@@ -91,6 +95,7 @@ public class RevisionsActivity extends BaseActivity {
 		smallImaFour.setOnClickListener(this);
 		smallImaFive.setOnClickListener(this);
 		btSure.setOnClickListener(this);
+		mMembermessage= (MemberMessage)getIntent().getSerializableExtra("membermessage");
 		productId = getIntent().getStringExtra("new_product_id");
 		System.out.println("productId..." + productId);
 		new_food = getIntent().getStringExtra("new_product_food");
@@ -101,6 +106,7 @@ public class RevisionsActivity extends BaseActivity {
 		edCeramicCup.setText(new_rated);
 		edExchangeIntegral.setText(new_price);
 		Uri uri = Uri.parse(a);
+//        String  uri=mMembermessage.getProductImages().get(0).getImgUrl();
 		Glide.with(RevisionsActivity.this).load(uri).error(R.mipmap.default_head).into(imaBigima);
 
 	}
@@ -112,7 +118,6 @@ public class RevisionsActivity extends BaseActivity {
 
 		switch (view.getId()) {
 			case R.id.ima_Smallima:
-				isSelect = true;
 				img_flag = 1;
 				photoUtills.startPickPhotoFromAlbumWithCrop();
 				break;
@@ -160,17 +165,17 @@ public class RevisionsActivity extends BaseActivity {
 		StringBuilder stringBuilder = new StringBuilder();
 		StringBuilder stringBuilderDel = new StringBuilder();
 
-		if (imagesDel != null && imagesDel.size() > 0) {
-			for (int i = 0; i < imagesDel.size(); i++) {
-				if (i + 1 == imagesDel.size()) {
-					stringBuilderDel.append(imagesDel.get(i).getImageUrl());
+		if (strimagesDel != null && strimagesDel.size() > 0) {
+			for (int i = 0; i < strimagesDel.size(); i++) {
+				if (i + 1 == strimagesDel.size()) {
+					stringBuilderDel.append(strimagesDel.get(i));
 				} else {
-					stringBuilderDel.append(imagesDel.get(i).getImageUrl() + ",");
+					stringBuilderDel.append(strimagesDel.get(i) + ",");
 				}
 			}
 		}
 		delImageUrls = stringBuilderDel.toString();
-		System.out.println("delImageUrls" + delImageUrls);
+		Log.i("tag","172---->"+delImageUrls);
 		if (file != null && file.size() > 0) {
 			for (int i = 0; i < file.size(); i++) {
 				if (i + 1 == file.size()) {
@@ -225,31 +230,45 @@ public class RevisionsActivity extends BaseActivity {
 
 						switch (img_flag) {
 							case 1:
+								imageDeal(0);
 								imaBigima.setImageBitmap(bm);
-								if (isSelect) {
-									isMain = "Y";
-								} else {
-									isMain = "N";
-								}
+								isMain = "Y";
+
 
 								break;
 							case 2:
+								imageDeal(1);
 								smallImaOne.setImageBitmap(bm);
+								isMain = "N";
+
 
 								break;
 							case 3:
+								imageDeal(2);
 								smallImaTwo.setImageBitmap(bm);
+								isMain = "N";
+
 
 								break;
 							case 4:
+								imageDeal(3);
 								smallImaThree.setImageBitmap(bm);
+								isMain = "N";
+
 
 								break;
 							case 5:
+								imageDeal(4);
 								smallImaFour.setImageBitmap(bm);
+								isMain = "N";
+
+
 								break;
 							case 6:
+								imageDeal(5);
 								smallImaFive.setImageBitmap(bm);
+								isMain = "N";
+
 
 								break;
 
@@ -297,24 +316,26 @@ public class RevisionsActivity extends BaseActivity {
 	private void GetupdateProduct() {
 		String reqTime = AbDateUtil.getDateTimeNow();
 		String uuid = AbStrUtil.getUUID();
+		System.out.println("productId 297" + productId);
+		System.out.println("productName" + productName);
+		System.out.println("productDesc" + productDesc);
+		System.out.println("productAmt" + productAmt);
+		System.out.println("delImageUrls--->" + delImageUrls);
+		System.out.println("imageStr" + imageStr);
+		System.out.println("店铺id" + userShopInfoBean.getBusinessId());
+		System.out.println("isMain" + isMain);
 
 		try {
 			okHttpsImp.updateProduct(OkHttpsImp.md5_key, uuid, "app", reqTime,
 					productId, productName, "01", productDesc, productAmt, "Y",
-					delImageUrls, imageStr, userShopInfoBean.getBusinessId(),
+					a, imageStr, userShopInfoBean.getBusinessId(),
 					isMain, new MyResultCallback<String>() {
 				@Override
 				public void onResponseResult(Result result) {
 
 					String reString = result.getData();
-					System.out.println("reString291" + reString);
-					System.out.println("isMain" + isMain);
-					System.out.println("productName" + productName);
-					System.out.println("productDesc" + productDesc);
-					System.out.println("productAmt" + productAmt);
-					System.out.println("delImageUrls" + delImageUrls);
-					System.out.println("imageStr" + imageStr);
-					finish();
+
+					System.out.println("reString316" + reString);
 
 					ContentUtils.showMsg(RevisionsActivity.this, "修改产品成功");
 					Intent intent = new Intent();
@@ -332,5 +353,16 @@ public class RevisionsActivity extends BaseActivity {
 		}
 	}
 
-
+	private void imageDeal(int position) {
+		try {
+			strimagesDel.add(mMembermessage.getProductImages().get(position).getImgUrl());
+//			files.remove(position);
+		} catch (Exception e2) {
+		}
+//		try {
+//			files.remove(position);
+//		} catch (Exception e2) {
+//		}
+//		biMaps.remove(position);
+	}
 }

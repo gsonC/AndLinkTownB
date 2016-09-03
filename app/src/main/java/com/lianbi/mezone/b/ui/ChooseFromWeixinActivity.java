@@ -170,6 +170,7 @@ public class ChooseFromWeixinActivity extends BaseActivity {
 						intent.putExtra("new_product_food", item.getProName());
 						intent.putExtra("new_product_rated", item.getProDesc());
 						intent.putExtra("new_product_price", item.getPrice());
+						intent.putExtra("new_product_ima", item.getPath());
 						startActivityForResult(intent, RESULT_WEIXIN);
 					}
 				});
@@ -191,7 +192,7 @@ public class ChooseFromWeixinActivity extends BaseActivity {
 	 * @param
 	 */
 
-
+String shopSourceId;
 	private void getWeixinQueryProduct(final boolean isResh) {
 		if (isResh) {
 			page = 1;
@@ -203,7 +204,7 @@ public class ChooseFromWeixinActivity extends BaseActivity {
 
 		try {
 			okHttpsImp.QueryFromWinxin(OkHttpsImp.md5_key,uuid, "app", reqTime,
-					userShopInfoBean.getBusinessId(), page + "", 20 + "",new MyResultCallback<String>() {
+					userShopInfoBean.getBusinessId(), page + "", 20 + "",shopSourceId,new MyResultCallback<String>() {
 				@Override
 				public void onResponseResult(Result result) {
 					String reString = result.getData();
