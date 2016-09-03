@@ -159,11 +159,11 @@ public class MemberMessage implements Serializable {
 		this.createTime = createTime;
 	}
 
-	public class productImages{
-		private String imgDesc;
-		private String imgId;
-		private String imgUrl;
-		private String productId;
+	public class productImages implements Serializable{
+		public String imgDesc;
+		public String imgId;
+		public String imgUrl;
+		public String productId;
 
 		public String getImgDesc() {
 			return imgDesc;
