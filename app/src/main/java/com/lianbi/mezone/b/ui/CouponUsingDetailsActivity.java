@@ -71,9 +71,8 @@ public class CouponUsingDetailsActivity extends BaseActivity implements
 
     private String couponId;
 
-    private int duplicateNum = 0;//重复的条数
     private int pageSize = 20;
-    private int startNo = 0;
+    private int pageNo = 1;
     /**
      * 正在下拉刷新.
      */
@@ -154,7 +153,7 @@ public class CouponUsingDetailsActivity extends BaseActivity implements
         initCommonParameter();
         try {
             okHttpsImp.getCouponUsingDetailListByCoupId(uuid, "app", reqTime, couponId, "",
-                    Integer.toString(startNo), Integer.toString(pageSize),
+                    Integer.toString(pageNo), Integer.toString(pageSize),
                     new MyResultCallback<String>() {
                         @Override
                         public void onResponseResult(Result result) {
@@ -168,18 +167,21 @@ public class CouponUsingDetailsActivity extends BaseActivity implements
                                 if (l.size() < pageSize) {
                                     ContentUtils.showMsg(CouponUsingDetailsActivity.this, "已加载全部");
                                 }
-                                if (startNo == 0) {
+                                if (pageNo == 1) {
                                     mData = l;
                                 }
-                                if (startNo > 0) {
-                                    for (int i = 0; i < l.size(); i++) {
-                                        if (compareTo(mData, l.get(i))) {
-                                            l.remove(i);
-                                            i--;
-                                            duplicateNum++;
+                                if (pageNo > 1) {
+                                    if (l.isEmpty()) {
+                                        pageNo--;
+                                    } else {
+                                        for (int i = 0; i < l.size(); i++) {
+                                            if (compareTo(mData, l.get(i))) {
+                                                l.remove(i);
+                                                i--;
+                                            }
                                         }
+                                        mData.addAll(l);
                                     }
-                                    mData.addAll(l);
                                 }
                                 //除了“已使用”之外，所有的都按照创建时间倒序排列
                                 Collections.sort(mData, new Comparator<CouponUsingDetails>() {
@@ -222,6 +224,8 @@ public class CouponUsingDetailsActivity extends BaseActivity implements
 
                         @Override
                         public void onResponseFailed(String msg) {
+                            if (pageNo > 1)
+                                pageNo--;
                             refreshingFinish();
                         }
                     });
@@ -329,14 +333,14 @@ public class CouponUsingDetailsActivity extends BaseActivity implements
     @Override
     public void onFooterLoad(AbPullToRefreshView view) {
         mPullLoading = true;
-        startNo = mData.size() + duplicateNum;
+        pageNo++;
         getDatas();
     }
 
     @Override
     public void onHeaderRefresh(AbPullToRefreshView view) {
         mPullRefreshing = true;
-        startNo = 0;
+        pageNo = 1;
         getDatas();
     }
 

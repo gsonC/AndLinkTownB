@@ -64,9 +64,8 @@ public class CouponManagerActivity extends BaseActivity implements AdapterView.O
     private List<CouponBean> mValideData = new ArrayList<>();
     private List<CouponBean> mInvalideData = new ArrayList<>();
 
-    private int duplicateNum = 0;//重复的条数
     private int pageSize = 20;
-    private int startNo = 0;
+    private int pageNo;
     /**
      * 正在下拉刷新.
      */
@@ -90,7 +89,7 @@ public class CouponManagerActivity extends BaseActivity implements AdapterView.O
     @Override
     protected void onResume() {
         super.onResume();
-        startNo = 0;
+        pageNo = 1;
         getDatas();
     }
 
@@ -119,7 +118,7 @@ public class CouponManagerActivity extends BaseActivity implements AdapterView.O
         }
         initCommonParameter();
         try {
-            okHttpsImp.queryStoreCoupByStoreId(uuid, "app", reqTime, userShopInfoBean.getBusinessId(), "", Integer.toString(startNo), Integer.toString(pageSize),
+            okHttpsImp.queryStoreCoupByStoreId(uuid, "app", reqTime, userShopInfoBean.getBusinessId(), "", Integer.toString(pageNo), Integer.toString(pageSize),
                     new MyResultCallback<String>() {
                         @Override
                         public void onResponseResult(Result result) {
@@ -129,18 +128,21 @@ public class CouponManagerActivity extends BaseActivity implements AdapterView.O
                                 if (l.size() < pageSize) {
                                     ContentUtils.showMsg(CouponManagerActivity.this, "已加载全部");
                                 }
-                                if (startNo == 0) {
+                                if (pageNo == 1) {
                                     mData = l;
                                 }
-                                if (startNo > 0) {
-                                    for (int i = 0; i < l.size(); i++) {
-                                        if (compareTo(mData, l.get(i))) {
-                                            l.remove(i);
-                                            i--;
-                                            duplicateNum++;
+                                if (pageNo > 1) {
+                                    if (l.isEmpty()) {
+                                        pageNo--;
+                                    } else {
+                                        for (int i = 0; i < l.size(); i++) {
+                                            if (compareTo(mData, l.get(i))) {
+                                                l.remove(i);
+                                                i--;
+                                            }
                                         }
+                                        mData.addAll(l);
                                     }
-                                    mData.addAll(l);
                                 }
                                 Collections.sort(mData);
                                 mValideData.clear();
@@ -159,6 +161,8 @@ public class CouponManagerActivity extends BaseActivity implements AdapterView.O
 
                         @Override
                         public void onResponseFailed(String msg) {
+                            if (pageNo > 1)
+                                pageNo--;
                             refreshingFinish();
                         }
                     });
@@ -285,14 +289,14 @@ public class CouponManagerActivity extends BaseActivity implements AdapterView.O
     @Override
     public void onFooterLoad(AbPullToRefreshView view) {
         mPullLoading = true;
-        startNo = mData.size() + duplicateNum;
+        pageNo++;
         getDatas();
     }
 
     @Override
     public void onHeaderRefresh(AbPullToRefreshView view) {
         mPullRefreshing = true;
-        startNo = 0;
+        pageNo = 1;
         getDatas();
     }
 
