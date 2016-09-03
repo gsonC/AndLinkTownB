@@ -248,7 +248,7 @@ public class MemberAddCategoryActivity extends BaseActivity {
                             if (memberclassify.getTypeDiscountRatio()!=0) {
                                 double discountratio=memberclassify.getTypeDiscountRatio()*0.1;
                                 tvRadiovalue.setText(String.valueOf(discountratio));
-                            }
+                            }else{tvRadiovalue.setText(String.valueOf(0));}
                             if (!TextUtils.isEmpty(String.valueOf(memberclassify.getTypeMaxDiscount()))) {
                                 tvMaxidiscountvalue.setText(String.valueOf(memberclassify.getTypeMaxDiscount()));
                             }

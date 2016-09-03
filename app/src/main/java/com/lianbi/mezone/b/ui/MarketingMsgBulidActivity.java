@@ -23,6 +23,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.Result;
+import cn.com.hgh.view.DialogCommon;
 import cn.com.hgh.view.HttpDialog;
 
 /**
@@ -134,9 +135,10 @@ public class MarketingMsgBulidActivity extends BaseActivity {
                 @Override
                 public void onResponseResult(Result result) {
                     String reString = result.getData();
+                    successDialog();
                     if (reString != null) {
                         JSONObject jsonObject;
-                        ContentUtils.showMsg(MarketingMsgBulidActivity.this,"发送成功");
+//                        ContentUtils.showMsg(MarketingMsgBulidActivity.this,"发送成功");
 
                         try {
 
@@ -158,6 +160,28 @@ public class MarketingMsgBulidActivity extends BaseActivity {
         }catch (Exception e){e.printStackTrace();}
 
     }
+
+    private  void  successDialog(){
+        DialogCommon dialogCommon = new DialogCommon(
+                MarketingMsgBulidActivity.this) {
+
+            @Override
+            public void onCheckClick() {
+                dismiss();
+            }
+
+            @Override
+            public void onOkClick() {
+                dismiss();
+            }
+
+        };
+        dialogCommon.setTextTitle("短信发送成功");
+        dialogCommon.setTv_dialog_common_ok("确 定");
+        dialogCommon.setTv_dialog_common_cancelV(View.GONE);
+        dialogCommon.show();
+    }
+
     private void simpleJump(Class activity) {
         Intent intent = new Intent();
         intent.setClass(MarketingMsgBulidActivity.this, activity);

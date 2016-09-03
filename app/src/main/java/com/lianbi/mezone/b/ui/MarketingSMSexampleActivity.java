@@ -40,6 +40,7 @@ import cn.com.hgh.baseadapter.recyclerViewadapter.commonrecyclerview.RecycleView
 import cn.com.hgh.baseadapter.recyclerViewadapter.pullrefreshrecyclerview.DemoLoadMoreView;
 import cn.com.hgh.baseadapter.recyclerViewadapter.pullrefreshrecyclerview.PullRefreshRecyclerAdapter;
 import cn.com.hgh.baseadapter.recyclerViewadapter.pullrefreshrecyclerview.PullRefreshViewHolder;
+import cn.com.hgh.utils.AbStrUtil;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.view.HttpDialog;
 
@@ -60,6 +61,7 @@ public class MarketingSMSexampleActivity extends BaseActivity {
     private ArrayList<SmsTemplate> mData = new ArrayList<SmsTemplate>();
     private ArrayList<SmsTemplate> mDatas = new ArrayList<SmsTemplate>();
     HttpDialog dialog;
+
     private DataAdapter mAdapter;
     //    QuickAdapter<SmsTemplate> mAdapter;
     private static final int TIME = 1000;
@@ -278,7 +280,8 @@ public class MarketingSMSexampleActivity extends BaseActivity {
 
             @Override
             public void onBindViewHolder(final int position) {
-                et_smstemplate.setText(mDatas.get(position).getContent());
+                String  smstemplate=initTemplate(mDatas.get(position).getContent());
+                et_smstemplate.setText(smstemplate);
                 tv_loadedall.setVisibility(View.GONE);
                 lay_sms.setVisibility(View.VISIBLE);
                 cb_smstemplate.setOnClickListener(new View.OnClickListener() {
@@ -292,14 +295,14 @@ public class MarketingSMSexampleActivity extends BaseActivity {
                         if(templateType.equals("B")){
                         Intent intent = new Intent();
                         intent.setClass(MarketingSMSexampleActivity.this, MarketingMsgBulidActivity.class);
-                        intent.putExtra("info", mDatas.get(position).getContent());
+                        intent.putExtra("info",initTemplate(mDatas.get(position).getContent()));
                         intent.putExtra("templateID", mDatas.get(position).getTemplateMark());
                         setResult(RESULT_OK, intent);}
                         else
                         if(templateType.equals("P")){
                         Intent intent = new Intent();
                         intent.setClass(MarketingSMSexampleActivity.this, SendNewCouponActivity.class);
-                        intent.putExtra("info", mDatas.get(position).getContent());
+                        intent.putExtra("info",mDatas.get(position).getContent());
                         intent.putExtra("templateID", mDatas.get(position).getTemplateMark());
                         setResult(RESULT_OK, intent);}
                         finish();
@@ -316,6 +319,11 @@ public class MarketingSMSexampleActivity extends BaseActivity {
 
 
         }
+    }
+    private  String  initTemplate(String template) {
+        String  temp="";
+        temp=AbStrUtil.stringReplace(template,"businessName",ShopName);
+        return  temp.toString();
     }
 }
 //    private void listviewData() {

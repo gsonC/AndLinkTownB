@@ -225,7 +225,13 @@ public class MarketingMsgDetailActivity extends BaseActivity {
                         JSONObject jsonObject;
                         try {
                             jsonObject = new JSONObject(reString);
-                            reString = jsonObject.getString("appsList");
+                            reString = jsonObject.getString("list");
+                            String sendTime=jsonObject.getString("sendTime");
+                            String sendNum=jsonObject.getString("sendNum");
+                            String sendText=jsonObject.getString("sendText");
+                            if (!TextUtils.isEmpty(sendTime)) {txtSendtime.setText(sendTime);   }
+                            if (!TextUtils.isEmpty(sendNum)) { txtSendnum.setText(sendNum);      }
+                            if (!TextUtils.isEmpty(sendText)) { txtSendcontext.setText(sendText);    }
                             if (!TextUtils.isEmpty(reString)) {
                                 mData.clear();
                                 ArrayList<MarketingMsgDetail> marketingmsgdetailList = (ArrayList<MarketingMsgDetail>) JSON
