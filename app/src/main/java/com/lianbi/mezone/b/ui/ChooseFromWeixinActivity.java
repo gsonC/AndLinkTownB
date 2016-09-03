@@ -3,6 +3,7 @@ package com.lianbi.mezone.b.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
@@ -13,7 +14,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
-import com.lianbi.mezone.b.bean.MemberMessage;
+import com.bumptech.glide.Glide;
+import com.lianbi.mezone.b.bean.WeiXinBean;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
 import com.xizhi.mezone.b.R;
@@ -50,8 +52,8 @@ public class ChooseFromWeixinActivity extends BaseActivity {
 	AbPullToRefreshView actWeixinAbpulltorefreshview;
 
 	private ListView mAct_addmembers_listview;
-	private ArrayList<MemberMessage> mDatas = new ArrayList<MemberMessage>();
-	private QuickAdapter<MemberMessage> mAdapter;
+	private ArrayList<WeiXinBean> mDatas = new ArrayList<WeiXinBean>();
+	private QuickAdapter<WeiXinBean> mAdapter;
 	private int page = 1;
 
 	@Override
@@ -94,7 +96,7 @@ public class ChooseFromWeixinActivity extends BaseActivity {
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 				if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_UNSPECIFIED) {
 					String response = actWeixinListEdit.getText().toString().trim();
-
+					editSuit();
 				}
 				AbAppUtil.closeSoftInput(ChooseFromWeixinActivity.this);
 				return false;
@@ -118,12 +120,30 @@ public class ChooseFromWeixinActivity extends BaseActivity {
 			}
 		});
 	}
+	/**
+	 * 匹配输入框
+	 */
+	private void editSuit() {
+		String response = actWeixinListEdit.getText().toString().trim();
+		ArrayList<WeiXinBean> arrayList = new ArrayList<WeiXinBean>();
+		if (!TextUtils.isEmpty(response)) {
+			arrayList = mDatas;
+		} else {
+			arrayList.clear();
 
+			for (WeiXinBean weixin : arrayList) {
+				if ((weixin.getProName().contains(response)) || (weixin.getPrice().contains(response)) || (weixin.getProDesc().contains(response))) {
+					arrayList.add(weixin);
+				}
+			}
+		}
+		mAdapter.replaceAll(arrayList);
+	}
 	private void initAdapter() {
-		mAdapter = new QuickAdapter<MemberMessage>(ChooseFromWeixinActivity.this, R.layout.weixin_shop_list, mDatas) {
+		mAdapter = new QuickAdapter<WeiXinBean>(ChooseFromWeixinActivity.this, R.layout.weixin_shop_list, mDatas)  {
 
 			@Override
-			protected void convert(BaseAdapterHelper helper, final MemberMessage item) {
+			protected void convert(BaseAdapterHelper helper, final WeiXinBean item) {
 
 				ImageView new_product_ima = helper.getView(R.id.new_product_ima);
 				TextView new_product_food = helper.getView(R.id.new_product_food);
@@ -136,19 +156,20 @@ public class ChooseFromWeixinActivity extends BaseActivity {
 				ScreenUtils.textAdaptationOn720(new_product_price, ChooseFromWeixinActivity.this, 27);
 				ScreenUtils.textAdaptationOn720(new_product_choose, ChooseFromWeixinActivity.this, 23);
 
-				new_product_food.setText(item.getProductName());
-				new_product_rated.setText(item.getProductDesc());
-				new_product_price.setText(item.getProductPrice());
-
+				new_product_food.setText(item.getProName());
+				new_product_rated.setText(item.getProDesc());
+				new_product_price.setText(item.getPrice());
+				String  uri=item.getPath();
+				Glide.with(ChooseFromWeixinActivity.this).load(uri).error(R.mipmap.default_head).into(new_product_ima);
 
 				helper.getView(R.id.new_product_choose).setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
 						Intent intent = new Intent(ChooseFromWeixinActivity.this, RevisionsActivity.class);
 						intent.putExtra("new_product_id", item.getId());
-						intent.putExtra("new_product_food", item.getProductName());
-						intent.putExtra("new_product_rated", item.getProductDesc());
-						intent.putExtra("new_product_price", item.getProductPrice());
+						intent.putExtra("new_product_food", item.getProName());
+						intent.putExtra("new_product_rated", item.getProDesc());
+						intent.putExtra("new_product_price", item.getPrice());
 						startActivityForResult(intent, RESULT_WEIXIN);
 					}
 				});
@@ -161,25 +182,6 @@ public class ChooseFromWeixinActivity extends BaseActivity {
 	}
 
 	private final int RESULT_WEIXIN = 4444;
-	/*private void getWeiXinList() {
-		ArrayList<WeiXinProduct> mDatasL = new ArrayList<WeiXinProduct>();
-		for (int i = 0; i < 20; i++) {
-			WeiXinProduct bean = new WeiXinProduct();
-			bean.setNew_product_food("dsadasda" + i);
-			bean.setNew_product_choose("选择" + i);
-			bean.setNew_product_rated("普通" + i);
-			bean.setNew_product_price("微店" + i);
-
-			mDatasL.add(bean);
-		}
-		if (mDatasL.size() > 0) {
-			mDatas.addAll(mDatasL);
-		}
-		if (mDatasL.size() > 0) {
-			mDatas.addAll(mDatasL);
-		}
-		mAdapter.replaceAll(mDatas);
-	}*/
 
 	/**
 	 * 积分商品查询
@@ -200,16 +202,17 @@ public class ChooseFromWeixinActivity extends BaseActivity {
 		String uuid = AbStrUtil.getUUID();
 
 		try {
-			okHttpsImp.QueryProduct(uuid, "app", reqTime, OkHttpsImp.md5_key, "BDP200eWiZ16cbs041217820", new MyResultCallback<String>() {
+			okHttpsImp.QueryFromWinxin(OkHttpsImp.md5_key,uuid, "app", reqTime,
+					userShopInfoBean.getBusinessId(), page + "", 20 + "",new MyResultCallback<String>() {
 				@Override
 				public void onResponseResult(Result result) {
 					String reString = result.getData();
-					System.out.println("reString" + reString);
+					System.out.println("reString.." + reString);
 					if (reString != null) {
 						try {
 							JSONObject jsonObject = new JSONObject(reString);
-							reString = jsonObject.getString("products");
-							ArrayList<MemberMessage> mDatasL = (ArrayList<MemberMessage>) JSON.parseArray(reString, MemberMessage.class);
+							reString = jsonObject.getString("wcmProductList");
+							ArrayList<WeiXinBean> mDatasL = (ArrayList<WeiXinBean>) JSON.parseArray(reString, WeiXinBean.class);
 							if (mDatasL != null && mDatasL.size() > 0) {
 								mDatas.addAll(mDatasL);
 
@@ -245,5 +248,17 @@ public class ChooseFromWeixinActivity extends BaseActivity {
 			e.printStackTrace();
 		}
 	}
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (resultCode == RESULT_OK) {
+			switch (requestCode) {
 
+				case RESULT_WEIXIN:
+					getWeixinQueryProduct(true);
+					break;
+
+			}
+		}
+	}
 }

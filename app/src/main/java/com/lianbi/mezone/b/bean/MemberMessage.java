@@ -27,7 +27,7 @@ public class MemberMessage implements Serializable {
 	String productImgId;
 	String isOnline;
 	String createTime;
-	ArrayList<productImages> productImages;
+	ArrayList<MemberMessage.productImages> productImages;
 	String shopSourceId;
 	String updateTime;
 

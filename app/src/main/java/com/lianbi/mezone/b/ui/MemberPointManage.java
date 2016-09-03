@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
 import com.alibaba.fastjson.JSON;
+import com.bumptech.glide.Glide;
 import com.lianbi.mezone.b.bean.MemberMessage;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
@@ -43,6 +44,9 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 	private EditText tv_search;
 	ImageView img_memberpoint_empty;
 	private String typeID = "";
+	private final int RESULT_MENMBERCHANGE = 1359;//修改积分产品返回
+	private final int RESULT_ADDSHOP = 1548;//增加店铺后返回
+	private final int RESULT_WEIXIN = 1388;//
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -116,7 +120,7 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 				if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_UNSPECIFIED) {
 					editSuit();
-					}
+				}
 
 				AbAppUtil.closeSoftInput(MemberPointManage.this);
 				return false;
@@ -129,17 +133,16 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 	/**
 	 * 匹配输入框
 	 */
-	private void editSuit(){
+	private void editSuit() {
 		String response = tv_search.getText().toString().trim();
 		ArrayList<MemberMessage> arrayList = new ArrayList<MemberMessage>();
 		if (!TextUtils.isEmpty(response)) {
-			arrayList = mDatas;}
-		else{
+			arrayList = mDatas;
+		} else {
 			arrayList.clear();
 
 			for (MemberMessage memberpoint : arrayList) {
-				if ((memberpoint.getLabelName().contains(response)) ||(memberpoint.getProductPrice().contains(response))
-						||(memberpoint.getProductDesc().contains(response))) {
+				if ((memberpoint.getLabelName().contains(response)) || (memberpoint.getProductPrice().contains(response)) || (memberpoint.getProductDesc().contains(response))) {
 					arrayList.add(memberpoint);
 				}
 			}
@@ -164,7 +167,7 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 				final TextView goodsPoint = helper.getView(R.id.goodsPoint);
 				final TextView pullgoods = helper.getView(R.id.pullgoods);
 				final TextView pushgoods = helper.getView(R.id.pushgoods);
-				//point_ima.setImageResource();
+
 				point_goodsName.setText(item.getProductName());
 				rated.setText(item.getProductDesc());
 				goodsPoint.setText(item.getProductPrice());
@@ -176,10 +179,12 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 					pullgoods.setText("下架");
 					pushgoods.setVisibility(View.GONE);
 				}
-				//String  uri=item.getProductImages().get(2).getImgUrl();//图片url
-				//System.out.println(item.getProductImages().get(2).getImgUrl());
-				//adaption();
+				String uri = item.getProductImages().get(0).getImgUrl();//图片url
+
+
+				System.out.println("uri" + uri);
 				//上架下架的点击事件
+				Glide.with(MemberPointManage.this).load(uri).error(R.mipmap.default_head).into(point_ima);
 
 				pullgoods.setOnClickListener(new OnClickListener() {
 					@Override
@@ -210,6 +215,7 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 						intent.putExtra("new_product_food", item.getProductName());
 						intent.putExtra("new_product_rated", item.getProductDesc());
 						intent.putExtra("new_product_price", item.getProductPrice());
+						intent.putExtra("new_product_ima", item.getProductImages().get(0).getImgUrl());
 						startActivityForResult(intent, RESULT_MENMBERCHANGE);
 					}
 				});
@@ -230,25 +236,6 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 		};
 		fm_member_listView.setAdapter(mAdapter);
 	}
-
-	private final int RESULT_MENMBERCHANGE = 1111;//修改积分产品返回
-	private final int RESULT_ADDSHOP = 2222;//增加店铺后返回
-	private final int RESULT_WEIXIN = 3333;//
-
-	/**
-	 *
-	 */
-	 /* private void adaption(){
-		  ScreenUtils.textAdaptationOn720(point_goodsName,MemberPointManage.this,24);//
-		  ScreenUtils.textAdaptationOn720(rated,MemberPointManage.this,24);//
-		  ScreenUtils.textAdaptationOn720(trated,MemberPointManage.this,24);//
-		  ScreenUtils.textAdaptationOn720(goodsPoint,MemberPointManage.this,24);//
-		  ScreenUtils.textAdaptationOn720(pullgoods,MemberPointManage.this,24);//
-		  ScreenUtils.textAdaptationOn720(pushgoods,MemberPointManage.this,24);//
-		  ScreenUtils.textAdaptationOn720(changegoods,MemberPointManage.this,24);
-		  ScreenUtils.textAdaptationOn720(pullgoods,MemberPointManage.this,24);
-	  }*/
-
 
 	/*private void getTagList(final boolean isResh) {
 		ArrayList<MemberMessage> mDatasL = new ArrayList<MemberMessage>();
@@ -280,25 +267,7 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 		mAdapter.replaceAll(mDatas);
 
 	}*/
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-		if (resultCode == RESULT_OK) {
-			switch (resultCode) {
 
-				case RESULT_MENMBERCHANGE:
-					getQueryProduct();
-					break;
-				case RESULT_ADDSHOP:
-					getQueryProduct();
-					break;
-				case RESULT_WEIXIN:
-					getQueryProduct();
-					break;
-
-			}
-		}
-	}
 
 	/**
 	 * 积分商品查询
@@ -309,18 +278,17 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 		String uuid = AbStrUtil.getUUID();
 
 		try {
-			okHttpsImp.QueryProduct(uuid, "app", reqTime, OkHttpsImp.md5_key, "BD2016051910141600000004", new MyResultCallback<String>() {
+			okHttpsImp.QueryProduct(uuid, "app", reqTime, OkHttpsImp.md5_key, userShopInfoBean.getBusinessId(), new MyResultCallback<String>() {
 				@Override
 				public void onResponseResult(Result result) {
 					String reString = result.getData();
-					System.out.println("reString318" + reString);
 					if (reString != null) {
 						try {
 							JSONObject jsonObject = new JSONObject(reString);
 							reString = jsonObject.getString("products");
-							//	String productImages = jsonObject.getString("productImages");
-							//Glide.with(MemberPointManage.this).load(uri).into(point_ima);
+							mDatas.clear();
 							ArrayList<MemberMessage> mDatasL = (ArrayList<MemberMessage>) JSON.parseArray(reString, MemberMessage.class);
+
 							if (mDatasL != null && mDatasL.size() > 0) {
 								mDatas.addAll(mDatasL);
 
@@ -366,7 +334,7 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 		String reqTime = AbDateUtil.getDateTimeNow();
 		String uuid = AbStrUtil.getUUID();
 		try {
-			okHttpsImp.DeleteMember(uuid, "app", reqTime, OkHttpsImp.md5_key, "BD2016051910141600000004", productId, new MyResultCallback<String>() {
+			okHttpsImp.DeleteMember(uuid, "app", reqTime, OkHttpsImp.md5_key, userShopInfoBean.getBusinessId(), productId, new MyResultCallback<String>() {
 				@Override
 				public void onResponseResult(Result result) {
 					getQueryProduct();
@@ -383,6 +351,26 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 		}
 	}
 
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (resultCode == RESULT_OK) {
+			switch (requestCode) {
+
+				case RESULT_MENMBERCHANGE:
+
+					getQueryProduct();
+					break;
+				case RESULT_ADDSHOP:
+					getQueryProduct();
+					break;
+				case RESULT_WEIXIN:
+					getQueryProduct();
+					break;
+
+			}
+		}
+	}
 }
 
 

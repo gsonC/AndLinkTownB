@@ -66,7 +66,7 @@ public class NewIntegralGoodsActivity extends BaseActivity {
 	@Bind(R.id.bt_sure)
 	TextView btSure;
 	String productName, productDesc, productAmt;
-	String imageStr = null;
+	String imageStr ;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -194,8 +194,9 @@ public class NewIntegralGoodsActivity extends BaseActivity {
 				public void onResponseResult(Result result) {
 					String reString = result.getData();
 					System.out.println("aDDreString220" + reString);
-					ContentUtils.showMsg(NewIntegralGoodsActivity.this, "新增成功");
+					ContentUtils.showMsg(NewIntegralGoodsActivity.this, "新增成功1");
 					Intent intent = new Intent();
+					intent.setClass(NewIntegralGoodsActivity.this,MemberPointManage.class);
 					setResult(RESULT_OK, intent);
 					finish();
 				}

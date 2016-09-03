@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.lianbi.mezone.b.bean.ShopIntroduceImageBean;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
@@ -34,6 +35,7 @@ import cn.com.hgh.utils.Picture_Base64;
 import cn.com.hgh.utils.Result;
 
 public class RevisionsActivity extends BaseActivity {
+
 	private ValueCallback<Uri> mUploadMessage;
 	private final static int FILECHOOSER_RESULTCODE = 1;
 	private MyPhotoUtills photoUtills;
@@ -43,7 +45,9 @@ public class RevisionsActivity extends BaseActivity {
 	private List<File> file;
 	private int img_flag;
 	private ArrayList<ShopIntroduceImageBean> imagesDel = new ArrayList<ShopIntroduceImageBean>();
-	String productId;
+	Boolean isSelect = false;
+	String productName, productDesc, productAmt, new_food, new_rated, new_price, a, productId, delImageUrls, isMain;
+	String imageStr = null;
 	@Bind(R.id.ed_Cup)
 	EditText edCup;
 	@Bind(R.id.ed_CeramicCup)
@@ -66,9 +70,7 @@ public class RevisionsActivity extends BaseActivity {
 	ImageView smallImaFive;
 	@Bind(R.id.bt_sure)
 	TextView btSure;
-	String productName, productDesc, productAmt;
-	String imageStr = null;
-    String new_food,new_rated,new_price;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -90,24 +92,29 @@ public class RevisionsActivity extends BaseActivity {
 		smallImaFive.setOnClickListener(this);
 		btSure.setOnClickListener(this);
 		productId = getIntent().getStringExtra("new_product_id");
-		System.out.println("productId..."+productId);
-		new_food=getIntent().getStringExtra("new_product_food");
-		new_rated=getIntent().getStringExtra("new_product_rated");
-		new_price=getIntent().getStringExtra("new_product_price");
+		System.out.println("productId..." + productId);
+		new_food = getIntent().getStringExtra("new_product_food");
+		new_rated = getIntent().getStringExtra("new_product_rated");
+		new_price = getIntent().getStringExtra("new_product_price");
+		a = getIntent().getStringExtra("new_product_ima");
 		edCup.setText(new_food);
 		edCeramicCup.setText(new_rated);
 		edExchangeIntegral.setText(new_price);
+		Uri uri = Uri.parse(a);
+		Glide.with(RevisionsActivity.this).load(uri).error(R.mipmap.default_head).into(imaBigima);
+
 	}
-	String isMain;
+
+
 	@Override
 	public void onClick(View view) {
 		super.onClick(view);
 
 		switch (view.getId()) {
 			case R.id.ima_Smallima:
+				isSelect = true;
 				img_flag = 1;
 				photoUtills.startPickPhotoFromAlbumWithCrop();
-				isMain="Y";
 				break;
 			case R.id.small_imaOne:
 				img_flag = 2;
@@ -116,7 +123,6 @@ public class RevisionsActivity extends BaseActivity {
 			case R.id.small_imaTwo:
 				img_flag = 3;
 				photoUtills.startPickPhotoFromAlbumWithCrop();
-
 				break;
 			case R.id.small_imaThree:
 				img_flag = 4;
@@ -148,7 +154,8 @@ public class RevisionsActivity extends BaseActivity {
 	 * @param
 	 * @param
 	 */
-	String delImageUrls = "";
+
+
 	private void Mosaicimage() {
 		StringBuilder stringBuilder = new StringBuilder();
 		StringBuilder stringBuilderDel = new StringBuilder();
@@ -163,6 +170,7 @@ public class RevisionsActivity extends BaseActivity {
 			}
 		}
 		delImageUrls = stringBuilderDel.toString();
+		System.out.println("delImageUrls" + delImageUrls);
 		if (file != null && file.size() > 0) {
 			for (int i = 0; i < file.size(); i++) {
 				if (i + 1 == file.size()) {
@@ -218,21 +226,31 @@ public class RevisionsActivity extends BaseActivity {
 						switch (img_flag) {
 							case 1:
 								imaBigima.setImageBitmap(bm);
+								if (isSelect) {
+									isMain = "Y";
+								} else {
+									isMain = "N";
+								}
+
 								break;
 							case 2:
 								smallImaOne.setImageBitmap(bm);
+
 								break;
 							case 3:
 								smallImaTwo.setImageBitmap(bm);
+
 								break;
 							case 4:
 								smallImaThree.setImageBitmap(bm);
+
 								break;
 							case 5:
 								smallImaFour.setImageBitmap(bm);
 								break;
 							case 6:
 								smallImaFive.setImageBitmap(bm);
+
 								break;
 
 						}
@@ -242,7 +260,7 @@ public class RevisionsActivity extends BaseActivity {
 		}
 	}
 
-	String  mImgId;
+	String mImgId;
 
 	/**
 	 * 图像裁剪实现类
@@ -279,16 +297,25 @@ public class RevisionsActivity extends BaseActivity {
 	private void GetupdateProduct() {
 		String reqTime = AbDateUtil.getDateTimeNow();
 		String uuid = AbStrUtil.getUUID();
+
 		try {
-			okHttpsImp.updateProduct(OkHttpsImp.md5_key,
-					uuid, reqTime, "app",
-					productName, productDesc, productAmt,userShopInfoBean.getBusinessId(),imageStr,delImageUrls,productId,isMain,
-					new MyResultCallback<String>() {
+			okHttpsImp.updateProduct(OkHttpsImp.md5_key, uuid, "app", reqTime,
+					productId, productName, "01", productDesc, productAmt, "Y",
+					delImageUrls, imageStr, userShopInfoBean.getBusinessId(),
+					isMain, new MyResultCallback<String>() {
 				@Override
 				public void onResponseResult(Result result) {
+
 					String reString = result.getData();
-					finish();
 					System.out.println("reString291" + reString);
+					System.out.println("isMain" + isMain);
+					System.out.println("productName" + productName);
+					System.out.println("productDesc" + productDesc);
+					System.out.println("productAmt" + productAmt);
+					System.out.println("delImageUrls" + delImageUrls);
+					System.out.println("imageStr" + imageStr);
+					finish();
+
 					ContentUtils.showMsg(RevisionsActivity.this, "修改产品成功");
 					Intent intent = new Intent();
 					setResult(RESULT_OK, intent);
