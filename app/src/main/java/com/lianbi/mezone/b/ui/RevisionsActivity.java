@@ -189,9 +189,9 @@ public class RevisionsActivity extends BaseActivity {
 			Log.i("tag","imagesDel-187--"+imagesDel.size());
 			for (int i = 0; i < imagesDel.size(); i++) {
 				if (i + 1 == imagesDel.size()) {
-					stringBuilderDel.append(imagesDel.get(i).getImgUrl());
+					stringBuilderDel.append(imagesDel.get(i).getImgId());
 				} else {
-					stringBuilderDel.append(imagesDel.get(i).getImgUrl() + ",");
+					stringBuilderDel.append(imagesDel.get(i).getImgId() + ",");
 				}
 			}
 		}
