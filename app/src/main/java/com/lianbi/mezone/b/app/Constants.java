@@ -77,6 +77,10 @@ public class Constants {
 	 */
 	public static final String USERBUSINESSID = "userbusinessid";
 	/**
+	 * 用户商铺名
+	 */
+	public static final String USERSHOPNAME = "usershopName";
+	/**
 	 * 查询财务室字段
 	 */
 	public static final String SEARCHFINANCIAL = "search_financial";

@@ -188,7 +188,7 @@ public class LoginActivity extends BaseActivity {
 									Constants.USERTAG, Constants.USERHEADURL, backBean.getUserImage());
 							ContentUtils.putSharePre(LoginActivity.this,
 									Constants.USERTAG, Constants.USERBUSINESSID, backBean.getDefaultBusiness());
-							
+
 //							postClientId();
 						}
 						Intent intent = new Intent();

@@ -1,15 +1,12 @@
 package com.lianbi.mezone.b.bean;
 
-import java.io.Serializable;
-
-
-import cn.com.hgh.utils.ContentUtils;
+import android.content.Context;
 
 import com.lianbi.mezone.b.app.Constants;
 
+import java.io.Serializable;
 
-import android.content.Context;
-import android.content.SharedPreferences;
+import cn.com.hgh.utils.ContentUtils;
 
 public class UserShopInfoBean implements Serializable {
 
@@ -55,7 +52,7 @@ public class UserShopInfoBean implements Serializable {
 	 name=ContentUtils.getSharePreString(context, Constants.USERTAG, Constants.USER_NAME);
 	 personHeadUrl=ContentUtils.getSharePreString(context, Constants.USERTAG, Constants.USERHEADURL);
 	 businessId=ContentUtils.getSharePreString(context, Constants.USERTAG, Constants.USERBUSINESSID);
-
+	 shopName=ContentUtils.getSharePreString(context, Constants.USERTAG, Constants.USERSHOPNAME);
 	}
 	public String getIndustry_id() {
 		return industry_id;

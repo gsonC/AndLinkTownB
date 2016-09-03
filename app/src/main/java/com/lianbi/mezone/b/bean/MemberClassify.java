@@ -10,7 +10,7 @@ public class MemberClassify  implements Serializable {
     String   typeId;
     String typeName;
     String dataSize;
-    String typeDiscountRatio;
+    int typeDiscountRatio;
     int   thisTypeCount;
     int  typeMaxDiscount;
     int  typeConditionMin;
@@ -72,11 +72,11 @@ public class MemberClassify  implements Serializable {
         this.dataSize = dataSize;
     }
 
-    public String getTypeDiscountRatio() {
+    public int getTypeDiscountRatio() {
         return typeDiscountRatio;
     }
 
-    public void setTypeDiscountRatio(String typeDiscountRatio) {
+    public void setTypeDiscountRatio(int typeDiscountRatio) {
         this.typeDiscountRatio = typeDiscountRatio;
     }
 }

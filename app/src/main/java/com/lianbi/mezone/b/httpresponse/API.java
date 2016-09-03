@@ -44,14 +44,14 @@ public class API {
 	 */
 	public static final String TEMPLATE = "template/serveMarket/list.html?userId=";
 	/*
-	 *  生产环境url
+     *  生产环境url
      */
 	// 	public static final String ENVIRONMENTAL = "http://front.xylbn.cn:9003";
-	// 	public static final String TOSTORESERVICE = "http://mall.xylbn.cn:9005";//到店服务
-	//	public static final String PAYQR = ENVIRONMENTAL+"/lincombFront/toOrderPay.do?state=";/**支付二维码**/
-	//	public static final String INTELLIGENT_WIFI ="http://www.xylbn.cn/wcmv2/routerApplication/wifiIndex?businessId=";//智能wifi
+ 	// 	public static final String TOSTORESERVICE = "http://mall.xylbn.cn:9005";//到店服务
+    //	public static final String PAYQR = ENVIRONMENTAL+"/lincombFront/toOrderPay.do?state=";/**支付二维码**/
+    //	public static final String INTELLIGENT_WIFI ="http://www.xylbn.cn/wcmv2/routerApplication/wifiIndex?businessId=";//智能wifi
 	/**
-	 * uat环境url
+	 *  uat环境url
 	 */
 	//public static final String ENVIRONMENTAL = "http://139.196.214.16";//前置TEST
 	//public static final String TOSTORESERVICE = "http://139.196.214.16";//到店服务TEST
@@ -88,11 +88,11 @@ public class API {
 	/**
 	 * 货源订单明细
 	 */
-	public static final String HOST_SUPPLYGOODS_MALL = TOSTORESERVICE + "/wcm/sws/showOrderDetl?";
+	public static final String HOST_SUPPLYGOODS_MALL = TOSTORESERVICE+"/wcm/sws/showOrderDetl?";
 	/**
 	 * 预约订单
 	 */
-	public static final String HOST_BOOK_MALL = TOSTORESERVICE + "/wcm/rss/showOrderDetl?";
+	public static final String HOST_BOOK_MALL = TOSTORESERVICE+"/wcm/rss/showOrderDetl?";
 
 	/**
 	 * webURL介绍 clerk - 店员管理 finance - 财务管理 financialTransactions - 我要理财 manage
@@ -100,7 +100,8 @@ public class API {
 	 * 产品管理 server - 服务商场 shops - 切换商铺 source - 货源商城 store - 我的店铺 sweep - 扫一扫
 	 * trade - 交易管理 vip - 会员管理
 	 */
-	public static final String HOSTWEBCUR = HOST + "template/introduce/index.html?type=";
+	public static final String HOSTWEBCUR = HOST
+			+ "template/introduce/index.html?type=";
 	/**
 	 * 订单列表
 	 */

@@ -31,7 +31,7 @@
          android:layout_centerVertical="true"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
-         android:text="2015 06  08"
+         android:text=""
          android:textColor="@color/color_4b4b4b"
          android:textSize="@dimen/h15"
          />
@@ -55,7 +55,7 @@
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
          android:textColor="@color/color_4b4b4b"
-         android:text="22"
+         android:text=""
          android:textSize="@dimen/h15"
          />
 
@@ -134,7 +134,24 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/colores_news_14" />
-    <ScrollView
+    <com.lhh.ptrrv.library.PullToRefreshRecyclerView
+        android:id="@+id/mptrrv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/v_01"
+        >
+
+    </com.lhh.ptrrv.library.PullToRefreshRecyclerView>
+    <ImageView
+        android:visibility="gone"
+        android:id="@+id/img_ememberslist_empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitCenter"
+        android:src="@mipmap/iv_empty"
+        android:layout_below="@id/v_01"
+        />
+   <!-- <ScrollView
         android:id="@+id/sv_marketdetail"
         android:layout_below="@id/v_01"
         android:layout_width="match_parent"
@@ -156,5 +173,5 @@
         android:dividerHeight="1dp"
      />
     </LinearLayout>
-    </ScrollView>
+    </ScrollView>-->
 </RelativeLayout>

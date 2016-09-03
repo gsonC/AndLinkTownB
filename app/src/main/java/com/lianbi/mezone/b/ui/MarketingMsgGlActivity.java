@@ -16,7 +16,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.lhh.ptrrv.library.PullToRefreshRecyclerView;
@@ -277,7 +276,7 @@ public class MarketingMsgGlActivity extends BaseActivity {
                     mPtrrview.onFinishLoading(true, false);
                     dialog.dismiss();
                 }
-            }, userShopInfoBean.getBusinessId(), String.valueOf(mDatas.size()), eachgetnum, nowtime, reqTime, uuid);
+            }, BusinessId, String.valueOf(mDatas.size()), eachgetnum, nowtime, reqTime, uuid);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -342,8 +341,12 @@ public class MarketingMsgGlActivity extends BaseActivity {
 
             @Override
             protected void onItemClick(View view, int adapterPosition) {
-                Toast.makeText(mContext, "This is item " + adapterPosition, Toast.LENGTH_SHORT).show();
-                simpleJump(MarketingMsgDetailActivity.class);
+//                Toast.makeText(mContext, "This is item " + adapterPosition, Toast.LENGTH_SHORT).show();
+//                simpleJump(MarketingMsgDetailActivity.class);
+                Intent intent = new Intent();
+                intent.setClass(MarketingMsgGlActivity.this, MarketingMsgDetailActivity.class);
+                intent.putExtra("info",mDatas.get(adapterPosition));
+                startActivity(intent);
             }
         }
     }
