@@ -1,109 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colores_news_14"
-    android:scrollbars="none">
+    android:orientation="vertical"
+    >
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:padding="10dp"
+        android:text="积分商品"
+        android:textColor="@color/showcolor"
+        android:textSize="16sp"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        />
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colores_news_14"
-        android:orientation="vertical">
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:padding="10dp">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="10dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:background="@color/white"
-            android:gravity="center_vertical"
-            android:padding="10dp"
-            android:text="积分商品"
-            android:textColor="@color/showcolor"
-            android:textSize="16sp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="10dp" />
-
-        <LinearLayout
+        <cn.com.hgh.view.ContainsEmojiEditText
+            android:id="@+id/ed_Cup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:orientation="horizontal"
-            android:padding="10dp">
+            android:background="@null"
+            android:hint="商品名称"
+            android:maxLength="10"
+            android:singleLine="true"
+            android:textColor="@color/colores_news_10"
+            android:textColorHint="@color/colores_news_11"
+            android:textSize="15sp"
+            />
+    </LinearLayout>
 
-            <cn.com.hgh.view.ContainsEmojiEditText
-                android:id="@+id/ed_Cup"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:hint="商品名称"
-                android:maxLength="10"
-                android:singleLine="true"
-                android:textColor="@color/colores_news_10"
-                android:textColorHint="@color/colores_news_11"
-                android:textSize="15sp" />
-        </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line"
+        android:background="@color/colores_news_14"/>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/line"
-            android:background="@color/colores_news_14" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:padding="10dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:orientation="horizontal"
-            android:padding="10dp">
-
-            <cn.com.hgh.view.ContainsEmojiEditText
-                android:id="@+id/ed_CeramicCup"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:hint="商品介绍"
-                android:maxLength="10"
-                android:singleLine="true"
-                android:textColor="@color/colores_news_10"
-                android:textColorHint="@color/colores_news_11"
-                android:textSize="15sp" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/line"
-            android:background="@color/colores_news_14" />
-
-        <LinearLayout
+        <cn.com.hgh.view.ContainsEmojiEditText
+            android:id="@+id/ed_CeramicCup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:orientation="horizontal"
-            android:padding="10dp">
+            android:background="@null"
+            android:hint="商品介绍"
+            android:maxLength="10"
+            android:singleLine="true"
+            android:textColor="@color/colores_news_10"
+            android:textColorHint="@color/colores_news_11"
+            android:textSize="15sp"
+            />
+    </LinearLayout>
 
-            <cn.com.hgh.view.ClearEditText
-                android:id="@+id/ed_ExchangeIntegral"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:hint="兑换所需积分"
-                android:inputType="number"
-                android:maxLength="10"
-                android:singleLine="true"
-                android:textColor="@color/colores_news_10"
-                android:textColorHint="@color/colores_news_11"
-                android:textSize="15sp" />
-        </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line"
+        android:background="@color/colores_news_14"/>
 
-        <View
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <cn.com.hgh.view.ClearEditText
+            android:id="@+id/ed_ExchangeIntegral"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/line"
-            android:background="@color/colores_news_14" /><!--
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:hint="兑换所需积分"
+            android:inputType="number"
+            android:maxLength="10"
+            android:singleLine="true"
+            android:textColor="@color/colores_news_10"
+            android:textColorHint="@color/colores_news_11"
+            android:textSize="15sp"
+            />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line"
+        android:background="@color/colores_news_14"/>
+
+    <!--
         <EditText
             android:id="@+id/ed_Cup"
             android:layout_width="match_parent"
@@ -142,113 +147,131 @@
         android:layout_height="0.5dp"
         android:background="@color/color_e3e3e3"/>
 -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="320dp"
+        android:background="@color/white"
+        >
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/color_e3e3e3"/>
+
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="320dp"
-            android:background="@color/white">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/color_e3e3e3" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="280dp"
-                android:background="@color/white">
-
-                <ImageView
-                    android:id="@+id/ima_bigima"
-                    android:layout_width="248dp"
-                    android:layout_height="248dp"
-                    android:layout_centerInParent="true" />
-
-                <ImageView
-                    android:id="@+id/ima_Smallima"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_centerInParent="true"
-                    android:src="@mipmap/add2"
-                    android:visibility="visible" />
-            </RelativeLayout>
-        </RelativeLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="10dp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="75dp"
+            android:layout_height="280dp"
             android:background="@color/white"
-            android:orientation="horizontal">
+            >
 
             <ImageView
-                android:id="@+id/small_imaOne"
-                android:layout_width="0dp"
-                android:layout_height="48dp"
+                android:id="@+id/ima_bigima"
+                android:layout_width="248dp"
+                android:layout_height="248dp"
                 android:layout_centerInParent="true"
-                android:layout_marginLeft="18dp"
-                android:layout_marginTop="14dp"
-                android:layout_weight="1"
-                android:src="@mipmap/add2" />
 
-            <ImageView
-                android:id="@+id/small_imaTwo"
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:layout_centerInParent="true"
-                android:layout_marginLeft="21dp"
-                android:layout_marginTop="14dp"
-                android:layout_weight="1"
-                android:src="@mipmap/add2" />
+            />
 
-            <ImageView
-                android:id="@+id/small_imaThree"
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:layout_centerInParent="true"
-                android:layout_marginLeft="21dp"
-                android:layout_marginTop="14dp"
-                android:layout_weight="1"
-                android:src="@mipmap/add2" />
+        <ImageView
+            android:id="@+id/ima_Smallima"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/add2"
+            android:visibility="visible"
+            />
+    </RelativeLayout>
+    </RelativeLayout>
 
-            <ImageView
-                android:id="@+id/small_imaFour"
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:layout_centerInParent="true"
-                android:layout_marginLeft="21dp"
-                android:layout_marginTop="14dp"
-                android:layout_weight="1"
-                android:src="@mipmap/add2" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        />
 
-            <ImageView
-                android:id="@+id/small_imaFive"
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:layout_centerInParent="true"
-                android:layout_marginLeft="21dp"
-                android:layout_marginRight="21dp"
-                android:layout_marginTop="14dp"
-                android:layout_weight="1"
-                android:src="@mipmap/add2" />
-        </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:orientation="horizontal"
+        android:background="@color/white"
+        >
 
-        <TextView
-            android:id="@+id/bt_sure"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="14dp"
-            android:layout_marginRight="14dp"
-            android:layout_marginTop="44dp"
-            android:background="@drawable/shape_login"
-            android:clickable="true"
-            android:gravity="center"
-            android:padding="10dp"
-            android:text="确定"
-            android:textColor="@color/white"
-            android:textSize="17sp" />
+        <ImageView
+            android:id="@+id/small_imaOne"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="18dp"
+            android:layout_marginTop="14dp"
+            android:layout_weight="1"
+            android:src="@mipmap/add2"
+            />
+
+        <ImageView
+            android:id="@+id/small_imaTwo"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="21dp"
+            android:layout_marginTop="14dp"
+            android:layout_weight="1"
+            android:src="@mipmap/add2"
+
+            />
+
+        <ImageView
+            android:id="@+id/small_imaThree"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="21dp"
+            android:layout_marginTop="14dp"
+            android:layout_weight="1"
+            android:src="@mipmap/add2"
+
+            />
+
+        <ImageView
+            android:id="@+id/small_imaFour"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="21dp"
+            android:layout_marginTop="14dp"
+            android:layout_weight="1"
+            android:src="@mipmap/add2"
+
+            />
+
+        <ImageView
+            android:id="@+id/small_imaFive"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="21dp"
+            android:layout_marginRight="21dp"
+            android:layout_marginTop="14dp"
+            android:layout_weight="1"
+            android:src="@mipmap/add2"
+
+            />
     </LinearLayout>
-</ScrollView>
+
+    <TextView
+        android:id="@+id/bt_sure"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="44dp"
+        android:background="@drawable/shape_login"
+        android:clickable="true"
+        android:gravity="center"
+        android:text="确定"
+        android:padding="10dp"
+        android:textColor="@color/white"
+        android:textSize="17sp"
+        />
+
+</LinearLayout>
+
+
