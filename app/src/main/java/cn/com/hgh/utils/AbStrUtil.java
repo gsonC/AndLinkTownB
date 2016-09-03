@@ -547,5 +547,15 @@ public class AbStrUtil {
 		}
 		return flag;
 	}
+	/*
+     * 替换字符串
+     */
+	public static String stringReplace(String src,String wait,String aim) {
+		String  temp ="";
+		if(src.contains(wait) && !AbStrUtil.isEmpty(aim)) {
+			temp=src.replace(wait,aim);
+		}
+		return temp.toString();
+	}
 }
 

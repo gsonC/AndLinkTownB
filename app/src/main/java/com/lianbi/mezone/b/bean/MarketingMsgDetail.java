@@ -7,15 +7,15 @@ import java.io.Serializable;
  */
 public class MarketingMsgDetail implements Serializable {
 
-	int  mobile;
+	String  mobile;
 	String coupGrade;
 	String coupNote;
 
-	public int getMobile() {
+	public String getMobile() {
 		return mobile;
 	}
 
-	public void setMobile(int mobile) {
+	public void setMobile(String mobile) {
 		this.mobile = mobile;
 	}
 

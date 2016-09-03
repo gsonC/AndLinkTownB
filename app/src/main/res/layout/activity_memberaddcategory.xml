@@ -87,6 +87,7 @@
              android:layout_centerVertical="true"
              android:singleLine="true"
              android:maxLength="3"
+             android:text=""
              android:inputType="numberDecimal"
              android:textColor="@color/colores_news_04"
              android:textSize="15sp"
