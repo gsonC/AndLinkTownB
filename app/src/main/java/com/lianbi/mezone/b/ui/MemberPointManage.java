@@ -154,7 +154,7 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 //初始化适配器
 
 	public QuickAdapter<MemberMessage> mAdapter;
-
+	String uri;
 	private void initListAdapter() {
 		mAdapter = new QuickAdapter<MemberMessage>(MemberPointManage.this, R.layout.activity_point_manager, mDatas) {
 
@@ -179,12 +179,15 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 					pullgoods.setText("下架");
 					pushgoods.setVisibility(View.GONE);
 				}
-				String uri = item.getProductImages().get(0).getImgUrl();//图片url
+				if(!item.getProductImages().equals(null)){
+					uri = item.getProductImages().get(0).getImgUrl();//图片url
 
 
-				System.out.println("uri" + uri);
-				//上架下架的点击事件
-				Glide.with(MemberPointManage.this).load(uri).error(R.mipmap.default_head).into(point_ima);
+					System.out.println("uri" + uri);
+					//上架下架的点击事件
+					Glide.with(MemberPointManage.this).load(uri).error(R.mipmap.default_head).into(point_ima);
+				}
+
 
 				pullgoods.setOnClickListener(new OnClickListener() {
 					@Override
@@ -289,6 +292,7 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 						try {
 							JSONObject jsonObject = new JSONObject(reString);
 							reString = jsonObject.getString("products");
+							System.out.println("reString292"+reString);
 							mDatas.clear();
 							ArrayList<MemberMessage> mDatasL = (ArrayList<MemberMessage>) JSON.parseArray(reString, MemberMessage.class);
 
