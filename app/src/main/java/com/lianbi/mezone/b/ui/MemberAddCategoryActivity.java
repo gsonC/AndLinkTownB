@@ -99,6 +99,7 @@ public class MemberAddCategoryActivity extends BaseActivity {
     @Bind(R.id.lay_numofmembers)
     LinearLayout lay_numofmembers;
     boolean iserrorvalue;
+    MemberClassify  mMemberClassify;
     HttpDialog dialog;
     String  membertypeId;
     String  nametype;
@@ -139,23 +140,37 @@ public class MemberAddCategoryActivity extends BaseActivity {
     /**
      * 初始化View
      */
+    String name;
     private void initViewAndData() {
         dialog = new HttpDialog(this);
         getIntent = getIntent();
         nametype = getIntent.getStringExtra("type");
         setPageTitle(nametype);
-        if (nametype.equals("分类详情")) {
-            setPageRightText("修改");
-            MemberClassify  memberclassify = (MemberClassify)getIntent.getSerializableExtra("info");
-            membertypeId=memberclassify.getTypeId();
-            lay_numofmembers.setVisibility(View.VISIBLE);
+        mMemberClassify=(MemberClassify)getIntent.getSerializableExtra("info");
+        if(mMemberClassify!=null&&mMemberClassify.getTypeName().equals("普通会员")){
+            tvClassifyvalue.setEnabled(false);
+            tvRadiovalue.setEnabled(false);
+            tvMaxidiscountvalue.setEnabled(false);
+            etRangebefore.setEnabled(false);
+            etRangeafter.setEnabled(false);
+            setPageRightText("");
+        }else
+        if(mMemberClassify!=null&&!mMemberClassify.getTypeName().equals("普通会员"))
+        {
             tvClassifyvalue.setEnabled(true);
             tvRadiovalue.setEnabled(true);
             tvMaxidiscountvalue.setEnabled(true);
+            etRangebefore.setEnabled(false);
+            etRangeafter.setEnabled(false);
+            setPageRightText("修改");
+        }
+
+        if (nametype.equals("分类详情")) {
+            name=mMemberClassify.getTypeName();
+            membertypeId=mMemberClassify.getTypeId();
+            lay_numofmembers.setVisibility(View.VISIBLE);
             tvWhatmoney.setEnabled(false);
             tvWhatintegral.setEnabled(false);
-            etRangebefore.setEnabled(true);
-            etRangeafter.setEnabled(true);
             getMemberTypedetail(membertypeId);
         }else if(nametype.equals("新增分类")){
             setPageRightText("保存");

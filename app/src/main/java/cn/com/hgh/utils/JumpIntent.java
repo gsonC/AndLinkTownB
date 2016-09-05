@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.text.TextUtils;
 
 import com.lianbi.mezone.b.app.Constants;
-import com.lianbi.mezone.b.bean.WebProductManagementBean;
 import com.lianbi.mezone.b.ui.AddShopActivity;
 import com.lianbi.mezone.b.ui.BaseActivity;
 import com.lianbi.mezone.b.ui.MainActivity;
@@ -119,11 +118,12 @@ public class JumpIntent {
 		String bussniessId = BaseActivity.userShopInfoBean.getBusinessId();
 		switch (type){
 			case WECHATMALL://微信商城
-				WebProductManagementBean data = new WebProductManagementBean();
-				data.setBusinessId(bussniessId);
-				String dataJson = com.alibaba.fastjson.JSONObject.toJSON(data)
-						.toString();
-				String url = CryptTool.encryptionUrl(urladdress, dataJson);
+//				WebProductManagementBean data = new WebProductManagementBean();
+//				data.setBusinessId(bussniessId);
+//				String dataJson = com.alibaba.fastjson.JSONObject.toJSON(data)
+//						.toString();
+//				String url = CryptTool.encryptionUrl(urladdress, dataJson);
+				String url=urladdress+ "storeId=" + bussniessId;
 				return url;
 			case SUPPLYWHOLESALE://货源批发
 				return urladdress + "storeId=" + bussniessId;
