@@ -298,41 +298,45 @@ public class SendNewCouponActivity extends BaseActivity implements CompoundButto
                             businessId, "", "", "app", businessName, new MyResultCallback<String>() {
                                 @Override
                                 public void onResponseResult(Result result) {
-                                    if (result != null && result.getCode() == 0) {
-                                        DialogCommon dialog = new DialogCommon(SendNewCouponActivity.this) {
-                                            @Override
-                                            public void onCheckClick() {
-                                                finish();
-                                            }
+                                    if (result != null) {
+                                        if (result.getCode() == 0) {
+                                            DialogCommon dialog = new DialogCommon(SendNewCouponActivity.this) {
+                                                @Override
+                                                public void onCheckClick() {
+                                                    finish();
+                                                }
 
-                                            @Override
-                                            public void onOkClick() {
-                                                dismiss();
-                                                coupName = "";
-                                                input_coupon_name.setText(coupName);
-                                                coupAmt = "";
-                                                coupon_money_num.setText(coupAmt);
-                                                minimum.setText("100");
-                                                vipPhones = "";
-                                                expected_coupon_send_num.setText("0");
-                                                expected_sms_send_num.setText("0");
-                                                beginTime = "";
-                                                valid_period_from.setText(beginTime);
-                                                endTime = "";
-                                                valid_period_to.setText(endTime);
-                                                msgId = "";
-                                                is_need_send_sms.setChecked(false);
-                                                templetSplitedArrs = new String[0];
-                                                replacedStrs.clear();
-                                                editable_sms_content.setText("");
-                                            }
-                                        };
-                                        dialog.setCancelable(false);
-                                        dialog.setCanceledOnTouchOutside(false);
-                                        dialog.setTextTitle("发送成功");
-                                        dialog.setTv_dialog_common_ok("再发一条");
-                                        dialog.setTv_dialog_common_cancel("查看详情");
-                                        dialog.show();
+                                                @Override
+                                                public void onOkClick() {
+                                                    dismiss();
+                                                    coupName = "";
+                                                    input_coupon_name.setText(coupName);
+                                                    coupAmt = "";
+                                                    coupon_money_num.setText(coupAmt);
+                                                    minimum.setText("100");
+                                                    vipPhones = "";
+                                                    expected_coupon_send_num.setText("0");
+                                                    expected_sms_send_num.setText("0");
+                                                    beginTime = "";
+                                                    valid_period_from.setText(beginTime);
+                                                    endTime = "";
+                                                    valid_period_to.setText(endTime);
+                                                    msgId = "";
+                                                    is_need_send_sms.setChecked(false);
+                                                    templetSplitedArrs = new String[0];
+                                                    replacedStrs.clear();
+                                                    editable_sms_content.setText("");
+                                                }
+                                            };
+                                            dialog.setCancelable(false);
+                                            dialog.setCanceledOnTouchOutside(false);
+                                            dialog.setTextTitle("发送成功");
+                                            dialog.setTv_dialog_common_ok("再发一条");
+                                            dialog.setTv_dialog_common_cancel("查看详情");
+                                            dialog.show();
+                                        } else {
+                                            ContentUtils.showMsg(SendNewCouponActivity.this, result.getMsg());
+                                        }
                                     }
                                 }
 
