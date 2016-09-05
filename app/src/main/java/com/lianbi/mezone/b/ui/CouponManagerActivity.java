@@ -120,52 +120,52 @@ public class CouponManagerActivity extends BaseActivity implements AdapterView.O
         try {
             okHttpsImp.queryStoreCoupByStoreId(uuid, "app", reqTime, userShopInfoBean.getBusinessId(), "", Integer.toString(pageNo), Integer.toString(pageSize),
                     new MyResultCallback<String>() {
-                        @Override
-                        public void onResponseResult(Result result) {
-                            if (null != result) {
-                                JSONObject jsonObject = JSON.parseObject(result.getData());
-                                List<CouponBean> l = JSON.parseArray(jsonObject.getString("list"), CouponBean.class);
-                                if (l.size() < pageSize) {
-                                    ContentUtils.showMsg(CouponManagerActivity.this, "已加载全部");
-                                }
-                                if (pageNo == 1) {
-                                    mData = l;
-                                }
-                                if (pageNo > 1) {
-                                    if (l.isEmpty()) {
-                                        pageNo--;
-                                    } else {
-                                        for (int i = 0; i < l.size(); i++) {
-                                            if (compareTo(mData, l.get(i))) {
-                                                l.remove(i);
-                                                i--;
-                                            }
-                                        }
-                                        mData.addAll(l);
-                                    }
-                                }
-                                Collections.sort(mData);
-                                mValideData.clear();
-                                mInvalideData.clear();
-                                for (CouponBean couponBean : mData) {
-                                    if (couponBean.getIsValide().trim().equals("Y")) {
-                                        mValideData.add(couponBean);
-                                    } else {
-                                        mInvalideData.add(couponBean);
-                                    }
-                                }
-                                switchAdapter();
-                            }
-                            refreshingFinish();
+                @Override
+                public void onResponseResult(Result result) {
+                    if (null != result) {
+                        JSONObject jsonObject = JSON.parseObject(result.getData());
+                        List<CouponBean> l = JSON.parseArray(jsonObject.getString("list"), CouponBean.class);
+                        if (l.size() < pageSize) {
+                            ContentUtils.showMsg(CouponManagerActivity.this, "已加载全部");
                         }
-
-                        @Override
-                        public void onResponseFailed(String msg) {
-                            if (pageNo > 1)
+                        if (pageNo == 1) {
+                            mData = l;
+                        }
+                        if (pageNo > 1) {
+                            if (l.isEmpty()) {
                                 pageNo--;
-                            refreshingFinish();
+                            } else {
+                                for (int i = 0; i < l.size(); i++) {
+                                    if (compareTo(mData, l.get(i))) {
+                                        l.remove(i);
+                                        i--;
+                                    }
+                                }
+                                mData.addAll(l);
+                            }
                         }
-                    });
+                        Collections.sort(mData);
+                        mValideData.clear();
+                        mInvalideData.clear();
+                        for (CouponBean couponBean : mData) {
+                            if (couponBean.getIsValide().trim().equals("Y")) {
+                                mValideData.add(couponBean);
+                            } else {
+                                mInvalideData.add(couponBean);
+                            }
+                        }
+                        switchAdapter();
+                    }
+                    refreshingFinish();
+                }
+
+                @Override
+                public void onResponseFailed(String msg) {
+                    if (pageNo > 1)
+                        pageNo--;
+                    refreshingFinish();
+                }
+            });
         } catch (Exception e) {
             e.printStackTrace();
         }

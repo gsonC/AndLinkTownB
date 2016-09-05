@@ -663,7 +663,7 @@ public class AbDateUtil {
 	}
 
 	/**
-	 * 比较t1与t2的大小t1>t2 true
+	 * 比较t1与t2的大小t1>t2 false
 	 * 
 	 * @param t1
 	 * @param t2
