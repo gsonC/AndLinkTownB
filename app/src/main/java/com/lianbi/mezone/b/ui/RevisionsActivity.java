@@ -16,7 +16,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.lianbi.mezone.b.bean.MemberMessage;
-import com.lianbi.mezone.b.bean.ShopIntroduceImageBean;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
 import com.lianbi.mezone.b.photo.FileUtils;
@@ -30,8 +29,6 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import cn.com.hgh.utils.AbDateUtil;
-import cn.com.hgh.utils.AbStrUtil;
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.Picture_Base64;
 import cn.com.hgh.utils.Result;
@@ -47,9 +44,11 @@ public class RevisionsActivity extends BaseActivity {
 	private List<File> file;
 	private int img_flag;
 	private MemberMessage mMembermessage;
-	private ArrayList<ShopIntroduceImageBean> imagesDel = new ArrayList<ShopIntroduceImageBean>();
-	private ArrayList<String>  strimagesDel = new ArrayList<String>();
+	private ArrayList<MemberMessage.productImages> imagesDel = new ArrayList<MemberMessage.productImages>();
+	private ArrayList<MemberMessage.productImages> images;
 	Boolean isSelect = false;
+	//是否上架
+	private final String SHELVES="Y";
 	String productName, productDesc, productAmt, new_food="", new_rated, new_price, a, productId, delImageUrls, isMain;
 	String imageStr = null;
 	@Bind(R.id.ed_Cup)
@@ -78,7 +77,7 @@ public class RevisionsActivity extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_new_integral_goods, NOTYPE);
+		setContentView(R.layout.activity_new_integral_goods, HAVETYPE);
 		ButterKnife.bind(this);
 		initView();
 
@@ -97,20 +96,41 @@ public class RevisionsActivity extends BaseActivity {
 		btSure.setOnClickListener(this);
 		mMembermessage= (MemberMessage)getIntent().getSerializableExtra("membermessage");
 		productId = getIntent().getStringExtra("new_product_id");
-		System.out.println("productId..." + productId);
 		new_food = getIntent().getStringExtra("new_product_food");
 		new_rated = getIntent().getStringExtra("new_product_rated");
 		new_price = getIntent().getStringExtra("new_product_price");
-		a = getIntent().getStringExtra("new_product_ima");
+		images = (ArrayList<MemberMessage.productImages>) getIntent()
+				.getSerializableExtra("new_product_image");
 		edCup.setText(new_food);
 		edCeramicCup.setText(new_rated);
 		edExchangeIntegral.setText(new_price);
-		Uri uri = Uri.parse(a);
-//        String  uri=mMembermessage.getProductImages().get(0).getImgUrl();
-		Glide.with(RevisionsActivity.this).load(uri).error(R.mipmap.default_head).into(imaBigima);
+		showImage();
 
 	}
+    private   void  showImage(){
+		if(images==null){
+			return;
+		}
+		if(images.size()!=0){
+			Glide.with(RevisionsActivity.this).load(Uri.parse(images.get(0).getImgUrl())).error(R.mipmap.add2).into(imaBigima);
+		}
+		if(images.size()>1&&images.get(1)!=null){
+			Glide.with(RevisionsActivity.this).load(Uri.parse(images.get(1).getImgUrl())).error(R.mipmap.add2).into(smallImaOne);
+		}
+		if(images.size()>2&&images.get(2)!=null){
+			Glide.with(RevisionsActivity.this).load(Uri.parse(images.get(2).getImgUrl())).error(R.mipmap.add2).into(smallImaTwo);
+		}
+		if(images.size()>3&&images.get(3)!=null){
+			Glide.with(RevisionsActivity.this).load(Uri.parse(images.get(3).getImgUrl())).error(R.mipmap.add2).into(smallImaThree);
+		}
+		if(images.size()>4&&images.get(4)!=null){
+			Glide.with(RevisionsActivity.this).load(Uri.parse(images.get(4).getImgUrl())).error(R.mipmap.add2).into(smallImaFour);
+		}
+		if(images.size()>5&&images.get(5)!=null){
+			Glide.with(RevisionsActivity.this).load(Uri.parse(images.get(5).getImgUrl())).error(R.mipmap.add2).into(smallImaFive);
+		}
 
+	}
 
 	@Override
 	public void onClick(View view) {
@@ -164,18 +184,19 @@ public class RevisionsActivity extends BaseActivity {
 	private void Mosaicimage() {
 		StringBuilder stringBuilder = new StringBuilder();
 		StringBuilder stringBuilderDel = new StringBuilder();
-
-		if (strimagesDel != null && strimagesDel.size() > 0) {
-			for (int i = 0; i < strimagesDel.size(); i++) {
-				if (i + 1 == strimagesDel.size()) {
-					stringBuilderDel.append(strimagesDel.get(i));
+		Log.i("tag","imagesDel-187--"+imagesDel);
+		if (imagesDel != null && imagesDel.size() > 0) {
+			Log.i("tag","imagesDel-187--"+imagesDel.size());
+			for (int i = 0; i < imagesDel.size(); i++) {
+				if (i + 1 == imagesDel.size()) {
+					stringBuilderDel.append(imagesDel.get(i).getImgId());
 				} else {
-					stringBuilderDel.append(strimagesDel.get(i) + ",");
+					stringBuilderDel.append(imagesDel.get(i).getImgId() + ",");
 				}
 			}
 		}
 		delImageUrls = stringBuilderDel.toString();
-		Log.i("tag","172---->"+delImageUrls);
+
 		if (file != null && file.size() > 0) {
 			for (int i = 0; i < file.size(); i++) {
 				if (i + 1 == file.size()) {
@@ -186,7 +207,6 @@ public class RevisionsActivity extends BaseActivity {
 			}
 		}
 		imageStr = stringBuilder.toString();
-		System.out.println("imageStr" + imageStr);
 		productName = edCup.getText().toString().trim();
 		productDesc = edCeramicCup.getText().toString().trim();
 		productAmt = edExchangeIntegral.getText().toString().trim();
@@ -221,55 +241,37 @@ public class RevisionsActivity extends BaseActivity {
 						FileUtils.copyFile(filePath, PhotoUtills.photoCurrentFile.toString(), true);
 						photoUtills.startCropImage();
 						//file = photoUtills.photoCurrentFile;
-						file.add(photoUtills.photoCurrentFile);
 						break;
 
 
 					case PhotoUtills.REQUEST_IMAGE_CROP:
 						Bitmap bm = PhotoUtills.getBitmap();
+						file.add(photoUtills.photoCurrentFile);
 
 						switch (img_flag) {
 							case 1:
-								imageDeal(0);
+								imageDeal(0,"Y");
 								imaBigima.setImageBitmap(bm);
-								isMain = "Y";
-
-
 								break;
 							case 2:
-								imageDeal(1);
+								imageDeal(1,"N");
 								smallImaOne.setImageBitmap(bm);
-								isMain = "N";
-
-
 								break;
 							case 3:
-								imageDeal(2);
+								imageDeal(2,"N");
 								smallImaTwo.setImageBitmap(bm);
-								isMain = "N";
-
-
 								break;
 							case 4:
-								imageDeal(3);
+								imageDeal(3,"N");
 								smallImaThree.setImageBitmap(bm);
-								isMain = "N";
-
-
 								break;
 							case 5:
-								imageDeal(4);
+								imageDeal(4,"N");
 								smallImaFour.setImageBitmap(bm);
-								isMain = "N";
-
-
 								break;
 							case 6:
-								imageDeal(5);
+								imageDeal(5,"N");
 								smallImaFive.setImageBitmap(bm);
-								isMain = "N";
-
-
 								break;
 
 						}
@@ -314,8 +316,6 @@ public class RevisionsActivity extends BaseActivity {
 	 * 修改产品
 	 */
 	private void GetupdateProduct() {
-		String reqTime = AbDateUtil.getDateTimeNow();
-		String uuid = AbStrUtil.getUUID();
 		System.out.println("productId 297" + productId);
 		System.out.println("productName" + productName);
 		System.out.println("productDesc" + productDesc);
@@ -327,8 +327,8 @@ public class RevisionsActivity extends BaseActivity {
 
 		try {
 			okHttpsImp.updateProduct(OkHttpsImp.md5_key, uuid, "app", reqTime,
-					productId, productName, "01", productDesc, productAmt, "Y",
-					a, imageStr, userShopInfoBean.getBusinessId(),
+					productId, productName, "01", productDesc, productAmt, SHELVES,
+					delImageUrls, imageStr,BusinessId,
 					isMain, new MyResultCallback<String>() {
 				@Override
 				public void onResponseResult(Result result) {
@@ -353,14 +353,18 @@ public class RevisionsActivity extends BaseActivity {
 		}
 	}
 
-	private void imageDeal(int position) {
+	private void imageDeal(int position,String isMain) {
+		this.isMain=isMain;
 		try {
-			strimagesDel.add(mMembermessage.getProductImages().get(position).getImgUrl());
-//			files.remove(position);
+			if(mMembermessage.getProductImages().size()!=0&&
+					mMembermessage.getProductImages().get(position)!=null) {
+				imagesDel.add(mMembermessage.getProductImages().get(position));
+//				file.remove(position);
+			}
 		} catch (Exception e2) {
 		}
 //		try {
-//			files.remove(position);
+//		  file.remove(position);
 //		} catch (Exception e2) {
 //		}
 //		biMaps.remove(position);
