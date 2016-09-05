@@ -47,6 +47,7 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 	private final int RESULT_MENMBERCHANGE = 1359;//修改积分产品返回
 	private final int RESULT_ADDSHOP = 1548;//增加店铺后返回
 	private final int RESULT_WEIXIN = 1388;//
+	private  boolean   isShow = false;//
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -174,9 +175,11 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 
 				if (item.getIsOnline().equals("Y")) {
 					pullgoods.setText("上架");
-					pushgoods.setVisibility(View.VISIBLE);
+					pushgoods.setText("下架");
+					pushgoods.setVisibility(View.GONE);
 				} else {
 					pullgoods.setText("下架");
+					pushgoods.setText("上架");
 					pushgoods.setVisibility(View.GONE);
 				}
                 if(item.getProductImages().size()!=0) {
@@ -186,17 +189,28 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 				pullgoods.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						pullgoods.setText("上架");
-						pushgoods.setText("下架");
-
+						if(isShow==false) {
+							isShow=true;
+						pullgoods.setVisibility(View.VISIBLE);
+						pushgoods.setVisibility(View.VISIBLE);
+						}else{
+						   isShow=false;
+						pullgoods.setVisibility(View.VISIBLE);
+						pushgoods.setVisibility(View.GONE);
+						}
 					}
 				});
 
 				pushgoods.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						pullgoods.setText("下架");
-						pushgoods.setVisibility(View.GONE);
+						if (item.getIsOnline().equals("Y")) {
+							item.setIsOnline("N");
+							mAdapter.replaceAll(mDatas);
+						} else {
+							item.setIsOnline("Y");
+							mAdapter.replaceAll(mDatas);
+						}
 
 					}
 				});
