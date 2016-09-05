@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.xizhi.mezone.b.R;
@@ -25,7 +25,7 @@ public class MembersManagementActivity extends BaseActivity {
 	List<String> parent = null;
 	Map<String, List<String>> map = null;
 	ExpandableListView expandListView;
-
+	LinearLayout rela_child;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +98,7 @@ public class MembersManagementActivity extends BaseActivity {
 			}
 			ImageView child_ima=(ImageView)convertView.findViewById(R.id.child_ima);
 			//
-			RelativeLayout rela_child= (RelativeLayout) findViewById(R.id.rela_child);
+			 rela_child= (LinearLayout) findViewById(R.id.rela_child);
 			TextView tv = (TextView) convertView.findViewById(R.id.second_textview);
 			tv.setText(info);
 			tv.setOnClickListener(new OnClickListener() {

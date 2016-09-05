@@ -193,7 +193,7 @@ public class RevisionsActivity extends BaseActivity {
 				}
 			}
 		}
-
+		delImageUrls = stringBuilderDel.toString();
 		if (file != null && file.size() > 0) {
 			for (int i = 0; i < file.size(); i++) {
 				if (i + 1 == file.size()) {
@@ -204,7 +204,7 @@ public class RevisionsActivity extends BaseActivity {
 			}
 		}
 		imageStr = stringBuilder.toString();
-		delImageUrls = stringBuilderDel.toString();
+
 		System.out.println("delImageUrls---"+delImageUrls);
 		productName = edCup.getText().toString().trim();
 		productDesc = edCeramicCup.getText().toString().trim();
@@ -249,7 +249,6 @@ public class RevisionsActivity extends BaseActivity {
 
 						switch (img_flag) {
 							case 1:
-
 								imaBigima.setImageBitmap(bm);
 								imageDeal(0,"Y");
 								break;
