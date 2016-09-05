@@ -2280,14 +2280,16 @@ public enum OkHttpsImp {
    * @param startNo 开始行数
    * @param pageSize 每页显示条数
    */
-	public void queryStoreCoupByStoreId(String serNum, String source, String reqTime, String issuedStoreId, String isValide, String startNo, String pageSize, MyResultCallback<String> myResultCallback) throws Exception {
+	public void queryStoreCoupByStoreId(String serNum, String source, String reqTime,
+										String issuedStoreId, String isValide, String pageNo,
+										String pageSize, MyResultCallback<String> myResultCallback) throws Exception {
 		Map<String, String> params = new HashMap<>();
 		params.put("reqTime", reqTime);
 		params.put("serNum", serNum);
 		params.put("source", source);
 		params.put("issuedStoreId", issuedStoreId);
 		params.put("isValide", isValide);
-		params.put("startNo", startNo);
+		params.put("pageNo", pageNo);
 		params.put("pageSize", pageSize);
 
 		String sign = getSign(md5_key, params);
@@ -2334,14 +2336,17 @@ public enum OkHttpsImp {
 	/*
 	* 查询店铺优惠券使用详情列表
 	*/
-	public void getCouponUsingDetailListByCoupId(String serNum, String source, String reqTime, String coupId, String stote, String startNo, String pageSize, MyResultCallback<String> myResultCallback) throws Exception {
+	public void getCouponUsingDetailListByCoupId(String serNum, String source,
+												 String reqTime, String coupId,
+												 String state, String pageNo,
+												 String pageSize, MyResultCallback<String> myResultCallback) throws Exception {
 		Map<String, String> params = new HashMap<>();
 		params.put("reqTime", reqTime);
 		params.put("serNum", serNum);
 		params.put("source", source);
 		params.put("coupId", coupId);
-		params.put("stote", stote);
-		params.put("startNo", startNo);
+		params.put("state", state);
+		params.put("pageNo", pageNo);
 		params.put("pageSize", pageSize);
 
 		String sign = getSign(md5_key, params);
