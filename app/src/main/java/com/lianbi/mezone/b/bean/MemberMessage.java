@@ -14,6 +14,7 @@ import java.util.ArrayList;
  * @更新描述 ＄{TOOD}＄
  */
 public class MemberMessage implements Serializable {
+	private static final long serialVersionUID = 6656336236080664400L;
 	String id;
 	String tv_tagmessage;
 	ImageView point_ima;

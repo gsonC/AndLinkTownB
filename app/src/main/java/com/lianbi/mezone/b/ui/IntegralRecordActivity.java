@@ -52,6 +52,7 @@ public class IntegralRecordActivity extends BaseActivity {
 	private QuickAdapter<IntegralRecordBean> mAdapter;
 	private ArrayList<IntegralRecordBean> mDatas = new ArrayList<>();
 	private AbPullToRefreshView mActIntegralrecordAbpulltorefreshview;
+	ArrayList<IntegralRecordBean> arrayList = new ArrayList<>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +62,7 @@ public class IntegralRecordActivity extends BaseActivity {
 		initView();
 		setLisenter();
 		initAdapter();
-		getIntegralRecord(true,1);
+		getIntegralRecord(true,0);
 	}
 
 	private void initAdapter() {
@@ -77,9 +78,7 @@ public class IntegralRecordActivity extends BaseActivity {
 				ScreenUtils.textAdaptationOn720(tv_rc_thing, IntegralRecordActivity.this, 24);//消费内容
 				ScreenUtils.textAdaptationOn720(tv_rc_where, IntegralRecordActivity.this, 24);//消费地点
 				ScreenUtils.textAdaptationOn720(tv_rc_much, IntegralRecordActivity.this, 24);//消费金额
-
-				tv_rc_time.setText(item.getCreateTime());
-				tv_rc_thing.setText(item.getConsumName());
+				tv_rc_thing.setText(item.getConsumName().replace("[","").replace("{","").replace("}","").replace("]","").replace("\"","").replace(":","*"));
 				tv_rc_where.setText(item.getConsumSorce());
 				tv_rc_much.setText(item.getConsumAmount());
 			}
@@ -88,10 +87,6 @@ public class IntegralRecordActivity extends BaseActivity {
 	}
 
 	private int page = 1;
-
-	ArrayList<IntegralRecordBean> arrayList = new ArrayList<>();
-	ArrayList<IntegralRecordBean> arrayList0 = new ArrayList<>();
-	ArrayList<IntegralRecordBean> arrayList1 = new ArrayList<>();
 
 	/**
 	 * 获取消费记录
@@ -107,8 +102,9 @@ public class IntegralRecordActivity extends BaseActivity {
 		String reqTime = AbDateUtil.getDateTimeNow();
 		String uuid = AbStrUtil.getUUID();
 		try {
-			okHttpsImp.getIntegralRecordByID(uuid, "app", reqTime, userShopInfoBean.getBusinessId(),
-					mMemberInfoBean.getVipId(), type, page + "", 20 + "",
+			okHttpsImp.getIntegralRecordByID(uuid, "app", reqTime,userShopInfoBean.getBusinessId()
+					,mMemberInfoBean.getVipId()
+					, type, page + "", 20 + "",
 					new MyResultCallback<String>() {
 						@Override
 						public void onResponseResult(Result result) {
