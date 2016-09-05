@@ -67,7 +67,10 @@ public class NewIntegralGoodsActivity extends BaseActivity {
 	TextView btSure;
 	String productName, productDesc, productAmt;
 	String imageStr ;
-
+    String isMain;
+	String shopSourceId;
+	private  final   String  isIntegral="01";
+	private final   String isOnline="Y";
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -88,6 +91,13 @@ public class NewIntegralGoodsActivity extends BaseActivity {
 		smallImaFour.setOnClickListener(this);
 		smallImaFive.setOnClickListener(this);
 		btSure.setOnClickListener(this);
+		String shopSourceId =getIntent().getStringExtra("shopSourceId");
+		if(shopSourceId!=null&&!shopSourceId.equals("")){
+			this.shopSourceId=shopSourceId;
+		}else{
+			this.shopSourceId="M";
+		}
+
 	}
 
 	@Override
@@ -157,7 +167,7 @@ public class NewIntegralGoodsActivity extends BaseActivity {
 			}
 		}
 		imageStr = stringBuilder.toString();
-		System.out.println("imageStr" + imageStr);
+//		System.out.println("imageStr" + imageStr);
 		productName = edCup.getText().toString().trim();
 		productDesc = edCeramicCup.getText().toString().trim();
 		productAmt = edExchangeIntegral.getText().toString().trim();
@@ -189,7 +199,10 @@ public class NewIntegralGoodsActivity extends BaseActivity {
 		String productDesc = edCeramicCup.getText().toString();
 		String productAmt = edExchangeIntegral.getText().toString();
 		try {
-			okHttpsImp.addProduct(OkHttpsImp.md5_key, uuid, "app", reqTime, productName, "01", productDesc, productAmt, imageStr, userShopInfoBean.getBusinessId(), new MyResultCallback<String>() {
+			okHttpsImp.addProduct(OkHttpsImp.md5_key, uuid, "app", reqTime,
+					productName, isIntegral, productDesc, productAmt,isOnline,
+					imageStr, userShopInfoBean.getBusinessId(),isMain,shopSourceId,
+					new MyResultCallback<String>() {
 				@Override
 				public void onResponseResult(Result result) {
 					String reString = result.getData();
@@ -236,22 +249,34 @@ public class NewIntegralGoodsActivity extends BaseActivity {
 
 						switch (img_flag) {
 							case 1:
+
 								imaBigima.setImageBitmap(bm);
+								isMain="Y";
 								break;
 							case 2:
+
 								smallImaOne.setImageBitmap(bm);
+								isMain="N";
 								break;
 							case 3:
+
 								smallImaTwo.setImageBitmap(bm);
+								isMain="N";
 								break;
 							case 4:
+
 								smallImaThree.setImageBitmap(bm);
+								isMain="N";
 								break;
 							case 5:
+
 								smallImaFour.setImageBitmap(bm);
+								isMain="N";
 								break;
 							case 6:
+
 								smallImaFive.setImageBitmap(bm);
+								isMain="N";
 								break;
 
 						}

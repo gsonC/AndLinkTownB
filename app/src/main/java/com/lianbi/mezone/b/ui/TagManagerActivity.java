@@ -69,8 +69,6 @@ public class TagManagerActivity extends BaseActivity {
 		fm_Tag_listView = (SlideListView2) findViewById(R.id.fm_Tag_listView);
 		fm_Tag_listView.initSlideMode(SlideListView2.MOD_RIGHT);
 		act_Tag_abpulltorefreshview = (AbPullToRefreshView) findViewById(R.id.act_Tag_abpulltorefreshview);//AbPullToRefreshView
-		inputtag = tv_searchtag.getText().toString();
-
 	}
 
 	private void setLisenter() {
@@ -94,6 +92,7 @@ public class TagManagerActivity extends BaseActivity {
 		bt_sure.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				inputtag = tv_searchtag.getText().toString();
 				if (inputtag != null) {
 					if (!inputtag.matches(REGX.REGX_CHINESE_CHECK)) {
 						ContentUtils.showMsg(TagManagerActivity.this, "请输入正确的会员标签");
@@ -121,8 +120,6 @@ public class TagManagerActivity extends BaseActivity {
 				tv_tag = helper.getView(R.id.tv_tag);
 				ScreenUtils.textAdaptationOn720(tv_tag, TagManagerActivity.this, 24);
 				tv_tag.setText(item.getLabelName());
-				System.out.println("item.getLabelName()" + item.getLabelName());
-				labelId = String.valueOf(item.getLabelId());
 				helper.getView(R.id.tv_chdelete).setOnClickListener(// 删除
 						new OnClickListener() {
 
@@ -132,6 +129,7 @@ public class TagManagerActivity extends BaseActivity {
 								fm_Tag_listView.slideBack();
 								// 通知服务器
 								mDatas.remove(item);
+								labelId =item.getLabelId();
 								//Toast.makeText(mActivity, "删除", 0).show();
 								mAdapter.replaceAll(mDatas);
 								ArrayList<String> ids = new ArrayList<String>();
@@ -170,13 +168,11 @@ public class TagManagerActivity extends BaseActivity {
 						try {
 							JSONObject jsonObject = new JSONObject(reString);
 							reString = jsonObject.getString("vipLabelList");
-							System.out.println("reStringtag" + reString);
 							ArrayList<SelectTagBean> mDatasL = (ArrayList<SelectTagBean>) JSON.parseArray(reString, SelectTagBean.class);
 							if (mDatasL != null && mDatasL.size() > 0) {
 
 								mDatas.addAll(mDatasL);
 
-								System.out.println("mDatas" + mDatas);
 							}
 							if (mDatas != null && mDatas.size() > 0) {
 								imgTagmanagerEmpty.setVisibility(View.GONE);
@@ -188,7 +184,6 @@ public class TagManagerActivity extends BaseActivity {
 							}
 							AbPullHide.hideRefreshView(isResh, act_Tag_abpulltorefreshview);
 							mAdapter.replaceAll(mDatas);
-							System.out.println("mAdapter" + mAdapter);
 						} catch (JSONException e) {
 							e.printStackTrace();
 						}

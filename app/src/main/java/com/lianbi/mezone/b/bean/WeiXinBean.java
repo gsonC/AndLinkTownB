@@ -14,12 +14,29 @@ public class WeiXinBean implements Serializable {
 	String id;
 	String path;
 	String price;
-	String proDesc;
+	String productDesc;
 	String proName;
-	String proType;
 
+	public String getProductDesc() {
+		return productDesc;
+	}
+
+	public void setProductDesc(String productDesc) {
+		this.productDesc = productDesc;
+	}
+
+	String proType;
+   String shopSourceId;
 	public String getId() {
 		return id;
+	}
+
+	public String getShopSourceId() {
+		return shopSourceId;
+	}
+
+	public void setShopSourceId(String shopSourceId) {
+		this.shopSourceId = shopSourceId;
 	}
 
 	public void setId(String id) {
@@ -40,14 +57,6 @@ public class WeiXinBean implements Serializable {
 
 	public void setPrice(String price) {
 		this.price = price;
-	}
-
-	public String getProDesc() {
-		return proDesc;
-	}
-
-	public void setProDesc(String proDesc) {
-		this.proDesc = proDesc;
 	}
 
 	public String getProName() {

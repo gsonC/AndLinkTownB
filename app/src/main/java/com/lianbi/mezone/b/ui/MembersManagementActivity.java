@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.xizhi.mezone.b.R;
@@ -70,7 +71,6 @@ public class MembersManagementActivity extends BaseActivity {
 
 	}
 
-
 	//适配器
 	class MyAdapter extends BaseExpandableListAdapter {
 
@@ -97,8 +97,8 @@ public class MembersManagementActivity extends BaseActivity {
 				convertView = inflater.inflate(R.layout.layout_children, null);
 			}
 			ImageView child_ima=(ImageView)convertView.findViewById(R.id.child_ima);
-			//child_ima.setBackgroundResource(R.mipmap.icon_back);
-
+			//
+			RelativeLayout rela_child= (RelativeLayout) findViewById(R.id.rela_child);
 			TextView tv = (TextView) convertView.findViewById(R.id.second_textview);
 			tv.setText(info);
 			tv.setOnClickListener(new OnClickListener() {
@@ -173,9 +173,9 @@ public class MembersManagementActivity extends BaseActivity {
 
 			// 将默认的箭头修改到右边显示:
 			if (isExpanded) {
-				expand_ima.setBackgroundResource(R.mipmap.down12);
-			} else {
 				expand_ima.setBackgroundResource(R.mipmap.up2);
+			} else {
+				expand_ima.setBackgroundResource(R.mipmap.down12);
 			}
 
 			return convertView;

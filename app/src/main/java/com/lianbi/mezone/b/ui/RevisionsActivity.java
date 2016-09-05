@@ -73,7 +73,7 @@ public class RevisionsActivity extends BaseActivity {
 	ImageView smallImaFive;
 	@Bind(R.id.bt_sure)
 	TextView btSure;
-
+	String shopSourceId="";
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -105,7 +105,10 @@ public class RevisionsActivity extends BaseActivity {
 		edCeramicCup.setText(new_rated);
 		edExchangeIntegral.setText(new_price);
 		showImage();
-
+         String shopSourceId =getIntent().getStringExtra("shopSourceId");
+		if(shopSourceId!=null&&!shopSourceId.equals("")){
+			this.shopSourceId=shopSourceId;
+		}
 	}
     private   void  showImage(){
 		if(images==null){
@@ -175,16 +178,11 @@ public class RevisionsActivity extends BaseActivity {
 	/**
 	 * 拼接图片地址
 	 *
-	 * @param
-	 * @param
-	 * @param
 	 */
-
-
 	private void Mosaicimage() {
 		StringBuilder stringBuilder = new StringBuilder();
 		StringBuilder stringBuilderDel = new StringBuilder();
-		Log.i("tag","imagesDel-187--"+imagesDel);
+		System.out.println("imagesDel-187--"+imagesDel.size());
 		if (imagesDel != null && imagesDel.size() > 0) {
 			Log.i("tag","imagesDel-187--"+imagesDel.size());
 			for (int i = 0; i < imagesDel.size(); i++) {
@@ -195,7 +193,6 @@ public class RevisionsActivity extends BaseActivity {
 				}
 			}
 		}
-		delImageUrls = stringBuilderDel.toString();
 
 		if (file != null && file.size() > 0) {
 			for (int i = 0; i < file.size(); i++) {
@@ -207,6 +204,8 @@ public class RevisionsActivity extends BaseActivity {
 			}
 		}
 		imageStr = stringBuilder.toString();
+		delImageUrls = stringBuilderDel.toString();
+		System.out.println("delImageUrls---"+delImageUrls);
 		productName = edCup.getText().toString().trim();
 		productDesc = edCeramicCup.getText().toString().trim();
 		productAmt = edExchangeIntegral.getText().toString().trim();
@@ -250,28 +249,34 @@ public class RevisionsActivity extends BaseActivity {
 
 						switch (img_flag) {
 							case 1:
-								imageDeal(0,"Y");
+
 								imaBigima.setImageBitmap(bm);
+								imageDeal(0,"Y");
 								break;
 							case 2:
-								imageDeal(1,"N");
+
 								smallImaOne.setImageBitmap(bm);
+								imageDeal(1,"N");
 								break;
 							case 3:
-								imageDeal(2,"N");
+
 								smallImaTwo.setImageBitmap(bm);
+								imageDeal(2,"N");
 								break;
 							case 4:
-								imageDeal(3,"N");
+
 								smallImaThree.setImageBitmap(bm);
+								imageDeal(3,"N");
 								break;
 							case 5:
-								imageDeal(4,"N");
+
 								smallImaFour.setImageBitmap(bm);
+								imageDeal(4,"N");
 								break;
 							case 6:
-								imageDeal(5,"N");
+
 								smallImaFive.setImageBitmap(bm);
+								imageDeal(5,"N");
 								break;
 
 						}
@@ -316,27 +321,23 @@ public class RevisionsActivity extends BaseActivity {
 	 * 修改产品
 	 */
 	private void GetupdateProduct() {
-		System.out.println("productId 297" + productId);
-		System.out.println("productName" + productName);
-		System.out.println("productDesc" + productDesc);
+		System.out.println("productId 324" + productId);
+		System.out.println("productName 325" + productName);
+		System.out.println("productDesc " + productDesc);
 		System.out.println("productAmt" + productAmt);
 		System.out.println("delImageUrls--->" + delImageUrls);
-		System.out.println("imageStr" + imageStr);
-		System.out.println("店铺id" + userShopInfoBean.getBusinessId());
+//		System.out.println("imageStr  329" + imageStr);
+		System.out.println("shopSourceId 330" + shopSourceId);
 		System.out.println("isMain" + isMain);
-
 		try {
 			okHttpsImp.updateProduct(OkHttpsImp.md5_key, uuid, "app", reqTime,
-					productId, productName, "01", productDesc, productAmt, SHELVES,
-					delImageUrls, imageStr,BusinessId,
-					isMain, new MyResultCallback<String>() {
+						productId, productName, "01", productDesc, productAmt, SHELVES,
+						delImageUrls, imageStr,BusinessId,
+						isMain,shopSourceId,new MyResultCallback<String>() {
 				@Override
 				public void onResponseResult(Result result) {
-
 					String reString = result.getData();
-
-					System.out.println("reString316" + reString);
-
+					Log.i("tag","修改图片返回----->"+reString);
 					ContentUtils.showMsg(RevisionsActivity.this, "修改产品成功");
 					Intent intent = new Intent();
 					setResult(RESULT_OK, intent);
@@ -359,14 +360,9 @@ public class RevisionsActivity extends BaseActivity {
 			if(mMembermessage.getProductImages().size()!=0&&
 					mMembermessage.getProductImages().get(position)!=null) {
 				imagesDel.add(mMembermessage.getProductImages().get(position));
-//				file.remove(position);
 			}
 		} catch (Exception e2) {
 		}
-//		try {
-//		  file.remove(position);
-//		} catch (Exception e2) {
-//		}
-//		biMaps.remove(position);
+
 	}
 }

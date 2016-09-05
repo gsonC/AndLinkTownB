@@ -132,7 +132,7 @@ public class ChooseFromWeixinActivity extends BaseActivity {
 			arrayList.clear();
 
 			for (WeiXinBean weixin : arrayList) {
-				if ((weixin.getProName().contains(response)) || (weixin.getPrice().contains(response)) || (weixin.getProDesc().contains(response))) {
+				if ((weixin.getProName().contains(response)) || (weixin.getPrice().contains(response)) || (weixin.getProductDesc().contains(response))) {
 					arrayList.add(weixin);
 				}
 			}
@@ -157,7 +157,7 @@ public class ChooseFromWeixinActivity extends BaseActivity {
 				ScreenUtils.textAdaptationOn720(new_product_choose, ChooseFromWeixinActivity.this, 23);
 
 				new_product_food.setText(item.getProName());
-				new_product_rated.setText(item.getProDesc());
+				new_product_rated.setText(item.getProductDesc());
 				new_product_price.setText(item.getPrice());
 				String  uri=item.getPath();
 				Glide.with(ChooseFromWeixinActivity.this).load(uri).error(R.mipmap.default_head).into(new_product_ima);
@@ -168,9 +168,10 @@ public class ChooseFromWeixinActivity extends BaseActivity {
 						Intent intent = new Intent(ChooseFromWeixinActivity.this, RevisionsActivity.class);
 						intent.putExtra("new_product_id", item.getId());
 						intent.putExtra("new_product_food", item.getProName());
-						intent.putExtra("new_product_rated", item.getProDesc());
+						intent.putExtra("new_product_rated", item.getProductDesc());
 						intent.putExtra("new_product_price", item.getPrice());
 						intent.putExtra("new_product_ima", item.getPath());
+						intent.putExtra("shopSourceId",item.getShopSourceId());
 						startActivityForResult(intent, RESULT_WEIXIN);
 					}
 				});
@@ -185,7 +186,7 @@ public class ChooseFromWeixinActivity extends BaseActivity {
 	private final int RESULT_WEIXIN = 4444;
 
 	/**
-	 * 积分商品查询
+	 * 微信商品查询
 	 *
 	 * @param
 	 * @param
@@ -216,7 +217,6 @@ public class ChooseFromWeixinActivity extends BaseActivity {
 							if (mDatasL != null && mDatasL.size() > 0) {
 								mDatas.addAll(mDatasL);
 
-
 							}
 							if (mDatasL != null && mDatas.size() > 0) {
 								imgWeixinshopEmpty.setVisibility(View.GONE);
@@ -241,7 +241,7 @@ public class ChooseFromWeixinActivity extends BaseActivity {
 						actWeixinAbpulltorefreshview.setVisibility(View.GONE);
 					}
 					AbPullHide.hideRefreshView(isResh, actWeixinAbpulltorefreshview);
-					ContentUtils.showMsg(ChooseFromWeixinActivity.this, "查询积分商品失败");
+					ContentUtils.showMsg(ChooseFromWeixinActivity.this, "查询微信列表失败");
 				}
 			});
 		} catch (Exception e) {

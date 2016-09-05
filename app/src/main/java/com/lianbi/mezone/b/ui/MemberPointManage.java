@@ -35,8 +35,10 @@ import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.utils.ScreenUtils;
 import cn.com.hgh.view.SlideListView2;
+import okhttp3.Request;
 
 public class MemberPointManage extends BaseActivity implements OnClickListener {
+	ArrayList<MemberMessage> mData = new ArrayList<MemberMessage>();
 	ArrayList<MemberMessage> mDatas = new ArrayList<MemberMessage>();
 	private TextView tv_increaseProduct, choose_from_weixin;
 	private SlideListView2 fm_member_listView;
@@ -48,6 +50,7 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 	private final int RESULT_ADDSHOP = 1548;//增加店铺后返回
 	private final int RESULT_WEIXIN = 1388;//
 	private  boolean   isShow = false;//
+	private  final   String  isIntegral="01";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -182,9 +185,8 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 					pushgoods.setText("上架");
 					pushgoods.setVisibility(View.GONE);
 				}
-                if(item.getProductImages().size()!=0) {
-					Glide.with(MemberPointManage.this).load(item.getProductImages().get(0).getImgUrl())
-							.error(R.mipmap.default_head).into(point_ima);
+				if (item.getProductImages().size() != 0) {
+					Glide.with(MemberPointManage.this).load(item.getProductImages().get(0).getImgUrl()).error(R.mipmap.default_head).into(point_ima);
 				}
 				pullgoods.setOnClickListener(new OnClickListener() {
 					@Override
@@ -206,9 +208,13 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 					public void onClick(View v) {
 						if (item.getIsOnline().equals("Y")) {
 							item.setIsOnline("N");
+							upAndDownProduct(item.getId(),item.getProductName(),
+									item.getProductDesc(),item.getProductPrice(),item.getIsOnline());
 							mAdapter.replaceAll(mDatas);
 						} else {
 							item.setIsOnline("Y");
+							upAndDownProduct(item.getId(),item.getProductName(),
+									item.getProductDesc(),item.getProductPrice(),item.getIsOnline());
 							mAdapter.replaceAll(mDatas);
 						}
 
@@ -222,12 +228,12 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 					public void onClick(View v) {
 
 						Intent intent = new Intent(MemberPointManage.this, RevisionsActivity.class);
-						intent.putExtra("membermessage",item);
+						intent.putExtra("membermessage", item);
 						intent.putExtra("new_product_id", item.getId());
 						intent.putExtra("new_product_food", item.getProductName());
 						intent.putExtra("new_product_rated", item.getProductDesc());
 						intent.putExtra("new_product_price", item.getProductPrice());
-						if(item.getProductImages().size()!=0) {
+						if (item.getProductImages().size() != 0) {
 							intent.putExtra("new_product_image", item.getProductImages());
 						}
 						startActivityForResult(intent, RESULT_MENMBERCHANGE);
@@ -251,6 +257,7 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 		fm_member_listView.setAdapter(mAdapter);
 	}
 
+
 	/**
 	 * 积分商品查询
 	 */
@@ -264,19 +271,17 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 				@Override
 				public void onResponseResult(Result result) {
 					String reString = result.getData();
-					System.out.println("reString287" + reString);
+					System.out.println("reString253"+reString);
+					mData.clear();
 					if (reString != null) {
 						try {
 							JSONObject jsonObject = new JSONObject(reString);
 							reString = jsonObject.getString("products");
-							mDatas.clear();
 							ArrayList<MemberMessage> mDatasL = (ArrayList<MemberMessage>) JSON.parseArray(reString, MemberMessage.class);
+							mData.addAll(mDatasL);
+							updateView(mData);
 
 							if (mDatasL != null && mDatasL.size() > 0) {
-								mDatas.addAll(mDatasL);
-
-							}
-							if (mDatas != null && mDatas.size() > 0) {
 								img_memberpoint_empty.setVisibility(View.GONE);
 								fm_member_listView.setVisibility(View.VISIBLE);
 
@@ -286,7 +291,6 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 
 							}
 
-							mAdapter.replaceAll(mDatas);
 						} catch (JSONException e) {
 							e.printStackTrace();
 						}
@@ -298,8 +302,6 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 					img_memberpoint_empty.setVisibility(View.VISIBLE);
 					fm_member_listView.setVisibility(View.GONE);
 
-					//	ContentUtils.showMsg(MemberPointManage.this, "查询积分商品失败");
-					//	fm_member_listView.setVisibility(View.GONE);
 				}
 			});
 		} catch (Exception e) {
@@ -321,12 +323,12 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 				@Override
 				public void onResponseResult(Result result) {
 					getQueryProduct();
-					ContentUtils.showMsg(MemberPointManage.this, "删除标签成功");
+					ContentUtils.showMsg(MemberPointManage.this, "删除积分商品成功");
 				}
 
 				@Override
 				public void onResponseFailed(String msg) {
-					ContentUtils.showMsg(MemberPointManage.this, "删除标签失败");
+					ContentUtils.showMsg(MemberPointManage.this, "删除积分商品失败");
 				}
 			});
 		} catch (Exception e) {
@@ -334,6 +336,45 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 		}
 	}
 
+	/**
+	 * 修改上下架
+	 */
+	private void  upAndDownProduct(String  productId,String productName,
+				String productDesc,String productAmt,String  SHELVES) {
+		String isMain="N";
+		String deleteImageIds="";
+		String addImages="";
+		String shopSourceId="";
+		try {
+			okHttpsImp.updateProduct(OkHttpsImp.md5_key, uuid, "app", reqTime,
+					productId, productName, isIntegral, productDesc, productAmt, SHELVES,
+					deleteImageIds,addImages,BusinessId,
+					isMain,shopSourceId,new MyResultCallback<String>() {
+						@Override
+						public void onResponseResult(Result result) {
+							String reString = result.getData();
+//							ContentUtils.showMsg(MemberPointManage.this, "修改上下架成功");
+
+						}
+						@Override
+						public void onBefore(Request request) {
+							super.onBefore(request);
+
+						}
+						@Override
+						public void onResponseFailed(String msg) {
+//							ContentUtils.showMsg(MemberPointManage.this, "修改上下架失败");
+						}
+					});
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	protected void updateView(ArrayList<MemberMessage> arrayList) {
+		mDatas.clear();
+		mDatas.addAll(arrayList);
+		mAdapter.replaceAll(mDatas);
+	}
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
@@ -346,6 +387,7 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 					break;
 				case RESULT_ADDSHOP:
 					getQueryProduct();
+
 					break;
 				case RESULT_WEIXIN:
 					getQueryProduct();

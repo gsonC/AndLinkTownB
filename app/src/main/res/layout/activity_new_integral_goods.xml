@@ -149,24 +149,24 @@
 -->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="260dp"
+        android:layout_height="320dp"
         android:background="@color/white"
         >
-        <ImageView
+        <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="@color/color_e3e3e3"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="220dp"
+            android:layout_height="320dp"
             android:background="@color/white"
             >
 
             <ImageView
                 android:id="@+id/ima_bigima"
-                android:layout_width="188dp"
-                android:layout_height="188dp"
+                android:layout_width="290dp"
+                android:layout_height="290dp"
                 android:layout_centerInParent="true"
 
             />

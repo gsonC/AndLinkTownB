@@ -31,6 +31,7 @@ public class MemberMessage implements Serializable {
 	String shopSourceId;
 	String updateTime;
 
+
 	public String getShopSourceId() {
 		return shopSourceId;
 	}

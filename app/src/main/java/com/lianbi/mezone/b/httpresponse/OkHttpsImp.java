@@ -2538,17 +2538,24 @@ public enum OkHttpsImp {
 	/**
 	 * 新增产品
 	 */
-	public void addProduct(String md5_key, String serNum, String source, String reqTime, String productName, String productType, String productDesc, String productAmt, String images, String storeId, MyResultCallback<String> myResultCallback) throws Exception {
+
+	public void addProduct(String md5_key, String serNum, String source, String reqTime,
+						   String productName, String productType, String productDesc,
+						   String productAmt,String  isOnline, String images, String storeId, String isMain,String shopSourceId,
+						   MyResultCallback<String> myResultCallback) throws Exception {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("serNum", serNum);
 		params.put("source", source);
 		params.put("reqTime", reqTime);
+		params.put("isOnline", isOnline);
+		params.put("storeId", storeId);
 		params.put("productName", productName);
 		params.put("productType", productType);
 		params.put("productDesc", productDesc);
 		params.put("productAmt", productAmt);
 		params.put("images", images);
-		params.put("storeId", storeId);
+		params.put("isMain", isMain);
+		params.put("shopSourceId", shopSourceId);
 		String sign = getSign(md5_key, params);
 		params.put("sign", sign);
 		String url = getAbsoluteUrl(API.AddPRODUCTT);
@@ -2564,7 +2571,7 @@ public enum OkHttpsImp {
 							  String productType, String productDesc,
 							  String productAmt, String isOnline,
 							  String deleteImageId, String addImages,
-							  String storeId, String isMain,
+							  String storeId, String isMain,String shopSourceId,
 							  MyResultCallback<String> myResultCallback) throws Exception {
 //		(OkHttpsImp.md5_key, uuid, "app", reqTime,
 //				productId, productName, "01", productDesc, productAmt, "Y",
@@ -2579,13 +2586,14 @@ public enum OkHttpsImp {
 		params.put("productName", productName);
 		params.put("productType", productType);
 		params.put("isOnline", isOnline);
+		params.put("deleteImageIds", deleteImageId);
 		params.put("productDesc", productDesc);
 		params.put("productAmt", productAmt);
 		params.put("addImages", addImages);
 		params.put("storeId", storeId);
 		params.put("productId", productId);
 		params.put("isMain", isMain);
-		params.put("deleteImageId", deleteImageId);
+		params.put("shopSourceId", shopSourceId);
 		String sign = getSign(md5_key, params);
 		params.put("sign", sign);
 		String url = getAbsoluteUrl(API.CHANGERODUCT);
