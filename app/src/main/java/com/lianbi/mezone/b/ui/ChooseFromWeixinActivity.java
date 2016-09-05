@@ -188,10 +188,8 @@ public class ChooseFromWeixinActivity extends BaseActivity {
 	/**
 	 * 微信商品查询
 	 *
-	 * @param
-	 * @param
-	 * @param
 	 */
+String shopSourceId;
 
 	private void getWeixinQueryProduct(final boolean isResh) {
 		if (isResh) {

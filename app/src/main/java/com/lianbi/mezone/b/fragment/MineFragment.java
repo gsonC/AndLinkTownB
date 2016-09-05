@@ -281,11 +281,11 @@ public class MineFragment extends Fragment implements OnClickListener,
 						.toString().trim());
 				break;
 			case R.id.rlt_update://版本升级
-		//		if (mUpgrade) {
-		//			maActivity.getUpData();
-		//		} else {
-		//			ContentUtils.showMsg(maActivity, "已是最新版本!");
-		//		}
+				if (mUpgrade) {
+					maActivity.getUpData();
+				} else {
+					ContentUtils.showMsg(maActivity, "已是最新版本!");
+				}
 				break;
 			case R.id.llt_mine_about_us:// 关于我们
 				startActivity(new Intent(maActivity, AboutUsActivity.class));

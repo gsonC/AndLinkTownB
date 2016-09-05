@@ -350,7 +350,8 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 				String dataJson = com.alibaba.fastjson.JSONObject.toJSON(data)
 						.toString();
 				String url = encryptionUrl(address, dataJson);*/
-				return address+ "storeId=" + bussniessId;
+			//	return encryptionUrl(address, dataJson);
+			return address+ "storeId=" + bussniessId;
 			case 2://货源批发
 				return address + "storeId=" + bussniessId;
 			case 3://智能WIFI

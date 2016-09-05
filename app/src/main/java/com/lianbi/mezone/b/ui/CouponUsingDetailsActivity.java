@@ -26,7 +26,6 @@ import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.QuickAdapter;
 import cn.com.hgh.utils.AbDateUtil;
 import cn.com.hgh.utils.AbStrUtil;
-import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.view.AbPullToRefreshView;
 
@@ -164,9 +163,6 @@ public class CouponUsingDetailsActivity extends BaseActivity implements
                                 unused_num.setText(jsonObject.getString("noUseCount"));
                                 invalid_num.setText(jsonObject.getString("failCount"));
                                 List<CouponUsingDetails> l = JSON.parseArray(jsonObject.getString("list"), CouponUsingDetails.class);
-                                if (l.size() < pageSize) {
-                                    ContentUtils.showMsg(CouponUsingDetailsActivity.this, "已加载全部");
-                                }
                                 if (pageNo == 1) {
                                     mData = l;
                                 }
