@@ -22,6 +22,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.com.hgh.utils.AbStrUtil;
 import cn.com.hgh.utils.ContentUtils;
+import cn.com.hgh.utils.REGX;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.view.HttpDialog;
 
@@ -148,7 +149,7 @@ public class MemberAddCategoryActivity extends BaseActivity {
             MemberClassify  memberclassify = (MemberClassify)getIntent.getSerializableExtra("info");
             membertypeId=memberclassify.getTypeId();
             lay_numofmembers.setVisibility(View.VISIBLE);
-            tvClassifyvalue.setEnabled(false);
+            tvClassifyvalue.setEnabled(true);
             tvRadiovalue.setEnabled(true);
             tvMaxidiscountvalue.setEnabled(true);
             tvWhatmoney.setEnabled(false);
@@ -205,8 +206,14 @@ public class MemberAddCategoryActivity extends BaseActivity {
 
     public  boolean  verifyData(){
         if (TextUtils.isEmpty(typeName)) {
+            if(!typeName.matches(REGX.REGX_CHINESE_CHECK)){
+                ContentUtils.showMsg(MemberAddCategoryActivity.this, "请输入正确的会员类别");
+                return true;
+            }
+
+        }else{
             ContentUtils.showMsg(MemberAddCategoryActivity.this, "请输入会员类别");
-            return  true;
+            return  false;
         }
         if (TextUtils.isEmpty(typeDiscountRatio)||iserrorvalue==true) {
             ContentUtils.showMsg(MemberAddCategoryActivity.this, "请输入正确的折扣比例");

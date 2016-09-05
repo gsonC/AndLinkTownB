@@ -51,7 +51,7 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_member_point_manage, HAVETYPE);
+		setContentView(R.layout.activity_member_point_manage, NOTYPE);
 		initView();
 		initListAdapter();
 		setLisenter();

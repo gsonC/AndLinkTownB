@@ -192,7 +192,6 @@ public class ChooseFromWeixinActivity extends BaseActivity {
 	 * @param
 	 */
 
-String shopSourceId;
 	private void getWeixinQueryProduct(final boolean isResh) {
 		if (isResh) {
 			page = 1;
@@ -204,7 +203,7 @@ String shopSourceId;
 
 		try {
 			okHttpsImp.QueryFromWinxin(OkHttpsImp.md5_key,uuid, "app", reqTime,
-					userShopInfoBean.getBusinessId(), page + "", 20 + "",shopSourceId,new MyResultCallback<String>() {
+					userShopInfoBean.getBusinessId(), page + "", 20 + "",new MyResultCallback<String>() {
 				@Override
 				public void onResponseResult(Result result) {
 					String reString = result.getData();

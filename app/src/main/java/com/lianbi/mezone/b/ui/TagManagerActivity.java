@@ -25,6 +25,7 @@ import cn.com.hgh.utils.AbDateUtil;
 import cn.com.hgh.utils.AbPullHide;
 import cn.com.hgh.utils.AbStrUtil;
 import cn.com.hgh.utils.ContentUtils;
+import cn.com.hgh.utils.REGX;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.utils.ScreenUtils;
 import cn.com.hgh.view.AbPullToRefreshView;
@@ -41,6 +42,7 @@ public class TagManagerActivity extends BaseActivity {
 	private String paramLike;
 	private String labelId;
 	private ImageView imgTagmanagerEmpty;
+	String inputtag;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +53,6 @@ public class TagManagerActivity extends BaseActivity {
 		initListAdapter();
 		setLisenter();
 		getvipLabel(true);
-		//	getTagList();
 	}
 
 	@Override
@@ -68,6 +69,7 @@ public class TagManagerActivity extends BaseActivity {
 		fm_Tag_listView = (SlideListView2) findViewById(R.id.fm_Tag_listView);
 		fm_Tag_listView.initSlideMode(SlideListView2.MOD_RIGHT);
 		act_Tag_abpulltorefreshview = (AbPullToRefreshView) findViewById(R.id.act_Tag_abpulltorefreshview);//AbPullToRefreshView
+		inputtag = tv_searchtag.getText().toString();
 
 	}
 
@@ -92,9 +94,15 @@ public class TagManagerActivity extends BaseActivity {
 		bt_sure.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if (tv_searchtag.getText().toString() != null) {
+				if (inputtag != null) {
+					if (!inputtag.matches(REGX.REGX_CHINESE_CHECK)) {
+						ContentUtils.showMsg(TagManagerActivity.this, "请输入正确的会员标签");
+						return;
+					}
 					getAddvipLabel();
-
+				} else {
+					ContentUtils.showMsg(TagManagerActivity.this, "请输入标签");
+					return;
 				}
 			}
 		});

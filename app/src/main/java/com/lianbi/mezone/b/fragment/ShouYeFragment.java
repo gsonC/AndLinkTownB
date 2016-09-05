@@ -24,7 +24,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.lianbi.mezone.b.app.Constants;
 import com.lianbi.mezone.b.bean.ShouYeBannerBean;
 import com.lianbi.mezone.b.bean.ShouyeServiceBean;
-import com.lianbi.mezone.b.bean.WebProductManagementBean;
 import com.lianbi.mezone.b.httpresponse.API;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
@@ -245,7 +244,7 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 							intent_web.putExtra("NEEDNOTTITLE", false);
 							intent_web.putExtra("Re", true);
 							intent_web.putExtra(WebActivty.T, "微信商城");
-							intent_web.putExtra(WebActivty.U, getSAUrl(API.TOSTORE_PRODUCT_MANAGEMENT,1));
+							intent_web.putExtra(WebActivty.U, getSAUrl(API.TOSTORE_MODULE_WCM,1));
 							mActivity.startActivity(intent_web);
 						}
 						break;
@@ -346,12 +345,12 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 		String bussniessId = BaseActivity.userShopInfoBean.getBusinessId();
 		switch (type){
 			case 1://微信商城
-				WebProductManagementBean data = new WebProductManagementBean();
+				/*WebProductManagementBean data = new WebProductManagementBean();
 				data.setBusinessId(bussniessId);
 				String dataJson = com.alibaba.fastjson.JSONObject.toJSON(data)
 						.toString();
-				String url = encryptionUrl(address, dataJson);
-				return url;
+				String url = encryptionUrl(address, dataJson);*/
+				return address+ "storeId=" + bussniessId;
 			case 2://货源批发
 				return address + "storeId=" + bussniessId;
 			case 3://智能WIFI

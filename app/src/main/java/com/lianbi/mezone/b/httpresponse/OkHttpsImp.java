@@ -2611,7 +2611,7 @@ public enum OkHttpsImp {
 
 	public void QueryFromWinxin(String md5_key, String serNum, String source, String reqTime,
 
-								String storeId, String pageNo, String pageSize,String shopSourceId, MyResultCallback<String> myResultCallback) throws Exception {
+								String storeId, String pageNo, String pageSize, MyResultCallback<String> myResultCallback) throws Exception {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("serNum", serNum);
 		params.put("source", source);
@@ -2619,7 +2619,6 @@ public enum OkHttpsImp {
 		params.put("storeId", storeId);
 		params.put("pageNo", pageNo);
 		params.put("pageSize", pageSize);
-		params.put("shopSourceId", shopSourceId);
 		String sign = getSign(md5_key, params);
 		params.put("sign", sign);
 		String url = getAbsoluteUrl(API.QUERYFROMWEIXINSHOP);

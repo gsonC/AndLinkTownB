@@ -74,9 +74,13 @@ public class API {
 	 */
 	public static final String WEBCUR = HOST + "template/product/release.html";
 	/**
-	 * 产品管理和微信商城
+	 * 产品管理
 	 */
 	public static final String TOSTORE_PRODUCT_MANAGEMENT = TOSTORESERVICE + "/wcm/product/enterIntoProductManager?";
+	/**
+	 * 微信商城
+	 */
+	public static final String TOSTORE_MODULE_WCM = TOSTORESERVICE + "/wcm/product/IntoBEndMenu?";
 	/**
 	 * 货源批发
 	 */
