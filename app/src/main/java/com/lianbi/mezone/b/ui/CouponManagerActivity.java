@@ -27,7 +27,6 @@ import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.QuickAdapter;
 import cn.com.hgh.utils.AbDateUtil;
 import cn.com.hgh.utils.AbStrUtil;
-import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.view.AbPullToRefreshView;
 import cn.com.hgh.view.DialogCommon;
@@ -125,9 +124,6 @@ public class CouponManagerActivity extends BaseActivity implements AdapterView.O
                     if (null != result) {
                         JSONObject jsonObject = JSON.parseObject(result.getData());
                         List<CouponBean> l = JSON.parseArray(jsonObject.getString("list"), CouponBean.class);
-                        if (l.size() < pageSize) {
-                            ContentUtils.showMsg(CouponManagerActivity.this, "已加载全部");
-                        }
                         if (pageNo == 1) {
                             mData = l;
                         }
