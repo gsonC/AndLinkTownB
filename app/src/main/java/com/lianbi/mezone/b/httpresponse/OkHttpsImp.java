@@ -698,20 +698,14 @@ public enum OkHttpsImp {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("storeId", businessID);
 		params.put("businessName", businessName);
-		params.put("vipPhones", phone);
 		params.put("msgId", templateMark);
-		params.put("batchNum", "");
-		params.put("storeId",businessID);
-		params.put("businessName",businessName);
 		params.put("phones",phone);
-		params.put("msgId",templateMark);
 		params.put("serNum", uuid);
 		params.put("source", appsource);
-		params.put("sourceCode",appsource);
 		params.put("reqTime", reqTime);
 		String sign = getSign(md5_key, params);
 		params.put("sign", sign);
-		String url = getAbsoluteUrl(API.MARKETINGSMS_BULK_LIST);
+		String url = getAbsoluteUrl(API.MARKETINGSMS_SENDMSG_LIST);
 		postProgressResponse(myResultCallback, params, url);
 	}
 
