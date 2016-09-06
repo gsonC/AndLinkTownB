@@ -321,7 +321,7 @@ public class MarketingMsgDetailActivity extends BaseActivity {
                 }else{
                     tv_sendmobile.setText(mDatas.get(position).getMobile());
                     tv_membergrade.setText(String.valueOf(mDatas.get(position).getCoupGrade()));
-                    tv_memberlable.setText(String.valueOf(mDatas.get(position).getCoupNote()));
+                    tv_memberlable.setText(judgeEmpty(mDatas.get(position).getCoupNote()));
                     llt_marketingmsgl.setVisibility(View.VISIBLE);
                     tv_loadedall.setVisibility(View.GONE);
 
@@ -339,32 +339,16 @@ public class MarketingMsgDetailActivity extends BaseActivity {
             }
         }
     }
-    //    private void listviewData() {
-//        mAdapter = new QuickAdapter<MarketingMsgDetail>(MarketingMsgDetailActivity.this,
-//                R.layout.item_marketingmsgdetail_list, mDatas) {
-//
-//            @Override
-//            protected void convert(BaseAdapterHelper helper,
-//                                   final MarketingMsgDetail item) {
-//
-//                LinearLayout llt_marketingmsgl = helper
-//                        .getView(R.id.llt_marketingmsgl);
-//                TextView tv_sendmobile = helper
-//                        .getView(R.id.tv_sendmobile);
-//                TextView tv_membergrade = helper
-//                        .getView(R.id.tv_membergrade);
-//                TextView tv_memberlable = helper
-//                        .getView(R.id.tv_memberlable);
-//                tv_sendmobile.setText(item.getMobile());
-//                tv_membergrade.setText(item.getCoupGrade());
-//                tv_memberlable.setText(item.getCoupNote());
-//            }
-//        };
-//        // 设置适配器
-//        lvActmarketdetail.setAdapter(mAdapter);
-//
-//
-//    }
+    private  String   judgeEmpty(String  msg){
+        String  temp="";
+        if(TextUtils.isEmpty(msg)){
+            temp="无";
+        }else{
+            temp=msg;
+        }
+        return  temp;
+    }
+
 }
 
 

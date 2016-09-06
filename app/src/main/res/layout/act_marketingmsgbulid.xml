@@ -125,7 +125,7 @@
         android:layout_height="150dp"
         android:layout_marginTop="20dp"
         android:editable="false"
-        android:hint="编辑短信内容"
+        android:hint="请选择可选模板"
         android:background="@drawable/shap_hollow_grey"
         android:textColorHint="@color/colores_news_11"
         android:gravity="top"

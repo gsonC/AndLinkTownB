@@ -113,12 +113,8 @@ public class MarketingMsgBulidActivity extends BaseActivity {
         }
     }
     private  void  sendShortmsg(){
-        Log.i("tag","113-getBusinessId------>"+BusinessId);
-        Log.i("tag","113-templateID------>"+templateID);
-        Log.i("tag","114-sendPhones------>"+sendPhones);
-        Log.i("tag","115----reqTime-->"+reqTime);
-        Log.i("tag","116----uuid----->"+uuid);
-        Log.i("tag","129--ShopName--->"+ShopName);
+        Log.i("tag","113-短信模板ID------>"+templateID);
+        Log.i("tag","118-发送会员手机号------>"+sendPhones);
 
         if(TextUtils.isEmpty(templateID)){
             ContentUtils.showMsg(MarketingMsgBulidActivity.this,"请选择短信模板");
@@ -138,7 +134,6 @@ public class MarketingMsgBulidActivity extends BaseActivity {
                     successDialog();
                     if (reString != null) {
                         JSONObject jsonObject;
-//                        ContentUtils.showMsg(MarketingMsgBulidActivity.this,"发送成功");
 
                         try {
 
@@ -162,24 +157,31 @@ public class MarketingMsgBulidActivity extends BaseActivity {
     }
 
     private  void  successDialog(){
-        DialogCommon dialogCommon = new DialogCommon(
-                MarketingMsgBulidActivity.this) {
-
-            @Override
-            public void onCheckClick() {
-                dismiss();
-            }
-
-            @Override
-            public void onOkClick() {
-                dismiss();
-            }
-
-        };
-        dialogCommon.setTextTitle("短信发送成功");
-        dialogCommon.setTv_dialog_common_ok("确 定");
-        dialogCommon.setTv_dialog_common_cancelV(View.GONE);
-        dialogCommon.show();
+        DialogCommon dialog = new DialogCommon(MarketingMsgBulidActivity.this) {
+                          @Override
+                          public void onCheckClick() {
+                              dismiss();
+                              Intent intent=new Intent();
+                              intent.setClass(MarketingMsgBulidActivity.this,MarketingMsgGlActivity.class);
+                              startActivity(intent);
+                              finish();
+                          }
+                          @Override
+                          public void onOkClick() {
+                             dismiss();
+                             templateID="";
+                             sendPhones="";
+                             sendtotal="0条";
+                             etSendcontext.setText("");
+                             btnMsgnum.setText("0条");
+                          }
+                          };
+                          dialog.setCancelable(false);
+                          dialog.setCanceledOnTouchOutside(false);
+                          dialog.setTextTitle("发送成功");
+                          dialog.setTv_dialog_common_ok("再发一条");
+                          dialog.setTv_dialog_common_cancel("查看详情");
+                          dialog.show();
     }
 
     private void simpleJump(Class activity) {
