@@ -30,7 +30,6 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import cn.com.hgh.utils.AbStrUtil;
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.Picture_Base64;
 import cn.com.hgh.utils.Result;
@@ -51,7 +50,6 @@ public class RevisionsActivity extends BaseActivity {
 	private List<MemberMessage.productImages> images = new ArrayList<>();
 	private List<MemberMessage.productImages> imagesother = new ArrayList<>();
 	int isNum;
-	private String weiDianimgurl;
 	Boolean isSelect = false;
 	//是否上架
 	private final String SHELVES = "Y";
@@ -83,7 +81,7 @@ public class RevisionsActivity extends BaseActivity {
 	TextView btSure;
 	String shopSourceId = "";
 	boolean isBigpivture = false;
-	private List<WeiXinBean.productImages> mMd;
+	private ArrayList<WeiXinBean.productImages> mWeiDianimgurl;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -110,27 +108,21 @@ public class RevisionsActivity extends BaseActivity {
 		new_food = getIntent().getStringExtra("new_product_food");
 		new_rated = getIntent().getStringExtra("new_product_rated");
 		new_price = getIntent().getStringExtra("new_product_price");
-		weiDianimgurl = getIntent().getStringExtra("new_product_ima");
-		images = (ArrayList<MemberMessage.productImages>) getIntent().getSerializableExtra("new_product_image");
-	//	mMd = (ArrayList<WeiXinBean.productImages>) getIntent().getSerializableExtra("new_product_images");
-	//	System.out.println("++++"+images.size());
-	//	try {
-	//		int s = mMd.size();
-	//		if (s > 0) {
-	//			for (int i = 0; i < s; i++) {
-	//				MemberMessage bean = new MemberMessage();
-	//				MemberMessage.productImages mds = bean.new productImages();
-	//				mds.setImgId(mMd.get(i).getImgId());
-	//				mds.setImgDesc(mMd.get(i).getImgDesc());
-	//				mds.setImgUrl(mMd.get(i).getImgUrl());
-	//				images.add(mds);
-	//			}
-	//		}
-	//	}catch (Exception e){
-	//		e.printStackTrace();
-	//	}
+		mWeiDianimgurl = (ArrayList<WeiXinBean.productImages>) getIntent().getSerializableExtra("new_product_ima");
 
-	//	System.out.println("---"+images.size());
+		images = (ArrayList<MemberMessage.productImages>) getIntent().getSerializableExtra("new_product_image");
+
+		/*if(mWeiDianimgurl!=null){
+			int s = mWeiDianimgurl.size();
+			for(int i=0;i<s;i++){
+				MemberMessage bean = new MemberMessage();
+				MemberMessage.productImages mds = bean.new productImages();
+				mds.setImgId(mWeiDianimgurl.get(i).getImgId());
+				mds.setImgDesc(mWeiDianimgurl.get(i).getImgDesc());
+				mds.setImgUrl(mWeiDianimgurl.get(i).getImgUrl());
+				images.add(mds);
+			}
+		}*/
 
 		edCup.setText(new_food);
 		edCeramicCup.setText(new_rated);
@@ -145,14 +137,14 @@ public class RevisionsActivity extends BaseActivity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		weiDianimgurl = "";
+	//	weiDianimgurl = "";
 	}
 
 	private void showImage() {
 
-		if(!AbStrUtil.isEmpty(weiDianimgurl)){
-			Glide.with(RevisionsActivity.this).load(Uri.parse(weiDianimgurl)).error(R.mipmap.add2).into(imaBigima);
-		}
+	//	if(!AbStrUtil.isEmpty(weiDianimgurl)){
+	//		Glide.with(RevisionsActivity.this).load(Uri.parse(weiDianimgurl)).error(R.mipmap.add2).into(imaBigima);
+	//	}
 
 		if (images == null) {
 			return;

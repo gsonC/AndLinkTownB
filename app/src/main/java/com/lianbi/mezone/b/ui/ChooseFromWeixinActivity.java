@@ -66,7 +66,6 @@ public class ChooseFromWeixinActivity extends BaseActivity {
 		getWeixinQueryProduct(true,"");
 	}
 
-
 	/**
 	 * 添加监听
 	 */
@@ -177,7 +176,7 @@ public class ChooseFromWeixinActivity extends BaseActivity {
 						Intent intent = new Intent(ChooseFromWeixinActivity.this, RevisionsActivity.class);
 						intent.putExtra("new_product_food", item.getProductName());
 						intent.putExtra("new_product_rated", item.getProductDesc());
-						intent.putExtra("new_product_ima", item.getProductImages().get(0).getImgUrl());
+						intent.putExtra("new_product_image", item.getProductImages());
 						intent.putExtra("shopSourceId",item.getShopSourceId());
 						startActivityForResult(intent, RESULT_WEIXIN);
 						finish();
