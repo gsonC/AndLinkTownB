@@ -279,7 +279,8 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 		String uuid = AbStrUtil.getUUID();
 
 		try {
-			okHttpsImp.QueryProduct(uuid, "app", reqTime, OkHttpsImp.md5_key, userShopInfoBean.getBusinessId(),new MyResultCallback<String>() {
+			okHttpsImp.QueryProduct(uuid, "app", reqTime, OkHttpsImp.md5_key,
+					userShopInfoBean.getBusinessId(),new MyResultCallback<String>() {
 				@Override
 				public void onResponseResult(Result result) {
 					String reString = result.getData();

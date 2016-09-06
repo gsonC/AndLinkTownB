@@ -47,7 +47,8 @@ public class AddNewMembersActivity extends BaseActivity {
 	private ClearEditText mEditAddmemberPhone, mEditMembercardnumber, mEditIDnumber;
 	private EditText mEtMemberbirthday, mEtMembercardtermofvalidity;
 	private TextView mTvMunberadress, mTvRemarks, mTvMemberfile, mTvRecordsofconsumption, mTvIntegralrecord,
-			mTvMunberadressVisable, mTvMunberremarksVisable, mTvAddmemberSex, mTvAddmembertag, mEditAddmemberPhone1, mTvMembertype, mTvAddmemberDiscount, mTvAddmemberMax, mTvAddmemberIntegral;
+			mTvMunberadressVisable, mTvMunberremarksVisable, mTvAddmemberSex,
+			mTvAddmembertag, mEditAddmemberPhone1, mTvMembertype, mTvAddmemberDiscount, mTvAddmemberMax, mTvAddmemberIntegral;
 	private ContainsEmojiEditText mEditMembername;
 	private LinearLayout mLltAddmemberaddress, mLltAddmemberremarks;
 	private MemberInfoBean mMemberInfoBean;

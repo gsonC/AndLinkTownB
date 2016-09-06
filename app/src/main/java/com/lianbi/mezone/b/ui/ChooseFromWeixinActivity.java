@@ -205,11 +205,11 @@ String shopSourceId;
 
 		try {
 			okHttpsImp.QueryFromWinxin(OkHttpsImp.md5_key,uuid, "app", reqTime,
-					userShopInfoBean.getBusinessId(), page + "", 20 + "","",new MyResultCallback<String>() {
+					userShopInfoBean.getBusinessId(), page + "", 20 + "",input,new MyResultCallback<String>() {
 				@Override
 				public void onResponseResult(Result result) {
+					page++;
 					String reString = result.getData();
-					System.out.println("reString.." + reString);
 					if (reString != null) {
 						try {
 							JSONObject jsonObject = new JSONObject(reString);
