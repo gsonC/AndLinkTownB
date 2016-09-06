@@ -235,7 +235,7 @@ public class MarketingMsgGlActivity extends BaseActivity {
                         JSONObject jsonObject;
                         try {
                             jsonObject = new JSONObject(reString);
-                            reString = jsonObject.getString("list");
+                            reString=jsonObject.optString("list");
                             smstotalSendNum=String.valueOf(jsonObject.getInt("totalSendNum"));
                             remainSendNum=String.valueOf(jsonObject.getInt("remainSendNum"));
                             txtAlreadysendnum.setText(smstotalSendNum);
