@@ -25,7 +25,7 @@ public class MembersManagementActivity extends BaseActivity {
 	List<String> parent = null;
 	Map<String, List<String>> map = null;
 	ExpandableListView expandListView;
-	LinearLayout rela_child;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +43,6 @@ public class MembersManagementActivity extends BaseActivity {
 		//设置 属性 GroupIndicator 去掉默认向下的箭头
 		expandListView.setGroupIndicator(null);
 		mainlistview = (ExpandableListView) this.findViewById(R.id.main_expandablelistview);
-
 
 	}
 
@@ -96,12 +95,12 @@ public class MembersManagementActivity extends BaseActivity {
 				LayoutInflater inflater = (LayoutInflater) MembersManagementActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 				convertView = inflater.inflate(R.layout.layout_children, null);
 			}
-		//	ImageView child_ima=(ImageView)convertView.findViewById(R.id.child_ima);
+			//ImageView child_ima=(ImageView)findViewById(R.id.child_ima);
 			//
-			 rela_child= (LinearLayout) findViewById(R.id.rela_child);
+			LinearLayout rela_child= (LinearLayout)convertView.findViewById(R.id.heheh);
 			TextView tv = (TextView) convertView.findViewById(R.id.second_textview);
 			tv.setText(info);
-			tv.setOnClickListener(new OnClickListener() {
+			rela_child.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					//会员列表
@@ -132,7 +131,7 @@ public class MembersManagementActivity extends BaseActivity {
 				}
 			});
 
-			return tv;
+			return rela_child;
 
 	}
 

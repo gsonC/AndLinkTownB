@@ -2600,12 +2600,14 @@ public enum OkHttpsImp {
 
 	public void QueryProduct(String serNum, String source, String reqTime, String md5_key,
 
-							 String storeId, MyResultCallback<String> myResultCallback) throws Exception {
+							 String storeId,String  productName,String  productPrice,MyResultCallback<String> myResultCallback) throws Exception {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("serNum", serNum);
 		params.put("source", source);
 		params.put("reqTime", reqTime);
 		params.put("storeId", storeId);
+		params.put("productName", productName);
+		params.put("productPrice", productPrice);
 		String sign = getSign(md5_key, params);
 		params.put("sign", sign);
 		String url = getAbsoluteUrl(API.QUERYPOINTPRODUCT);
