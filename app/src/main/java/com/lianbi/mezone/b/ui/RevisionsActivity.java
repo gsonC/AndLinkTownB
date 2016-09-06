@@ -108,21 +108,24 @@ public class RevisionsActivity extends BaseActivity {
 		new_food = getIntent().getStringExtra("new_product_food");
 		new_rated = getIntent().getStringExtra("new_product_rated");
 		new_price = getIntent().getStringExtra("new_product_price");
-		mWeiDianimgurl = (ArrayList<WeiXinBean.productImages>) getIntent().getSerializableExtra("new_product_ima");
-
 		images = (ArrayList<MemberMessage.productImages>) getIntent().getSerializableExtra("new_product_image");
+		mWeiDianimgurl = (ArrayList<WeiXinBean.productImages>) getIntent().getSerializableExtra("new_product_images");
 
-		/*if(mWeiDianimgurl!=null){
+		if(mWeiDianimgurl!=null){
+			if(null==images){
+				images = new ArrayList<>();
+				images.clear();
+			}
 			int s = mWeiDianimgurl.size();
 			for(int i=0;i<s;i++){
-				MemberMessage bean = new MemberMessage();
-				MemberMessage.productImages mds = bean.new productImages();
+				MemberMessage.productImages mds = new MemberMessage().new productImages();
 				mds.setImgId(mWeiDianimgurl.get(i).getImgId());
 				mds.setImgDesc(mWeiDianimgurl.get(i).getImgDesc());
 				mds.setImgUrl(mWeiDianimgurl.get(i).getImgUrl());
+				System.out.println(mWeiDianimgurl.get(i).getImgId());
 				images.add(mds);
 			}
-		}*/
+		}
 
 		edCup.setText(new_food);
 		edCeramicCup.setText(new_rated);
@@ -336,11 +339,11 @@ public class RevisionsActivity extends BaseActivity {
 						break;
 					case PhotoUtills.REQUEST_IMAGE_CROP:
 						Bitmap bm = PhotoUtills.getBitmap();
-					//	file.add(photoUtills.photoCurrentFile);
+						file.add(photoUtills.photoCurrentFile);
 						switch (img_flag) {
 							case 1:
 								imaBigima.setImageBitmap(bm);
-								file.add(photoUtills.photoCurrentFile);
+					//			file.add(photoUtills.photoCurrentFile);
 								isBigpivture = true;
 								imageDealMain();
 								break;

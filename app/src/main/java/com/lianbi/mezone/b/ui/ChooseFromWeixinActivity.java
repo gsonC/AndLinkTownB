@@ -176,7 +176,7 @@ public class ChooseFromWeixinActivity extends BaseActivity {
 						Intent intent = new Intent(ChooseFromWeixinActivity.this, RevisionsActivity.class);
 						intent.putExtra("new_product_food", item.getProductName());
 						intent.putExtra("new_product_rated", item.getProductDesc());
-						intent.putExtra("new_product_image", item.getProductImages());
+						intent.putExtra("new_product_images", item.getProductImages());
 						intent.putExtra("shopSourceId",item.getShopSourceId());
 						startActivityForResult(intent, RESULT_WEIXIN);
 						finish();
