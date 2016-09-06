@@ -82,6 +82,7 @@ public class RevisionsActivity extends BaseActivity {
 	String shopSourceId = "";
 	boolean isBigpivture = false;
 	private ArrayList<WeiXinBean.productImages> mWeiDianimgurl;
+	private String mBigImgID;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -157,7 +158,7 @@ public class RevisionsActivity extends BaseActivity {
 		if (imagessize > 0) {
 			for (int i = 0; i < imagessize; i++) {
 				if ("main".equals(images.get(i).getImgDesc())) {
-					String bigImgID = images.get(i).getImgId();
+					mBigImgID = images.get(i).getImgId();
 					isNum = i;
 					Glide.with(RevisionsActivity.this).load(Uri.parse(images.get(i).getImgUrl())).error(R.mipmap.add2).into(imaBigima);
 					imagesother = images;
@@ -258,7 +259,14 @@ public class RevisionsActivity extends BaseActivity {
 		//			}
 		//		}
 		//	}
+
 		delImageUrls = stringBuilderDel.toString();
+
+		if("Y".equals(isMain)){
+			delImageUrls = delImageUrls+","+mBigImgID;
+	//		stringBuilderDel.append(",");
+		}
+
 
 		if (file != null && file.size() > 0) {
 			for (int i = 0; i < file.size(); i++) {
