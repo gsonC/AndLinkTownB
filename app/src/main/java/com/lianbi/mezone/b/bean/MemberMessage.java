@@ -162,6 +162,7 @@ public class MemberMessage implements Serializable {
 	}
 
 	public class productImages implements Serializable{
+		private static final long serialVersionUID = 3831784191913017925L;
 		public String imgDesc;
 		public String imgId;
 		public String imgUrl;

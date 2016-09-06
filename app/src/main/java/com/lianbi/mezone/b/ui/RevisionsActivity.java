@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.lianbi.mezone.b.bean.MemberMessage;
+import com.lianbi.mezone.b.bean.WeiXinBean;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
 import com.lianbi.mezone.b.photo.FileUtils;
@@ -45,10 +46,10 @@ public class RevisionsActivity extends BaseActivity {
 	private List<File> file;
 	private int img_flag;
 	private MemberMessage mMembermessage;
-	private ArrayList<MemberMessage.productImages> imagesDel = new ArrayList<>();
+	private ArrayList<MemberMessage.productImages> imagesDel;
 	private List<String> imgreDel = new ArrayList<>();
-	private ArrayList<MemberMessage.productImages> images;
-	private ArrayList<MemberMessage.productImages> imagesother = new ArrayList<>();
+	private List<MemberMessage.productImages> images = new ArrayList<>();
+	private List<MemberMessage.productImages> imagesother = new ArrayList<>();
 	int isNum;
 	private String weiDianimgurl;
 	Boolean isSelect = false;
@@ -82,6 +83,7 @@ public class RevisionsActivity extends BaseActivity {
 	TextView btSure;
 	String shopSourceId = "";
 	boolean isBigpivture = false;
+	private List<WeiXinBean.productImages> mMd;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -110,6 +112,26 @@ public class RevisionsActivity extends BaseActivity {
 		new_price = getIntent().getStringExtra("new_product_price");
 		weiDianimgurl = getIntent().getStringExtra("new_product_ima");
 		images = (ArrayList<MemberMessage.productImages>) getIntent().getSerializableExtra("new_product_image");
+	//	mMd = (ArrayList<WeiXinBean.productImages>) getIntent().getSerializableExtra("new_product_images");
+	//	System.out.println("++++"+images.size());
+	//	try {
+	//		int s = mMd.size();
+	//		if (s > 0) {
+	//			for (int i = 0; i < s; i++) {
+	//				MemberMessage bean = new MemberMessage();
+	//				MemberMessage.productImages mds = bean.new productImages();
+	//				mds.setImgId(mMd.get(i).getImgId());
+	//				mds.setImgDesc(mMd.get(i).getImgDesc());
+	//				mds.setImgUrl(mMd.get(i).getImgUrl());
+	//				images.add(mds);
+	//			}
+	//		}
+	//	}catch (Exception e){
+	//		e.printStackTrace();
+	//	}
+
+	//	System.out.println("---"+images.size());
+
 		edCup.setText(new_food);
 		edCeramicCup.setText(new_rated);
 		edExchangeIntegral.setText(new_price);

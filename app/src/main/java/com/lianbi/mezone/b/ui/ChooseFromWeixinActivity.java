@@ -50,13 +50,9 @@ public class ChooseFromWeixinActivity extends BaseActivity {
 	ListView actWeixinListview;
 	@Bind(R.id.act_weixin_abpulltorefreshview)
 	AbPullToRefreshView actWeixinAbpulltorefreshview;
-	private final int RESULT_WEIXIN = 4444;
-	String shopSourceId;
 
 	private ListView mAct_addmembers_listview;
 	private ArrayList<WeiXinBean> mDatas = new ArrayList<WeiXinBean>();
-	private ArrayList<String>  mStrimgurl = new ArrayList<String>();
-
 	private QuickAdapter<WeiXinBean> mAdapter;
 	private int page = 1;
 
@@ -144,14 +140,14 @@ public class ChooseFromWeixinActivity extends BaseActivity {
 				}
 			}
 		}
-		mStrimgurl.clear();
 		mAdapter.replaceAll(arrayList);
 	}
+
 	private void initAdapter() {
 		mAdapter = new QuickAdapter<WeiXinBean>(ChooseFromWeixinActivity.this, R.layout.weixin_shop_list, mDatas)  {
 
 			@Override
-			protected void convert(final BaseAdapterHelper helper, final WeiXinBean item) {
+			protected void convert(BaseAdapterHelper helper, final WeiXinBean item) {
 
 				ImageView new_product_ima = helper.getView(R.id.new_product_ima);
 				TextView new_product_food = helper.getView(R.id.new_product_food);
@@ -167,56 +163,45 @@ public class ChooseFromWeixinActivity extends BaseActivity {
 				new_product_food.setText(item.getProductName());
 				new_product_rated.setText(item.getProductDesc());
 				new_product_price.setText(item.getProductPrice());
-//				String uri=item.getProductImages().get(0).getImgUrl();
-//				Glide.with(ChooseFromWeixinActivity.this).load(uri).error(R.mipmap.default_head).into(new_product_ima);
-				int imagesize=item.getProductImages().size();
-				for (int i = 0; i < imagesize; i++) {
-					if ("main".equals(item.getProductImages().get(i).getImgDesc())) {
-						Glide.with(ChooseFromWeixinActivity.this).load
-								(item.getProductImages().get(i).getImgUrl()).error(R.mipmap.default_head).into(new_product_ima);
-						mStrimgurl.add(item.getProductImages().get(i).getImgUrl());
-						break;
-					}
+				String uri ="";
+				try {
+					uri = item.getProductImages().get(0).getImgUrl();
+				}catch (Exception e){
+					e.printStackTrace();
 				}
-
+				Glide.with(ChooseFromWeixinActivity.this).load(uri).error(R.mipmap.default_head).into(new_product_ima);
 
 				helper.getView(R.id.new_product_choose).setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
 						Intent intent = new Intent(ChooseFromWeixinActivity.this, RevisionsActivity.class);
-						intent.putExtra("new_product_id", item.getShopSourceId());
 						intent.putExtra("new_product_food", item.getProductName());
 						intent.putExtra("new_product_rated", item.getProductDesc());
-                    	intent.putExtra("new_product_ima",judge(mStrimgurl.size(),helper.getPosition()));
+						intent.putExtra("new_product_ima", item.getProductImages().get(0).getImgUrl());
 						intent.putExtra("shopSourceId",item.getShopSourceId());
 						startActivityForResult(intent, RESULT_WEIXIN);
 						finish();
 					}
 				});
 			}
+
+
 		};
 
 		actWeixinListview.setAdapter(mAdapter);
 	}
-    public  String    judge(int   mStrimgurlsize,int  helperPosition){
-       String temp="";
-       if(helperPosition==mStrimgurlsize||helperPosition>mStrimgurlsize){
-		 temp="";
-	   }else{
-		 temp=mStrimgurl.get(helperPosition);
-	   }
-       return   temp;
-	}
+
+	private final int RESULT_WEIXIN = 4444;
 
 	/**
 	 * 微信商品查询
 	 *
 	 */
+	String shopSourceId;
 
 	private void getWeixinQueryProduct(final boolean isResh,String input) {
 		if (isResh) {
 			page = 1;
-			mStrimgurl.clear();
 			mDatas.clear();
 			mAdapter.replaceAll(mDatas);
 		}
@@ -248,7 +233,6 @@ public class ChooseFromWeixinActivity extends BaseActivity {
 								actWeixinAbpulltorefreshview.setVisibility(View.GONE);
 							}
 							AbPullHide.hideRefreshView(isResh, actWeixinAbpulltorefreshview);
-							mStrimgurl.clear();
 							mAdapter.replaceAll(mDatas);
 						} catch (JSONException e) {
 							e.printStackTrace();

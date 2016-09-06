@@ -69,6 +69,7 @@ public class WeiXinBean implements Serializable {
 	}
 
 	public class productImages implements Serializable{
+		private static final long serialVersionUID = 916208303026316853L;
 		String imgId;
 		String imgUrl;
 		String imgDesc;

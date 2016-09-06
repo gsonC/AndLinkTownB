@@ -453,9 +453,11 @@ public class AddNewMembersActivity extends BaseActivity {
 				case REQUEST_TAG:
 					String tagContent = data.getStringExtra("tagContent");
 					mVipLabel = data.getStringExtra("tagID");
-					if (!AbStrUtil.isEmpty(tagContent) && !AbStrUtil.isEmpty(mVipLabel)) {
+					System.out.println("tagContent"+tagContent);
+					if (!"".equals(tagContent)) {
 						mTvAddmembertag.setText(tagContent);
 					} else {
+						mTvAddmembertag.setText("");
 						mTvAddmembertag.setHint("请选择会员标签");
 					}
 					break;
