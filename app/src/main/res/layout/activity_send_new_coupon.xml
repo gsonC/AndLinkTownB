@@ -276,7 +276,7 @@
                 android:layout_marginTop="15dp"
                 android:background="@drawable/shape_radius_4dp"
                 android:gravity="center"
-                android:hint="可编辑短信内容"
+                android:hint="请选择短信模板"
                 android:textColor="@color/colores_news_11"
                 android:textSize="@dimen/h13"
                 android:visibility="gone" />

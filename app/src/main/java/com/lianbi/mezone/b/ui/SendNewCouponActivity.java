@@ -156,11 +156,14 @@ public class SendNewCouponActivity extends BaseActivity implements CompoundButto
     }
 
     @Override
-    @OnClick({R.id.linearLayout, R.id.valid_period_from, R.id.valid_period_to,
+    @OnClick({R.id.linearLayout, R.id.valid_period_from, R.id.valid_period_to, R.id.editable_sms_content,
             R.id.selectable_member, R.id.selectable_templet, R.id.send_new_coupon})
     protected void onChildClick(View view) {
         super.onChildClick(view);
         switch (view.getId()) {
+            case R.id.editable_sms_content:
+                gotoSelectMembers();
+                break;
             case R.id.linearLayout:
                 resetMinmum();
                 break;
@@ -209,9 +212,7 @@ public class SendNewCouponActivity extends BaseActivity implements CompoundButto
                 timeSelectorTo.show();
                 break;
             case R.id.selectable_member:
-                resetMinmum();
-                Intent intentmember = new Intent(SendNewCouponActivity.this, MarketingSelectMemberActivity.class);
-                startActivityForResult(intentmember, REQUEST_CODE_MEMBER_RESULT);
+                gotoSelectMembers();
                 break;
             case R.id.selectable_templet:
                 resetMinmum();
@@ -223,6 +224,12 @@ public class SendNewCouponActivity extends BaseActivity implements CompoundButto
                 sendNewCoupon();
                 break;
         }
+    }
+
+    private void gotoSelectMembers() {
+        resetMinmum();
+        Intent intentmember = new Intent(SendNewCouponActivity.this, MarketingSelectMemberActivity.class);
+        startActivityForResult(intentmember, REQUEST_CODE_MEMBER_RESULT);
     }
 
     @Override
