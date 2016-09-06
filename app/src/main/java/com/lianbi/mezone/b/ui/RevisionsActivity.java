@@ -241,8 +241,6 @@ public class RevisionsActivity extends BaseActivity {
 		//	}
 		delImageUrls = stringBuilderDel.toString();
 
-		System.out.println("imagesDel-187--" + delImageUrls);
-
 		if (file != null && file.size() > 0) {
 			for (int i = 0; i < file.size(); i++) {
 				if (i + 1 == file.size()) {

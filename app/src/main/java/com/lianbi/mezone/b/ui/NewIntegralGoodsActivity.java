@@ -71,6 +71,7 @@ public class NewIntegralGoodsActivity extends BaseActivity {
 	String shopSourceId;
 	private  final   String  isIntegral="01";
 	private final   String isOnline="Y";
+	private boolean isBigImg = false;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -110,53 +111,49 @@ public class NewIntegralGoodsActivity extends BaseActivity {
 				photoUtills.startPickPhotoFromAlbumWithCrop();
 				break;
 			case R.id.small_imaOne:
-				img_flag = 2;
-				photoUtills.startPickPhotoFromAlbumWithCrop();
+				isHavBigimg(2);
 				break;
 			case R.id.small_imaTwo:
-				img_flag = 3;
-				photoUtills.startPickPhotoFromAlbumWithCrop();
-
+				isHavBigimg(3);
+		//		img_flag = 3;
+		//		photoUtills.startPickPhotoFromAlbumWithCrop();
 				break;
 			case R.id.small_imaThree:
-				img_flag = 4;
-				photoUtills.startPickPhotoFromAlbumWithCrop();
+				isHavBigimg(4);
 				break;
 			case R.id.small_imaFour:
-				img_flag = 5;
-				photoUtills.startPickPhotoFromAlbumWithCrop();
+				isHavBigimg(5);
 				break;
 			case R.id.small_imaFive:
-				img_flag = 6;
-				photoUtills.startPickPhotoFromAlbumWithCrop();
+				isHavBigimg(6);
 				break;
 			case R.id.bt_sure:
-
 				getImageUrl();
-				getProduct();
-
-
 				break;
 		}
 	}
 
 	/**
+	 * 判断主图是否首先上传
+	 */
+	private boolean isHavBigimg(int num){
+		if(isBigImg){
+			img_flag = num;
+			photoUtills.startPickPhotoFromAlbumWithCrop();
+			return true;
+		}else{
+			ContentUtils.showMsg(this,"请首先上传主图");
+			return false;
+		}
+
+	}
+
+
+	/**
 	 * 获得图片路径并裁剪
 	 */
-	private void getImageUrl(){
+	private void getImageUrl() {
 		StringBuilder stringBuilder = new StringBuilder();
-		StringBuilder stringBuilderDel = new StringBuilder();
-		String delImageUrls = "";
-		if (imagesDel != null && imagesDel.size() > 0) {
-			for (int i = 0; i < imagesDel.size(); i++) {
-				if (i + 1 == imagesDel.size()) {
-					stringBuilderDel.append(imagesDel.get(i).getImageUrl());
-				} else {
-					stringBuilderDel.append(imagesDel.get(i).getImageUrl() + ",");
-				}
-			}
-		}
-		delImageUrls = stringBuilderDel.toString();
 		if (file != null && file.size() > 0) {
 			for (int i = 0; i < file.size(); i++) {
 				if (i + 1 == file.size()) {
@@ -183,14 +180,15 @@ public class NewIntegralGoodsActivity extends BaseActivity {
 			ContentUtils.showMsg(NewIntegralGoodsActivity.this, "请输入商品名价格");
 			return;
 		}
-	}
 
+		if (isBigImg) {
+			getProduct();
+		}else{
+			ContentUtils.showMsg(this,"请上传主图");
+		}
+	}
 	/**
 	 * 新增产品接口
-	 *
-	 * @param
-	 * @param
-	 * @param
 	 */
 	private void getProduct() {
 		String reqTime = AbDateUtil.getDateTimeNow();
@@ -201,13 +199,13 @@ public class NewIntegralGoodsActivity extends BaseActivity {
 		try {
 			okHttpsImp.addProduct(OkHttpsImp.md5_key, uuid, "app", reqTime,
 					productName, isIntegral, productDesc, productAmt,isOnline,
-					imageStr, userShopInfoBean.getBusinessId(),isMain,shopSourceId,
+					imageStr, userShopInfoBean.getBusinessId(),isMain,
 					new MyResultCallback<String>() {
 				@Override
 				public void onResponseResult(Result result) {
 					String reString = result.getData();
 					System.out.println("aDDreString220" + reString);
-					ContentUtils.showMsg(NewIntegralGoodsActivity.this, "新增成功1");
+					ContentUtils.showMsg(NewIntegralGoodsActivity.this, "新增成功");
 					Intent intent = new Intent();
 					intent.setClass(NewIntegralGoodsActivity.this,MemberPointManage.class);
 					setResult(RESULT_OK, intent);
@@ -243,7 +241,6 @@ public class NewIntegralGoodsActivity extends BaseActivity {
 						file.add(photoUtills.photoCurrentFile);
 						break;
 
-
 					case PhotoUtills.REQUEST_IMAGE_CROP:
 						Bitmap bm = PhotoUtills.getBitmap();
 
@@ -252,6 +249,7 @@ public class NewIntegralGoodsActivity extends BaseActivity {
 
 								imaBigima.setImageBitmap(bm);
 								isMain="Y";
+								isBigImg = true;
 								break;
 							case 2:
 

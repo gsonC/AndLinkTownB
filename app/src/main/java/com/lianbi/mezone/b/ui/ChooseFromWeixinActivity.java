@@ -172,7 +172,6 @@ public class ChooseFromWeixinActivity extends BaseActivity {
 						intent.putExtra("new_product_id", item.getShopSourceId());
 						intent.putExtra("new_product_food", item.getProductName());
 						intent.putExtra("new_product_rated", item.getProductDesc());
-						intent.putExtra("new_product_price", item.getProductPrice());
 						intent.putExtra("new_product_ima", item.getProductImages().get(0).getImgUrl());
 						intent.putExtra("shopSourceId",item.getShopSourceId());
 						startActivityForResult(intent, RESULT_WEIXIN);

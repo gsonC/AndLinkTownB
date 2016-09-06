@@ -2493,7 +2493,7 @@ public enum OkHttpsImp {
 	 */
 	public void addProduct(String md5_key, String serNum, String source, String reqTime,
 						   String productName, String productType, String productDesc,
-						   String productAmt,String  isOnline, String images, String storeId, String isMain,String shopSourceId,
+						   String productAmt,String  isOnline, String images, String storeId, String isMain,
 						   MyResultCallback<String> myResultCallback) throws Exception {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("serNum", serNum);
@@ -2507,7 +2507,6 @@ public enum OkHttpsImp {
 		params.put("productAmt", productAmt);
 		params.put("images", images);
 		params.put("isMain", isMain);
-		params.put("shopSourceId", shopSourceId);
 		String sign = getSign(md5_key, params);
 		params.put("sign", sign);
 		String url = getAbsoluteUrl(API.AddPRODUCTT);
