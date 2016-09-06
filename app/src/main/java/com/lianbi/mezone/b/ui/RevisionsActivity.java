@@ -45,16 +45,17 @@ public class RevisionsActivity extends BaseActivity {
 	private List<File> file;
 	private int img_flag;
 	private MemberMessage mMembermessage;
-	private ArrayList<MemberMessage.productImages> imagesDel = new ArrayList<MemberMessage.productImages>();
+	private ArrayList<MemberMessage.productImages> imagesDel = new ArrayList<>();
 	private List<String> imgreDel = new ArrayList<>();
 	private ArrayList<MemberMessage.productImages> images;
-	private ArrayList<MemberMessage.productImages> imagesother = new ArrayList<MemberMessage.productImages>();
+	private ArrayList<MemberMessage.productImages> imagesother = new ArrayList<>();
 	int isNum;
 	private String weiDianimgurl;
 	Boolean isSelect = false;
 	//是否上架
 	private final String SHELVES = "Y";
-	String productName, productDesc, productAmt, new_food = "", new_rated, new_price, a, productId, delImageUrls;
+	String productName= "", productDesc= "", productAmt= "", new_food = "", new_rated= "",
+			new_price= "", productId = "", delImageUrls= "";
 	String isMain = "N";
 	String imageStr = null;
 	@Bind(R.id.ed_Cup)
@@ -270,6 +271,38 @@ public class RevisionsActivity extends BaseActivity {
 		GetupdateProduct();
 	}
 
+	/**
+	 * 修改产品
+	 */
+	private void GetupdateProduct() {
+		if(null==productId){
+			productId = "";
+		}
+
+		try {
+			okHttpsImp.updateProduct(OkHttpsImp.md5_key, uuid, "app",
+					reqTime, productId, productName, "01", productDesc,
+					productAmt, SHELVES, delImageUrls, imageStr, BusinessId, isMain, shopSourceId, new MyResultCallback<String>() {
+						@Override
+						public void onResponseResult(Result result) {
+							String reString = result.getData();
+							ContentUtils.showMsg(RevisionsActivity.this, "修改产品成功");
+							Intent intent = new Intent();
+							setResult(RESULT_OK, intent);
+							finish();
+						}
+
+						@Override
+						public void onResponseFailed(String msg) {
+							ContentUtils.showMsg(RevisionsActivity.this, "修改产品失败");
+						}
+					});
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+
 	@SuppressWarnings("static-access")
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
@@ -289,10 +322,11 @@ public class RevisionsActivity extends BaseActivity {
 						break;
 					case PhotoUtills.REQUEST_IMAGE_CROP:
 						Bitmap bm = PhotoUtills.getBitmap();
-						file.add(photoUtills.photoCurrentFile);
+					//	file.add(photoUtills.photoCurrentFile);
 						switch (img_flag) {
 							case 1:
 								imaBigima.setImageBitmap(bm);
+								file.add(photoUtills.photoCurrentFile);
 								isBigpivture = true;
 								imageDealMain();
 								break;
@@ -354,40 +388,6 @@ public class RevisionsActivity extends BaseActivity {
 	}
 
 
-	/**
-	 * 修改产品
-	 */
-	private void GetupdateProduct() {
-//		System.out.println("productId 324" + productId);
-//		System.out.println("productName 325" + productName);
-//		System.out.println("productDesc " + productDesc);
-//		System.out.println("productAmt" + productAmt);
-//		System.out.println("delImageUrls--->" + delImageUrls);
-//		System.out.println("imageStr  329" + imageStr);
-//		System.out.println("shopSourceId 330" + shopSourceId);
-//		System.out.println("isMain" + isMain);
-
-
-		try {
-			okHttpsImp.updateProduct(OkHttpsImp.md5_key, uuid, "app", reqTime, productId, productName, "01", productDesc, productAmt, SHELVES, delImageUrls, imageStr, BusinessId, isMain, shopSourceId, new MyResultCallback<String>() {
-				@Override
-				public void onResponseResult(Result result) {
-					String reString = result.getData();
-					ContentUtils.showMsg(RevisionsActivity.this, "修改产品成功");
-					Intent intent = new Intent();
-					setResult(RESULT_OK, intent);
-					finish();
-				}
-
-				@Override
-				public void onResponseFailed(String msg) {
-					ContentUtils.showMsg(RevisionsActivity.this, "修改产品失败");
-				}
-			});
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
 	/**
 	 * 主图修改

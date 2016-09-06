@@ -162,19 +162,24 @@ public class ChooseFromWeixinActivity extends BaseActivity {
 				new_product_food.setText(item.getProductName());
 				new_product_rated.setText(item.getProductDesc());
 				new_product_price.setText(item.getProductPrice());
-				String uri=item.getProductImages().get(0).getImgUrl();
+				String uri ="";
+				try {
+					uri = item.getProductImages().get(0).getImgUrl();
+				}catch (Exception e){
+					e.printStackTrace();
+				}
 				Glide.with(ChooseFromWeixinActivity.this).load(uri).error(R.mipmap.default_head).into(new_product_ima);
 
 				helper.getView(R.id.new_product_choose).setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
 						Intent intent = new Intent(ChooseFromWeixinActivity.this, RevisionsActivity.class);
-						intent.putExtra("new_product_id", item.getShopSourceId());
 						intent.putExtra("new_product_food", item.getProductName());
 						intent.putExtra("new_product_rated", item.getProductDesc());
 						intent.putExtra("new_product_ima", item.getProductImages().get(0).getImgUrl());
 						intent.putExtra("shopSourceId",item.getShopSourceId());
 						startActivityForResult(intent, RESULT_WEIXIN);
+						finish();
 					}
 				});
 			}

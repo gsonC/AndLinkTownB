@@ -59,6 +59,11 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 		initView();
 		initListAdapter();
 		setLisenter();
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
 		getQueryProduct();
 	}
 
@@ -284,7 +289,6 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 				@Override
 				public void onResponseResult(Result result) {
 					String reString = result.getData();
-					System.out.println("reString253"+reString);
 					mData.clear();
 					if (reString != null) {
 						try {
