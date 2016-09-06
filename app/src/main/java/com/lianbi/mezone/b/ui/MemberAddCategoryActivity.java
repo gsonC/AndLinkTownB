@@ -2,9 +2,7 @@ package com.lianbi.mezone.b.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -22,7 +20,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.com.hgh.utils.AbStrUtil;
 import cn.com.hgh.utils.ContentUtils;
-import cn.com.hgh.utils.REGX;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.view.HttpDialog;
 
@@ -133,7 +130,7 @@ public class MemberAddCategoryActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_memberaddcategory, HAVETYPE);
         ButterKnife.bind(this);
-        listenDiscountRatio();
+//      listenDiscountRatio();
         initViewAndData();
     }
 
@@ -186,67 +183,43 @@ public class MemberAddCategoryActivity extends BaseActivity {
 
     }
 
-    public  void  listenDiscountRatio(){
-        tvRadiovalue
-                .addTextChangedListener(new TextWatcher() {
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start,
-                                              int before, int count) {
-
-                    }
-
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start,
-                                                  int count, int after) {
-
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable s) {
-                        String   strdata=s.toString();
-                        if(!strdata.equals("")&&!AbStrUtil.indexOfString(strdata,".")&&Integer.parseInt(strdata)>10){
-                           iserrorvalue=true;
-
-                           ContentUtils.showMsg(MemberAddCategoryActivity.this, "请输入0.1-10之间的数值");
-                          }else{
-
-                           iserrorvalue=false;
-                          }
-
-                    }
-                });
-
-    }
-
-    public  boolean  verifyData(){
-        if (TextUtils.isEmpty(typeName)) {
-            if(!typeName.matches(REGX.REGX_CHINESE_CHECK)){
-                ContentUtils.showMsg(MemberAddCategoryActivity.this, "请输入正确的会员类别");
-                return true;
-            }
-
-        }else{
-            ContentUtils.showMsg(MemberAddCategoryActivity.this, "请输入会员类别");
-            return  false;
+    private  boolean  checkDiscountRatio(String  strdata){
+        int  lenth=strdata.length();
+        switch (lenth){
+            case 1:
+             if(strdata.contains(".")) {
+                 ContentUtils.showMsg(MemberAddCategoryActivity.this, "请输入0.1-10之间的数值");
+                 return  true;
+             }
+               break;
+            case 2:
+             if(strdata.contains(".")) {
+                ContentUtils.showMsg(MemberAddCategoryActivity.this, "请输入0.1-10之间的数值");
+                return  true;
+             }else{
+                int  inttwo=Integer.parseInt(strdata);
+                if(inttwo>10){
+                    ContentUtils.showMsg(MemberAddCategoryActivity.this, "请输入0.1-10之间的数值");
+                return  true;
+                }
+             }
+                break;
+            case 3:
+              if(strdata.contains(".")) {
+                  if(strdata.charAt(0)=='.'||strdata.charAt(lenth-1)=='.'){
+                      ContentUtils.showMsg(MemberAddCategoryActivity.this, "请输入0.1-10之间的数值");
+                      return  true;
+                  }
+              }else{
+                int  inttress=Integer.parseInt(strdata);
+                if(inttress>10){
+                   ContentUtils.showMsg(MemberAddCategoryActivity.this, "请输入0.1-10之间的数值");
+                   return  true;
+                }
+              }
+            break;
         }
-        if (TextUtils.isEmpty(typeDiscountRatio)||iserrorvalue==true) {
-            ContentUtils.showMsg(MemberAddCategoryActivity.this, "请输入正确的折扣比例");
-            return  true;
-        }
-        if (TextUtils.isEmpty(typeMaxDiscount)) {
-            ContentUtils.showMsg(MemberAddCategoryActivity.this, "请输入单笔最高优惠");
-            return  true;
-        }
-        if (TextUtils.isEmpty(typeConditionMin)) {
-            ContentUtils.showMsg(MemberAddCategoryActivity.this, "请输入累计消费下限");
-            return  true;
-        }
-        if (TextUtils.isEmpty(typeConditionMax)) {
-            ContentUtils.showMsg(MemberAddCategoryActivity.this, "请输入累计消费上限");
-            return  true;
-        }
-       return  false;
+        return  false;
     }
     /*查询此分类详情**/
     public  void getMemberTypedetail(String membertypeId){
@@ -306,9 +279,30 @@ public class MemberAddCategoryActivity extends BaseActivity {
         typeMaxDiscount=tvMaxidiscountvalue.getText().toString();
         typeConditionMin=etRangebefore.getText().toString();
         typeConditionMax=etRangeafter.getText().toString();
-        if(verifyData()){
-                return;
-            }
+        if (TextUtils.isEmpty(typeName)) {
+            ContentUtils.showMsg(MemberAddCategoryActivity.this, "请输入正确的会员类别");
+            return;
+        }
+        if (TextUtils.isEmpty(typeDiscountRatio)||checkDiscountRatio(typeDiscountRatio)) {
+            ContentUtils.showMsg(MemberAddCategoryActivity.this, "请输入正确的折扣比例");
+            return;
+        }
+        if (TextUtils.isEmpty(typeMaxDiscount)) {
+            ContentUtils.showMsg(MemberAddCategoryActivity.this, "请输入单笔最高优惠");
+            return;
+        }
+        if (TextUtils.isEmpty(typeConditionMin)) {
+            ContentUtils.showMsg(MemberAddCategoryActivity.this, "请输入累计消费下限");
+            return;
+        }
+        if (TextUtils.isEmpty(typeConditionMax)) {
+            ContentUtils.showMsg(MemberAddCategoryActivity.this, "请输入累计消费上限");
+            return;
+        }
+
+
+
+
         if(AbStrUtil.indexOfString(typeDiscountRatio,".")){
             typeDiscountRatio = String.valueOf((int)(Double.parseDouble(typeDiscountRatio)* 10));
         }else {
@@ -351,9 +345,29 @@ public class MemberAddCategoryActivity extends BaseActivity {
         typeMaxDiscount=tvMaxidiscountvalue.getText().toString();
         typeConditionMin=etRangebefore.getText().toString();
         typeConditionMax=etRangeafter.getText().toString();
-        if(verifyData()){
+        if (TextUtils.isEmpty(typeName)) {
+            ContentUtils.showMsg(MemberAddCategoryActivity.this, "请输入正确的会员类别");
             return;
         }
+        if (TextUtils.isEmpty(typeDiscountRatio)||checkDiscountRatio(typeDiscountRatio)) {
+            ContentUtils.showMsg(MemberAddCategoryActivity.this, "请输入正确的折扣比例");
+            return;
+        }
+        if (TextUtils.isEmpty(typeMaxDiscount)) {
+            ContentUtils.showMsg(MemberAddCategoryActivity.this, "请输入单笔最高优惠");
+            return;
+        }
+        if (TextUtils.isEmpty(typeConditionMin)) {
+            ContentUtils.showMsg(MemberAddCategoryActivity.this, "请输入累计消费下限");
+            return;
+        }
+        if (TextUtils.isEmpty(typeConditionMax)) {
+            ContentUtils.showMsg(MemberAddCategoryActivity.this, "请输入累计消费上限");
+            return;
+        }
+
+
+
         if(AbStrUtil.indexOfString(typeDiscountRatio,".")){
             typeDiscountRatio = String.valueOf((int)(Double.parseDouble(typeDiscountRatio)* 10));
         }else {
@@ -402,8 +416,33 @@ public class MemberAddCategoryActivity extends BaseActivity {
         }
     }
 }
-
-
+//
+//
+//    public  void  listenDiscountRatio(){
+//        tvRadiovalue
+//                .addTextChangedListener(new TextWatcher() {
+//
+//                    @Override
+//                    public void onTextChanged(CharSequence s, int start,
+//                                              int before, int count) {
+//
+//                    }
+//
+//                    @Override
+//                    public void beforeTextChanged(CharSequence s, int start,
+//                                                  int count, int after) {
+//
+//                    }
+//
+//                    @Override
+//                    public void afterTextChanged(Editable s) {
+//                        String   strdata=s.toString();
+//
+//                        checkDiscountRatio(strdata);
+//                    }
+//                });
+//
+//    }
 
 
 

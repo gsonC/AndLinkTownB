@@ -87,7 +87,7 @@ public class MarketingMsgBulidActivity extends BaseActivity {
     private String  sendPhones="";
     private String  sendtotal="";
 
-    @OnClick({R.id.txt_sendmsg, R.id.tv_choicetemplate, R.id.btn_msgpay, R.id.btn_senduser})
+    @OnClick({R.id.txt_sendmsg, R.id.tv_choicetemplate, R.id.btn_msgpay, R.id.btn_senduser,R.id.et_sendcontext})
     public void OnClick(View v) {
         switch (v.getId()) {
             case R.id.txt_sendmsg:
@@ -95,9 +95,11 @@ public class MarketingMsgBulidActivity extends BaseActivity {
                 break;
             case R.id.tv_choicetemplate:
 
-                Intent intenttemplate = new Intent(this, MarketingSMSexampleActivity.class);
-                intenttemplate.putExtra(MarketingSMSexampleActivity.TEMPLATE_TYPE, "B");
-                startActivityForResult(intenttemplate, REQUEST_CODE_TEMPLATE_RESULT);
+                intentSms();
+                break;
+            case R.id.et_sendcontext:
+                intentSms();
+
                 break;
             case R.id.btn_msgpay:
 
@@ -111,6 +113,13 @@ public class MarketingMsgBulidActivity extends BaseActivity {
                 startActivityForResult(intentmember, REQUEST_CODE_MEMBER_RESULT);
                 break;
         }
+    }
+    private  void  intentSms(){
+
+        Intent intenttemplate = new Intent(this, MarketingSMSexampleActivity.class);
+        intenttemplate.putExtra(MarketingSMSexampleActivity.TEMPLATE_TYPE, "B");
+        startActivityForResult(intenttemplate, REQUEST_CODE_TEMPLATE_RESULT);
+
     }
     private  void  sendShortmsg(){
         Log.i("tag","113-短信模板ID------>"+templateID);
