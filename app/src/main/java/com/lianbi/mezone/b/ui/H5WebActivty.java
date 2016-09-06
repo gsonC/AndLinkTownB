@@ -481,6 +481,17 @@ public class H5WebActivty extends BaseActivity{
 
 		}
 		/**
+		 * 返回图片ID
+		 *
+		 */
+		@JavascriptInterface
+		public String  getImgId()
+		{
+
+			return  mImgId;
+
+		}
+		/**
 		 * 保存邀请码
 		 *
 		 */
