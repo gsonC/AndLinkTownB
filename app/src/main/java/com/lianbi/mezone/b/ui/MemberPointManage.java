@@ -106,6 +106,10 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
 				// 当输入框里面的值为空，更新为原来的列表，否则为过滤数据列表
+		//		editSuit();
+				if("".equals(s.toString())){
+					editSuit("");
+				}
 
 			}
 
@@ -122,8 +126,10 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 
 			@Override
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-				if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_UNSPECIFIED) {
-					editSuit();
+				if (actionId == EditorInfo.IME_ACTION_DONE
+						|| actionId == EditorInfo.IME_ACTION_UNSPECIFIED) {
+					String input = tv_search.getText().toString().trim();
+					editSuit(input);
 				}
 
 				AbAppUtil.closeSoftInput(MemberPointManage.this);
@@ -137,16 +143,16 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 	/**
 	 * 匹配输入框
 	 */
-	private void editSuit() {
-		String response = tv_search.getText().toString().trim();
+	private void editSuit(String input) {
+
 		ArrayList<MemberMessage> arrayList = new ArrayList<MemberMessage>();
-		if (TextUtils.isEmpty(response)) {
+		if (TextUtils.isEmpty(input)) {
 			arrayList = mDatas;
 		} else {
 			arrayList.clear();
-
-			for (MemberMessage memberpoint : arrayList) {
-				if ((memberpoint.getLabelName().contains(response)) || (memberpoint.getProductPrice().contains(response)) || (memberpoint.getProductDesc().contains(response))) {
+			for (MemberMessage memberpoint : mDatas) {
+				if ((memberpoint.getProductName().contains(input)) ||
+						(memberpoint.getProductPrice().contains(input)) || (memberpoint.getProductDesc().contains(input))) {
 					arrayList.add(memberpoint);
 				}
 			}
@@ -154,11 +160,11 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 		mAdapter.replaceAll(arrayList);
 	}
 
-
-//初始化适配器
-
 	public QuickAdapter<MemberMessage> mAdapter;
 
+	/**
+	 *初始化适配器
+	 */
 	private void initListAdapter() {
 		mAdapter = new QuickAdapter<MemberMessage>(MemberPointManage.this, R.layout.activity_point_manager, mDatas) {
 

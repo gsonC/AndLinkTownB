@@ -78,7 +78,9 @@ public class ChooseFromWeixinActivity extends BaseActivity {
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
 				// 当输入框里面的值为空，更新为原来的列表，否则为过滤数据列表
-
+				if("".equals(s.toString())){
+					editSuit("");
+				}
 			}
 
 			@Override
@@ -96,7 +98,7 @@ public class ChooseFromWeixinActivity extends BaseActivity {
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 				if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_UNSPECIFIED) {
 					String response = actWeixinListEdit.getText().toString().trim();
-					editSuit();
+					editSuit(response);
 				}
 				AbAppUtil.closeSoftInput(ChooseFromWeixinActivity.this);
 				return false;
@@ -123,16 +125,15 @@ public class ChooseFromWeixinActivity extends BaseActivity {
 	/**
 	 * 匹配输入框
 	 */
-	private void editSuit() {
-		String response = actWeixinListEdit.getText().toString().trim();
+	private void editSuit(String input) {
 		ArrayList<WeiXinBean> arrayList = new ArrayList<WeiXinBean>();
-		if (!TextUtils.isEmpty(response)) {
+		if (TextUtils.isEmpty(input)) {
 			arrayList = mDatas;
 		} else {
 			arrayList.clear();
-
-			for (WeiXinBean weixin : arrayList) {
-				if ((weixin.getProName().contains(response)) || (weixin.getPrice().contains(response)) || (weixin.getProductDesc().contains(response))) {
+			for (WeiXinBean weixin : mDatas) {
+				if ((weixin.getProName().contains(input)) || (weixin.getPrice().contains(input))
+						|| (weixin.getProductDesc().contains(input))) {
 					arrayList.add(weixin);
 				}
 			}
