@@ -157,6 +157,7 @@ public class RevisionsActivity extends BaseActivity {
 		if (imagessize > 0) {
 			for (int i = 0; i < imagessize; i++) {
 				if ("main".equals(images.get(i).getImgDesc())) {
+					String bigImgID = images.get(i).getImgId();
 					isNum = i;
 					Glide.with(RevisionsActivity.this).load(Uri.parse(images.get(i).getImgUrl())).error(R.mipmap.add2).into(imaBigima);
 					imagesother = images;
@@ -341,32 +342,37 @@ public class RevisionsActivity extends BaseActivity {
 						break;
 					case PhotoUtills.REQUEST_IMAGE_CROP:
 						Bitmap bm = PhotoUtills.getBitmap();
-						file.add(photoUtills.photoCurrentFile);
+					//	file.add(photoUtills.photoCurrentFile);
 						switch (img_flag) {
 							case 1:
 								imaBigima.setImageBitmap(bm);
-					//			file.add(photoUtills.photoCurrentFile);
+								file.add(0,photoUtills.photoCurrentFile);
 								isBigpivture = true;
 								imageDealMain();
 								break;
 							case 2:
 								smallImaOne.setImageBitmap(bm);
+								file.add(photoUtills.photoCurrentFile);
 								imageDealOther(0);
 								break;
 							case 3:
 								smallImaTwo.setImageBitmap(bm);
+								file.add(photoUtills.photoCurrentFile);
 								imageDealOther(1);
 								break;
 							case 4:
 								smallImaThree.setImageBitmap(bm);
+								file.add(photoUtills.photoCurrentFile);
 								imageDealOther(2);
 								break;
 							case 5:
 								smallImaFour.setImageBitmap(bm);
+								file.add(photoUtills.photoCurrentFile);
 								imageDealOther(3);
 								break;
 							case 6:
 								smallImaFive.setImageBitmap(bm);
+								file.add(photoUtills.photoCurrentFile);
 								imageDealOther(4);
 								break;
 
@@ -435,10 +441,6 @@ public class RevisionsActivity extends BaseActivity {
 	private String imgId1, imgId2, imgId3, imgId4, imgId5;
 
 	private void imageDealOther(int position) {
-		//	int imagesothersize = imagesother.size();
-		//	if (imagesother.get(position) != null) {
-		//		imagesDel.add(imagesother.get(position));
-		//	}
 
 		/**
 		 * 问题原因 当图片只有两张时 点击第三个按钮出现越界
