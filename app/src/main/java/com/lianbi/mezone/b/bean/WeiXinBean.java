@@ -1,6 +1,7 @@
 package com.lianbi.mezone.b.bean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * @创建者 Administration
@@ -11,11 +12,13 @@ import java.io.Serializable;
  * @更新描述 ＄{TOOD}＄
  */
 public class WeiXinBean implements Serializable {
-	String id;
-	String path;
-	String price;
+	private static final long serialVersionUID = -238866149790757127L;
 	String productDesc;
-	String proName;
+	String shopSourceId;
+	String productName;
+	String productPrice;
+	String productType;
+	ArrayList<productImages> productImages;
 
 	public String getProductDesc() {
 		return productDesc;
@@ -23,12 +26,6 @@ public class WeiXinBean implements Serializable {
 
 	public void setProductDesc(String productDesc) {
 		this.productDesc = productDesc;
-	}
-
-	String proType;
-   String shopSourceId;
-	public String getId() {
-		return id;
 	}
 
 	public String getShopSourceId() {
@@ -39,39 +36,65 @@ public class WeiXinBean implements Serializable {
 		this.shopSourceId = shopSourceId;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public String getProductName() {
+		return productName;
 	}
 
-	public String getPath() {
-		return path;
+	public void setProductName(String productName) {
+		this.productName = productName;
 	}
 
-	public void setPath(String path) {
-		this.path = path;
+	public String getProductPrice() {
+		return productPrice;
 	}
 
-	public String getPrice() {
-		return price;
+	public void setProductPrice(String productPrice) {
+		this.productPrice = productPrice;
 	}
 
-	public void setPrice(String price) {
-		this.price = price;
+	public String getProductType() {
+		return productType;
 	}
 
-	public String getProName() {
-		return proName;
+	public void setProductType(String productType) {
+		this.productType = productType;
 	}
 
-	public void setProName(String proName) {
-		this.proName = proName;
+	public ArrayList<WeiXinBean.productImages> getProductImages() {
+		return productImages;
 	}
 
-	public String getProType() {
-		return proType;
+	public void setProductImages(ArrayList<WeiXinBean.productImages> productImages) {
+		this.productImages = productImages;
 	}
 
-	public void setProType(String proType) {
-		this.proType = proType;
+	public class productImages implements Serializable{
+		String imgId;
+		String imgUrl;
+		String imgDesc;
+
+		public String getImgId() {
+			return imgId;
+		}
+
+		public void setImgId(String imgId) {
+			this.imgId = imgId;
+		}
+
+		public String getImgUrl() {
+			return imgUrl;
+		}
+
+		public void setImgUrl(String imgUrl) {
+			this.imgUrl = imgUrl;
+		}
+
+		public String getImgDesc() {
+			return imgDesc;
+		}
+
+		public void setImgDesc(String imgDesc) {
+			this.imgDesc = imgDesc;
+		}
 	}
 }

@@ -9,6 +9,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -29,7 +30,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.QuickAdapter;
-import cn.com.hgh.indexscortlist.ClearEditText;
 import cn.com.hgh.utils.AbAppUtil;
 import cn.com.hgh.utils.AbDateUtil;
 import cn.com.hgh.utils.AbPullHide;
@@ -45,7 +45,7 @@ public class ChooseFromWeixinActivity extends BaseActivity {
 	@Bind(R.id.img_weixinshop_empty)
 	ImageView imgWeixinshopEmpty;
 	@Bind(R.id.act_weixin_list_edit)
-	ClearEditText actWeixinListEdit;
+	EditText actWeixinListEdit;
 	@Bind(R.id.act_weixin_listview)
 	ListView actWeixinListview;
 	@Bind(R.id.act_weixin_abpulltorefreshview)
@@ -63,7 +63,7 @@ public class ChooseFromWeixinActivity extends BaseActivity {
 		ButterKnife.bind(this);
 		setLisenter();
 		initAdapter();
-		getWeixinQueryProduct(true);
+		getWeixinQueryProduct(true,"");
 	}
 
 
@@ -110,7 +110,8 @@ public class ChooseFromWeixinActivity extends BaseActivity {
 
 			@Override
 			public void onHeaderRefresh(AbPullToRefreshView view) {
-				getWeixinQueryProduct(true);
+				String input = actWeixinListEdit.getText().toString().trim();
+				getWeixinQueryProduct(true,input);
 			}
 
 		});
@@ -118,7 +119,8 @@ public class ChooseFromWeixinActivity extends BaseActivity {
 
 			@Override
 			public void onFooterLoad(AbPullToRefreshView view) {
-				getWeixinQueryProduct(true);
+				String input = actWeixinListEdit.getText().toString().trim();
+				getWeixinQueryProduct(false,input);
 			}
 		});
 	}
@@ -132,8 +134,8 @@ public class ChooseFromWeixinActivity extends BaseActivity {
 		} else {
 			arrayList.clear();
 			for (WeiXinBean weixin : mDatas) {
-				if ((weixin.getProName().contains(input)) || (weixin.getPrice().contains(input))
-						|| (weixin.getProductDesc().contains(input))) {
+				if ((weixin.getProductDesc().contains(input)) || (weixin.getProductName().contains(input))
+						|| (weixin.getProductPrice().contains(input))) {
 					arrayList.add(weixin);
 				}
 			}
@@ -157,21 +159,21 @@ public class ChooseFromWeixinActivity extends BaseActivity {
 				ScreenUtils.textAdaptationOn720(new_product_price, ChooseFromWeixinActivity.this, 27);
 				ScreenUtils.textAdaptationOn720(new_product_choose, ChooseFromWeixinActivity.this, 23);
 
-				new_product_food.setText(item.getProName());
+				new_product_food.setText(item.getProductName());
 				new_product_rated.setText(item.getProductDesc());
-				new_product_price.setText(item.getPrice());
-				String  uri=item.getPath();
+				new_product_price.setText(item.getProductPrice());
+				String uri=item.getProductImages().get(0).getImgUrl();
 				Glide.with(ChooseFromWeixinActivity.this).load(uri).error(R.mipmap.default_head).into(new_product_ima);
 
 				helper.getView(R.id.new_product_choose).setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
 						Intent intent = new Intent(ChooseFromWeixinActivity.this, RevisionsActivity.class);
-						intent.putExtra("new_product_id", item.getId());
-						intent.putExtra("new_product_food", item.getProName());
+						intent.putExtra("new_product_id", item.getShopSourceId());
+						intent.putExtra("new_product_food", item.getProductName());
 						intent.putExtra("new_product_rated", item.getProductDesc());
-						intent.putExtra("new_product_price", item.getPrice());
-						intent.putExtra("new_product_ima", item.getPath());
+						intent.putExtra("new_product_price", item.getProductPrice());
+						intent.putExtra("new_product_ima", item.getProductImages().get(0).getImgUrl());
 						intent.putExtra("shopSourceId",item.getShopSourceId());
 						startActivityForResult(intent, RESULT_WEIXIN);
 					}
@@ -192,7 +194,7 @@ public class ChooseFromWeixinActivity extends BaseActivity {
 	 */
 String shopSourceId;
 
-	private void getWeixinQueryProduct(final boolean isResh) {
+	private void getWeixinQueryProduct(final boolean isResh,String input) {
 		if (isResh) {
 			page = 1;
 			mDatas.clear();
@@ -203,7 +205,7 @@ String shopSourceId;
 
 		try {
 			okHttpsImp.QueryFromWinxin(OkHttpsImp.md5_key,uuid, "app", reqTime,
-					userShopInfoBean.getBusinessId(), page + "", 20 + "",new MyResultCallback<String>() {
+					userShopInfoBean.getBusinessId(), page + "", 20 + "","",new MyResultCallback<String>() {
 				@Override
 				public void onResponseResult(Result result) {
 					String reString = result.getData();
@@ -211,7 +213,7 @@ String shopSourceId;
 					if (reString != null) {
 						try {
 							JSONObject jsonObject = new JSONObject(reString);
-							reString = jsonObject.getString("wcmProductList");
+							reString = jsonObject.getString("products");
 							ArrayList<WeiXinBean> mDatasL = (ArrayList<WeiXinBean>) JSON.parseArray(reString, WeiXinBean.class);
 							if (mDatasL != null && mDatasL.size() > 0) {
 								mDatas.addAll(mDatasL);
@@ -254,7 +256,7 @@ String shopSourceId;
 			switch (requestCode) {
 
 				case RESULT_WEIXIN:
-					getWeixinQueryProduct(true);
+					getWeixinQueryProduct(true,"");
 					break;
 
 			}

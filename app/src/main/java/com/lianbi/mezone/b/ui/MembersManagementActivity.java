@@ -98,6 +98,7 @@ public class MembersManagementActivity extends BaseActivity {
 			//ImageView child_ima=(ImageView)findViewById(R.id.child_ima);
 			//
 			LinearLayout rela_child= (LinearLayout)convertView.findViewById(R.id.heheh);
+		//	 rela_child= (LinearLayout)convertView.findViewById(R.id.rela_child);
 			TextView tv = (TextView) convertView.findViewById(R.id.second_textview);
 			tv.setText(info);
 			rela_child.setOnClickListener(new OnClickListener() {
