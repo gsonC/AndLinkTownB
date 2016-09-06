@@ -264,7 +264,7 @@ public class RevisionsActivity extends BaseActivity {
 			return;
 		}
 		if (TextUtils.isEmpty(productAmt)) {
-			ContentUtils.showMsg(RevisionsActivity.this, "请输入商品名价格");
+			ContentUtils.showMsg(RevisionsActivity.this, "请输入兑换所需积分");
 			return;
 		}
 		GetupdateProduct();
