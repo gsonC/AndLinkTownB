@@ -96,7 +96,7 @@ public class MembersManagementActivity extends BaseActivity {
 				LayoutInflater inflater = (LayoutInflater) MembersManagementActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 				convertView = inflater.inflate(R.layout.layout_children, null);
 			}
-			ImageView child_ima=(ImageView)convertView.findViewById(R.id.child_ima);
+		//	ImageView child_ima=(ImageView)convertView.findViewById(R.id.child_ima);
 			//
 			 rela_child= (LinearLayout) findViewById(R.id.rela_child);
 			TextView tv = (TextView) convertView.findViewById(R.id.second_textview);

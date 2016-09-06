@@ -6,10 +6,11 @@
               >
 
         <LinearLayout
+            android:id="@+id/rela_child"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:id="@+id/rela_child">
+           >
 
 
         <TextView
@@ -24,7 +25,7 @@
             android:textSize="16sp"
             />
 
-        <ImageView
+       <!-- <ImageView
             android:layout_alignParentRight="true"
             android:id="@+id/child_ima"
             android:layout_width="wrap_content"
@@ -32,7 +33,7 @@
             android:padding="10dp"
             android:src="@mipmap/service_new_right"
            android:layout_gravity="center_vertical"
-            />
+            />-->
 
 
         </LinearLayout>

@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.webkit.ValueCallback;
 import android.widget.EditText;
@@ -25,6 +24,7 @@ import com.xizhi.mezone.b.R;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import butterknife.Bind;
@@ -45,11 +45,15 @@ public class RevisionsActivity extends BaseActivity {
 	private int img_flag;
 	private MemberMessage mMembermessage;
 	private ArrayList<MemberMessage.productImages> imagesDel = new ArrayList<MemberMessage.productImages>();
+	private List<String> imgreDel = new ArrayList<>();
 	private ArrayList<MemberMessage.productImages> images;
+	private ArrayList<MemberMessage.productImages> imagesother = new ArrayList<MemberMessage.productImages>();
+	int isNum;
 	Boolean isSelect = false;
 	//是否上架
-	private final String SHELVES="Y";
-	String productName, productDesc, productAmt, new_food="", new_rated, new_price, a, productId, delImageUrls, isMain;
+	private final String SHELVES = "Y";
+	String productName, productDesc, productAmt, new_food = "", new_rated, new_price, a, productId, delImageUrls;
+	String isMain = "N";
 	String imageStr = null;
 	@Bind(R.id.ed_Cup)
 	EditText edCup;
@@ -73,7 +77,9 @@ public class RevisionsActivity extends BaseActivity {
 	ImageView smallImaFive;
 	@Bind(R.id.bt_sure)
 	TextView btSure;
-	String shopSourceId="";
+	String shopSourceId = "";
+	boolean isBigpivture = false;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -94,46 +100,57 @@ public class RevisionsActivity extends BaseActivity {
 		smallImaFour.setOnClickListener(this);
 		smallImaFive.setOnClickListener(this);
 		btSure.setOnClickListener(this);
-		mMembermessage= (MemberMessage)getIntent().getSerializableExtra("membermessage");
+		mMembermessage = (MemberMessage) getIntent().getSerializableExtra("membermessage");
 		productId = getIntent().getStringExtra("new_product_id");
 		new_food = getIntent().getStringExtra("new_product_food");
 		new_rated = getIntent().getStringExtra("new_product_rated");
 		new_price = getIntent().getStringExtra("new_product_price");
-		images = (ArrayList<MemberMessage.productImages>) getIntent()
-				.getSerializableExtra("new_product_image");
+		images = (ArrayList<MemberMessage.productImages>) getIntent().getSerializableExtra("new_product_image");
 		edCup.setText(new_food);
 		edCeramicCup.setText(new_rated);
 		edExchangeIntegral.setText(new_price);
 		showImage();
-         String shopSourceId =getIntent().getStringExtra("shopSourceId");
-		if(shopSourceId!=null&&!shopSourceId.equals("")){
-			this.shopSourceId=shopSourceId;
+		String shopSourceId = getIntent().getStringExtra("shopSourceId");
+		if (shopSourceId != null && !shopSourceId.equals("")) {
+			this.shopSourceId = shopSourceId;
 		}
 	}
-    private   void  showImage(){
-		if(images==null){
+
+	private void showImage() {
+		if (images == null) {
 			return;
 		}
-		if(images.size()!=0){
-			Glide.with(RevisionsActivity.this).load(Uri.parse(images.get(0).getImgUrl())).error(R.mipmap.add2).into(imaBigima);
+		int imagessize = images.size();
+
+		if (imagessize > 0) {
+			for (int i = 0; i < imagessize; i++) {
+				if ("main".equals(images.get(i).getImgDesc())) {
+					isNum = i;
+					Glide.with(RevisionsActivity.this).load(Uri.parse(images.get(i).getImgUrl())).error(R.mipmap.add2).into(imaBigima);
+					imagesother = images;
+				}
+			}
 		}
-		if(images.size()>1&&images.get(1)!=null){
-			Glide.with(RevisionsActivity.this).load(Uri.parse(images.get(1).getImgUrl())).error(R.mipmap.add2).into(smallImaOne);
+		imagesother.remove(isNum);
+		if (imagesother.size() > 0) {
+			Glide.with(RevisionsActivity.this).load(Uri.parse(imagesother.get(0).getImgUrl())).error(R.mipmap.add2).into(smallImaOne);
 		}
-		if(images.size()>2&&images.get(2)!=null){
-			Glide.with(RevisionsActivity.this).load(Uri.parse(images.get(2).getImgUrl())).error(R.mipmap.add2).into(smallImaTwo);
+		if (imagesother.size() > 1 ) {
+			Glide.with(RevisionsActivity.this).load(Uri.parse(imagesother.get(1).getImgUrl())).error(R.mipmap.add2).into(smallImaTwo);
 		}
-		if(images.size()>3&&images.get(3)!=null){
-			Glide.with(RevisionsActivity.this).load(Uri.parse(images.get(3).getImgUrl())).error(R.mipmap.add2).into(smallImaThree);
+		if (imagesother.size() > 2) {
+			Glide.with(RevisionsActivity.this).load(Uri.parse(imagesother.get(2).getImgUrl())).error(R.mipmap.add2).into(smallImaThree);
 		}
-		if(images.size()>4&&images.get(4)!=null){
-			Glide.with(RevisionsActivity.this).load(Uri.parse(images.get(4).getImgUrl())).error(R.mipmap.add2).into(smallImaFour);
+		if (imagesother.size() > 3) {
+			Glide.with(RevisionsActivity.this).load(Uri.parse(imagesother.get(3).getImgUrl())).error(R.mipmap.add2).into(smallImaFour);
 		}
-		if(images.size()>5&&images.get(5)!=null){
-			Glide.with(RevisionsActivity.this).load(Uri.parse(images.get(5).getImgUrl())).error(R.mipmap.add2).into(smallImaFive);
+		if (imagesother.size() > 4) {
+			Glide.with(RevisionsActivity.this).load(Uri.parse(imagesother.get(4).getImgUrl())).error(R.mipmap.add2).into(smallImaFive);
 		}
 
 	}
+
+
 
 	@Override
 	public void onClick(View view) {
@@ -146,29 +163,32 @@ public class RevisionsActivity extends BaseActivity {
 				break;
 			case R.id.small_imaOne:
 				img_flag = 2;
+
 				photoUtills.startPickPhotoFromAlbumWithCrop();
 				break;
 			case R.id.small_imaTwo:
 				img_flag = 3;
+
 				photoUtills.startPickPhotoFromAlbumWithCrop();
 				break;
 			case R.id.small_imaThree:
 				img_flag = 4;
+
 				photoUtills.startPickPhotoFromAlbumWithCrop();
 				break;
 			case R.id.small_imaFour:
 				img_flag = 5;
+
 				photoUtills.startPickPhotoFromAlbumWithCrop();
 				break;
 			case R.id.small_imaFive:
 				img_flag = 6;
+
 				photoUtills.startPickPhotoFromAlbumWithCrop();
 				break;
 			case R.id.bt_sure:
 
-
 				Mosaicimage();
-				GetupdateProduct();
 
 
 				break;
@@ -177,23 +197,39 @@ public class RevisionsActivity extends BaseActivity {
 
 	/**
 	 * 拼接图片地址
-	 *
 	 */
 	private void Mosaicimage() {
 		StringBuilder stringBuilder = new StringBuilder();
 		StringBuilder stringBuilderDel = new StringBuilder();
-		System.out.println("imagesDel-187--"+imagesDel.size());
-		if (imagesDel != null && imagesDel.size() > 0) {
-			Log.i("tag","imagesDel-187--"+imagesDel.size());
-			for (int i = 0; i < imagesDel.size(); i++) {
-				if (i + 1 == imagesDel.size()) {
-					stringBuilderDel.append(imagesDel.get(i).getImgId());
-				} else {
-					stringBuilderDel.append(imagesDel.get(i).getImgId() + ",");
+
+		HashSet hs = new HashSet<>(imgreDel);
+		imgreDel.clear();
+		imgreDel.addAll(hs);
+
+		if(imgreDel!=null&&imgreDel.size()>0){
+			int s = imgreDel.size();
+			for(int i = 0;i<s;i++){
+				if(i+1 == s){
+					stringBuilderDel.append(imgreDel.get(i));
+				}else{
+					stringBuilderDel.append(imgreDel.get(i)+ ",");
 				}
 			}
 		}
+	//	if (imagesDel != null && imagesDel.size() > 0) {
+	//		Log.i("tag", "imagesDel-187--" + imagesDel.size());
+	//		for (int i = 0; i < imagesDel.size(); i++) {
+	//			if (i + 1 == imagesDel.size()) {
+	//				stringBuilderDel.append(imagesDel.get(i).getImgId());
+	//			} else {
+	//				stringBuilderDel.append(imagesDel.get(i).getImgId() + ",");
+	//			}
+	//		}
+	//	}
 		delImageUrls = stringBuilderDel.toString();
+
+		System.out.println("imagesDel-187--" + delImageUrls);
+
 		if (file != null && file.size() > 0) {
 			for (int i = 0; i < file.size(); i++) {
 				if (i + 1 == file.size()) {
@@ -205,7 +241,6 @@ public class RevisionsActivity extends BaseActivity {
 		}
 		imageStr = stringBuilder.toString();
 
-		System.out.println("delImageUrls---"+delImageUrls);
 		productName = edCup.getText().toString().trim();
 		productDesc = edCeramicCup.getText().toString().trim();
 		productAmt = edExchangeIntegral.getText().toString().trim();
@@ -221,19 +256,19 @@ public class RevisionsActivity extends BaseActivity {
 			ContentUtils.showMsg(RevisionsActivity.this, "请输入商品名价格");
 			return;
 		}
-
+		GetupdateProduct();
 	}
 
 	@SuppressWarnings("static-access")
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-		super.onActivityResult(requestCode, resultCode, intent);
+		try {
+			super.onActivityResult(requestCode, resultCode, intent);
+		} catch (Exception e) {
 
-		if (resultCode == Activity.RESULT_OK) {
-			if (intent == null) {
-			} else {
+		} finally {
+			if (resultCode == Activity.RESULT_OK) {
 				switch (requestCode) {
-
 					case PhotoUtills.REQUEST_IMAGE_FROM_ALBUM_AND_CROP://相册选择并裁剪
 						Uri uri = intent.getData();
 						String filePath = PhotoUtills.getPath(this, uri);
@@ -241,47 +276,39 @@ public class RevisionsActivity extends BaseActivity {
 						photoUtills.startCropImage();
 						//file = photoUtills.photoCurrentFile;
 						break;
-
-
 					case PhotoUtills.REQUEST_IMAGE_CROP:
 						Bitmap bm = PhotoUtills.getBitmap();
 						file.add(photoUtills.photoCurrentFile);
-
 						switch (img_flag) {
 							case 1:
 								imaBigima.setImageBitmap(bm);
-								imageDeal(0,"Y");
+								isBigpivture = true;
+								imageDealMain();
 								break;
 							case 2:
-
 								smallImaOne.setImageBitmap(bm);
-								imageDeal(1,"N");
+								imageDealOther(0);
 								break;
 							case 3:
-
 								smallImaTwo.setImageBitmap(bm);
-								imageDeal(2,"N");
+								imageDealOther(1);
 								break;
 							case 4:
-
 								smallImaThree.setImageBitmap(bm);
-								imageDeal(3,"N");
+								imageDealOther(2);
 								break;
 							case 5:
-
 								smallImaFour.setImageBitmap(bm);
-								imageDeal(4,"N");
+								imageDealOther(3);
 								break;
 							case 6:
-
 								smallImaFive.setImageBitmap(bm);
-								imageDeal(5,"N");
+								imageDealOther(4);
 								break;
 
 						}
 				}
 			}
-
 		}
 	}
 
@@ -320,23 +347,23 @@ public class RevisionsActivity extends BaseActivity {
 	 * 修改产品
 	 */
 	private void GetupdateProduct() {
-		System.out.println("productId 324" + productId);
-		System.out.println("productName 325" + productName);
-		System.out.println("productDesc " + productDesc);
-		System.out.println("productAmt" + productAmt);
-		System.out.println("delImageUrls--->" + delImageUrls);
+//		System.out.println("productId 324" + productId);
+//		System.out.println("productName 325" + productName);
+//		System.out.println("productDesc " + productDesc);
+//		System.out.println("productAmt" + productAmt);
+//		System.out.println("delImageUrls--->" + delImageUrls);
 //		System.out.println("imageStr  329" + imageStr);
-		System.out.println("shopSourceId 330" + shopSourceId);
-		System.out.println("isMain" + isMain);
+//		System.out.println("shopSourceId 330" + shopSourceId);
+//		System.out.println("isMain" + isMain);
+
+
 		try {
-			okHttpsImp.updateProduct(OkHttpsImp.md5_key, uuid, "app", reqTime,
-						productId, productName, "01", productDesc, productAmt, SHELVES,
-						delImageUrls, imageStr,BusinessId,
-						isMain,shopSourceId,new MyResultCallback<String>() {
+			okHttpsImp.updateProduct(OkHttpsImp.md5_key, uuid, "app", reqTime, productId,
+					productName, "01", productDesc, productAmt, SHELVES, delImageUrls, imageStr,
+					BusinessId, isMain, shopSourceId, new MyResultCallback<String>() {
 				@Override
 				public void onResponseResult(Result result) {
 					String reString = result.getData();
-					Log.i("tag","修改图片返回----->"+reString);
 					ContentUtils.showMsg(RevisionsActivity.this, "修改产品成功");
 					Intent intent = new Intent();
 					setResult(RESULT_OK, intent);
@@ -353,15 +380,99 @@ public class RevisionsActivity extends BaseActivity {
 		}
 	}
 
-	private void imageDeal(int position,String isMain) {
-		this.isMain=isMain;
+	/**
+	 * 主图修改
+	 */
+	private void imageDealMain() {
+		if (isBigpivture == true) {
+			this.isMain = "Y";
+		}
 		try {
-			if(mMembermessage.getProductImages().size()!=0&&
-					mMembermessage.getProductImages().get(position)!=null) {
-				imagesDel.add(mMembermessage.getProductImages().get(position));
+			int imagessize = images.size();
+
+			if (isBigpivture == true) {
+				if (imagessize > 0) {
+					for (int i = 0; i < imagessize; i++) {
+						if ("main".equals(images.get(i).getImgDesc())) {
+							imagesDel.add(images.get(i));
+						}
+					}
+				}
 			}
 		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+	}
+
+	private String imgId1,imgId2,imgId3,imgId4,imgId5;
+
+	private void imageDealOther(int position) {
+	//	int imagesothersize = imagesother.size();
+	//	if (imagesother.get(position) != null) {
+	//		imagesDel.add(imagesother.get(position));
+	//	}
+
+		/**
+		 * 问题原因 当图片只有两张时 点击第三个按钮出现越界
+		 */
+		/**
+		 * 思路 新建一个list 把原来存在的图片ID存起来 当用户点击那个 替换那个ID 记录换下的ID 多余的向后添加
+		 */
+
+		int s = imagesother.size();
+		switch (position){
+			case 0:
+				if(s>0){
+					imgreDel.add(imagesother.get(0).getImgId());
+				}
+				break;
+			case 1:
+				if(s>1){
+					imgreDel.add(imagesother.get(1).getImgId());
+				}
+				break;
+			case 2:
+				if(s>2){
+					imgreDel.add(imagesother.get(2).getImgId());
+				}
+				break;
+			case 3:
+				if(s>3){
+					imgreDel.add(imagesother.get(3).getImgId());
+				}
+				break;
+			case 4:
+				if(s>4){
+					imgreDel.add(imagesother.get(4).getImgId());
+				}
+				break;
+		}
+
+		/**
+		 * 有风险 会多次添加 遍历去重(重要)
+		 */
+		for(String str:imgreDel){
+			System.out.println(str);
 		}
 
 	}
+
+	/**
+	 * 判断imageview是否已经拥有图片
+	 */
+	private boolean hasImageView(ImageView imgview) {
+		if (null != imgview.getDrawable()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		isBigpivture = false;
+
+	}
 }
+

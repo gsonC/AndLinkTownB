@@ -51,7 +51,7 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 	private final int RESULT_WEIXIN = 1388;//
 	private  boolean   isShow = false;//
 	private  final   String  isIntegral="01";
-
+  String productName,productPrice;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -140,7 +140,7 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 	private void editSuit() {
 		String response = tv_search.getText().toString().trim();
 		ArrayList<MemberMessage> arrayList = new ArrayList<MemberMessage>();
-		if (!TextUtils.isEmpty(response)) {
+		if (TextUtils.isEmpty(response)) {
 			arrayList = mDatas;
 		} else {
 			arrayList.clear();
@@ -175,7 +175,8 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 				point_goodsName.setText(item.getProductName());
 				rated.setText(item.getProductDesc());
 				goodsPoint.setText(item.getProductPrice());
-
+				productName=item.getProductName();
+				productPrice=item.getProductPrice();
 				if (item.getIsOnline().equals("Y")) {
 					pullgoods.setText("上架");
 					pushgoods.setText("下架");
@@ -185,9 +186,14 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 					pushgoods.setText("上架");
 					pushgoods.setVisibility(View.GONE);
 				}
-				if (item.getProductImages().size() != 0) {
-					Glide.with(MemberPointManage.this).load(item.getProductImages().get(0).getImgUrl()).error(R.mipmap.default_head).into(point_ima);
+				int imagesize=item.getProductImages().size();
+				for (int i = 0; i < imagesize; i++) {
+					if ("main".equals(item.getProductImages().get(i).getImgDesc())) {
+					Glide.with(MemberPointManage.this).load
+								(item.getProductImages().get(i).getImgUrl()).error(R.mipmap.default_head).into(point_ima);
+					}
 				}
+
 				pullgoods.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
@@ -267,7 +273,7 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 		String uuid = AbStrUtil.getUUID();
 
 		try {
-			okHttpsImp.QueryProduct(uuid, "app", reqTime, OkHttpsImp.md5_key, userShopInfoBean.getBusinessId(), new MyResultCallback<String>() {
+			okHttpsImp.QueryProduct(uuid, "app", reqTime, OkHttpsImp.md5_key, userShopInfoBean.getBusinessId(),new MyResultCallback<String>() {
 				@Override
 				public void onResponseResult(Result result) {
 					String reString = result.getData();
