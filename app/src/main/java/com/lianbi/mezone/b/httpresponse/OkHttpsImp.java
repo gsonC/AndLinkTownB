@@ -2489,50 +2489,8 @@ public enum OkHttpsImp {
 	}
 
 	/**
-	 * 签名方法
-	 */
-	private static String getSign(String md5_key, Map<String, String> dataMap) throws Exception {
-		List<String> keyList = new ArrayList<String>(dataMap.keySet());
-		Collections.sort(keyList);
-		StringBuilder builder = new StringBuilder();
-		for (String mapKey : keyList) {
-			// builder.append(mapKey).append("=").append(dataMap.get(mapKey))
-			// .append("&");
-			if (!isChinese(dataMap.get(mapKey))) {
-				builder.append(dataMap.get(mapKey));
-			}
-		}
-		// builder.append("key=").append(md5_key);
-		builder.append(md5_key);
-		MessageDigest md5 = MessageDigest.getInstance(SignType);
-		md5.update(builder.toString().getBytes(inputCharset));
-		byte[] md5Bytes = md5.digest();
-		StringBuffer hexValue = new StringBuffer();
-		for (int i = 0; i < md5Bytes.length; i++) {
-			int val = ((int) md5Bytes[i]) & 0xff;
-			if (val < 16) {
-				hexValue.append("0");
-			}
-			hexValue.append(Integer.toHexString(val));
-		}
-		return hexValue.toString();
-	}
-
-	/**
-	 * 判断是否有中文
-	 */
-	public static boolean isChinese(String str) {
-		if (str.length() < str.getBytes().length) {
-			return true;// 中文
-		} else {
-			return false;
-		}
-	}
-
-	/**
 	 * 新增产品
 	 */
-
 	public void addProduct(String md5_key, String serNum, String source, String reqTime,
 						   String productName, String productType, String productDesc,
 						   String productAmt,String  isOnline, String images, String storeId, String isMain,String shopSourceId,
@@ -2597,17 +2555,15 @@ public enum OkHttpsImp {
 	/**
 	 * 积分商品查询
 	 */
-
 	public void QueryProduct(String serNum, String source, String reqTime, String md5_key,
 
-							 String storeId,String  productName,String  productPrice,MyResultCallback<String> myResultCallback) throws Exception {
+							 String storeId,MyResultCallback<String> myResultCallback) throws Exception {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("serNum", serNum);
 		params.put("source", source);
 		params.put("reqTime", reqTime);
 		params.put("storeId", storeId);
-		params.put("productName", productName);
-		params.put("productPrice", productPrice);
+
 		String sign = getSign(md5_key, params);
 		params.put("sign", sign);
 		String url = getAbsoluteUrl(API.QUERYPOINTPRODUCT);
@@ -2617,7 +2573,6 @@ public enum OkHttpsImp {
 	/**
 	 * 从微信产品库选择
 	 */
-
 	public void QueryFromWinxin(String md5_key, String serNum, String source, String reqTime,
 								String storeId, String pageNo, String pageSize,
 								String productName,MyResultCallback<String> myResultCallback) throws Exception {
@@ -2633,6 +2588,49 @@ public enum OkHttpsImp {
 		params.put("sign", sign);
 		String url = getAbsoluteUrl(API.QUERYFROMWEIXINSHOP);
 		getProgressResponse(myResultCallback, params, url);
+	}
+
+
+
+	/**
+	 * 签名方法
+	 */
+	private static String getSign(String md5_key, Map<String, String> dataMap) throws Exception {
+		List<String> keyList = new ArrayList<String>(dataMap.keySet());
+		Collections.sort(keyList);
+		StringBuilder builder = new StringBuilder();
+		for (String mapKey : keyList) {
+			// builder.append(mapKey).append("=").append(dataMap.get(mapKey))
+			// .append("&");
+			if (!isChinese(dataMap.get(mapKey))) {
+				builder.append(dataMap.get(mapKey));
+			}
+		}
+		// builder.append("key=").append(md5_key);
+		builder.append(md5_key);
+		MessageDigest md5 = MessageDigest.getInstance(SignType);
+		md5.update(builder.toString().getBytes(inputCharset));
+		byte[] md5Bytes = md5.digest();
+		StringBuffer hexValue = new StringBuffer();
+		for (int i = 0; i < md5Bytes.length; i++) {
+			int val = ((int) md5Bytes[i]) & 0xff;
+			if (val < 16) {
+				hexValue.append("0");
+			}
+			hexValue.append(Integer.toHexString(val));
+		}
+		return hexValue.toString();
+	}
+
+	/**
+	 * 判断是否有中文
+	 */
+	public static boolean isChinese(String str) {
+		if (str.length() < str.getBytes().length) {
+			return true;// 中文
+		} else {
+			return false;
+		}
 	}
 
 }

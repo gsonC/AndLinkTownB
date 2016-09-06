@@ -324,8 +324,6 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 	/**
 	 * 删除积分产品
 	 */
-
-
 	private void Deletemenber(String productId) {
 
 		String reqTime = AbDateUtil.getDateTimeNow();
