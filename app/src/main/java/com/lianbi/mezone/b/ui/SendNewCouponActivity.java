@@ -273,11 +273,24 @@ public class SendNewCouponActivity extends BaseActivity implements CompoundButto
             return;
         }
 
+        if (Integer.parseInt(coupAmt, 10) == 0) {
+            coupon_money_num.requestFocus();
+            ContentUtils.showMsg(SendNewCouponActivity.this, "优惠券金额不能为0");
+            return;
+        }
+
         limitAmt = minimum.getText().toString();
         if (AbStrUtil.isEmpty(limitAmt)) {
             minimum.requestFocus();
             resetMinmum();
             ContentUtils.showMsg(SendNewCouponActivity.this, "请输入优惠券使用条件,如:满100元");
+            return;
+        }
+
+        if (Integer.parseInt(limitAmt) == 0) {
+            minimum.requestFocus();
+            resetMinmum();
+            ContentUtils.showMsg(SendNewCouponActivity.this, "优惠券使用条件不能为:满0元");
             return;
         }
 
@@ -312,6 +325,8 @@ public class SendNewCouponActivity extends BaseActivity implements CompoundButto
                 dismiss();
                 initCommonParameter();
                 try {
+                    coupAmt = Integer.toString(Integer.parseInt(coupAmt, 10) * 100);
+                    limitAmt = Integer.toString(Integer.parseInt(limitAmt, 10) * 100);
                     okHttpsImp.sendNewCoupon(uuid, "app", reqTime, coupName, coupAmt, limitAmt, vipPhones,
                             beginTime, endTime, is_need_send_sms.isChecked() ? msgId : "",
                             businessId, "", "", "app", businessName, new MyResultCallback<String>() {
