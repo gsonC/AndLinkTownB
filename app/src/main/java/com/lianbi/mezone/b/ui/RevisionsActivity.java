@@ -123,7 +123,6 @@ public class RevisionsActivity extends BaseActivity {
 				mds.setImgId(mWeiDianimgurl.get(i).getImgId());
 				mds.setImgDesc(mWeiDianimgurl.get(i).getImgDesc());
 				mds.setImgUrl(mWeiDianimgurl.get(i).getImgUrl());
-				System.out.println(mWeiDianimgurl.get(i).getImgId());
 				images.add(mds);
 			}
 		}
@@ -484,13 +483,6 @@ public class RevisionsActivity extends BaseActivity {
 					imgreDel.add(imagesother.get(4).getImgId());
 				}
 				break;
-		}
-
-		/**
-		 * 有风险 会多次添加 遍历去重(重要)
-		 */
-		for (String str : imgreDel) {
-			System.out.println(str);
 		}
 
 	}

@@ -320,7 +320,6 @@ public class MarketingSelectMemberActivity extends BaseActivity {
     };
 
     private void getMembersSelsectList(final  boolean isResh) {
-        Log.i("tag","321-paramLike--->"+paramLike);
         try {
             okHttpsImp.getMembersList(uuid, "app", reqTime, OkHttpsImp.md5_key,
                     userShopInfoBean.getBusinessId(), paramLike,"", page + "", 20 + "", new MyResultCallback<String>() {
@@ -328,7 +327,6 @@ public class MarketingSelectMemberActivity extends BaseActivity {
                         @Override
                         public void onResponseResult(Result result) {
                             String reString = result.getData();
-                            Log.i("tag","要发送的会员----->"+reString);
                             String  dataSize;
                             if (reString != null) {
                                 JSONObject jsonObject;
@@ -543,7 +541,6 @@ public class MarketingSelectMemberActivity extends BaseActivity {
         } else {
             return;
         }
-        Log.i("tag","要发送的所有手机号----->"+sb.toString());
         sendPhones=sb.toString();
         this.statisticspeople=totalpeople;
     }

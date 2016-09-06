@@ -122,8 +122,6 @@ public class MarketingMsgBulidActivity extends BaseActivity {
 
     }
     private  void  sendShortmsg(){
-        Log.i("tag","113-短信模板ID------>"+templateID);
-        Log.i("tag","118-发送会员手机号------>"+sendPhones);
 
         if(TextUtils.isEmpty(templateID)){
             ContentUtils.showMsg(MarketingMsgBulidActivity.this,"请选择短信模板");

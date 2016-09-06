@@ -183,7 +183,6 @@ public class MarketingSMSexampleActivity extends BaseActivity {
                 @Override
                 public void onResponseResult(Result result) {
                     String reString = result.getData();
-                    Log.i("tag", "短信模板返回-125----》" + reString);
                     if (reString != null) {
                         JSONObject jsonObject;
                         try {

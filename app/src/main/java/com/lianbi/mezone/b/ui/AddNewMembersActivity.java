@@ -453,7 +453,6 @@ public class AddNewMembersActivity extends BaseActivity {
 				case REQUEST_TAG:
 					String tagContent = data.getStringExtra("tagContent");
 					mVipLabel = data.getStringExtra("tagID");
-					System.out.println("tagContent"+tagContent);
 					if (!"".equals(tagContent)) {
 						mTvAddmembertag.setText(tagContent);
 					} else {

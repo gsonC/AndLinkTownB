@@ -214,7 +214,11 @@ public class CouponManagerActivity extends BaseActivity implements AdapterView.O
                 ImageView is_valid = helper.getView(R.id.is_valid);
 
                 coupon_name.setText(item.getCoupName());
-                coupon_tiaojian.setText(item.getLimitAmt());
+                try{
+                coupon_tiaojian.setText(AbStrUtil.changeF2Y(Long.valueOf(item.getLimitAmt())));
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
                 youxiaoqi_from.setText(AbDateUtil.getStringByFormat(item.getBeginTime(), AbDateUtil.dateFormatYMDNew));
                 youxiaoqi_to.setText(AbDateUtil.getStringByFormat(item.getEndTime(), AbDateUtil.dateFormatYMDNew));
                 if (item.getIsValide().trim().equals("Y")) {

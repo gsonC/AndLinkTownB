@@ -308,7 +308,6 @@ public class MemberAddCategoryActivity extends BaseActivity {
         }else {
             typeDiscountRatio = String.valueOf(Integer.parseInt(typeDiscountRatio) * 10);
         }
-        Log.i("tag","折扣比例-295------->"+typeDiscountRatio);
         try {
             okHttpsImp.upDateMemberCategories(new MyResultCallback<String>() {
 
@@ -373,7 +372,6 @@ public class MemberAddCategoryActivity extends BaseActivity {
         }else {
             typeDiscountRatio = String.valueOf(Integer.parseInt(typeDiscountRatio) * 10);
         }
-        Log.i("tag","折扣比例-340------->"+typeDiscountRatio);
 
         try {
             okHttpsImp.addMemberCategories(new MyResultCallback<String>() {

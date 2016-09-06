@@ -204,7 +204,6 @@ public class NewIntegralGoodsActivity extends BaseActivity {
 				@Override
 				public void onResponseResult(Result result) {
 					String reString = result.getData();
-					System.out.println("aDDreString220" + reString);
 					ContentUtils.showMsg(NewIntegralGoodsActivity.this, "新增成功");
 					Intent intent = new Intent();
 					intent.setClass(NewIntegralGoodsActivity.this,MemberPointManage.class);

@@ -78,6 +78,9 @@ public class IntegralRecordActivity extends BaseActivity {
 				ScreenUtils.textAdaptationOn720(tv_rc_thing, IntegralRecordActivity.this, 24);//消费内容
 				ScreenUtils.textAdaptationOn720(tv_rc_where, IntegralRecordActivity.this, 24);//消费地点
 				ScreenUtils.textAdaptationOn720(tv_rc_much, IntegralRecordActivity.this, 24);//消费金额
+
+				// a.substring(0,t)+b+a.substring(t+1,a.length());
+				tv_rc_time.setText(item.getCreateTime().substring(0,4)+"-"+item.getCreateTime().substring(4,6)+"-"+item.getCreateTime().substring(6,8));
 				tv_rc_thing.setText(item.getConsumName().replace("[","").replace("{","").replace("}","").replace("]","").replace("\"","").replace(":","*"));
 				tv_rc_where.setText(item.getConsumSorce());
 				tv_rc_much.setText(item.getConsumAmount());
