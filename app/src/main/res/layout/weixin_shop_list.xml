@@ -16,7 +16,7 @@
             android:layout_height="61dp"
             android:layout_marginBottom="17dp"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="17dp"
+            android:layout_marginTop="15dp"
             />
 
         <LinearLayout
@@ -30,11 +30,10 @@
                 android:id="@+id/new_product_food"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
                 android:layout_weight="1"
                 android:text="蛋包饭+紫菜汤"
                 android:textColor="@color/showcolor"
-                android:textSize="14sp"
+                android:textSize="10sp"
 
                 />
 
@@ -42,11 +41,10 @@
                 android:id="@+id/new_product_rated"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
                 android:layout_weight="1"
                 android:text="好吃"
                 android:textColor="@color/foodcolor"
-                android:textSize="14sp"
+                android:textSize="8sp"
 
                 />
 
@@ -54,11 +52,10 @@
                 android:id="@+id/new_product_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
                 android:layout_weight="1"
                 android:text="580"
                 android:textColor="@color/pointcolor"
-                android:textSize="14sp"
+                android:textSize="10sp"
                 />
         </LinearLayout>
 
@@ -73,7 +70,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:gravity="right"
         android:orientation="vertical"
         >
@@ -82,18 +79,20 @@
             android:id="@+id/new_product_choose"
             android:layout_width="60dp"
             android:layout_height="30dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="5dp"
             android:background="@drawable/shape_addnewmember"
             android:gravity="center"
             android:padding="2dp"
             android:text="选择"
+            android:layout_marginRight="5dp"
+
             />
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="11dp"
-            android:background="@color/color_ededed"
-            />
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="11dp"
+        android:background="@color/color_ededed"
+        />
 </LinearLayout>
