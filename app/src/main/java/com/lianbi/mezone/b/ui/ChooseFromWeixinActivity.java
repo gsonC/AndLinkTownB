@@ -179,7 +179,6 @@ public class ChooseFromWeixinActivity extends BaseActivity {
 						intent.putExtra("new_product_images", item.getProductImages());
 						intent.putExtra("shopSourceId",item.getShopSourceId());
 						startActivityForResult(intent, RESULT_WEIXIN);
-						finish();
 					}
 				});
 			}

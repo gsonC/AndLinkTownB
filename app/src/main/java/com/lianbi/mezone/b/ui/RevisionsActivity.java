@@ -299,14 +299,16 @@ public class RevisionsActivity extends BaseActivity {
 		try {
 			okHttpsImp.updateProduct(OkHttpsImp.md5_key, uuid, "app",
 					reqTime, productId, productName, "01", productDesc,
-					productAmt, SHELVES, delImageUrls, imageStr, BusinessId, isMain, shopSourceId, new MyResultCallback<String>() {
+					productAmt, SHELVES, delImageUrls, imageStr, BusinessId,
+					isMain, shopSourceId, new MyResultCallback<String>() {
 						@Override
 						public void onResponseResult(Result result) {
 							String reString = result.getData();
 							ContentUtils.showMsg(RevisionsActivity.this, "修改产品成功");
-							Intent intent = new Intent();
+							Intent intent = new Intent(RevisionsActivity.this,MemberPointManage.class);
 							setResult(RESULT_OK, intent);
-							finish();
+							startActivity(intent);
+				//			finish();
 						}
 
 						@Override
