@@ -50,6 +50,8 @@ public class ChooseFromWeixinActivity extends BaseActivity {
 	ListView actWeixinListview;
 	@Bind(R.id.act_weixin_abpulltorefreshview)
 	AbPullToRefreshView actWeixinAbpulltorefreshview;
+	private final int RESULT_WEIXIN = 4444;
+	String shopSourceId;
 
 	private ListView mAct_addmembers_listview;
 	private ArrayList<WeiXinBean> mDatas = new ArrayList<WeiXinBean>();
@@ -178,7 +180,6 @@ public class ChooseFromWeixinActivity extends BaseActivity {
 				}
 
 
-
 				helper.getView(R.id.new_product_choose).setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
@@ -186,26 +187,31 @@ public class ChooseFromWeixinActivity extends BaseActivity {
 						intent.putExtra("new_product_id", item.getShopSourceId());
 						intent.putExtra("new_product_food", item.getProductName());
 						intent.putExtra("new_product_rated", item.getProductDesc());
-						intent.putExtra("new_product_ima",mStrimgurl.get(helper.getPosition()));
+                    	intent.putExtra("new_product_ima",judge(mStrimgurl.size(),helper.getPosition()));
 						intent.putExtra("shopSourceId",item.getShopSourceId());
 						startActivityForResult(intent, RESULT_WEIXIN);
+						finish();
 					}
 				});
 			}
-
-
 		};
 
 		actWeixinListview.setAdapter(mAdapter);
 	}
-
-	private final int RESULT_WEIXIN = 4444;
+    public  String    judge(int   mStrimgurlsize,int  helperPosition){
+       String temp="";
+       if(helperPosition==mStrimgurlsize||helperPosition>mStrimgurlsize){
+		 temp="";
+	   }else{
+		 temp=mStrimgurl.get(helperPosition);
+	   }
+       return   temp;
+	}
 
 	/**
 	 * 微信商品查询
 	 *
 	 */
-String shopSourceId;
 
 	private void getWeixinQueryProduct(final boolean isResh,String input) {
 		if (isResh) {
