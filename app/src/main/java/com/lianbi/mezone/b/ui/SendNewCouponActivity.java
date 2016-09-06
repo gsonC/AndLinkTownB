@@ -162,7 +162,7 @@ public class SendNewCouponActivity extends BaseActivity implements CompoundButto
         super.onChildClick(view);
         switch (view.getId()) {
             case R.id.editable_sms_content:
-                gotoSelectMembers();
+                gotoSMSexample();
                 break;
             case R.id.linearLayout:
                 resetMinmum();
@@ -212,13 +212,12 @@ public class SendNewCouponActivity extends BaseActivity implements CompoundButto
                 timeSelectorTo.show();
                 break;
             case R.id.selectable_member:
-                gotoSelectMembers();
+                resetMinmum();
+                Intent intentmember = new Intent(SendNewCouponActivity.this, MarketingSelectMemberActivity.class);
+                startActivityForResult(intentmember, REQUEST_CODE_MEMBER_RESULT);
                 break;
             case R.id.selectable_templet:
-                resetMinmum();
-                Intent intenttemplate = new Intent(SendNewCouponActivity.this, MarketingSMSexampleActivity.class);
-                intenttemplate.putExtra(MarketingSMSexampleActivity.TEMPLATE_TYPE, "P");
-                startActivityForResult(intenttemplate, REQUEST_CODE_TEMPLATE_RESULT);
+                gotoSMSexample();
                 break;
             case R.id.send_new_coupon:
                 sendNewCoupon();
@@ -226,10 +225,11 @@ public class SendNewCouponActivity extends BaseActivity implements CompoundButto
         }
     }
 
-    private void gotoSelectMembers() {
+    private void gotoSMSexample() {
         resetMinmum();
-        Intent intentmember = new Intent(SendNewCouponActivity.this, MarketingSelectMemberActivity.class);
-        startActivityForResult(intentmember, REQUEST_CODE_MEMBER_RESULT);
+        Intent intenttemplate = new Intent(SendNewCouponActivity.this, MarketingSMSexampleActivity.class);
+        intenttemplate.putExtra(MarketingSMSexampleActivity.TEMPLATE_TYPE, "P");
+        startActivityForResult(intenttemplate, REQUEST_CODE_TEMPLATE_RESULT);
     }
 
     @Override
