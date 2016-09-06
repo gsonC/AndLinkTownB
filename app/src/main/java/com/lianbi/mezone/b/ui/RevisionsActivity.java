@@ -164,8 +164,8 @@ public class RevisionsActivity extends BaseActivity {
 					imagesother = images;
 				}
 			}
+			imagesother.remove(isNum);
 		}
-		imagesother.remove(isNum);
 		if (imagesother.size() > 0) {
 			Glide.with(RevisionsActivity.this).load(Uri.parse(imagesother.get(0).getImgUrl())).error(R.mipmap.add2).into(smallImaOne);
 		}
