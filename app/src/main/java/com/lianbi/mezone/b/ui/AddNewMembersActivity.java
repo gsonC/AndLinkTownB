@@ -253,8 +253,8 @@ public class AddNewMembersActivity extends BaseActivity {
 			Integer typeDiscountRatio = memberDetails.getVipTypeObject().getTypeDiscountRatio();
 			Integer TypeMaxDiscount = memberDetails.getVipTypeObject().getTypeMaxDiscount();
 			int vipIntegral = memberDetails.getVipIntegral();
-			memberDiscount(typeDiscountRatio,mTvAddmemberDiscount);
-			memberDiscount(TypeMaxDiscount,mTvAddmemberMax);
+			memberDiscount(typeDiscountRatio,mTvAddmemberDiscount,1);
+			memberDiscount(TypeMaxDiscount,mTvAddmemberMax,2);
 			mTvAddmemberIntegral.setText(vipIntegral+"");
 
 			if(!"老板娘app".equals(memberDetails.getVipSource())){
@@ -325,10 +325,17 @@ public class AddNewMembersActivity extends BaseActivity {
 	/**
 	 * 会员折扣填充
 	 */
-	private void memberDiscount(Integer discount,TextView tvs){
+	private void memberDiscount(Integer discount,TextView tvs,int i){
+		int ratio=0;
+		if(1==i){
+			ratio = 10;
+		}else{
+			ratio = 100;
+		}
+
 		if(discount!=null){
 			tvs.setText(MathExtend.roundNew(new BigDecimal(discount)
-					.divide(new BigDecimal(100)).doubleValue(), 1));
+					.divide(new BigDecimal(ratio)).doubleValue(), 1));
 		}else{
 			tvs.setText("无");
 		}

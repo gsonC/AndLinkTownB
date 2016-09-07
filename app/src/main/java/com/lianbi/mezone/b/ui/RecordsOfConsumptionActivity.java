@@ -83,7 +83,7 @@ public class RecordsOfConsumptionActivity extends BaseActivity {
 				}else{
 					tv_rc_where.setText("无");
 				}
-				tv_rc_much.setText(MathExtend.roundNew(item.getConsumPrice().divide(new BigDecimal(100)).doubleValue(), 2) + "元");
+				tv_rc_much.setText(MathExtend.roundNew(item.getConsumAmount().divide(new BigDecimal(100)).doubleValue(), 2) + "元");
 
 			}
 		};

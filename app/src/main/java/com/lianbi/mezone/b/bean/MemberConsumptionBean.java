@@ -19,7 +19,7 @@ public class MemberConsumptionBean implements Serializable {
 	private BigDecimal consumPrice;
 	private String consumNum;
 	private String consumDiscount;
-	private String consumAmount;
+	private BigDecimal consumAmount;
 	private String createTime;
 	private String consumSorce;
 
@@ -63,11 +63,11 @@ public class MemberConsumptionBean implements Serializable {
 		this.consumDiscount = consumDiscount;
 	}
 
-	public String getConsumAmount() {
+	public BigDecimal getConsumAmount() {
 		return consumAmount;
 	}
 
-	public void setConsumAmount(String consumAmount) {
+	public void setConsumAmount(BigDecimal consumAmount) {
 		this.consumAmount = consumAmount;
 	}
 
