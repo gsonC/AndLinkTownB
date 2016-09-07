@@ -205,15 +205,15 @@ public class MemberClassifyActivity extends BaseActivity {
                 @Override
                 public void onResponseResult(Result result) {
                     String reString = result.getData();
-                    String  dataSize;
+                    int  dataSize;
                     if (reString != null) {
                         JSONObject jsonObject;
                         try {
                             jsonObject = new JSONObject(reString);
                             reString = jsonObject.getString("vipTypeList");
-                            dataSize = jsonObject.getString("dataSize");
+                            dataSize = jsonObject.getInt("dataSize");
 
-                            if(dataSize.equals("0")){
+                            if(dataSize==0&&mDatas.size()!=0){
                                 Nodata=true;
                                 mAdapter.notifyDataSetChanged();
                                 mPtrrv.onFinishLoading(false, false);
@@ -228,7 +228,9 @@ public class MemberClassifyActivity extends BaseActivity {
                                 mData.addAll(memberclassifyList);
                                 updateView(mData);
                                 mPtrrv.onFinishLoading(true, false);
-                                page=page+1;
+                                if(memberclassifyList.size()!=0) {
+                                    page = page + 1;
+                                }
                             }
                             if(page==1&&mDatas.size()==0){
                                 mPtrrv.setVisibility(View.GONE);

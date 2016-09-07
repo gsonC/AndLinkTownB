@@ -3,7 +3,6 @@ package com.lianbi.mezone.b.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -150,16 +149,17 @@ public class MemberAddCategoryActivity extends BaseActivity {
             tvMaxidiscountvalue.setEnabled(false);
             etRangebefore.setEnabled(false);
             etRangeafter.setEnabled(false);
-            setPageRightText("");
+            setPageRightTextVisibility(View.GONE);
         }else
         if(mMemberClassify!=null&&!mMemberClassify.getTypeName().equals("普通会员"))
         {
-            tvClassifyvalue.setEnabled(true);
-            tvRadiovalue.setEnabled(true);
-            tvMaxidiscountvalue.setEnabled(true);
+            tvClassifyvalue.setEnabled(false);
+            tvRadiovalue.setEnabled(false);
+            tvMaxidiscountvalue.setEnabled(false);
             etRangebefore.setEnabled(false);
             etRangeafter.setEnabled(false);
             setPageRightText("修改");
+            setPageRightTextVisibility(View.VISIBLE);
         }
 
         if (nametype.equals("分类详情")) {
@@ -406,8 +406,15 @@ public class MemberAddCategoryActivity extends BaseActivity {
     protected void onTitleRightClickTv() {
         super.onTitleRightClickTv();
         if (nametype.equals("分类详情")) {
-            getUpDateMemberType(membertypeId);
-
+            if(getPageRightText().equals("修改")){
+                setPageRightText("保存");
+                tvClassifyvalue.setEnabled(true);
+                tvRadiovalue.setEnabled(true);
+                tvMaxidiscountvalue.setEnabled(true);
+            }else
+            if(getPageRightText().equals("保存")){
+               getUpDateMemberType(membertypeId);
+            }
         }else if(nametype.equals("新增分类")){
             getAddMemberType();
 
