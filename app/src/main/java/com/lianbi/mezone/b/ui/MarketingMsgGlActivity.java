@@ -98,6 +98,7 @@ public class MarketingMsgGlActivity extends BaseActivity {
     boolean  isshow=false;
     boolean  isLoadMore=false;
     int i = 0;
+    //第几页
     int  page=1;
     boolean  Nodata=false;
     private String  smstotalSendNum="";
@@ -247,6 +248,15 @@ public class MarketingMsgGlActivity extends BaseActivity {
                                                 MarketingMsgGl.class);
                                 mData.addAll(msgGlsList);
                                 updateView(mData);
+                                if(msgGlsList.size()!=0){
+                                    page = page + 1;
+                                }
+                            }
+                            if(mData.size()==0&&mDatas.size()!=0){
+                                Nodata=true;
+                                mAdapter.notifyDataSetChanged();
+                                mPtrrview.onFinishLoading(false, false);
+                                return;
                             }
                             if(page==1&&mDatas.size()==0){
                                 mPtrrview.setVisibility(View.GONE);
@@ -276,7 +286,7 @@ public class MarketingMsgGlActivity extends BaseActivity {
                     mPtrrview.onFinishLoading(true, false);
                     dialog.dismiss();
                 }
-            }, BusinessId, String.valueOf(mDatas.size()), eachgetnum, nowtime, reqTime, uuid);
+            }, BusinessId, String.valueOf(page), eachgetnum, nowtime, reqTime, uuid);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -321,7 +331,7 @@ public class MarketingMsgGlActivity extends BaseActivity {
 
             @Override
             public void onBindViewHolder(int position) {
-                if(isshow==true&&position==mDatas.size()-1)
+                if(Nodata==true&&position==mDatas.size()-1)
                 {
                     isLoadMore=true;
                     llt_marketingmsgl.setVisibility(View.GONE);

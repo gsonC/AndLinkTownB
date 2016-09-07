@@ -2,7 +2,6 @@ package com.lianbi.mezone.b.httpresponse;
 
 import android.content.Context;
 import android.os.Environment;
-import android.util.Log;
 import android.widget.ProgressBar;
 
 import com.lianbi.mezone.b.ui.BaseActivity;
@@ -602,7 +601,7 @@ public enum OkHttpsImp {
 	public void querySendMsgStatistic(MyResultCallback<String> myResultCallback, String businessId, String startNo, String pageSize, String sendDate, String reqTime, String uuid) throws Exception {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("storeId", businessId);
-		params.put("startNo", startNo);
+		params.put("pageNo", startNo);
 		params.put("pageSize", pageSize);
 		params.put("sendDate", sendDate);
 		params.put("reqTime", reqTime);

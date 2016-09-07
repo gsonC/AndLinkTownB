@@ -14,7 +14,6 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -327,15 +326,15 @@ public class MarketingSelectMemberActivity extends BaseActivity {
                         @Override
                         public void onResponseResult(Result result) {
                             String reString = result.getData();
-                            String  dataSize;
+                            int  dataSize;
                             if (reString != null) {
                                 JSONObject jsonObject;
                                 try {
                                     jsonObject = new JSONObject(reString);
                                     reString = jsonObject.getString("businessVipList");
-                                    dataSize = jsonObject.getString("dataSize");
+                                    dataSize = jsonObject.getInt("dataSize");
 
-                                    if(dataSize.equals("0")){
+                                    if(dataSize==0&&mDatas.size()!=0){
                                         Nodata=true;
                                         mAdapter.notifyDataSetChanged();
                                         ptrrview.onFinishLoading(false, false);
@@ -350,7 +349,9 @@ public class MarketingSelectMemberActivity extends BaseActivity {
                                         checkboxRefresh(isResh);
                                         updateView(mData);
                                         ptrrview.onFinishLoading(true, false);
-                                        page=page+1;
+                                        if(memberinfoselectList.size()!=0){
+                                           page=page+1;
+                                        }
                                     }
                                     if(page==1&&mDatas.size()==0){
                                         ptrrview.setVisibility(View.GONE);
@@ -462,7 +463,7 @@ public class MarketingSelectMemberActivity extends BaseActivity {
                 ScreenUtils.textAdaptationOn720(tv_mb_source, MarketingSelectMemberActivity.this, 24);//本周新增会员
                 ScreenUtils.textAdaptationOn720(tv_mb_label, MarketingSelectMemberActivity.this, 24);//本周新增会员
                 ScreenUtils.textAdaptationOn720(tv_mb_integral, MarketingSelectMemberActivity.this, 24);//本周新增会员
-                if(isshow==true&&position==mDatas.size()-1)
+                if(Nodata==true&&position==mDatas.size()-1)
                 {
                     isLoadMore=true;
                     lay_item.setVisibility(View.GONE);

@@ -377,6 +377,21 @@ public class BaseActivity extends FragmentActivity implements OnClickListener {
 	public void setPageRightTextVisibility(int visibility) {
 		tvTitleRight.setVisibility(visibility);
 	}
+	/**
+	 * 得到右边显示文字
+	 *
+	 * @param
+	 */
+	public String   getPageRightText() {
+		String   temp="";
+		if(tvTitleRight.getVisibility()==View.GONE){
+			temp="";
+		}else
+		if(tvTitleRight.getVisibility()==View.VISIBLE){
+			temp=tvTitleRight.getText().toString();
+		}
+        return  temp;
+	}
 
 	@Override
 	protected void onDestroy() {
