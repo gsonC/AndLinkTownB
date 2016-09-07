@@ -1078,7 +1078,15 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 			setPageTitle("首页");
 		}
 	}
-
+	/**
+	 * 首页title
+	 */
+	private void titleFinancialOffice() {
+		setPageRightText("明细");
+		setPageRightTextColor(R.color.color_6bb4ff);
+		tv_title_left.setText("财务室");
+		tv_title_left.setVisibility(View.INVISIBLE);
+	}
 	/**
 	 * 返回键时间间隔
 	 */

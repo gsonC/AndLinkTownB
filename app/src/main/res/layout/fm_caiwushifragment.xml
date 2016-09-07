@@ -27,8 +27,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/totalaccount"
+                    android:layout_marginTop="20dp"
+                    android:text="店铺今日收入(元)"
                     android:textColor="@color/white"
                     android:textSize="17sp" />
 
@@ -37,29 +37,29 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="20dp"
                     android:text="@string/initial"
                     android:textColor="@color/white"
                     android:textSize="38sp" />
 
-                <TextView
-                    android:id="@+id/tv_shopaccountword"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="15dp"
-                    android:text="@string/shopaccount"
-                    android:textColor="@color/white" />
+                <!-- <TextView
+                     android:id="@+id/tv_shopaccountword"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_gravity="center_horizontal"
+                     android:layout_marginTop="15dp"
+                     android:text="@string/shopaccount"
+                     android:textColor="@color/white" />
 
-                <TextView
-                    android:id="@+id/tv_shopaccount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/initial"
-                    android:textColor="@color/white"
-                    android:textSize="30sp" />
+                 <TextView
+                     android:id="@+id/tv_shopaccount"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_gravity="center_horizontal"
+                     android:layout_marginTop="10dp"
+                     android:text="@string/initial"
+                     android:textColor="@color/white"
+                     android:textSize="30sp" />-->
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -67,9 +67,9 @@
                     android:baselineAligned="false"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="30dp"
                     android:layout_marginBottom="10dp"
-                     >
+                    >
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -79,15 +79,16 @@
                         android:orientation="vertical"
 
                         >
-
                         <TextView
-                            android:id="@+id/tv_dongjiejine"
+                            android:id="@+id/tv_shopaccountword"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
-                            android:text="@string/freezingamount"
+                            android:text="@string/shopaccount"
                             android:textSize="11sp"
-                            android:textColor="@color/white" />
+                            android:textColor="@color/white"/>
+
+
 
                         <TextView
                             android:id="@+id/tv_freezingamount"
@@ -110,15 +111,22 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:orientation="vertical" >
-
                         <TextView
+                            android:id="@+id/tv_dongjiejine"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="@string/freezingamount"
+                            android:textSize="11sp"
+                            android:textColor="@color/white" />
+                        <!--<TextView
                             android:id="@+id/tv_keyongyue"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:textSize="11sp"
                             android:text="@string/availablebalance"
-                            android:textColor="@color/white" />
+                            android:textColor="@color/white" />-->
 
                         <TextView
                             android:id="@+id/tv_availablebalance"
@@ -140,15 +148,15 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:orientation="vertical" >
-
                         <TextView
-                            android:id="@+id/tv_tixianzhongyue"
+                            android:id="@+id/tv_keyongyue"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
-                            android:text="@string/takeinmoney"
                             android:textSize="11sp"
+                            android:text="@string/availablebalance"
                             android:textColor="@color/white" />
+
 
                         <TextView
                             android:id="@+id/tv_takeinmoney"
@@ -170,14 +178,13 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:orientation="vertical" >
-
                         <TextView
-                            android:id="@+id/tv_dianpujinrishouru"
+                            android:id="@+id/tv_tixianzhongyue"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
+                            android:text="@string/takeinmoney"
                             android:textSize="11sp"
-                            android:text="@string/shopincometoday"
                             android:textColor="@color/white" />
 
                         <TextView
@@ -207,7 +214,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/account_security"
+                    android:text="规则说明"
                     android:textColor="#50b021" />
             </LinearLayout>
 
@@ -314,5 +321,4 @@
 
         </LinearLayout>
     </ScrollView>
-
 </android.support.v4.widget.SwipeRefreshLayout>
