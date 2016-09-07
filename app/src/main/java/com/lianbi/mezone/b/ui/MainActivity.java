@@ -1075,6 +1075,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 				setPageTitle("首页");
 			}
 		} else {
+
 			setPageTitle("首页");
 		}
 	}
