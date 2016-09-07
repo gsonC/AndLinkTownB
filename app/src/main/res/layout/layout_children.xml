@@ -5,34 +5,37 @@
                 android:id="@+id/rela_child"
               >
 
-   <LinearLayout
-       android:id="@+id/heheh"
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       android:orientation="vertical">
+    <RelativeLayout
+        android:id="@+id/heheh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        >
+
         <TextView
             android:id="@+id/second_textview"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="45dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="22dp"
             android:layout_gravity="center_vertical"
             android:padding="10dp"
-            android:text="jkj"
-            android:layout_marginLeft="16dp"
+            android:text=""
             android:textColor="#262626"
             android:textSize="16sp"
             />
-
-     <!--   <ImageView
-            android:layout_alignParentRight="true"
+        <ImageView
             android:id="@+id/child_ima"
             android:layout_width="wrap_content"
             android:layout_height="45dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:padding="10dp"
             android:src="@mipmap/service_new_right"
-           android:layout_gravity="center_vertical"
-            />-->
-
-   </LinearLayout>
-
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="15dp"
+            android:scaleType="centerInside"
+            />
+    </RelativeLayout>
 
 </RelativeLayout>

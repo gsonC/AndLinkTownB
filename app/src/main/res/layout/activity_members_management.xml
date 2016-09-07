@@ -10,6 +10,9 @@
     <ExpandableListView
         android:id="@+id/main_expandablelistview"
         android:background="@color/white"
+        android:divider="@color/color_e3e3e3"
+        android:childDivider="@color/color_e3e3e3"
+        android:dividerHeight="1dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
        />
