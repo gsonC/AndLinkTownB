@@ -327,15 +327,18 @@ public class AddNewMembersActivity extends BaseActivity {
 	 */
 	private void memberDiscount(Integer discount,TextView tvs,int i){
 		int ratio=0;
+		int several=0;
 		if(1==i){
 			ratio = 10;
+			several = 1;
 		}else{
 			ratio = 100;
+			several = 0;
 		}
 
 		if(discount!=null){
 			tvs.setText(MathExtend.roundNew(new BigDecimal(discount)
-					.divide(new BigDecimal(ratio)).doubleValue(), 1));
+					.divide(new BigDecimal(ratio)).doubleValue(), several));
 		}else{
 			tvs.setText("无");
 		}

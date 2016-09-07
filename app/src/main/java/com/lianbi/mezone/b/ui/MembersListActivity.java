@@ -130,8 +130,8 @@ public class MembersListActivity extends BaseActivity {
 				ScreenUtils.textAdaptationOn720(tv_mb_label, MembersListActivity.this, 24);//本周新增会员
 				ScreenUtils.textAdaptationOn720(tv_mb_integral, MembersListActivity.this, 24);//本周新增会员
 				tv_mb_phone.setText(item.getVipPhone());
-				if(!AbStrUtil.isEmpty(item.getVipTypeObject())){
-					tv_mb_category.setText(item.getVipTypeObject());
+				if(!AbStrUtil.isEmpty(item.getVipType())){
+					tv_mb_category.setText(item.getVipType());
 				}else{
 					tv_mb_category.setText("普通会员");
 				}
