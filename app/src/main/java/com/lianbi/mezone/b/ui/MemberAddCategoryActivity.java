@@ -245,13 +245,16 @@ public class MemberAddCategoryActivity extends BaseActivity {
                                 tvRadiovalue.setText(String.valueOf(discountratio));
                             }else{tvRadiovalue.setText(String.valueOf(0));}
                             if (!TextUtils.isEmpty(String.valueOf(memberclassify.getTypeMaxDiscount()))) {
-                                tvMaxidiscountvalue.setText(String.valueOf(memberclassify.getTypeMaxDiscount()));
+                                String maxdiscount=String.valueOf(memberclassify.getTypeMaxDiscount()/100);
+                                tvMaxidiscountvalue.setText(maxdiscount);
                             }
                             if (!TextUtils.isEmpty(String.valueOf(memberclassify.getTypeConditionMin()))) {
-                                etRangebefore.setText(String.valueOf(memberclassify.getTypeConditionMin()));
+                                String conditionmin=String.valueOf(memberclassify.getTypeConditionMin()/100);
+                                etRangebefore.setText(conditionmin);
                             }
-                            if (!TextUtils.isEmpty(String.valueOf(memberclassify.getTypeConditionMin()))) {
-                                etRangeafter.setText(String.valueOf(memberclassify.getTypeConditionMax()));
+                            if (!TextUtils.isEmpty(String.valueOf(memberclassify.getTypeConditionMax()))) {
+                                String conditionmax=String.valueOf(memberclassify.getTypeConditionMax()/100);
+                                etRangeafter.setText(conditionmax);
                             }
                             if (!TextUtils.isEmpty(String.valueOf(memberclassify.getThisTypeCount()))) {
                                 tvSpecificfigures.setText(String.valueOf(memberclassify.getThisTypeCount()));
