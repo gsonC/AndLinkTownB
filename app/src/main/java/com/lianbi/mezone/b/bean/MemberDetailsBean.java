@@ -32,6 +32,15 @@ public class MemberDetailsBean implements Serializable {
 	private String vipRemarks;
 	private vipTypeObject vipTypeObject;
 	private List<labels> labels;
+	private String vipSource;
+
+	public String getVipSource() {
+		return vipSource;
+	}
+
+	public void setVipSource(String vipSource) {
+		this.vipSource = vipSource;
+	}
 
 	public List<MemberDetailsBean.labels> getLabels() {
 		return labels;

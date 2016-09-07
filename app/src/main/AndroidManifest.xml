@@ -90,8 +90,7 @@
             android:windowSoftInputMode="stateHidden|stateUnchanged"
             android:launchMode="singleTask"/>
         <activity
-            android:name="com.lianbi.mezone.b.ui.TagManagerActivity"
-            android:windowSoftInputMode="stateHidden|stateUnchanged"/>
+            android:name="com.lianbi.mezone.b.ui.TagManagerActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.MembersManagementActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.RevisionsActivity"/>
         <activity

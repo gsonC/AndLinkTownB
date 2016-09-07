@@ -257,6 +257,10 @@ public class AddNewMembersActivity extends BaseActivity {
 			memberDiscount(TypeMaxDiscount,mTvAddmemberMax);
 			mTvAddmemberIntegral.setText(vipIntegral+"");
 
+			if(!"老板娘app".equals(memberDetails.getVipSource())){
+				mEditAddmemberPhone.setFocusable(false);
+			}
+
 			if(null!=memberDetails.getLabels()&&memberDetails.getLabels().size()>0){
 				int size = memberDetails.getLabels().size();
 				StringBuffer labelName = new StringBuffer();

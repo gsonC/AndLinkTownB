@@ -52,7 +52,7 @@
         android:padding="10dp"
         >
 
-        <cn.com.hgh.indexscortlist.ClearEditText
+        <cn.com.hgh.view.ContainsEmojiEditText
             android:id="@+id/tv_searchtag"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -62,9 +62,11 @@
             android:padding="7dp"
             android:background="@drawable/shape_addnewmember"
             android:hint="请输入标签"
-            android:textColor="@color/colores_news_10"
-            android:textSize="14sp"
             android:maxLength="10"
+            android:singleLine="true"
+            android:textColor="@color/colores_news_10"
+            android:textColorHint="@color/colores_news_11"
+            android:textSize="14sp"
             />
 
         <TextView

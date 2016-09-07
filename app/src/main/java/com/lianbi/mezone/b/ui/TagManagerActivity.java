@@ -1,6 +1,7 @@
 package com.lianbi.mezone.b.ui;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
@@ -25,7 +26,6 @@ import cn.com.hgh.utils.AbDateUtil;
 import cn.com.hgh.utils.AbPullHide;
 import cn.com.hgh.utils.AbStrUtil;
 import cn.com.hgh.utils.ContentUtils;
-import cn.com.hgh.utils.REGX;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.utils.ScreenUtils;
 import cn.com.hgh.view.AbPullToRefreshView;
@@ -53,12 +53,6 @@ public class TagManagerActivity extends BaseActivity {
 		initListAdapter();
 		setLisenter();
 		getvipLabel(true);
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-
 	}
 
 	private void initview() {
@@ -92,8 +86,8 @@ public class TagManagerActivity extends BaseActivity {
 		bt_sure.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				inputtag = tv_searchtag.getText().toString();
-				if (inputtag != null) {
+				inputtag = tv_searchtag.getText().toString().trim();
+				/*if (inputtag != null) {
 					if (!inputtag.matches(REGX.REGX_CHINESE_CHECK)) {
 						ContentUtils.showMsg(TagManagerActivity.this, "请输入正确的会员标签");
 						return;
@@ -102,13 +96,19 @@ public class TagManagerActivity extends BaseActivity {
 				} else {
 					ContentUtils.showMsg(TagManagerActivity.this, "请输入标签");
 					return;
+				}*/
+				if (!TextUtils.isEmpty(inputtag)) {
+					getAddvipLabel(inputtag);
+				} else {
+					ContentUtils.showMsg(TagManagerActivity.this, "请输入标签");
 				}
+
 			}
 		});
 	}
 
 
-//初始化适配器
+	//初始化适配器
 
 	public QuickAdapter<SelectTagBean> mAdapter;
 
@@ -128,12 +128,12 @@ public class TagManagerActivity extends BaseActivity {
 
 								fm_Tag_listView.slideBack();
 								// 通知服务器
-								mDatas.remove(item);
-								labelId =item.getLabelId();
+								//	mDatas.remove(item);
+								labelId = item.getLabelId();
 								//Toast.makeText(mActivity, "删除", 0).show();
-								mAdapter.replaceAll(mDatas);
-								ArrayList<String> ids = new ArrayList<String>();
-								ids.add(String.valueOf(item.getLabelId()));
+								//	mAdapter.replaceAll(mDatas);
+								//	ArrayList<String> ids = new ArrayList<String>();
+								//	ids.add(String.valueOf(item.getLabelId()));
 								//	delteLeaveMsg(ids,true);
 								DeletevipLabel();
 							}
@@ -148,7 +148,6 @@ public class TagManagerActivity extends BaseActivity {
 	/**
 	 * 获取会员标签列表
 	 */
-
 	private void getvipLabel(final boolean isResh) {
 		if (isResh) {
 			page = 1;
@@ -207,29 +206,28 @@ public class TagManagerActivity extends BaseActivity {
 	/**
 	 * 添加会员标签
 	 */
+	private void getAddvipLabel(String input) {
 
-	String searchtag;
 
-	private void getAddvipLabel() {
-		searchtag = tv_searchtag.getText().toString();
 		String reqTime = AbDateUtil.getDateTimeNow();
 		String uuid = AbStrUtil.getUUID();
 		try {
-			okHttpsImp.AddMemberTag(uuid, "app", reqTime, OkHttpsImp.md5_key, userShopInfoBean.getBusinessId(), searchtag, new MyResultCallback<String>() {
+			okHttpsImp.AddMemberTag(uuid, "app", reqTime, OkHttpsImp.md5_key,
+					userShopInfoBean.getBusinessId(), input, new MyResultCallback<String>() {
 
-				@Override
-				public void onResponseResult(Result result) {
-					tv_searchtag.setText("");
-					getvipLabel(true);
-					ContentUtils.showMsg(TagManagerActivity.this, "标签添加成功");
+						@Override
+						public void onResponseResult(Result result) {
+							tv_searchtag.setText("");
+							getvipLabel(true);
+							ContentUtils.showMsg(TagManagerActivity.this, "标签添加成功");
 
-				}
+						}
 
-				@Override
-				public void onResponseFailed(String msg) {
-					ContentUtils.showMsg(TagManagerActivity.this, "标签添加失败");
-				}
-			});
+						@Override
+						public void onResponseFailed(String msg) {
+							ContentUtils.showMsg(TagManagerActivity.this, "标签添加失败");
+						}
+					});
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
