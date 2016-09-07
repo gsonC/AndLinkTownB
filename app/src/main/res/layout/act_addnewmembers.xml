@@ -209,7 +209,7 @@
                 android:id="@+id/tv_addmember_max1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="5dp"
                 android:gravity="center"
                 android:text="单笔最高折扣优惠:"
                 android:textColor="@color/colores_news_19"/>
@@ -226,7 +226,7 @@
                 android:id="@+id/tv_addmember_integral1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="5dp"
                 android:gravity="center"
                 android:text="会员积分:"
                 android:textColor="@color/colores_news_19"/>
