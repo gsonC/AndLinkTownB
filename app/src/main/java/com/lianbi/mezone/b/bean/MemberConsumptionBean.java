@@ -21,7 +21,15 @@ public class MemberConsumptionBean implements Serializable {
 	private String consumDiscount;
 	private BigDecimal consumAmount;
 	private String createTime;
-	private String consumSorce;
+	private String consumSource;
+
+	public String getConsumSource() {
+		return consumSource;
+	}
+
+	public void setConsumSource(String consumSource) {
+		this.consumSource = consumSource;
+	}
 
 	public String getConsumType() {
 		return consumType;
@@ -77,14 +85,6 @@ public class MemberConsumptionBean implements Serializable {
 
 	public void setCreateTime(String createTime) {
 		this.createTime = createTime;
-	}
-
-	public String getConsumSorce() {
-		return consumSorce;
-	}
-
-	public void setConsumSorce(String consumSorce) {
-		this.consumSorce = consumSorce;
 	}
 
 }

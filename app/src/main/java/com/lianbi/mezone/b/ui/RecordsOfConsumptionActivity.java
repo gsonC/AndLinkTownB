@@ -78,8 +78,8 @@ public class RecordsOfConsumptionActivity extends BaseActivity {
 
 				tv_rc_time.setText(item.getCreateTime() + "");
 				tv_rc_thing.setText(item.getConsumName() + "");
-				if(!AbStrUtil.isEmpty(item.getConsumSorce())){
-					tv_rc_where.setText(item.getConsumSorce() + "");
+				if(!AbStrUtil.isEmpty(item.getConsumSource())){
+					tv_rc_where.setText(item.getConsumSource() + "");
 				}else{
 					tv_rc_where.setText("无");
 				}
