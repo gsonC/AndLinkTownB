@@ -10,7 +10,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,6 +70,7 @@ public class MarketingSMSexampleActivity extends BaseActivity {
     boolean isLoadMore = false;
     boolean Nodata = false;
     boolean isResh;
+    private static  String PType="P";
     //更新列表
     private static final int REQUEST_CODE_UPDATA_RESULT = 1009;
     //    添加会员类别
@@ -194,13 +194,14 @@ public class MarketingSMSexampleActivity extends BaseActivity {
                                         .parseArray(reString,
                                                 SmsTemplate.class);
                                 int listsize=smstemplatelist.size();
-//                                for (int i = 0; i < listsize; i++) {
-//                                    SmsTemplate smsTemplate = smstemplatelist.get(i);
-//                                    if (smsTemplate.getTemplateType()!=null&&!smsTemplate.getTemplateType().trim().equals(templateType)) {
-//                                        smstemplatelist.remove(i);
-//                                        i--;
-//                                    }
-//                                }
+                                for (int i = 0; i < listsize; i++) {
+                                    if (smstemplatelist.get(i).getTemplateType()!=null&&
+                                            smstemplatelist.get(i).getTemplateType().trim().equals(PType)) {
+                                        smstemplatelist.remove(i);
+                                      listsize--;
+                                      i--;
+                                    }
+                                }
                                 mData.addAll(smstemplatelist);
                                 updateView(mData);
                             }
@@ -325,48 +326,7 @@ public class MarketingSMSexampleActivity extends BaseActivity {
         return  temp.toString();
     }
 }
-//    private void listviewData() {
-//        mAdapter = new QuickAdapter<SmsTemplate>(MarketingSMSexampleActivity.this,
-//                R.layout.item_marketingsmsexample_list, mDatas) {
-//            private int index = -1;
-//
-//            @Override
-//            protected void convert(final BaseAdapterHelper helper,
-//                                   final SmsTemplate item) {
-//                RelativeLayout ray_choice = helper
-//                        .getView(R.id.ray_choice);
-//                CheckBox cb_smstemplate= helper
-//                        .getView(R.id.cb_smstemplate);
-//                EditText  et_smstemplate= helper
-//                        .getView(R.id.et_smstemplate);
-//
-//                et_smstemplate.setText(item.getContent());
-//                helper.getView(R.id.cb_smstemplate).setOnClickListener(
-//                        new  View.OnClickListener(){
-//                            @Override
-//                            public void onClick(View v) {
-//                                Intent intent=new Intent();
-//                                intent.setClass(MarketingSMSexampleActivity.this,MarketingMsgBulidActivity.class);
-//                                intent.putExtra("smscontext",item.getContent());
-//                                startActivity(intent);
-////                              index=helper.getPosition();
-////                              notifyDataSetChanged();
-//
-//                            }
-//                        }
-//                );
-//                if (index == helper.getPosition()) {// 选中的条目和当前的条目是否相等
-//                    cb_smstemplate.setChecked(true);
-//                } else {
-//                    cb_smstemplate.setChecked(false);
-//                }
-//            }
-//        };
-//        // 设置适配器
-//        actSmsexampleList.setAdapter(mAdapter);
-//
-//
-//    }
+
 
 
 
