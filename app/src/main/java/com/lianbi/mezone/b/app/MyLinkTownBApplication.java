@@ -2,6 +2,8 @@ package com.lianbi.mezone.b.app;
 
 import android.app.Application;
 
+import com.iflytek.cloud.SpeechConstant;
+import com.iflytek.cloud.SpeechUtility;
 import com.zhy.http.okhttp.OkHttpUtils;
 
 import java.util.concurrent.TimeUnit;
@@ -40,6 +42,9 @@ public class MyLinkTownBApplication extends Application {
 
 		OkHttpUtils.getInstance(okHttpClient);
 */
+
+		SpeechUtility.createUtility(MyLinkTownBApplication.this, SpeechConstant.APPID +"=57c3aecb");
+
 		OkHttpUtils.getInstance().debug("OkHttpUtils")
 				.setConnectTimeout(10000, TimeUnit.MILLISECONDS);
 		OkHttpUtils.getInstance().getOkHttpClient().newBuilder().retryOnConnectionFailure(false);

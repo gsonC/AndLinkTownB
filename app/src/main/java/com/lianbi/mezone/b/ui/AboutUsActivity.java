@@ -18,8 +18,6 @@ import cn.com.hgh.utils.AbViewUtil;
  */
 public class AboutUsActivity extends BaseActivity {
 
-
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

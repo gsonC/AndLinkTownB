@@ -276,7 +276,6 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 	 */
 	private void initGetui() {
 		PushManager.getInstance().initialize(this.getApplicationContext());
-
 	}
 
 	@Override

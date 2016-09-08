@@ -368,4 +368,5 @@ public class MineFragment extends Fragment implements OnClickListener,
 	public void reFresh() {
 		maActivity.refreshFMData();
 	}
+
 }
