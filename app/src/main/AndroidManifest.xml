@@ -304,6 +304,7 @@
         <activity android:name="com.lianbi.mezone.b.ui.CouponManagerActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.CouponUsingDetailsActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.SendNewCouponActivity"/>
+        <activity android:name="com.lianbi.mezone.b.ui.OrderContentActivity"/>
 
         <!-- 个推SDK配置开始 -->
         <!-- 配置的第三方参数属性 -->

@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colores_news_14"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/colores_news_14"
+        />
+
+
+
+    <LinearLayout
+        android:id="@+id/llt_line"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <View
+            android:id="@+id/view_line1"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="1"
+            android:background="@color/color_ff8208"
+            android:visibility="invisible"/>
+
+        <View
+            android:id="@+id/view_line2"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="1"
+            android:background="@color/color_ff8208"
+            android:visibility="invisible"/>
+
+        <View
+            android:id="@+id/view_line3"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1"
+            android:background="@color/color_ff8208"
+            android:visibility="invisible"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/colores_news_14"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="时间："
+            android:layout_marginLeft="20dp"
+            android:textColor="#4b4b4b"
+            android:textSize="12.5sp" />
+
+        <TextView
+            android:id="@+id/valid_period_from"
+            android:layout_width="81dp"
+            android:layout_height="19.5dp"
+            android:background="@drawable/shape_radius_4dp"
+            android:gravity="center"
+            android:hint=""
+            android:textColor="#4b4b4b"
+            android:textSize="12.5sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5.5dp"
+            android:layout_marginRight="5.5dp"
+            android:text="---"
+            android:textColor="#4b4b4b"
+            android:textSize="12.5sp" />
+
+        <TextView
+            android:id="@+id/valid_period_to"
+            android:layout_width="81dp"
+            android:layout_height="19.5dp"
+            android:background="@drawable/shape_radius_4dp"
+            android:gravity="center"
+            android:hint=""
+            android:textColor="#4b4b4b"
+            android:textSize="12.5sp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:padding="7dp"
+        >
+
+        <TextView
+            android:id="@+id/tv_allrecord"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="1"
+            android:background="@drawable/member_record_pressed"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="今日"
+            android:textColor="@color/colores_news_19"/>
+
+        <TextView
+            android:id="@+id/tv_accessrecord"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="1"
+            android:background="@drawable/member_record"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="三日内"
+            android:textColor="@color/colores_news_19"/>
+
+        <TextView
+            android:id="@+id/tv_userecord"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1"
+            android:background="@drawable/member_record"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="一月内"
+            android:textColor="@color/colores_news_19"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/colores_news_14"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        >
+
+        <TextView
+            android:id="@+id/tv_integral_memberfile"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="全部"
+            android:layout_marginLeft="20dp"
+            android:textColor="@color/colores_news_19"/>
+
+        <TextView
+            android:id="@+id/tv_integral_recordsofconsumption"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="20dp"
+            android:gravity="center"
+            android:text="支付成功"
+            android:textColor="@color/colores_news_19"/>
+
+        <TextView
+            android:id="@+id/tv_integral_integralrecord"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:gravity="center"
+            android:text="支付失败"
+            android:textColor="@color/colores_news_19"/>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/colores_news_14"
+        />
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_orderpager"
+        android:layout_above="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+      >
+    </android.support.v4.view.ViewPager>
+
+
+    <ImageView
+        android:id="@+id/act_memberrecord_iv_empty"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scaleType="fitCenter"
+        android:src="@mipmap/iv_empty"
+        android:visibility="gone"/>
+
+</LinearLayout>
