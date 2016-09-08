@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lianbi.mezone.b.bean.InfoMessageBean;
+import com.lianbi.mezone.b.bean.OrderContent;
 import com.lianbi.mezone.b.ui.OrderContentActivity;
 import com.xizhi.mezone.b.R;
 
@@ -78,6 +79,12 @@ public class OrederFragment extends Fragment {
         };
 
         fmOrederfragmentListView.setAdapter(mAdapter);
+    }
+    public void doSomthing(ArrayList<OrderContent> arraylist, int position) {
+
+
+
+
     }
     @Override
     public void onDestroyView() {
