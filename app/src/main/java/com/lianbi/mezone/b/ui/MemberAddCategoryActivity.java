@@ -245,13 +245,16 @@ public class MemberAddCategoryActivity extends BaseActivity {
                                 tvRadiovalue.setText(String.valueOf(discountratio));
                             }else{tvRadiovalue.setText(String.valueOf(0));}
                             if (!TextUtils.isEmpty(String.valueOf(memberclassify.getTypeMaxDiscount()))) {
-                                tvMaxidiscountvalue.setText(String.valueOf(memberclassify.getTypeMaxDiscount()));
+                                String maxdiscount=String.valueOf(memberclassify.getTypeMaxDiscount()/100);
+                                tvMaxidiscountvalue.setText(maxdiscount);
                             }
                             if (!TextUtils.isEmpty(String.valueOf(memberclassify.getTypeConditionMin()))) {
-                                etRangebefore.setText(String.valueOf(memberclassify.getTypeConditionMin()));
+                                String conditionmin=String.valueOf(memberclassify.getTypeConditionMin()/100);
+                                etRangebefore.setText(conditionmin);
                             }
-                            if (!TextUtils.isEmpty(String.valueOf(memberclassify.getTypeConditionMin()))) {
-                                etRangeafter.setText(String.valueOf(memberclassify.getTypeConditionMax()));
+                            if (!TextUtils.isEmpty(String.valueOf(memberclassify.getTypeConditionMax()))) {
+                                String conditionmax=String.valueOf(memberclassify.getTypeConditionMax()/100);
+                                etRangeafter.setText(conditionmax);
                             }
                             if (!TextUtils.isEmpty(String.valueOf(memberclassify.getThisTypeCount()))) {
                                 tvSpecificfigures.setText(String.valueOf(memberclassify.getThisTypeCount()));
@@ -279,6 +282,7 @@ public class MemberAddCategoryActivity extends BaseActivity {
         typeMaxDiscount=tvMaxidiscountvalue.getText().toString();
         typeConditionMin=etRangebefore.getText().toString();
         typeConditionMax=etRangeafter.getText().toString();
+
         if (TextUtils.isEmpty(typeName)) {
             ContentUtils.showMsg(MemberAddCategoryActivity.this, "请输入正确的会员类别");
             return;
@@ -299,9 +303,12 @@ public class MemberAddCategoryActivity extends BaseActivity {
             ContentUtils.showMsg(MemberAddCategoryActivity.this, "请输入累计消费上限");
             return;
         }
-
-
-
+        int  int_maxdiscount=Integer.parseInt(typeMaxDiscount)*100;
+        int  int_conditionmin=Integer.parseInt(typeConditionMin)*100;
+        int  int_conditionmax=Integer.parseInt(typeConditionMax)*100;
+        typeMaxDiscount=String.valueOf(int_maxdiscount);
+        typeConditionMin=String.valueOf(int_conditionmin);
+        typeConditionMax=String.valueOf(int_conditionmax);
 
         if(AbStrUtil.indexOfString(typeDiscountRatio,".")){
             typeDiscountRatio = String.valueOf((int)(Double.parseDouble(typeDiscountRatio)* 10));
@@ -364,8 +371,12 @@ public class MemberAddCategoryActivity extends BaseActivity {
             ContentUtils.showMsg(MemberAddCategoryActivity.this, "请输入累计消费上限");
             return;
         }
-
-
+        int  int_maxdiscount=Integer.parseInt(typeMaxDiscount)*100;
+        int  int_conditionmin=Integer.parseInt(typeConditionMin)*100;
+        int  int_conditionmax=Integer.parseInt(typeConditionMax)*100;
+        typeMaxDiscount=String.valueOf(int_maxdiscount);
+        typeConditionMin=String.valueOf(int_conditionmin);
+        typeConditionMax=String.valueOf(int_conditionmax);
 
         if(AbStrUtil.indexOfString(typeDiscountRatio,".")){
             typeDiscountRatio = String.valueOf((int)(Double.parseDouble(typeDiscountRatio)* 10));

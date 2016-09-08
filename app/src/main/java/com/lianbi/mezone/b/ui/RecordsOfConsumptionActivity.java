@@ -78,12 +78,12 @@ public class RecordsOfConsumptionActivity extends BaseActivity {
 
 				tv_rc_time.setText(item.getCreateTime() + "");
 				tv_rc_thing.setText(item.getConsumName() + "");
-				if(!AbStrUtil.isEmpty(item.getConsumSorce())){
-					tv_rc_where.setText(item.getConsumSorce() + "");
+				if(!AbStrUtil.isEmpty(item.getConsumSource())){
+					tv_rc_where.setText(item.getConsumSource() + "");
 				}else{
 					tv_rc_where.setText("无");
 				}
-				tv_rc_much.setText(MathExtend.roundNew(item.getConsumPrice().divide(new BigDecimal(100)).doubleValue(), 2) + "元");
+				tv_rc_much.setText(MathExtend.roundNew(item.getConsumAmount().divide(new BigDecimal(100)).doubleValue(), 2) + "元");
 
 			}
 		};
