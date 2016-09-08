@@ -471,8 +471,8 @@ public class MarketingSelectMemberActivity extends BaseActivity {
                 }else{
                     cb_selectmember.setChecked(mDatas.get(position).isChecked());
                     tv_mb_phone.setText(mDatas.get(position).getVipPhone());
-                    if(!AbStrUtil.isEmpty(mDatas.get(position).getVipTypeObject())){
-                        tv_mb_category.setText(mDatas.get(position).getVipTypeObject());
+                    if(!AbStrUtil.isEmpty(mDatas.get(position).getVipType())){
+                        tv_mb_category.setText(mDatas.get(position).getVipType());
                     }else{
                         tv_mb_category.setText("普通会员");
                     }

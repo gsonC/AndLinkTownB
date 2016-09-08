@@ -34,6 +34,15 @@ public class MemberInfoSelectBean implements Serializable {
 	private String vipValidityPeriod;
 	private int vipSex;
 	private String labelName;
+	private String vipType;
+
+	public String getVipType() {
+		return vipType;
+	}
+
+	public void setVipType(String vipType) {
+		this.vipType = vipType;
+	}
 
 	public String getVipIdNo() {
 		return vipIdNo;
