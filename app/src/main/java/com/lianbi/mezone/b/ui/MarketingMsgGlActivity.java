@@ -92,7 +92,6 @@ public class MarketingMsgGlActivity extends BaseActivity {
     private static final int DEFAULT_ITEM_SIZE = 20;
     private static final int ITEM_SIZE_OFFSET = 20;
     private static final int TIME = 1000;
-
     private static final int MSG_CODE_REFRESH = 0;
     private static final int MSG_CODE_LOADMORE = 1;
     boolean  isshow=false;

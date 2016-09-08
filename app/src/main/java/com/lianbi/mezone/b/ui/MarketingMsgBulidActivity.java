@@ -3,7 +3,6 @@ package com.lianbi.mezone.b.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -108,8 +107,8 @@ public class MarketingMsgBulidActivity extends BaseActivity {
 
                 break;
             case R.id.btn_senduser:
-
                 Intent intentmember = new Intent(this, MarketingSelectMemberActivity.class);
+                intentmember.putExtra("selectsource","MarketingMsgBulid");
                 startActivityForResult(intentmember, REQUEST_CODE_MEMBER_RESULT);
                 break;
         }
@@ -236,10 +235,10 @@ public class MarketingMsgBulidActivity extends BaseActivity {
         dialog = new HttpDialog(this);
         String smstotalSendNum=getIntent().getStringExtra("smstotalSendNum");
         String remainSendNum=getIntent().getStringExtra("remainSendNum");
-        if(smstotalSendNum!=null&&!smstotalSendNum.equals("")){
+        if(!TextUtils.isEmpty(smstotalSendNum)){
             txtAlreadysendnum.setText(smstotalSendNum);
         }
-        if(remainSendNum!=null&&!remainSendNum.equals("")){
+        if(!TextUtils.isEmpty(remainSendNum)){
             txtRemainsendnum.setText(remainSendNum);
         }
     }

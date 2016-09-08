@@ -125,6 +125,7 @@ public class MarketingSelectMemberActivity extends BaseActivity {
 
     private static final int MSG_CODE_REFRESH = 0;
     private static final int MSG_CODE_LOADMORE = 1;
+    public  String  selectsource="selectsource";
     int i = 0;
     boolean  isshow=false;
     boolean  isLoadMore=false;
@@ -137,13 +138,22 @@ public class MarketingSelectMemberActivity extends BaseActivity {
     public void OnClick(View v) {
         switch (v.getId()) {
             case R.id.tv_sure:
-                Intent intent = new Intent();
-                intent.setClass(MarketingSelectMemberActivity.this,MarketingMsgBulidActivity.class);
-                intent.putExtra("sendphones",sendPhones);
-                intent.putExtra("sendtotal",statisticspeople+"条");
-                setResult(RESULT_OK, intent);
-                finish();
+                if(selectsource.equals("MarketingMsgBulid")){
 
+                    Intent intent = new Intent();
+                    intent.setClass(MarketingSelectMemberActivity.this,MarketingMsgBulidActivity.class);
+                    intent.putExtra("sendphones",sendPhones);
+                    intent.putExtra("sendtotal",statisticspeople+"条");
+                    setResult(RESULT_OK, intent);
+                }else
+                if (selectsource.equals("SendNewCoupon")){
+                    Intent intent = new Intent();
+                    intent.setClass(MarketingSelectMemberActivity.this,SendNewCouponActivity.class);
+                    intent.putExtra("sendphones",sendPhones);
+                    intent.putExtra("sendtotal",statisticspeople+"条");
+                    setResult(RESULT_OK, intent);
+                }
+                finish();
                 break;
             case R.id.cb_selectall:
                 upDateSeleteAll(isSeleteAll);
@@ -206,6 +216,10 @@ public class MarketingSelectMemberActivity extends BaseActivity {
     private void initViewAndData() {
         setPageTitle("请选择要发送的会员");
         dialog = new HttpDialog(this);
+        String selectsource=getIntent().getStringExtra("selectsource");
+        if(!TextUtils.isEmpty(selectsource)){
+            this.selectsource=selectsource;
+        }
         mDrawableDowm = ContextCompat.getDrawable(this, R.mipmap.tma_down);
         mDrawableUp = ContextCompat.getDrawable(this, R.mipmap.tma_up);
         mDrawableinitial = ContextCompat.getDrawable(this, R.mipmap.tma_initialdown);
@@ -504,7 +518,7 @@ public class MarketingSelectMemberActivity extends BaseActivity {
                 );
 
                 int  sum=mDatas.size();
-                int  statisticspeople=-0;
+                int  statisticspeople=0;
                 intlist.clear();
                 phones.clear();
                 for(int toatl=0;toatl<sum;toatl++){
@@ -527,10 +541,11 @@ public class MarketingSelectMemberActivity extends BaseActivity {
             }
         }
     }
-    public void  splitPhones(ArrayList<String> ids,int totalpeople
+    public void  splitPhones(ArrayList<String> ids,int statisticspeople
                             ) {
         StringBuffer sb = new StringBuffer();
         int s = ids.size();
+
         if (s > 0) {
             for (int i = 0; i < s; i++) {
                 if (i == (s - 1)) {
@@ -540,10 +555,12 @@ public class MarketingSelectMemberActivity extends BaseActivity {
                 }
             }
         } else {
+            sendPhones=sb.toString();
+            this.statisticspeople=statisticspeople;
             return;
         }
         sendPhones=sb.toString();
-        this.statisticspeople=totalpeople;
+        this.statisticspeople=statisticspeople;
     }
     /**
      * View适配
