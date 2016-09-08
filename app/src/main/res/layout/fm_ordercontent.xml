@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <cn.com.hgh.view.SlideListView2
+            android:id="@+id/fm_orederfragment_listView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#fff4f7f9"
+            android:cacheColorHint="#00000000"
+            android:divider="#dddbdb"
+            android:dividerHeight="1.0px"
+            android:drawSelectorOnTop="false"
+            android:listSelector="#00000000"
+            android:scrollbars="none" >
+        </cn.com.hgh.view.SlideListView2>
+
+        <ImageView
+            android:visibility="visible"
+            android:id="@+id/fm_orederfragment_iv_empty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@mipmap/iv_empty"
+             />
+    </FrameLayout>
+
+   
+</RelativeLayout>

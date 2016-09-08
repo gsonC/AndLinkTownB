@@ -79,8 +79,9 @@
                         android:orientation="vertical"
 
                         >
+                       <!-- android:id="@+id/tv_shopaccountword"-->
                         <TextView
-                            android:id="@+id/tv_shopaccountword"
+                            android:id="@+id/tv_shopaccount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
@@ -194,6 +195,23 @@
                             android:text="@string/initial"
                             android:textColor="@color/white"
                             android:textSize="20sp" />
+
+
+
+
+
+
+
+
+
+                        <TextView
+                            android:id="@+id/tv_dianpujinrishouru"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/initial"
+                            android:textColor="@color/white"
+                            android:textSize="20sp" />
+
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
