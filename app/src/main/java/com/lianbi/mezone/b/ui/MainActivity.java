@@ -304,9 +304,9 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 									.parseObject(result.getData(),
 											AppUpDataBean.class);
 							String status = uB.getCoerceModify();
-
-							((MineFragment) fm_mine).setRedDotShow();
-
+							if(!uB.getVersion().equals("V"+AbAppUtil.getAppVersionName(MainActivity.this))) {
+								((MineFragment) fm_mine).setRedDotShow();
+							}
 							if (status.equals("Y")) {
 								mustUp = true;
 								DialogCommon dialogCommon = new DialogCommon(
