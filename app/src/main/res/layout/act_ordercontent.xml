@@ -94,24 +94,26 @@
             android:text="今日"
             android:textColor="@color/colores_news_19"/>
 
-        <TextView
+        <CheckBox
             android:id="@+id/tv_threeday"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_weight="1"
+            android:button="@null"
             android:background="@drawable/cb_greyselected"
             android:gravity="center"
             android:padding="5dp"
             android:text="三日内"
             android:textColor="@color/colores_news_19"/>
 
-        <TextView
+        <CheckBox
             android:id="@+id/tv_onemonth"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
+            android:button="@null"
             android:layout_weight="1"
             android:background="@drawable/cb_greyselected"
             android:gravity="center"
@@ -198,5 +200,76 @@
         android:scaleType="fitCenter"
         android:src="@mipmap/iv_empty"
         android:visibility="gone"/>
-
+    <LinearLayout
+        android:id="@+id/lay_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="15dp"
+        android:gravity="right"
+        >
+        <TextView
+            android:id="@+id/tv_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/pay_type_select"
+            android:button="@null"
+            android:gravity="center"
+            android:text="共计"
+            android:textColor="@color/colores_news_19"/>
+        <TextView
+            android:id="@+id/tv_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/pay_type_select"
+            android:button="@null"
+            android:gravity="center"
+            android:text="5"
+            android:textStyle="bold"
+            android:textColor="@color/colores_news_19"/>
+        <TextView
+            android:id="@+id/tv_unit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/pay_type_select"
+            android:button="@null"
+            android:gravity="center"
+            android:text="个订单"
+            android:textColor="@color/colores_news_19"/>
+        <TextView
+            android:id="@+id/tv_addupto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/pay_type_select"
+            android:button="@null"
+            android:gravity="center"
+            android:text="合计"
+            android:textColor="@color/colores_news_19"/>
+        <TextView
+            android:id="@+id/tv_rmb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/pay_type_select"
+            android:button="@null"
+            android:gravity="center"
+            android:text="¥ 600"
+            android:textColor="@color/colores_news_04"/>
+    </LinearLayout>
 </LinearLayout>

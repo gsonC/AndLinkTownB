@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.view.NoScrollViewPager;
 import okhttp3.Request;
@@ -119,6 +120,7 @@ public class OrderLookUpActivity extends BaseActivity implements
      */
     private void initView() {
         setPageTitle("订单明细");
+        tvAll.setChecked(true);
         setPageRightResource(R.mipmap.search_bar_icon_normal);
         viewAdapter();
     }
@@ -163,10 +165,9 @@ public class OrderLookUpActivity extends BaseActivity implements
     }
 
     @Override
-    protected void onTitleLeftClick() {
+    protected void onTitleRightClick1() {
         super.onTitleLeftClick();
-        startActivity(new Intent(OrderLookUpActivity.this, MembersListActivity.class));
-        finish();
+        startActivity(new Intent(OrderLookUpActivity.this, OrderContentActivity.class));
     }
 
     class MyAdapter extends FragmentPagerAdapter {
@@ -320,4 +321,46 @@ public class OrderLookUpActivity extends BaseActivity implements
         },BusinessId);
 
     }
+
+    /**
+     * 删除订单信息
+     */
+    public void delteOrderMsg(ArrayList<String> ids, boolean status) {
+
+        StringBuffer sb = new StringBuffer();
+        int s = ids.size();
+        if (s > 0) {
+            for (int i = 0; i < s; i++) {
+                if (i == (s - 1)) {
+                    sb.append(ids.get(i));
+                } else {
+                    sb.append(ids.get(i) + ",");
+
+                }
+            }
+            ContentUtils.showMsg(OrderLookUpActivity.this, sb.toString());
+        } else {
+            return;
+        }
+        if (status) {
+
+            okHttpsImp.getDeleteMessages(new MyResultCallback<String>() {
+
+                @Override
+                public void onResponseResult(Result result) {
+
+                    ContentUtils.showMsg(OrderLookUpActivity.this, "删除订单成功");
+                    // 刷新页面
+                    getOrderInfo();
+                }
+
+                @Override
+                public void onResponseFailed(String msg) {
+
+                }
+            },BusinessId, sb.toString());
+        }
+    }
+
+
 }
