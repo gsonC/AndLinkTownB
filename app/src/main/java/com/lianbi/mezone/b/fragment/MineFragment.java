@@ -293,11 +293,13 @@ public class MineFragment extends Fragment implements OnClickListener,
 				break;
 			case R.id.llt_feedback://意见反馈
 
-				re = JumpIntent.jumpLogin_addShop1(isLogin, API.MATERIAL,
-						maActivity);
-				if (re) {
+				boolean Login = ContentUtils.getLoginStatus(maActivity);
+
+				if (Login) {
 					Intent intent = new Intent(maActivity, FeedBackActivity.class);
 					startActivity(intent);
+				}else{
+					ContentUtils.showMsg(maActivity,"请登陆后使用");
 				}
 				break;
 

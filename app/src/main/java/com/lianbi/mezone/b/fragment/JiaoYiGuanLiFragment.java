@@ -399,10 +399,19 @@ public class JiaoYiGuanLiFragment extends Fragment implements
 				}
 				break;
 			case R.id.iv_jygl_memberma:// 会员管理
-				re = JumpIntent.jumpLogin_addShop(isLogin, API.INFODETAILS, mMainActivity);
+		//		re = JumpIntent.jumpLogin_addShop1(isLogin, API.INFODETAILS, mMainActivity);
 
-				if (re) {
-					startActivity(new Intent(mMainActivity, MembersManagementActivity.class));
+				boolean Login = ContentUtils.getLoginStatus(mMainActivity);
+
+				if (Login) {
+					if(TextUtils.isEmpty(BaseActivity.userShopInfoBean.getBusinessId())){
+						Intent intent_more = new Intent(mMainActivity, AddShopActivity.class);
+						mMainActivity.startActivity(intent_more);
+					}else {
+						startActivity(new Intent(mMainActivity, MembersManagementActivity.class));
+					}
+				}else{
+					ContentUtils.showMsg(mMainActivity,"请登陆后使用");
 				}
 				break;
 			case R.id.iv_jygl_baristasma:// 店员管理
