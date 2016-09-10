@@ -18,6 +18,7 @@ import cn.com.hgh.utils.AbViewUtil;
  */
 public class AboutUsActivity extends BaseActivity {
 
+	//测试合并
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
