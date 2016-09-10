@@ -43,6 +43,7 @@ public class MyLinkTownBApplication extends Application {
 		OkHttpUtils.getInstance(okHttpClient);
 */
 
+		//初始化科大讯飞
 		SpeechUtility.createUtility(MyLinkTownBApplication.this, SpeechConstant.APPID +"=57c3aecb");
 
 		OkHttpUtils.getInstance().debug("OkHttpUtils")

@@ -6,8 +6,8 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.RingtoneManager;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v4.app.NotificationCompat;
 
 import com.iflytek.cloud.SpeechConstant;
@@ -123,7 +123,9 @@ public class PushNotifitionManager {
 	 * 初始化 Builder
 	 */
 	private void initNotify() {
-	//	long[] vibrates = {0, 1000, 1000, 1000};//此处表示手机先震动1秒，然后静止1秒，然后再震动1秒
+
+
+		long[] vibrates = {0, 1000, 1000, 1000};//此处表示手机先震动1秒，然后静止1秒，然后再震动1秒
 		mBuilder = new NotificationCompat.Builder(mContext);
 		mBuilder.setSmallIcon(R.mipmap.ic_launcher)
 				.setContentTitle(mDatas.getTitle())
@@ -139,7 +141,7 @@ public class PushNotifitionManager {
 				//.setDefaults(Notification.DEFAULT_ALL)// 向通知添加声音、闪灯和振动效果的最简单、最一致的方式是使用当前的用户默认设置，使用defaults属性，可以组合：
 				// Notification.DEFAULT_ALL Notification.DEFAULT_SOUND 添加声音 //
 				// requires VIBRATE permission
-		//		.setVibrate(vibrates)//设置震动
+				.setVibrate(vibrates)//设置震动
 				.setLights(Color.WHITE, 1000, 1000);//设置灯光
 		if (2 == mDatas.getCallType()||1 == mDatas.getCallType()) {
 			mTts.startSpeaking("老板娘,又有新订单了", mSynListener);
@@ -152,7 +154,7 @@ public class PushNotifitionManager {
 			mTts.startSpeaking("老板娘,有人呼叫,快去看看吧", mSynListener);
 		} else {
 			//mBuilder.setDefaults(Notification.DEFAULT_SOUND);
-			mBuilder.setSound(MediaStore.Audio.Media.INTERNAL_CONTENT_URI);
+			mBuilder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
 		}
 	}
 

@@ -779,6 +779,9 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 					startActivity(intent_more);
 				}
 				break;
+			case POSITION2:
+
+				break;
 			case POSITION3:
 				if (ContentUtils.getLoginStatus(this)) {
 					DialogCommon dialog = new DialogCommon(MainActivity.this) {
@@ -958,9 +961,12 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 			fm_funcpage1.setVisibility(View.VISIBLE);
 		} else if (position == POSITION2) {
 			curPosition = POSITION2;
-			setPageRightTextVisibility(View.GONE);
+		//	setPageRightTextVisibility(View.GONE);
 			setPageTitle("财务室");
-			tv_title_left.setVisibility(View.GONE);
+			setPageRightText("明细");
+			tv_title_left.setText("明细");
+			setPageRightTextColor(R.color.commo_text_color);
+			tv_title_left.setVisibility(View.INVISIBLE);
 			((FinancialOfficeFragment) fm_caiwushi).refreshFMData();
 			setPageBackVisibility(View.INVISIBLE);
 			setPageRightImageVisibility();
@@ -972,20 +978,14 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 			getFinancialOfficeClick();// 刷新财务室价格
 		} else if (position == POSITION3) {
 			curPosition = POSITION3;
-		//	setPageRightTextVisibility(View.GONE);//1
-			// 		tv_title_left.setVisibility(View.GONE);
-			//		setPageRightResource(R.mipmap.more_other);//1
 			((MineFragment) fm_mine).refreshFMData();
 			setPageTitle("我的");
-		//	tv_title_left.setVisibility(View.GONE);
-			setPageRightImageVisibility();
-			setPageRightText("退出登录");//2
-			setPageRightTextColor(R.color.black);//2
-			tv_title_left.setText("退出登录");//2
-			tv_title_left.setVisibility(View.INVISIBLE);//2
+			setPageRightText("退出登录");
+			setPageRightTextColor(R.color.black);
+			tv_title_left.setText("退出登录");
+			tv_title_left.setVisibility(View.INVISIBLE);
 			setPageBackVisibility(View.INVISIBLE);
-		//	setPageRightResource(R.mipmap.more_other);//1
-			setPageRightImageVisibility();//2
+			setPageRightImageVisibility();
 			rb_mine.setChecked(true);
 			fm_funcpage2.setVisibility(View.GONE);
 			fm_funcpage0.setVisibility(View.GONE);
