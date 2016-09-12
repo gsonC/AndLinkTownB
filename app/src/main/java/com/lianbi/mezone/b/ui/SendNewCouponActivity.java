@@ -214,6 +214,7 @@ public class SendNewCouponActivity extends BaseActivity implements CompoundButto
             case R.id.selectable_member:
                 resetMinmum();
                 Intent intentmember = new Intent(SendNewCouponActivity.this, MarketingSelectMemberActivity.class);
+                intentmember.putExtra("selectsource", "SendNewCoupon");
                 startActivityForResult(intentmember, REQUEST_CODE_MEMBER_RESULT);
                 break;
             case R.id.selectable_templet:

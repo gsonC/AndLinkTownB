@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/colores_news_14"
     android:gravity="center_horizontal"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/shouruhactivity_ll_noband"
@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:visibility="gone" >
+        android:visibility="gone">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -38,14 +38,14 @@
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginTop="45dp"
-            android:background="@mipmap/imaginary_line_frame" >
+            android:background="@mipmap/imaginary_line_frame">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:gravity="center"
-                android:orientation="horizontal" >
+                android:orientation="horizontal">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -72,7 +72,7 @@
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:visibility="gone" >
+        android:visibility="gone">
 
         <include layout="@layout/my_bank_card" />
 
@@ -84,7 +84,7 @@
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingLeft="15dp"
-            android:paddingRight="15dp" >
+            android:paddingRight="15dp">
 
             <EditText
                 android:id="@+id/shouruhactivity_et_num"
@@ -97,19 +97,17 @@
                 android:textColor="@color/colores_news_01" />
         </LinearLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp" >
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
 
             <TextView
+                android:id="@+id/max"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
                 android:text="最多可提现余额"
                 android:textColor="@color/colores_news_11" />
 
@@ -117,18 +115,40 @@
                 android:id="@+id/shouruhactivity_tv_numtotale"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
+                android:layout_toRightOf="@id/max"
                 android:text="0"
                 android:textColor="@color/colores_news_01" />
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="left|center_vertical"
+                android:layout_toRightOf="@id/shouruhactivity_tv_numtotale"
                 android:text="元"
                 android:textColor="@color/colores_news_11" />
-        </LinearLayout>
+
+            <TextView
+                android:id="@+id/yuan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="元"
+                android:textColor="@color/colores_news_11" />
+
+            <TextView
+                android:id="@+id/min"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/yuan"
+                android:text="50"
+                android:textColor="@color/colores_news_01" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/min"
+                android:text="最少可提现余额"
+                android:textColor="@color/colores_news_11" />
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/shouruhactivity_tv_tijiao"
