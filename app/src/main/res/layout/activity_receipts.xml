@@ -3,13 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/color_ededed"
     android:orientation="vertical"
     tools:context="com.lianbi.mezone.b.ui.ReceiptsActivity">
 
     <RelativeLayout
+        android:id="@+id/background"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@mipmap/payment">
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/today_left"
@@ -22,12 +23,12 @@
             android:textSize="@dimen/h16" />
 
         <TextView
+            android:id="@+id/today_left_"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/today_left"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
-            android:text="000000.00"
             android:textColor="@android:color/white"
             android:textSize="36sp"
             android:textStyle="bold" />
@@ -36,6 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -47,11 +49,17 @@
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:text="今日总额度"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/h12" />
 
                 <TextView
+                    android:id="@+id/today_total"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/h16" />
             </LinearLayout>
 
             <View
@@ -70,12 +78,26 @@
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:text="今日已用额度"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/h12" />
 
                 <TextView
+                    android:id="@+id/today_has_used"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/h16" />
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="50dp"
+        android:layout_marginTop="11dp"
+        android:layout_weight="1"
+        android:background="@android:color/white" />
 </LinearLayout>

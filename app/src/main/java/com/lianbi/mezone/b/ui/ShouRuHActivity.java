@@ -353,6 +353,6 @@ public class ShouRuHActivity extends BaseActivity {
 	@Override
 	protected void onTitleRightClickTv() {
 		super.onTitleRightClickTv();
-//		startActivity(new Intent(ShouRuHActivity.this, WithdrawingProgressActivity));
+		startActivity(new Intent(ShouRuHActivity.this, WithdrawRecordActivity.class));
 	}
 }
