@@ -16,6 +16,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -52,6 +53,7 @@ public class OrderLookUpActivity extends BaseActivity implements
     private ArrayList<OrderContent> mWholeData = new ArrayList<OrderContent>();
     private ArrayList<OrderContent> mPaySuccessDatas = new ArrayList<OrderContent>();
     private ArrayList<OrderContent> mPayFailDatas = new ArrayList<OrderContent>();
+    private ArrayList<OrderContent> mDatas = new ArrayList<OrderContent>();
     /**
      * 当前位置
      */
@@ -71,26 +73,37 @@ public class OrderLookUpActivity extends BaseActivity implements
     private String limitAmt;
     private String coupAmt;
     private String beginTime;
-    private String endTime;
-
+    private int pageNo=1;
+    private String pageSize="15";
+    private String orderNo="";
+    private String orderStatus="";
+    private String  txnTime="";
+    private String  startTime="";
+    private String  endTime="";
     @OnClick({R.id.tv_all, R.id.tv_success, R.id.tv_fail})
     public void OnClick(View v) {
         switch (v.getId()) {
 
             case R.id.tv_all:
-                vpOrderpager.setCurrentItem(0);
                 tvSuccess.setChecked(false);
                 tvFail.setChecked(false);
+                vpOrderpager.setCurrentItem(0);
+                orderStatus="";
+                getOrderInfo(true,false,false);
                 break;
             case R.id.tv_success:
                 vpOrderpager.setCurrentItem(1);
                 tvAll.setChecked(false);
                 tvFail.setChecked(false);
+                orderStatus="03";
+                getOrderInfo(true,false,false);
                 break;
             case R.id.tv_fail:
                 vpOrderpager.setCurrentItem(2);
                 tvAll.setChecked(false);
                 tvSuccess.setChecked(false);
+                orderStatus="04";
+                getOrderInfo(true,false,false);
                 break;
         }
     }
@@ -107,13 +120,9 @@ public class OrderLookUpActivity extends BaseActivity implements
         setContentView(R.layout.act_orderlookup, NOTYPE);
         ButterKnife.bind(this);
         initView();
-        setLisenter();
-        initAdapter();
-        getOrderInfo();
+        getOrderInfo(false,false,false);
     }
 
-    private void initAdapter() {
-    }
 
     /**
      * 初始化View
@@ -127,6 +136,7 @@ public class OrderLookUpActivity extends BaseActivity implements
 
     private void viewAdapter() {
         vpOrderpager.setAdapter(new MyAdapter(getSupportFragmentManager()));
+        vpOrderpager.setCurrentItem(0);
         vpOrderpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
             @Override
@@ -157,12 +167,6 @@ public class OrderLookUpActivity extends BaseActivity implements
 
     }
 
-
-    /**
-     * 添加监听
-     */
-    private void setLisenter() {
-    }
 
     @Override
     protected void onTitleRightClick1() {
@@ -260,107 +264,101 @@ public class OrderLookUpActivity extends BaseActivity implements
         }
     }
 
-    public void getOrderInfo() {
-        okHttpsImp.getTableInfo(new MyResultCallback<String>() {
+    public void getOrderInfo(final boolean  isResh,final boolean  isLoad,boolean  isDelete) {
+        if (isResh) {
+            pageNo =1;
+            mDatas.clear();
+        }
+        try{
+            okHttpsImp.getqueryOrderInfo(uuid,"app",
+                    reqTime,"Y",
+                    "app",BusinessId,orderNo,
+                    String.valueOf(pageNo),pageSize,
+                    orderStatus,txnTime,startTime,
+                    endTime,new MyResultCallback<String>() {
 
-            @Override
-            public void onResponseResult(Result result) {
-                String reString = result.getData();
-
-                int isfbusiness;
-                if (reString != null) {
-                    JSONObject jsonObject;
-                    try {
-                        jsonObject = new JSONObject(reString);
-                        isfbusiness = jsonObject.getInt("storeOpenSts");
-                        reString = jsonObject.getString("tableList");
-                        if (!TextUtils.isEmpty(reString)) {
-                            switch (isfbusiness) {
-                                case 0:
-                                    mWholeData.clear();
-                                    ArrayList<OrderContent> inBusinessList = (ArrayList<OrderContent>) JSON
-                                            .parseArray(reString,
-                                                    OrderContent.class);
-                                    swtFmDo(curPosition,inBusinessList);
-                                    vpOrderpager.setCurrentItem(0);
-                                    break;
-                                case 1:
-                                    mPaySuccessDatas.clear();
-                                    ArrayList<OrderContent> mPaySuccessList = (ArrayList<OrderContent>) JSON
-                                            .parseArray(reString,
-                                                    OrderContent.class);
-                                    swtFmDo(curPosition,mPaySuccessList);
-                                    vpOrderpager.setCurrentItem(1);
-                                    break;
-                                case 2:
-                                    mPayFailDatas.clear();
-                                    ArrayList<OrderContent> mPayFailList = (ArrayList<OrderContent>) JSON
-                                            .parseArray(reString,
-                                                    OrderContent.class);
-                                    swtFmDo(curPosition,mPayFailList);
-                                    vpOrderpager.setCurrentItem(2);
-                                    break;
+                @Override
+                public void onResponseResult(Result result) {
+                    if(isResh==true||isLoad==true){
+                        pageNo++;
+                    }
+                    String reString = result.getData();
+                    Log.i("tag","订单返回 279--->"+reString);
+                    if (reString != null) {
+                        JSONObject jsonObject;
+                        try {
+                            jsonObject = new JSONObject(reString);
+                            reString = jsonObject.getString("list");
+                            mWholeData.clear();
+                            mPaySuccessDatas.clear();
+                            mPayFailDatas.clear();
+                            if(TextUtils.isEmpty(reString)){
+                                ContentUtils.showMsg(OrderLookUpActivity.this, "删除订单成功");
                             }
+                            if (!TextUtils.isEmpty(reString)) {
+                                ArrayList<OrderContent>  baseList = (ArrayList<OrderContent>) JSON
+                                        .parseArray(reString,
+                                                OrderContent.class);
+                                int  basesize=baseList.size();
+                                for(int i=0;i<basesize;i++){
+                                    mWholeData.add(baseList.get(i));
+                                  if(baseList.get(i).getOrderStatus().equals("03")){
+                                    mPaySuccessDatas.add(baseList.get(i));
+                                  }
+                                  if(baseList.get(i).getOrderStatus().equals("04")){
+                                    mPayFailDatas.add(baseList.get(i));
+                                  }
+                                }
+
+
+                                switch (curPosition) {
+                                    case 0:
+                                        mDatas.addAll(mWholeData);
+                                        swtFmDo(curPosition,mDatas);
+                                        break;
+                                    case 1:
+                                        mDatas.addAll(mPaySuccessDatas);
+                                        swtFmDo(curPosition,mDatas);
+                                        break;
+                                    case 2:
+                                        mDatas.addAll(mPayFailDatas);
+                                        swtFmDo(curPosition,mDatas);
+                                        break;
+                                }
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
                     }
                 }
-            }
-
-            @Override
-            public void onResponseFailed(String msg) {
-
-            }
-            @Override
-            public void onBefore(Request request) {
-            }
-            @Override
-            public void onAfter() {
-            }
-        },BusinessId);
+                @Override
+                public void onResponseFailed(String msg) {
+                }
+                @Override
+                public void onBefore(Request request) {
+                }
+                @Override
+                public void onAfter() {
+                }
+            });
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
     }
 
     /**
      * 删除订单信息
      */
-    public void delteOrderMsg(ArrayList<String> ids, boolean status) {
+    public void delteOrderMsg(String  orderNo) {
 
-        StringBuffer sb = new StringBuffer();
-        int s = ids.size();
-        if (s > 0) {
-            for (int i = 0; i < s; i++) {
-                if (i == (s - 1)) {
-                    sb.append(ids.get(i));
-                } else {
-                    sb.append(ids.get(i) + ",");
-
-                }
-            }
-            ContentUtils.showMsg(OrderLookUpActivity.this, sb.toString());
-        } else {
-            return;
-        }
-        if (status) {
-
-            okHttpsImp.getDeleteMessages(new MyResultCallback<String>() {
-
-                @Override
-                public void onResponseResult(Result result) {
-
-                    ContentUtils.showMsg(OrderLookUpActivity.this, "删除订单成功");
-                    // 刷新页面
-                    getOrderInfo();
-                }
-
-                @Override
-                public void onResponseFailed(String msg) {
-
-                }
-            },BusinessId, sb.toString());
-        }
+        initDelete(orderNo);
+        getOrderInfo(false,false,true);
     }
 
+    private  void  initDelete(String orderNo){
+        this.orderNo=orderNo;
+
+    }
 
 }

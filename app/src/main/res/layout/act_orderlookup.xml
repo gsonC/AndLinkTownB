@@ -76,14 +76,14 @@
         android:layout_weight="1" >
     </cn.com.hgh.view.NoScrollViewPager>
 
-    <ImageView
+   <!-- <ImageView
         android:id="@+id/img_empty"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:scaleType="fitCenter"
         android:src="@mipmap/iv_empty"
-        android:visibility="gone"/>
+        android:visibility="gone"/>-->
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"

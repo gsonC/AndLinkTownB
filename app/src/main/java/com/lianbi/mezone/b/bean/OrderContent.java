@@ -4,11 +4,29 @@ import java.io.Serializable;
 
 public class OrderContent implements Serializable {
 
+	String  orderNo;
+	String  channelOrderNo;
 	String  orderID;
-	String  paystate;
-	String  ordertime;
-	String  orderprice;
+	String  txnAmt;
+	String  orderAmt;
+	String  txnTime;
+	String  orderStatus;
 
+	public String getOrderNo() {
+		return orderNo;
+	}
+
+	public void setOrderNo(String orderNo) {
+		this.orderNo = orderNo;
+	}
+
+	public String getChannelOrderNo() {
+		return channelOrderNo;
+	}
+
+	public void setChannelOrderNo(String channelOrderNo) {
+		this.channelOrderNo = channelOrderNo;
+	}
 
 	public String getOrderID() {
 		return orderID;
@@ -18,27 +36,35 @@ public class OrderContent implements Serializable {
 		this.orderID = orderID;
 	}
 
-	public String getPaystate() {
-		return paystate;
+	public String getTxnAmt() {
+		return txnAmt;
 	}
 
-	public void setPaystate(String paystate) {
-		this.paystate = paystate;
+	public void setTxnAmt(String txnAmt) {
+		this.txnAmt = txnAmt;
 	}
 
-	public String getOrdertime() {
-		return ordertime;
+	public String getOrderAmt() {
+		return orderAmt;
 	}
 
-	public void setOrdertime(String ordertime) {
-		this.ordertime = ordertime;
+	public void setOrderAmt(String orderAmt) {
+		this.orderAmt = orderAmt;
 	}
 
-	public String getOrderprice() {
-		return orderprice;
+	public String getTxnTime() {
+		return txnTime;
 	}
 
-	public void setOrderprice(String orderprice) {
-		this.orderprice = orderprice;
+	public void setTxnTime(String txnTime) {
+		this.txnTime = txnTime;
+	}
+
+	public String getOrderStatus() {
+		return orderStatus;
+	}
+
+	public void setOrderStatus(String orderStatus) {
+		this.orderStatus = orderStatus;
 	}
 }

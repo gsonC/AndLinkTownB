@@ -68,7 +68,8 @@ public class ChoiceDingdanInfoWayActivity extends BaseActivity {
 			case R.id.llt_app_dingdanway:
 				re = JumpIntent.jumpLogin_addShop(isLogin, API.ORDERDETAIL, this);
 				if (re) {
-					Intent intent = new Intent(this, DingdanInfoActivity.class);
+//					Intent intent = new Intent(this, DingdanInfoActivity.class);
+					Intent intent = new Intent(this,OrderLookUpActivity.class);
 					startActivity(intent);
 				}
 				break;

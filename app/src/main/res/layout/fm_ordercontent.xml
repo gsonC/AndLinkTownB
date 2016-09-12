@@ -7,11 +7,20 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
+        <cn.com.hgh.view.AbPullToRefreshView
+            android:id="@+id/act_addorder_abpulltorefreshview"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:visibility="visible">
+
         <cn.com.hgh.view.SlideListView2
             android:id="@+id/fm_orederfragment_listView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:background="#fff4f7f9"
             android:cacheColorHint="#00000000"
             android:divider="#dddbdb"
@@ -20,7 +29,7 @@
             android:listSelector="#00000000"
             android:scrollbars="none" >
         </cn.com.hgh.view.SlideListView2>
-
+      </cn.com.hgh.view.AbPullToRefreshView>
         <ImageView
             android:visibility="visible"
             android:id="@+id/fm_orederfragment_iv_empty"
@@ -28,7 +37,7 @@
             android:layout_height="match_parent"
             android:src="@mipmap/iv_empty"
              />
-    </FrameLayout>
+      </FrameLayout>
 
    
 </RelativeLayout>

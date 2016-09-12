@@ -15,6 +15,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -85,9 +86,13 @@ public class OrderContentActivity extends BaseActivity implements
     private String coupName;
     private String limitAmt;
     private String coupAmt;
+    private String txnTime;
     private String beginTime;
-    private String endTime;
-
+    private int pageNo=1;
+    private String pageSize="15";
+    private String orderNo="";
+    private String orderStatus="";
+    private String  endTime="";
     @OnClick({R.id.tv_all, R.id.tv_success, R.id.tv_fail})
     public void OnClick(View v) {
         switch (v.getId()) {
@@ -97,18 +102,42 @@ public class OrderContentActivity extends BaseActivity implements
                 tvAll.setChecked(true);
                 tvSuccess.setChecked(false);
                 tvFail.setChecked(false);
+                initSearch(
+                    "",
+                    orderStatus,
+                    txnTime,
+                    beginTime,
+                    endTime
+                );
+                getOrderInfo(false,false,false);
                 break;
             case R.id.tv_success:
                 vpOrderpager.setCurrentItem(1);
                 tvAll.setChecked(false);
                 tvSuccess.setChecked(true);
                 tvFail.setChecked(false);
+                initSearch(
+                        "",
+                        orderStatus,
+                        txnTime,
+                        beginTime,
+                        endTime
+                );
+                getOrderInfo(false,false,false);
                 break;
             case R.id.tv_fail:
                 vpOrderpager.setCurrentItem(2);
                 tvAll.setChecked(false);
                 tvSuccess.setChecked(false);
                 tvFail.setChecked(true);
+                initSearch(
+                        "",
+                        orderStatus,
+                        txnTime,
+                        beginTime,
+                        endTime
+                );
+                getOrderInfo(false,false,false);
                 break;
         }
     }
@@ -122,18 +151,43 @@ public class OrderContentActivity extends BaseActivity implements
                 tvToday.setChecked(true);
                 tvThreeday.setChecked(false);
                 tvOnemonth.setChecked(false);
+                String  txnTime=AbDateUtil.getDateYearMonthDayNow();
+                initSearch(
+                        "",
+                        orderStatus,
+                        txnTime,
+                        "",
+                        ""
+                );
+                getOrderInfo(false,false,false);
                 break;
             case R.id.tv_threeday:
                 vpOrderpager.setCurrentItem(1);
                 tvToday.setChecked(false);
                 tvThreeday.setChecked(true);
                 tvOnemonth.setChecked(false);
+                initSearch(
+                        "",
+                        orderStatus,
+                        "",
+                        beginTime,
+                        endTime
+                );
+                getOrderInfo(false,false,false);
                 break;
             case R.id.tv_onemonth:
                 vpOrderpager.setCurrentItem(2);
                 tvToday.setChecked(false);
                 tvThreeday.setChecked(false);
                 tvOnemonth.setChecked(true);
+                initSearch(
+                        "",
+                        orderStatus,
+                        "",
+                        beginTime,
+                        endTime
+                );
+                getOrderInfo(false,false,false);
                 break;
         }
     }
@@ -198,20 +252,13 @@ public class OrderContentActivity extends BaseActivity implements
         initView();
         setLisenter();
         initAdapter();
-        getIntegralRecord(true, 0);
+        getOrderInfo(false,false,false);
     }
 
     private void initAdapter() {
     }
 
 
-    /**
-     * 获取消费记录
-     */
-    public void getIntegralRecord(final boolean isResh, final int type) {
-
-
-    }
 
     /**
      * 初始化View
@@ -327,65 +374,83 @@ public class OrderContentActivity extends BaseActivity implements
                 break;
         }
     }
-    public void getOrderInfo() {
-        okHttpsImp.getTableInfo(new MyResultCallback<String>() {
-
-            @Override
-            public void onResponseResult(Result result) {
-                String reString = result.getData();
-
-                int isfbusiness;
-                if (reString != null) {
-                    JSONObject jsonObject;
-                    try {
-                        jsonObject = new JSONObject(reString);
-                        isfbusiness = jsonObject.getInt("storeOpenSts");
-                        reString = jsonObject.getString("tableList");
-                        if (!TextUtils.isEmpty(reString)) {
-                            switch (isfbusiness) {
-                                case 0:
+    public void getOrderInfo(final boolean  isResh, final boolean  isLoad, boolean  isDelete) {
+        if (isResh) {
+            pageNo =1;
+//            mDatas.clear();
+//            mAdapter.replaceAll(mDatas);
+        }
+        try{
+            okHttpsImp.getqueryOrderInfo(uuid,"app",
+                    reqTime,"Y",
+                    "app",BusinessId,orderNo,
+                    String.valueOf(pageNo),pageSize,
+                    orderStatus,txnTime,beginTime,
+                    endTime,new MyResultCallback<String>() {
+                        @Override
+                        public void onResponseResult(Result result) {
+                            if(isResh==true||isLoad==true){
+                               pageNo++;
+                            }
+                            String reString = result.getData();
+                            Log.i("tag","订单返回 346--->"+reString);
+                            if (reString != null) {
+                                JSONObject jsonObject;
+                                try {
+                                    jsonObject = new JSONObject(reString);
+                                    reString = jsonObject.getString("list");
                                     mWholeData.clear();
-                                    ArrayList<OrderContent> inBusinessList = (ArrayList<OrderContent>) JSON
-                                            .parseArray(reString,
-                                                    OrderContent.class);
-                                    swtFmDo(curPosition,inBusinessList);
-                                    vpOrderpager.setCurrentItem(0);
-                                    break;
-                                case 1:
                                     mPaySuccessDatas.clear();
-                                    ArrayList<OrderContent> mPaySuccessList = (ArrayList<OrderContent>) JSON
-                                            .parseArray(reString,
-                                                    OrderContent.class);
-                                    swtFmDo(curPosition,mPaySuccessList);
-                                    vpOrderpager.setCurrentItem(1);
-                                    break;
-                                case 2:
                                     mPayFailDatas.clear();
-                                    ArrayList<OrderContent> mPayFailList = (ArrayList<OrderContent>) JSON
-                                            .parseArray(reString,
-                                                    OrderContent.class);
-                                    swtFmDo(curPosition,mPayFailList);
-                                    vpOrderpager.setCurrentItem(2);
-                                    break;
+                                    if(TextUtils.isEmpty(reString)){
+                                        ContentUtils.showMsg(OrderContentActivity.this, "删除订单成功");
+                                    }
+                                    if (!TextUtils.isEmpty(reString)) {
+                                        ArrayList<OrderContent>  baseList = (ArrayList<OrderContent>) JSON
+                                                .parseArray(reString,
+                                                        OrderContent.class);
+                                        int  basesize=baseList.size();
+                                        for(int i=0;i<basesize;i++){
+                                            mWholeData.add(baseList.get(i));
+                                            if(baseList.get(i).getOrderStatus().equals("03")){
+                                                mPaySuccessDatas.add(baseList.get(i));
+                                            }
+                                            if(baseList.get(i).getOrderStatus().equals("04")){
+                                                mPayFailDatas.add(baseList.get(i));
+                                            }
+                                        }
+
+                                        switch (curPosition) {
+                                            case 0:
+                                                swtFmDo(curPosition,mWholeData);
+                                                break;
+                                            case 1:
+                                                swtFmDo(curPosition,mPaySuccessDatas);
+                                                break;
+                                            case 2:
+                                                swtFmDo(curPosition,mPayFailDatas);
+                                                break;
+                                        }
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
+                        @Override
+                        public void onResponseFailed(String msg) {
+                        }
+                        @Override
+                        public void onBefore(Request request) {
+                        }
+                        @Override
+                        public void onAfter() {
+                        }
+                    });
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
-            @Override
-            public void onResponseFailed(String msg) {
-
-            }
-            @Override
-            public void onBefore(Request request) {
-            }
-            @Override
-            public void onAfter() {
-            }
-        },BusinessId);
 
     }
     private void swtFmDo(int position,
@@ -412,41 +477,27 @@ public class OrderContentActivity extends BaseActivity implements
     /**
      * 删除订单信息
      */
-    public void delteOrderMsg(ArrayList<String> ids, boolean status) {
+    public void delteOrderMsg(String  orderNo) {
 
-        StringBuffer sb = new StringBuffer();
-        int s = ids.size();
-        if (s > 0) {
-            for (int i = 0; i < s; i++) {
-                if (i == (s - 1)) {
-                    sb.append(ids.get(i));
-                } else {
-                    sb.append(ids.get(i) + ",");
-
-                }
-            }
-            ContentUtils.showMsg(OrderContentActivity.this, sb.toString());
-        } else {
-            return;
+        initDelete(orderNo);
+        getOrderInfo(false,false,true);
         }
-        if (status) {
 
-            okHttpsImp.getDeleteMessages(new MyResultCallback<String>() {
-
-                @Override
-                public void onResponseResult(Result result) {
-
-                    ContentUtils.showMsg(OrderContentActivity.this, "删除订单成功");
-                    // 刷新页面
-                    getOrderInfo();
-                }
-
-                @Override
-                public void onResponseFailed(String msg) {
-
-                }
-            },BusinessId, sb.toString());
-        }
+    private  void  initDelete(String orderNo){
+        this.orderNo=orderNo;
+    }
+    private  void  initSearch(String orderNo,
+                              String orderStatus,
+                              String txnTime,
+                              String beginTime,
+                              String endTime
+                              )
+    {
+        this.orderNo="";
+        this.orderStatus=orderStatus;
+        this.txnTime=txnTime;
+        this.beginTime=beginTime;
+        this.endTime=endTime;
     }
 
 }

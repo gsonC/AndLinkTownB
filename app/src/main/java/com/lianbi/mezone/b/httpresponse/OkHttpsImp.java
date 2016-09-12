@@ -1747,7 +1747,6 @@ public enum OkHttpsImp {
 		params.put("storeNo", storeNo);
 		params.put("currentPageNum", currentPageNum);
 		params.put("pageSize", pageSize);
-
 		params.put("serNum", serNum);
 		params.put("source", source);
 		params.put("reqTime", reqTime);
@@ -1953,6 +1952,35 @@ public enum OkHttpsImp {
 		params.put("pageSize", pageSize);
 		params.put("isValid", isValid);
 		params.put("merchantSubCode", merchantSubCode);
+		params.put("reqTime", reqTime);
+		params.put("serNum", serNum);
+		params.put("source", source);
+		params.put("sourceType", sourceType);
+		String sign = getSign(md5_key, params);
+		params.put("sign", sign);
+		String url = getAbsoluteUrl(API.OREDRINFO);
+		getProgressResponse(myResultCallback, params, url);
+	}
+	/**
+	 * 3期迭代后
+	 * APP订单明细
+	 */
+	public void getqueryOrderInfo(String serNum,
+								  String source, String reqTime,
+								  String isValid, String sourceType,
+								  String merchantSubCode,String orderNo,
+								  String currentPageNum, String pageSize,
+                                  String  orderStatus,String txnTime,
+								  String startTime,String  endTime,
+								  MyResultCallback<String> myResultCallback) throws Exception {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("currentPageNum", currentPageNum);
+		params.put("pageSize", pageSize);
+		params.put("isValid", isValid);
+		params.put("merchantSubCode", merchantSubCode);
+		params.put("orderStatus", orderStatus);
+		params.put("startTime", startTime);
+		params.put("endTime", endTime);
 		params.put("reqTime", reqTime);
 		params.put("serNum", serNum);
 		params.put("source", source);
