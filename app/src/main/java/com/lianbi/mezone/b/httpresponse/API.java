@@ -138,6 +138,11 @@ public class API {
 	 * 切换商铺
 	 */
 	public static final String SHOPS = "shops";
+
+	/**
+	 * 收入明细
+	 */
+	public static final String INCOMEDETAIL = "income";
 	/**
 	 * 服务商场
 	 */

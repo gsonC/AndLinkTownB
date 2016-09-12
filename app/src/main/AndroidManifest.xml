@@ -91,17 +91,14 @@
         </activity>
         <activity
             android:name="com.lianbi.mezone.b.ui.MemberPointManage"
-            android:windowSoftInputMode="stateHidden|stateUnchanged"
-            android:launchMode="singleTask"/>
-        <activity
-            android:name="com.lianbi.mezone.b.ui.TagManagerActivity"/>
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="stateHidden|stateUnchanged"/>
+        <activity android:name="com.lianbi.mezone.b.ui.TagManagerActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.MembersManagementActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.RevisionsActivity"/>
         <activity
             android:name="com.lianbi.mezone.b.ui.NewIntegralGoodsActivity"
-            android:windowSoftInputMode="stateHidden|stateUnchanged"
-            />
-
+            android:windowSoftInputMode="stateHidden|stateUnchanged"/>
         <activity android:name="com.lianbi.mezone.b.ui.ReceivablesQRActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.ReceivablesActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.MarketingBuySMSActivity"/>
@@ -435,6 +432,8 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version"/>
         <!-- 个推SDK配置结束 -->
+        <activity android:name="com.lianbi.mezone.b.ui.IncomeActivity">
+        </activity>
     </application>
 
 </manifest>

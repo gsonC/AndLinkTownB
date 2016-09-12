@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <string name="ultimatelimit">每日收款限额</string>
+    <string name="Collectionamoun">今日剩余收款额度：500.00元</string>
+    <string name="commission">手续费0.1%1</string>
+    <string name="Collection">收款规则:</string>
     <string name="app_name">习之老板娘</string>
     <!-- 客服电话号码 -->
     <string name="vip_phoe">400-660-2289</string>
