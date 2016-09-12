@@ -25,5 +25,6 @@ public class AboutUsActivity extends BaseActivity {
 		setPageTitle("关于我们");
 		ImageView iv = (ImageView) findViewById(R.id.about_us_iv);
 		iv.setImageBitmap(AbViewUtil.readBitMap(this, R.mipmap.about_us));
+
 	}
 }
