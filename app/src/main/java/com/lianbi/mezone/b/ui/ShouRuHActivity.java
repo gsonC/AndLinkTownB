@@ -1,10 +1,6 @@
 package com.lianbi.mezone.b.ui;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,7 +15,6 @@ import cn.com.hgh.utils.AbDateUtil;
 import cn.com.hgh.utils.AbStrUtil;
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.EditTextUtills;
-import cn.com.hgh.utils.MathExtend;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.view.EditJDialogCommon;
 
@@ -64,6 +59,7 @@ public class ShouRuHActivity extends BaseActivity {
 	 */
 	protected void initView() {
 		setPageTitle("提现");
+		setPageRightText("提现记录");
 		shouruhactivity_tv_band = (TextView) findViewById(R.id.shouruhactivity_tv_band);
 		shouruhactivity_tv_tijiao = (TextView) findViewById(R.id.shouruhactivity_tv_tijiao);
 		tv_my_bank_card_name = (TextView) findViewById(R.id.tv_my_bank_card_name);
@@ -352,5 +348,11 @@ public class ShouRuHActivity extends BaseActivity {
 		super.onResume();
 		getIsBand();
 		getBankGettotalmount();
+	}
+
+	@Override
+	protected void onTitleRightClickTv() {
+		super.onTitleRightClickTv();
+//		startActivity(new Intent(ShouRuHActivity.this, WithdrawingProgressActivity));
 	}
 }

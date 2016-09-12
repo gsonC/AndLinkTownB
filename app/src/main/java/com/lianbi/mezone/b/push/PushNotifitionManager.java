@@ -1,21 +1,24 @@
 package com.lianbi.mezone.b.push;
 
-import com.lianbi.mezone.b.app.Constants;
-import com.lianbi.mezone.b.ui.WebActivty;
-import com.xizhi.mezone.b.R;
-import com.lianbi.mezone.b.bean.PushDataBean;
-import com.lianbi.mezone.b.ui.InfoDetailsActivity;
-
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.net.Uri;
-import android.provider.MediaStore;
+import android.media.RingtoneManager;
+import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
-import android.text.TextUtils;
+
+import com.iflytek.cloud.SpeechConstant;
+import com.iflytek.cloud.SpeechError;
+import com.iflytek.cloud.SpeechSynthesizer;
+import com.iflytek.cloud.SynthesizerListener;
+import com.lianbi.mezone.b.app.Constants;
+import com.lianbi.mezone.b.bean.PushDataBean;
+import com.lianbi.mezone.b.ui.InfoDetailsActivity;
+import com.lianbi.mezone.b.ui.WebActivty;
+import com.xizhi.mezone.b.R;
 
 public class PushNotifitionManager {
 
@@ -28,6 +31,7 @@ public class PushNotifitionManager {
 	public  PushDataBean               mDatas;
 	private NotificationCompat.Builder mBuilder;
 	private Intent resultIntent;
+	private SpeechSynthesizer mTts;
 
 	public PushNotifitionManager(Context context, PushDataBean data) {
 		this.mContext = context;
@@ -38,6 +42,7 @@ public class PushNotifitionManager {
 		NotificationManager mNotificationManager = (NotificationManager) mContext
 				.getSystemService(Context.NOTIFICATION_SERVICE);
 
+		initVoice();
 		initNotify();
 
 		// Notification mNotification = mBuilder.build();
@@ -87,9 +92,39 @@ public class PushNotifitionManager {
 	}
 
 	/**
+	 * mTts = SpeechSynthesizer.createSynthesizer(maActivity, null);
+	 //2.合成参数设置，详见《科大讯飞MSC API手册(Android)》SpeechSynthesizer 类
+	 mTts.setParameter(SpeechConstant.VOICE_NAME, "xiaoyan");//设置发音人
+	 mTts.setParameter(SpeechConstant.SPEED, "50");//设置语速
+	 mTts.setParameter(SpeechConstant.VOLUME, "80");//设置音量，范围0~100
+	 mTts.setParameter(SpeechConstant.ENGINE_TYPE, SpeechConstant.TYPE_CLOUD); //设置云端
+	 mTts.startSpeaking("科大讯飞，让世界聆听我们的声音", mSynListener);
+	 */
+
+	/**
+	 * 初始化科大讯飞语音
+	 */
+	private void initVoice() {
+		mTts = SpeechSynthesizer.createSynthesizer(mContext,null);
+		//2.合成参数设置，详见《科大讯飞MSC API手册(Android)》SpeechSynthesizer 类
+		mTts.setParameter(SpeechConstant.VOICE_NAME,"xiaoyan");//设置发音人
+		mTts.setParameter(SpeechConstant.SPEED, "50");//设置语速
+		mTts.setParameter(SpeechConstant.VOLUME, "80");//设置音量，范围0~100
+		mTts.setParameter(SpeechConstant.ENGINE_TYPE, SpeechConstant.TYPE_CLOUD); //设置云端
+		//设置合成音频保存位置（可自定义保存位置），保存在“./sdcard/iflytek.pcm”
+		//保存在SD卡需要在AndroidManifest.xml添加写SD卡权限
+		//如果不需要保存合成音频，注释该行代码
+		//	mTts.setParameter(SpeechConstant.TTS_AUDIO_PATH, "./sdcard/iflytek.pcm");
+		//3.开始合成
+		//mTts.startSpeaking("语音内容", mSynListener);
+	}
+
+	/**
 	 * 初始化 Builder
 	 */
 	private void initNotify() {
+
+
 		long[] vibrates = {0, 1000, 1000, 1000};//此处表示手机先震动1秒，然后静止1秒，然后再震动1秒
 		mBuilder = new NotificationCompat.Builder(mContext);
 		mBuilder.setSmallIcon(R.mipmap.ic_launcher)
@@ -109,14 +144,17 @@ public class PushNotifitionManager {
 				.setVibrate(vibrates)//设置震动
 				.setLights(Color.WHITE, 1000, 1000);//设置灯光
 		if (2 == mDatas.getCallType()||1 == mDatas.getCallType()) {
-			mBuilder.setSound(Uri.parse("android.resource://" + mContext.getPackageName() + "/" + R.raw.neworder));
+			mTts.startSpeaking("老板娘,又有新订单了", mSynListener);
+		//	mBuilder.setSound(Uri.parse("android.resource://" + mContext.getPackageName() + "/" + R.raw.neworder));
 		} else if (3 == mDatas.getCallType()) {
-			mBuilder.setSound(Uri.parse("android.resource://" + mContext.getPackageName() + "/" + R.raw.checkorder));
+			mTts.startSpeaking("买单了,老板娘打小票先", mSynListener);
+		//	mBuilder.setSound(Uri.parse("android.resource://" + mContext.getPackageName() + "/" + R.raw.checkorder));
 		} else if (4 == mDatas.getCallType()) {
-			mBuilder.setSound(Uri.parse("android.resource://" + mContext.getPackageName() + "/" + R.raw.call));
+		//	mBuilder.setSound(Uri.parse("android.resource://" + mContext.getPackageName() + "/" + R.raw.call));
+			mTts.startSpeaking("老板娘,有人呼叫,快去看看吧", mSynListener);
 		} else {
 			//mBuilder.setDefaults(Notification.DEFAULT_SOUND);
-			mBuilder.setSound(MediaStore.Audio.Media.INTERNAL_CONTENT_URI);
+			mBuilder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
 		}
 	}
 
@@ -130,5 +168,54 @@ public class PushNotifitionManager {
 				new Intent(), flags);
 		return pendingIntent;
 	}
+
+
+	private SynthesizerListener mSynListener = new SynthesizerListener() {
+		//恢复播放回调接口
+		@Override
+		public void onSpeakResumed() {
+			// TODO Auto-generated method stub
+
+		}
+		//播放进度回调
+		//percent为播放进度0~100,beginPos为播放音频在文本中开始位置，endPos表示播放音频在文本中结束位置.
+		@Override
+		public void onSpeakProgress(int arg0, int arg1, int arg2) {
+			// TODO Auto-generated method stub
+
+		}
+		//暂停播放
+		@Override
+		public void onSpeakPaused() {
+			// TODO Auto-generated method stub
+
+		}
+		//开始播放
+		@Override
+		public void onSpeakBegin() {
+			// TODO Auto-generated method stub
+
+		}
+		//会话事件回调接口
+		@Override
+		public void onEvent(int arg0, int arg1, int arg2, Bundle arg3) {
+			// TODO Auto-generated method stub
+
+		}
+		//会话结束回调接口，没有错误时，error为null
+		@Override
+		public void onCompleted(SpeechError arg0) {
+			// TODO Auto-generated method stub
+
+		}
+		//缓冲进度回调
+		//percent为缓冲进度0~100，beginPos为缓冲音频在文本中开始位置，endPos表示缓冲音频在文本中结束位置，info为附加信息。
+		@Override
+		public void onBufferProgress(int arg0, int arg1, int arg2, String arg3) {
+			// TODO Auto-generated method stub
+
+		}
+	};
+
 
 }

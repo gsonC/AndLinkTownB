@@ -1,6 +1,7 @@
 package com.lianbi.mezone.b.fragment;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -52,8 +53,9 @@ public class FinancialOfficeFragment extends Fragment implements
 	private ImageView iv_recharge, iv_withdrawalsdetails, iv_withdrawals,
 			iv_bankcard;
 	private TextView tv_totalaccount, tv_shopaccount, tv_availablebalance,
-			tv_takeinmoney, tv_shopincometoday,tv_freezingamount;
-	private TextView tv_dongjiejine,tv_keyongyue,tv_tixianzhongyue,tv_dianpujinrishouru;
+			tv_takeinmoney, tv_shopincometoday,tv_freezingamount,tv_shopaccountword;
+	private TextView tv_dongjiejine,tv_keyongyue,tv_tixianzhongyue,tv_dianpujinrishouru,
+			tv_finalcial_ruledescription,tv_finalcial_oldrate,tv_finalcial_newrate;
 	public double totalaccount = 0, shopaccount = 0, availablebalance = 0,
 			takeinmoney = 0, shopincometoday = 0,freezingamount=0;
 
@@ -171,6 +173,10 @@ public class FinancialOfficeFragment extends Fragment implements
 				.findViewById(R.id.iv_withdrawalsdetails);// 体现明细
 		iv_withdrawals = (ImageView) view.findViewById(R.id.iv_withdrawals);// 提现
 		iv_bankcard = (ImageView) view.findViewById(R.id.iv_bankcard);// 银行卡
+		tv_finalcial_ruledescription = (TextView) view.findViewById(R.id.tv_finalcial_ruledescription);//规则说明
+		tv_finalcial_oldrate = (TextView) view.findViewById(R.id.tv_finalcial_oldrate);//老费率
+		tv_finalcial_newrate = (TextView) view.findViewById(R.id.tv_finalcial_newrate);//新费率
+		tv_finalcial_oldrate.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG );//中间加横线
 		tv_totalaccount = (TextView) view.findViewById(R.id.tv_totalaccount);// 账户总额(数字)
 		tv_shopaccount = (TextView) view.findViewById(R.id.tv_shopaccount);// 店铺总额(数字)
 
@@ -188,7 +194,9 @@ public class FinancialOfficeFragment extends Fragment implements
 		tv_tixianzhongyue = (TextView) view
 				.findViewById(R.id.tv_tixianzhongyue);// 提现中余额
 		tv_dianpujinrishouru = (TextView) view
-				.findViewById(R.id.tv_dianpujinrishouru);// 店铺今日收入
+				.findViewById(R.id.tv_dianpujinrishouru);// 店铺总额
+		tv_shopaccountword = (TextView) view.findViewById(R.id.tv_shopaccountword);// 店铺今日收入
+
 
 		textAdaptation();
 
@@ -208,15 +216,17 @@ public class FinancialOfficeFragment extends Fragment implements
 	 * 文字适配
 	 */
 	private void textAdaptation() {
-		ScreenUtils.textAdaptationOn720(tv_dongjiejine,mMainActivity,24);
-		ScreenUtils.textAdaptationOn720(tv_keyongyue,mMainActivity,24);
-		ScreenUtils.textAdaptationOn720(tv_tixianzhongyue,mMainActivity,24);
-		ScreenUtils.textAdaptationOn720(tv_dianpujinrishouru,mMainActivity,24);
+		ScreenUtils.textAdaptationOn720(tv_dongjiejine,mMainActivity,25);
+		ScreenUtils.textAdaptationOn720(tv_keyongyue,mMainActivity,25);
+		ScreenUtils.textAdaptationOn720(tv_tixianzhongyue,mMainActivity,25);
+		ScreenUtils.textAdaptationOn720(tv_dianpujinrishouru,mMainActivity,25);
+		ScreenUtils.textAdaptationOn720(tv_shopaccountword,mMainActivity,32);
 
-		ScreenUtils.textAdaptationOn720(tv_freezingamount,mMainActivity,26);
-		ScreenUtils.textAdaptationOn720(tv_shopincometoday,mMainActivity,26);
-		ScreenUtils.textAdaptationOn720(tv_takeinmoney,mMainActivity,26);
-		ScreenUtils.textAdaptationOn720(tv_availablebalance,mMainActivity,26);
+		ScreenUtils.textAdaptationOn720(tv_freezingamount,mMainActivity,27);
+		ScreenUtils.textAdaptationOn720(tv_shopincometoday,mMainActivity,73);
+		ScreenUtils.textAdaptationOn720(tv_takeinmoney,mMainActivity,27);
+		ScreenUtils.textAdaptationOn720(tv_availablebalance,mMainActivity,27);
+		ScreenUtils.textAdaptationOn720(tv_shopaccount,mMainActivity,27);
 	}
 
 	/**
@@ -285,6 +295,7 @@ public class FinancialOfficeFragment extends Fragment implements
 		iv_withdrawalsdetails.setOnClickListener(this);
 		iv_withdrawals.setOnClickListener(this);
 		iv_bankcard.setOnClickListener(this);
+		tv_finalcial_ruledescription.setOnClickListener(this);
 	}
 
 	@Override
@@ -326,6 +337,10 @@ public class FinancialOfficeFragment extends Fragment implements
 						AddBankCardActivity.class).putExtra("isBand", isBand));
 			}
 			break;
+
+			case R.id.tv_finalcial_ruledescription://规则说明
+
+				break;
 
 		}
 	}

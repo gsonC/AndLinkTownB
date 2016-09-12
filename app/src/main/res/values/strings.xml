@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <string name="ultimatelimit">每日收款限额</string>
+    <string name="Collectionamoun">今日剩余收款额度：500.00元</string>
+    <string name="commission">手续费0.1%1</string>
+    <string name="Collection">收款规则:</string>
     <string name="app_name">习之老板娘</string>
     <!-- 客服电话号码 -->
     <string name="vip_phoe">400-660-2289</string>
@@ -140,10 +143,10 @@
     <string name="retrievepassword">找回密码</string>
     <string name="registerimmediately">立即注册</string>
     <string name="totalaccount">账户总额 (元)</string>
-    <string name="shopaccount">店铺总额(元)</string>
+    <string name="shopaccount">店铺今日收入 (元)</string>
     <string name="availablebalance">可用余额</string>
     <string name="takeinmoney">提现中金额</string>
-    <string name="shopincometoday">店铺今日收入</string>
+    <string name="shopincometoday">店铺总额</string>
     <string name="initial">0.00</string>
     <string name="title_activity_leave_message">LeaveMessageActivity</string>
     <string name="reservationorder">预约订单</string>
@@ -152,6 +155,6 @@
     <string name="freezingamount">冻结金额</string>
     <string name="newaddcategory">添加会员分类</string>
     <string name="membercategoryhint">(注意:10-100,表示10,不含100,满足条件可自动升级，请慎重设置,如需修改请联系业务人员)</string>
-
-
+    <string name="withdraw_failed_reason">审核未通过，请核对银行卡信息是否正确</string>
+    <string name="today_left_money">今天剩余额度</string>
 </resources>

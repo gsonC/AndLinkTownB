@@ -47,6 +47,10 @@
     <!-- 允许应用读取低级别的系统日志文件 -->
     <uses-permission android:name="android.permission.READ_LOGS">
     </uses-permission>
+    <!--获取手机录音机使用权限，听写、识别、语义理解需要用到此权限 -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <!--读取联系人权限，上传联系人需要用到此权限 -->
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
     <!-- 加入手机震动，一定要在manifest.xml中加入权限： -->
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION">
@@ -87,17 +91,14 @@
         </activity>
         <activity
             android:name="com.lianbi.mezone.b.ui.MemberPointManage"
-            android:windowSoftInputMode="stateHidden|stateUnchanged"
-            android:launchMode="singleTask"/>
-        <activity
-            android:name="com.lianbi.mezone.b.ui.TagManagerActivity"/>
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="stateHidden|stateUnchanged"/>
+        <activity android:name="com.lianbi.mezone.b.ui.TagManagerActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.MembersManagementActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.RevisionsActivity"/>
         <activity
             android:name="com.lianbi.mezone.b.ui.NewIntegralGoodsActivity"
-            android:windowSoftInputMode="stateHidden|stateUnchanged"
-            />
-
+            android:windowSoftInputMode="stateHidden|stateUnchanged"/>
         <activity android:name="com.lianbi.mezone.b.ui.ReceivablesQRActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.ReceivablesActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.MarketingBuySMSActivity"/>
@@ -304,6 +305,12 @@
         <activity android:name="com.lianbi.mezone.b.ui.CouponManagerActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.CouponUsingDetailsActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.SendNewCouponActivity"/>
+        <activity android:name="com.lianbi.mezone.b.ui.OrderContentActivity"/>
+        <activity android:name="com.lianbi.mezone.b.ui.OrderLookUpActivity"/>
+        <activity android:name="com.lianbi.mezone.b.ui.WithdrawingProgressActivity" />
+        <activity android:name="com.lianbi.mezone.b.ui.WithdrawRecordActivity" />
+        <activity android:name="com.lianbi.mezone.b.ui.WithdrawFailedReasonActivity" />
+        <activity android:name="com.lianbi.mezone.b.ui.ReceiptsActivity"/>
 
         <!-- 个推SDK配置开始 -->
         <!-- 配置的第三方参数属性 -->
@@ -425,6 +432,8 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version"/>
         <!-- 个推SDK配置结束 -->
+        <activity android:name="com.lianbi.mezone.b.ui.IncomeActivity">
+        </activity>
     </application>
 
 </manifest>
