@@ -5,32 +5,33 @@ import java.io.Serializable;
 public class PushDataBean implements Serializable {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 5426769992680535808L;
 
 	String title;
 	String content;
 	String img;
-	int type;
 	int callType;//1跳转URL 2新订单 3呼叫买单 4呼叫服务
 	String jumpUrl;
+	String type;
 
-	public String getJumpUrl(){
-		return  jumpUrl;
-	}
-
-	public void setJumpUrl(String jumpUrl){
-		this.jumpUrl = jumpUrl;
-	}
-
-	public int getType() {
+	public String getType() {
 		return type;
 	}
 
-	public void setType(int type) {
+	public void setType(String type) {
 		this.type = type;
 	}
+
+	public String getJumpUrl() {
+		return jumpUrl;
+	}
+
+	public void setJumpUrl(String jumpUrl) {
+		this.jumpUrl = jumpUrl;
+	}
+
 
 	public int getCallType() {
 		return callType;

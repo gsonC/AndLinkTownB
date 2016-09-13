@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 
@@ -17,7 +18,9 @@ import com.iflytek.cloud.SynthesizerListener;
 import com.lianbi.mezone.b.app.Constants;
 import com.lianbi.mezone.b.bean.PushDataBean;
 import com.lianbi.mezone.b.ui.InfoDetailsActivity;
+import com.lianbi.mezone.b.ui.OrderLookUpActivity;
 import com.lianbi.mezone.b.ui.WebActivty;
+import com.lianbi.mezone.b.ui.WithdrawRecordActivity;
 import com.xizhi.mezone.b.R;
 
 public class PushNotifitionManager {
@@ -28,7 +31,7 @@ public class PushNotifitionManager {
 	 */
 	int notifyId = 100;
 
-	public  PushDataBean               mDatas;
+	public PushDataBean mDatas;
 	private NotificationCompat.Builder mBuilder;
 	private Intent resultIntent;
 	private SpeechSynthesizer mTts;
@@ -60,27 +63,30 @@ public class PushNotifitionManager {
 		// 点击的意图ACTION是跳转到Intent
 		String pushtarget = "";
 		int tiaozhuan = mDatas.getCallType();
-		if(1==tiaozhuan) {
+		if (1 == tiaozhuan) {
 			resultIntent = new Intent(mContext, WebActivty.class);
 			resultIntent.putExtra(Constants.NEDDLOGIN, false);
 			resultIntent.putExtra("Re", true);
 			resultIntent.putExtra(WebActivty.U, mDatas.getJumpUrl());
-		}else if(2==tiaozhuan){
+		} else if (2 == tiaozhuan) {
 			pushtarget = "xindingdan";
+			resultIntent = new Intent(mContext, InfoDetailsActivity.class);//跳转订单明细页面
+			resultIntent.putExtra("TIAOZHUANXIAOXI", pushtarget);
+		} else if (3 == tiaozhuan) {
+			pushtarget = "maidan";
 			resultIntent = new Intent(mContext, InfoDetailsActivity.class);
 			resultIntent.putExtra("TIAOZHUANXIAOXI", pushtarget);
-		}else if(3==tiaozhuan){
-			pushtarget =  "maidan";
-			resultIntent = new Intent(mContext, InfoDetailsActivity.class);
-			resultIntent.putExtra("TIAOZHUANXIAOXI", pushtarget);
-		}else if(4==tiaozhuan){
+		} else if (4 == tiaozhuan) {
 			pushtarget = "fuwu";
 			resultIntent = new Intent(mContext, InfoDetailsActivity.class);
 			resultIntent.putExtra("TIAOZHUANXIAOXI", pushtarget);
-		}else{
-			pushtarget = "xindingdan";
-			resultIntent = new Intent(mContext, InfoDetailsActivity.class);
-			resultIntent.putExtra("TIAOZHUANXIAOXI", pushtarget);
+		} else if (6 == tiaozhuan) {
+			resultIntent = new Intent(mContext, OrderLookUpActivity.class);//跳转订单明细页面
+		} else if (7 == tiaozhuan) {
+			resultIntent = new Intent(mContext, WithdrawRecordActivity.class);//跳转提现记录页面
+		} else {
+			mNotificationManager.notify(notifyId, mBuilder.build());
+			return;
 		}
 
 		resultIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -105,9 +111,9 @@ public class PushNotifitionManager {
 	 * 初始化科大讯飞语音
 	 */
 	private void initVoice() {
-		mTts = SpeechSynthesizer.createSynthesizer(mContext,null);
+		mTts = SpeechSynthesizer.createSynthesizer(mContext, null);
 		//2.合成参数设置，详见《科大讯飞MSC API手册(Android)》SpeechSynthesizer 类
-		mTts.setParameter(SpeechConstant.VOICE_NAME,"xiaoyan");//设置发音人
+		mTts.setParameter(SpeechConstant.VOICE_NAME, "xiaoyan");//设置发音人
 		mTts.setParameter(SpeechConstant.SPEED, "50");//设置语速
 		mTts.setParameter(SpeechConstant.VOLUME, "80");//设置音量，范围0~100
 		mTts.setParameter(SpeechConstant.ENGINE_TYPE, SpeechConstant.TYPE_CLOUD); //设置云端
@@ -143,19 +149,24 @@ public class PushNotifitionManager {
 				// requires VIBRATE permission
 				.setVibrate(vibrates)//设置震动
 				.setLights(Color.WHITE, 1000, 1000);//设置灯光
-		if (2 == mDatas.getCallType()||1 == mDatas.getCallType()) {
-			mTts.startSpeaking("老板娘,又有新订单了", mSynListener);
-		//	mBuilder.setSound(Uri.parse("android.resource://" + mContext.getPackageName() + "/" + R.raw.neworder));
+		if (2 == mDatas.getCallType() || 1 == mDatas.getCallType()) {
+			//mTts.startSpeaking("老板娘,又有新订单了", mSynListener);
+			mBuilder.setSound(Uri.parse("android.resource://" + mContext.getPackageName() + "/" + R.raw.neworder));
 		} else if (3 == mDatas.getCallType()) {
-			mTts.startSpeaking("买单了,老板娘打小票先", mSynListener);
-		//	mBuilder.setSound(Uri.parse("android.resource://" + mContext.getPackageName() + "/" + R.raw.checkorder));
+			//mTts.startSpeaking("买单了,老板娘打小票先", mSynListener);
+			mBuilder.setSound(Uri.parse("android.resource://" + mContext.getPackageName() + "/" + R.raw.checkorder));
 		} else if (4 == mDatas.getCallType()) {
-		//	mBuilder.setSound(Uri.parse("android.resource://" + mContext.getPackageName() + "/" + R.raw.call));
-			mTts.startSpeaking("老板娘,有人呼叫,快去看看吧", mSynListener);
+			mBuilder.setSound(Uri.parse("android.resource://" + mContext.getPackageName() + "/" + R.raw.call));
+			//mTts.startSpeaking("老板娘,有人呼叫,快去看看吧", mSynListener);
+		} else if (6 == mDatas.getCallType()) {//收款成功
+			mTts.startSpeaking(mDatas.getContent(), mSynListener);
 		} else {
 			//mBuilder.setDefaults(Notification.DEFAULT_SOUND);
 			mBuilder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
 		}
+		/**
+		 * 5 7 使用默认声音
+		 */
 	}
 
 	/**
@@ -177,6 +188,7 @@ public class PushNotifitionManager {
 			// TODO Auto-generated method stub
 
 		}
+
 		//播放进度回调
 		//percent为播放进度0~100,beginPos为播放音频在文本中开始位置，endPos表示播放音频在文本中结束位置.
 		@Override
@@ -184,30 +196,35 @@ public class PushNotifitionManager {
 			// TODO Auto-generated method stub
 
 		}
+
 		//暂停播放
 		@Override
 		public void onSpeakPaused() {
 			// TODO Auto-generated method stub
 
 		}
+
 		//开始播放
 		@Override
 		public void onSpeakBegin() {
 			// TODO Auto-generated method stub
 
 		}
+
 		//会话事件回调接口
 		@Override
 		public void onEvent(int arg0, int arg1, int arg2, Bundle arg3) {
 			// TODO Auto-generated method stub
 
 		}
+
 		//会话结束回调接口，没有错误时，error为null
 		@Override
 		public void onCompleted(SpeechError arg0) {
 			// TODO Auto-generated method stub
 
 		}
+
 		//缓冲进度回调
 		//percent为缓冲进度0~100，beginPos为缓冲音频在文本中开始位置，endPos表示缓冲音频在文本中结束位置，info为附加信息。
 		@Override
