@@ -8,9 +8,9 @@
     tools:context="com.lianbi.mezone.b.ui.ReceiptsActivity">
 
     <RelativeLayout
-        android:id="@+id/background"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="207.5dp"
+        android:background="@mipmap/payment">
 
         <TextView
             android:id="@+id/today_left"
