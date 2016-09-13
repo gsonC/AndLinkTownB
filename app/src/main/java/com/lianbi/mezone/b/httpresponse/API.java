@@ -542,6 +542,10 @@ public class API {
 	 */
 	public static final String OREDRINFO = "order/queryOrder.do";
 	/**
+	 * APP删除订单明细
+	 */
+	public static final String UPDATEORDER = "order/updateOrder.do";
+	/**
 	 * 今日用户收入
 	 */
 	public static final String QUERYACCOUNTTODAYINCOME = "finance/queryAccountTodayIncome.do";

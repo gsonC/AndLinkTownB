@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +15,7 @@ import com.lianbi.mezone.b.ui.OrderContentActivity;
 import com.lianbi.mezone.b.ui.OrderLookUpActivity;
 import com.xizhi.mezone.b.R;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import butterknife.Bind;
@@ -42,6 +42,7 @@ public class OrederFragment extends Fragment {
     boolean isResh;
     boolean isLoad;
     boolean isDelete;
+    int listPosition=-1;
     @Override
     public View onCreateView(LayoutInflater inflater,
                              @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -107,9 +108,27 @@ public class OrederFragment extends Fragment {
                 TextView tv_item_orderinfo_paytime=helper.getView(R.id.tv_item_orderinfo_paytime);
                 TextView tv_item_orderinfo_price = helper.getView(R.id.tv_item_orderinfo_price);
                 tv_item_orderinfo_num.setText(item.getOrderNo());
-                tv_item_orderinfo_state.setText(item.getOrderStatus());
                 tv_item_orderinfo_paytime.setText(item.getTxnTime());
                 tv_item_orderinfo_price.setText(String.valueOf(item.getTxnAmt()));
+                if(item.getOrderStatus().equals("03")){
+                    tv_item_orderinfo_state.setText("支付成功");
+                }else if(item.getOrderStatus().equals("04")){
+                    tv_item_orderinfo_state.setText("支付失败");
+                }
+                String amt = BigDecimal.valueOf(Long.valueOf(item.getTxnAmt()))
+                        .divide(new BigDecimal(100)).toString();
+                tv_item_orderinfo_price.setText(String.valueOf(amt));
+
+                String time = item.getTxnTime();
+                String year = time.substring(0, 4);
+                String months = time.substring(4, 6);
+                String daytime = time.substring(6, 8);
+                String hour = time.substring(8, 10);
+                String minute = time.substring(10, 12);
+                String second = time.substring(12, 14);
+                tv_item_orderinfo_paytime.setText(year + "-" + months + "-"
+                        + daytime + " " + hour + ":" + minute + ":" + second);
+
 
                 helper.getView(R.id.tv_chdelete).setOnClickListener(// 删除
                         new View.OnClickListener() {
@@ -121,11 +140,12 @@ public class OrederFragment extends Fragment {
                             mAdapter.replaceAll(mDatas);
                             ArrayList<String> ids = new ArrayList<String>();
                             ids.add(String.valueOf(item.getOrderNo()));
-                            if(mActivity instanceof OrderLookUpActivity){
-                                mOrderLookUpActivity.delteOrderMsg(item.getOrderNo(),helper.getPosition());
+                            listPosition=helper.getPosition();
+                                if(mActivity instanceof OrderLookUpActivity){
+                                mOrderLookUpActivity.delteOrderMsg(item.getOrderNo(),listPosition);
                             }else
                             if(mActivity instanceof OrderContentActivity){
-                                mOrderContentActivity.delteOrderMsg(item.getOrderNo(),helper.getPosition());
+                                mOrderContentActivity.delteOrderMsg(item.getOrderNo(),listPosition);
                             }
 
                             }
@@ -171,5 +191,9 @@ public class OrederFragment extends Fragment {
         if(fmOrederfragmentListView.getIsSlided()==true){
             fmOrederfragmentListView.slideBack();
         }
+    }
+    public void upData(){
+        mDatas.remove(listPosition);
+        mAdapter.notifyDataSetChanged();
     }
 }

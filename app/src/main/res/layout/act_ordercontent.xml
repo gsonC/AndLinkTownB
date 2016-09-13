@@ -89,6 +89,7 @@
             android:layout_weight="1"
             android:button="@null"
             android:checked="true"
+
             android:background="@drawable/cb_greyselected"
             android:gravity="center"
             android:padding="5dp"
@@ -233,7 +234,7 @@
             android:background="@drawable/pay_type_select"
             android:button="@null"
             android:gravity="center"
-            android:text="5"
+            android:text="0"
             android:textStyle="bold"
             android:textColor="@color/colores_news_19"/>
         <TextView
@@ -270,7 +271,7 @@
             android:background="@drawable/pay_type_select"
             android:button="@null"
             android:gravity="center"
-            android:text="¥ 600"
+            android:text="¥ 0"
             android:textColor="@color/colores_news_04"/>
     </LinearLayout>
 </LinearLayout>

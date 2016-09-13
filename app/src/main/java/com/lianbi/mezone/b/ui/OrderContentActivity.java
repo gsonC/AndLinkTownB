@@ -60,6 +60,7 @@ public class OrderContentActivity extends BaseActivity implements
      * 当前位置
      */
     public int curPosition;
+    private final String STARTTIME = "2010-01-01 00:00";
     private final String ENDTIME = "2030-01-01 00:00";
     @Bind(R.id.tv_starttime)
     TextView tvStarttime;
@@ -93,7 +94,6 @@ public class OrderContentActivity extends BaseActivity implements
     private String coupAmt;
     private String isValid="Y";
     private int  intentLayout=0;
-    private int intTxnAmt=0;
     private String txnTime;
     private String beginTime;
     private int pageNo=1;
@@ -159,6 +159,8 @@ public class OrderContentActivity extends BaseActivity implements
         switch (v.getId()) {
 
             case R.id.tv_today:
+                tvStarttime.setText("");
+                tvFinishtime.setText("");
                 tvToday.setChecked(true);
                 tvThreeday.setChecked(false);
                 tvOnemonth.setChecked(false);
@@ -173,6 +175,8 @@ public class OrderContentActivity extends BaseActivity implements
                 getOrderInfo(false,false,isValid);
                 break;
             case R.id.tv_threeday:
+                tvStarttime.setText("");
+                tvFinishtime.setText("");
                 tvToday.setChecked(false);
                 tvThreeday.setChecked(true);
                 tvOnemonth.setChecked(false);
@@ -188,6 +192,8 @@ public class OrderContentActivity extends BaseActivity implements
                 getOrderInfo(false,false,isValid);
                 break;
             case R.id.tv_onemonth:
+                tvStarttime.setText("");
+                tvFinishtime.setText("");
                 tvToday.setChecked(false);
                 tvThreeday.setChecked(false);
                 tvOnemonth.setChecked(true);
@@ -234,7 +240,7 @@ public class OrderContentActivity extends BaseActivity implements
                                     }
                                 }
                             }
-                        }, AbDateUtil.getCurrentDate(AbDateUtil.dateFormatYMDHM),
+                        }, STARTTIME,
                         ENDTIME);
                 timeSelectorFrom.setMode(TimeSelectorE.MODE.YMD);
                 timeSelectorFrom.setTitle("起始时间");
@@ -265,7 +271,7 @@ public class OrderContentActivity extends BaseActivity implements
                                     }
                                 }
                             }
-                        }, AbDateUtil.getCurrentDate(AbDateUtil.dateFormatYMDHM),
+                        },STARTTIME,
                         ENDTIME);
                 timeSelectorTo.setMode(TimeSelectorE.MODE.YMD);
                 timeSelectorTo.setTitle("结束时间");
@@ -410,11 +416,13 @@ public class OrderContentActivity extends BaseActivity implements
                 break;
         }
     }
-    public void getOrderInfo(final boolean  isResh, final boolean  isLoad,String  isValid) {
+    public void getOrderInfo(final boolean  isResh, final boolean  isLoad,final String  isValid) {
         if (isResh) {
             pageNo =1;
             mDatas.clear();
         }
+
+//        "BD2016070614191100000123"
         try{
             okHttpsImp.getqueryOrderInfo(uuid,"app",
                     reqTime,isValid,
@@ -436,11 +444,7 @@ public class OrderContentActivity extends BaseActivity implements
                                     mWholeData.clear();
                                     mPaySuccessDatas.clear();
                                     mPayFailDatas.clear();
-                                    if(TextUtils.isEmpty(reString)){
-                                        ContentUtils.showMsg(OrderContentActivity.this, "删除订单成功");
-                                        mDatas.remove(listPosition);
-                                        tv_num.setText(String.valueOf(mDatas.size()));
-                                    }
+
                                     if (!TextUtils.isEmpty(reString)) {
                                         ArrayList<OrderContent>  baseList = (ArrayList<OrderContent>) JSON
                                                 .parseArray(reString,
@@ -482,6 +486,8 @@ public class OrderContentActivity extends BaseActivity implements
 
     }
     public void   showData(boolean  isResh){
+        int intTxnAmt=0;
+
         for (OrderContent ordercontent : mDatas) {
             intTxnAmt=intTxnAmt+ordercontent.getTxnAmt();
         }
@@ -535,7 +541,7 @@ public class OrderContentActivity extends BaseActivity implements
     public void delteOrderMsg(String  orderNo,int listPosition) {
 
         initDelete(orderNo,listPosition);
-        getOrderInfo(false,false,isValid);
+        deleteOrder(orderNo);
         }
 
     private  void  initDelete(String orderNo,int listPosition){
@@ -558,5 +564,63 @@ public class OrderContentActivity extends BaseActivity implements
         this.beginTime=beginTime;
         this.endTime=endTime;
     }
+    /**
+     *
+     * 删除订单
+     */
+    private  void   deleteOrder(final String  orderNo){
+        try{
+            okHttpsImp.getDeleteOrderInfo(uuid,"app",
+                    reqTime,"N",
+                    "app",orderNo,
+                    new MyResultCallback<String>() {
 
+                        @Override
+                        public void onResponseResult(Result result) {
+                            String reString = result.getData();
+                            if (reString != null) {
+                                JSONObject jsonObject;
+                                ContentUtils.showMsg(OrderContentActivity.this, "删除成功");
+                                switch (intentLayout) {
+                                    case POSITION0:
+                                        if (mWholeFragment != null) {
+                                            mWholeFragment.upData();
+                                        }
+                                        break;
+
+                                    case POSITION1:
+                                        if (mPaySuccessFragment != null) {
+                                            mPaySuccessFragment.upData();
+                                        }
+                                        break;
+                                    case POSITION2:
+                                        if (mPayFailFragment != null) {
+                                            mPayFailFragment.upData();
+                                        }
+                                        break;
+                                }
+                                mDatas.remove(listPosition);
+                                tv_num.setText(String.valueOf(mDatas.size()));
+                                try {
+                                    jsonObject = new JSONObject(reString);
+                                    if (!TextUtils.isEmpty(reString)) {
+
+
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                        @Override
+                        public void onResponseFailed(String msg) {
+
+                        }
+                    });
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+    }
 }

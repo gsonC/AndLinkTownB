@@ -79,7 +79,6 @@ public class OrderLookUpActivity extends BaseActivity implements
     private int listPosition=-1;
     private int  intentLayout=0;
     private int pageNo=1;
-    private int intTxnAmt=0;
     private String isValid="Y";
     private String pageSize="15";
     private String orderNo="";
@@ -276,12 +275,13 @@ public class OrderLookUpActivity extends BaseActivity implements
         }
     }
 
-    public void getOrderInfo(final boolean  isResh,final boolean  isLoad,String  isValid) {
+    public void getOrderInfo(final boolean  isResh,final boolean  isLoad,final String  isValid) {
         if (isResh) {
             pageNo =1;
             mDatas.clear();
         }
         try{
+//            BD2016070614191100000123
             okHttpsImp.getqueryOrderInfo(uuid,"app",
                     reqTime,isValid,
                     "app",BusinessId,orderNo,
@@ -303,11 +303,6 @@ public class OrderLookUpActivity extends BaseActivity implements
                             mWholeData.clear();
                             mPaySuccessDatas.clear();
                             mPayFailDatas.clear();
-                            if(TextUtils.isEmpty(reString)){
-                                ContentUtils.showMsg(OrderLookUpActivity.this, "删除订单成功");
-                                mDatas.remove(listPosition);
-                                tv_num.setText(String.valueOf(mDatas.size()));
-                            }
                             if (!TextUtils.isEmpty(reString)) {
                                 ArrayList<OrderContent>  baseList = (ArrayList<OrderContent>) JSON
                                         .parseArray(reString,
@@ -352,6 +347,7 @@ public class OrderLookUpActivity extends BaseActivity implements
 
     }
     public void   showData(boolean  isResh){
+        int intTxnAmt=0;
         for (OrderContent ordercontent : mDatas) {
             intTxnAmt=intTxnAmt+ordercontent.getTxnAmt();
         }
@@ -384,7 +380,7 @@ public class OrderLookUpActivity extends BaseActivity implements
     public void delteOrderMsg(String  orderNo,int listPosition) {
 
         initDelete(orderNo,listPosition);
-        getOrderInfo(true,false,isValid);
+        deleteOrder(orderNo);
     }
 
     private  void  initDelete(String orderNo,int listPosition){
@@ -393,4 +389,63 @@ public class OrderLookUpActivity extends BaseActivity implements
         this.isValid="N";
     }
 
+    /**
+     *
+     * 删除订单
+     */
+    private  void   deleteOrder(final String  orderNo){
+        try{
+            okHttpsImp.getDeleteOrderInfo(uuid,"app",
+                    reqTime,"N",
+                    "app",orderNo,
+                    new MyResultCallback<String>() {
+
+                        @Override
+                        public void onResponseResult(Result result) {
+                            String reString = result.getData();
+                            if (reString != null) {
+                                JSONObject jsonObject;
+                                ContentUtils.showMsg(OrderLookUpActivity.this, "删除成功");
+                                switch (intentLayout) {
+                                    case POSITION0:
+                                        if (mWholeFragment != null) {
+                                            mWholeFragment.upData();
+                                        }
+                                        break;
+
+                                    case POSITION1:
+                                        if (mPaySuccessFragment != null) {
+                                            mPaySuccessFragment.upData();
+                                        }
+                                        break;
+                                    case POSITION2:
+                                        if (mPayFailFragment != null) {
+                                            mPayFailFragment.upData();
+                                        }
+                                        break;
+                                }
+                                mDatas.remove(listPosition);
+                                tv_num.setText(String.valueOf(mDatas.size()));
+                                try {
+                                    jsonObject = new JSONObject(reString);
+                                    if (!TextUtils.isEmpty(reString)) {
+
+
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                        @Override
+                        public void onResponseFailed(String msg) {
+
+                        }
+                    });
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+    }
 }

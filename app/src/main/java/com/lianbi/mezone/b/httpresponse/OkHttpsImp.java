@@ -2010,6 +2010,27 @@ public enum OkHttpsImp {
 		String url = getAbsoluteUrl(API.OREDRINFO);
 		getProgressResponse(myResultCallback, params, url);
 	}
+	/**
+	 * 3期迭代后
+	 * APP订单明细删除
+	 */
+	public void getDeleteOrderInfo(String serNum,
+								  String source, String reqTime,
+								  String isValid, String sourceType,
+								  String orderNo,
+								  MyResultCallback<String> myResultCallback) throws Exception {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("serNum", serNum);
+		params.put("source", source);
+		params.put("reqTime", reqTime);
+		params.put("isValid", isValid);
+		params.put("sourceType", sourceType);
+		params.put("orderNo", orderNo);
+		String sign = getSign(md5_key, params);
+		params.put("sign", sign);
+		String url = getAbsoluteUrl(API.UPDATEORDER);
+		getProgressResponse(myResultCallback, params, url);
+	}
 
 	/**
 	 * 每日收入明细
