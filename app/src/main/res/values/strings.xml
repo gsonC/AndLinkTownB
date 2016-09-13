@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="shopSYAccount">可用余额=店铺总额-冻结金额</string>
+    <string name="shopNumAccount">店铺总额=店铺累计收入-手续费支出-已提现金额-提现中金额</string>
+    <string name="counttime">活动优惠时间:</string>
+    <string name="rate">收款单笔手续费率为</string>
+    <string name="count">,活动期间优惠费率</string>
     <string name="ultimatelimit">每日收款限额</string>
     <string name="Collectionamoun">今日剩余收款额度：500.00元</string>
     <string name="commission">手续费0.1%1</string>

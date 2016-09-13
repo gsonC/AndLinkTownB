@@ -17,11 +17,15 @@ public abstract class DialogCommon extends Dialog {
 	private TextView tv_dialog_common_title;
 	private Context context;
 
+
 	public DialogCommon(Context context) {
 		super(context, R.style.DialogStyle_4);
 		this.context = context;
 		initView();
+
 	}
+
+
 
 	TextView tv_dialog_common_cancel;
 	TextView tv_dialog_common_ok;
@@ -81,4 +85,6 @@ public abstract class DialogCommon extends Dialog {
 	public abstract void onCheckClick();
 
 	public abstract void onOkClick();
+
+
 }

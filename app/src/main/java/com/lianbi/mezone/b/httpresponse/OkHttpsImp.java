@@ -1548,6 +1548,24 @@ public enum OkHttpsImp {
 	}
 
 	/**
+	 * 获取收入明细
+	 */
+	public void getIsAmtFlow(String md5_key, String accountNo, String storeNo,String optType,
+							 String serNum, String source, String reqTime,
+							 MyResultCallback<String> myResultCallback) throws Exception {
+		Map<String, String> params = new HashMap<String,String>();
+		params.put("accountNo", accountNo);
+		params.put("storeNo", storeNo);
+		params.put("optType", optType);
+		params.put("reqTime", reqTime);
+		params.put("serNum", serNum);
+		params.put("source", source);
+		String sign = getSign(md5_key, params);
+		params.put("sign", sign);
+		String url = getAbsoluteUrl(API.GETINCOME);
+		getNoProgressResponse(myResultCallback, params, url);
+	}
+	/**
 	 * 获取经营总收入
 	 */
 	public void getCountByBusiness(String BusinessId, boolean isShow, MyResultCallback<String> myResultCallback) {

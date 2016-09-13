@@ -21,6 +21,15 @@ public class FinancialOfficeAmountBean implements Serializable {
 	private BigDecimal storeTodayIncome;
 	private BigDecimal storeTotalIncome;
 	private BigDecimal storeWithdrawAmount;
+	private BigDecimal storeNewRate;
+
+	public BigDecimal getStoreNewRate() {
+		return storeNewRate;
+	}
+
+	public void setStoreNewRate(BigDecimal storeNewRate) {
+		this.storeNewRate = storeNewRate;
+	}
 
 	public BigDecimal getAccountTotalIncome() {
 		return accountTotalIncome;

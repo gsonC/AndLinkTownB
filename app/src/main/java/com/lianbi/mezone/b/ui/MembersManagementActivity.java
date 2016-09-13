@@ -98,7 +98,7 @@ public class MembersManagementActivity extends BaseActivity {
 			//ImageView child_ima=(ImageView)findViewById(R.id.child_ima);
 			//
 			RelativeLayout rela_child= (RelativeLayout)convertView.findViewById(R.id.heheh);
-		//	 rela_child= (LinearLayout)convertView.findViewById(R.id.rela_child);
+			//	 rela_child= (LinearLayout)convertView.findViewById(R.id.rela_child);
 			TextView tv = (TextView) convertView.findViewById(R.id.second_textview);
 			tv.setText(info);
 			rela_child.setOnClickListener(new OnClickListener() {
@@ -134,7 +134,7 @@ public class MembersManagementActivity extends BaseActivity {
 
 			return rela_child;
 
-	}
+		}
 
 		//获取当前父item下的子item的个数
 		@Override
@@ -173,10 +173,9 @@ public class MembersManagementActivity extends BaseActivity {
 
 			// 将默认的箭头修改到右边显示:
 			if (isExpanded) {
-				expand_ima.setImageResource(R.mipmap.up2);
+				expand_ima.setBackgroundResource(R.mipmap.up2);
 			} else {
-             	expand_ima.setImageResource(R.mipmap.down12);
-
+				expand_ima.setBackgroundResource(R.mipmap.down12);
 			}
 
 			return convertView;

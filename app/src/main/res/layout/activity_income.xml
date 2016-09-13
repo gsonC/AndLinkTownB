@@ -1,9 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.lianbi.mezone.b.ui.IncomeActivity">
+    android:orientation="vertical"
+    >
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="32.5dp"
+    android:orientation="horizontal"
+    android:background="@color/color_ededed"
+    android:layout_marginLeft="11dp"
+    android:gravity="center_vertical">
+    <TextView
+        android:id="@+id/tv_income_year"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14.5sp"
+        android:textColor="@color/tag_mask"
+        android:text="2016"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14.5sp"
+        android:textColor="@color/tag_mask"
+        android:text="年"/>
+    <TextView
+        android:id="@+id/tv_income_month"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14.5sp"
+        android:textColor="@color/tag_mask"
+        android:text="11"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14.5sp"
+        android:textColor="@color/tag_mask"
+        android:text="月"
+        />
 
-</RelativeLayout>
+</LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="11dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@color/tag_mask"
+            android:paddingTop="13dp"
+            android:text="收入-提现失败金额返还"
+            />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="13dp">
+            <TextView
+                android:id="@+id/tv_income_data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12.5sp"
+                android:textColor="@color/foodcolor"
+                android:text="2016-07-06"
+                />
+            <TextView
+                android:id="@+id/tv_income_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12.5sp"
+                android:textColor="@color/foodcolor"
+                android:text="18:46:42"
+                android:layout_marginLeft="5dp"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

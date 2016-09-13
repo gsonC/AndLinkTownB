@@ -38,6 +38,7 @@ import cn.com.hgh.utils.JumpIntent;
 import cn.com.hgh.utils.MathExtend;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.utils.ScreenUtils;
+import cn.com.hgh.view.DiaqlogNow;
 
 /**
  * 
@@ -58,6 +59,7 @@ public class FinancialOfficeFragment extends Fragment implements
 			tv_finalcial_ruledescription,tv_finalcial_oldrate,tv_finalcial_newrate;
 	public double totalaccount = 0, shopaccount = 0, availablebalance = 0,
 			takeinmoney = 0, shopincometoday = 0,freezingamount=0;
+	TextView tv_gz_rate,tv_gz_count,tv_Fdiscount_time,tv_Ediscount_time;
 
 	/**
 	 * 刷新fm数据
@@ -197,6 +199,10 @@ public class FinancialOfficeFragment extends Fragment implements
 				.findViewById(R.id.tv_dianpujinrishouru);// 店铺总额
 		tv_shopaccountword = (TextView) view.findViewById(R.id.tv_shopaccountword);// 店铺今日收入
 
+		tv_gz_rate = (TextView) view.findViewById(R.id.tv_gz_rate);// 店铺今日收入
+		tv_gz_count = (TextView) view.findViewById(R.id.tv_gz_count);// 店铺今日收入
+		tv_Fdiscount_time = (TextView) view.findViewById(R.id.tv_Fdiscount_time);// 店铺今日收入
+		tv_Ediscount_time = (TextView) view.findViewById(R.id.tv_Ediscount_time);// 店铺今日收入
 
 		textAdaptation();
 
@@ -246,6 +252,8 @@ public class FinancialOfficeFragment extends Fragment implements
 		tv_shopincometoday.setText(MathExtend.roundNew(financialOfficeAmountBean.getStoreTodayIncome().divide(new BigDecimal(100)).doubleValue(), 2));// 店铺今日收入
 		tv_freezingamount.setText(MathExtend.roundNew(financialOfficeAmountBean.getSotreFrozenAmount().divide(new BigDecimal(100)).doubleValue(), 2));// 冻结中金额
 		tv_takeinmoney.setText(MathExtend.roundNew(financialOfficeAmountBean.getStoreWithdrawAmount().divide(new BigDecimal(100)).doubleValue(), 2));// 提现中余额
+		tv_finalcial_newrate.setText(MathExtend.roundNew(financialOfficeAmountBean.getStoreNewRate().divide(new BigDecimal(100)).doubleValue(), 2));//新汇率
+
 	}
 
 	/**
@@ -303,46 +311,56 @@ public class FinancialOfficeFragment extends Fragment implements
 		boolean isLogin = ContentUtils.getLoginStatus(mMainActivity);
 		boolean re = false;
 		switch (v.getId()) {
-		case R.id.iv_recharge:// 充值
-			ContentUtils.showMsg(mMainActivity, "正在建设中...");
-			break;
-
-		case R.id.iv_withdrawalsdetails:// 交易明细
-			re = JumpIntent.jumpLogin_addShop(isLogin, API.TRDATEDETAIL,
-					mMainActivity);
-			if (re) {
-				if (isBand) {
-					Intent intent = new Intent(mMainActivity,
-							WithdrawDepositActivity.class);
-					intent.putExtra("totalamount", tv_availablebalance.getText().toString().trim());
-					startActivity(intent);
-				} else {
-					ContentUtils.showMsg(mMainActivity, "请您先绑定银行卡!");
-				}
-			}
-			break;
-		case R.id.iv_withdrawals:// 提现
-			re = JumpIntent.jumpLogin_addShop(isLogin, API.WITHDRAWDEPOSIT,
-					mMainActivity);
-			if (re) {
-				startActivity(new Intent(mMainActivity, ShouRuHActivity.class)
-						.putExtra("isBand", isBand));
-			}
-			break;
-		case R.id.iv_bankcard:// 银行卡
-			re = JumpIntent.jumpLogin_addShop(isLogin, API.BANKCARD,
-					mMainActivity);
-			if (re) {
-				startActivity(new Intent(mMainActivity,
-						AddBankCardActivity.class).putExtra("isBand", isBand));
-			}
-			break;
-
-			case R.id.tv_finalcial_ruledescription://规则说明
-
+			case R.id.iv_recharge:// 充值
+				ContentUtils.showMsg(mMainActivity, "正在建设中...");
 				break;
 
+			case R.id.iv_withdrawalsdetails:// 交易明细
+				re = JumpIntent.jumpLogin_addShop(isLogin, API.TRDATEDETAIL, mMainActivity);
+				if (re) {
+					if (isBand) {
+						Intent intent = new Intent(mMainActivity, WithdrawDepositActivity.class);
+						intent.putExtra("totalamount", tv_availablebalance.getText().toString().trim());
+						startActivity(intent);
+					} else {
+						ContentUtils.showMsg(mMainActivity, "请您先绑定银行卡!");
+					}
+				}
+				break;
+			case R.id.iv_withdrawals:// 提现
+				re = JumpIntent.jumpLogin_addShop(isLogin, API.WITHDRAWDEPOSIT, mMainActivity);
+				if (re) {
+					startActivity(new Intent(mMainActivity, ShouRuHActivity.class).putExtra("isBand", isBand));
+				}
+				break;
+			case R.id.iv_bankcard:// 银行卡
+				re = JumpIntent.jumpLogin_addShop(isLogin, API.BANKCARD, mMainActivity);
+				if (re) {
+					startActivity(new Intent(mMainActivity, AddBankCardActivity.class).putExtra("isBand", isBand));
+				}
+				break;
+
+			case R.id.tv_finalcial_ruledescription://规则说明
+				DiaqlogNow dialog = new DiaqlogNow(getActivity()) {
+					@Override
+					public void onCheckClick() {
+						dismiss();
+					}
+
+					@Override
+					public void onOkClick() {
+
+					}
+				};
+				dialog.setTv_gz_count(tv_gz_rate);
+				dialog.setTv_gz_count(tv_gz_count);
+				dialog.setTv_gz_count(tv_Fdiscount_time);
+				dialog.setTv_gz_count(tv_Ediscount_time);
+				dialog.show();
+
+				break;
 		}
 	}
+
 
 }

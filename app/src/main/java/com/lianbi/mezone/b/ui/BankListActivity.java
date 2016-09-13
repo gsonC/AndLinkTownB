@@ -1,11 +1,5 @@
 package com.lianbi.mezone.b.ui;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -18,17 +12,24 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.lianbi.mezone.b.bean.BankCardList;
+import com.lianbi.mezone.b.httpresponse.MyResultCallback;
+import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
+import com.xizhi.mezone.b.R;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.QuickAdapter;
 import cn.com.hgh.utils.AbDateUtil;
 import cn.com.hgh.utils.AbStrUtil;
 import cn.com.hgh.utils.Result;
-
-import com.bumptech.glide.Glide;
-import com.xizhi.mezone.b.R;
-import com.lianbi.mezone.b.bean.BankCardList;
-import com.lianbi.mezone.b.httpresponse.MyResultCallback;
-import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
 
 /**
  * 选择开户行
@@ -160,9 +161,13 @@ public class BankListActivity extends BaseActivity {
 				@Override
 				public void onResponseResult(Result result) {
 					try {
+						String restring=result.getData();
+						System.out.println("restring165"+restring);
 						JSONObject jbB = new JSONObject(result.getData());
+						System.out.println("jbB"+jbB);
+
 						String reStr = jbB.getString("list");
-						
+						System.out.println("reStr"+reStr);
 						List<BankCardList> curArray = com.alibaba.fastjson.JSONObject
 								.parseArray(reStr, BankCardList.class);
 						arrayList.clear();

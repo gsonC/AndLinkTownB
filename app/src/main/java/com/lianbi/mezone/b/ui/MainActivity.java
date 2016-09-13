@@ -423,6 +423,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 						@Override
 						public void onResponseResult(Result result) {
 							String reString = result.getData();
+							System.out.println("reString426"+reString);
 							if (!TextUtils.isEmpty(reString)) {
 								FinancialOfficeAmountBean financialOfficeAmountBean = JSON.parseObject(reString,
 										FinancialOfficeAmountBean.class);
@@ -780,8 +781,12 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 				}
 				break;
 			case POSITION2:
-
-				break;
+				re = JumpIntent.jumpLogin_addShop(isLogin, API.SHOPS, this);
+				if (re) {
+					Intent intent = new Intent(this, IncomeActivity.class);
+					startActivity(intent);
+					break;
+				}
 			case POSITION3:
 				if (ContentUtils.getLoginStatus(this)) {
 					DialogCommon dialog = new DialogCommon(MainActivity.this) {
