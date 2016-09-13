@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.QuickAdapter;
+import cn.com.hgh.utils.AbPullHide;
 import cn.com.hgh.view.AbPullToRefreshView;
 import cn.com.hgh.view.SlideListView2;
 
@@ -65,10 +67,10 @@ public class OrederFragment extends Fragment {
                     @Override
                     public void onHeaderRefresh(AbPullToRefreshView view) {
                         if(mActivity instanceof OrderLookUpActivity){
-                            mOrderLookUpActivity.getOrderInfo(true,false,false);
+                            mOrderLookUpActivity.getOrderInfo(true,false,"Y");
                         }else
                         if(mActivity instanceof OrderContentActivity){
-                            mOrderContentActivity.getOrderInfo(true,false,false);
+                            mOrderContentActivity.getOrderInfo(true,false,"Y");
                         }
                     }
 
@@ -79,12 +81,13 @@ public class OrederFragment extends Fragment {
                     @Override
                     public void onFooterLoad(AbPullToRefreshView view) {
                         if(mActivity instanceof OrderLookUpActivity){
-                            mOrderLookUpActivity.getOrderInfo(false,true,false);
+                            mOrderLookUpActivity.getOrderInfo(false,true,"Y");
                         }else
                         if(mActivity instanceof OrderContentActivity){
-                            mOrderContentActivity.getOrderInfo(false,true,false);
+                            mOrderContentActivity.getOrderInfo(false,true,"Y");
                         }                    }
                 });
+        fmOrederfragmentListView.initSlideMode(SlideListView2.MOD_RIGHT);
 
         initListAdapter();
     }
@@ -98,15 +101,15 @@ public class OrederFragment extends Fragment {
             @Override
             protected void convert(final BaseAdapterHelper helper,
                                    final OrderContent item) {
+
                 TextView  tv_item_orderinfo_num = helper.getView(R.id.tv_item_orderinfo_num);
                 TextView tv_item_orderinfo_state = helper.getView(R.id.tv_item_orderinfo_state);
                 TextView tv_item_orderinfo_paytime=helper.getView(R.id.tv_item_orderinfo_paytime);
                 TextView tv_item_orderinfo_price = helper.getView(R.id.tv_item_orderinfo_price);
-
-                tv_item_orderinfo_num.setText(item.getOrderID());
+                tv_item_orderinfo_num.setText(item.getOrderNo());
                 tv_item_orderinfo_state.setText(item.getOrderStatus());
                 tv_item_orderinfo_paytime.setText(item.getTxnTime());
-                tv_item_orderinfo_price.setText(item.getTxnAmt());
+                tv_item_orderinfo_price.setText(String.valueOf(item.getTxnAmt()));
 
                 helper.getView(R.id.tv_chdelete).setOnClickListener(// 删除
                         new View.OnClickListener() {
@@ -117,12 +120,12 @@ public class OrederFragment extends Fragment {
                             mDatas.remove(item);
                             mAdapter.replaceAll(mDatas);
                             ArrayList<String> ids = new ArrayList<String>();
-                            ids.add(String.valueOf(item.getOrderID()));
+                            ids.add(String.valueOf(item.getOrderNo()));
                             if(mActivity instanceof OrderLookUpActivity){
-                                mOrderLookUpActivity.delteOrderMsg(item.getOrderNo());
+                                mOrderLookUpActivity.delteOrderMsg(item.getOrderNo(),helper.getPosition());
                             }else
                             if(mActivity instanceof OrderContentActivity){
-                                mOrderContentActivity.delteOrderMsg(item.getOrderNo());
+                                mOrderContentActivity.delteOrderMsg(item.getOrderNo(),helper.getPosition());
                             }
 
                             }
@@ -148,14 +151,25 @@ public class OrederFragment extends Fragment {
                 fmOrederfragmentIvEmpty.setVisibility(View.VISIBLE);
                 fmOrederfragmentListView.setVisibility(View.GONE);
             }
-        }
-
     }
 
+    }
+    public  void  hideRefreshView(boolean isResh){
+        AbPullHide.hideRefreshView(isResh,
+                mact_addorder_abpulltorefreshview);
+    }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if(fmOrederfragmentListView.getIsSlided()==true){
+            fmOrederfragmentListView.slideBack();
+        }
     }
 }

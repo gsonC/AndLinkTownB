@@ -16,10 +16,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.lianbi.mezone.b.bean.OrderContent;
@@ -38,7 +37,6 @@ import butterknife.OnClick;
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.view.NoScrollViewPager;
-import okhttp3.Request;
 
 public class OrderLookUpActivity extends BaseActivity implements
         ViewPager.OnPageChangeListener {
@@ -67,13 +65,22 @@ public class OrderLookUpActivity extends BaseActivity implements
     CheckBox tvFail;
     @Bind(R.id.vp_orderpager)
     NoScrollViewPager vpOrderpager;
-    @Bind(R.id.img_empty)
-    ImageView imgEmpty;
+
+    @Bind(R.id.tv_num)
+    TextView tv_num;
+    @Bind(R.id.tv_rmb)
+    TextView tv_rmb;
+//    @Bind(R.id.img_empty)
+//    ImageView imgEmpty;
     private String coupName;
     private String limitAmt;
     private String coupAmt;
     private String beginTime;
+    private int listPosition=-1;
+    private int  intentLayout=0;
     private int pageNo=1;
+    private int intTxnAmt=0;
+    private String isValid="Y";
     private String pageSize="15";
     private String orderNo="";
     private String orderStatus="";
@@ -82,30 +89,35 @@ public class OrderLookUpActivity extends BaseActivity implements
     private String  endTime="";
     @OnClick({R.id.tv_all, R.id.tv_success, R.id.tv_fail})
     public void OnClick(View v) {
-        switch (v.getId()) {
+            switch (v.getId()) {
 
             case R.id.tv_all:
                 tvSuccess.setChecked(false);
                 tvFail.setChecked(false);
                 vpOrderpager.setCurrentItem(0);
-                orderStatus="";
-                getOrderInfo(true,false,false);
+                initQuery("03,04",POSITION0);
+                getOrderInfo(true,false,isValid);
                 break;
             case R.id.tv_success:
                 vpOrderpager.setCurrentItem(1);
                 tvAll.setChecked(false);
                 tvFail.setChecked(false);
-                orderStatus="03";
-                getOrderInfo(true,false,false);
+                initQuery("03",POSITION1);
+                getOrderInfo(true,false,isValid);
                 break;
             case R.id.tv_fail:
                 vpOrderpager.setCurrentItem(2);
                 tvAll.setChecked(false);
                 tvSuccess.setChecked(false);
-                orderStatus="04";
-                getOrderInfo(true,false,false);
+                initQuery("04",POSITION2);
+                getOrderInfo(true,false,isValid);
                 break;
         }
+    }
+    private  void  initQuery(String orderStatus,int intentLayout){
+        this.orderStatus=orderStatus;
+        this.intentLayout=intentLayout;
+        this.isValid="Y";
     }
     @Override
     protected void onTitleRightClickTv() {
@@ -120,7 +132,7 @@ public class OrderLookUpActivity extends BaseActivity implements
         setContentView(R.layout.act_orderlookup, NOTYPE);
         ButterKnife.bind(this);
         initView();
-        getOrderInfo(false,false,false);
+        getOrderInfo(true,false,isValid);
     }
 
 
@@ -264,14 +276,14 @@ public class OrderLookUpActivity extends BaseActivity implements
         }
     }
 
-    public void getOrderInfo(final boolean  isResh,final boolean  isLoad,boolean  isDelete) {
+    public void getOrderInfo(final boolean  isResh,final boolean  isLoad,String  isValid) {
         if (isResh) {
             pageNo =1;
             mDatas.clear();
         }
         try{
             okHttpsImp.getqueryOrderInfo(uuid,"app",
-                    reqTime,"Y",
+                    reqTime,isValid,
                     "app",BusinessId,orderNo,
                     String.valueOf(pageNo),pageSize,
                     orderStatus,txnTime,startTime,
@@ -279,11 +291,10 @@ public class OrderLookUpActivity extends BaseActivity implements
 
                 @Override
                 public void onResponseResult(Result result) {
-                    if(isResh==true||isLoad==true){
+                    if(isLoad==true){
                         pageNo++;
                     }
                     String reString = result.getData();
-                    Log.i("tag","订单返回 279--->"+reString);
                     if (reString != null) {
                         JSONObject jsonObject;
                         try {
@@ -294,6 +305,8 @@ public class OrderLookUpActivity extends BaseActivity implements
                             mPayFailDatas.clear();
                             if(TextUtils.isEmpty(reString)){
                                 ContentUtils.showMsg(OrderLookUpActivity.this, "删除订单成功");
+                                mDatas.remove(listPosition);
+                                tv_num.setText(String.valueOf(mDatas.size()));
                             }
                             if (!TextUtils.isEmpty(reString)) {
                                 ArrayList<OrderContent>  baseList = (ArrayList<OrderContent>) JSON
@@ -301,30 +314,27 @@ public class OrderLookUpActivity extends BaseActivity implements
                                                 OrderContent.class);
                                 int  basesize=baseList.size();
                                 for(int i=0;i<basesize;i++){
-                                    mWholeData.add(baseList.get(i));
-                                  if(baseList.get(i).getOrderStatus().equals("03")){
-                                    mPaySuccessDatas.add(baseList.get(i));
-                                  }
-                                  if(baseList.get(i).getOrderStatus().equals("04")){
-                                    mPayFailDatas.add(baseList.get(i));
-                                  }
+                                    switch (intentLayout) {
+                                        case 0:
+                                            mWholeData.add(baseList.get(i));
+                                            mDatas.addAll(mWholeData);
+                                            tv_num.setText(String.valueOf(mDatas.size()));
+                                            break;
+                                        case 1:
+                                            mPaySuccessDatas.add(baseList.get(i));
+                                            mDatas.addAll(mPaySuccessDatas);
+                                            tv_num.setText(String.valueOf(mDatas.size()));
+                                            break;
+                                        case 2:
+                                            mPayFailDatas.add(baseList.get(i));
+                                            mDatas.addAll(mPayFailDatas);
+                                            tv_num.setText(String.valueOf(mDatas.size()));
+                                            break;
+                                    }
                                 }
 
+                                showData(isResh);
 
-                                switch (curPosition) {
-                                    case 0:
-                                        mDatas.addAll(mWholeData);
-                                        swtFmDo(curPosition,mDatas);
-                                        break;
-                                    case 1:
-                                        mDatas.addAll(mPaySuccessDatas);
-                                        swtFmDo(curPosition,mDatas);
-                                        break;
-                                    case 2:
-                                        mDatas.addAll(mPayFailDatas);
-                                        swtFmDo(curPosition,mDatas);
-                                        break;
-                                }
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -333,12 +343,7 @@ public class OrderLookUpActivity extends BaseActivity implements
                 }
                 @Override
                 public void onResponseFailed(String msg) {
-                }
-                @Override
-                public void onBefore(Request request) {
-                }
-                @Override
-                public void onAfter() {
+                    showData(isResh);
                 }
             });
         }catch (Exception e){
@@ -346,19 +351,46 @@ public class OrderLookUpActivity extends BaseActivity implements
         }
 
     }
+    public void   showData(boolean  isResh){
+        for (OrderContent ordercontent : mDatas) {
+            intTxnAmt=intTxnAmt+ordercontent.getTxnAmt();
+        }
+        tv_rmb.setText("¥"+intTxnAmt);
+        switch (intentLayout) {
+            case POSITION0:
+                if (mWholeFragment != null) {
+                    swtFmDo(POSITION0,mDatas);
+                    mWholeFragment.hideRefreshView(isResh);
+                }
+                break;
 
+            case POSITION1:
+                if (mPaySuccessFragment != null) {
+                    swtFmDo(POSITION1,mDatas);
+                    mPaySuccessFragment.hideRefreshView(isResh);
+                }
+                break;
+            case POSITION2:
+                if (mPayFailFragment != null) {
+                    swtFmDo(POSITION2,mDatas);
+                    mPayFailFragment.hideRefreshView(isResh);
+                }
+                break;
+        }
+    }
     /**
      * 删除订单信息
      */
-    public void delteOrderMsg(String  orderNo) {
+    public void delteOrderMsg(String  orderNo,int listPosition) {
 
-        initDelete(orderNo);
-        getOrderInfo(false,false,true);
+        initDelete(orderNo,listPosition);
+        getOrderInfo(true,false,isValid);
     }
 
-    private  void  initDelete(String orderNo){
+    private  void  initDelete(String orderNo,int listPosition){
+        this.listPosition=listPosition;
         this.orderNo=orderNo;
-
+        this.isValid="N";
     }
 
 }

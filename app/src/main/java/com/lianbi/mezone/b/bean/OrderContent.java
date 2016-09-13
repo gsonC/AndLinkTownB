@@ -4,21 +4,20 @@ import java.io.Serializable;
 
 public class OrderContent implements Serializable {
 
-	String  orderNo;
 	String  channelOrderNo;
-	String  orderID;
-	String  txnAmt;
+	String  createTime;
+	String  isValid;
+	String  merchantCode;
+	String  merchantSubCode;
 	String  orderAmt;
-	String  txnTime;
+	String  orderNo;
 	String  orderStatus;
-
-	public String getOrderNo() {
-		return orderNo;
-	}
-
-	public void setOrderNo(String orderNo) {
-		this.orderNo = orderNo;
-	}
+	String  orderType;
+	String  payWay;
+	String  sourceType;
+	int  txnAmt;
+	String  txnTime;
+	String  updateTime;
 
 	public String getChannelOrderNo() {
 		return channelOrderNo;
@@ -28,20 +27,36 @@ public class OrderContent implements Serializable {
 		this.channelOrderNo = channelOrderNo;
 	}
 
-	public String getOrderID() {
-		return orderID;
+	public String getCreateTime() {
+		return createTime;
 	}
 
-	public void setOrderID(String orderID) {
-		this.orderID = orderID;
+	public void setCreateTime(String createTime) {
+		this.createTime = createTime;
 	}
 
-	public String getTxnAmt() {
-		return txnAmt;
+	public String getIsValid() {
+		return isValid;
 	}
 
-	public void setTxnAmt(String txnAmt) {
-		this.txnAmt = txnAmt;
+	public void setIsValid(String isValid) {
+		this.isValid = isValid;
+	}
+
+	public String getMerchantCode() {
+		return merchantCode;
+	}
+
+	public void setMerchantCode(String merchantCode) {
+		this.merchantCode = merchantCode;
+	}
+
+	public String getMerchantSubCode() {
+		return merchantSubCode;
+	}
+
+	public void setMerchantSubCode(String merchantSubCode) {
+		this.merchantSubCode = merchantSubCode;
 	}
 
 	public String getOrderAmt() {
@@ -52,12 +67,12 @@ public class OrderContent implements Serializable {
 		this.orderAmt = orderAmt;
 	}
 
-	public String getTxnTime() {
-		return txnTime;
+	public String getOrderNo() {
+		return orderNo;
 	}
 
-	public void setTxnTime(String txnTime) {
-		this.txnTime = txnTime;
+	public void setOrderNo(String orderNo) {
+		this.orderNo = orderNo;
 	}
 
 	public String getOrderStatus() {
@@ -66,5 +81,53 @@ public class OrderContent implements Serializable {
 
 	public void setOrderStatus(String orderStatus) {
 		this.orderStatus = orderStatus;
+	}
+
+	public String getOrderType() {
+		return orderType;
+	}
+
+	public void setOrderType(String orderType) {
+		this.orderType = orderType;
+	}
+
+	public String getPayWay() {
+		return payWay;
+	}
+
+	public void setPayWay(String payWay) {
+		this.payWay = payWay;
+	}
+
+	public String getSourceType() {
+		return sourceType;
+	}
+
+	public void setSourceType(String sourceType) {
+		this.sourceType = sourceType;
+	}
+
+	public int getTxnAmt() {
+		return txnAmt;
+	}
+
+	public void setTxnAmt(int txnAmt) {
+		this.txnAmt = txnAmt;
+	}
+
+	public String getTxnTime() {
+		return txnTime;
+	}
+
+	public void setTxnTime(String txnTime) {
+		this.txnTime = txnTime;
+	}
+
+	public String getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(String updateTime) {
+		this.updateTime = updateTime;
 	}
 }

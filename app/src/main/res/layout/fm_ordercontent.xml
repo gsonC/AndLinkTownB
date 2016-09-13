@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    >
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
-        <cn.com.hgh.view.AbPullToRefreshView
+    <cn.com.hgh.view.AbPullToRefreshView
             android:id="@+id/act_addorder_abpulltorefreshview"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
             android:layout_marginTop="10dp"
-            android:layout_weight="1"
             android:background="@color/white"
             android:orientation="vertical"
             android:visibility="visible">
@@ -29,13 +29,17 @@
             android:listSelector="#00000000"
             android:scrollbars="none" >
         </cn.com.hgh.view.SlideListView2>
+
       </cn.com.hgh.view.AbPullToRefreshView>
+
+
         <ImageView
             android:visibility="visible"
             android:id="@+id/fm_orederfragment_iv_empty"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:src="@mipmap/iv_empty"
+            android:scaleType="fitCenter"
              />
       </FrameLayout>
 

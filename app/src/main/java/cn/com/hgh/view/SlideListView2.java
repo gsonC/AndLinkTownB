@@ -297,5 +297,8 @@ public class SlideListView2 extends ListView {
 	public void slideBack() {
 		this.scrollBack();
 	}
+	public boolean getIsSlided() {
 
+        return  isSlided;
+	}
 }
