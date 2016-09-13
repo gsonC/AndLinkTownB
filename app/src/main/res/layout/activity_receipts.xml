@@ -29,6 +29,7 @@
             android:layout_below="@id/today_left"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
+            android:text="0.00"
             android:textColor="@android:color/white"
             android:textSize="36sp"
             android:textStyle="bold" />
@@ -58,6 +59,7 @@
                     android:id="@+id/today_total"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="0.00"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/h16" />
             </LinearLayout>
@@ -87,6 +89,7 @@
                     android:id="@+id/today_has_used"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="0.00"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/h16" />
             </LinearLayout>

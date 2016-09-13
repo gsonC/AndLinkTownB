@@ -697,7 +697,8 @@ public class API {
 	public static final String MARKETINGSMS_BULK_LIST = "message/smsBulkSend.do";
 	/* 群发结果查询**/
 	public static final String MARKETINGSMS_QUERYRESULTS_LIST = "message/queryBulkResult.do";
-
+	/* 查询今日剩余额度、今日总额度、今日已用额度**/
+	public static final String QUERY_AMT_CONFIG = "finance/queryAmtConfig.do";
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }

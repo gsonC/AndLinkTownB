@@ -2633,7 +2633,22 @@ public enum OkHttpsImp {
 		getProgressResponse(myResultCallback, params, url);
 	}
 
-
+	/*
+	* 查询今日剩余额度、今日总额度、今日已用额度
+	* */
+	public void queryAmtConfig(String serNum, String reqTime, String accountNo, String storeNo,
+							   MyResultCallback<String> myResultCallback) throws Exception {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("serNum", serNum);
+		params.put("source", appsource);
+		params.put("reqTime", reqTime);
+		params.put("accountNo", accountNo);
+		params.put("storeNo", storeNo);
+		String sign = getSign(md5_key, params);
+		params.put("sign", sign);
+		String url = getAbsoluteUrl(API.QUERY_AMT_CONFIG);
+		getProgressResponse(myResultCallback, params, url);
+	}
 
 	/**
 	 * 签名方法
