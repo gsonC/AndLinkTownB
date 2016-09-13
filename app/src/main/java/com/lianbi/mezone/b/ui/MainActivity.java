@@ -876,6 +876,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 
 							@Override
 							public void onResponseResult(Result result) {
+								System.out.println(userShopInfoBean.getBusinessId());
 							}
 
 							@Override
