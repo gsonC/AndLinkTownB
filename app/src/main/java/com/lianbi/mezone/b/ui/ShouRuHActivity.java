@@ -28,11 +28,11 @@ import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
 
 /**
  * 提现
- * 
+ *
  * @time 下午6:18:46
  * @date 2016-1-12
  * @author hongyu.yang
- * 
+ *
  */
 public class ShouRuHActivity extends BaseActivity {
 	TextView shouruhactivity_tv_band, shouruhactivity_tv_tijiao,
@@ -59,6 +59,8 @@ public class ShouRuHActivity extends BaseActivity {
 	 */
 	protected void initView() {
 		setPageTitle("提现");
+		setPageRightTextColor(R.color.commo_text_color);
+		setPageRightTextSize(15);
 		setPageRightText("提现记录");
 		shouruhactivity_tv_band = (TextView) findViewById(R.id.shouruhactivity_tv_band);
 		shouruhactivity_tv_tijiao = (TextView) findViewById(R.id.shouruhactivity_tv_tijiao);
@@ -108,6 +110,10 @@ public class ShouRuHActivity extends BaseActivity {
 				ContentUtils.showMsg(this, "请正确输入提现金额");
 				return;
 			}
+			if(Double.parseDouble(amount) < 50){
+                ContentUtils.showMsg(ShouRuHActivity.this, "提现金额不能低于50元！");
+                return;
+            }
 			totalamount = Double.parseDouble(shouruhactivity_tv_numtotale
 					.getText().toString().trim());
 			if (Double.parseDouble(amount) - totalamount > 0) {
@@ -141,7 +147,7 @@ public class ShouRuHActivity extends BaseActivity {
 							totalamount = BigDecimal
 									.valueOf(Long.valueOf(result.getData()))
 									.divide(new BigDecimal(100)).doubleValue();
-							
+
 							shouruhactivity_tv_numtotale.setText(totalamount
 									+ "");
 						}
@@ -262,7 +268,7 @@ public class ShouRuHActivity extends BaseActivity {
 		 * String outerOrderId, String accountNo, String storeNo, String
 		 * amount,String product,String channel, String serNum,String
 		 * source,String reqTime,
-		 * 
+		 *
 		 */
 		try {
 			okHttpsImp.withdraw(OkHttpsImp.md5_key,
@@ -276,14 +282,13 @@ public class ShouRuHActivity extends BaseActivity {
 							dialogInputPassword.dismiss();
 							shouruhactivity_et_num.setText("");
 							shouruhactivity_et_num.setHint("请输入提现金额（元）");
-							
+
 							ContentUtils.putSharePre(ShouRuHActivity.this,
 									Constants.SHARED_PREFERENCE_NAME, Constants.SEARCHFINANCIAL,
 									true);
-							
-							Intent intent = new Intent(ShouRuHActivity.this,
-									Sucess_FailledActivity.class);
-							intent.putExtra("key", 1);
+
+							Intent intent = new Intent(ShouRuHActivity.this, WithdrawingProgressActivity.class);
+							intent.putExtra(WithdrawingProgressActivity.FROM, WithdrawingProgressActivity.PROGRESS);
 							ShouRuHActivity.this.startActivity(intent);
 						}
 

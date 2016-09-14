@@ -1,5 +1,6 @@
 package com.lianbi.mezone.b.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -28,10 +29,43 @@ public class WithdrawingProgressActivity extends BaseActivity {
     @Bind(R.id.transferred_to_account_time)
     TextView transferred_to_account_time;//到账时间
 
+    /*
+    * 从哪里跳转过来的
+    * */
+    public static final String FROM = "from_name";
+
+    /*
+    * 说明提现尚未完成或者提现请求刚刚提交
+    * */
+    public static final String PROGRESS = "progress";
+
+    /*
+    * 说明提现已经成功
+    * */
+    public static final String SUCESS = "sucess";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_withdrawing_progress, NOTYPE);
         ButterKnife.bind(WithdrawingProgressActivity.this);
+
+        switch (getIntent().getStringExtra(FROM)) {//从哪里跳转过来的
+            case PROGRESS://progress代表从FinancialOfficeFragment或ShouRuHActivity跳转过来，说明提现尚未完成或者提现请求刚刚提交
+                setPageTitle("提现进度");
+                setPageRightTextColor(R.color.commo_text_color);
+                setPageRightTextSize(15);
+                setPageRightText("提现记录");
+                break;
+            case SUCESS://sucess代表从WithdrawRecordActivity中点击item跳转过来，说明提现已经成功
+                setPageTitle("提现成功");
+                break;
+        }
+    }
+
+    @Override
+    protected void onTitleRightClickTv() {
+        super.onTitleRightClickTv();
+        startActivity(new Intent(WithdrawingProgressActivity.this, WithdrawRecordActivity.class));
     }
 }

@@ -1,6 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.lhh.ptrrv.library.PullToRefreshRecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+<cn.com.hgh.view.AbPullToRefreshView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/withdraw_record"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.lianbi.mezone.b.ui.WithdrawRecordActivity" />
+    android:orientation="vertical"
+    tools:context="com.lianbi.mezone.b.ui.WithdrawRecordActivity">
+
+    <ImageView
+        android:id="@+id/iv_empty_act_withdraw_record"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerInside"
+        android:src="@mipmap/iv_empty" />
+
+    <ListView
+        android:id="@+id/withdraw_record_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:cacheColorHint="@color/transparent"
+        android:divider="@color/colores_news_14"
+        android:dividerHeight="@dimen/line"
+        android:drawSelectorOnTop="false"
+        android:listSelector="@color/transparent"
+        android:scrollbars="none"
+        android:scrollingCache="true" />
+</cn.com.hgh.view.AbPullToRefreshView>
