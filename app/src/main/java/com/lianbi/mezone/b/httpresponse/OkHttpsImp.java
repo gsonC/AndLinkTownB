@@ -2333,7 +2333,24 @@ public enum OkHttpsImp {
 		String url = getAbsoluteUrl(API.MEMBERLABELLIST);
 		getProgressResponse(myResultCallback, params, url);
 	}
+	/**
+	 * 查询所有未删除的呼叫内容列表
+	 */
+	public void getTssCallTypeList(
+			String serNum, String source, String reqTime,
+			String md5_key,
+			String storeId, MyResultCallback<String> myResultCallback) throws Exception {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("storeId", storeId);
+		params.put("reqTime", reqTime);
+		params.put("serNum", serNum);
+		params.put("source", source);
+		String sign = getSign(md5_key, params);
+		params.put("sign", sign);
+		String url = getHttpUrl(storeId,API.CALLLIST);
+		postProgressResponse(myResultCallback, params, url);
 
+	}
 	/*
    * 优惠券管理（-店铺-优惠券表）按优惠券状态筛选店铺所有的优惠券
    * @param issuedStoreId 商铺ID
@@ -2507,7 +2524,21 @@ public enum OkHttpsImp {
 		String url = getAbsoluteUrl(API.ADDVIPLABEL);
 		getProgressResponse(myResultCallback, params, url);
 	}
-
+	/**
+	 * 添加呼叫标签
+	 */
+	public void AddCallTag(String serNum, String source, String reqTime, String md5_key, String storeId, String content, MyResultCallback<String> myResultCallback) throws Exception {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("serNum", serNum);
+		params.put("source", source);
+		params.put("reqTime", reqTime);
+		params.put("storeId", storeId);
+		params.put("content", content);
+		String sign = getSign(md5_key, params);
+		params.put("sign", sign);
+		String url = getHttpUrl(storeId,API.ADDCALLTAG);
+		postProgressResponse(myResultCallback, params, url);
+	}
 	/**
 	 * 删除会员标签
 	 */
@@ -2523,7 +2554,21 @@ public enum OkHttpsImp {
 		String url = getAbsoluteUrl(API.DELETELABEL);
 		getProgressResponse(myResultCallback, params, url);
 	}
-
+	/**
+	 * 删除呼叫内容
+	 */
+	public void DeleteCallTag(String serNum, String source, String reqTime, String md5_key,
+							 String callId,String storeId, MyResultCallback<String> myResultCallback) throws Exception {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("serNum", serNum);
+		params.put("source", source);
+		params.put("reqTime", reqTime);
+		params.put("callId", callId);
+		String sign = getSign(md5_key, params);
+		params.put("sign", sign);
+		String url = getHttpUrl(storeId,API.DELETECALLLABEL);
+		postProgressResponse(myResultCallback, params, url);
+	}
 	/**
 	 * 删除积分商品
 	 */

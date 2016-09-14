@@ -64,7 +64,7 @@ public class TableSetActivity extends BaseActivity implements
 	private ArrayList<TableSetBean> mSearchRsult = new ArrayList<TableSetBean>();
 	private ArrayList<TableSetBean> mDatas = new ArrayList<TableSetBean>();
 	private ArrayList<TableSetBean> mIntentSearch= new ArrayList<TableSetBean>();
-
+   private TextView tv_call_setup;
 	private boolean Isdeletedsucces = false;
 	/**
 	 * 当前位置
@@ -247,6 +247,7 @@ public class TableSetActivity extends BaseActivity implements
 		tv_addtableset = (TextView) findViewById(R.id.tv_addtableset);// 添加桌位
 		iv_addtableset = (ImageView) findViewById(R.id.iv_addtableset);// 添加桌位
 		iv_delete_table = (ImageView) findViewById(R.id.iv_delete_table);
+		tv_call_setup=(TextView)findViewById(R.id.tv_call_setup);
 	}
 
 	@Override
@@ -268,6 +269,7 @@ public class TableSetActivity extends BaseActivity implements
 		slide.setSlideListener(this);
 		iv_delete_table.setOnClickListener(this);
 		iv_addtableset.setOnClickListener(this);
+		tv_call_setup.setOnClickListener(this);
 	}
 
 	private void initAdapter() {
@@ -280,6 +282,10 @@ public class TableSetActivity extends BaseActivity implements
 	@Override
 	protected void onChildClick(View view) {
 		switch (view.getId()) {
+			case R.id.tv_call_setup://呼叫设置
+
+				startActivity(new Intent(this,CallSetActivity.class));
+				break;
 		case R.id.tv_searchtablenum:// 搜索框
 
 			Intent intent = new Intent(this, SearchActivity.class);
@@ -344,6 +350,7 @@ public class TableSetActivity extends BaseActivity implements
 				swtFmDo(curPosition, isDeteled, false, null);
 			}
 			break;
+
 		}
 	}
 

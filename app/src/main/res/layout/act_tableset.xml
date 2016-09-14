@@ -11,7 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/white"
-        android:gravity="center" >
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/tv_searchtablenum"
@@ -26,6 +27,15 @@
             android:text="@string/searchtablenum"
             android:textColor="#FF909090"
             android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_call_setup"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:text="呼叫设置"
+            android:background="@drawable/shape_addnewmember"
+            android:padding="7dp"
+            />
     </LinearLayout>
 
     <View
@@ -49,6 +59,8 @@
             slideswitch:shape1="circle"
             slideswitch:themeColor="#ff0a5a00" >
         </cn.com.hgh.view.SlideSwitch>
+
+
     </LinearLayout>
 
     <LinearLayout

@@ -195,11 +195,13 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/lin_discount"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
                 android:background="@color/white"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="visible">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -208,7 +210,6 @@
                     android:gravity="center_horizontal">
 
                     <TextView
-
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="费率: "/>
@@ -223,6 +224,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/colores_news_01"
                         android:text=" 0.1%"/>
+
                 </LinearLayout>
 
 

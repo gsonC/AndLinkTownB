@@ -67,7 +67,12 @@ public class IncomeActivity extends BaseActivity implements OnClickListener {
 				if (AbStrUtil.isEmpty(item.getTime())) {
 					tv_income1_title.setVisibility(View.GONE);
 					llt_income_bottom.setVisibility(View.VISIBLE);
-					tv_income2_title.setText(item.getOptMsg() + "");
+					if("item.getOptMsg()"==null){
+						tv_income2_title.setText("收入-提现失败金额返还");
+					}else{
+						tv_income2_title.setText(item.getOptMsg() + "");
+					}
+
 					tv_income2_time.setText(item.getCreateTime());
 					if ("01".equals(item.getOptType())) {
 						tv_income2_money.setText(MathExtend.roundNew(new BigDecimal(item.getAmount())

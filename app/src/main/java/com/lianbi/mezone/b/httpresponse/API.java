@@ -634,13 +634,25 @@ public class API {
 	 */
 	public static final String MEMBERLABELLIST = "vipLabel/vipLabelList.do";
 	/**
+	 * 获取呼叫列表
+	 */
+	public static final String CALLLIST = "getTssCallTypeList.do";
+	/**
 	 * 增加会员标签
 	 */
 	public static final String ADDVIPLABEL = "vipLabel/addVipLabel.do";
 	/**
+	 * 增加呼叫标签
+	 */
+	public static final String ADDCALLTAG= "createTssCallType.do";
+	/**
 	 * 删除会员标签
 	 */
 	public static final String DELETELABEL = "vipLabel/delVipLabel.do";
+	/**
+	 * 删除呼叫内容
+	 */
+	public static final String DELETECALLLABEL = "deleteTssCallType.do";
 	/**
 	 * 删除积分商品
 	 */
