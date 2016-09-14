@@ -160,13 +160,13 @@ public class IncomeActivity extends BaseActivity implements OnClickListener {
 				break;
 			case R.id.mainpoplayout_tvxia:
 				optType = "01";
-				setPageRightText("收入");
+				setPageRightText("支出");
 				getAmtFlow(true, optType);
 				pw.dismiss();
 				break;
 			case R.id.mainpoplayout_tvincome:
 				optType = "02";
-				setPageRightText("支出");
+				setPageRightText("收入");
 				getAmtFlow(true, optType);
 				pw.dismiss();
 				break;
@@ -192,6 +192,8 @@ public class IncomeActivity extends BaseActivity implements OnClickListener {
 			mAdapter.replaceAll(mDatas);
 		}
 
+		System.out.println("optType---"+optType);
+
 		try {
 			okHttpsImp.getIsAmtFlow(OkHttpsImp.md5_key, userShopInfoBean.getUserId(), userShopInfoBean.getBusinessId(), optType, uuid, "app", reqTime, page + "", 20 + "", new MyResultCallback<String>() {
 				@Override
@@ -202,6 +204,10 @@ public class IncomeActivity extends BaseActivity implements OnClickListener {
 						ArrayList<IncomeBean> mDatasL = (ArrayList<IncomeBean>) JSON.parseArray(restring, IncomeBean.class);
 						//数据拆分
 						if (mDatasL != null && mDatasL.size() > 0) {
+
+							img_income_empty.setVisibility(View.GONE);
+							act_income_abpulltorefreshview.setVisibility(View.VISIBLE);
+
 							int dataLSize = mDatasL.size();
 
 							for (int i = 0; i < dataLSize; i++) {
