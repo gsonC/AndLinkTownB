@@ -20,9 +20,6 @@ import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
 import com.lianbi.mezone.b.photo.PopupWindowHelper;
 import com.xizhi.mezone.b.R;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,7 +48,7 @@ public class IncomeActivity extends BaseActivity implements OnClickListener {
 		initView();
 		setListener();
 		initPickView();
-		setAdapter();
+	//	setAdapter();
 		getAmtFlow(true, "00");
 	}
 
@@ -163,56 +160,53 @@ public class IncomeActivity extends BaseActivity implements OnClickListener {
 			page = 1;
 			datas.clear();
 			datas.addAll(mDatas);
-			if(adapter!=null){
+			if (adapter != null) {
 				adapter.notifyDataSetChanged();
 			}
 		}
 
 		try {
-			okHttpsImp.getIsAmtFlow(OkHttpsImp.md5_key, userShopInfoBean.getUserId(), userShopInfoBean.getBusinessId(), optType, uuid, "app", reqTime, page + "", 20 + "", new MyResultCallback<String>() {
-				@Override
-				public void onResponseResult(Result result) {
-					page++;
-					String restring = result.getData();
-					if (!TextUtils.isEmpty(restring)) {
-						try {
-							JSONObject jsonobject = new JSONObject(restring);
-							restring = jsonobject.getString("xxxxxx");
-							ArrayList<IncomeBean> mDatasL = (ArrayList<IncomeBean>) JSON.parseArray(restring, IncomeBean.class);
+			okHttpsImp.getIsAmtFlow(OkHttpsImp.md5_key, userShopInfoBean.getUserId(), userShopInfoBean.getBusinessId(),
+					optType, uuid, "app", reqTime, page + "", 20 + "", new MyResultCallback<String>() {
+						@Override
+						public void onResponseResult(Result result) {
+							page++;
+							String restring = result.getData();
+							if (!TextUtils.isEmpty(restring)) {
+								ArrayList<IncomeBean> mDatasL = (ArrayList<IncomeBean>) JSON.parseArray(restring, IncomeBean.class);
+								System.out.println("mDatasL"+mDatasL.size());
 
-							if (mDatasL != null && mDatasL.size() > 0) {
-								mDatas.addAll(mDatasL);
-							}
-							if (mDatas != null && mDatas.size() > 0) {
-								img_income_empty.setVisibility(View.GONE);
-								act_income_abpulltorefreshview.setVisibility(View.VISIBLE);
+
+								/*if (mDatasL != null && mDatasL.size() > 0) {
+									mDatas.addAll(mDatasL);
+								}
+								if (mDatas != null && mDatas.size() > 0) {
+									img_income_empty.setVisibility(View.GONE);
+									act_income_abpulltorefreshview.setVisibility(View.VISIBLE);
+								} else {
+									img_income_empty.setVisibility(View.VISIBLE);
+									act_income_abpulltorefreshview.setVisibility(View.GONE);
+								}
+								AbPullHide.hideRefreshView(isResh, act_income_abpulltorefreshview);
+								datas.clear();
+								datas.addAll(mDatas);
+								adapter.notifyDataSetChanged();*/
+
 							} else {
 								img_income_empty.setVisibility(View.VISIBLE);
 								act_income_abpulltorefreshview.setVisibility(View.GONE);
 							}
-							AbPullHide.hideRefreshView(isResh, act_income_abpulltorefreshview);
-							datas.clear();
-							datas.addAll(mDatas);
-							adapter.notifyDataSetChanged();
-
-						} catch (JSONException e) {
-							e.printStackTrace();
 						}
-					}else{
-						img_income_empty.setVisibility(View.VISIBLE);
-						act_income_abpulltorefreshview.setVisibility(View.GONE);
-					}
-				}
 
-				@Override
-				public void onResponseFailed(String msg) {
-					if (isResh) {
-						img_income_empty.setVisibility(View.VISIBLE);
-						act_income_abpulltorefreshview.setVisibility(View.GONE);
-					}
-					AbPullHide.hideRefreshView(isResh, act_income_abpulltorefreshview);
-				}
-			});
+						@Override
+						public void onResponseFailed(String msg) {
+							if (isResh) {
+								img_income_empty.setVisibility(View.VISIBLE);
+								act_income_abpulltorefreshview.setVisibility(View.GONE);
+							}
+							AbPullHide.hideRefreshView(isResh, act_income_abpulltorefreshview);
+						}
+					});
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
