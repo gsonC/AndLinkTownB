@@ -8,7 +8,7 @@ import cn.com.hgh.utils.AbDateUtil;
 /**
  * Created by zemin.zheng on 2016/8/25.
  */
-public class CouponBean implements Serializable,Comparable<CouponBean>{
+public class CouponBean implements Serializable, Comparable<CouponBean> {
     private static final long serialVersionUID = -7853355851081754560L;
     private String isValide;
     private String issuedStoreId;

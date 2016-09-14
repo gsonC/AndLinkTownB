@@ -16,12 +16,12 @@
         android:gravity="center">
 
         <TextView
+            android:id="@+id/reason"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableLeft="@mipmap/withdraw_failure"
             android:drawablePadding="10dp"
             android:gravity="center_vertical"
-            android:text="@string/withdraw_failed_reason"
             android:textColor="@color/colores_news_17"
             android:textSize="@dimen/h13" />
     </RelativeLayout>

@@ -179,13 +179,9 @@ public class WithdrawDepositActivity extends BaseActivity {
 	}
 
 	private void getBankWithdrawrecord() {
-		String reqTime = AbDateUtil.getDateTimeNow();
-		String uuid = AbStrUtil.getUUID();
 		try {
-			okHttpsImp.getWithDrawByUserId(OkHttpsImp.md5_key,
-					userShopInfoBean.getUserId(),
-					userShopInfoBean.getBusinessId(), "0", 20 + "", uuid,
-					"app", reqTime,
+			okHttpsImp.getWithDrawByUserId(userShopInfoBean.getUserId(),
+					BusinessId, "0", 20 + "", uuid, reqTime,
 
 					new MyResultCallback<String>() {
 

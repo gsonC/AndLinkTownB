@@ -160,6 +160,7 @@
     <string name="freezingamount">冻结金额</string>
     <string name="newaddcategory">添加会员分类</string>
     <string name="membercategoryhint">(注意:10-100,表示10,不含100,满足条件可自动升级，请慎重设置,如需修改请联系业务人员)</string>
-    <string name="withdraw_failed_reason">审核未通过，请核对银行卡信息是否正确</string>
+    <string name="withdraw_failed_reason_1">审核未通过，请核对提现信息是否正确</string>
+    <string name="withdraw_failed_reason_2">银行打款失败，请核对银行卡信息是否正确</string>
     <string name="today_left_money">今天剩余额度</string>
 </resources>
