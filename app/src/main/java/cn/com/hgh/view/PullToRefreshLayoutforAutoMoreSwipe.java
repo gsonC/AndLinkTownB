@@ -29,7 +29,7 @@ import java.util.TimerTask;
  * @author 95
  */
 public class PullToRefreshLayoutforAutoMoreSwipe extends RelativeLayout implements OnScrollListener {
-	public static final String TAG = "PullToRefreshLayout";
+	public static final String TAG = "";
 	// 初始状态
 	public static final int INIT = 0;
 	// 释放刷新
@@ -194,7 +194,7 @@ public class PullToRefreshLayoutforAutoMoreSwipe extends RelativeLayout implemen
 	 */
 	/**
 	 * @param refreshResult
-	 *            PullToRefreshLayout.SUCCEED代表成功，PullToRefreshLayout.FAIL代表失败
+	 *
 	 */
 	public void refreshFinish(int refreshResult) {
 		refreshingView.clearAnimation();
@@ -233,7 +233,7 @@ public class PullToRefreshLayoutforAutoMoreSwipe extends RelativeLayout implemen
 	 * 加载完毕，显示加载结果。注意：加载完成后一定要调用这个方法
 	 * 
 	 * @param
-	 *            ，PullToRefreshLayout.FAIL代表失败
+	 *            ，FAIL代表失败
 	 */
 	/*public void loadmoreFinish(int refreshResult) {
 		loadingView.clearAnimation();

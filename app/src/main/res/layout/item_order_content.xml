@@ -111,7 +111,7 @@
             </LinearLayout>
         </LinearLayout>
         <RelativeLayout
-            android:layout_width="60dp"
+            android:layout_width="85dp"
             android:layout_height="85dp"
             android:layout_alignParentRight="true"
             android:clickable="true"
@@ -125,11 +125,11 @@
 
                 <TextView
                     android:id="@+id/tv_chdelete"
-                    android:layout_width="60dp"
+                    android:layout_width="85dp"
                     android:layout_height="match_parent"
                     android:background="#ff0000"
                     android:gravity="center"
-                    android:text="删除"
+                    android:text="删 除"
                 android:textSize="15sp" />
 
             </LinearLayout>

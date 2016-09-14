@@ -280,9 +280,15 @@ public class OrderContentActivity extends BaseActivity implements
                 timeSelectorTo.show();
                 break;
             case R.id.iv_close:
+                if(!TextUtils.isEmpty(tvStarttime.getText().toString())){
+                    beginTime="";
+                    tvStarttime.setText("");
+                }
+                if(!TextUtils.isEmpty(tvFinishtime.getText().toString())){
+                    endTime="";
+                    tvFinishtime.setText("");
+                }
 
-                tvStarttime.setText("");
-                tvFinishtime.setText("");
                 break;
         }
     }
@@ -397,10 +403,11 @@ public class OrderContentActivity extends BaseActivity implements
         Log.i("tag","传参 292 pageNo---》"+pageNo);
         Log.i("tag","传参 293 ---》"+pageSize);
 //        "BD2016070614191100000123"
+//        BDP20gCtJi160FN041202711""
         try{
             okHttpsImp.getqueryOrderInfo(uuid,"app",
                     reqTime,isValid,
-                    "app","BDP20gCtJi160FN041202711",orderNo,
+                    "app",BusinessId,orderNo,
                     String.valueOf(pageNo),pageSize,
                     orderStatus,txnTime,beginTime,
                     endTime,new MyResultCallback<String>() {
@@ -440,8 +447,12 @@ public class OrderContentActivity extends BaseActivity implements
                                                 tv_num.setText(String.valueOf(mDatas.size()));
                                                 break;
                                         }
-
-                                        setLoadMore(true);
+                                        int  mDatasize=mDatas.size();
+                                        if (mDatasize<Integer.parseInt(pageSize)) {
+                                            setLoadMore(false);//显示没有更多
+                                        }else {
+                                            setLoadMore(true);//显示加载更多并自动加载
+                                        }
                                         showData(isResh);
                                     }
                                 } catch (JSONException e) {

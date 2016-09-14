@@ -300,9 +300,10 @@ public class OrderLookUpActivity extends BaseActivity implements
 
         try{
 //            BD2016070614191100000123
+//            BDP20gCtJi160FN041202711
             okHttpsImp.getqueryOrderInfo(uuid,"app",
                     reqTime,isValid,
-                    "app","BDP20gCtJi160FN041202711",orderNo,
+                    "app",BusinessId,orderNo,
                     String.valueOf(pageNo),pageSize,
                     orderStatus,txnTime,startTime,
                     endTime,new MyResultCallback<String>() {
@@ -342,8 +343,13 @@ public class OrderLookUpActivity extends BaseActivity implements
                                             tv_num.setText(String.valueOf(mDatas.size()));
                                             break;
                                     }
+                                int  mDatasize=mDatas.size();
+                                if (mDatasize<Integer.parseInt(pageSize)) {
+                                    setLoadMore(false);//显示没有更多
+                                }else {
+                                    setLoadMore(true);//显示加载更多并自动加载
+                                }
 
-                                setLoadMore(true);
                                 showData(isResh);
                             }
                         } catch (JSONException e) {

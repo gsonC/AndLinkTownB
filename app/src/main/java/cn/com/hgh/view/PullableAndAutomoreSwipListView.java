@@ -73,7 +73,7 @@ public class PullableAndAutomoreSwipListView extends ListView implements Pullabl
                 R.styleable.swipelistviewstyle);  
         
       //获取自定义属性和默认值  
-      mRightViewWidth = (int) mTypedArray.getDimension(R.styleable.swipelistviewstyle_right_width, 200);
+      mRightViewWidth = (int) mTypedArray.getDimension(R.styleable.swipelistviewstyle_right_width, 120);
       
       mTypedArray.recycle();  
     }
