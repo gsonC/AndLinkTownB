@@ -15,6 +15,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -29,6 +30,7 @@ import com.xizhi.mezone.b.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import butterknife.Bind;
@@ -94,9 +96,9 @@ public class OrderContentActivity extends BaseActivity implements
     private String coupAmt;
     private String isValid="Y";
     private int  intentLayout=0;
-    private String txnTime;
-    private String beginTime;
-    private int pageNo=1;
+    private String txnTime="";
+    private String beginTime="";
+    private int pageNo=0;
     private String pageSize="15";
     private String orderNo="";
     private int listPosition=-1;
@@ -119,7 +121,7 @@ public class OrderContentActivity extends BaseActivity implements
                     endTime
                 );
                 this.intentLayout=POSITION0;
-                getOrderInfo(false,false,isValid);
+                getOrderInfo(true,false,isValid);
                 break;
             case R.id.tv_success:
                 vpOrderpager.setCurrentItem(1);
@@ -134,7 +136,7 @@ public class OrderContentActivity extends BaseActivity implements
                         endTime
                 );
                 this.intentLayout=POSITION1;
-                getOrderInfo(false,false,isValid);
+                getOrderInfo(true,false,isValid);
                 break;
             case R.id.tv_fail:
                 vpOrderpager.setCurrentItem(2);
@@ -149,7 +151,7 @@ public class OrderContentActivity extends BaseActivity implements
                         endTime
                 );
                 this.intentLayout=POSITION2;
-                getOrderInfo(false,false,isValid);
+                getOrderInfo(true,false,isValid);
                 break;
         }
     }
@@ -172,7 +174,7 @@ public class OrderContentActivity extends BaseActivity implements
                         "",
                         ""
                 );
-                getOrderInfo(false,false,isValid);
+                getOrderInfo(true,false,isValid);
                 break;
             case R.id.tv_threeday:
                 tvStarttime.setText("");
@@ -189,7 +191,7 @@ public class OrderContentActivity extends BaseActivity implements
                         beginTime,
                         endTime
                 );
-                getOrderInfo(false,false,isValid);
+                getOrderInfo(true,false,isValid);
                 break;
             case R.id.tv_onemonth:
                 tvStarttime.setText("");
@@ -206,7 +208,7 @@ public class OrderContentActivity extends BaseActivity implements
                         beginTime,
                         endTime
                 );
-                getOrderInfo(false,false,isValid);
+                getOrderInfo(true,false,isValid);
                 break;
         }
     }
@@ -236,7 +238,7 @@ public class OrderContentActivity extends BaseActivity implements
                                                 beginTime,
                                                 endTime
                                         );
-                                        getOrderInfo(false,false,isValid);
+                                        getOrderInfo(true,false,isValid);
                                     }
                                 }
                             }
@@ -267,7 +269,7 @@ public class OrderContentActivity extends BaseActivity implements
                                                 beginTime,
                                                 endTime
                                         );
-                                        getOrderInfo(false,false,isValid);
+                                        getOrderInfo(true,false,isValid);
                                     }
                                 }
                             }
@@ -291,12 +293,8 @@ public class OrderContentActivity extends BaseActivity implements
         setContentView(R.layout.act_ordercontent, NOTYPE);
         ButterKnife.bind(this);
         initView();
-        setLisenter();
-        initAdapter();
-        getOrderInfo(false,false,isValid);
-    }
-
-    private void initAdapter() {
+        orderStatus="03,04";
+        getOrderInfo(true,false,isValid);
     }
 
 
@@ -312,42 +310,11 @@ public class OrderContentActivity extends BaseActivity implements
     private void viewAdapter() {
         vpOrderpager.setAdapter(new MyAdapter(getSupportFragmentManager()));
         vpOrderpager.setCurrentItem(0);
-        vpOrderpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-
-            @Override
-            public void onPageSelected(int arg0) {
-                switch (arg0) {
-                    case 0: {
-                    }
-                    break;
-                    case 1: {
-                    }
-                    break;
-                    case 2: {
-                    }
-                    break;
-                }
-            }
-
-            @Override
-            public void onPageScrolled(int arg0, float arg1, int arg2) {
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int arg0) {
-
-            }
-        });
+        vpOrderpager.addOnPageChangeListener(this);
 
     }
 
 
-    /**
-     * 添加监听
-     */
-    private void setLisenter() {
-    }
 
     class MyAdapter extends FragmentPagerAdapter {
 
@@ -418,23 +385,28 @@ public class OrderContentActivity extends BaseActivity implements
     }
     public void getOrderInfo(final boolean  isResh, final boolean  isLoad,final String  isValid) {
         if (isResh) {
-            pageNo =1;
+            pageNo =0;
             mDatas.clear();
         }
-
+        Log.i("tag","传参 283 ---》"+mDatas.size());
+        Log.i("tag","传参 284---》 "+orderNo);
+        Log.i("tag","传参 285---》 "+orderStatus);
+        Log.i("tag","传参 285 ---》"+txnTime);
+        Log.i("tag","传参 288 ---》"+endTime);
+        Log.i("tag","传参 290---》"+isValid);
+        Log.i("tag","传参 292 pageNo---》"+pageNo);
+        Log.i("tag","传参 293 ---》"+pageSize);
 //        "BD2016070614191100000123"
         try{
             okHttpsImp.getqueryOrderInfo(uuid,"app",
                     reqTime,isValid,
-                    "app",BusinessId,orderNo,
+                    "app","BDP20gCtJi160FN041202711",orderNo,
                     String.valueOf(pageNo),pageSize,
                     orderStatus,txnTime,beginTime,
                     endTime,new MyResultCallback<String>() {
                         @Override
                         public void onResponseResult(Result result) {
-                            if(isLoad==true){
                                pageNo++;
-                            }
                             String reString = result.getData();
                             if (reString != null) {
                                 JSONObject jsonObject;
@@ -450,23 +422,26 @@ public class OrderContentActivity extends BaseActivity implements
                                                 .parseArray(reString,
                                                         OrderContent.class);
                                         int  basesize=baseList.size();
-                                        for(int i=0;i<basesize;i++){
-                                            switch (intentLayout) {
-                                                case POSITION0:
-                                                    mWholeData.add(baseList.get(i));
-                                                    mDatas.addAll(mWholeData);
-                                                    break;
-                                                case POSITION1:
-                                                    mPaySuccessDatas.add(baseList.get(i));
-                                                    mDatas.addAll(mPaySuccessDatas);
-                                                    break;
-                                                case POSITION2:
-                                                    mPayFailDatas.add(baseList.get(i));
-                                                    mDatas.addAll(mPayFailDatas);
-                                                    break;
-                                            }
+                                        Log.i("tag","查询到的条数"+basesize);
+                                        switch (intentLayout) {
+                                            case POSITION0:
+                                                mWholeData.addAll(baseList);
+                                                mDatas.addAll(mWholeData);
+                                                tv_num.setText(String.valueOf(mDatas.size()));
+                                                break;
+                                            case POSITION1:
+                                                mPaySuccessDatas.addAll(baseList);
+                                                mDatas.addAll(mPaySuccessDatas);
+                                                tv_num.setText(String.valueOf(mDatas.size()));
+                                                break;
+                                            case POSITION2:
+                                                mPayFailDatas.addAll(baseList);
+                                                mDatas.addAll(mPayFailDatas);
+                                                tv_num.setText(String.valueOf(mDatas.size()));
+                                                break;
                                         }
 
+                                        setLoadMore(true);
                                         showData(isResh);
                                     }
                                 } catch (JSONException e) {
@@ -476,6 +451,7 @@ public class OrderContentActivity extends BaseActivity implements
                         }
                         @Override
                         public void onResponseFailed(String msg) {
+                            setLoadMore(false);
                             showData(isResh);
                         }
                     });
@@ -485,31 +461,47 @@ public class OrderContentActivity extends BaseActivity implements
 
 
     }
+    public  void  setLoadMore(boolean  loadmore){
+        switch (intentLayout) {
+            case POSITION0:
+                mWholeFragment.LoadMore(loadmore);
+                break;
+            case POSITION1:
+                mPaySuccessFragment.LoadMore(loadmore);
+                break;
+            case POSITION2:
+                mPayFailFragment.LoadMore(loadmore);
+                break;
+        }
+
+    }
     public void   showData(boolean  isResh){
         int intTxnAmt=0;
 
         for (OrderContent ordercontent : mDatas) {
             intTxnAmt=intTxnAmt+ordercontent.getTxnAmt();
         }
-        tv_rmb.setText("¥"+intTxnAmt);
+        String amt = BigDecimal.valueOf(Long.valueOf(intTxnAmt))
+                .divide(new BigDecimal(100)).toString();
+        tv_rmb.setText("¥"+amt);
         switch (intentLayout) {
             case POSITION0:
                 if (mWholeFragment != null) {
-                    swtFmDo(POSITION0,mDatas);
                     mWholeFragment.hideRefreshView(isResh);
+                    swtFmDo(POSITION0,mDatas);
                 }
                 break;
 
             case POSITION1:
                 if (mPaySuccessFragment != null) {
-                    swtFmDo(POSITION1,mDatas);
                     mPaySuccessFragment.hideRefreshView(isResh);
+                    swtFmDo(POSITION1,mDatas);
                 }
                 break;
             case POSITION2:
                 if (mPayFailFragment != null) {
-                    swtFmDo(POSITION2,mDatas);
                     mPayFailFragment.hideRefreshView(isResh);
+                    swtFmDo(POSITION2,mDatas);
                 }
                 break;
         }
@@ -599,8 +591,15 @@ public class OrderContentActivity extends BaseActivity implements
                                         }
                                         break;
                                 }
-                                mDatas.remove(listPosition);
+//                                mDatas.remove(listPosition);
                                 tv_num.setText(String.valueOf(mDatas.size()));
+                                int intTxnAmt=0;
+                                for (OrderContent ordercontent : mDatas) {
+                                    intTxnAmt=intTxnAmt+ordercontent.getTxnAmt();
+                                }
+                                String amt = BigDecimal.valueOf(Long.valueOf(intTxnAmt))
+                                        .divide(new BigDecimal(100)).toString();
+                                tv_rmb.setText("¥"+amt);
                                 try {
                                     jsonObject = new JSONObject(reString);
                                     if (!TextUtils.isEmpty(reString)) {

@@ -16,6 +16,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
@@ -29,6 +30,7 @@ import com.xizhi.mezone.b.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import butterknife.Bind;
@@ -78,7 +80,7 @@ public class OrderLookUpActivity extends BaseActivity implements
     private String beginTime;
     private int listPosition=-1;
     private int  intentLayout=0;
-    private int pageNo=1;
+    private int pageNo;
     private String isValid="Y";
     private String pageSize="15";
     private String orderNo="";
@@ -115,15 +117,9 @@ public class OrderLookUpActivity extends BaseActivity implements
     }
     private  void  initQuery(String orderStatus,int intentLayout){
         this.orderStatus=orderStatus;
+        this.pageNo=0;
         this.intentLayout=intentLayout;
         this.isValid="Y";
-    }
-    @Override
-    protected void onTitleRightClickTv() {
-        super.onTitleRightClickTv();
-        Intent intent=new  Intent();
-        intent.setClass(OrderLookUpActivity.this,OrderContentActivity.class);
-        startActivity(intent);
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,6 +127,7 @@ public class OrderLookUpActivity extends BaseActivity implements
         setContentView(R.layout.act_orderlookup, NOTYPE);
         ButterKnife.bind(this);
         initView();
+        orderStatus="03,04";
         getOrderInfo(true,false,isValid);
     }
 
@@ -152,14 +149,24 @@ public class OrderLookUpActivity extends BaseActivity implements
 
             @Override
             public void onPageSelected(int arg0) {
+                curPosition = arg0;
                 switch (arg0) {
                     case 0: {
+                        if (mWholeFragment != null) {
+                            swtFmDo(arg0,mWholeData);
+                        }
                     }
                     break;
                     case 1: {
+                        if (mPaySuccessFragment != null) {
+                            swtFmDo(arg0,mPaySuccessDatas);
+                        }
                     }
                     break;
                     case 2: {
+                        if (mPayFailFragment != null) {
+                            swtFmDo(arg0,mPayFailDatas);
+                        }
                     }
                     break;
                 }
@@ -181,7 +188,6 @@ public class OrderLookUpActivity extends BaseActivity implements
 
     @Override
     protected void onTitleRightClick1() {
-        super.onTitleLeftClick();
         startActivity(new Intent(OrderLookUpActivity.this, OrderContentActivity.class));
     }
 
@@ -276,24 +282,34 @@ public class OrderLookUpActivity extends BaseActivity implements
     }
 
     public void getOrderInfo(final boolean  isResh,final boolean  isLoad,final String  isValid) {
+        Log.i("tag","pageNo getOrderInfo ---》"+pageNo);
         if (isResh) {
-            pageNo =1;
+            Log.i("tag","过---》");
+            pageNo =0;
             mDatas.clear();
         }
+        Log.i("tag","传参 283 ---》"+mDatas.size());
+        Log.i("tag","传参 284---》 "+orderNo);
+        Log.i("tag","传参 285---》 "+orderStatus);
+        Log.i("tag","传参 285 ---》"+txnTime);
+        Log.i("tag","传参 287 ---》"+startTime);
+        Log.i("tag","传参 288 ---》"+endTime);
+        Log.i("tag","传参 290---》"+isValid);
+        Log.i("tag","传参 292 pageNo---》"+pageNo);
+        Log.i("tag","传参 293 ---》"+pageSize);
+
         try{
 //            BD2016070614191100000123
             okHttpsImp.getqueryOrderInfo(uuid,"app",
                     reqTime,isValid,
-                    "app",BusinessId,orderNo,
+                    "app","BDP20gCtJi160FN041202711",orderNo,
                     String.valueOf(pageNo),pageSize,
                     orderStatus,txnTime,startTime,
                     endTime,new MyResultCallback<String>() {
-
                 @Override
                 public void onResponseResult(Result result) {
-                    if(isLoad==true){
-                        pageNo++;
-                    }
+                    pageNo++;
+                    Log.i("tag","此时pageNo==="+pageNo);
                     String reString = result.getData();
                     if (reString != null) {
                         JSONObject jsonObject;
@@ -308,28 +324,27 @@ public class OrderLookUpActivity extends BaseActivity implements
                                         .parseArray(reString,
                                                 OrderContent.class);
                                 int  basesize=baseList.size();
-                                for(int i=0;i<basesize;i++){
+                                Log.i("tag","查询到的条数324---->"+basesize);
                                     switch (intentLayout) {
-                                        case 0:
-                                            mWholeData.add(baseList.get(i));
+                                        case POSITION0:
+                                            mWholeData.addAll(baseList);
                                             mDatas.addAll(mWholeData);
                                             tv_num.setText(String.valueOf(mDatas.size()));
                                             break;
-                                        case 1:
-                                            mPaySuccessDatas.add(baseList.get(i));
+                                        case POSITION1:
+                                            mPaySuccessDatas.addAll(baseList);
                                             mDatas.addAll(mPaySuccessDatas);
                                             tv_num.setText(String.valueOf(mDatas.size()));
                                             break;
-                                        case 2:
-                                            mPayFailDatas.add(baseList.get(i));
+                                        case POSITION2:
+                                            mPayFailDatas.addAll(baseList);
                                             mDatas.addAll(mPayFailDatas);
                                             tv_num.setText(String.valueOf(mDatas.size()));
                                             break;
                                     }
-                                }
 
+                                setLoadMore(true);
                                 showData(isResh);
-
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -338,11 +353,28 @@ public class OrderLookUpActivity extends BaseActivity implements
                 }
                 @Override
                 public void onResponseFailed(String msg) {
+
+                    setLoadMore(false);
                     showData(isResh);
                 }
+
             });
         }catch (Exception e){
             e.printStackTrace();
+        }
+
+    }
+    public  void  setLoadMore(boolean  loadmore){
+        switch (intentLayout) {
+            case POSITION0:
+                mWholeFragment.LoadMore(loadmore);
+                break;
+            case POSITION1:
+                mPaySuccessFragment.LoadMore(loadmore);
+                break;
+            case POSITION2:
+                mPayFailFragment.LoadMore(loadmore);
+                break;
         }
 
     }
@@ -351,25 +383,27 @@ public class OrderLookUpActivity extends BaseActivity implements
         for (OrderContent ordercontent : mDatas) {
             intTxnAmt=intTxnAmt+ordercontent.getTxnAmt();
         }
-        tv_rmb.setText("¥"+intTxnAmt);
+        String amt = BigDecimal.valueOf(Long.valueOf(intTxnAmt))
+                .divide(new BigDecimal(100)).toString();
+        tv_rmb.setText("¥"+amt);
         switch (intentLayout) {
             case POSITION0:
                 if (mWholeFragment != null) {
-                    swtFmDo(POSITION0,mDatas);
                     mWholeFragment.hideRefreshView(isResh);
+                    swtFmDo(POSITION0,mDatas);
                 }
                 break;
 
             case POSITION1:
                 if (mPaySuccessFragment != null) {
-                    swtFmDo(POSITION1,mDatas);
                     mPaySuccessFragment.hideRefreshView(isResh);
+                    swtFmDo(POSITION1,mDatas);
                 }
                 break;
             case POSITION2:
                 if (mPayFailFragment != null) {
-                    swtFmDo(POSITION2,mDatas);
                     mPayFailFragment.hideRefreshView(isResh);
+                    swtFmDo(POSITION2,mDatas);
                 }
                 break;
         }
@@ -424,8 +458,15 @@ public class OrderLookUpActivity extends BaseActivity implements
                                         }
                                         break;
                                 }
-                                mDatas.remove(listPosition);
+//                              mDatas.remove(listPosition);
                                 tv_num.setText(String.valueOf(mDatas.size()));
+                                int intTxnAmt=0;
+                                for (OrderContent ordercontent : mDatas) {
+                                    intTxnAmt=intTxnAmt+ordercontent.getTxnAmt();
+                                }
+                                String amt = BigDecimal.valueOf(Long.valueOf(intTxnAmt))
+                                        .divide(new BigDecimal(100)).toString();
+                                tv_rmb.setText("¥"+amt);
                                 try {
                                     jsonObject = new JSONObject(reString);
                                     if (!TextUtils.isEmpty(reString)) {

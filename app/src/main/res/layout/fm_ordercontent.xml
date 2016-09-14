@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:sp="http://schemas.android.com/com.lianbi.mezone.b.fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
@@ -8,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
-    <cn.com.hgh.view.AbPullToRefreshView
+   <!-- <cn.com.hgh.view.AbPullToRefreshView
             android:id="@+id/act_addorder_abpulltorefreshview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -30,8 +31,27 @@
             android:scrollbars="none" >
         </cn.com.hgh.view.SlideListView2>
 
-      </cn.com.hgh.view.AbPullToRefreshView>
+      </cn.com.hgh.view.AbPullToRefreshView>-->
+        <cn.com.hgh.view.PullToRefreshLayoutforAutoMoreSwipe
+            android:id="@+id/refresh_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
 
+            <include layout="@layout/refresh_head" />
+            <!-- 支持所有实现Pullable接口的View -->
+
+            <cn.com.hgh.view.PullableAndAutomoreSwipListView
+                android:id="@+id/listview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#fff4f7f9"
+                android:cacheColorHint="#00000000"
+                android:divider="#dddbdb"
+                android:dividerHeight="1dp"
+                sp:right_width="120dp" />
+
+            <include layout="@layout/load_more" />
+        </cn.com.hgh.view.PullToRefreshLayoutforAutoMoreSwipe>
 
         <ImageView
             android:visibility="visible"
