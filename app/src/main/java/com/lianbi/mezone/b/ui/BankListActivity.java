@@ -162,12 +162,9 @@ public class BankListActivity extends BaseActivity {
 				public void onResponseResult(Result result) {
 					try {
 						String restring=result.getData();
-						System.out.println("restring165"+restring);
 						JSONObject jbB = new JSONObject(result.getData());
-						System.out.println("jbB"+jbB);
 
 						String reStr = jbB.getString("list");
-						System.out.println("reStr"+reStr);
 						List<BankCardList> curArray = com.alibaba.fastjson.JSONObject
 								.parseArray(reStr, BankCardList.class);
 						arrayList.clear();

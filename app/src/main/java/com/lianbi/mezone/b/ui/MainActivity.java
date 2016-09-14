@@ -423,7 +423,6 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 						@Override
 						public void onResponseResult(Result result) {
 							String reString = result.getData();
-							System.out.println("reString426"+reString);
 							if (!TextUtils.isEmpty(reString)) {
 								FinancialOfficeAmountBean financialOfficeAmountBean = JSON.parseObject(reString,
 										FinancialOfficeAmountBean.class);
@@ -876,7 +875,6 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 
 							@Override
 							public void onResponseResult(Result result) {
-								System.out.println(userShopInfoBean.getBusinessId());
 							}
 
 							@Override

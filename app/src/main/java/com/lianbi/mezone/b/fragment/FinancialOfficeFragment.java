@@ -30,6 +30,7 @@ import com.lianbi.mezone.b.ui.WithdrawDepositActivity;
 import com.xizhi.mezone.b.R;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 
 import cn.com.hgh.utils.AbDateUtil;
 import cn.com.hgh.utils.AbStrUtil;
@@ -178,7 +179,7 @@ public class FinancialOfficeFragment extends Fragment implements
 		tv_finalcial_ruledescription = (TextView) view.findViewById(R.id.tv_finalcial_ruledescription);//规则说明
 		tv_finalcial_oldrate = (TextView) view.findViewById(R.id.tv_finalcial_oldrate);//老费率
 		tv_finalcial_newrate = (TextView) view.findViewById(R.id.tv_finalcial_newrate);//新费率
-		tv_finalcial_oldrate.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG );//中间加横线
+
 		tv_totalaccount = (TextView) view.findViewById(R.id.tv_totalaccount);// 账户总额(数字)
 		tv_shopaccount = (TextView) view.findViewById(R.id.tv_shopaccount);// 店铺总额(数字)
 
@@ -199,10 +200,10 @@ public class FinancialOfficeFragment extends Fragment implements
 				.findViewById(R.id.tv_dianpujinrishouru);// 店铺总额
 		tv_shopaccountword = (TextView) view.findViewById(R.id.tv_shopaccountword);// 店铺今日收入
 
-		tv_gz_rate = (TextView) view.findViewById(R.id.tv_gz_rate);// 店铺今日收入
-		tv_gz_count = (TextView) view.findViewById(R.id.tv_gz_count);// 店铺今日收入
-		tv_Fdiscount_time = (TextView) view.findViewById(R.id.tv_Fdiscount_time);// 店铺今日收入
-		tv_Ediscount_time = (TextView) view.findViewById(R.id.tv_Ediscount_time);// 店铺今日收入
+		tv_gz_rate = (TextView) view.findViewById(R.id.tv_gz_rate);//pop手续费
+		tv_gz_count = (TextView) view.findViewById(R.id.tv_gz_count);//pop优惠费率
+		tv_Fdiscount_time = (TextView) view.findViewById(R.id.tv_Fdiscount_time);//开始时间
+		tv_Ediscount_time = (TextView) view.findViewById(R.id.tv_Ediscount_time);//结束时间
 
 		textAdaptation();
 
@@ -235,11 +236,14 @@ public class FinancialOfficeFragment extends Fragment implements
 		ScreenUtils.textAdaptationOn720(tv_shopaccount,mMainActivity,27);
 	}
 
+	private FinancialOfficeAmountBean financialOfficeAmountBean;
+
 	/**
 	 * 设置财务室信息
 	 */
 	public void setFinancialOfficeAmount(FinancialOfficeAmountBean financialOfficeAmountBean){
 
+		this.financialOfficeAmountBean = financialOfficeAmountBean;
 		this.totalaccount = financialOfficeAmountBean.getAccountTotalIncome().doubleValue();
 		this.shopaccount = financialOfficeAmountBean.getStoreTotalIncome().doubleValue();
 		this.availablebalance = financialOfficeAmountBean.getStoreBalance().doubleValue();
@@ -252,10 +256,27 @@ public class FinancialOfficeFragment extends Fragment implements
 		tv_shopincometoday.setText(MathExtend.roundNew(financialOfficeAmountBean.getStoreTodayIncome().divide(new BigDecimal(100)).doubleValue(), 2));// 店铺今日收入
 		tv_freezingamount.setText(MathExtend.roundNew(financialOfficeAmountBean.getSotreFrozenAmount().divide(new BigDecimal(100)).doubleValue(), 2));// 冻结中金额
 		tv_takeinmoney.setText(MathExtend.roundNew(financialOfficeAmountBean.getStoreWithdrawAmount().divide(new BigDecimal(100)).doubleValue(), 2));// 提现中余额
-		tv_finalcial_newrate.setText(MathExtend.roundNew(financialOfficeAmountBean.getStoreNewRate().divide(new BigDecimal(100)).doubleValue(), 2));//新汇率
 
+		int cardinal = 100;
+		double multiplicativecardinal = cardinal;
+		DecimalFormat df = new DecimalFormat("#.00");
+
+		if(0!=financialOfficeAmountBean.getRate().compareTo(BigDecimal.ZERO)){
+			tv_finalcial_oldrate.setText(df.format(MathExtend.multiply(financialOfficeAmountBean.getRate()
+					.doubleValue(),multiplicativecardinal))+"%");
+		}else{
+			tv_finalcial_oldrate.setText("0.00%");
+		}
+
+		if(0!=financialOfficeAmountBean.getCheapRate().compareTo(BigDecimal.ZERO)){
+			tv_finalcial_newrate.setText(" "+df.format(MathExtend.multiply(financialOfficeAmountBean.getCheapRate()
+					.doubleValue(),multiplicativecardinal))+"%");
+
+		}else{
+			tv_finalcial_newrate.setText(" 0.00%");
+		}
+		tv_finalcial_oldrate.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG );//中间加横线
 	}
-
 	/**
 	 * 设置财务室信息
 	 */
@@ -341,21 +362,8 @@ public class FinancialOfficeFragment extends Fragment implements
 				break;
 
 			case R.id.tv_finalcial_ruledescription://规则说明
-				DiaqlogNow dialog = new DiaqlogNow(getActivity()) {
-					@Override
-					public void onCheckClick() {
-						dismiss();
-					}
+				DiaqlogNow dialog = new DiaqlogNow(mMainActivity,financialOfficeAmountBean);
 
-					@Override
-					public void onOkClick() {
-
-					}
-				};
-				dialog.setTv_gz_count(tv_gz_rate);
-				dialog.setTv_gz_count(tv_gz_count);
-				dialog.setTv_gz_count(tv_Fdiscount_time);
-				dialog.setTv_gz_count(tv_Ediscount_time);
 				dialog.show();
 
 				break;

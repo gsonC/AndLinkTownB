@@ -1,32 +1,34 @@
 package com.lianbi.mezone.b.ui;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.lianbi.mezone.b.bean.IncomeBean;
+import com.lianbi.mezone.b.bean.IncomesBean;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
 import com.lianbi.mezone.b.photo.PopupWindowHelper;
 import com.xizhi.mezone.b.R;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.com.hgh.baseadapter.BaseAdapterHelper;
+import cn.com.hgh.baseadapter.QuickAdapter;
 import cn.com.hgh.utils.AbDateUtil;
 import cn.com.hgh.utils.AbPullHide;
 import cn.com.hgh.utils.AbStrUtil;
 import cn.com.hgh.utils.AbViewUtil;
+import cn.com.hgh.utils.MathExtend;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.view.AbPullToRefreshView;
 
@@ -36,10 +38,10 @@ public class IncomeActivity extends BaseActivity implements OnClickListener {
 	private AbPullToRefreshView act_income_abpulltorefreshview;
 	private ListView act_income_listview;
 	private ImageView img_income_empty;
-	private int page = 1;
-	private List<IncomeBean> mDatas = new ArrayList<>();
+	private int page = 0;
 	private List<IncomeBean> datas = new ArrayList<>();
-	private MyAdapter adapter;
+	private List<IncomesBean> mDatas = new ArrayList<>();
+	private QuickAdapter<IncomesBean> mAdapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,13 +50,41 @@ public class IncomeActivity extends BaseActivity implements OnClickListener {
 		initView();
 		setListener();
 		initPickView();
-	//	setAdapter();
+		initAdapter();
 		getAmtFlow(true, "00");
 	}
 
-	private void setAdapter() {
-		adapter = new MyAdapter(this, datas);
-		act_income_listview.setAdapter(adapter);
+	private void initAdapter() {
+		mAdapter = new QuickAdapter<IncomesBean>(this, R.layout.item_income_1, mDatas) {
+			@Override
+			protected void convert(BaseAdapterHelper helper, IncomesBean item) {
+				TextView tv_income1_title = helper.getView(R.id.tv_income1_title);
+				LinearLayout llt_income_bottom = helper.getView(R.id.llt_income_bottom);
+				TextView tv_income2_title = helper.getView(R.id.tv_income2_title);
+				TextView tv_income2_time = helper.getView(R.id.tv_income2_time);
+				TextView tv_income2_money = helper.getView(R.id.tv_income2_money);
+
+				if (AbStrUtil.isEmpty(item.getTime())) {
+					tv_income1_title.setVisibility(View.GONE);
+					llt_income_bottom.setVisibility(View.VISIBLE);
+					tv_income2_title.setText(item.getOptMsg() + "");
+					tv_income2_time.setText(item.getCreateTime());
+					if ("01".equals(item.getOptType())) {
+						tv_income2_money.setText(MathExtend.roundNew(new BigDecimal(item.getAmount())
+								.divide(new BigDecimal(100)).doubleValue(), 2));
+					} else {
+						tv_income2_money.setText("-" + MathExtend.roundNew(new BigDecimal(item.getAmount())
+								.divide(new BigDecimal(100)).doubleValue(), 2));
+					}
+				}else{
+					tv_income1_title.setVisibility(View.VISIBLE);
+					llt_income_bottom.setVisibility(View.GONE);
+					tv_income1_title.setText(item.getTime());
+				}
+
+			}
+		};
+		act_income_listview.setAdapter(mAdapter);
 	}
 
 	private void setListener() {
@@ -157,171 +187,69 @@ public class IncomeActivity extends BaseActivity implements OnClickListener {
 		String uuid = AbStrUtil.getUUID();
 
 		if (isResh) {
-			page = 1;
-			datas.clear();
-			datas.addAll(mDatas);
-			if (adapter != null) {
-				adapter.notifyDataSetChanged();
-			}
+			page = 0;
+			mDatas.clear();
+			mAdapter.replaceAll(mDatas);
 		}
 
 		try {
-			okHttpsImp.getIsAmtFlow(OkHttpsImp.md5_key, userShopInfoBean.getUserId(), userShopInfoBean.getBusinessId(),
-					optType, uuid, "app", reqTime, page + "", 20 + "", new MyResultCallback<String>() {
-						@Override
-						public void onResponseResult(Result result) {
-							page++;
-							String restring = result.getData();
-							if (!TextUtils.isEmpty(restring)) {
-								ArrayList<IncomeBean> mDatasL = (ArrayList<IncomeBean>) JSON.parseArray(restring, IncomeBean.class);
-								System.out.println("mDatasL"+mDatasL.size());
+			okHttpsImp.getIsAmtFlow(OkHttpsImp.md5_key, userShopInfoBean.getUserId(), userShopInfoBean.getBusinessId(), optType, uuid, "app", reqTime, page + "", 20 + "", new MyResultCallback<String>() {
+				@Override
+				public void onResponseResult(Result result) {
+					page++;
+					String restring = result.getData();
+					if (!TextUtils.isEmpty(restring)) {
+						ArrayList<IncomeBean> mDatasL = (ArrayList<IncomeBean>) JSON.parseArray(restring, IncomeBean.class);
+						//数据拆分
+						if (mDatasL != null && mDatasL.size() > 0) {
+							int dataLSize = mDatasL.size();
 
+							for (int i = 0; i < dataLSize; i++) {
+								List<IncomeBean.data> listbean = mDatasL.get(i).getData();
+								int dataListSize = listbean.size();
 
-								/*if (mDatasL != null && mDatasL.size() > 0) {
-									mDatas.addAll(mDatasL);
+								IncomesBean bean = new IncomesBean();
+								bean.setTime(mDatasL.get(i).getTime() + "");
+								mDatas.add(bean);
+
+								for (int y = 0; y < dataListSize; y++) {
+									IncomesBean beans = new IncomesBean();
+									beans.setOptType(listbean.get(y).getOptType() + "");
+									beans.setAmount(listbean.get(y).getAmount());
+									beans.setStoreNo(listbean.get(y).getStoreNo() + "");
+									beans.setOptMsg(listbean.get(y).getOptMsg() + "");
+									beans.setCreateTime(listbean.get(y).getCreateTime() + "");
+									beans.setAccountNo(listbean.get(y).getAccountNo() + "");
+									beans.setSettleDate(listbean.get(y).getSettleDate() + "");
+									mDatas.add(beans);
 								}
-								if (mDatas != null && mDatas.size() > 0) {
-									img_income_empty.setVisibility(View.GONE);
-									act_income_abpulltorefreshview.setVisibility(View.VISIBLE);
-								} else {
-									img_income_empty.setVisibility(View.VISIBLE);
-									act_income_abpulltorefreshview.setVisibility(View.GONE);
-								}
-								AbPullHide.hideRefreshView(isResh, act_income_abpulltorefreshview);
-								datas.clear();
-								datas.addAll(mDatas);
-								adapter.notifyDataSetChanged();*/
-
-							} else {
-								img_income_empty.setVisibility(View.VISIBLE);
-								act_income_abpulltorefreshview.setVisibility(View.GONE);
 							}
+						} else {
+							img_income_empty.setVisibility(View.VISIBLE);
+							act_income_abpulltorefreshview.setVisibility(View.GONE);
 						}
 
-						@Override
-						public void onResponseFailed(String msg) {
-							if (isResh) {
-								img_income_empty.setVisibility(View.VISIBLE);
-								act_income_abpulltorefreshview.setVisibility(View.GONE);
-							}
-							AbPullHide.hideRefreshView(isResh, act_income_abpulltorefreshview);
-						}
-					});
+						AbPullHide.hideRefreshView(isResh, act_income_abpulltorefreshview);
+						mAdapter.replaceAll(mDatas);
+
+
+					} else {
+						img_income_empty.setVisibility(View.VISIBLE);
+						act_income_abpulltorefreshview.setVisibility(View.GONE);
+					}
+				}
+
+				@Override
+				public void onResponseFailed(String msg) {
+					if (isResh) {
+						img_income_empty.setVisibility(View.VISIBLE);
+						act_income_abpulltorefreshview.setVisibility(View.GONE);
+					}
+					AbPullHide.hideRefreshView(isResh, act_income_abpulltorefreshview);
+				}
+			});
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * adpter
-	 */
-	public class MyAdapter extends BaseAdapter {
-
-		List<IncomeBean> list;
-		Context mContext;
-		private LayoutInflater inflater;
-		private final int TYPE1 = 0;
-		private final int TYPE2 = 1;
-
-		public MyAdapter(Context context, List<IncomeBean> list) {
-			this.list = list;
-			this.mContext = context;
-			inflater = LayoutInflater.from(mContext);
-		}
-
-		@Override
-		public int getCount() {
-			return list.size();
-		}
-
-		@Override
-		public Object getItem(int position) {
-			return list.get(position);
-		}
-
-		@Override
-		public long getItemId(int position) {
-			return position;
-		}
-
-		@Override
-		public int getViewTypeCount() {
-			return 2;
-		}
-
-		@Override
-		public int getItemViewType(int position) {
-			IncomeBean bean = list.get(position);
-
-			//获取标记 判断当前数据属于哪个数据源
-			if (true) {
-				return TYPE1;
-			} else {
-				return TYPE2;
-			}
-
-		}
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			//初始化每个holder
-			ViewHolder1 holder1 = null;
-			ViewHolder2 holder2 = null;
-			int type = getItemViewType(position);
-
-			if (convertView == null) {
-				switch (type) {
-					case TYPE1:
-						convertView = inflater.inflate(R.layout.item_income_1, null, false);
-						holder1 = new ViewHolder1();
-						holder1.tv_income1_title = (TextView) convertView.findViewById(R.id.tv_income1_title);
-						convertView.setTag(holder1);
-						break;
-					case TYPE2:
-						convertView = inflater.inflate(R.layout.item_income_2, null, false);
-						holder2 = new ViewHolder2();
-						holder2.tv_income2_title = (TextView) convertView.findViewById(R.id.tv_income2_title);
-						holder2.tv_income2_time = (TextView) convertView.findViewById(R.id.tv_income2_time);
-						holder2.tv_income2_money = (TextView) convertView.findViewById(R.id.tv_income2_money);
-						convertView.setTag(holder2);
-						break;
-				}
-			} else {
-				switch (type) {
-					case TYPE1:
-						holder1 = (ViewHolder1) convertView.getTag();
-						break;
-					case TYPE2:
-						holder2 = (ViewHolder2) convertView.getTag();
-						break;
-
-				}
-			}
-
-			//为布局设置数据
-			switch (type) {
-				case TYPE1:
-					holder1.tv_income1_title.setText("");
-					break;
-				case TYPE2:
-					holder2.tv_income2_title.setText("");
-					holder2.tv_income2_time.setText("");
-					holder2.tv_income2_money.setText("");
-					break;
-			}
-
-			return convertView;
-		}
-
-		public class ViewHolder1 {
-			TextView tv_income1_title;
-		}
-
-		public class ViewHolder2 {
-			TextView tv_income2_title;
-			TextView tv_income2_time;
-			TextView tv_income2_money;
-
 		}
 	}
 

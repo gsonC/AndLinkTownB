@@ -21,14 +21,42 @@ public class FinancialOfficeAmountBean implements Serializable {
 	private BigDecimal storeTodayIncome;
 	private BigDecimal storeTotalIncome;
 	private BigDecimal storeWithdrawAmount;
-	private BigDecimal storeNewRate;
 
-	public BigDecimal getStoreNewRate() {
-		return storeNewRate;
+	private String endDate;
+	private String startDate;
+	private BigDecimal rate;
+	private BigDecimal cheapRate;
+
+	public String getEndDate() {
+		return endDate;
 	}
 
-	public void setStoreNewRate(BigDecimal storeNewRate) {
-		this.storeNewRate = storeNewRate;
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
+
+	public String getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+
+	public BigDecimal getRate() {
+		return rate;
+	}
+
+	public void setRate(BigDecimal rate) {
+		this.rate = rate;
+	}
+
+	public BigDecimal getCheapRate() {
+		return cheapRate;
+	}
+
+	public void setCheapRate(BigDecimal cheapRate) {
+		this.cheapRate = cheapRate;
 	}
 
 	public BigDecimal getAccountTotalIncome() {
