@@ -62,7 +62,7 @@ public class OrderContentActivity extends BaseActivity implements
      * 当前位置
      */
     public int curPosition;
-    private final String STARTTIME = "2010-01-01 00:00";
+    private final String STARTTIME = "2012-01-01 00:00";
     private final String ENDTIME = "2030-01-01 00:00";
     @Bind(R.id.tv_starttime)
     TextView tvStarttime;
@@ -121,6 +121,12 @@ public class OrderContentActivity extends BaseActivity implements
                     endTime
                 );
                 this.intentLayout=POSITION0;
+                if(TextUtils.isEmpty(txnTime)){
+                    if(TextUtils.isEmpty(beginTime)||TextUtils.isEmpty(endTime)){
+                        ContentUtils.showMsg(OrderContentActivity.this, "请选择查询时间");
+                        return;
+                    }
+                }
                 getOrderInfo(true,false,isValid);
                 break;
             case R.id.tv_success:
@@ -136,6 +142,12 @@ public class OrderContentActivity extends BaseActivity implements
                         endTime
                 );
                 this.intentLayout=POSITION1;
+                if(TextUtils.isEmpty(txnTime)){
+                    if(TextUtils.isEmpty(beginTime)||TextUtils.isEmpty(endTime)){
+                        ContentUtils.showMsg(OrderContentActivity.this, "请选择查询时间");
+                        return;
+                    }
+                }
                 getOrderInfo(true,false,isValid);
                 break;
             case R.id.tv_fail:
@@ -151,6 +163,12 @@ public class OrderContentActivity extends BaseActivity implements
                         endTime
                 );
                 this.intentLayout=POSITION2;
+                if(TextUtils.isEmpty(txnTime)){
+                    if(TextUtils.isEmpty(beginTime)||TextUtils.isEmpty(endTime)){
+                        ContentUtils.showMsg(OrderContentActivity.this, "请选择查询时间");
+                        return;
+                    }
+                }
                 getOrderInfo(true,false,isValid);
                 break;
         }
@@ -182,7 +200,7 @@ public class OrderContentActivity extends BaseActivity implements
                 tvToday.setChecked(false);
                 tvThreeday.setChecked(true);
                 tvOnemonth.setChecked(false);
-                beginTime=AbDateUtil.getDate(3);
+                beginTime=AbDateUtil.getDateG(3);
                 endTime=AbDateUtil.getDateYearMonthDayNow();
                 initSearch(
                         "",
@@ -199,7 +217,7 @@ public class OrderContentActivity extends BaseActivity implements
                 tvToday.setChecked(false);
                 tvThreeday.setChecked(false);
                 tvOnemonth.setChecked(true);
-                beginTime=AbDateUtil.getDate(30);
+                beginTime=AbDateUtil.getDateG(30);
                 endTime=AbDateUtil.getDateYearMonthDayNow();
                 initSearch(
                         "",
@@ -284,26 +302,19 @@ public class OrderContentActivity extends BaseActivity implements
                 timeSelectorTo.show();
                 break;
             case R.id.iv_close:
-                if(!TextUtils.isEmpty(tvFinishtime.getText().toString())&&
-                        !TextUtils.isEmpty(tvFinishtime.getText().toString())
-                        ){
-                    String  txnTime=AbDateUtil.getDateYearMonthDayNow();
-                    initSearch(
-                            "",
-                            orderStatus,
-                            txnTime,
-                            "",
-                            ""
-                    );
-                    tvToday.setChecked(true);
-                    getOrderInfo(true,false,isValid);
-
+                String  strStarttime=tvStarttime.getText().toString();
+                String  strFinishtime=tvFinishtime.getText().toString();
+                if(!TextUtils.isEmpty(strStarttime)&&!TextUtils.isEmpty(strFinishtime)){
+                    mDatas.clear();
+                    clearData();
+                    tv_num.setText("0");
+                    tv_rmb.setText("¥0");
                 }
-                if(!TextUtils.isEmpty(tvStarttime.getText().toString())){
+                if(!TextUtils.isEmpty(strStarttime)){
                     beginTime="";
                     tvStarttime.setText("");
                 }
-                if(!TextUtils.isEmpty(tvFinishtime.getText().toString())){
+                if(!TextUtils.isEmpty(strFinishtime)){
                     endTime="";
                     tvFinishtime.setText("");
                 }
@@ -316,14 +327,35 @@ public class OrderContentActivity extends BaseActivity implements
         tvThreeday.setChecked(false);
         tvOnemonth.setChecked(false);
     }
+    public void  clearData(){
+        switch (intentLayout) {
+            case POSITION0:
+                if (mWholeFragment != null) {
+                    swtFmDo(POSITION0,mDatas);
+                }
+                break;
+
+            case POSITION1:
+                if (mPaySuccessFragment != null) {
+                    swtFmDo(POSITION1,mDatas);
+                }
+                break;
+            case POSITION2:
+                if (mPayFailFragment != null) {
+                    swtFmDo(POSITION2,mDatas);
+                }
+                break;
+        }
+
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_ordercontent, NOTYPE);
         ButterKnife.bind(this);
         initView();
-        orderStatus="03,04";
-        getOrderInfo(true,false,isValid);
+//      orderStatus="03,04";
+//      getOrderInfo(true,false,isValid);
     }
 
 
@@ -417,14 +449,14 @@ public class OrderContentActivity extends BaseActivity implements
             pageNo =0;
             mDatas.clear();
         }
-        Log.i("tag","传参 283 ---》"+mDatas.size());
-        Log.i("tag","传参 284---》 "+orderNo);
-        Log.i("tag","传参 285---》 "+orderStatus);
-        Log.i("tag","传参 285 ---》"+txnTime);
-        Log.i("tag","传参 288 ---》"+endTime);
-        Log.i("tag","传参 290---》"+isValid);
-        Log.i("tag","传参 292 pageNo---》"+pageNo);
-        Log.i("tag","传参 293 ---》"+pageSize);
+        Log.i("tag","当前数据数量 ---》"+mDatas.size());
+        Log.i("tag","订单号---》 "+orderNo);
+        Log.i("tag","订单状态查询---》 "+orderStatus);
+        Log.i("tag","交易时间 ---》"+txnTime);
+        Log.i("tag","开始时间 ---》"+beginTime);
+        Log.i("tag","结束时间 ---》"+endTime);
+        Log.i("tag","页数---》"+pageNo);
+        Log.i("tag","每页个数---》"+pageSize);
 //        "BD2016070614191100000123"
 //        BDP20gCtJi160FN041202711""
         try{
@@ -510,6 +542,7 @@ public class OrderContentActivity extends BaseActivity implements
 
     }
     public void   showData(boolean  isResh){
+        int mDatasize=mDatas.size();
         int intTxnAmt=0;
 
         for (OrderContent ordercontent : mDatas) {
@@ -521,20 +554,26 @@ public class OrderContentActivity extends BaseActivity implements
         switch (intentLayout) {
             case POSITION0:
                 if (mWholeFragment != null) {
-                    mWholeFragment.hideRefreshView(isResh);
+                    if(mDatasize!=0) {
+                        mWholeFragment.hideRefreshView(isResh);
+                    }
                     swtFmDo(POSITION0,mDatas);
                 }
                 break;
 
             case POSITION1:
                 if (mPaySuccessFragment != null) {
-                    mPaySuccessFragment.hideRefreshView(isResh);
+                    if(mDatasize!=0) {
+                        mPaySuccessFragment.hideRefreshView(isResh);
+                    }
                     swtFmDo(POSITION1,mDatas);
                 }
                 break;
             case POSITION2:
                 if (mPayFailFragment != null) {
-                    mPayFailFragment.hideRefreshView(isResh);
+                    if(mDatasize!=0) {
+                        mPayFailFragment.hideRefreshView(isResh);
+                    }
                     swtFmDo(POSITION2,mDatas);
                 }
                 break;

@@ -385,6 +385,7 @@ public class OrderLookUpActivity extends BaseActivity implements
 
     }
     public void   showData(boolean  isResh){
+        int mDatasize=mDatas.size();
         int intTxnAmt=0;
         for (OrderContent ordercontent : mDatas) {
             intTxnAmt=intTxnAmt+ordercontent.getTxnAmt();
@@ -395,20 +396,26 @@ public class OrderLookUpActivity extends BaseActivity implements
         switch (intentLayout) {
             case POSITION0:
                 if (mWholeFragment != null) {
-                    mWholeFragment.hideRefreshView(isResh);
-                    swtFmDo(POSITION0,mDatas);
+                    if(mDatasize!=0) {
+                        mWholeFragment.hideRefreshView(isResh);
+                    }
+                        swtFmDo(POSITION0,mDatas);
                 }
                 break;
 
             case POSITION1:
                 if (mPaySuccessFragment != null) {
-                    mPaySuccessFragment.hideRefreshView(isResh);
+                    if(mDatasize!=0) {
+                        mPaySuccessFragment.hideRefreshView(isResh);
+                    }
                     swtFmDo(POSITION1,mDatas);
                 }
                 break;
             case POSITION2:
                 if (mPayFailFragment != null) {
-                    mPayFailFragment.hideRefreshView(isResh);
+                    if(mDatasize!=0) {
+                        mPayFailFragment.hideRefreshView(isResh);
+                    }
                     swtFmDo(POSITION2,mDatas);
                 }
                 break;
