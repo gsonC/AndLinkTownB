@@ -8,11 +8,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -63,11 +65,20 @@ public class FinancialOfficeFragment extends Fragment implements
     public double totalaccount = 0, shopaccount = 0, availablebalance = 0,
             takeinmoney = 0, shopincometoday = 0, freezingamount = 0;
     TextView tv_gz_rate, tv_gz_count, tv_Fdiscount_time, tv_Ediscount_time;
-
+    LinearLayout lin_discount,n_safety;
     /**
      * 刷新fm数据
      */
     public void refreshFMData() {
+        boolean isLogin = ContentUtils.getLoginStatus(mMainActivity);
+        Log.i("tag","财务室是否登录"+isLogin);
+        if(isLogin){
+            n_safety.setVisibility(View.GONE);
+            lin_discount.setVisibility(View.VISIBLE);
+        }else{
+            n_safety.setVisibility(View.VISIBLE);
+            lin_discount.setVisibility(View.GONE);
+        }
         if (ContentUtils.getLoginStatus(mMainActivity)) {
             getIsBand();
         } else {
@@ -173,6 +184,8 @@ public class FinancialOfficeFragment extends Fragment implements
      * @param view
      */
     private void initView(View view) {
+        n_safety=(LinearLayout)view.findViewById(R.id.n_safety);
+        lin_discount=(LinearLayout)view.findViewById(R.id.lin_discount);
         iv_recharge = (ImageView) view.findViewById(R.id.iv_recharge);// 充值
         iv_withdrawalsdetails = (ImageView) view
                 .findViewById(R.id.iv_withdrawalsdetails);// 体现明细
