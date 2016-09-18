@@ -222,7 +222,8 @@ public class OrderContentActivity extends BaseActivity implements
                         new TimeSelectorE.ResultHandler() {
                             @Override
                             public void handle(String time) {
-                                if (!AbStrUtil.isEmpty(endTime) && !AbDateUtil.compareTime(time, endTime)) {
+                                if (!AbStrUtil.isEmpty(tvFinishtime.getText().toString()) &&
+                                        !AbDateUtil.compareTime(time,tvFinishtime.getText().toString())) {
                                     ContentUtils.showMsg(OrderContentActivity.this, "开始日期须在结束日期之前！");
                                     tvStarttime.setText("");
                                     beginTime = "";
@@ -254,7 +255,8 @@ public class OrderContentActivity extends BaseActivity implements
                         new TimeSelectorE.ResultHandler() {
                             @Override
                             public void handle(String time) {
-                                if (!AbStrUtil.isEmpty(beginTime) && !AbDateUtil.compareTime(beginTime, time)) {
+                                if (!AbStrUtil.isEmpty(tvStarttime.getText().toString()) &&
+                                        !AbDateUtil.compareTime(tvStarttime.getText().toString(), time)) {
                                     ContentUtils.showMsg(OrderContentActivity.this, "结束日期须在开始日期之后！");
                                     tvFinishtime.setText("");
                                     endTime = "";
@@ -619,8 +621,8 @@ public class OrderContentActivity extends BaseActivity implements
                                         break;
                                     case POSITION2:
                                         if (mPayFailFragment != null) {
-                                            mPayFailFragment.upData();
-                                        }
+                                        mPayFailFragment.upData();
+                                    }
                                         break;
                                 }
 //                                mDatas.remove(listPosition);
