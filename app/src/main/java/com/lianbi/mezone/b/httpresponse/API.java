@@ -53,10 +53,10 @@ public class API {
 	/**
 	 *  uat环境url
 	 */
-	/*public static final String ENVIRONMENTAL = "http://139.196.214.16";//前置
-	public static final String TOSTORESERVICE = "http://139.196.214.16";//到店服务
-	public static final String PAYQR = ENVIRONMENTAL+"/lincombFront/toOrderPay.do?state=";//支付二维码
-	public static final String INTELLIGENT_WIFI ="http://139.196.214.16/wcmv2/routerApplication/wifiIndex?businessId=";*///智能wifi
+	//public static final String ENVIRONMENTAL = "http://139.196.214.16";//前置
+	//public static final String TOSTORESERVICE = "http://139.196.214.16";//到店服务
+	//public static final String PAYQR = ENVIRONMENTAL+"/lincombFront/toOrderPay.do?state=";//支付二维码
+	//public static final String INTELLIGENT_WIFI ="http://139.196.214.16/wcmv2/routerApplication/wifiIndex?businessId=";//智能wifi
 	/*
      *  测试环境url
      */

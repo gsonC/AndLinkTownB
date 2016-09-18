@@ -194,7 +194,7 @@ public class FinancialOfficeFragment extends Fragment implements
         tv_finalcial_ruledescription = (TextView) view.findViewById(R.id.tv_finalcial_ruledescription);//规则说明
         tv_finalcial_oldrate = (TextView) view.findViewById(R.id.tv_finalcial_oldrate);//老费率
         tv_finalcial_newrate = (TextView) view.findViewById(R.id.tv_finalcial_newrate);//新费率
-
+        tv_finalcial_oldrate.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);//中间加横线
         tv_totalaccount = (TextView) view.findViewById(R.id.tv_totalaccount);// 账户总额(数字)
         tv_shopaccount = (TextView) view.findViewById(R.id.tv_shopaccount);// 店铺总额(数字)
 
@@ -290,7 +290,7 @@ public class FinancialOfficeFragment extends Fragment implements
         } else {
             tv_finalcial_newrate.setText(" 0.00%");
         }
-        tv_finalcial_oldrate.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);//中间加横线
+
     }
 
     /**

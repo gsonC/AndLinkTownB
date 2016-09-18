@@ -65,13 +65,15 @@ public class DiaqlogNow extends Dialog {
 		String startDate = bean.getStartDate();
 		String endDate = bean.getEndDate();
 
-		if(0!=bean.getRate().compareTo(BigDecimal.ZERO)){
+
+
+		if(null!=bean.getRate()&&0!=bean.getRate().compareTo(BigDecimal.ZERO)){
 			tv_gz_rate.setText(Double.toString(MathExtend.divide(bean.getRate().doubleValue(),100,2))+"%");
 		}else{
 			tv_gz_rate.setText("0.00%");
 		}
 
-		if(0!=bean.getCheapRate().compareTo(BigDecimal.ZERO)){
+		if(null!=bean.getCheapRate()&&0!=bean.getCheapRate().compareTo(BigDecimal.ZERO)){
 			tv_gz_count.setText(Double.toString(MathExtend.divide(bean.getCheapRate().doubleValue(),100,2))+"%");
 		}else{
 			tv_gz_count.setText("0.00%");
