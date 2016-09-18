@@ -43,7 +43,7 @@ public class WithdrawDepositDesitionActivity extends BaseActivity {
 			 * 01:审核中 02：以提现 03：未通过
 			 */
 
-			String status = withDrawDeposite.getStatus();
+			String status = withDrawDeposite.getCheckStatus();
 			String sStr = "";
 			int colorRe = 0;
 			if ("01".equals(status)) {
@@ -79,7 +79,7 @@ public class WithdrawDepositDesitionActivity extends BaseActivity {
 			withdrawdepositdesitionactivity_tv_status.setText(sStr);
 
 			withdrawdepositdesitionactivity_tv_withdraw_content.setText("转出到"
-					+ withDrawDeposite.getBanknum());
+					+ withDrawDeposite.getBankAccountNo());
 			// setPrice(withDrawDeposite.getAmount(),
 			// withdrawdepositdesitionactivity_tv_withdraw_money);
 			
@@ -91,8 +91,8 @@ public class WithdrawDepositDesitionActivity extends BaseActivity {
 							money, 2));
 //			withdrawdepositdesitionactivity_tv_withdraw_money
 //					.setText(withDrawDeposite.getAmount());
-			withdrawdepositdesitionactivity_tv_withdraw_time
-					.setText(withDrawDeposite.getCreateTime());
+//			withdrawdepositdesitionactivity_tv_withdraw_time
+//					.setText(withDrawDeposite.getCreateTime());
 		}
 	}
 

@@ -4,7 +4,6 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -23,8 +22,8 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.OnItemClick;
-import butterknife.OnTouch;
 import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.QuickAdapter;
 import cn.com.hgh.utils.MathExtend;
@@ -35,7 +34,7 @@ import cn.com.hgh.view.AbPullToRefreshView;
  * 提现记录
  */
 public class WithdrawRecordActivity extends BaseActivity implements AdapterView.OnItemClickListener,
-        AbPullToRefreshView.OnHeaderRefreshListener, AbPullToRefreshView.OnFooterLoadListener, View.OnTouchListener {
+        AbPullToRefreshView.OnHeaderRefreshListener, AbPullToRefreshView.OnFooterLoadListener {
     @Bind(R.id.withdraw_record)
     AbPullToRefreshView withdrawRecord;
     @Bind(R.id.iv_empty_act_withdraw_record)
@@ -103,7 +102,7 @@ public class WithdrawRecordActivity extends BaseActivity implements AdapterView.
                         .doubleValue();
                 withdraw_money.setText("-" + MathExtend.roundNew(money, 2));
 
-                withdraw_time.setText(item.getCreateTime());
+                withdraw_time.setText(item.getStatus().getApply());
             }
         };
         listView.setAdapter(adapter);
@@ -203,12 +202,13 @@ public class WithdrawRecordActivity extends BaseActivity implements AdapterView.
     @Override
     @OnItemClick({R.id.withdraw_record_listview})
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        String checkStatus =
-                ((WithDrawDeposite) parent.getAdapter().getItem(position)).getCheckStatus();
+        WithDrawDeposite withDrawDeposite = (WithDrawDeposite) parent.getAdapter().getItem(position);
+        String checkStatus = withDrawDeposite.getCheckStatus();
         Intent intent = new Intent();
         if ("04".equals(checkStatus)) {//打款成功
             intent.setComponent(new ComponentName(WithdrawRecordActivity.this, WithdrawingProgressActivity.class));
             intent.putExtra(WithdrawingProgressActivity.FROM, WithdrawingProgressActivity.SUCESS);
+            intent.putExtra(WithdrawingProgressActivity.STATUS, withDrawDeposite.getStatus());
         } else {//03、审核拒绝，05、打款失败
             intent.setComponent(new ComponentName(WithdrawRecordActivity.this, WithdrawFailedReasonActivity.class));
             intent.putExtra(WithdrawFailedReasonActivity.checkStatus, checkStatus);
@@ -228,9 +228,13 @@ public class WithdrawRecordActivity extends BaseActivity implements AdapterView.
     }
 
     @Override
-    @OnTouch({R.id.iv_empty_act_withdraw_record})
-    public boolean onTouch(View v, MotionEvent event) {
-        withdrawRecord.headerRefreshing();
-        return true;
+    @OnClick({R.id.iv_empty_act_withdraw_record})
+    protected void onChildClick(View view) {
+        super.onChildClick(view);
+        if (view.getId() == R.id.iv_empty_act_withdraw_record) {
+            pageNo = 0;
+            initCommonParameter();
+            getDatas();
+        }
     }
 }

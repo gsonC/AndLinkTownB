@@ -6,42 +6,25 @@ import java.util.Date;
 import cn.com.hgh.utils.AbDateUtil;
 
 public class WithDrawDeposite implements Serializable, Comparable<WithDrawDeposite> {
-
     private static final long serialVersionUID = 6092270372321487489L;
-    String amount;
-    String checkStatus;
+    private String amount;
+    private String checkStatus;
+    private String outOrderId;
+    private String bankAccountNo;
+    private String accountNo;
+    private String storeNo;
+    private String id;
+    private Status status;
 
-    String outOrderId;
-    String bankName;
-    String createTime;
-    String bankAccountNo;
-    String accountNo;
-    String storeNo;
-    String id;
-
-
-    public String getCheckStatus() {
-        return checkStatus;
+    public WithDrawDeposite() {
     }
 
-    public void setCheckStatus(String checkStatus) {
-        this.checkStatus = checkStatus;
+    public Status getStatus() {
+        return status;
     }
 
-    public String getAccountNo() {
-        return accountNo;
-    }
-
-    public void setAccountNo(String accountNo) {
-        this.accountNo = accountNo;
-    }
-
-    public String getStoreNo() {
-        return storeNo;
-    }
-
-    public void setStoreNo(String storeNo) {
-        this.storeNo = storeNo;
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     public String getId() {
@@ -52,20 +35,20 @@ public class WithDrawDeposite implements Serializable, Comparable<WithDrawDeposi
         this.id = id;
     }
 
-    public String getOutOrderId() {
-        return outOrderId;
+    public String getStoreNo() {
+        return storeNo;
     }
 
-    public void setOutOrderId(String outOrderId) {
-        this.outOrderId = outOrderId;
+    public void setStoreNo(String storeNo) {
+        this.storeNo = storeNo;
     }
 
-    public String getBankName() {
-        return bankName;
+    public String getAccountNo() {
+        return accountNo;
     }
 
-    public void setBankName(String bankName) {
-        this.bankName = bankName;
+    public void setAccountNo(String accountNo) {
+        this.accountNo = accountNo;
     }
 
     public String getBankAccountNo() {
@@ -76,6 +59,22 @@ public class WithDrawDeposite implements Serializable, Comparable<WithDrawDeposi
         this.bankAccountNo = bankAccountNo;
     }
 
+    public String getOutOrderId() {
+        return outOrderId;
+    }
+
+    public void setOutOrderId(String outOrderId) {
+        this.outOrderId = outOrderId;
+    }
+
+    public String getCheckStatus() {
+        return checkStatus;
+    }
+
+    public void setCheckStatus(String checkStatus) {
+        this.checkStatus = checkStatus;
+    }
+
     public String getAmount() {
         return amount;
     }
@@ -84,43 +83,10 @@ public class WithDrawDeposite implements Serializable, Comparable<WithDrawDeposi
         this.amount = amount;
     }
 
-    public String getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(String createTime) {
-        this.createTime = createTime;
-    }
-
-    public String getStatus() {
-        return checkStatus;
-    }
-
-    public void setStatus(String checkStatus) {
-        this.checkStatus = checkStatus;
-    }
-
-    public String getBank_w_id() {
-        return outOrderId;
-    }
-
-    public void setBank_w_id(String outOrderId) {
-        this.outOrderId = outOrderId;
-    }
-
-    public String getBanknum() {
-        return bankAccountNo;
-    }
-
-    public void setBanknum(String bankAccountNo) {
-        this.bankAccountNo = bankAccountNo;
-    }
-
-
     @Override
     public int compareTo(WithDrawDeposite another) {
-        Date thisDate = AbDateUtil.getDateByFormat(this.createTime, AbDateUtil.dateFormatYMDHMS);
-        Date anotherDate = AbDateUtil.getDateByFormat(another.getCreateTime(), AbDateUtil.dateFormatYMDHMS);
+        Date thisDate = AbDateUtil.getDateByFormat(this.status.getApply(), AbDateUtil.dateFormatYMDHMS);
+        Date anotherDate = AbDateUtil.getDateByFormat(another.getStatus().getApply(), AbDateUtil.dateFormatYMDHMS);
         return anotherDate.compareTo(thisDate);
     }
 }

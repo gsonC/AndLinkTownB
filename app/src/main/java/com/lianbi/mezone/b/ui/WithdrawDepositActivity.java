@@ -232,8 +232,8 @@ public class WithdrawDepositActivity extends BaseActivity {
 						.getView(R.id.tv_withdraw_time);
 				TextView tv_withdraw_money = helper
 						.getView(R.id.tv_withdraw_money);
-				tv_withdraw_content.setText("转出到" + item.getBanknum());
-				tv_withdraw_time.setText(item.getCreateTime());
+//				tv_withdraw_content.setText("转出到" + item.getBanknum());
+//				tv_withdraw_time.setText(item.getCreateTime());
 				// setPrice(item.getAmount(), tv_withdraw_money);
 				double money = BigDecimal
 						.valueOf(Long.valueOf(item.getAmount()))
