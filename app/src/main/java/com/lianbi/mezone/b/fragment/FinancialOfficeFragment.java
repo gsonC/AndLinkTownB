@@ -29,7 +29,6 @@ import com.lianbi.mezone.b.ui.BaseActivity;
 import com.lianbi.mezone.b.ui.MainActivity;
 import com.lianbi.mezone.b.ui.ReceiptsActivity;
 import com.lianbi.mezone.b.ui.ShouRuHActivity;
-import com.lianbi.mezone.b.ui.WithdrawDepositActivity;
 import com.lianbi.mezone.b.ui.WithdrawingProgressActivity;
 import com.xizhi.mezone.b.R;
 
