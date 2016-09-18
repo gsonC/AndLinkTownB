@@ -229,7 +229,7 @@ public class OrderContentActivity extends BaseActivity implements
                                 } else {
                                     tvStarttime.setText(time);
                                     beginTime = time;
-                                    if (!TextUtils.isEmpty(endTime))
+                                    if (!TextUtils.isEmpty(tvFinishtime.getText().toString()))
                                     {
                                         initSearch(
                                                 "",
@@ -238,6 +238,7 @@ public class OrderContentActivity extends BaseActivity implements
                                                 beginTime,
                                                 endTime
                                         );
+                                        someOperation();
                                         getOrderInfo(true,false,isValid);
                                     }
                                 }
@@ -260,7 +261,7 @@ public class OrderContentActivity extends BaseActivity implements
                                 } else {
                                     tvFinishtime.setText(time);
                                     endTime = time;
-                                    if (!TextUtils.isEmpty(beginTime))
+                                    if (!TextUtils.isEmpty(tvStarttime.getText().toString()))
                                     {
                                         initSearch(
                                                 "",
@@ -269,6 +270,7 @@ public class OrderContentActivity extends BaseActivity implements
                                                 beginTime,
                                                 endTime
                                         );
+                                        someOperation();
                                         getOrderInfo(true,false,isValid);
                                     }
                                 }
@@ -280,6 +282,21 @@ public class OrderContentActivity extends BaseActivity implements
                 timeSelectorTo.show();
                 break;
             case R.id.iv_close:
+                if(!TextUtils.isEmpty(tvFinishtime.getText().toString())&&
+                        !TextUtils.isEmpty(tvFinishtime.getText().toString())
+                        ){
+                    String  txnTime=AbDateUtil.getDateYearMonthDayNow();
+                    initSearch(
+                            "",
+                            orderStatus,
+                            txnTime,
+                            "",
+                            ""
+                    );
+                    tvToday.setChecked(true);
+                    getOrderInfo(true,false,isValid);
+
+                }
                 if(!TextUtils.isEmpty(tvStarttime.getText().toString())){
                     beginTime="";
                     tvStarttime.setText("");
@@ -292,7 +309,11 @@ public class OrderContentActivity extends BaseActivity implements
                 break;
         }
     }
-
+    private   void  someOperation(){
+        tvToday.setChecked(false);
+        tvThreeday.setChecked(false);
+        tvOnemonth.setChecked(false);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
