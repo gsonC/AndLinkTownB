@@ -28,14 +28,17 @@
             android:textColor="#FF909090"
             android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/tv_call_setup"
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:text="呼叫设置"
-            android:background="@drawable/shape_addnewmember"
-            android:padding="7dp"
-            />
+
+            <TextView
+                android:id="@+id/tv_call_setup"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:text="呼叫设置"
+                android:background="@drawable/shape_addnewmember"
+                android:padding="7dp"
+                android:layout_alignParentRight="true"
+                />
+
     </LinearLayout>
 
     <View

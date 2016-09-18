@@ -335,7 +335,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:scaleType="fitCenter"
-                        android:src="@mipmap/withdrawalsdetails"/>
+                        android:src="@mipmap/paymentamount"/>
                 </LinearLayout>
             </LinearLayout>
 
