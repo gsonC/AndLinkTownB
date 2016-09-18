@@ -98,7 +98,7 @@ public class DiaqlogNow extends Dialog {
 		String year = time.substring(0,4);
 		String mouth = time.substring(5,7);
 		String day = time.substring(8,time.length());
-		return year+"年"+mouth+"月"+day;
+		return year+"年"+mouth+"月"+day+"日;";
 	}
 
 }
