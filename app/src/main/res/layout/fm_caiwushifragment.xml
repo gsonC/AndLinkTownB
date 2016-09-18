@@ -237,7 +237,27 @@
                     android:gravity="center_horizontal"
                     android:text="规则说明"/>
             </LinearLayout>
+            <LinearLayout
+                android:id="@+id/n_safety"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:visibility="gone">
 
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/baozhang" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/account_security"
+                    android:textColor="#50b021" />
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
