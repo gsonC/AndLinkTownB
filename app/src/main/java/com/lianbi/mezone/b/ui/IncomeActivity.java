@@ -42,7 +42,6 @@ public class IncomeActivity extends BaseActivity implements OnClickListener {
 	private List<IncomeBean> datas = new ArrayList<>();
 	private List<IncomesBean> mDatas = new ArrayList<>();
 	private QuickAdapter<IncomesBean> mAdapter;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -205,6 +204,7 @@ public class IncomeActivity extends BaseActivity implements OnClickListener {
 				public void onResponseResult(Result result) {
 					page++;
 					String restring = result.getData();
+					System.out.println("restring208"+restring);
 					if (!TextUtils.isEmpty(restring)) {
 						ArrayList<IncomeBean> mDatasL = (ArrayList<IncomeBean>) JSON.parseArray(restring, IncomeBean.class);
 						//数据拆分
@@ -218,9 +218,9 @@ public class IncomeActivity extends BaseActivity implements OnClickListener {
 							for (int i = 0; i < dataLSize; i++) {
 								List<IncomeBean.data> listbean = mDatasL.get(i).getData();
 								int dataListSize = listbean.size();
-
 								IncomesBean bean = new IncomesBean();
-								bean.setTime(mDatasL.get(i).getTime() + "");
+								bean.setTime(getTime(mDatasL.get(i).getTime() + ""));
+								//bean.setTime(mDatasL.get(i).getTime() + "");
 								mDatas.add(bean);
 
 								for (int y = 0; y < dataListSize; y++) {
@@ -263,5 +263,9 @@ public class IncomeActivity extends BaseActivity implements OnClickListener {
 			e.printStackTrace();
 		}
 	}
-
+	private String getTime(String time){
+		String year = time.substring(0,4);
+		String mouth = time.substring(4,6);
+		return year+"年"+mouth+"月";
+	}
 }

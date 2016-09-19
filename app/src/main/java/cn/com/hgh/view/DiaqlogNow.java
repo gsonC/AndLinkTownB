@@ -100,7 +100,6 @@ public class DiaqlogNow extends Dialog {
 		//点击对话框时消除后面模糊场景
 		win.setFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND,
 				WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
-
 	}
 
 	private String getTime(String time){

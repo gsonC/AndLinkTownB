@@ -74,12 +74,9 @@ public abstract class DialogCommon extends Dialog {
 		Window win = getWindow();
 		WindowManager.LayoutParams lp = win.getAttributes();
 		lp.gravity = Gravity.CENTER;
-		lp.alpha=0.1f;
-		win.setAttributes(lp);
 		lp.width = (int) (screenWidth * 0.8);
 		lp.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-		win.setFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND,
-				WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
+
 	}
 
 	public void setTextTitle(String txtString) {
