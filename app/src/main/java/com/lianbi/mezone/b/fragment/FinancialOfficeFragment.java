@@ -64,7 +64,7 @@ public class FinancialOfficeFragment extends Fragment implements
     public double totalaccount = 0, shopaccount = 0, availablebalance = 0,
             takeinmoney = 0, shopincometoday = 0, freezingamount = 0;
     TextView tv_gz_rate, tv_gz_count, tv_Fdiscount_time, tv_Ediscount_time;
-    LinearLayout lin_discount, n_safety;
+    LinearLayout lin_discount,n_safety;
 
     /**
      * 刷新fm数据
