@@ -267,6 +267,8 @@ public class OrderContentActivity extends BaseActivity implements
                 timeSelectorFrom.setMode(TimeSelectorE.MODE.YMD);
                 timeSelectorFrom.setTitle("起始时间");
                 timeSelectorFrom.show();
+//                timeSelectorFrom.defaultShow(AbDateUtil.getCurrentDate(AbDateUtil.dateFormatYMD));
+
                 break;
             case R.id.tv_finishtime:
                 TimeSelectorE timeSelectorTo = new TimeSelectorE(this,
@@ -300,6 +302,7 @@ public class OrderContentActivity extends BaseActivity implements
                 timeSelectorTo.setMode(TimeSelectorE.MODE.YMD);
                 timeSelectorTo.setTitle("结束时间");
                 timeSelectorTo.show();
+//                timeSelectorTo.defaultShow(AbDateUtil.getCurrentDate(AbDateUtil.dateFormatYMD));
                 break;
             case R.id.iv_close:
                 String  strStarttime=tvStarttime.getText().toString();
@@ -504,9 +507,9 @@ public class OrderContentActivity extends BaseActivity implements
                                         }
                                         int  mDatasize=mDatas.size();
                                         if (mDatasize<Integer.parseInt(pageSize)) {
-                                            setLoadMore(false);//显示没有更多
+                                            setLoadMore(0);//显示没有更多
                                         }else {
-                                            setLoadMore(true);//显示加载更多并自动加载
+                                            setLoadMore(1);//显示加载更多并自动加载
                                         }
                                         showData(isResh);
                                     }
@@ -517,7 +520,12 @@ public class OrderContentActivity extends BaseActivity implements
                         }
                         @Override
                         public void onResponseFailed(String msg) {
-                            setLoadMore(false);
+                            int  mDatasize=mDatas.size();
+                            if (mDatasize<Integer.parseInt(pageSize)) {
+                                setLoadMore(0);
+                            }else {
+                                setLoadMore(2);//显示加载更多并自动加载
+                            }
                             showData(isResh);
                         }
                     });
@@ -527,7 +535,7 @@ public class OrderContentActivity extends BaseActivity implements
 
 
     }
-    public  void  setLoadMore(boolean  loadmore){
+    public  void  setLoadMore(int  loadmore){
         switch (intentLayout) {
             case POSITION0:
                 mWholeFragment.LoadMore(loadmore);

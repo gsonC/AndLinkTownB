@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -105,6 +106,12 @@ public class OrederFragment extends Fragment {
                 TextView tv_item_orderinfo_state = helper.getView(R.id.tv_item_orderinfo_state);
                 TextView tv_item_orderinfo_paytime = helper.getView(R.id.tv_item_orderinfo_paytime);
                 TextView tv_item_orderinfo_price = helper.getView(R.id.tv_item_orderinfo_price);
+                LinearLayout item_left = helper.getView(R.id.item_left);
+                LinearLayout item_right = helper.getView(R.id.item_right);
+                LinearLayout.LayoutParams lp1 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+                item_left.setLayoutParams(lp1);
+                LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams(120, LinearLayout.LayoutParams.MATCH_PARENT);
+                item_right.setLayoutParams(lp2);
                 tv_item_orderinfo_num.setText(item.getOrderNo());
                 tv_item_orderinfo_paytime.setText(item.getTxnTime());
                 tv_item_orderinfo_price.setText(String.valueOf(item.getTxnAmt()));
@@ -190,11 +197,19 @@ public class OrederFragment extends Fragment {
         hideRefreshView(true);
         mAdapter.replaceAll(mDatas);
     }
-    public void LoadMore(boolean status){
-        if (status) {
-            mPullableAndAutomoreSwipListView.setNomore(1);//设置可以自动加载
-        } else {
-            mPullableAndAutomoreSwipListView.setNomore(2);//显示没有更多
+    public void LoadMore(int status){
+        switch (status){
+            case   0:
+                mPullableAndAutomoreSwipListView.setNomore(0);//数据不够一页，啥也不显示
+              break;
+            case   1:
+                mPullableAndAutomoreSwipListView.setNomore(1);//设置可以自动加载
+
+                break;
+            default:
+//            case   2:
+                mPullableAndAutomoreSwipListView.setNomore(2);//显示没有更多
+                break;
         }
 
     }
@@ -215,11 +230,11 @@ public class OrederFragment extends Fragment {
         public void onLoadMore(final PullToRefreshLayoutforAutoMoreSwipe pullToRefreshLayout) {
 
             if(mActivity instanceof OrderLookUpActivity){
-                LoadMore(true);
+                LoadMore(1);
                 mOrderLookUpActivity.getOrderInfo(false,true,"Y");
                 }else
                 if(mActivity instanceof OrderContentActivity){
-                LoadMore(true);
+                LoadMore(1);
                 mOrderContentActivity.getOrderInfo(false,true,"Y");
             }
         }

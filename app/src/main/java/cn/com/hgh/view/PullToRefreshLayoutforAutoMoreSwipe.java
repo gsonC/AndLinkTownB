@@ -197,6 +197,10 @@ public class PullToRefreshLayoutforAutoMoreSwipe extends RelativeLayout implemen
 	 *
 	 */
 	public void refreshFinish(int refreshResult) {
+		if(refreshingView==null){
+
+			return;
+		}
 		refreshingView.clearAnimation();
 		refreshingView.setVisibility(View.INVISIBLE);
 		switch (refreshResult) {

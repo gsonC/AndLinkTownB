@@ -2,19 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="horizontal"
     android:background="@color/white"
-    android:orientation="vertical"
-    android:paddingRight="-90dp" >
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+    >
         <LinearLayout
+            android:id="@+id/item_left"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/white"
             android:orientation="vertical"
-            android:layout_centerInParent="true"
             android:gravity="center_vertical"
             >
             <LinearLayout
@@ -110,35 +106,25 @@
 
             </LinearLayout>
         </LinearLayout>
-        <RelativeLayout
-            android:layout_width="85dp"
-            android:layout_height="85dp"
-            android:layout_alignParentRight="true"
-            android:clickable="true"
-            android:gravity="right" >
 
-            <LinearLayout
+        <LinearLayout
+                android:id="@+id/item_right"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
-                android:gravity="right" >
+                android:layout_height="85dp"
+                android:background="@color/grey"
+                android:gravity="center" >
 
                 <TextView
                     android:id="@+id/tv_chdelete"
-                    android:layout_width="85dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:background="#ff0000"
+                    android:drawableLeft="@mipmap/del_icon_normal"
                     android:gravity="center"
                     android:text="删 除"
-                android:textSize="15sp" />
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
 
-            </LinearLayout>
-        </RelativeLayout>
-    </RelativeLayout>
+        </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.1dp"
-        android:background="#ededed" />
 
 </LinearLayout>

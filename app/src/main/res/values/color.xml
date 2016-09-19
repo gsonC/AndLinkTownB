@@ -71,5 +71,8 @@
     <color name="griditems_bg">#ffe8ecef</color>
     <color name="commo_text_color">#ff333333</color>
     <color name="line">#ffd3dde6</color>
-    
+    <color name="blur_bg">#FFFAF0</color>
+    <color name="grey">#ff999999</color>
+    <color name="orange">#F5A100</color><!-- 橙色 -->
+    <color name="right_bg">#ff999999</color>
 </resources>

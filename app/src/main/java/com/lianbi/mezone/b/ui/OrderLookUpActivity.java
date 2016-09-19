@@ -345,9 +345,9 @@ public class OrderLookUpActivity extends BaseActivity implements
                                     }
                                 int  mDatasize=mDatas.size();
                                 if (mDatasize<Integer.parseInt(pageSize)) {
-                                    setLoadMore(false);//显示没有更多
+                                    setLoadMore(0);//显示没有更多
                                 }else {
-                                    setLoadMore(true);//显示加载更多并自动加载
+                                    setLoadMore(1);//显示加载更多并自动加载
                                 }
 
                                 showData(isResh);
@@ -359,8 +359,12 @@ public class OrderLookUpActivity extends BaseActivity implements
                 }
                 @Override
                 public void onResponseFailed(String msg) {
-
-                    setLoadMore(false);
+                    int  mDatasize=mDatas.size();
+                    if (mDatasize<Integer.parseInt(pageSize)) {
+                        setLoadMore(0);
+                    }else {
+                        setLoadMore(2);//显示加载更多并自动加载
+                    }
                     showData(isResh);
                 }
 
@@ -370,7 +374,7 @@ public class OrderLookUpActivity extends BaseActivity implements
         }
 
     }
-    public  void  setLoadMore(boolean  loadmore){
+    public  void  setLoadMore(int  loadmore){
         switch (intentLayout) {
             case POSITION0:
                 mWholeFragment.LoadMore(loadmore);
