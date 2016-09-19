@@ -185,7 +185,6 @@ public class OrederFragment extends Fragment {
 
 
     }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -230,11 +229,11 @@ public class OrederFragment extends Fragment {
         public void onLoadMore(final PullToRefreshLayoutforAutoMoreSwipe pullToRefreshLayout) {
 
             if(mActivity instanceof OrderLookUpActivity){
-                LoadMore(1);
+//                LoadMore(1);
                 mOrderLookUpActivity.getOrderInfo(false,true,"Y");
                 }else
                 if(mActivity instanceof OrderContentActivity){
-                LoadMore(1);
+//                LoadMore(1);
                 mOrderContentActivity.getOrderInfo(false,true,"Y");
             }
         }

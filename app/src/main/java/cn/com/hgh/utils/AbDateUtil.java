@@ -707,15 +707,15 @@ public class AbDateUtil {
 
 	/**
 	 * 计算后推几天过去
-	 * 
+	 *
 	 * @param days
 	 * @return
 	 */
-	public static String getDateG(int days) {
+	public static String getDateG(int days,String DateFormat) {
 
 		Calendar calendar = Calendar.getInstance();
 		calendar.add(Calendar.DATE, -days);
-		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sf = new SimpleDateFormat(DateFormat);
 		return sf.format(calendar.getTime());
 	}
 
@@ -741,6 +741,19 @@ public class AbDateUtil {
 	public static String getDateYearMonthDayNow() {
 		long millisecond = System.currentTimeMillis();// 当前时间毫秒值
 		SimpleDateFormat formatter = new SimpleDateFormat(dateFormatYMD);
+		Date curDate = new Date(millisecond);// 获取当前时间
+		String str = formatter.format(curDate);
+		return str;
+	}
+	/**
+	 * 得到当前时间格式yyyyMMdd
+	 *
+	 * @param
+	 *
+	 */
+	public static String getDateYearMonthDayNowPlus(String  DateFormat) {
+		long millisecond = System.currentTimeMillis();// 当前时间毫秒值
+		SimpleDateFormat formatter = new SimpleDateFormat(DateFormat);
 		Date curDate = new Date(millisecond);// 获取当前时间
 		String str = formatter.format(curDate);
 		return str;

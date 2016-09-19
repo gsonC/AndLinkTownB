@@ -1,13 +1,5 @@
 package com.lianbi.mezone.b.ui;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
-
-import org.json.JSONException;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
@@ -29,6 +21,21 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.PopupWindow.OnDismissListener;
 import android.widget.TextView;
+
+import com.alibaba.fastjson.JSONObject;
+import com.lianbi.mezone.b.bean.DateAndColor;
+import com.lianbi.mezone.b.bean.OrderBean;
+import com.lianbi.mezone.b.httpresponse.MyResultCallback;
+import com.xizhi.mezone.b.R;
+
+import org.json.JSONException;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.DateRecylerviewAdapter;
 import cn.com.hgh.baseadapter.DateRecylerviewAdapter.OnItemMonthClickListener;
@@ -44,12 +51,6 @@ import cn.com.hgh.utils.SpannableuUtills;
 import cn.com.hgh.view.AbPullToRefreshView;
 import cn.com.hgh.view.AbPullToRefreshView.OnFooterLoadListener;
 import cn.com.hgh.view.AbPullToRefreshView.OnHeaderRefreshListener;
-
-import com.alibaba.fastjson.JSONObject;
-import com.xizhi.mezone.b.R;
-import com.lianbi.mezone.b.bean.DateAndColor;
-import com.lianbi.mezone.b.bean.OrderBean;
-import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 
 @SuppressLint("ResourceAsColor")
 public class TransactionManagementActivity extends BaseActivity {
@@ -122,7 +123,7 @@ public class TransactionManagementActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.act_transactionmanagementactivity, NOTYPE);
-		today = AbDateUtil.getDateG(0);
+		today = AbDateUtil.getDateG(0,"yyyy-MM-dd");
 		startTime = today;
 		endTime = today;
 		tM = cyear + "" + month;
@@ -388,9 +389,9 @@ public class TransactionManagementActivity extends BaseActivity {
 		initPopView();
 		initFilterPopupWindow();
 		tv_tma_open_time = (TextView) findViewById(R.id.tv_tma_open_time);
-		tv_tma_open_time.setText(AbDateUtil.getDateG(0));
+		tv_tma_open_time.setText(AbDateUtil.getDateG(0,"yyyy-MM-dd"));
 		tv_tma_over_time = (TextView) findViewById(R.id.tv_tma_over_time);
-		tv_tma_over_time.setText(AbDateUtil.getDateG(0));
+		tv_tma_over_time.setText(AbDateUtil.getDateG(0,"yyyy-MM-dd"));
 		llt_tma_owner_time = (LinearLayout) findViewById(R.id.llt_tma_owner_time);
 		llt_tma_open_time = (LinearLayout) findViewById(R.id.llt_tma_open_time);
 		llt_tma_over_time = (LinearLayout) findViewById(R.id.llt_tma_over_time);
@@ -456,9 +457,9 @@ public class TransactionManagementActivity extends BaseActivity {
 				disD();
 				llt_tma_owner_time.setVisibility(View.GONE);
 				tv_time_act_transactionmanagementactivity.setText(AbDateUtil
-						.getDateG(2) + "至" + today);
+						.getDateG(2,"yyyy-MM-dd") + "至" + today);
 				endTime = today;
-				startTime = AbDateUtil.getDateG(2);
+				startTime = AbDateUtil.getDateG(2,"yyyy-MM-dd");
 				pop_tma_today.setTextColor(TransactionManagementActivity.this
 						.getResources().getColor(R.color.color_c6c6c6));
 				pop_tma_three.setTextColor(TransactionManagementActivity.this
@@ -481,9 +482,9 @@ public class TransactionManagementActivity extends BaseActivity {
 				disD();
 				llt_tma_owner_time.setVisibility(View.GONE);
 				tv_time_act_transactionmanagementactivity.setText(AbDateUtil
-						.getDateG(6) + "至" + today);
+						.getDateG(6,"yyyy-MM-dd") + "至" + today);
 				endTime = today;
-				startTime = AbDateUtil.getDateG(6);
+				startTime = AbDateUtil.getDateG(6,"yyyy-MM-dd");
 				pop_tma_today.setTextColor(TransactionManagementActivity.this
 						.getResources().getColor(R.color.color_c6c6c6));
 				pop_tma_three.setTextColor(TransactionManagementActivity.this
@@ -506,9 +507,9 @@ public class TransactionManagementActivity extends BaseActivity {
 				disD();
 				llt_tma_owner_time.setVisibility(View.GONE);
 				tv_time_act_transactionmanagementactivity.setText(AbDateUtil
-						.getDateG(29) + "至" + today);
+						.getDateG(29,"yyyy-MM-dd") + "至" + today);
 				endTime = today;
-				startTime = AbDateUtil.getDateG(29);
+				startTime = AbDateUtil.getDateG(29,"yyyy-MM-dd");
 				pop_tma_today.setTextColor(TransactionManagementActivity.this
 						.getResources().getColor(R.color.color_c6c6c6));
 				pop_tma_three.setTextColor(TransactionManagementActivity.this

@@ -54,7 +54,7 @@
         </cn.com.hgh.view.PullToRefreshLayoutforAutoMoreSwipe>
 
         <ImageView
-            android:visibility="visible"
+            android:visibility="gone"
             android:id="@+id/fm_orederfragment_iv_empty"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

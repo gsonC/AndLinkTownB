@@ -36,7 +36,7 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.com.hgh.timeselector.TimeSelectorE;
+import cn.com.hgh.timeselector.TimeSelectorA;
 import cn.com.hgh.utils.AbDateUtil;
 import cn.com.hgh.utils.AbStrUtil;
 import cn.com.hgh.utils.ContentUtils;
@@ -184,7 +184,7 @@ public class OrderContentActivity extends BaseActivity implements
                 tvToday.setChecked(true);
                 tvThreeday.setChecked(false);
                 tvOnemonth.setChecked(false);
-                String  txnTime=AbDateUtil.getDateYearMonthDayNow();
+                String  txnTime=AbDateUtil.getDateYearMonthDayNowPlus("yyyyMMdd");
                 initSearch(
                         "",
                         orderStatus,
@@ -200,8 +200,8 @@ public class OrderContentActivity extends BaseActivity implements
                 tvToday.setChecked(false);
                 tvThreeday.setChecked(true);
                 tvOnemonth.setChecked(false);
-                beginTime=AbDateUtil.getDateG(3);
-                endTime=AbDateUtil.getDateYearMonthDayNow();
+                beginTime=AbDateUtil.getDateG(3,"yyyyMMdd");
+                endTime=AbDateUtil.getDateYearMonthDayNowPlus("yyyyMMdd");
                 initSearch(
                         "",
                         orderStatus,
@@ -217,8 +217,8 @@ public class OrderContentActivity extends BaseActivity implements
                 tvToday.setChecked(false);
                 tvThreeday.setChecked(false);
                 tvOnemonth.setChecked(true);
-                beginTime=AbDateUtil.getDateG(30);
-                endTime=AbDateUtil.getDateYearMonthDayNow();
+                beginTime=AbDateUtil.getDateG(30,"yyyyMMdd");
+                endTime=AbDateUtil.getDateYearMonthDayNowPlus("yyyyMMdd");
                 initSearch(
                         "",
                         orderStatus,
@@ -236,8 +236,8 @@ public class OrderContentActivity extends BaseActivity implements
         switch (v.getId()) {
 
             case R.id.tv_starttime:
-                TimeSelectorE timeSelectorFrom = new TimeSelectorE(OrderContentActivity.this,
-                        new TimeSelectorE.ResultHandler() {
+                TimeSelectorA timeSelectorFrom = new TimeSelectorA(OrderContentActivity.this,
+                        new TimeSelectorA.ResultHandler() {
                             @Override
                             public void handle(String time) {
                                 if (!AbStrUtil.isEmpty(tvFinishtime.getText().toString()) &&
@@ -264,15 +264,15 @@ public class OrderContentActivity extends BaseActivity implements
                             }
                         }, STARTTIME,
                         ENDTIME);
-                timeSelectorFrom.setMode(TimeSelectorE.MODE.YMD);
+                timeSelectorFrom.setDataFormat("yyyyMMdd");
+                timeSelectorFrom.setMode(TimeSelectorA.MODE.YMD);
                 timeSelectorFrom.setTitle("起始时间");
-                timeSelectorFrom.show();
-//                timeSelectorFrom.defaultShow(AbDateUtil.getCurrentDate(AbDateUtil.dateFormatYMD));
+                timeSelectorFrom.showCurrent();
 
                 break;
             case R.id.tv_finishtime:
-                TimeSelectorE timeSelectorTo = new TimeSelectorE(this,
-                        new TimeSelectorE.ResultHandler() {
+                TimeSelectorA timeSelectorTo = new TimeSelectorA(this,
+                        new TimeSelectorA.ResultHandler() {
                             @Override
                             public void handle(String time) {
                                 if (!AbStrUtil.isEmpty(tvStarttime.getText().toString()) &&
@@ -299,10 +299,10 @@ public class OrderContentActivity extends BaseActivity implements
                             }
                         },STARTTIME,
                         ENDTIME);
-                timeSelectorTo.setMode(TimeSelectorE.MODE.YMD);
+                timeSelectorTo.setDataFormat("yyyyMMdd");
+                timeSelectorTo.setMode(TimeSelectorA.MODE.YMD);
                 timeSelectorTo.setTitle("结束时间");
-                timeSelectorTo.show();
-//                timeSelectorTo.defaultShow(AbDateUtil.getCurrentDate(AbDateUtil.dateFormatYMD));
+                timeSelectorTo.showCurrent();
                 break;
             case R.id.iv_close:
                 String  strStarttime=tvStarttime.getText().toString();
@@ -357,7 +357,7 @@ public class OrderContentActivity extends BaseActivity implements
         setContentView(R.layout.act_ordercontent, NOTYPE);
         ButterKnife.bind(this);
         initView();
-//      orderStatus="03,04";
+        orderStatus="03,04";
 //      getOrderInfo(true,false,isValid);
     }
 
