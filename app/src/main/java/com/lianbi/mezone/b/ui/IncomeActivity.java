@@ -73,11 +73,11 @@ public class IncomeActivity extends BaseActivity implements OnClickListener {
 					}
 
 					tv_income2_time.setText(item.getCreateTime());
-					if ("01".equals(item.getOptType())) {
-						tv_income2_money.setText(MathExtend.roundNew(new BigDecimal(item.getAmount())
+					if ("03".equals(item.getOptType())||"05".equals(item.getOptType())||"06".equals(item.getOptType())) {
+						tv_income2_money.setText("-" + MathExtend.roundNew(new BigDecimal(item.getAmount())
 								.divide(new BigDecimal(100)).doubleValue(), 2));
 					} else {
-						tv_income2_money.setText("-" + MathExtend.roundNew(new BigDecimal(item.getAmount())
+						tv_income2_money.setText(MathExtend.roundNew(new BigDecimal(item.getAmount())
 								.divide(new BigDecimal(100)).doubleValue(), 2));
 					}
 				}else{
@@ -115,7 +115,7 @@ public class IncomeActivity extends BaseActivity implements OnClickListener {
 		setPageTitle("收入明细");
 		setPageRightText("全部");
 		act_income_abpulltorefreshview = (AbPullToRefreshView) findViewById(R.id.act_income_abpulltorefreshview);//AbPullToRefreshView
-		act_income_listview = (ListView) findViewById(R.id.act_income_listview);//列表\
+		act_income_listview = (ListView) findViewById(R.id.act_income_listview);//列表
 		img_income_empty = (ImageView) findViewById(R.id.img_income_empty);
 	}
 
@@ -157,22 +157,23 @@ public class IncomeActivity extends BaseActivity implements OnClickListener {
 		super.onClick(view);
 		switch (view.getId()) {
 			case R.id.mainpoplayout_tvlist:
-				optType = "00";
 				setPageRightText("全部");
 				getAmtFlow(true, optType);
 				pw.dismiss();
 				break;
 			case R.id.mainpoplayout_tvxia:
-				optType = "01";
-				setPageRightText("支出");
-				getAmtFlow(true, optType);
-				pw.dismiss();
+                   optType="02";
+					setPageRightText("支出");
+					getAmtFlow(true, optType);
+					pw.dismiss();
+
 				break;
 			case R.id.mainpoplayout_tvincome:
-				optType = "02";
-				setPageRightText("收入");
-				getAmtFlow(true, optType);
-				pw.dismiss();
+				optType="01";
+					setPageRightText("收入");
+					getAmtFlow(true, optType);
+					pw.dismiss();
+
 				break;
 		}
 	}
