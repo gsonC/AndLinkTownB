@@ -33,8 +33,7 @@ import cn.com.hgh.view.AbPullToRefreshView;
 /**
  * 提现记录
  */
-public class WithdrawRecordActivity extends BaseActivity implements AdapterView.OnItemClickListener,
-        AbPullToRefreshView.OnHeaderRefreshListener, AbPullToRefreshView.OnFooterLoadListener {
+public class WithdrawRecordActivity extends BaseActivity implements AbPullToRefreshView.OnHeaderRefreshListener, AbPullToRefreshView.OnFooterLoadListener {
     @Bind(R.id.withdraw_record)
     AbPullToRefreshView withdrawRecord;
     @Bind(R.id.iv_empty_act_withdraw_record)
@@ -68,7 +67,7 @@ public class WithdrawRecordActivity extends BaseActivity implements AdapterView.
     private void initAdapter() {
         adapter = new QuickAdapter<WithDrawDeposite>(WithdrawRecordActivity.this, R.layout.withdraw_record_listview_item, mData) {
             @Override
-            protected void convert(BaseAdapterHelper helper, WithDrawDeposite item) {
+            protected void convert(BaseAdapterHelper helper, final WithDrawDeposite item) {
                 TextView order_no = helper.getView(R.id.order_no);
                 TextView state = helper.getView(R.id.state);
                 TextView withdraw_content = helper.getView(R.id.withdraw_content);
@@ -80,12 +79,27 @@ public class WithdrawRecordActivity extends BaseActivity implements AdapterView.
                 String status = item.getCheckStatus();
                 String sStr = "";
                 int colorRes = 0;
-                if ("04".equals(status)) {
+                if ("04".equals(status)) {//打款成功
                     sStr = "提现成功";
                     colorRes = R.color.colores_news_06;
-                } else {
+                    state.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            startActivity(new Intent(WithdrawRecordActivity.this, WithdrawingProgressActivity.class)
+                                    .putExtra(WithdrawingProgressActivity.FROM, WithdrawingProgressActivity.SUCESS)
+                                    .putExtra(WithdrawingProgressActivity.STATUS, item.getStatus()));
+                        }
+                    });
+                } else {//03、审核拒绝，05、打款失败
                     sStr = "提现失败";
                     colorRes = R.color.colores_news_04;
+                    state.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            startActivity(new Intent(WithdrawRecordActivity.this, WithdrawFailedReasonActivity.class)
+                                    .putExtra(WithdrawFailedReasonActivity.checkStatus, item.getCheckStatus()));
+                        }
+                    });
                 }
                 GradientDrawable drawable = (GradientDrawable) state.getBackground();
                 drawable.setColor(getResources().getColor(colorRes));
@@ -197,23 +211,6 @@ public class WithdrawRecordActivity extends BaseActivity implements AdapterView.
         pageNo = 0;
         initCommonParameter();
         getDatas();
-    }
-
-    @Override
-    @OnItemClick({R.id.withdraw_record_listview})
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        WithDrawDeposite withDrawDeposite = (WithDrawDeposite) parent.getAdapter().getItem(position);
-        String checkStatus = withDrawDeposite.getCheckStatus();
-        Intent intent = new Intent();
-        if ("04".equals(checkStatus)) {//打款成功
-            intent.setComponent(new ComponentName(WithdrawRecordActivity.this, WithdrawingProgressActivity.class));
-            intent.putExtra(WithdrawingProgressActivity.FROM, WithdrawingProgressActivity.SUCESS);
-            intent.putExtra(WithdrawingProgressActivity.STATUS, withDrawDeposite.getStatus());
-        } else {//03、审核拒绝，05、打款失败
-            intent.setComponent(new ComponentName(WithdrawRecordActivity.this, WithdrawFailedReasonActivity.class));
-            intent.putExtra(WithdrawFailedReasonActivity.checkStatus, checkStatus);
-        }
-        startActivity(intent);
     }
 
     private void refreshingFinish() {
