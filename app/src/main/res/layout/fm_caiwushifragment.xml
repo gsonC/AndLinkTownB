@@ -280,7 +280,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:scaleType="fitCenter"
-                        android:src="@mipmap/recharge"/>
+                        android:src="@mipmap/rechargess"/>
                 </LinearLayout>
 
                 <View
@@ -303,7 +303,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:scaleType="fitCenter"
-                        android:src="@mipmap/withdrawals"/>
+                        android:src="@mipmap/withdrawalsss"/>
                 </LinearLayout>
             </LinearLayout>
 
@@ -333,7 +333,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:scaleType="fitCenter"
-                        android:src="@mipmap/bankcard"/>
+                        android:src="@mipmap/bankcardss"/>
                 </LinearLayout>
 
                 <View
@@ -355,7 +355,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:scaleType="fitCenter"
-                        android:src="@mipmap/paymentamount"/>
+                        android:src="@mipmap/paymentamountss"/>
                 </LinearLayout>
             </LinearLayout>
 

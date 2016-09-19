@@ -92,8 +92,15 @@ public class DiaqlogNow extends Dialog {
 		Window win = getWindow();
 		WindowManager.LayoutParams lp = win.getAttributes();
 		lp.gravity = Gravity.CENTER;
+		//设置透明度
+		lp.alpha=0.8f;
+		win.setAttributes(lp);
 		lp.width = (int) (screenWidth * 0.8);
 		lp.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+		//点击对话框时消除后面模糊场景
+		win.setFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND,
+				WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
+
 	}
 
 	private String getTime(String time){
