@@ -375,11 +375,13 @@ public class FinancialOfficeFragment extends Fragment implements
                 break;
 
             case R.id.tv_finalcial_ruledescription://规则说明
-                DiaqlogNow dialog = new DiaqlogNow(mMainActivity, financialOfficeAmountBean);
+                try{
+                    DiaqlogNow dialog = new DiaqlogNow(mMainActivity, financialOfficeAmountBean);
+                    dialog.show();
+                }catch (Exception e){
+                    ContentUtils.showMsg(mMainActivity,"数据异常，请稍后再试");
+                }
 
-                dialog.show();
-
-                break;
         }
     }
 

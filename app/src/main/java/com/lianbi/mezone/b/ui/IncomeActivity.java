@@ -199,7 +199,8 @@ public class IncomeActivity extends BaseActivity implements OnClickListener {
 		}
 
 		try {
-			okHttpsImp.getIsAmtFlow(OkHttpsImp.md5_key, userShopInfoBean.getUserId(), userShopInfoBean.getBusinessId(), optType, uuid, "app", reqTime, page + "", 20 + "", new MyResultCallback<String>() {
+			okHttpsImp.getIsAmtFlow(OkHttpsImp.md5_key, userShopInfoBean.getUserId(),
+					userShopInfoBean.getBusinessId(), optType, uuid, "app", reqTime, page + "", 20 + "", new MyResultCallback<String>() {
 				@Override
 				public void onResponseResult(Result result) {
 					page++;

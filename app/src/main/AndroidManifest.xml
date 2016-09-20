@@ -93,7 +93,8 @@
             android:name="com.lianbi.mezone.b.ui.MemberPointManage"
             android:launchMode="singleTask"
             android:windowSoftInputMode="stateHidden|stateUnchanged"/>
-        <activity android:name="com.lianbi.mezone.b.ui.TagManagerActivity"/>
+        <activity android:name="com.lianbi.mezone.b.ui.TagManagerActivity"
+                  android:windowSoftInputMode="stateHidden"/>
         <activity android:name="com.lianbi.mezone.b.ui.MembersManagementActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.RevisionsActivity"/>
         <activity
