@@ -200,6 +200,10 @@
         android:scaleType="fitCenter"
         android:src="@mipmap/iv_empty"
         android:visibility="gone"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colores_news_14" />
     <LinearLayout
         android:id="@+id/lay_bottom"
         android:layout_width="match_parent"

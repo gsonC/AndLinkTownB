@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.lianbi.mezone.b.bean.OrderContent;
@@ -24,17 +23,13 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.QuickAdapter;
+import cn.com.hgh.utils.AbPullHide;
 import cn.com.hgh.utils.ContentUtils;
-import cn.com.hgh.view.PullToRefreshLayoutforAutoMoreSwipe;
-import cn.com.hgh.view.PullToRefreshLayoutforAutoMoreSwipe.OnRefreshListener;
-import cn.com.hgh.view.PullableAndAutomoreSwipListView;
+import cn.com.hgh.view.AbPullToRefreshView;
+import cn.com.hgh.view.SwipeListView;
 
 public class OrederFragment extends Fragment {
 
-    //    @Bind(R.id.act_addorder_abpulltorefreshview)
-//    AbPullToRefreshView mact_addorder_abpulltorefreshview;
-//    @Bind(R.id.fm_orederfragment_listView)
-//    SlideListView2 fmOrederfragmentListView;
     Activity mActivity;
     OrderLookUpActivity mOrderLookUpActivity;
     OrderContentActivity mOrderContentActivity;
@@ -44,38 +39,16 @@ public class OrederFragment extends Fragment {
     boolean isLoad;
     boolean isDelete;
     int listPosition = -1;
-    @Bind(R.id.pull_icon)
-    ImageView pullIcon;
-    @Bind(R.id.refreshing_icon)
-    ImageView refreshingIcon;
-    @Bind(R.id.state_tv)
-    TextView stateTv;
-    @Bind(R.id.state_iv)
-    ImageView stateIv;
-    @Bind(R.id.head_view)
-    RelativeLayout headView;
-    @Bind(R.id.listview)
-    PullableAndAutomoreSwipListView mPullableAndAutomoreSwipListView;
-    @Bind(R.id.pullup_icon)
-    ImageView pullupIcon;
-    @Bind(R.id.loading_icon)
-    ImageView loadingIcon;
-    @Bind(R.id.loadstate_tv)
-    TextView loadstateTv;
-    @Bind(R.id.loadstate_iv)
-    ImageView loadstateIv;
-    @Bind(R.id.loadmore_view)
-    RelativeLayout loadmoreView;
-    @Bind(R.id.refresh_view)
-    PullToRefreshLayoutforAutoMoreSwipe refreshView;
+    @Bind(R.id.act_addmembers_listview)
+    SwipeListView actOrederListview;
+    @Bind(R.id.act_addmembers_abpulltorefreshview)
+    AbPullToRefreshView actOrederAbpulltorefreshview;
     @Bind(R.id.fm_orederfragment_iv_empty)
     ImageView fmOrederfragmentIvEmpty;
-    @Bind(R.id.tv_nomore)
-    TextView tv_nomore;
-
 
 
     private boolean isFirstIn = true;
+
     @Override
     public View onCreateView(LayoutInflater inflater,
                              @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -92,9 +65,39 @@ public class OrederFragment extends Fragment {
     }
 
     private void initView(View view) {
-        refreshView.setOnRefreshListener(new MyListener());
+        actOrederAbpulltorefreshview.setLoadMoreEnable(true);
+        actOrederAbpulltorefreshview.setPullRefreshEnable(true);
+        actOrederAbpulltorefreshview
+                .setOnHeaderRefreshListener(new AbPullToRefreshView.OnHeaderRefreshListener() {
+
+                    @Override
+                    public void onHeaderRefresh(AbPullToRefreshView view) {
+                        if (mActivity instanceof OrderLookUpActivity) {
+                            mOrderLookUpActivity.getOrderInfo(true, false, "Y");
+                        } else if (mActivity instanceof OrderContentActivity) {
+                            if (mOrderContentActivity.timeNoselected()) {
+                                ContentUtils.showMsg(mActivity, "请选择查询时间");
+                                hideRefreshView(true);
+                                return;
+                            }
+                            mOrderContentActivity.getOrderInfo(true, false, "Y");
+                        }
+                    }
+
+                });
+        actOrederAbpulltorefreshview
+                .setOnFooterLoadListener(new AbPullToRefreshView.OnFooterLoadListener() {
+
+                    @Override
+                    public void onFooterLoad(AbPullToRefreshView view) {
+                        if (mActivity instanceof OrderLookUpActivity) {
+                            mOrderLookUpActivity.getOrderInfo(false, true, "Y");
+                        } else if (mActivity instanceof OrderContentActivity) {
+                            mOrderContentActivity.getOrderInfo(false, true, "Y");
+                        }
+                    }
+                });
         initListAdapter();
-        refreshView.setListView(mPullableAndAutomoreSwipListView);
     }
 
     /**
@@ -146,7 +149,7 @@ public class OrederFragment extends Fragment {
 
                             @Override
                             public void onClick(View v) {
-                                mPullableAndAutomoreSwipListView.slideBack();
+                                actOrederListview.slideBack();
                                 ArrayList<String> ids = new ArrayList<String>();
                                 ids.add(String.valueOf(item.getOrderNo()));
                                 listPosition = helper.getPosition();
@@ -161,7 +164,7 @@ public class OrederFragment extends Fragment {
             }
         };
 
-        mPullableAndAutomoreSwipListView.setAdapter(mAdapter);
+        actOrederListview.setAdapter(mAdapter);
     }
 
     public void doSomthing(ArrayList<OrderContent> cuArrayList, int position) {
@@ -170,38 +173,38 @@ public class OrederFragment extends Fragment {
             mDatas = cuArrayList;
             mAdapter.replaceAll(mDatas);
             fmOrederfragmentIvEmpty.setVisibility(View.GONE);
-            refreshView.setVisibility(View.VISIBLE);
+            actOrederAbpulltorefreshview.setVisibility(View.VISIBLE);
         } else {
             if (mDatas.size() > 0) {
                 fmOrederfragmentIvEmpty.setVisibility(View.GONE);
-                refreshView.setVisibility(View.VISIBLE);
+                actOrederAbpulltorefreshview.setVisibility(View.VISIBLE);
                 mAdapter.replaceAll(mDatas);
             } else {
                 fmOrederfragmentIvEmpty.setVisibility(View.VISIBLE);
-                refreshView.setVisibility(View.GONE);
+                actOrederAbpulltorefreshview.setVisibility(View.GONE);
             }
         }
 
     }
+
     //用于判断是没有查到数据还是没有选时间
-    public void  timeNoselected(boolean  timeNoselect){
-        if(timeNoselect==true){
-          mAdapter.replaceAll(mDatas);
-          fmOrederfragmentIvEmpty.setVisibility(View.GONE);
-          refreshView.setVisibility(View.VISIBLE);
-          LoadMore(0);
+    public void timeNoselected(boolean timeNoselect) {
+        if (timeNoselect == true) {
+            mAdapter.replaceAll(mDatas);
+            fmOrederfragmentIvEmpty.setVisibility(View.GONE);
+            actOrederAbpulltorefreshview.setVisibility(View.VISIBLE);
         }
 
 
-
     }
+
     public void hideRefreshView(boolean isResh) {
 
-        refreshView.refreshFinish(PullToRefreshLayoutforAutoMoreSwipe.SUCCEED);
-
-
+        AbPullHide.hideRefreshView(isResh,
+                actOrederAbpulltorefreshview);
 
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -213,83 +216,6 @@ public class OrederFragment extends Fragment {
         hideRefreshView(true);
         mAdapter.replaceAll(mDatas);
     }
-    public void LoadMore(int status){
-        switch (status){
-            case   0:
-                mPullableAndAutomoreSwipListView.setNomore(0);//数据不够一页，啥也不显示
-                tv_nomore.setVisibility(View.GONE);
-                break;
-            case   1:
-                mPullableAndAutomoreSwipListView.setNomore(1);//设置可以自动加载
-                tv_nomore.setVisibility(View.GONE);
-                break;
-            default:
-//            case   2:
-//                tv_nomore.setVisibility(View.VISIBLE);
-                mPullableAndAutomoreSwipListView.setNomore(2);//显示没有更多
-                break;
-        }
 
-    }
-    class MyListener implements OnRefreshListener {
 
-        @Override
-        public void onRefresh(final PullToRefreshLayoutforAutoMoreSwipe pullToRefreshLayout) {
-
-            if(mActivity instanceof OrderLookUpActivity){
-                mOrderLookUpActivity.getOrderInfo(true,false,"Y");
-            }else
-            if(mActivity instanceof OrderContentActivity){
-                if(mOrderContentActivity.timeNoselected()){
-                    ContentUtils.showMsg(mActivity, "请选择查询时间");
-                    hideRefreshView(true);
-                    return;
-                }
-                mOrderContentActivity.getOrderInfo(true,false,"Y");
-            }
-        }
-
-        @Override
-        public void onLoadMore(final PullToRefreshLayoutforAutoMoreSwipe pullToRefreshLayout) {
-
-            if(mActivity instanceof OrderLookUpActivity){
-//                LoadMore(1);
-                mOrderLookUpActivity.getOrderInfo(false,true,"Y");
-                }else
-                if(mActivity instanceof OrderContentActivity){
-//                LoadMore(1);
-                mOrderContentActivity.getOrderInfo(false,true,"Y");
-            }
-        }
-    }
 }
-
-//mact_addorder_abpulltorefreshview.setLoadMoreEnable(true);
-//        mact_addorder_abpulltorefreshview.setPullRefreshEnable(true);
-//        mact_addorder_abpulltorefreshview
-//        .setOnHeaderRefreshListener(new AbPullToRefreshView.OnHeaderRefreshListener() {
-//
-//@Override
-//public void onHeaderRefresh(AbPullToRefreshView view) {
-//        if(mActivity instanceof OrderLookUpActivity){
-//        mOrderLookUpActivity.getOrderInfo(true,false,"Y");
-//        }else
-//        if(mActivity instanceof OrderContentActivity){
-//        mOrderContentActivity.getOrderInfo(true,false,"Y");
-//        }
-//        }
-//
-//        });
-//        mact_addorder_abpulltorefreshview
-//        .setOnFooterLoadListener(new AbPullToRefreshView.OnFooterLoadListener() {
-//
-//@Override
-//public void onFooterLoad(AbPullToRefreshView view) {
-//        if(mActivity instanceof OrderLookUpActivity){
-//        mOrderLookUpActivity.getOrderInfo(false,true,"Y");
-//        }else
-//        if(mActivity instanceof OrderContentActivity){
-//        mOrderContentActivity.getOrderInfo(false,true,"Y");
-//        }                    }
-//        });
-//        fmOrederfragmentListView.initSlideMode(SlideListView2.MOD_RIGHT);
