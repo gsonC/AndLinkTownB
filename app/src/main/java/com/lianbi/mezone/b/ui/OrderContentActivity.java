@@ -501,27 +501,25 @@ public class OrderContentActivity extends BaseActivity implements
                                         Log.i("tag","查询到的条数"+basesize);
                                         switch (intentLayout) {
                                             case POSITION0:
+                                                mWholeFragment.hideRefreshView(isResh);
                                                 mWholeData.addAll(baseList);
                                                 mDatas.addAll(mWholeData);
                                                 tv_num.setText(String.valueOf(mDatas.size()));
                                                 break;
                                             case POSITION1:
+                                                mPaySuccessFragment.hideRefreshView(isResh);
                                                 mPaySuccessDatas.addAll(baseList);
                                                 mDatas.addAll(mPaySuccessDatas);
                                                 tv_num.setText(String.valueOf(mDatas.size()));
                                                 break;
                                             case POSITION2:
+                                                mPayFailFragment.hideRefreshView(isResh);
                                                 mPayFailDatas.addAll(baseList);
                                                 mDatas.addAll(mPayFailDatas);
                                                 tv_num.setText(String.valueOf(mDatas.size()));
                                                 break;
                                         }
                                         int  mDatasize=mDatas.size();
-                                        if (mDatasize<Integer.parseInt(pageSize)) {
-                                            setLoadMore(0);//显示没有更多
-                                        }else {
-                                            setLoadMore(1);//显示加载更多并自动加载
-                                        }
                                         showData(isResh);
                                     }
                                 } catch (JSONException e) {
@@ -532,10 +530,23 @@ public class OrderContentActivity extends BaseActivity implements
                         @Override
                         public void onResponseFailed(String msg) {
                             int  mDatasize=mDatas.size();
-                            if (mDatasize<Integer.parseInt(pageSize)) {
-                                setLoadMore(0);
-                            }else {
-                                setLoadMore(2);//显示加载更多并自动加载
+                            switch (intentLayout) {
+                                case POSITION0:
+                                    if (mWholeFragment != null) {
+                                        mWholeFragment.hideRefreshView(isResh);
+                                    }
+                                    break;
+
+                                case POSITION1:
+                                    if (mPaySuccessFragment != null) {
+                                        mPaySuccessFragment.hideRefreshView(isResh);
+                                    }
+                                    break;
+                                case POSITION2:
+                                    if (mPayFailFragment != null) {
+                                        mPayFailFragment.hideRefreshView(isResh);
+                                    }
+                                    break;
                             }
                             showData(isResh);
                         }
@@ -544,20 +555,6 @@ public class OrderContentActivity extends BaseActivity implements
             e.printStackTrace();
         }
 
-
-    }
-    public  void  setLoadMore(int  loadmore){
-        switch (intentLayout) {
-            case POSITION0:
-                mWholeFragment.LoadMore(loadmore);
-                break;
-            case POSITION1:
-                mPaySuccessFragment.LoadMore(loadmore);
-                break;
-            case POSITION2:
-                mPayFailFragment.LoadMore(loadmore);
-                break;
-        }
 
     }
     public void   showData(boolean  isResh){
@@ -573,26 +570,17 @@ public class OrderContentActivity extends BaseActivity implements
         switch (intentLayout) {
             case POSITION0:
                 if (mWholeFragment != null) {
-                    if(mDatasize!=0) {
-                        mWholeFragment.hideRefreshView(isResh);
-                    }
                     swtFmDo(POSITION0,mDatas);
                 }
                 break;
 
             case POSITION1:
                 if (mPaySuccessFragment != null) {
-                    if(mDatasize!=0) {
-                        mPaySuccessFragment.hideRefreshView(isResh);
-                    }
                     swtFmDo(POSITION1,mDatas);
                 }
                 break;
             case POSITION2:
                 if (mPayFailFragment != null) {
-                    if(mDatasize!=0) {
-                        mPayFailFragment.hideRefreshView(isResh);
-                    }
                     swtFmDo(POSITION2,mDatas);
                 }
                 break;
