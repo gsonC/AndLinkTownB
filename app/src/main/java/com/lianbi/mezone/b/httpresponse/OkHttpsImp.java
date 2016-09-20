@@ -1999,6 +1999,7 @@ public enum OkHttpsImp {
 		params.put("isValid", isValid);
 		params.put("merchantSubCode", merchantSubCode);
 		params.put("orderStatus", orderStatus);
+		params.put("txnTime", txnTime);
 		params.put("startTime", startTime);
 		params.put("endTime", endTime);
 		params.put("reqTime", reqTime);

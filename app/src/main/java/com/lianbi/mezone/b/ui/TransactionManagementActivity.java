@@ -748,7 +748,7 @@ public class TransactionManagementActivity extends BaseActivity {
 						public void handle(String time) {
 							tv_tma_open_time.setText(time);
 							startTime = time;
-							if (!AbDateUtil.compareTime(startTime, endTime)) {
+							if (!AbDateUtil.compareTime(startTime, endTime,"yyyy-MM-dd")) {
 								return;
 							}
 							getData(true);
@@ -766,7 +766,7 @@ public class TransactionManagementActivity extends BaseActivity {
 						public void handle(String time) {
 							tv_tma_over_time.setText(time);
 							endTime = time;
-							if (!AbDateUtil.compareTime(startTime, endTime)) {
+							if (!AbDateUtil.compareTime(startTime, endTime,"yyyy-MM-dd")) {
 								ContentUtils.showMsg(
 										TransactionManagementActivity.this,
 										"起始时间不能大于结束时间");

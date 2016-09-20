@@ -173,7 +173,7 @@ public class SendNewCouponActivity extends BaseActivity implements CompoundButto
                         new TimeSelectorE.ResultHandler() {
                             @Override
                             public void handle(String time) {
-                                if (!AbStrUtil.isEmpty(endTime) && !AbDateUtil.compareTime(time, endTime)) {
+                                if (!AbStrUtil.isEmpty(endTime) && !AbDateUtil.compareTime(time, endTime,"yyyy-MM-dd")) {
                                     ContentUtils.showMsg(SendNewCouponActivity.this, "结束日期须在开始日期之后！");
                                     valid_period_from.setText("");
                                     beginTime = "";
@@ -195,7 +195,7 @@ public class SendNewCouponActivity extends BaseActivity implements CompoundButto
                         new TimeSelectorE.ResultHandler() {
                             @Override
                             public void handle(String time) {
-                                if (!AbStrUtil.isEmpty(beginTime) && !AbDateUtil.compareTime(beginTime, time)) {
+                                if (!AbStrUtil.isEmpty(beginTime) && !AbDateUtil.compareTime(beginTime, time,"yyyy-MM-dd")) {
                                     ContentUtils.showMsg(SendNewCouponActivity.this, "结束日期须在开始日期之后！");
                                     valid_period_to.setText("");
                                     endTime = "";

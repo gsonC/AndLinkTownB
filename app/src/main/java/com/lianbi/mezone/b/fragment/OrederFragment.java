@@ -24,6 +24,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.QuickAdapter;
+import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.view.PullToRefreshLayoutforAutoMoreSwipe;
 import cn.com.hgh.view.PullToRefreshLayoutforAutoMoreSwipe.OnRefreshListener;
 import cn.com.hgh.view.PullableAndAutomoreSwipListView;
@@ -69,6 +70,11 @@ public class OrederFragment extends Fragment {
     PullToRefreshLayoutforAutoMoreSwipe refreshView;
     @Bind(R.id.fm_orederfragment_iv_empty)
     ImageView fmOrederfragmentIvEmpty;
+    @Bind(R.id.tv_nomore)
+    TextView tv_nomore;
+
+
+
     private boolean isFirstIn = true;
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -177,7 +183,18 @@ public class OrederFragment extends Fragment {
         }
 
     }
+    //用于判断是没有查到数据还是没有选时间
+    public void  timeNoselected(boolean  timeNoselect){
+        if(timeNoselect==true){
+          mAdapter.replaceAll(mDatas);
+          fmOrederfragmentIvEmpty.setVisibility(View.GONE);
+          refreshView.setVisibility(View.VISIBLE);
+          LoadMore(0);
+        }
 
+
+
+    }
     public void hideRefreshView(boolean isResh) {
 
         refreshView.refreshFinish(PullToRefreshLayoutforAutoMoreSwipe.SUCCEED);
@@ -200,13 +217,15 @@ public class OrederFragment extends Fragment {
         switch (status){
             case   0:
                 mPullableAndAutomoreSwipListView.setNomore(0);//数据不够一页，啥也不显示
-              break;
+                tv_nomore.setVisibility(View.GONE);
+                break;
             case   1:
                 mPullableAndAutomoreSwipListView.setNomore(1);//设置可以自动加载
-
+                tv_nomore.setVisibility(View.GONE);
                 break;
             default:
 //            case   2:
+//                tv_nomore.setVisibility(View.VISIBLE);
                 mPullableAndAutomoreSwipListView.setNomore(2);//显示没有更多
                 break;
         }
@@ -221,6 +240,11 @@ public class OrederFragment extends Fragment {
                 mOrderLookUpActivity.getOrderInfo(true,false,"Y");
             }else
             if(mActivity instanceof OrderContentActivity){
+                if(mOrderContentActivity.timeNoselected()){
+                    ContentUtils.showMsg(mActivity, "请选择查询时间");
+                    hideRefreshView(true);
+                    return;
+                }
                 mOrderContentActivity.getOrderInfo(true,false,"Y");
             }
         }

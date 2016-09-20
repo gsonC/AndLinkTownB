@@ -173,9 +173,10 @@ public class MembersManagementActivity extends BaseActivity {
 
 			// 将默认的箭头修改到右边显示:
 			if (isExpanded) {
-				expand_ima.setBackgroundResource(R.mipmap.up2);
+				expand_ima.setImageResource(R.mipmap.up2);
 			} else {
-				expand_ima.setBackgroundResource(R.mipmap.down12);
+				expand_ima.setImageResource(R.mipmap.down12);
+
 			}
 
 			return convertView;

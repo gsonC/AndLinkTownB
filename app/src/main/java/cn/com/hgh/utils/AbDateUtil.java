@@ -672,8 +672,8 @@ public class AbDateUtil {
 	 * @param t2
 	 * @return
 	 */
-	public static boolean compareTime(String t1, String t2) {
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+	public static boolean compareTime(String t1, String t2,String  DateFormat) {
+		DateFormat df = new SimpleDateFormat(DateFormat);
 		Calendar c1 = Calendar.getInstance();
 		Calendar c2 = Calendar.getInstance();
 		try {

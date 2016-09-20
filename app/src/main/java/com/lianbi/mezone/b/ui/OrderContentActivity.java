@@ -121,13 +121,15 @@ public class OrderContentActivity extends BaseActivity implements
                     endTime
                 );
                 this.intentLayout=POSITION0;
-                if(TextUtils.isEmpty(txnTime)){
-                    if(TextUtils.isEmpty(beginTime)||TextUtils.isEmpty(endTime)){
-                        ContentUtils.showMsg(OrderContentActivity.this, "请选择查询时间");
-                        return;
-                    }
+                if(timeNoselected()){
+                    ContentUtils.showMsg(OrderContentActivity.this, "请选择查询时间");
+                    clearUpdate();
+                    return;
+                }else{
+
                 }
                 getOrderInfo(true,false,isValid);
+
                 break;
             case R.id.tv_success:
                 vpOrderpager.setCurrentItem(1);
@@ -142,11 +144,12 @@ public class OrderContentActivity extends BaseActivity implements
                         endTime
                 );
                 this.intentLayout=POSITION1;
-                if(TextUtils.isEmpty(txnTime)){
-                    if(TextUtils.isEmpty(beginTime)||TextUtils.isEmpty(endTime)){
-                        ContentUtils.showMsg(OrderContentActivity.this, "请选择查询时间");
-                        return;
-                    }
+                if(timeNoselected()){
+                    ContentUtils.showMsg(OrderContentActivity.this, "请选择查询时间");
+                    clearUpdate();
+                    return;
+                }else{
+
                 }
                 getOrderInfo(true,false,isValid);
                 break;
@@ -163,11 +166,12 @@ public class OrderContentActivity extends BaseActivity implements
                         endTime
                 );
                 this.intentLayout=POSITION2;
-                if(TextUtils.isEmpty(txnTime)){
-                    if(TextUtils.isEmpty(beginTime)||TextUtils.isEmpty(endTime)){
-                        ContentUtils.showMsg(OrderContentActivity.this, "请选择查询时间");
-                        return;
-                    }
+                if(timeNoselected()){
+                    ContentUtils.showMsg(OrderContentActivity.this, "请选择查询时间");
+                    clearUpdate();
+                    return;
+                }else{
+
                 }
                 getOrderInfo(true,false,isValid);
                 break;
@@ -241,7 +245,7 @@ public class OrderContentActivity extends BaseActivity implements
                             @Override
                             public void handle(String time) {
                                 if (!AbStrUtil.isEmpty(tvFinishtime.getText().toString()) &&
-                                        !AbDateUtil.compareTime(time,tvFinishtime.getText().toString())) {
+                                        !AbDateUtil.compareTime(time,tvFinishtime.getText().toString(),"yyyyMMdd")) {
                                     ContentUtils.showMsg(OrderContentActivity.this, "开始日期须在结束日期之前！");
                                     tvStarttime.setText("");
                                     beginTime = "";
@@ -276,7 +280,7 @@ public class OrderContentActivity extends BaseActivity implements
                             @Override
                             public void handle(String time) {
                                 if (!AbStrUtil.isEmpty(tvStarttime.getText().toString()) &&
-                                        !AbDateUtil.compareTime(tvStarttime.getText().toString(), time)) {
+                                        !AbDateUtil.compareTime(tvStarttime.getText().toString(), time,"yyyyMMdd")) {
                                     ContentUtils.showMsg(OrderContentActivity.this, "结束日期须在开始日期之后！");
                                     tvFinishtime.setText("");
                                     endTime = "";
@@ -307,12 +311,6 @@ public class OrderContentActivity extends BaseActivity implements
             case R.id.iv_close:
                 String  strStarttime=tvStarttime.getText().toString();
                 String  strFinishtime=tvFinishtime.getText().toString();
-                if(!TextUtils.isEmpty(strStarttime)&&!TextUtils.isEmpty(strFinishtime)){
-                    mDatas.clear();
-                    clearData();
-                    tv_num.setText("0");
-                    tv_rmb.setText("¥0");
-                }
                 if(!TextUtils.isEmpty(strStarttime)){
                     beginTime="";
                     tvStarttime.setText("");
@@ -321,7 +319,10 @@ public class OrderContentActivity extends BaseActivity implements
                     endTime="";
                     tvFinishtime.setText("");
                 }
-
+                if(timeNoselected()){
+                    clearUpdate();
+                    return;
+                }
                 break;
         }
     }
@@ -330,22 +331,32 @@ public class OrderContentActivity extends BaseActivity implements
         tvThreeday.setChecked(false);
         tvOnemonth.setChecked(false);
     }
+    public void   clearUpdate(){
+        mDatas.clear();
+        clearData();
+        tv_num.setText("0");
+        tv_rmb.setText("¥0");
+    }
     public void  clearData(){
         switch (intentLayout) {
             case POSITION0:
                 if (mWholeFragment != null) {
                     swtFmDo(POSITION0,mDatas);
+                    mWholeFragment.timeNoselected(true);
                 }
                 break;
 
             case POSITION1:
                 if (mPaySuccessFragment != null) {
                     swtFmDo(POSITION1,mDatas);
+                    mPaySuccessFragment.timeNoselected(true);
+
                 }
                 break;
             case POSITION2:
                 if (mPayFailFragment != null) {
                     swtFmDo(POSITION2,mDatas);
+                    mPayFailFragment.timeNoselected(true);
                 }
                 break;
         }
@@ -428,24 +439,24 @@ public class OrderContentActivity extends BaseActivity implements
     @Override
     public void onPageSelected(int arg0) {
         curPosition = arg0;
-        switch (arg0) {
-            case POSITION0:
-                if (mWholeFragment != null) {
-                    swtFmDo(arg0,mWholeData);
-                }
-                break;
-
-            case POSITION1:
-                if (mPaySuccessFragment != null) {
-                    swtFmDo(arg0,mPaySuccessDatas);
-                }
-                break;
-            case POSITION2:
-                if (mPayFailFragment != null) {
-                    swtFmDo(arg0,mPayFailDatas);
-                }
-                break;
-        }
+//        switch (arg0) {
+//            case POSITION0:
+//                if (mWholeFragment != null) {
+//                    swtFmDo(arg0,mWholeData);
+//                }
+//                break;
+//
+//            case POSITION1:
+//                if (mPaySuccessFragment != null) {
+//                    swtFmDo(arg0,mPaySuccessDatas);
+//                }
+//                break;
+//            case POSITION2:
+//                if (mPayFailFragment != null) {
+//                    swtFmDo(arg0,mPayFailDatas);
+//                }
+//                break;
+//        }
     }
     public void getOrderInfo(final boolean  isResh, final boolean  isLoad,final String  isValid) {
         if (isResh) {
@@ -702,5 +713,15 @@ public class OrderContentActivity extends BaseActivity implements
         }
 
 
+    }
+    //用于判断是没有查到数据还是没有选时间
+    public boolean  timeNoselected() {
+        if (TextUtils.isEmpty(txnTime)) {
+            if (TextUtils.isEmpty(beginTime) || TextUtils.isEmpty(endTime)) {
+
+                return  true;
+            }
+        }
+       return  false;
     }
 }

@@ -1,7 +1,5 @@
 package com.lianbi.mezone.b.ui;
 
-import java.io.File;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -22,25 +20,27 @@ import android.widget.PopupWindow;
 import android.widget.PopupWindow.OnDismissListener;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
+import com.lianbi.mezone.b.bean.IndustryListBean;
+import com.lianbi.mezone.b.httpresponse.MyResultCallback;
+import com.lianbi.mezone.b.photo.FileUtils;
+import com.lianbi.mezone.b.photo.PhotoUtills;
+import com.lianbi.mezone.b.photo.PickImageDescribe;
+import com.xizhi.mezone.b.R;
+
+import java.io.File;
+
 import cn.com.hgh.timeselector.TimeSelectorE;
 import cn.com.hgh.timeselector.TimeSelectorE.MODE;
 import cn.com.hgh.utils.AbDateUtil;
 import cn.com.hgh.utils.AbViewUtil;
 import cn.com.hgh.utils.ContentUtils;
-import cn.com.hgh.utils.FilePathGet;
 import cn.com.hgh.utils.Picture_Base64;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.utils.ScrollerUtills;
 import cn.com.hgh.view.MyContainsViewJJ;
 import cn.com.hgh.view.MyContainsViewJJ.ImOnclick;
 import cn.com.hgh.view.MyContainsViewJJ.UnitChange;
-
-import com.xizhi.mezone.b.R;
-import com.lianbi.mezone.b.bean.IndustryListBean;
-import com.lianbi.mezone.b.httpresponse.MyResultCallback;
-import com.lianbi.mezone.b.photo.FileUtils;
-import com.lianbi.mezone.b.photo.PhotoUtills;
-import com.lianbi.mezone.b.photo.PickImageDescribe;
 
 /**
  * 货源发布
@@ -435,7 +435,7 @@ public class PublishSupplyGoodsActivity extends BaseActivity {
 		}
 		if (!TextUtils.isEmpty(eDay)) {
 
-			if (!AbDateUtil.compareTime(sDay, eDay)) {
+			if (!AbDateUtil.compareTime(sDay, eDay,"yyyy-MM-dd")) {
 				ContentUtils.showMsg(this, "起始时间不能大于结束时间");
 				return;
 			}
