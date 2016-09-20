@@ -28,6 +28,7 @@ import cn.com.hgh.utils.AbDateUtil;
 import cn.com.hgh.utils.AbPullHide;
 import cn.com.hgh.utils.AbStrUtil;
 import cn.com.hgh.utils.AbViewUtil;
+import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.MathExtend;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.view.AbPullToRefreshView;
@@ -67,13 +68,29 @@ public class IncomeActivity extends BaseActivity implements OnClickListener {
 				if (AbStrUtil.isEmpty(item.getTime())) {
 					tv_income1_title.setVisibility(View.GONE);
 					llt_income_bottom.setVisibility(View.VISIBLE);
-					if (item.getOptMsg() == null) {
-						tv_income2_title.setText("收入-提现失败金额返还");
-					} else {
-						tv_income2_title.setText(item.getOptMsg() + "");
-					}
 
 					tv_income2_time.setText(item.getCreateTime());
+
+					if("00".equals(item.getOptType())){
+						tv_income2_title.setText("收入-扫码收款");
+					}else if("01".equals(item.getOptType())){
+						tv_income2_title.setText("收入-微店");
+					}else if("02".equals(item.getOptType())){
+						tv_income2_title.setText("解冻");
+					}else if("03".equals(item.getOptType())){
+						tv_income2_title.setText("支出-提现打款");
+					}else if("04".equals(item.getOptType())){
+						tv_income2_title.setText("收入-提现失败金额返还");
+					}else if("05".equals(item.getOptType())){
+						tv_income2_title.setText("支出-手续费");
+					}else if("06".equals(item.getOptType())){
+						tv_income2_title.setText("支出-提现手续费");
+					}else{
+						ContentUtils.showMsg(IncomeActivity.this,"业务类型不能为空");
+					}
+
+
+
 					if ("03".equals(item.getOptType()) || "05".equals(item.getOptType()) || "06".equals(item.getOptType())) {
 						tv_income2_money.setText("-" + MathExtend.roundNew(new BigDecimal(item.getAmount()).divide(new BigDecimal(100)).doubleValue(), 2));
 					} else {
