@@ -273,7 +273,7 @@ public class FinancialOfficeFragment extends Fragment implements
 
         int cardinal = 100;
         double multiplicativecardinal = cardinal;
-        DecimalFormat df = new DecimalFormat("#.00");
+        DecimalFormat df = new DecimalFormat("0.00");
 
         if (0 != financialOfficeAmountBean.getRate().compareTo(BigDecimal.ZERO)) {
             tv_finalcial_oldrate.setText(df.format(MathExtend.multiply(financialOfficeAmountBean.getRate()

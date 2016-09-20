@@ -1551,7 +1551,7 @@ public enum OkHttpsImp {
 	 * 获取收入明细
 	 */
 	public void getIsAmtFlow(String md5_key, String accountNo, String storeNo,String optType,
-							 String serNum, String source, String reqTime,String pageNo, String pageSize,
+							 String serNum, String source, String reqTime,String currentPageNum, String pageSize,
 							 MyResultCallback<String> myResultCallback) throws Exception {
 		Map<String, String> params = new HashMap<String,String>();
 		params.put("accountNo", accountNo);
@@ -1559,7 +1559,7 @@ public enum OkHttpsImp {
 		params.put("optType", optType);
 		params.put("reqTime", reqTime);
 		params.put("serNum", serNum);
-		params.put("pageNo", pageNo);
+		params.put("currentPageNum", currentPageNum);
 		params.put("pageSize", pageSize);
 		params.put("source", source);
 		String sign = getSign(md5_key, params);

@@ -15,6 +15,7 @@ import com.lianbi.mezone.b.bean.FinancialOfficeAmountBean;
 import com.xizhi.mezone.b.R;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 
 import cn.com.hgh.utils.AbStrUtil;
 import cn.com.hgh.utils.MathExtend;
@@ -66,15 +67,27 @@ public class DiaqlogNow extends Dialog {
 		String endDate = bean.getEndDate();
 
 
+		int cardinal = 100;
+		double multiplicativecardinal = cardinal;
+		DecimalFormat df = new DecimalFormat("0.00");
 
 		if(null!=bean.getRate()&&0!=bean.getRate().compareTo(BigDecimal.ZERO)){
-			tv_gz_rate.setText(Double.toString(MathExtend.divide(bean.getRate().doubleValue(),100,2))+"%");
+		//	tv_gz_rate.setText(Double.toString(MathExtend.divide(bean.getRate().doubleValue(),100,2))+"%");
+
+			tv_gz_rate.setText(df.format(MathExtend.multiply(bean.getRate()
+					.doubleValue(), multiplicativecardinal)) + "%");
+
 		}else{
 			tv_gz_rate.setText("0.00%");
 		}
 
 		if(null!=bean.getCheapRate()&&0!=bean.getCheapRate().compareTo(BigDecimal.ZERO)){
-			tv_gz_count.setText(Double.toString(MathExtend.divide(bean.getCheapRate().doubleValue(),100,2))+"%");
+			//tv_gz_count.setText(Double.toString(MathExtend.divide(bean.getCheapRate().doubleValue(),100,2))+"%");
+
+			tv_gz_count.setText(df.format(MathExtend.multiply(bean.getCheapRate()
+					.doubleValue(), multiplicativecardinal)) + "%");
+
+
 		}else{
 			tv_gz_count.setText("0.00%");
 		}

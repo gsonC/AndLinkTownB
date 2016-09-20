@@ -42,6 +42,7 @@ public class IncomeActivity extends BaseActivity implements OnClickListener {
 	private List<IncomeBean> datas = new ArrayList<>();
 	private List<IncomesBean> mDatas = new ArrayList<>();
 	private QuickAdapter<IncomesBean> mAdapter;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -66,23 +67,22 @@ public class IncomeActivity extends BaseActivity implements OnClickListener {
 				if (AbStrUtil.isEmpty(item.getTime())) {
 					tv_income1_title.setVisibility(View.GONE);
 					llt_income_bottom.setVisibility(View.VISIBLE);
-					if("item.getOptMsg()"==null){
+					if (item.getOptMsg() == null) {
 						tv_income2_title.setText("收入-提现失败金额返还");
-					}else{
+					} else {
 						tv_income2_title.setText(item.getOptMsg() + "");
 					}
 
 					tv_income2_time.setText(item.getCreateTime());
-					if ("03".equals(item.getOptType())||"05".equals(item.getOptType())||"06".equals(item.getOptType())) {
-						tv_income2_money.setText("-" + MathExtend.roundNew(new BigDecimal(item.getAmount())
-								.divide(new BigDecimal(100)).doubleValue(), 2));
+					if ("03".equals(item.getOptType()) || "05".equals(item.getOptType()) || "06".equals(item.getOptType())) {
+						tv_income2_money.setText("-" + MathExtend.roundNew(new BigDecimal(item.getAmount()).divide(new BigDecimal(100)).doubleValue(), 2));
 					} else {
-						tv_income2_money.setText(MathExtend.roundNew(new BigDecimal(item.getAmount())
-								.divide(new BigDecimal(100)).doubleValue(), 2));
+						tv_income2_money.setText(MathExtend.roundNew(new BigDecimal(item.getAmount()).divide(new BigDecimal(100)).doubleValue(), 2));
 					}
-				}else{
+				} else {
 					tv_income1_title.setVisibility(View.VISIBLE);
 					llt_income_bottom.setVisibility(View.GONE);
+
 					tv_income1_title.setText(item.getTime());
 				}
 
@@ -157,22 +157,23 @@ public class IncomeActivity extends BaseActivity implements OnClickListener {
 		super.onClick(view);
 		switch (view.getId()) {
 			case R.id.mainpoplayout_tvlist:
+				optType = "00";
 				setPageRightText("全部");
 				getAmtFlow(true, optType);
 				pw.dismiss();
 				break;
 			case R.id.mainpoplayout_tvxia:
-                   optType="02";
-					setPageRightText("支出");
-					getAmtFlow(true, optType);
-					pw.dismiss();
+				optType = "02";
+				setPageRightText("支出");
+				getAmtFlow(true, optType);
+				pw.dismiss();
 
 				break;
 			case R.id.mainpoplayout_tvincome:
-				optType="01";
-					setPageRightText("收入");
-					getAmtFlow(true, optType);
-					pw.dismiss();
+				optType = "01";
+				setPageRightText("收入");
+				getAmtFlow(true, optType);
+				pw.dismiss();
 
 				break;
 		}
@@ -197,33 +198,43 @@ public class IncomeActivity extends BaseActivity implements OnClickListener {
 			mAdapter.replaceAll(mDatas);
 		}
 
-		System.out.println("optType---"+optType);
-
 		try {
 			okHttpsImp.getIsAmtFlow(OkHttpsImp.md5_key, userShopInfoBean.getUserId(), userShopInfoBean.getBusinessId(), optType, uuid, "app", reqTime, page + "", 20 + "", new MyResultCallback<String>() {
 				@Override
 				public void onResponseResult(Result result) {
 					page++;
 					String restring = result.getData();
-					System.out.println("restring208"+restring);
 					if (!TextUtils.isEmpty(restring)) {
 						ArrayList<IncomeBean> mDatasL = (ArrayList<IncomeBean>) JSON.parseArray(restring, IncomeBean.class);
-						//数据拆分
-						if (mDatasL != null && mDatasL.size() > 0) {
 
-							img_income_empty.setVisibility(View.GONE);
-							act_income_abpulltorefreshview.setVisibility(View.VISIBLE);
+						//数据拆分
+						if (mDatasL != null && mDatasL.size() > 0&&!"".equals(mDatasL.get(0).getTime())) {
+
+							if (!isResh) {
+
+								int s = mDatas.size();
+								String nexttime = getTime(mDatasL.get(0).getTime());
+								for (int i = 0; i < s; i++) {
+									String time = mDatas.get(i).getTime();
+									if (null != time) {
+										if (nexttime.equals(time)) {
+											mDatasL.get(0).setTime(null);
+										}
+									}
+								}
+							}
 
 							int dataLSize = mDatasL.size();
 
 							for (int i = 0; i < dataLSize; i++) {
 								List<IncomeBean.data> listbean = mDatasL.get(i).getData();
+
 								int dataListSize = listbean.size();
 								IncomesBean bean = new IncomesBean();
-								bean.setTime(getTime(mDatasL.get(i).getTime() + ""));
-								//bean.setTime(mDatasL.get(i).getTime() + "");
-								mDatas.add(bean);
-
+								if(null!=mDatasL.get(i).getTime()) {
+									bean.setTime(getTime(mDatasL.get(i).getTime() + ""));
+									mDatas.add(bean);
+								}
 								for (int y = 0; y < dataListSize; y++) {
 									IncomesBean beans = new IncomesBean();
 									beans.setOptType(listbean.get(y).getOptType() + "");
@@ -236,6 +247,12 @@ public class IncomeActivity extends BaseActivity implements OnClickListener {
 									mDatas.add(beans);
 								}
 							}
+
+						}
+
+						if (null != mDatas && mDatas.size() > 0) {
+							img_income_empty.setVisibility(View.GONE);
+							act_income_abpulltorefreshview.setVisibility(View.VISIBLE);
 						} else {
 							img_income_empty.setVisibility(View.VISIBLE);
 							act_income_abpulltorefreshview.setVisibility(View.GONE);
@@ -245,9 +262,6 @@ public class IncomeActivity extends BaseActivity implements OnClickListener {
 						mAdapter.replaceAll(mDatas);
 
 
-					} else {
-						img_income_empty.setVisibility(View.VISIBLE);
-						act_income_abpulltorefreshview.setVisibility(View.GONE);
 					}
 				}
 
@@ -264,9 +278,10 @@ public class IncomeActivity extends BaseActivity implements OnClickListener {
 			e.printStackTrace();
 		}
 	}
-	private String getTime(String time){
-		String year = time.substring(0,4);
-		String mouth = time.substring(4,6);
-		return year+"年"+mouth+"月";
+
+	private String getTime(String time) {
+		String year = time.substring(0, 4);
+		String mouth = time.substring(4, 6);
+		return year + "年" + mouth + "月";
 	}
 }
