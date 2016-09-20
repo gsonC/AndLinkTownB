@@ -47,7 +47,8 @@
             android:singleLine="true"
             android:text="有新订单"
             android:textColor="@color/colores_news_10"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:maxLength="10"/>
         <!--
                 <Button
                     android:layout_width="0dp"

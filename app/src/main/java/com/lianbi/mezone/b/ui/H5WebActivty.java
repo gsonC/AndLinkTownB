@@ -529,30 +529,9 @@ public class H5WebActivty extends BaseActivity{
 		} else {
 			web_webactivty.goBack();//返回
 		}
-		// if (web_webactivty.canGoBack()) {
-		// web_webactivty.goBack();
-		// } else {
-		// finish();
-		// }
+
 	}
-	/*@Override
-	protected void onTitleLeftClick() {
-		if (gobackurl.contains("rss/product/showRssCreateProduct?") || gobackurl.contains("rss/product/showRssUpdateProduct?") || gobackurl.contains("rss/product/showRssAppointment?")
-				|| gobackurl.contains("rss/queryReservationDetail") || gobackurl.contains("rss/product/asyncLoadProductListByProName?proName")) {
-			web_webactivty.loadUrl(url);//返回一级目录
-		} else if (gobackurl.contains("viewMyAuthenticationMsg")) {
-			web_webactivty.loadUrl(MyMsg);//返回指定页面
-		} else if (gobackurl.contains("rss/product/" + userShopInfoBean.getBusinessId() + "/productsList") || gobackurl.contains("rss/showOrderDetl") || gobackurl.contains("/productType/queryTypeList/")) {
-			finish();//退出
-		} else {
-			web_webactivty.goBack();//正常返回
-		}
-		// if (web_webactivty.canGoBack()) {
-		// web_webactivty.goBack();
-		// } else {
-		// finish();
-		// }
-	}*/
+
 	/**
 	 * 图像裁剪实现类
 	 *

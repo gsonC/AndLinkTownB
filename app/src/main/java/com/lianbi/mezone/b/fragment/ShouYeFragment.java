@@ -31,6 +31,7 @@ import com.lianbi.mezone.b.impl.MyShopChange;
 import com.lianbi.mezone.b.ui.BaseActivity;
 import com.lianbi.mezone.b.ui.BookFunctionActivity;
 import com.lianbi.mezone.b.ui.H5WebActivty;
+import com.lianbi.mezone.b.ui.LineTakeNoWebActivity;
 import com.lianbi.mezone.b.ui.MainActivity;
 import com.lianbi.mezone.b.ui.ReceivablesActivity;
 import com.lianbi.mezone.b.ui.ReceivablesQRActivity;
@@ -277,6 +278,19 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 							mActivity.startActivity(intent_web);
 						}
 						break;
+
+					case 6:
+						if(isLogin){//排队取号
+							Intent intent_line=new Intent(mActivity, LineTakeNoWebActivity.class);
+							intent_line.putExtra(Constants.NEDDLOGIN, false);
+							intent_line.putExtra("NEEDNOTTITLE", false);
+							intent_line.putExtra("Re", true);
+							intent_line.putExtra(LineTakeNoWebActivity.U, getSAUrl(API.TOSTORE_Supply_Wholesale,4));
+							mActivity.startActivity(intent_line);
+						}
+
+						break;
+
 					case 99:
 						re = JumpIntent.jumpLogin_addShop(isLogin, API.SWEEP,
 								mActivity);
@@ -356,6 +370,9 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 				return address + "storeId=" + bussniessId;
 			case 3://智能WIFI
 				return address+bussniessId;
+			case 4://排队取号
+				//BDP200eWiZ16cbs041217820
+				return address+bussniessId+"/showUserQueueList";
 		}
 		return "";
 	}

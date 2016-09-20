@@ -90,7 +90,6 @@ public class IncomeActivity extends BaseActivity implements OnClickListener {
 					}
 
 
-
 					if ("03".equals(item.getOptType()) || "05".equals(item.getOptType()) || "06".equals(item.getOptType())) {
 						tv_income2_money.setText("-" + MathExtend.roundNew(new BigDecimal(item.getAmount()).divide(new BigDecimal(100)).doubleValue(), 2));
 					} else {

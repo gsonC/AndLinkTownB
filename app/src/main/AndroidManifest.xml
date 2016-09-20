@@ -93,8 +93,9 @@
             android:name="com.lianbi.mezone.b.ui.MemberPointManage"
             android:launchMode="singleTask"
             android:windowSoftInputMode="stateHidden|stateUnchanged"/>
-        <activity android:name="com.lianbi.mezone.b.ui.TagManagerActivity"
-                  android:windowSoftInputMode="stateHidden"/>
+        <activity
+            android:name="com.lianbi.mezone.b.ui.TagManagerActivity"
+            android:windowSoftInputMode="stateHidden"/>
         <activity android:name="com.lianbi.mezone.b.ui.MembersManagementActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.RevisionsActivity"/>
         <activity
@@ -121,6 +122,7 @@
             android:name="com.lianbi.mezone.b.ui.MembersListActivity"
             android:launchMode="singleTask"/>
         <activity android:name="com.lianbi.mezone.b.ui.WIFIWebActivity"/>
+        <activity android:name="com.lianbi.mezone.b.ui.LineTakeNoWebActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.BookWebActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.BookFunctionActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.MallIntroduceActivity"/>
@@ -435,8 +437,11 @@
         <!-- 个推SDK配置结束 -->
         <activity android:name="com.lianbi.mezone.b.ui.IncomeActivity">
         </activity>
-        <activity android:name="com.lianbi.mezone.b.ui.CallSetActivity">
+        <activity android:name="com.lianbi.mezone.b.ui.CallSetActivity"
+                  android:windowSoftInputMode="stateHidden|adjustPan">
+
         </activity>
+
     </application>
 
 </manifest>
