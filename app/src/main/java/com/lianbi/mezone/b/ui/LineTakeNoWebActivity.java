@@ -9,6 +9,8 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -24,7 +26,11 @@ import com.lianbi.mezone.b.photo.PhotoUtills;
 import com.xizhi.mezone.b.R;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 
+import Decoder.BASE64Decoder;
+import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.WebViewInit;
 import cn.com.hgh.view.HttpDialog;
 @SuppressLint("ResourceAsColor")
@@ -50,7 +56,7 @@ public class LineTakeNoWebActivity extends BaseActivity {
 	protected HttpDialog dialog;
 	String url;
 	Boolean isSave = false;
-
+	private String  base64="";
 	/**
 	 * 需要登陆
 	 */
@@ -63,7 +69,7 @@ public class LineTakeNoWebActivity extends BaseActivity {
 	private boolean isNeedTitle = false;
 	private String MyMsg;
 	private String bussinessId;
-
+	private String  mImgId;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -118,7 +124,7 @@ public class LineTakeNoWebActivity extends BaseActivity {
 		dialog = new HttpDialog(this);
 		web_webactivty = (WebView) findViewById(R.id.web_webactivty);
 		WebViewInit.WebSettingInit(web_webactivty, this);
-		web_webactivty.addJavascriptInterface(new MyJs(), "LinktownB");
+		web_webactivty.addJavascriptInterface(new MyJavascript(), "LinktownB");
 		web_webactivty.setWebViewClient(new WebViewClient() {
 			@Override
 			public void onPageFinished(WebView view, String url) {
@@ -145,7 +151,6 @@ public class LineTakeNoWebActivity extends BaseActivity {
 			@Override
 			public void onPageStarted(WebView view, String url, Bitmap favicon) {
 				gobackurl = url;
-				System.out.println("url47"+url);
 				if (url.contains("routerApplication/viewRouter?")) {
 					MyMsg = url;
 				}
@@ -287,29 +292,13 @@ public class LineTakeNoWebActivity extends BaseActivity {
 		mFilePathCallback = null;
 	}
 
-	class MyJs {
-		@JavascriptInterface
-		public void getData(String type) {
 
-		}
-	}
 
 	private String gobackurl = "";
 
 
 	@Override
 	protected void onTitleLeftClick() {
-		/*if (gobackurl.contains("showUserQueueList")||gobackurl.contains("showRssCreateProduct?") || gobackurl.contains("routerApplication/viewRouter?")
-				) {
-			web_webactivty.loadUrl(url);//返回一级目录
-		} else if (gobackurl.contains("qnsWarnConfigController/goWarnConfig?")
-				||gobackurl.contains("goWarnConfig?")||gobackurl.contains("viewFinishUserQueueInfo?")) {
-			web_webactivty.loadUrl("showUserQueueList?");//返回指定页面
-		} else if (gobackurl.contains("wifiIndex") || gobackurl.contains("saveRouterApply")) {
-			finish();//退出
-		} else {
-			web_webactivty.goBack();//正常返回
-		}*/
 
 		if(gobackurl.contains("classifyCigController")||gobackurl.contains("qnsBannerController")
 				||gobackurl.contains("qnsWarnConfigController")||gobackurl.contains("viewUserQueueInfo")
@@ -322,6 +311,131 @@ public class LineTakeNoWebActivity extends BaseActivity {
 		}
 
 	}
+	/*
+			 * 判断字符串是否包含一些字符 indexOf
+			 */
+	public static boolean indexOfString(String src, String dest) {
+		boolean flag = false;
+		if (src.indexOf(dest)!=-1) {
+			flag = true;
+		}
+		return flag;
+	}
+	class MyJavascript {
+//		@JavascriptInterface
+//		public void getData(String type) {}
+		/**
+		 * 打开相册
+		 * @param flag
+		 */
+//		@JavascriptInterface
+//		public void  photoAlbumcut(boolean  flag)
+//		{
+//
+//			if(flag==true) {
+////				    mImgId=imgId;
+//					photoUtills.startPickPhotoFromAlbumWithCrop();
+//			}else{
+//			}
+//		}
+		@JavascriptInterface
+		public void  photoAlbumcut(boolean  flag,String  imgId)
+		{
 
+			if(flag==true) {
+				mImgId=imgId;
+				//photoUtills.startPickPhotoFromAlbumWithCrop();
+			}else{
+			}
+		}
+		/**
+		 * 返回base64
+		 *
+		 */
+		@JavascriptInterface
+		public String  getBase64()
+		{
 
+			return  base64;
+
+		}
+		/**
+		 * 返回图片ID
+		 *
+		 */
+		@JavascriptInterface
+		public String  getImgId()
+		{
+
+			return  mImgId;
+
+		}
+		/**
+		 * 保存邀请码
+		 *
+		 */
+		@JavascriptInterface
+		public void  saveQrcode(String  url)
+
+		{
+			System.out.println("url388"+url);
+
+			if(indexOfString(Uri.parse(url).toString(),"data:image/")){
+				String  str=Uri.parse(url).toString();
+				String jieguo = str.
+						substring(str.indexOf(",")+1,
+								str.length());
+				GenerateImage(jieguo);
+			}
+
+		}
+	}
+	//base64字符串转化成图片
+	public   void GenerateImage(String imgStr)
+	{   //对字节数组字符串进行Base64解码并生成图片
+		if (imgStr == null){ //图像数据为空
+			return;}
+		BASE64Decoder decoder = new BASE64Decoder();
+		try
+		{
+			//Base64解码
+			byte[] b = decoder.decodeBuffer(imgStr);
+			for(int i=0;i<b.length;++i)
+			{
+				if(b[i]<0)
+				{//调整异常数据
+					b[i]+=256;
+				}
+			}
+			//生成jpeg图片
+			File appDir = new File(Environment.getExternalStorageDirectory(),
+					"invitationcode");
+			if (!appDir.exists()) {
+				appDir.mkdir();
+			}
+			String imgFilePath = System.currentTimeMillis() + ".jpg";
+			File file = new File(appDir, imgFilePath);
+			OutputStream out = new FileOutputStream(file);
+//			out.write(b);
+			out.write(b,0,b.length);
+			out.flush();
+			out.close();
+			// 其次把文件插入到系统图库
+			try {
+				MediaStore.Images.Media.insertImage(this.getContentResolver(),
+						file.getAbsolutePath(), imgFilePath, null);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			// 最后通知图库更新
+			sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
+					Uri.fromFile(new File(file.getPath()))));
+			ContentUtils.showMsg(LineTakeNoWebActivity.this, "已保存");
+
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
 }
