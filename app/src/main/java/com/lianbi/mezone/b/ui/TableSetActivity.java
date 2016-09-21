@@ -282,10 +282,10 @@ public class TableSetActivity extends BaseActivity implements
 	@Override
 	protected void onChildClick(View view) {
 		switch (view.getId()) {
-			/*case R.id.tv_call_setup://呼叫设置
+			case R.id.tv_call_setup://呼叫设置
 
 				startActivity(new Intent(this,CallSetActivity.class));
-				break;*/
+				break;
 		case R.id.tv_searchtablenum:// 搜索框
 
 			Intent intent = new Intent(this, SearchActivity.class);
