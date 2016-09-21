@@ -285,7 +285,7 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 							intent_line.putExtra(Constants.NEDDLOGIN, false);
 							intent_line.putExtra("NEEDNOTTITLE", false);
 							intent_line.putExtra("Re", true);
-							intent_line.putExtra(LineTakeNoWebActivity.U, getSAUrl(API.TOSTORE_Supply_Wholesale,4));
+							intent_line.putExtra(LineTakeNoWebActivity.U, getSAUrl(API.TOSTORE_Line_TakeNo,4));
 							mActivity.startActivity(intent_line);
 						}
 

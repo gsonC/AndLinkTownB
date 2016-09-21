@@ -54,7 +54,8 @@ public class ServiceMallActivity extends BaseActivity {
 	public static final int  RESERVATION =4;
     //智能wifi
 	public static final int   INTELLIGENTWIFI=5;
-
+	//排队取号
+	public static final int   LINETAKENO=6;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -168,6 +169,12 @@ public class ServiceMallActivity extends BaseActivity {
 											JumpIntent.jumpWebActivty
 													(ServiceMallActivity.this,WIFIWebActivity.class,
 															isLogin,API.INTELLIGENT_WIFI,INTELLIGENTWIFI,
+															false,false,true,"");
+											break;
+										case LINETAKENO:
+											JumpIntent.jumpWebActivty
+													(ServiceMallActivity.this,LineTakeNoWebActivity.class,
+															isLogin,API.TOSTORE_Line_TakeNo,LINETAKENO,
 															false,false,true,"");
 											break;
 									}

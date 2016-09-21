@@ -28,6 +28,9 @@ public class JumpIntent {
 	public static final int  SUPPLYWHOLESALE =3;
 	//智能wifi
 	public static final int   INTELLIGENTWIFI=5;
+
+	//智能wifi
+	public static final int   LINETAKENO=6;
 	public static boolean jumpLogin_addShop(boolean isLogin, String type,
 											 Activity at) {
 		if (isLogin) {
@@ -129,6 +132,9 @@ public class JumpIntent {
 				return urladdress + "storeId=" + bussniessId;
 			case INTELLIGENTWIFI://智能WIFI
 				return urladdress+bussniessId;
+			case LINETAKENO:
+
+				return urladdress+bussniessId+"/showUserQueueList";
 		}
 		return "";
 	}

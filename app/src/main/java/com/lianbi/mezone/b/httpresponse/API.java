@@ -84,11 +84,11 @@ public class API {
 	/**
 	 * 货源批发
 	 */
-	public static final String TOSTORE_Line_TakeNo= TOSTORESERVICE + "/wcm/goto/showMenu?";
+	public static final String TOSTORE_Supply_Wholesale= TOSTORESERVICE + "/wcm/goto/showMenu?";
 	/**
 	 * 排队取号
 	 */
-	public static final String TOSTORE_Supply_Wholesale = TOSTORESERVICE + "/wcm/qns/";
+	public static final String TOSTORE_Line_TakeNo = TOSTORESERVICE + "/wcm/qns/";
 	/**
 	 * 微信订单明细
 	 */
