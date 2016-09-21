@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:sp="http://schemas.android.com/com.lianbi.mezone.b.fragment"
+    xmlns:sp="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
@@ -13,7 +13,6 @@
         android:id="@+id/act_addmembers_abpulltorefreshview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
         android:background="@color/white"
         android:orientation="vertical"
         android:visibility="visible">
@@ -27,7 +26,7 @@
             android:divider="#dddbdb"
             android:dividerHeight="1dp"
             android:listSelector="@color/transparent"
-            sp:right_width="120dp"
+            sp:right_width="100dp"
             android:scrollbars="none">
         </cn.com.hgh.view.SwipeListView>
     </cn.com.hgh.view.AbPullToRefreshView>

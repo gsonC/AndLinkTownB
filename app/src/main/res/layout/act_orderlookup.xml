@@ -111,6 +111,7 @@
             android:button="@null"
             android:gravity="center"
             android:text="共计"
+            android:textSize="14sp"
             android:textColor="@color/colores_news_19"/>
         <TextView
             android:id="@+id/tv_num"
@@ -123,6 +124,7 @@
             android:button="@null"
             android:gravity="center"
             android:text="0"
+            android:textSize="14sp"
             android:textStyle="bold"
             android:textColor="@color/colores_news_19"/>
         <TextView
@@ -136,6 +138,7 @@
             android:button="@null"
             android:gravity="center"
             android:text="个订单"
+            android:textSize="14sp"
             android:textColor="@color/colores_news_19"/>
         <TextView
             android:id="@+id/tv_addupto"
@@ -148,6 +151,7 @@
             android:button="@null"
             android:gravity="center"
             android:text="合计"
+            android:textSize="14sp"
             android:textColor="@color/colores_news_19"/>
         <TextView
             android:id="@+id/tv_rmb"
@@ -160,6 +164,7 @@
             android:button="@null"
             android:gravity="center"
             android:text="¥ 0"
+            android:textSize="14sp"
             android:textColor="@color/colores_news_04"/>
     </LinearLayout>
 </LinearLayout>

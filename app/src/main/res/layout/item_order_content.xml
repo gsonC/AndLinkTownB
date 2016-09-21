@@ -9,36 +9,41 @@
             android:id="@+id/item_left"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"
             android:orientation="vertical"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
             android:gravity="center_vertical"
             >
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
-                android:padding="8dp" >
+                >
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
                     android:text="订单号:"
+                    android:padding="5dp"
                     android:textColor="@color/colores_news_10"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
                 <TextView
                     android:id="@+id/tv_item_orderinfo_num"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="6dp"
+                    android:layout_marginLeft="3dp"
                     android:singleLine="true"
-                    android:maxEms="10"
+                    android:maxEms="8"
+                    android:padding="5dp"
                     android:ellipsize="start"
                     android:text="10000000000000000000000000"
                     android:textColor="@color/colores_news_10"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
 
                 <Button
                     android:layout_width="0dp"
@@ -49,24 +54,22 @@
                     android:id="@+id/tv_item_orderinfo_state"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="100dp"
                     android:layout_gravity="right|center_vertical"
                     android:ellipsize="end"
                     android:singleLine="true"
                     android:text="支付失败"
+                    android:padding="5dp"
                     android:textColor="@color/colores_news_10"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:textSize="14sp"
+                    />
 
 
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
+                android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:orientation="horizontal"
-                android:paddingRight="120dp"
-                android:padding="8dp"
                 >
 
                 <TextView
@@ -75,7 +78,8 @@
                     android:layout_height="wrap_content"
                     android:background="@color/white"
                     android:singleLine="true"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
+                    android:padding="5dp"
                     android:text="2015-10-10 10:10:10"
                     android:textColor="@color/colores_news_11" />
 
@@ -88,7 +92,6 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textStyle="bold"
                     android:textSize="12sp"
                     android:text="￥"
                     android:textColor="@color/colores_news_04" />
@@ -96,11 +99,11 @@
                     android:id="@+id/tv_item_orderinfo_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="100dp"
                     android:singleLine="true"
-                    android:textStyle="bold"
-                    android:textSize="17sp"
+                    android:textSize="14sp"
                     android:text="10000"
+                    android:paddingLeft="2dp"
+                    android:paddingRight="5dp"
                     android:textColor="@color/colores_news_04" />
 
 
@@ -109,10 +112,11 @@
 
         <LinearLayout
                 android:id="@+id/item_right"
-                android:layout_width="wrap_content"
-                android:layout_height="85dp"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
                 android:background="@color/grey"
-                android:gravity="center" >
+                android:gravity="center"
+            >
 
                 <TextView
                     android:id="@+id/tv_chdelete"
@@ -120,11 +124,12 @@
                     android:layout_height="match_parent"
                     android:drawableLeft="@mipmap/del_icon_normal"
                     android:gravity="center"
+                    android:drawablePadding="3dp"
                     android:text="删 除"
+                    android:singleLine="true"
                     android:textColor="@color/white"
                     android:textSize="15sp" />
 
         </LinearLayout>
-
 
 </LinearLayout>

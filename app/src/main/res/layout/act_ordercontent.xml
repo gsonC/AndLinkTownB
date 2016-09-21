@@ -18,7 +18,10 @@
         android:gravity="center_vertical"
         android:background="@color/white"
         android:orientation="horizontal"
-        android:padding="10dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
         >
 
         <TextView
@@ -27,7 +30,6 @@
             android:text="时间："
             android:gravity="center"
             android:padding="5dp"
-            android:layout_marginLeft="20dp"
             android:textColor="#4b4b4b"
         />
 
@@ -67,7 +69,6 @@
             android:id="@+id/iv_close"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
             android:layout_marginLeft="10dp"
             android:scaleType="centerInside"
             android:padding="5dp"
@@ -78,14 +79,15 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:orientation="horizontal"
-        android:padding="7dp"
-        >
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
 
         <CheckBox
             android:id="@+id/tv_today"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
             android:layout_weight="1"
             android:button="@null"
             android:background="@drawable/cb_greyselected"
@@ -112,7 +114,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
             android:button="@null"
             android:layout_weight="1"
             android:background="@drawable/cb_greyselected"
@@ -225,6 +226,7 @@
             android:button="@null"
             android:gravity="center"
             android:text="共计"
+            android:textSize="14sp"
             android:textColor="@color/colores_news_19"/>
         <TextView
             android:id="@+id/tv_num"
@@ -237,6 +239,7 @@
             android:button="@null"
             android:gravity="center"
             android:text="0"
+            android:textSize="14sp"
             android:textStyle="bold"
             android:textColor="@color/colores_news_19"/>
         <TextView
@@ -250,6 +253,7 @@
             android:button="@null"
             android:gravity="center"
             android:text="个订单"
+            android:textSize="14sp"
             android:textColor="@color/colores_news_19"/>
         <TextView
             android:id="@+id/tv_addupto"
@@ -262,6 +266,7 @@
             android:button="@null"
             android:gravity="center"
             android:text="合计"
+            android:textSize="14sp"
             android:textColor="@color/colores_news_19"/>
         <TextView
             android:id="@+id/tv_rmb"
@@ -274,6 +279,7 @@
             android:button="@null"
             android:gravity="center"
             android:text="¥ 0"
+            android:textSize="14sp"
             android:textColor="@color/colores_news_04"/>
     </LinearLayout>
 </LinearLayout>

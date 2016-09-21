@@ -16,7 +16,7 @@ import com.xizhi.mezone.b.R;
 
 /**
  *
- *用于带分页加载的删除listview
+ *用于带分页加载的侧滑删除listview
  */
 public class SwipeListView extends ListView {
     private Boolean mIsHorizontal;
@@ -53,7 +53,7 @@ public class SwipeListView extends ListView {
                 R.styleable.swipelistviewstyle);
         
       //获取自定义属性和默认值  
-      mRightViewWidth = (int) mTypedArray.getDimension(R.styleable.swipelistviewstyle_right_width, 120);
+      mRightViewWidth = (int) mTypedArray.getDimension(R.styleable.swipelistviewstyle_right_width, 200);
       
       mTypedArray.recycle();  
     }

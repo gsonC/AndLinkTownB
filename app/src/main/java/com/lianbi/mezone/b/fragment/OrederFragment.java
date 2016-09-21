@@ -119,7 +119,7 @@ public class OrederFragment extends Fragment {
                 LinearLayout item_right = helper.getView(R.id.item_right);
                 LinearLayout.LayoutParams lp1 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
                 item_left.setLayoutParams(lp1);
-                LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams(120, LinearLayout.LayoutParams.MATCH_PARENT);
+                LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams(actOrederListview.getRightViewWidth(), LinearLayout.LayoutParams.MATCH_PARENT);
                 item_right.setLayoutParams(lp2);
                 tv_item_orderinfo_num.setText(item.getOrderNo());
                 tv_item_orderinfo_paytime.setText(item.getTxnTime());
