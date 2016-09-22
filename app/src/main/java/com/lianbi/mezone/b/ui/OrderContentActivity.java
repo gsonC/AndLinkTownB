@@ -204,7 +204,7 @@ public class OrderContentActivity extends BaseActivity implements
                 tvToday.setChecked(false);
                 tvThreeday.setChecked(true);
                 tvOnemonth.setChecked(false);
-                beginTime=AbDateUtil.getDateG(3,"yyyyMMdd");
+                beginTime=AbDateUtil.getDateG(2,"yyyyMMdd");
                 endTime=AbDateUtil.getDateYearMonthDayNowPlus("yyyyMMdd");
                 initSearch(
                         "",
@@ -221,7 +221,7 @@ public class OrderContentActivity extends BaseActivity implements
                 tvToday.setChecked(false);
                 tvThreeday.setChecked(false);
                 tvOnemonth.setChecked(true);
-                beginTime=AbDateUtil.getDateG(30,"yyyyMMdd");
+                beginTime=AbDateUtil.getDateG(29,"yyyyMMdd");
                 endTime=AbDateUtil.getDateYearMonthDayNowPlus("yyyyMMdd");
                 initSearch(
                         "",
