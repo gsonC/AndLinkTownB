@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="67dp"
     android:background="@color/white"
     android:orientation="vertical"
+              android:id="@+id/ll_order"
     >
 
     <RelativeLayout
-        android:id="@+id/ll_order"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
@@ -18,12 +18,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="10dp"
             android:scaleType="centerInside"
             android:src="@mipmap/icon_uncheck" />
 
         <TextView
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="9dp"
             android:layout_toRightOf="@id/iv_check1"
             android:id="@+id/tv_tablename"
             android:layout_width="wrap_content"
@@ -31,31 +31,10 @@
             android:singleLine="true"
             android:text="1号桌"
             android:textColor="@color/colores_news_10"
-            android:textSize="16sp" />
-        <!--
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@null" /> -->
+            android:textSize="14.5sp"
+            />
 
-        <TextView
-            android:layout_centerInParent="true"
-            android:id="@+id/tv_messageContent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:text="有新订单"
-            android:textColor="@color/colores_news_10"
-            android:textSize="16sp"
-            android:maxLength="10"/>
-        <!--
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@null" />
-         -->
+
         <TextView
             android:layout_alignParentRight="true"
             android:id="@+id/tv_time"
@@ -63,9 +42,26 @@
             android:layout_height="wrap_content"
             android:singleLine="true"
             android:text="10:00"
-            android:textColor="@color/colores_news_10"
-            android:textSize="16sp" />
+            android:textColor="@color/colores_news_11"
+            android:textSize="12.5sp"
+            android:layout_marginRight="10.5dp"/>
     </RelativeLayout>
+
+    <TextView
+        android:layout_marginTop="5dp"
+        android:layout_centerInParent="true"
+        android:id="@+id/tv_messageContent"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:singleLine="true"
+        android:text="有新订单"
+        android:textColor="@color/color_414141"
+        android:textSize="13.5sp"
+        android:maxLength="15"
+        android:layout_marginLeft="35.5dp"
+        android:layout_marginBottom="15.5dp"
+        />
+
 
     <View
         android:layout_width="match_parent"

@@ -31,7 +31,7 @@ import cn.com.hgh.utils.MathExtend;
 public class DiaqlogNow extends Dialog {
 	private Context context;
 	private FinancialOfficeAmountBean bean;
-	TextView tv_gz_rate,tv_gz_count,tv_Fdiscount_time,tv_Ediscount_time;
+	TextView tv_gz_rate,tv_gz_count,tv_Fdiscount_time,tv_Ediscount_time,tv_Ediscount;
 
 	public DiaqlogNow(Context context) {
 		super(context, R.style.DialogStyle_4);
@@ -59,6 +59,7 @@ public class DiaqlogNow extends Dialog {
 		tv_gz_count= (TextView) view.findViewById(R.id.tv_gz_count);
 		tv_Fdiscount_time= (TextView) view.findViewById(R.id.tv_Fdiscount_time);
 		tv_Ediscount_time= (TextView) view.findViewById(R.id.tv_Ediscount_time);
+		tv_Ediscount= (TextView) view.findViewById(R.id.tv_Ediscount);
 		LinearLayout llt_dialoggz = (LinearLayout) view.findViewById(R.id.llt_dialoggz);
 		TextView tv_dialog_3 = (TextView) view.findViewById(R.id.tv_dialog_3);
 		TextView tv_dialog_4 = (TextView) view.findViewById(R.id.tv_dialog_4);
@@ -120,7 +121,7 @@ public class DiaqlogNow extends Dialog {
 		String year = time.substring(0,4);
 		String mouth = time.substring(5,7);
 		String day = time.substring(8,time.length());
-		return year+"年"+mouth+"月"+day+"日;";
+		return year+"年"+mouth+"月"+day+"日";
 	}
 
 }

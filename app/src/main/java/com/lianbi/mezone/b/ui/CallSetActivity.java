@@ -21,14 +21,16 @@ import java.util.ArrayList;
 import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.QuickAdapter;
 import cn.com.hgh.utils.AbDateUtil;
+import cn.com.hgh.utils.AbPullHide;
 import cn.com.hgh.utils.AbStrUtil;
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.utils.ScreenUtils;
+import cn.com.hgh.view.AbPullToRefreshView;
 import cn.com.hgh.view.SlideListView2;
 
 public class CallSetActivity extends BaseActivity {
-
+	private AbPullToRefreshView act_Call_abpulltorefreshview;
 	ArrayList<SelectCallBean> mData = new ArrayList<SelectCallBean>();
 	private SlideListView2 fm_Call_listView;
 	ArrayList<SelectCallBean> mDatas = new ArrayList<SelectCallBean>();
@@ -38,6 +40,7 @@ public class CallSetActivity extends BaseActivity {
 	private String labelId;
 	private ImageView img_callset_empty;
 	String inputcallMessage;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -46,7 +49,7 @@ public class CallSetActivity extends BaseActivity {
 		initview();
 		initListAdapter();
 		setLisenter();
-		getCallMessage();
+		getCallMessage(true);
 	}
 	private void initview() {
 		setPageTitle("呼叫设置");
@@ -55,10 +58,28 @@ public class CallSetActivity extends BaseActivity {
 		img_callset_empty = (ImageView) findViewById(R.id.img_callset_empty);
 		fm_Call_listView = (SlideListView2) findViewById(R.id.fm_Call_listView);
 		fm_Call_listView.initSlideMode(SlideListView2.MOD_RIGHT);
+		act_Call_abpulltorefreshview = (AbPullToRefreshView) findViewById(R.id.act_Call_abpulltorefreshview);//AbPullToRefreshView
+
 	}
 
 	private void setLisenter() {
+		act_Call_abpulltorefreshview.setLoadMoreEnable(true);
+		act_Call_abpulltorefreshview.setPullRefreshEnable(true);
+		act_Call_abpulltorefreshview.setOnHeaderRefreshListener(new AbPullToRefreshView.OnHeaderRefreshListener() {
 
+			@Override
+			public void onHeaderRefresh(AbPullToRefreshView view) {
+				getCallMessage(true);
+			}
+
+		});
+		act_Call_abpulltorefreshview.setOnFooterLoadListener(new AbPullToRefreshView.OnFooterLoadListener() {
+
+			@Override
+			public void onFooterLoad(AbPullToRefreshView view) {
+				getCallMessage(false);
+			}
+		});
 		bt_call_sure.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -109,7 +130,7 @@ public class CallSetActivity extends BaseActivity {
 	/**
 	 * 查询所有未删除的呼叫内容列表
 	 */
-	private void getCallMessage() {
+	private void getCallMessage(final boolean isResh) {
 
 		String reqTime = AbDateUtil.getDateTimeNow();
 		String uuid = AbStrUtil.getUUID();
@@ -135,12 +156,13 @@ public class CallSetActivity extends BaseActivity {
 
 							if (mDatasL != null && mDatasL.size() > 0) {
 								img_callset_empty.setVisibility(View.GONE);
-								fm_Call_listView.setVisibility(View.VISIBLE);
+								act_Call_abpulltorefreshview.setVisibility(View.VISIBLE);
 							} else {
 								img_callset_empty.setVisibility(View.VISIBLE);
-								fm_Call_listView.setVisibility(View.GONE);
+								act_Call_abpulltorefreshview.setVisibility(View.GONE);
 							}
-
+							AbPullHide.hideRefreshView(isResh, act_Call_abpulltorefreshview);
+							mAdapter.replaceAll(mDatas);
 
 						} catch (JSONException e) {
 							e.printStackTrace();
@@ -151,8 +173,11 @@ public class CallSetActivity extends BaseActivity {
 
 						@Override
 						public void onResponseFailed(String msg) {
-							img_callset_empty.setVisibility(View.VISIBLE);
-							fm_Call_listView.setVisibility(View.GONE);
+							if (isResh) {
+								img_callset_empty.setVisibility(View.VISIBLE);
+								act_Call_abpulltorefreshview.setVisibility(View.GONE);
+							}
+							AbPullHide.hideRefreshView(isResh, act_Call_abpulltorefreshview);
 
 						}
 					});
@@ -181,7 +206,7 @@ public class CallSetActivity extends BaseActivity {
 						@Override
 						public void onResponseResult(Result result) {
 							tv_call.setText("");
-							getCallMessage();
+							getCallMessage(true);
 							ContentUtils.showMsg(CallSetActivity.this, "呼叫内容添加成功");
 
 						}
@@ -207,7 +232,7 @@ public class CallSetActivity extends BaseActivity {
 					labelId,userShopInfoBean.getBusinessId(), new MyResultCallback<String>() {
 				@Override
 				public void onResponseResult(Result result) {
-					getCallMessage();
+					getCallMessage(true);
 					ContentUtils.showMsg(CallSetActivity.this, "删除呼叫内容成功");
 				}
 

@@ -104,6 +104,14 @@
             android:textColor="@color/colores_news_17"
             android:textSize="11sp"/>
         />
+        <TextView
+            android:id="@+id/tv_Ediscount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colores_news_17"
+            android:textSize="11sp"
+            android:text=";"/>
+        />
     </LinearLayout>
 
     <LinearLayout

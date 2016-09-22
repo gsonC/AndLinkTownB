@@ -10,8 +10,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.lianbi.mezone.b.app.Constants;
@@ -200,7 +200,7 @@ public class InfoMessageFragment extends Fragment {
 				TextView tv_tablename = helper.getView(R.id.tv_tablename);
 				TextView tv_messageContent = helper.getView(R.id.tv_messageContent);
 				TextView tv_time = helper.getView(R.id.tv_time);
-				RelativeLayout ll_order = helper.getView(R.id.ll_order);
+				LinearLayout ll_order = helper.getView(R.id.ll_order);
 				tv_tablename.setText(item.getTableName());
 				tv_messageContent.setText(item.getMsgContent());
 				tv_time.setText(item.getCreateTime());

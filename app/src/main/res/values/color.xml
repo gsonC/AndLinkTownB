@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="color_414141">#414141</color>
     <color name="color_272727">#272727</color>
     <color name="color_fff">#fff</color>
     <color name="color_ededed">#ededed</color>
