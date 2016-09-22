@@ -156,8 +156,8 @@ public class PushNotifitionManager {
 			//mTts.startSpeaking("买单了,老板娘打小票先", mSynListener);
 			mBuilder.setSound(Uri.parse("android.resource://" + mContext.getPackageName() + "/" + R.raw.checkorder));
 		} else if (4 == mDatas.getCallType()) {
-			//mBuilder.setSound(Uri.parse("android.resource://" + mContext.getPackageName() + "/" + R.raw.call));
-			mTts.startSpeaking(mDatas.getContent(), mSynListener);
+			mBuilder.setSound(Uri.parse("android.resource://" + mContext.getPackageName() + "/" + R.raw.call));
+			//mTts.startSpeaking(mDatas.getContent(), mSynListener);
 		} else if (6 == mDatas.getCallType()) {//收款成功
 			mTts.startSpeaking(mDatas.getContent(), mSynListener);
 		} else {
