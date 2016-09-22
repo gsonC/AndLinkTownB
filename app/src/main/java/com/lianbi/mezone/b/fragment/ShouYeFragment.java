@@ -220,16 +220,17 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 									int position, long id) {
-				int primaryID = 0;
+				String appCode = "";
 				try {
-					primaryID = mData.get(position).getId();
+					appCode = mData.get(position).getAppCode();
 				} catch (Exception e) {
 					ContentUtils.showMsg(mActivity, "数据异常,为了您的数据安全,请退出重新登陆");
 				}
 				boolean isLogin = ContentUtils.getLoginStatus(mActivity);
 				boolean re = false;
-				switch (primaryID) {
-					case 1:
+
+				switch (appCode) {
+					case "tss":
 						re = JumpIntent.jumpLogin_addShop(isLogin, API.SWEEP,
 								mActivity);
 						if (re) {// 到店服务
@@ -237,7 +238,7 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 									TableSetActivity.class));
 						}
 						break;
-					case 2:
+					case "wcm":
 						if (isLogin) {// 微信商城
 							Intent intent_web = new Intent(mActivity,
 									H5WebActivty.class);
@@ -249,7 +250,7 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 							mActivity.startActivity(intent_web);
 						}
 						break;
-					case 3:
+					case "sws":
 						if (isLogin) {//货源批发
 							Intent intent_web = new Intent(mActivity,
 									H5WebActivty.class);
@@ -261,13 +262,13 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 							mActivity.startActivity(intent_web);
 						}
 						break;
-					case 4:
+					case "rss":
 						if(isLogin){//预约界面
 							Intent intent = new Intent(mActivity, BookFunctionActivity.class);
 							startActivity(intent);
 						}
 						break;
-					case 5:
+					case "wifi":
 						if(isLogin){//智能WIFI
 							Intent intent_web = new Intent(mActivity,
 									WIFIWebActivity.class);
@@ -279,7 +280,7 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 						}
 						break;
 
-					case 6:
+					case "qns":
 						if(isLogin){//排队取号
 							Intent intent_line=new Intent(mActivity, LineTakeNoWebActivity.class);
 							intent_line.putExtra(Constants.NEDDLOGIN, false);
@@ -291,7 +292,7 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 
 						break;
 
-					case 99:
+					case "shoukuan":
 						re = JumpIntent.jumpLogin_addShop(isLogin, API.SWEEP,
 								mActivity);
 						if (re) {
@@ -300,7 +301,7 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 							isAgreeAgreement();
 						}
 						break;
-					case 100:
+					case "fuwushangcheng":
 						re = JumpIntent.jumpLogin_addShop(isLogin,
 								API.SERVICESTORE, mActivity);
 						if (re) {// 服务商城

@@ -143,12 +143,14 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 								service.setDefaultservice(2);
 								service.setAppName("收款");
 								service.setId(99);
+								service.setAppCode("shoukuan");
 								mDatas.add(0, service);
 
 								ShouyeServiceBean endservie = new ShouyeServiceBean();
 								endservie.setDefaultservice(1);
 								endservie.setAppName("服务商城");
 								endservie.setId(100);
+								endservie.setAppCode("fuwushangcheng");
 								mDatas.add(mDatas.size(), endservie);
 								setFill();
 
@@ -232,6 +234,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 		service.setDefaultservice(2);
 		service.setAppName("收款");
 		service.setId(99);
+		service.setAppCode("shoukuan");
 		mDatas.add(service);
 
 		ShouyeServiceBean endservie = new ShouyeServiceBean();
@@ -239,6 +242,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 		endservie.setDefaultservice(1);
 		endservie.setAppName("服务商城");
 		endservie.setId(100);
+		endservie.setAppCode("fuwushangcheng");
 		mDatas.add(endservie);
 		setFill();
 		((ShouYeFragment) fm_shouye).getServiceMall(mDatas);
@@ -266,6 +270,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 				filltheseats2.setDefaultservice(-1);
 				filltheseats2.setAppName("");
 				filltheseats2.setId(-1);
+				filltheseats2.setAppCode("");
 				mDatas.add(filltheseats2);
 			}
 		}
