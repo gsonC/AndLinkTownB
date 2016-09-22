@@ -599,7 +599,7 @@ public class API {
 	/**
 	 * 冻结中金额
 	 */
-	public static final String FINANCIALOFFICEAMOUNT = "finance/queryFinIncomeInfo.do";
+	public static final String FINANCIALOFFICEAMOUNT = "finance/queryFinIncomeInfoRate.do";
 	/**
 	 * 新增产品
 	 */
