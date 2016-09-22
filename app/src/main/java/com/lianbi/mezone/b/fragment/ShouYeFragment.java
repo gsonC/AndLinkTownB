@@ -214,6 +214,7 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 			}
 		});
 	}
+
 	private void listen() {
 		gv_shouyeservice.setOnItemClickListener(new OnItemClickListener() {
 
@@ -229,6 +230,80 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 				boolean isLogin = ContentUtils.getLoginStatus(mActivity);
 				boolean re = false;
 
+				if ("tss".equals(appCode)) {// 到店服务
+					re = JumpIntent.jumpLogin_addShop(isLogin, API.SWEEP,
+							mActivity);
+					if (re) {
+						startActivity(new Intent(mActivity,
+								TableSetActivity.class));
+					}
+				} else if ("wcm".equals(appCode)) {// 微信商城
+					if (isLogin) {
+						Intent intent_web = new Intent(mActivity,
+								H5WebActivty.class);
+						intent_web.putExtra(Constants.NEDDLOGIN, false);
+						intent_web.putExtra("NEEDNOTTITLE", false);
+						intent_web.putExtra("Re", true);
+						intent_web.putExtra(WebActivty.T, "微信商城");
+						intent_web.putExtra(WebActivty.U, getSAUrl(API.TOSTORE_MODULE_WCM, 1));
+						mActivity.startActivity(intent_web);
+					}
+				} else if ("sws".equals(appCode)) {//货源批发
+					if (isLogin) {
+						Intent intent_web = new Intent(mActivity,
+								H5WebActivty.class);
+						intent_web.putExtra(Constants.NEDDLOGIN, false);
+						intent_web.putExtra("NEEDNOTTITLE", false);
+						intent_web.putExtra("Re", true);
+						intent_web.putExtra(WebActivty.T, "货源批发");
+						intent_web.putExtra(WebActivty.U, getSAUrl(API.TOSTORE_Supply_Wholesale, 2));
+						mActivity.startActivity(intent_web);
+					}
+				} else if ("rss".equals(appCode)) {//预约界面
+					if (isLogin) {
+						Intent intent = new Intent(mActivity, BookFunctionActivity.class);
+						startActivity(intent);
+					}
+				} else if ("wifi".equals(appCode)) {//智能WIFI
+					if (isLogin) {
+						Intent intent_web = new Intent(mActivity,
+								WIFIWebActivity.class);
+						intent_web.putExtra(Constants.NEDDLOGIN, false);
+						intent_web.putExtra("NEEDNOTTITLE", false);
+						intent_web.putExtra("Re", true);
+						intent_web.putExtra(WIFIWebActivity.U, getSAUrl(API.INTELLIGENT_WIFI, 3));
+						mActivity.startActivity(intent_web);
+					}
+				} else if ("qns".equals(appCode)) {//排队取号
+					if (isLogin) {
+						Intent intent_line = new Intent(mActivity, LineTakeNoWebActivity.class);
+						intent_line.putExtra(Constants.NEDDLOGIN, false);
+						intent_line.putExtra("NEEDNOTTITLE", false);
+						intent_line.putExtra("Re", true);
+						intent_line.putExtra(LineTakeNoWebActivity.U, getSAUrl(API.TOSTORE_Line_TakeNo, 4));
+						mActivity.startActivity(intent_line);
+					}
+				} else if ("shoukuan".equals(appCode)) {// 收款二维码放大
+					re = JumpIntent.jumpLogin_addShop(isLogin, API.SWEEP,
+							mActivity);
+					if (re) {
+						//mActivity.startActivity(new Intent(mActivity, ReceivablesActivity.class));
+						//MagnifyImg();
+						isAgreeAgreement();
+					}
+				} else if ("fuwushangcheng".equals(appCode)) {// 服务商城
+					re = JumpIntent.jumpLogin_addShop(isLogin,
+							API.SERVICESTORE, mActivity);
+					if (re) {
+
+						Intent intent_more = new Intent(mActivity,
+								ServiceMallActivity.class);
+						mActivity.startActivityForResult(intent_more,
+								mActivity.SERVICEMALLSHOP_CODE);
+
+					}
+				}
+/*
 				switch (appCode) {
 					case "tss":
 						re = JumpIntent.jumpLogin_addShop(isLogin, API.SWEEP,
@@ -313,7 +388,7 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 
 						}
 						break;
-				}
+				}*/
 			}
 		});
 	}
@@ -330,13 +405,13 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 				@Override
 				public void onResponseResult(Result result) {
 					String reString = result.getData();
-					if(!TextUtils.isEmpty(reString)) {
+					if (!TextUtils.isEmpty(reString)) {
 						try {
 							JSONObject jsonObject = new JSONObject(reString);
 							boolean results = jsonObject.getBoolean("results");
-							if(results){
+							if (results) {
 								mActivity.startActivity(new Intent(mActivity, ReceivablesQRActivity.class));
-							}else{
+							} else {
 								mActivity.startActivity(new Intent(mActivity, ReceivablesActivity.class));
 							}
 						} catch (JSONException e) {
@@ -348,7 +423,7 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 
 				@Override
 				public void onResponseFailed(String msg) {
-					ContentUtils.showMsg(mActivity,"连接超时,请稍后再试");
+					ContentUtils.showMsg(mActivity, "连接超时,请稍后再试");
 				}
 			});
 		} catch (Exception e) {
@@ -356,24 +431,24 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 		}
 	}
 
-	private String getSAUrl(String address,int type){
+	private String getSAUrl(String address, int type) {
 		String bussniessId = BaseActivity.userShopInfoBean.getBusinessId();
-		switch (type){
+		switch (type) {
 			case 1://微信商城
 				/*WebProductManagementBean data = new WebProductManagementBean();
 				data.setBusinessId(bussniessId);
 				String dataJson = com.alibaba.fastjson.JSONObject.toJSON(data)
 						.toString();
 				String url = encryptionUrl(address, dataJson);*/
-			//	return encryptionUrl(address, dataJson);
-			return address+ "storeId=" + bussniessId;
+				//	return encryptionUrl(address, dataJson);
+				return address + "storeId=" + bussniessId;
 			case 2://货源批发
 				return address + "storeId=" + bussniessId;
 			case 3://智能WIFI
-				return address+bussniessId;
+				return address + bussniessId;
 			case 4://排队取号
 				//BDP200eWiZ16cbs041217820
-				return address+bussniessId+"/showUserQueueList";
+				return address + bussniessId + "/showUserQueueList";
 		}
 		return "";
 	}
