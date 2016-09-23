@@ -388,6 +388,32 @@ public class LineTakeNoWebActivity extends BaseActivity {
 				GenerateImage(jieguo);
 			}
 
+			/*
+			后续Android获取图片bae64编码方法
+			path = "http://d.hiphotos.baidu.com/baike/c0%3Dbaike116%2C5%2C5%2C116%2C38/sign=2df1eac6cc1b9d169eca923392b7dfea/9d82d158ccbf6c81db3d54f1be3eb13533fa40a4.jpg";
+			Log.i("-----------path=",path);
+			try {
+				//下载网络图片并转成输入流
+				URL url = new URL(path);
+				httpUrl = (HttpURLConnection) url.openConnection();
+				httpUrl.connect();
+				InputStream is = httpUrl.getInputStream();
+				Log.i("-----------length=",""+httpUrl.getContentLength());
+				byte[] data = new byte[httpUrl.getContentLength()];
+				is.read(data);
+				is.close();
+
+				BASE64Encoder encoder = new BASE64Encoder();
+				String base64Text = encoder.encode(data);
+				Log.i("-----------base64Text", base64Text);
+
+				//生成图片
+				GenerateImage(base64Text);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}*/
+
+
 		}
 	}
 	//base64字符串转化成图片

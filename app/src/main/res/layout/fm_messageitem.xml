@@ -57,9 +57,10 @@
         android:text="有新订单"
         android:textColor="@color/color_414141"
         android:textSize="13.5sp"
-        android:maxLength="15"
+        android:maxLength="20"
         android:layout_marginLeft="35.5dp"
         android:layout_marginBottom="15.5dp"
+
         />
 
 

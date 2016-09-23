@@ -302,7 +302,8 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 
 						@Override
 						public void onResponseResult(Result result) {
-
+							String restring=result.getData();
+							System.out.println("restring"+restring);
 							final AppUpDataBean uB = com.alibaba.fastjson.JSONObject
 									.parseObject(result.getData(),
 											AppUpDataBean.class);
