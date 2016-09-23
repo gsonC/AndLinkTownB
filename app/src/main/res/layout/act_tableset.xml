@@ -36,7 +36,6 @@
                 android:text="呼叫设置"
                 android:background="@drawable/shape_addnewmember"
                 android:padding="7dp"
-                android:visibility="gone"
                 android:layout_alignParentRight="true"
                 />
 
