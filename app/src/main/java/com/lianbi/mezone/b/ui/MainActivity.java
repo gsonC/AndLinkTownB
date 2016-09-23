@@ -2,7 +2,6 @@ package com.lianbi.mezone.b.ui;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -310,65 +309,66 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 							String status = uB.getCoerceModify();
 							if(!uB.getVersion().equals("V"+AbAppUtil.getAppVersionName(MainActivity.this))) {
 								((MineFragment) fm_mine).setRedDotShow();
-							}
-							if (status.equals("Y")) {
-								mustUp = true;
-								DialogCommon dialogCommon = new DialogCommon(
-										MainActivity.this) {
-
-									@Override
-									public void onOkClick() {
-										mustUp = false;
-										downApp(uB);
-										dismiss();
-									}
-
-									@Override
-									public void onCheckClick() {
-										dismiss();
-
-									}
-								};
-								dialogCommon
-										.setOnDismissListener(new OnDismissListener() {
-
-											@Override
-											public void onDismiss(
-													DialogInterface arg0) {
-												if (mustUp) {
-													MainActivity.this.exit();
-												}
-
-											}
-										});
-								dialogCommon.setTextTitle("必须更新了:"
-										+ uB.getVersion());
-								dialogCommon.setTv_dialog_common_ok("更新");
-								dialogCommon
-										.setTv_dialog_common_cancelV(View.GONE);
-								dialogCommon.show();
-							} else if (status.equals("N")) {
-								String edition = "V" + vName;
-								if (!edition.equals(uB.getVersion())) {
-									DialogCommon dialogCommon = new DialogCommon(MainActivity.this) {
+								if (status.equals("Y")) {
+									mustUp = true;
+									DialogCommon dialogCommon = new DialogCommon(
+											MainActivity.this) {
 
 										@Override
 										public void onOkClick() {
-											dismiss();
+											mustUp = false;
 											downApp(uB);
+											dismiss();
 										}
 
 										@Override
 										public void onCheckClick() {
 											dismiss();
+
 										}
 									};
-									dialogCommon.setTextTitle("有更新了:" + uB.getVersion());
+									dialogCommon
+											.setOnDismissListener(new DialogInterface.OnDismissListener() {
+
+												@Override
+												public void onDismiss(
+														DialogInterface arg0) {
+													if (mustUp) {
+														MainActivity.this.exit();
+													}
+
+												}
+											});
+									dialogCommon.setTextTitle("必须更新了:"
+											+ uB.getVersion());
 									dialogCommon.setTv_dialog_common_ok("更新");
-									dialogCommon.setTv_dialog_common_cancel("取消");
+									dialogCommon
+											.setTv_dialog_common_cancelV(View.GONE);
 									dialogCommon.show();
+								} else if (status.equals("N")) {
+									String edition = "V" + vName;
+									if (!edition.equals(uB.getVersion())) {
+										DialogCommon dialogCommon = new DialogCommon(MainActivity.this) {
+
+											@Override
+											public void onOkClick() {
+												dismiss();
+												downApp(uB);
+											}
+
+											@Override
+											public void onCheckClick() {
+												dismiss();
+											}
+										};
+										dialogCommon.setTextTitle("有更新了:" + uB.getVersion());
+										dialogCommon.setTv_dialog_common_ok("更新");
+										dialogCommon.setTv_dialog_common_cancel("取消");
+										dialogCommon.show();
+									}
 								}
 							}
+
 						}
 
 						@Override
