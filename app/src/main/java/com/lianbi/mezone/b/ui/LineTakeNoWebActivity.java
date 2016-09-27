@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.JavascriptInterface;
@@ -87,6 +88,7 @@ public class LineTakeNoWebActivity extends BaseActivity {
 
 	private void initListener() {
 		boolean is = webs.shouldOverrideUrlLoading(web_webactivty, "");
+
 		// webs.onPageStarted(view, url, favicon);
 	}
 
@@ -128,6 +130,7 @@ public class LineTakeNoWebActivity extends BaseActivity {
 		web_webactivty.setWebViewClient(new WebViewClient() {
 			@Override
 			public void onPageFinished(WebView view, String url) {
+				System.out.println("url132"+url);
 				setPageTitle(view.getTitle());
 				dialog.dismiss();
 			}
@@ -145,6 +148,7 @@ public class LineTakeNoWebActivity extends BaseActivity {
 			@Override
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {
 				view.loadUrl(url);
+				System.out.println("url150"+url);
 				return true;
 			}
 
@@ -299,7 +303,10 @@ public class LineTakeNoWebActivity extends BaseActivity {
 
 	@Override
 	protected void onTitleLeftClick() {
-
+		Log.i("tag","gobackurl----》 "+gobackurl);
+		if(!gobackurl.contains("http://")){
+			finish();
+		}
 		if(gobackurl.contains("classifyCigController")||gobackurl.contains("qnsBannerController")
 				||gobackurl.contains("qnsWarnConfigController")||gobackurl.contains("viewUserQueueInfo")
 				||gobackurl.contains("viewFinishUserQueueInfo")) {
@@ -309,6 +316,7 @@ public class LineTakeNoWebActivity extends BaseActivity {
 		}else{
 			web_webactivty.goBack();//正常返回
 		}
+
 
 	}
 	/*
@@ -370,23 +378,43 @@ public class LineTakeNoWebActivity extends BaseActivity {
 			return  mImgId;
 
 		}
+
 		/**
 		 * 保存邀请码
 		 *
 		 */
 		@JavascriptInterface
-		public void  saveQrcode(String  url)
+		public void  saveQrcode(final  String  url)
 
 		{
-			System.out.println("url388"+url);
 
 			if(indexOfString(Uri.parse(url).toString(),"data:image/")){
-				String  str=Uri.parse(url).toString();
-				String jieguo = str.
-						substring(str.indexOf(",")+1,
-								str.length());
-				GenerateImage(jieguo);
-			}
+						String  str=Uri.parse(url).toString();
+						String jieguo = str.
+								substring(str.indexOf(",")+1,
+										str.length());
+						GenerateImage(jieguo);
+					}
+//		   web_webactivty.setOnLongClickListener(new  View.OnLongClickListener(){
+//
+//				@Override
+//				public boolean onLongClick(View view) {
+//					System.out.println("url388"+url);
+//
+//					if(indexOfString(Uri.parse(url).toString(),"data:image/")){
+//						String  str=Uri.parse(url).toString();
+//						String jieguo = str.
+//								substring(str.indexOf(",")+1,
+//										str.length());
+//						GenerateImage(jieguo);
+//					}
+//
+//
+//
+//				return  true;
+//			}
+//			});
+
 
 		}
 	}
@@ -438,4 +466,5 @@ public class LineTakeNoWebActivity extends BaseActivity {
 			e.printStackTrace();
 		}
 	}
+
 }
