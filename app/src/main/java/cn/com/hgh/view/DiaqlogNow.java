@@ -74,7 +74,7 @@ public class DiaqlogNow extends Dialog {
 
 		if(null!=bean.getRate()&&0!=bean.getRate().compareTo(BigDecimal.ZERO)){
 		//	tv_gz_rate.setText(Double.toString(MathExtend.divide(bean.getRate().doubleValue(),100,2))+"%");
-
+     //format可以将各类数据格式化为字符串并输出
 			tv_gz_rate.setText(df.format(MathExtend.multiply(bean.getRate()
 					.doubleValue(), multiplicativecardinal)) + "%");
 
