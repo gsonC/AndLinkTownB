@@ -350,4 +350,10 @@ public class CouponUsingDetailsActivity extends BaseActivity implements
             mPullLoading = false;
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
+    }
 }

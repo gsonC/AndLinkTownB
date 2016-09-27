@@ -234,4 +234,10 @@ public class WithdrawRecordActivity extends BaseActivity implements AbPullToRefr
             getDatas();
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
+    }
 }

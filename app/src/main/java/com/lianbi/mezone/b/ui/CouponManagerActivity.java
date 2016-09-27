@@ -311,4 +311,10 @@ public class CouponManagerActivity extends BaseActivity implements AdapterView.O
         }
         return false;
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
+    }
 }

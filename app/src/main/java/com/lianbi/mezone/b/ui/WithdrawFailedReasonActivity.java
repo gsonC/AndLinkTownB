@@ -33,4 +33,10 @@ public class WithdrawFailedReasonActivity extends BaseActivity {
         }
         reason.setText(s);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
+    }
 }

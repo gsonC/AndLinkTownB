@@ -102,4 +102,10 @@ public class WithdrawingProgressActivity extends BaseActivity {
         super.onTitleRightClickTv();
         startActivity(new Intent(WithdrawingProgressActivity.this, WithdrawRecordActivity.class));
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
+    }
 }

@@ -502,4 +502,10 @@ public class SendNewCouponActivity extends BaseActivity implements CompoundButto
         }
         editable_sms_content.setText(sb.toString());
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
+    }
 }
