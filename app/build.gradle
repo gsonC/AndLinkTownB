@@ -8,8 +8,8 @@ android {
         applicationId "com.xizhi.mezone.b"
         minSdkVersion 11
         targetSdkVersion 21
-        versionCode 88
-        versionName "1.1.1"
+        versionCode 89
+        versionName "1.1.2"
     }
 
     buildTypes {
@@ -24,16 +24,16 @@ android {
     }
 
     //task nativeLibsToJar(type: Zip, description: "create a jar archive of the native libs") {
-    //    destinationDir file("$projectDir/libs")
+     //   destinationDir file("$projectDir/libs")
     //    baseName "Native_Libs2"
     //    extension "jar"
-    //    from fileTree(dir: "libs", include: "**/*.so")
+     //   from fileTree(dir: "libs", include: "**/*.so")
     //    into "lib"
-    //}
+   // }
 
-    //tasks.withType(JavaCompile) {
-     //   compileTask -> compileTask.dependsOn(nativeLibsToJar)
-    //}
+   // tasks.withType(JavaCompile) {
+   //     compileTask -> compileTask.dependsOn(nativeLibsToJar)
+   // }
 
 }
 
