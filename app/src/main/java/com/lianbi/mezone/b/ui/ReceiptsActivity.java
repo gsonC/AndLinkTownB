@@ -53,4 +53,10 @@ public class ReceiptsActivity extends BaseActivity {
             e.printStackTrace();
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
+    }
 }
