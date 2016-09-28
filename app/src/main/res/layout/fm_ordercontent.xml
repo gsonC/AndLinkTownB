@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >-->
-    <cn.com.hgh.view.AbPullToRefreshView
+   <!-- <cn.com.hgh.view.AbPullToRefreshView
         android:id="@+id/act_addmembers_abpulltorefreshview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -17,7 +17,7 @@
         android:orientation="vertical"
         android:visibility="visible">
 
-        <cn.com.hgh.view.SwipeListView
+        <android.support.v7.widget.RecyclerView
             android:id="@+id/act_addmembers_listview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -28,17 +28,45 @@
             android:listSelector="@color/transparent"
             sp:right_width="100dp"
             android:scrollbars="none">
-        </cn.com.hgh.view.SwipeListView>
-    </cn.com.hgh.view.AbPullToRefreshView>
-        <ImageView
-            android:visibility="gone"
-            android:id="@+id/fm_orederfragment_iv_empty"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@mipmap/iv_empty"
-            android:scaleType="fitXY"
-             />
+        </android.support.v7.widget.RecyclerView>
+    </cn.com.hgh.view.AbPullToRefreshView>-->
+        <!--<ImageView-->
+            <!--android:visibility="gone"-->
+            <!--android:id="@+id/fm_orederfragment_iv_empty"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:src="@mipmap/iv_empty"-->
+            <!--android:scaleType="fitXY"-->
+             <!--/>-->
 <!--</FrameLayout>-->
+    <cn.com.hgh.refreshlayoutsliding.BGARefreshLayout
+        android:id="@+id/define_sliding_bga"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        >
+        <!--android.support.v7.widget.RecyclerView-->
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/define_sliding_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:padding="5dp"
+            android:background="#fff4f7f9"
+            android:cacheColorHint="#00000000"
+            android:divider="#dddbdb"
+            android:dividerHeight="1dp"
+            android:listSelector="@color/transparent"
+            android:scrollbars="none">
 
-   
+        </android.support.v7.widget.RecyclerView>
+    </cn.com.hgh.refreshlayoutsliding.BGARefreshLayout>
+    <ImageView
+    android:visibility="gone"
+    android:id="@+id/fm_orederfragment_iv_empty"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:src="@mipmap/iv_empty"
+    android:scaleType="fitXY"
+    />
 </RelativeLayout>

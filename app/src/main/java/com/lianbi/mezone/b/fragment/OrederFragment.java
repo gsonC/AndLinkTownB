@@ -4,51 +4,51 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.lianbi.mezone.b.bean.OrderContent;
 import com.lianbi.mezone.b.ui.OrderContentActivity;
 import com.lianbi.mezone.b.ui.OrderLookUpActivity;
 import com.xizhi.mezone.b.R;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import cn.com.hgh.baseadapter.BaseAdapterHelper;
-import cn.com.hgh.baseadapter.QuickAdapter;
-import cn.com.hgh.utils.AbPullHide;
+import cn.com.hgh.baseadapter.SlidingRecyclerViewAdapter;
+import cn.com.hgh.refreshlayoutsliding.BGARefreshLayout;
+import cn.com.hgh.refreshlayoutsliding.DefineBAGRefreshWithLoadView;
 import cn.com.hgh.utils.ContentUtils;
-import cn.com.hgh.view.AbPullToRefreshView;
-import cn.com.hgh.view.SwipeListView;
 
-public class OrederFragment extends Fragment {
+public class OrederFragment extends Fragment implements BGARefreshLayout.BGARefreshLayoutDelegate , SlidingRecyclerViewAdapter.IonSlidingViewClickListener {
 
     Activity mActivity;
     OrderLookUpActivity mOrderLookUpActivity;
     OrderContentActivity mOrderContentActivity;
-    public QuickAdapter<OrderContent> mAdapter;
     ArrayList<OrderContent> mDatas = new ArrayList<OrderContent>();
     boolean isResh;
     boolean isLoad;
     boolean isDelete;
     int listPosition = -1;
-    @Bind(R.id.act_addmembers_listview)
-    SwipeListView actOrederListview;
-    @Bind(R.id.act_addmembers_abpulltorefreshview)
-    AbPullToRefreshView actOrederAbpulltorefreshview;
     @Bind(R.id.fm_orederfragment_iv_empty)
     ImageView fmOrederfragmentIvEmpty;
-
-
+    @Bind(R.id.define_sliding_bga)
+    BGARefreshLayout mBGARefreshLayout;
+    @Bind(R.id.define_sliding_recycler)
+    RecyclerView define_sliding_recycler;
+    /** 设置刷新和加载 */
+    private DefineBAGRefreshWithLoadView mDefineBAGRefreshWithLoadView = null;
+    /** 数据填充adapter */
+    private SlidingRecyclerViewAdapter mSlidingRecyclerViewAdapter = null;
     private boolean isFirstIn = true;
-
+    private boolean  havedata=false;
+    private boolean mIsRefreshing=false;
     @Override
     public View onCreateView(LayoutInflater inflater,
                              @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -65,144 +65,133 @@ public class OrederFragment extends Fragment {
     }
 
     private void initView(View view) {
-        actOrederAbpulltorefreshview.setLoadMoreEnable(true);
-        actOrederAbpulltorefreshview.setPullRefreshEnable(true);
-        actOrederAbpulltorefreshview
-                .setOnHeaderRefreshListener(new AbPullToRefreshView.OnHeaderRefreshListener() {
-
-                    @Override
-                    public void onHeaderRefresh(AbPullToRefreshView view) {
-                        if (mActivity instanceof OrderLookUpActivity) {
-                            mOrderLookUpActivity.getOrderInfo(true, false, "Y");
-                        } else if (mActivity instanceof OrderContentActivity) {
-                            if (mOrderContentActivity.timeNoselected()) {
-                                ContentUtils.showMsg(mActivity, "请选择查询时间");
-                                hideRefreshView(true);
-                                return;
-                            }
-                            mOrderContentActivity.getOrderInfo(true, false, "Y");
-                        }
-                    }
-
-                });
-        actOrederAbpulltorefreshview
-                .setOnFooterLoadListener(new AbPullToRefreshView.OnFooterLoadListener() {
-
-                    @Override
-                    public void onFooterLoad(AbPullToRefreshView view) {
-                        if (mActivity instanceof OrderLookUpActivity) {
-                            mOrderLookUpActivity.getOrderInfo(false, true, "Y");
-                        } else if (mActivity instanceof OrderContentActivity) {
-                            mOrderContentActivity.getOrderInfo(false, true, "Y");
-                        }
-                    }
-                });
-        initListAdapter();
+        mBGARefreshLayout.setDelegate(this);
+        setRecyclerCommadapter();
+        setBgaRefreshLayout();
+        setRecyclerView();
     }
-
+    public void  stopScroll(){
+        define_sliding_recycler.scrollToPosition(0);
+    }
+    /** 数据填充 */
+    private void setRecyclerCommadapter() {
+        mSlidingRecyclerViewAdapter = new SlidingRecyclerViewAdapter(mActivity);
+        define_sliding_recycler.setAdapter(mSlidingRecyclerViewAdapter);
+        mSlidingRecyclerViewAdapter.setDeleteLister(this);
+    }
     /**
-     * 初始化list Adapter
-     */
-    private void initListAdapter() {
-        mAdapter = new QuickAdapter<OrderContent>(mActivity,
-                R.layout.item_order_content, mDatas) {
-
-            @Override
-            protected void convert(final BaseAdapterHelper helper,
-                                   final OrderContent item) {
-
-                TextView tv_item_orderinfo_num = helper.getView(R.id.tv_item_orderinfo_num);
-                TextView tv_item_orderinfo_state = helper.getView(R.id.tv_item_orderinfo_state);
-                TextView tv_item_orderinfo_paytime = helper.getView(R.id.tv_item_orderinfo_paytime);
-                TextView tv_item_orderinfo_price = helper.getView(R.id.tv_item_orderinfo_price);
-                LinearLayout item_left = helper.getView(R.id.item_left);
-                LinearLayout item_right = helper.getView(R.id.item_right);
-                LinearLayout.LayoutParams lp1 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-                item_left.setLayoutParams(lp1);
-                LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams(actOrederListview.getRightViewWidth(), LinearLayout.LayoutParams.MATCH_PARENT);
-                item_right.setLayoutParams(lp2);
-                tv_item_orderinfo_num.setText(item.getOrderNo());
-                tv_item_orderinfo_paytime.setText(item.getTxnTime());
-                tv_item_orderinfo_price.setText(String.valueOf(item.getTxnAmt()));
-                if (item.getOrderStatus().equals("03")) {
-                    tv_item_orderinfo_state.setText("支付成功");
-                } else if (item.getOrderStatus().equals("04")) {
-                    tv_item_orderinfo_state.setText("支付失败");
+     * 设置 BGARefreshLayout刷新和加载
+     * */
+    private void setBgaRefreshLayout() {
+        mDefineBAGRefreshWithLoadView = new DefineBAGRefreshWithLoadView(mActivity, true , true);
+        mBGARefreshLayout.setRefreshViewHolder(mDefineBAGRefreshWithLoadView);//设置刷新样式
+        mDefineBAGRefreshWithLoadView.updateLoadingMoreText("正在加载...");
+    }
+    /** 设置RecyclerView的布局方式 */
+    private void setRecyclerView(){
+        define_sliding_recycler.setOnTouchListener(
+                new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        if (mIsRefreshing) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    }
                 }
-                String amt = BigDecimal.valueOf(Long.valueOf(item.getTxnAmt()))
-                        .divide(new BigDecimal(100)).toString();
-                tv_item_orderinfo_price.setText(String.valueOf(amt));
-
-                String time = item.getTxnTime();
-                String year = time.substring(0, 4);
-                String months = time.substring(4, 6);
-                String daytime = time.substring(6, 8);
-                String hour = time.substring(8, 10);
-                String minute = time.substring(10, 12);
-                String second = time.substring(12, 14);
-                tv_item_orderinfo_paytime.setText(year + "-" + months + "-"
-                        + daytime + " " + hour + ":" + minute + ":" + second);
-
-
-                helper.getView(R.id.tv_chdelete).setOnClickListener(// 删除
-                        new View.OnClickListener() {
-
-                            @Override
-                            public void onClick(View v) {
-                                actOrederListview.slideBack();
-                                ArrayList<String> ids = new ArrayList<String>();
-                                ids.add(String.valueOf(item.getOrderNo()));
-                                listPosition = helper.getPosition();
-                                if (mActivity instanceof OrderLookUpActivity) {
-                                    mOrderLookUpActivity.delteOrderMsg(item.getOrderNo(), listPosition);
-                                } else if (mActivity instanceof OrderContentActivity) {
-                                    mOrderContentActivity.delteOrderMsg(item.getOrderNo(), listPosition);
-                                }
-
-                            }
-                        });
+        );
+        //垂直listview显示方式
+        define_sliding_recycler.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false));
+    }
+    /** 刷新 */
+    @Override
+    public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
+        mDefineBAGRefreshWithLoadView.updateLoadingMoreText("正在加载...");
+        mDefineBAGRefreshWithLoadView.showLoadingMoreImg();
+        mIsRefreshing=true;
+        if (mActivity instanceof OrderLookUpActivity) {
+            mOrderLookUpActivity.getOrderInfo(true, false, "Y");
+        } else if (mActivity instanceof OrderContentActivity) {
+            if (mOrderContentActivity.timeNoselected()) {
+                ContentUtils.showMsg(mActivity, "请选择查询时间");
+                hideRefreshView(true,true);
+                return;
             }
-        };
+            mOrderContentActivity.getOrderInfo(true, false, "Y");
+        }
 
-        actOrederListview.setAdapter(mAdapter);
+    }
+    /** 加载 */
+    @Override
+    public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
+        mIsRefreshing=true;
+        if (mActivity instanceof OrderLookUpActivity) {
+            mOrderLookUpActivity.getOrderInfo(false, true, "Y");
+        } else if (mActivity instanceof OrderContentActivity) {
+            mOrderContentActivity.getOrderInfo(false, true, "Y");
+        }
+        return true;
+    }
+    @Override
+    public void onItemClick(View view, int position) {
+    }
+    @Override
+    public void onLongItemClick(View view, int position) {
+    }
+    /** 删除事件 */
+    @Override
+    public void onDeleteBtnCilck(View view, int position) {
+        listPosition=position;
+        if (mActivity instanceof OrderLookUpActivity) {
+            mOrderLookUpActivity.delteOrderMsg(mDatas.get(position).getOrderNo(), position);
+        } else if (mActivity instanceof OrderContentActivity) {
+            mOrderContentActivity.delteOrderMsg(mDatas.get(position).getOrderNo(), position);
+        }
     }
 
     public void doSomthing(ArrayList<OrderContent> cuArrayList, int position) {
 
         if (cuArrayList != null && cuArrayList.size() > 0) {
             mDatas = cuArrayList;
-            mAdapter.replaceAll(mDatas);
+            mSlidingRecyclerViewAdapter.setData(mDatas);
             fmOrederfragmentIvEmpty.setVisibility(View.GONE);
-            actOrederAbpulltorefreshview.setVisibility(View.VISIBLE);
+            mBGARefreshLayout.setVisibility(View.VISIBLE);
         } else {
             if (mDatas.size() > 0) {
                 fmOrederfragmentIvEmpty.setVisibility(View.GONE);
-                actOrederAbpulltorefreshview.setVisibility(View.VISIBLE);
-                mAdapter.replaceAll(mDatas);
+                mBGARefreshLayout.setVisibility(View.VISIBLE);
+                mSlidingRecyclerViewAdapter.setData(mDatas);
             } else {
                 fmOrederfragmentIvEmpty.setVisibility(View.VISIBLE);
-                actOrederAbpulltorefreshview.setVisibility(View.GONE);
+                mBGARefreshLayout.setVisibility(View.GONE);
             }
         }
 
     }
-
     //用于判断是没有查到数据还是没有选时间
     public void timeNoselected(boolean timeNoselect) {
         if (timeNoselect == true) {
-            mAdapter.replaceAll(mDatas);
+            mSlidingRecyclerViewAdapter.setData(mDatas);
             fmOrederfragmentIvEmpty.setVisibility(View.GONE);
-            actOrederAbpulltorefreshview.setVisibility(View.VISIBLE);
+            mBGARefreshLayout.setVisibility(View.VISIBLE);
         }
 
 
     }
 
-    public void hideRefreshView(boolean isResh) {
-
-        AbPullHide.hideRefreshView(isResh,
-                actOrederAbpulltorefreshview);
-
+    public void hideRefreshView(boolean isResh,boolean   havedata) {
+        this.havedata=havedata;
+        mIsRefreshing=false;
+        if(havedata==false){
+            mDefineBAGRefreshWithLoadView.updateLoadingMoreText("到底啦...");
+            mDefineBAGRefreshWithLoadView.hideLoadingMoreImg();
+        }
+        if(isResh==true&&mBGARefreshLayout!=null){
+            mBGARefreshLayout.endRefreshing();
+        }  else  if(mBGARefreshLayout!=null){
+            mBGARefreshLayout.endLoadingMore();
+        }
     }
 
     @Override
@@ -213,8 +202,8 @@ public class OrederFragment extends Fragment {
 
     public void upData() {
         mDatas.remove(listPosition);
-        hideRefreshView(true);
-        mAdapter.replaceAll(mDatas);
+        hideRefreshView(true,true);
+        mSlidingRecyclerViewAdapter.setData(mDatas);
     }
 
 

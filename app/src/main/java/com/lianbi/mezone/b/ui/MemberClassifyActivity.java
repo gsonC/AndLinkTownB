@@ -267,11 +267,11 @@ public class MemberClassifyActivity extends BaseActivity {
         }
     }
 
+
     protected void updateView(ArrayList<MemberClassify> arrayList) {
         mDatas.addAll(arrayList);
         mAdapter.notifyDataSetChanged();
     }
-
     class DataAdapter extends PullRefreshRecyclerAdapter<MemberClassify> {
 
 

@@ -93,25 +93,52 @@ public class OrderLookUpActivity extends BaseActivity implements
             switch (v.getId()) {
 
             case R.id.tv_all:
+                setScrollToTop();
                 tvSuccess.setChecked(false);
                 tvFail.setChecked(false);
+                tvAll.setChecked(true);
                 vpOrderpager.setCurrentItem(0);
                 initQuery("03,04",POSITION0);
                 getOrderInfo(true,false,isValid);
                 break;
             case R.id.tv_success:
+                setScrollToTop();
                 vpOrderpager.setCurrentItem(1);
                 tvAll.setChecked(false);
                 tvFail.setChecked(false);
+                tvSuccess.setChecked(true);
                 initQuery("03",POSITION1);
                 getOrderInfo(true,false,isValid);
                 break;
             case R.id.tv_fail:
+                setScrollToTop();
                 vpOrderpager.setCurrentItem(2);
                 tvAll.setChecked(false);
                 tvSuccess.setChecked(false);
+                tvFail.setChecked(true);
                 initQuery("04",POSITION2);
                 getOrderInfo(true,false,isValid);
+                break;
+        }
+    }
+    /*设置RecyclerView滚动到顶，*/
+    private void  setScrollToTop(){
+        switch (intentLayout) {
+            case POSITION0:
+                if (mWholeFragment != null) {
+                    mWholeFragment.stopScroll();
+                }
+                break;
+
+            case POSITION1:
+                if (mPaySuccessFragment != null) {
+                    mPaySuccessFragment.stopScroll();
+                }
+                break;
+            case POSITION2:
+                if (mPayFailFragment != null) {
+                    mPayFailFragment.stopScroll();
+                }
                 break;
         }
     }
@@ -150,26 +177,6 @@ public class OrderLookUpActivity extends BaseActivity implements
             @Override
             public void onPageSelected(int arg0) {
                 curPosition = arg0;
-                switch (arg0) {
-                    case 0: {
-                        if (mWholeFragment != null) {
-                            swtFmDo(arg0,mWholeData);
-                        }
-                    }
-                    break;
-                    case 1: {
-                        if (mPaySuccessFragment != null) {
-                            swtFmDo(arg0,mPaySuccessDatas);
-                        }
-                    }
-                    break;
-                    case 2: {
-                        if (mPayFailFragment != null) {
-                            swtFmDo(arg0,mPayFailDatas);
-                        }
-                    }
-                    break;
-                }
             }
 
             @Override
@@ -239,24 +246,6 @@ public class OrderLookUpActivity extends BaseActivity implements
     @Override
     public void onPageSelected(int arg0) {
         curPosition = arg0;
-        switch (arg0) {
-            case POSITION0:
-                if (mWholeFragment != null) {
-                    swtFmDo(arg0,mWholeData);
-                }
-                break;
-
-            case POSITION1:
-                if (mPaySuccessFragment != null) {
-                    swtFmDo(arg0,mPaySuccessDatas);
-                }
-                break;
-            case POSITION2:
-                if (mPayFailFragment != null) {
-                    swtFmDo(arg0,mPayFailDatas);
-                }
-                break;
-        }
     }
 
     private void swtFmDo(int position,
@@ -328,19 +317,19 @@ public class OrderLookUpActivity extends BaseActivity implements
                                 Log.i("tag","查询到的条数324---->"+basesize);
                                     switch (intentLayout) {
                                         case POSITION0:
-                                            mWholeFragment.hideRefreshView(isResh);
+                                            mWholeFragment.hideRefreshView(isResh,true);
                                             mWholeData.addAll(baseList);
                                             mDatas.addAll(mWholeData);
                                             tv_num.setText(String.valueOf(mDatas.size()));
                                             break;
                                         case POSITION1:
-                                            mPaySuccessFragment.hideRefreshView(isResh);
+                                            mPaySuccessFragment.hideRefreshView(isResh,true);
                                             mPaySuccessDatas.addAll(baseList);
                                             mDatas.addAll(mPaySuccessDatas);
                                             tv_num.setText(String.valueOf(mDatas.size()));
                                             break;
                                         case POSITION2:
-                                            mPayFailFragment.hideRefreshView(isResh);
+                                            mPayFailFragment.hideRefreshView(isResh,true);
                                             mPayFailDatas.addAll(baseList);
                                             mDatas.addAll(mPayFailDatas);
                                             tv_num.setText(String.valueOf(mDatas.size()));
@@ -360,13 +349,13 @@ public class OrderLookUpActivity extends BaseActivity implements
                     int  mDatasize=mDatas.size();
                     switch (intentLayout) {
                         case POSITION0:
-                            mWholeFragment.hideRefreshView(isResh);
+                            mWholeFragment.hideRefreshView(isResh,false);
                             break;
                         case POSITION1:
-                            mPaySuccessFragment.hideRefreshView(isResh);
+                            mPaySuccessFragment.hideRefreshView(isResh,false);
                             break;
                         case POSITION2:
-                            mPayFailFragment.hideRefreshView(isResh);
+                            mPayFailFragment.hideRefreshView(isResh,false);
                             break;
                     }
                     showData(isResh);

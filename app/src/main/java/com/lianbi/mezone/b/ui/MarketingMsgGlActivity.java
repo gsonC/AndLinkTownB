@@ -240,8 +240,8 @@ public class MarketingMsgGlActivity extends BaseActivity {
                             remainSendNum=String.valueOf(jsonObject.getInt("remainSendNum"));
                             txtAlreadysendnum.setText(smstotalSendNum);
                             txtRemainsendnum.setText(remainSendNum);
+                            mData.clear();
                             if (!TextUtils.isEmpty(reString)) {
-                                mData.clear();
                                 ArrayList<MarketingMsgGl> msgGlsList = (ArrayList<MarketingMsgGl>) JSON
                                         .parseArray(reString,
                                                 MarketingMsgGl.class);
@@ -266,8 +266,8 @@ public class MarketingMsgGlActivity extends BaseActivity {
                             }
                             if(isResh==true){
                                 mPtrrview.setOnRefreshComplete();
-                                mPtrrview.onFinishLoading(true, false);
                             }
+                            mPtrrview.onFinishLoading(true, false);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

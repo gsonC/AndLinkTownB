@@ -109,6 +109,7 @@ public class OrderContentActivity extends BaseActivity implements
         switch (v.getId()) {
 
             case R.id.tv_all:
+                setScrollToTop();
                 vpOrderpager.setCurrentItem(0);
                 tvAll.setChecked(true);
                 tvSuccess.setChecked(false);
@@ -132,6 +133,7 @@ public class OrderContentActivity extends BaseActivity implements
 
                 break;
             case R.id.tv_success:
+                setScrollToTop();
                 vpOrderpager.setCurrentItem(1);
                 tvAll.setChecked(false);
                 tvSuccess.setChecked(true);
@@ -154,6 +156,7 @@ public class OrderContentActivity extends BaseActivity implements
                 getOrderInfo(true,false,isValid);
                 break;
             case R.id.tv_fail:
+                setScrollToTop();
                 vpOrderpager.setCurrentItem(2);
                 tvAll.setChecked(false);
                 tvSuccess.setChecked(false);
@@ -322,6 +325,27 @@ public class OrderContentActivity extends BaseActivity implements
                 if(timeNoselected()){
                     clearUpdate();
                     return;
+                }
+                break;
+        }
+    }
+    /*RecyclerView bug，设置RecyclerView滚动到顶*/
+    private void  setScrollToTop(){
+        switch (intentLayout) {
+            case POSITION0:
+                if (mWholeFragment != null) {
+                    mWholeFragment.stopScroll();
+                }
+                break;
+
+            case POSITION1:
+                if (mPaySuccessFragment != null) {
+                    mPaySuccessFragment.stopScroll();
+                }
+                break;
+            case POSITION2:
+                if (mPayFailFragment != null) {
+                    mPayFailFragment.stopScroll();
                 }
                 break;
         }
@@ -501,19 +525,19 @@ public class OrderContentActivity extends BaseActivity implements
                                         Log.i("tag","查询到的条数"+basesize);
                                         switch (intentLayout) {
                                             case POSITION0:
-                                                mWholeFragment.hideRefreshView(isResh);
+                                                mWholeFragment.hideRefreshView(isResh,true);
                                                 mWholeData.addAll(baseList);
                                                 mDatas.addAll(mWholeData);
                                                 tv_num.setText(String.valueOf(mDatas.size()));
                                                 break;
                                             case POSITION1:
-                                                mPaySuccessFragment.hideRefreshView(isResh);
+                                                mPaySuccessFragment.hideRefreshView(isResh,true);
                                                 mPaySuccessDatas.addAll(baseList);
                                                 mDatas.addAll(mPaySuccessDatas);
                                                 tv_num.setText(String.valueOf(mDatas.size()));
                                                 break;
                                             case POSITION2:
-                                                mPayFailFragment.hideRefreshView(isResh);
+                                                mPayFailFragment.hideRefreshView(isResh,true);
                                                 mPayFailDatas.addAll(baseList);
                                                 mDatas.addAll(mPayFailDatas);
                                                 tv_num.setText(String.valueOf(mDatas.size()));
@@ -533,18 +557,18 @@ public class OrderContentActivity extends BaseActivity implements
                             switch (intentLayout) {
                                 case POSITION0:
                                     if (mWholeFragment != null) {
-                                        mWholeFragment.hideRefreshView(isResh);
+                                        mWholeFragment.hideRefreshView(isResh,false);
                                     }
                                     break;
 
                                 case POSITION1:
                                     if (mPaySuccessFragment != null) {
-                                        mPaySuccessFragment.hideRefreshView(isResh);
+                                        mPaySuccessFragment.hideRefreshView(isResh,false);
                                     }
                                     break;
                                 case POSITION2:
                                     if (mPayFailFragment != null) {
-                                        mPayFailFragment.hideRefreshView(isResh);
+                                        mPayFailFragment.hideRefreshView(isResh,false);
                                     }
                                     break;
                             }

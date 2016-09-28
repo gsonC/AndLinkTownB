@@ -183,7 +183,7 @@
     </LinearLayout>
     <View
         android:layout_width="match_parent"
-        android:layout_height="10dp"
+        android:layout_height="6dp"
         android:background="@color/colores_news_14"
         />
     <cn.com.hgh.view.NoScrollViewPager
