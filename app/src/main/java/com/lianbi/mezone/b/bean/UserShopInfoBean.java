@@ -11,7 +11,7 @@ import cn.com.hgh.utils.ContentUtils;
 public class UserShopInfoBean implements Serializable {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = -161511075479344022L;
 	/**
@@ -53,6 +53,7 @@ public class UserShopInfoBean implements Serializable {
 	 personHeadUrl=ContentUtils.getSharePreString(context, Constants.USERTAG, Constants.USERHEADURL);
 	 businessId=ContentUtils.getSharePreString(context, Constants.USERTAG, Constants.USERBUSINESSID);
 	 shopName=ContentUtils.getSharePreString(context, Constants.USERTAG, Constants.USERSHOPNAME);
+	 phone=ContentUtils.getSharePreString(context, Constants.USERTAG, Constants.BUSINESSPHONE);
 	}
 	public String getIndustry_id() {
 		return industry_id;

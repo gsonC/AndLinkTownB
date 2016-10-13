@@ -314,7 +314,7 @@
         <activity android:name="com.lianbi.mezone.b.ui.WithdrawRecordActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.WithdrawFailedReasonActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.ReceiptsActivity"/>
-
+        <activity android:name="com.lianbi.mezone.b.ui.WebMoreServiceActivty"/>
         <!-- 个推SDK配置开始 -->
         <!-- 配置的第三方参数属性 -->
 

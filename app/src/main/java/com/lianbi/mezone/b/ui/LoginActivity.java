@@ -130,7 +130,6 @@ public class LoginActivity extends BaseActivity {
 		if (PushManager.getInstance().getClientid(this) != null) {
 			mClientId = PushManager.getInstance().getClientid(this);
 		}
-
 		try {
 			okHttpsImp.postUserLogin(true, new MyResultCallback<String>() {
 
@@ -146,7 +145,7 @@ public class LoginActivity extends BaseActivity {
 					ContentUtils.putSharePre(LoginActivity.this,
 							Constants.SHARED_PREFERENCE_NAME,
 							Constants.PASS_WORD, password);
-
+                    String  strcontactphone="";
 					try {
 						JSONObject jsonObject = new JSONObject(reString);
 						String businessInfo = (String) jsonObject
@@ -164,8 +163,15 @@ public class LoginActivity extends BaseActivity {
 										.getBusinessName());
 								userShopInfoBean.setNikeName(myShopInfoBean
 										.getContactName());
-								userShopInfoBean.setPhone(myShopInfoBean
-										.getMobile());
+//								userShopInfoBean.setPhone(myShopInfoBean
+//										.getMobile());
+								if(!TextUtils.isEmpty(myShopInfoBean.getContactPhone())) {
+									strcontactphone=myShopInfoBean.getContactPhone();
+									ContentUtils.putSharePre(LoginActivity.this,
+											Constants.USERTAG, Constants.BUSINESSPHONE, myShopInfoBean.getContactPhone());
+									userShopInfoBean.setPhone(myShopInfoBean
+											.getContactPhone());
+								}
 							}
 						}
 						String user = (String) jsonObject
@@ -189,6 +195,11 @@ public class LoginActivity extends BaseActivity {
 							ContentUtils.putSharePre(LoginActivity.this,
 									Constants.USERTAG, Constants.USERBUSINESSID, backBean.getDefaultBusiness());
 
+							if(TextUtils.isEmpty(strcontactphone)){
+								ContentUtils.putSharePre(LoginActivity.this,
+										Constants.USERTAG, Constants.BUSINESSPHONE, backBean.getMobile());
+								userShopInfoBean.setPhone(backBean.getMobile());
+							}
 //							postClientId();
 						}
 						Intent intent = new Intent();

@@ -56,6 +56,8 @@ public class ServiceMallActivity extends BaseActivity {
 	public static final int   INTELLIGENTWIFI=5;
 	//排队取号
 	public static final int   LINETAKENO=6;
+	//更多服务
+	public static final int   MORESERVICE=7;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -108,6 +110,13 @@ public class ServiceMallActivity extends BaseActivity {
 				  tv_download.setVisibility(View.GONE);
 				  img_right.setVisibility(View.VISIBLE);
 				}
+
+
+				if(item.getAppCode().equals("mms")){
+					tv_download.setVisibility(View.GONE);
+					tv_oldprice.setVisibility(View.GONE);
+					tv_newprice.setVisibility(View.GONE);
+				}
 				helper.getView(R.id.tv_download).setOnClickListener(
 						new OnClickListener() {
 
@@ -145,6 +154,13 @@ public class ServiceMallActivity extends BaseActivity {
 								String  introduceurl=item.getIntroduceUrl();
 								String  isfdownload=item.getDownload();
 								String  isappname=item.getAppName();
+								if("mms".equals(appCode)){
+									JumpIntent.jumpWebActivty
+									         (ServiceMallActivity.this,WebMoreServiceActivty.class,
+											            isLogin,API.WEB_MORESERVICE,MORESERVICE,
+													    false,false,true,isappname);
+								    return;
+								}
 								if(isfdownload.equals("Y")){
 
 									if ("tss".equals(appCode)) {// 到店服务

@@ -51,6 +51,7 @@ public class ChangeShopActivity extends BaseActivity {
 	private ImageView img_change_shop_add_empty;
 	private String business_id = "", address;
 	private String shopName = "";
+	private String businessPhone = "";
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -110,6 +111,8 @@ public class ChangeShopActivity extends BaseActivity {
 													.getBusiness_id();
 											shopName= datas.get(0)
 													.getBusinessName();
+											businessPhone=datas.get(0)
+													.getPhone();
 											setBino();
 										} else {
 											for (int i = 0; i < datas.size(); i++) {
@@ -125,6 +128,8 @@ public class ChangeShopActivity extends BaseActivity {
 															.getBusiness_id();
 													shopName= datas.get(i)
 															.getBusinessName();
+												    businessPhone=datas.get(i)
+															.getPhone();
 												}
 											}
 										}
@@ -345,6 +350,8 @@ public class ChangeShopActivity extends BaseActivity {
 				Constants.USERTAG, Constants.USERBUSINESSID, business_id);
 		ContentUtils.putSharePre(ChangeShopActivity.this,
 				Constants.USERTAG, Constants.USERSHOPNAME, shopName);
+		ContentUtils.putSharePre(ChangeShopActivity.this,
+				Constants.USERTAG, Constants.BUSINESSPHONE, businessPhone);
 		userShopInfoBean.setBusinessId(business_id);
 		userShopInfoBean.setShopName(shopName);
 		userShopInfoBean.setIndustry_id(datas.get(position).getIndustry_id());

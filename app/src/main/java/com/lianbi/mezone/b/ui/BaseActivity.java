@@ -101,7 +101,6 @@ public class BaseActivity extends FragmentActivity implements OnClickListener {
 		uuid= AbStrUtil.getUUID();
 		BusinessId=userShopInfoBean.getBusinessId();
 		ShopName=userShopInfoBean.getShopName();
-
 	}
 	@Override
 	protected void onRestart() {

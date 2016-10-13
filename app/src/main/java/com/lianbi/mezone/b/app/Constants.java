@@ -81,6 +81,10 @@ public class Constants {
 	 */
 	public static final String USERSHOPNAME = "usershopName";
 	/**
+	 * 用户商铺手机号
+	 */
+	public static final String BUSINESSPHONE = "businessphone";
+	/**
 	 * 查询财务室字段
 	 */
 	public static final String SEARCHFINANCIAL = "search_financial";

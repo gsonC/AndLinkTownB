@@ -29,8 +29,11 @@ public class JumpIntent {
 	//智能wifi
 	public static final int   INTELLIGENTWIFI=5;
 
-	//智能wifi
+	//排队取号
 	public static final int   LINETAKENO=6;
+	//更多服务
+	public static final int   MORESERVICE=7;
+
 	public static boolean jumpLogin_addShop(boolean isLogin, String type,
 											 Activity at) {
 		if (isLogin) {
@@ -118,7 +121,9 @@ public class JumpIntent {
 		return false;
 	}
 	public static  String getSAUrl(String urladdress,int type){
+		String bussniessPhone = BaseActivity.userShopInfoBean.getPhone();
 		String bussniessId = BaseActivity.userShopInfoBean.getBusinessId();
+
 		switch (type){
 			case WECHATMALL://微信商城
 //				WebProductManagementBean data = new WebProductManagementBean();
@@ -135,6 +140,13 @@ public class JumpIntent {
 			case LINETAKENO:
 
 				return urladdress+bussniessId+"/showUserQueueList";
+			case MORESERVICE:
+
+				return urladdress+"242&userId="+bussniessPhone+"&jsonStr=storeId:"+
+						bussniessId
+			;
+
+
 		}
 		return "";
 	}
