@@ -809,6 +809,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 									false);
 							userShopInfoBean = null;
 							refreshFMData();
+							setPageRightTextVisibility(View.INVISIBLE);
 							dismiss();
 							ContentUtils.showMsg(MainActivity.this, "已退出登录");
 						}
@@ -824,7 +825,6 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 				break;
 		}
 	}
-
 	public static final int REQUEST_CHANKAN = 12453;
 	private final int OTHERACTIVITY_CODE = 3002;
 	public final int SERVICESHOPACTIVITY_CODE = 30089;
@@ -840,6 +840,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 					// getServiceMall();
 					postClientId();
 					refreshFMData();
+					setPageRightTextVisibility(View.VISIBLE);
 					break;
 				case OTHERACTIVITY_CODE:// 其他返回
 					refreshFMData();
@@ -999,6 +1000,11 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 			fm_funcpage0.setVisibility(View.GONE);
 			fm_funcpage3.setVisibility(View.VISIBLE);
 			fm_funcpage1.setVisibility(View.GONE);
+			if (ContentUtils.getLoginStatus(this)){
+				setPageRightTextVisibility(View.VISIBLE);
+			}else{
+				setPageRightTextVisibility(View.INVISIBLE);
+			}
 		}
 	}
 
@@ -1076,7 +1082,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 		if (ContentUtils.getLoginStatus(this)) {
 			try {
 				if (POSITION0 == clickPosition) {
-					setPageTitle(userShopInfoBean.getShopName());
+					setPageTitle(ShopName);
 				}
 			} catch (Exception e) {
 				setPageTitle("首页");
@@ -1154,6 +1160,8 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 
 	@Override
 	public void reFresh() {
+		userShopInfoBean.getSharePreString();
+		initCommonParameter();
 		MainActivity.this.refreshFMData();
 		getServiceMall();
 	}

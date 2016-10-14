@@ -68,6 +68,7 @@ public class BaseActivity extends FragmentActivity implements OnClickListener {
 	public static UserShopInfoBean userShopInfoBean;
 	public String BusinessId="";
 	public String ShopName="";
+	public String UserId="";
 	public String reqTime="";
 	public String uuid="";
 	@Override
@@ -94,6 +95,7 @@ public class BaseActivity extends FragmentActivity implements OnClickListener {
 		if (userShopInfoBean == null) {
 			userShopInfoBean = new UserShopInfoBean(this);
 		}
+		userShopInfoBean.getSharePreString();
 		initCommonParameter();
 	}
     public  void initCommonParameter(){
@@ -101,6 +103,7 @@ public class BaseActivity extends FragmentActivity implements OnClickListener {
 		uuid= AbStrUtil.getUUID();
 		BusinessId=userShopInfoBean.getBusinessId();
 		ShopName=userShopInfoBean.getShopName();
+		UserId=userShopInfoBean.getUserId();
 	}
 	@Override
 	protected void onRestart() {

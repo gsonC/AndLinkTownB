@@ -14,6 +14,7 @@ public class UserShopInfoBean implements Serializable {
 	 *
 	 */
 	private static final long serialVersionUID = -161511075479344022L;
+	private Context context;
 	/**
 	 * 当前商铺id
 	 */
@@ -48,12 +49,15 @@ public class UserShopInfoBean implements Serializable {
 	String personHeadUrl = " ";
 	String industry_id = "";
 	public  UserShopInfoBean(Context  context){
-	 userId=ContentUtils.getSharePreString(context, Constants.USERTAG, Constants.USERID);
-	 name=ContentUtils.getSharePreString(context, Constants.USERTAG, Constants.USER_NAME);
-	 personHeadUrl=ContentUtils.getSharePreString(context, Constants.USERTAG, Constants.USERHEADURL);
-	 businessId=ContentUtils.getSharePreString(context, Constants.USERTAG, Constants.USERBUSINESSID);
-	 shopName=ContentUtils.getSharePreString(context, Constants.USERTAG, Constants.USERSHOPNAME);
-	 phone=ContentUtils.getSharePreString(context, Constants.USERTAG, Constants.BUSINESSPHONE);
+	    this.context=context;
+	}
+    public void  getSharePreString(){
+		userId= ContentUtils.getSharePreString(context, Constants.USERTAG, Constants.USERID);
+		name=ContentUtils.getSharePreString(context, Constants.USERTAG, Constants.USER_NAME);
+		personHeadUrl=ContentUtils.getSharePreString(context, Constants.USERTAG, Constants.USERHEADURL);
+		businessId=ContentUtils.getSharePreString(context, Constants.USERTAG, Constants.USERBUSINESSID);
+		shopName=ContentUtils.getSharePreString(context, Constants.USERTAG, Constants.USERSHOPNAME);
+		phone=ContentUtils.getSharePreString(context, Constants.USERTAG, Constants.BUSINESSPHONE);
 	}
 	public String getIndustry_id() {
 		return industry_id;

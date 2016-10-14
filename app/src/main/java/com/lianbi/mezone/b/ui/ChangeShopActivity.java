@@ -224,6 +224,7 @@ public class ChangeShopActivity extends BaseActivity {
 					chbx_change_shop.setChecked(isSel);
 					business_id = item.getBusiness_id();
 					shopName=item.getBusinessName();
+					businessPhone=item.getContactPhone();
 				} else {
 					chbx_change_shop.setChecked(isSel);
 				}

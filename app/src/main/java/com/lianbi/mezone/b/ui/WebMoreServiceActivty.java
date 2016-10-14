@@ -1,10 +1,10 @@
 package com.lianbi.mezone.b.ui;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.JavascriptInterface;
@@ -12,7 +12,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.lianbi.mezone.b.app.Constants;
-import com.lianbi.mezone.b.bean.LoginBackBean;
 import com.lianbi.mezone.b.httpresponse.API;
 import com.xizhi.mezone.b.R;
 
@@ -53,6 +52,8 @@ public class WebMoreServiceActivty extends BaseActivity {
 	boolean needLogin = false;
 	private final static int REQUEST_LOGIN = 4563;
 	private boolean isNeedTitle = false;
+	private String gobackurl="";
+	private String MyMsg;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -118,6 +119,17 @@ public class WebMoreServiceActivty extends BaseActivity {
 			@Override
 			public void onPageStarted(WebView view, String url, Bitmap favicon) {
 				gobackurl = url;
+				if (gobackurl.contains("index")) {
+					MyMsg =gobackurl;
+				}else{
+					MyMsg="";
+				}
+				Log.i("tag","更多服务url------>"+gobackurl);
+//				if(gobackurl.contains("index")||gobackurl.contains("wap/?appId")){
+//				     setPageTitleVisibility(View.VISIBLE);
+//				}else{
+//				     setPageTitleVisibility(View.GONE);
+//				}
 				dialog.show();
 			}
 
@@ -136,29 +148,7 @@ public class WebMoreServiceActivty extends BaseActivity {
 		}
 	}
 
-	@Override
-	protected void onTitleRightClickTv() {
-		super.onTitleRightClickTv();
-		Intent intent_login = new Intent(this, LoginActivity.class);
-		startActivityForResult(intent_login, REQUEST_LOGIN);
-	}
 
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-		if (resultCode == RESULT_OK) {
-			switch (requestCode) {
-			case REQUEST_LOGIN:
-				LoginBackBean loginBackBean = (LoginBackBean) data.getExtras()
-						.getSerializable("LoginBackBean");
-				Intent intent = new Intent();
-				intent.putExtra("LoginBackBean", loginBackBean);
-				setResult(RESULT_OK, intent);
-				finish();
-				break;
-			}
-		}
-	}
 
 	class MyJs {
 		@JavascriptInterface
@@ -167,27 +157,22 @@ public class WebMoreServiceActivty extends BaseActivity {
 		}
 	}
 
-	private String gobackurl="";
-	
+
 	@Override
 	protected void onTitleLeftClick() {
-//		if(gobackurl.contains("OrderInfo")){
-//			web_webactivty.goBack();
-//		}
-//		if (isReturn) {
-//			finish();
-//		}
-//		else if (web_webactivty.canGoBack()) {
-//			web_webactivty.goBack();
-//		} else {
-//			finish();
-//		}
-
-//		if(gobackurl.contains("OrderInfo")){
-//			web_webactivty.goBack();
-//		}else{
-			finish();
-//		}
+		if (gobackurl.contains("wap/?appId")
+		|| gobackurl.contains("toDetail")
+				) {
+			web_webactivty.loadUrl(url);//返回一级目录
+		 }
+//		 else if(MyMsg.contains("index")){
+//			web_webactivty.loadUrl(MyMsg);
+//		 }
+		 else if (gobackurl.contains("toList") || gobackurl.contains("index")) {
+			finish();//退出
+		} else {
+			web_webactivty.goBack();//返回
+		}
 	}
 	
 	
