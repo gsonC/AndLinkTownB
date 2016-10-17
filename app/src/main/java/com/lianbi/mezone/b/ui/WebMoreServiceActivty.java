@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.JavascriptInterface;
@@ -53,7 +52,7 @@ public class WebMoreServiceActivty extends BaseActivity {
 	private final static int REQUEST_LOGIN = 4563;
 	private boolean isNeedTitle = false;
 	private String gobackurl="";
-	private String MyMsg;
+	private String MyMsg="";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -121,15 +120,8 @@ public class WebMoreServiceActivty extends BaseActivity {
 				gobackurl = url;
 				if (gobackurl.contains("index")) {
 					MyMsg =gobackurl;
-				}else{
-					MyMsg="";
 				}
-				Log.i("tag","更多服务url------>"+gobackurl);
-//				if(gobackurl.contains("index")||gobackurl.contains("wap/?appId")){
-//				     setPageTitleVisibility(View.VISIBLE);
-//				}else{
-//				     setPageTitleVisibility(View.GONE);
-//				}
+//				Log.i("tag","更多服务url------>"+gobackurl);
 				dialog.show();
 			}
 
@@ -160,14 +152,16 @@ public class WebMoreServiceActivty extends BaseActivity {
 
 	@Override
 	protected void onTitleLeftClick() {
-		if (gobackurl.contains("wap/?appId")
-		|| gobackurl.contains("toDetail")
-				) {
-			web_webactivty.loadUrl(url);//返回一级目录
-		 }
-//		 else if(MyMsg.contains("index")){
-//			web_webactivty.loadUrl(MyMsg);
-//		 }
+		if (gobackurl.contains("wap/?appId")){
+			web_webactivty.loadUrl(url);//返回第一级目录
+		}else if (gobackurl.contains("toDetail")){
+               if(MyMsg.contains("index")){
+				   web_webactivty.loadUrl(MyMsg);
+			   }else{
+				   web_webactivty.loadUrl(url);//返回第一级目录
+			   }
+			   MyMsg="";
+		}
 		 else if (gobackurl.contains("toList") || gobackurl.contains("index")) {
 			finish();//退出
 		} else {
