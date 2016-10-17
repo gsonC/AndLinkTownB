@@ -839,6 +839,8 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 				case REQUEST_CHANKAN:// 登录成功返回
 					// getServiceMall();
 					postClientId();
+					userShopInfoBean.getSharePreString();
+					initCommonParameter();
 					refreshFMData();
 					setPageRightTextVisibility(View.VISIBLE);
 					break;
@@ -897,9 +899,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 	 * 刷新fm数据
 	 */
 	public void refreshFMData() {
-		if (isChangSHpe) {
-			setShoyYeTitle();
-		}
+		setShoyYeTitle();
 		((ShouYeFragment) fm_shouye).refreshFMData();
 		((JiaoYiGuanLiFragment) fm_jiaoyiguanli).refreshFMData();
 		((FinancialOfficeFragment) fm_caiwushi).refreshFMData();

@@ -165,6 +165,8 @@ public class LoginActivity extends BaseActivity {
 								userShopInfoBean.setPhone(myShopInfoBean
 										.getContactPhone());
 								ContentUtils.putSharePre(LoginActivity.this,
+										Constants.USERTAG, Constants.USERSHOPNAME, myShopInfoBean.getBusinessName());
+								ContentUtils.putSharePre(LoginActivity.this,
 											Constants.USERTAG, Constants.BUSINESSPHONE, myShopInfoBean.getContactPhone());
 							}
 						}
