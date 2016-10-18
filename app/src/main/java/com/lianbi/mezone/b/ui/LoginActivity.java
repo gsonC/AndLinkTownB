@@ -166,8 +166,7 @@ public class LoginActivity extends BaseActivity {
 										.getContactPhone());
 								ContentUtils.putSharePre(LoginActivity.this,
 										Constants.USERTAG, Constants.USERSHOPNAME, myShopInfoBean.getBusinessName());
-								ContentUtils.putSharePre(LoginActivity.this,
-											Constants.USERTAG, Constants.BUSINESSPHONE, myShopInfoBean.getContactPhone());
+
 							}
 						}
 						String user = (String) jsonObject
@@ -190,6 +189,8 @@ public class LoginActivity extends BaseActivity {
 									Constants.USERTAG, Constants.USERHEADURL, backBean.getUserImage());
 							ContentUtils.putSharePre(LoginActivity.this,
 									Constants.USERTAG, Constants.USERBUSINESSID, backBean.getDefaultBusiness());
+							ContentUtils.putSharePre(LoginActivity.this,
+									Constants.USERTAG, Constants.BUSINESSPHONE,backBean.getMobile());
 
 //							postClientId();
 						}
