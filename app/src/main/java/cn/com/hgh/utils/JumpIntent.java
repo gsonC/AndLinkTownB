@@ -142,10 +142,8 @@ public class JumpIntent {
 				return urladdress+bussniessId+"/showUserQueueList";
 			case MORESERVICE:
 
-				return urladdress+"242&userId="+bussniessPhone+"&jsonStr=storeId:"+
-						bussniessId
-			;
-
+				return urladdress+"217&userId="+bussniessPhone+"&jsonStr={'storeId':'"+
+						bussniessId+"'}";
 
 		}
 		return "";

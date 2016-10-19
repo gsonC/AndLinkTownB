@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.JavascriptInterface;
@@ -119,8 +118,11 @@ public class WebMoreServiceActivty extends BaseActivity {
 			@Override
 			public void onPageStarted(WebView view, String url, Bitmap favicon) {
 				gobackurl = url;
-				if (gobackurl.contains("index")) {
+				if (gobackurl.contains("toList")) {
 					MyMsg =gobackurl;
+				}
+				if (gobackurl.contains("index")) {
+					MyMsg ="";
 				}
 //				Log.i("tag","更多服务url------>"+gobackurl);
 				dialog.show();
@@ -153,10 +155,8 @@ public class WebMoreServiceActivty extends BaseActivity {
 
 	@Override
 	protected void onTitleLeftClick() {
-		if (gobackurl.contains("wap/?appId")){
-			web_webactivty.loadUrl(url);//返回第一级目录
-		}else if (gobackurl.contains("toDetail")){
-               if(MyMsg.contains("index")){
+		if (gobackurl.contains("toDetail")){
+               if(MyMsg.contains("toList")){
 				   web_webactivty.loadUrl(MyMsg);
 			   }else{
 				   web_webactivty.loadUrl(url);//返回第一级目录
