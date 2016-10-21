@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="10dp"
+              android:padding="3dp"
+              android:background="@color/white"
+              android:orientation="horizontal">
+
+    <View
+        android:layout_width="3dp"
+        android:layout_height="20dp"
+        android:layout_gravity="center_vertical"
+        android:background="@color/colores_news_08"/>
+
+    <TextView
+        android:id="@+id/tv_include_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="5dp"
+        android:ellipsize="end"
+        android:padding="10dp"
+        android:singleLine="true"
+        android:text="交易流水"
+        android:textColor="@color/colores_news_10"/>
+
+</LinearLayout>

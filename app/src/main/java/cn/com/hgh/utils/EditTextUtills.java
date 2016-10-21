@@ -4,6 +4,9 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
 
+/**
+ * 输入金额校检
+ */
 public class EditTextUtills {
 
 	public static void setPricePoint(final EditText editText) {

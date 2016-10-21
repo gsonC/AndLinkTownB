@@ -6,19 +6,17 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
-import com.lianbi.mezone.b.httpresponse.FileDialogCallback;
 import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
 import com.lianbi.mezone.b.ui.MainActivity;
 import com.xizhi.mezone.b.R;
 
-import java.io.File;
-
 /*
  * @创建者     master
  * @创建时间   2016/10/19 18:18
- * @描述
+ * @描述		   首页-日常经营
  *
  * @更新者     $Author$ 
  * @更新时间   $Date$
@@ -43,28 +41,21 @@ public class ShouyeManagementFragment extends Fragment {
 	}
 
 	private void intView(View view) {
-		Button btn1 = (Button) view.findViewById(R.id.btn1);
-		btn1.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				mOkHttpsImp.getFile(new FileDialogCallback("OkGo.apk") {
-					@Override
-					public void onResponseResult(File result) {
-
-					}
-
-					@Override
-					public void onResponseFailed(String msg) {
-
-					}
-
-					@Override
-					public void fileDownloadProgress(long currentSize, long totalSize, float progress, long networkSpeed) {
-						System.out.println("downloadProgress -- " + totalSize + "  " + currentSize + "  " + progress + "  " + networkSpeed);
-					}
-				});
-			}
-		});
+		TextView tv_shouyemanagement_pay = (TextView) view.findViewById(R.id.tv_shouyemanagement_pay);
+		TextView tv_shouyemanagement_callservice = (TextView) view.findViewById(R.id.tv_shouyemanagement_callservice);
+		TextView tv_shouyemanagement_inshopdetail = (TextView) view.findViewById(R.id.tv_shouyemanagement_inshopdetail);
+		TextView tv_shouyemanagement_inshopservice = (TextView) view.findViewById(R.id.tv_shouyemanagement_inshopservice);
+		TextView tv_include_title_flow = (TextView) view.findViewById(R.id.ind_shouyemanagement_flow).findViewById(R.id.tv_include_title);
+		LinearLayout llt_shouyemanagement_flow_show = (LinearLayout) view.findViewById(R.id.llt_shouyemanagement_flow_show);
+		TextView tv_shouyemanagement_flow_detail = (TextView) view.findViewById(R.id.tv_shouyemanagement_flow_detail);
+		TextView tv_include_title_membernum = (TextView) view.findViewById(R.id.ind_shouyemanagement_membernum).findViewById(R.id.tv_include_title);
+		TextView tv_shouyemanagement_nummember = (TextView) view.findViewById(R.id.tv_shouyemanagement_nummember);
+		TextView tv_shouyemanagement_addmember = (TextView) view.findViewById(R.id.tv_shouyemanagement_addmember);
+		TextView tv_shouyemanagement_memberdetail = (TextView) view.findViewById(R.id.tv_shouyemanagement_memberdetail);
+		TextView tv_include_othertitle_salenum = (TextView) view.findViewById(R.id.ind_shouyemanagement_salenum).findViewById(R.id.tv_include_othertitle);
+		TextView tv_include_othertitle = (TextView) view.findViewById(R.id.ind_shouyemanagement_salenum).findViewById(R.id.tv_include_othertitle);
+		LinearLayout llt_shouyemanagement_salenum_show = (LinearLayout) view.findViewById(R.id.llt_shouyemanagement_salenum_show);
+		System.out.println("测试打印");
 	}
 
 	private void setLinten() {
