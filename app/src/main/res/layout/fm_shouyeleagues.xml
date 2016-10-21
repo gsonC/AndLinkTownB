@@ -1,7 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colores_news_14"
+    android:orientation="vertical">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="7dp"
+        android:background="@color/white"/>
+
+
+    <include
+        android:id="@+id/ind_shouyeLeagues_dynamic"
+        layout="@layout/include_shouyestrip"
+        />
+
+    <LinearLayout
+        android:id="@+id/llt_shouyeLeagues_flow_show"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@color/white"
+        android:orientation="vertical"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/colores_news_14"/>
+
+    <TextView
+        android:id="@+id/tv_shouyeLeagues_flow_detail"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/white"
+        android:gravity="center"
+        android:text="详情"
+        android:textColor="@color/colores_news_08"/>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/colores_news_14"/>
+
+    <LinearLayout
+        android:id="@+id/ind_shouyeLeagues_area"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:padding="3dp">
+
+        <View
+            android:layout_width="3dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center_vertical"
+            android:background="@color/colores_news_08"/>
+
+        <TextView
+            android:id="@+id/tv_include_othertitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:ellipsize="end"
+            android:padding="10dp"
+            android:singleLine="true"
+            android:text="交易流水"
+            android:textColor="@color/colores_news_10"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@color/white"/>
+
+    <include
+        android:id="@+id/ind_shouyeLeagues_hot"
+        layout="@layout/include_shouyedatestrip"/>
+
+    <LinearLayout
+        android:id="@+id/llt_shouyeLeagues_salenum_show"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:orientation="vertical"
+        android:background="@color/white"
+        />
 </LinearLayout>
