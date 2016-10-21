@@ -16,8 +16,8 @@ import android.widget.TextView;
 
 import com.lianbi.mezone.b.app.ActivityManager;
 import com.lianbi.mezone.b.bean.UserShopInfoBean;
-import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
+import com.lzy.okgo.OkGo;
 import com.xizhi.mezone.b.R;
 
 import cn.com.hgh.indexscortlist.ClearEditText;
@@ -87,7 +87,6 @@ public class BaseActivity extends FragmentActivity implements OnClickListener {
 		ISCONNECTED = AbAppUtil.isNetworkAvailable(this);
 		okHttpsImp = OkHttpsImp.SINGLEOKHTTPSIMP.newInstance(this);
 
-		MyResultCallback.isShow = true;
 		if (!ISCONNECTED) {
 			ContentUtils.showMsg(this, "当前网络连接不可用");
 		}
@@ -399,6 +398,8 @@ public class BaseActivity extends FragmentActivity implements OnClickListener {
 	protected void onDestroy() {
 		super.onDestroy();
 		activityManager.removeActivity(this);
+		//Activity销毁时，取消网络请求
+		OkGo.getInstance().cancelTag(this);
 	}
 
 	/**

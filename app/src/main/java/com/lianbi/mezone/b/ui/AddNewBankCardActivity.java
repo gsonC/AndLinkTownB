@@ -7,11 +7,13 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.lianbi.mezone.b.app.Constants;
+import com.lzy.okgo.OkGo;
+import com.xizhi.mezone.b.R;
+
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.REGX;
-
-import com.xizhi.mezone.b.R;
-import com.lianbi.mezone.b.app.Constants;
 
 /**
  * 添加银行卡

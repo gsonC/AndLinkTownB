@@ -19,6 +19,7 @@ import com.bumptech.glide.Glide;
 import com.lianbi.mezone.b.bean.WeiXinBean;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
+import com.lzy.okgo.OkGo;
 import com.xizhi.mezone.b.R;
 
 import org.json.JSONException;

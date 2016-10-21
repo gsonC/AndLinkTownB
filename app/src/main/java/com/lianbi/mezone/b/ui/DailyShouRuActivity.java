@@ -1,29 +1,31 @@
 package com.lianbi.mezone.b.ui;
 
+import android.os.Bundle;
+import android.webkit.WebView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.alibaba.fastjson.JSON;
+import com.lianbi.mezone.b.bean.Dayincome;
+import com.lianbi.mezone.b.httpresponse.API;
+import com.lianbi.mezone.b.httpresponse.MyResultCallback;
+import com.lzy.okgo.OkGo;
+import com.xizhi.mezone.b.R;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import android.os.Bundle;
-import android.webkit.WebView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import cn.com.hgh.utils.MathExtend;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.utils.ScreenUtils;
 import cn.com.hgh.utils.WebViewInit;
-
-import com.alibaba.fastjson.JSON;
-import com.xizhi.mezone.b.R;
-import com.lianbi.mezone.b.bean.Dayincome;
-import com.lianbi.mezone.b.httpresponse.API;
-import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 
 /**
  * 上周每日收入

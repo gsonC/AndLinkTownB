@@ -38,7 +38,6 @@ import cn.com.hgh.view.EasyDialog;
 import cn.com.hgh.view.NoScrollViewPager;
 import cn.com.hgh.view.SlideSwitch;
 import cn.com.hgh.view.SlideSwitch.SlideListener;
-import okhttp3.Request;
 
 public class TableSetActivity extends BaseActivity implements
 		OnPageChangeListener, SlideListener {
@@ -199,12 +198,6 @@ public class TableSetActivity extends BaseActivity implements
 //				dialog.dismiss();
 
 			}
-			@Override
-			public void onBefore(Request request) {
-			}
-			@Override
-			public void onAfter() {
-			}			
 		}, userShopInfoBean.getBusinessId());
 
 	}

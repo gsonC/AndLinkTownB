@@ -1,21 +1,33 @@
 package com.lianbi.mezone.b.httpresponse;
 
+/*
+ * @创建者     master
+ * @创建时间   2016/10/18 17:28
+ * @描述       向服务器请求bitmap
+ *
+ * @更新者     $Author$ 
+ * @更新时间   $Date$
+ * @更新描述
+ */
+
+
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
-import com.alibaba.fastjson.JSON;
-import com.lzy.okgo.callback.StringCallback;
+import com.lianbi.mezone.b.photo.AbImageUtil;
+import com.lzy.okgo.callback.BitmapCallback;
 import com.lzy.okgo.request.BaseRequest;
 
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.LogUtils;
-import cn.com.hgh.utils.Result;
 import cn.com.hgh.view.HttpDialog;
 import okhttp3.Call;
 import okhttp3.Response;
 
-public abstract class MyResultCallback<T> extends StringCallback {
+public abstract class BitmapDialogCallback extends BitmapCallback {
+
 	/**
 	 * 请求的dialog
 	 */
@@ -42,26 +54,17 @@ public abstract class MyResultCallback<T> extends StringCallback {
 	}
 
 	@Override
-	public void onSuccess(String s, Call call, Response response) {
-		LogUtils.i("服务器返回数据----->",s);
-		if (!TextUtils.isEmpty(s)) {
-			try {
-				Result srb = JSON.parseObject(s, Result.class);
-				if (srb != null) {
-					if (srb.getCode() == API.SUCCESS_EXIST) {
-						onResponseResult(srb);
-					} else {
-						onResponseFailed("RESULTERROR");
-						ContentUtils.showMsg(context, srb.getMsg());
-					}
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+	public void onSuccess(Bitmap bitmap, Call call, Response response) {
+		LogUtils.i("服务器返回Bitmap大小----->",AbImageUtil.getByteCount(bitmap,
+				Bitmap.CompressFormat.PNG)+"");
+
+		if (null != bitmap && AbImageUtil.getByteCount(bitmap, Bitmap.CompressFormat.PNG) > 0) {
+			onResponseSuccess(bitmap);
+		} else {
+			onResponseFailed("RESULTERROR");
+			ContentUtils.showMsg(context, "图片获取失败");
 		}
 	}
-
-
 
 	@Override
 	public void onError(Call call, Response response, Exception e) {
@@ -71,8 +74,8 @@ public abstract class MyResultCallback<T> extends StringCallback {
 	}
 
 	@Override
-	public void onAfter(@Nullable String s, @Nullable Exception e) {
-		super.onAfter(s, e);
+	public void onAfter(@Nullable Bitmap bitmap, @Nullable Exception e) {
+		super.onAfter(bitmap, e);
 		try {
 			if (progressDialog != null) {
 				progressDialog.dismiss();
@@ -84,7 +87,7 @@ public abstract class MyResultCallback<T> extends StringCallback {
 
 	/**
 	 * 设置progressDialog
-	 * 
+	 *
 	 * @param pg
 	 */
 	public void setDialog(String pg) {
@@ -96,7 +99,7 @@ public abstract class MyResultCallback<T> extends StringCallback {
 
 	/**
 	 * 设置上下文
-	 * 
+	 *
 	 * @param ct
 	 */
 	public void setContext(Context ct) {
@@ -107,14 +110,12 @@ public abstract class MyResultCallback<T> extends StringCallback {
 
 	/**
 	 * 请求成功回调
-	 * 
-	 * @param result
-	 *            返回结果
 	 */
-	public abstract void onResponseResult(Result result);
+	public abstract void onResponseSuccess(Bitmap bitmap);
 
 	/**
 	 * 请求失败回调
 	 */
 	public abstract void onResponseFailed(String msg);
+
 }

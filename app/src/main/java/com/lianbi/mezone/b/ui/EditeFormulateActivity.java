@@ -8,14 +8,16 @@ import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.ToggleButton;
-import cn.com.hgh.utils.ContentUtils;
-import cn.com.hgh.utils.EditTextUtills;
-import cn.com.hgh.utils.Result;
 
-import com.xizhi.mezone.b.R;
 import com.lianbi.mezone.b.app.Constants;
 import com.lianbi.mezone.b.bean.MemberDevelopmentBean;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
+import com.lzy.okgo.OkGo;
+import com.xizhi.mezone.b.R;
+
+import cn.com.hgh.utils.ContentUtils;
+import cn.com.hgh.utils.EditTextUtills;
+import cn.com.hgh.utils.Result;
 
 /**
  * 編輯制定

@@ -1,19 +1,19 @@
 package com.lianbi.mezone.b.ui;
 
-import org.json.JSONObject;
-
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.lianbi.mezone.b.httpresponse.MyResultCallback;
+import com.lzy.okgo.OkGo;
+import com.xizhi.mezone.b.R;
+
+import org.json.JSONObject;
+
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.Result;
-
-import com.xizhi.mezone.b.R;
-import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 
 public class AddTablesetActivity extends BaseActivity {
 

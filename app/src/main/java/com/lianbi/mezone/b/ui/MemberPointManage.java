@@ -35,7 +35,6 @@ import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.utils.ScreenUtils;
 import cn.com.hgh.view.SlideListView2;
-import okhttp3.Request;
 
 public class MemberPointManage extends BaseActivity implements OnClickListener {
 	ArrayList<MemberMessage> mData = new ArrayList<MemberMessage>();
@@ -371,11 +370,7 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 //							ContentUtils.showMsg(MemberPointManage.this, "修改上下架成功");
 
 						}
-						@Override
-						public void onBefore(Request request) {
-							super.onBefore(request);
 
-						}
 						@Override
 						public void onResponseFailed(String msg) {
 //							ContentUtils.showMsg(MemberPointManage.this, "修改上下架失败");

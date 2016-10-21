@@ -130,7 +130,6 @@ public class LineTakeNoWebActivity extends BaseActivity {
 		web_webactivty.setWebViewClient(new WebViewClient() {
 			@Override
 			public void onPageFinished(WebView view, String url) {
-				System.out.println("url132"+url);
 				setPageTitle(view.getTitle());
 				dialog.dismiss();
 			}
@@ -148,7 +147,6 @@ public class LineTakeNoWebActivity extends BaseActivity {
 			@Override
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {
 				view.loadUrl(url);
-				System.out.println("url150"+url);
 				return true;
 			}
 

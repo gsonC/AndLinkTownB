@@ -27,6 +27,7 @@ import com.lianbi.mezone.b.photo.FileUtils;
 import com.lianbi.mezone.b.photo.PhotoUtills;
 import com.lianbi.mezone.b.photo.PickImageDescribe;
 import com.lianbi.mezone.b.photo.PopupWindowHelper;
+import com.lzy.okgo.OkGo;
 import com.xizhi.mezone.b.R;
 
 import org.json.JSONException;

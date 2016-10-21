@@ -1,17 +1,18 @@
 package com.lianbi.mezone.b.httpresponse;
 
 import android.content.Context;
-import android.os.Environment;
-import android.widget.ProgressBar;
 
 import com.lianbi.mezone.b.ui.BaseActivity;
-import com.zhy.http.okhttp.OkHttpUtils;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.cache.CacheMode;
+import com.lzy.okgo.request.PostRequest;
 
 import java.io.File;
 import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -47,7 +48,8 @@ public enum OkHttpsImp {
 	 * 获取绝对路径
 	 */
 	private String getAbsoluteUrl(String relativeUrl) {
-		if (relativeUrl.startsWith("http://")) return relativeUrl;
+		if (relativeUrl.startsWith("http://"))
+			return relativeUrl;
 		return API.HOST + relativeUrl;
 	}
 
@@ -73,7 +75,8 @@ public enum OkHttpsImp {
 	private void getProgressResponse(MyResultCallback<String> myResultCallback, Map<String, String> params, String url) {
 		myResultCallback.setContext(context);
 		myResultCallback.setDialog("");
-		OkHttpUtils.get().url(url).params(params).build().execute(myResultCallback);
+		OkGo.get(url).cacheMode(CacheMode.FIRST_CACHE_THEN_REQUEST)
+				.cacheKey("").cacheTime(5000).params(params).execute(myResultCallback);
 	}
 
 	/**
@@ -85,7 +88,8 @@ public enum OkHttpsImp {
 	 */
 	private void getNoProgressResponse(MyResultCallback<String> myResultCallback, Map<String, String> params, String url) {
 		myResultCallback.setContext(context);
-		OkHttpUtils.get().url(url).params(params).build().execute(myResultCallback);
+		OkGo.get(url).cacheMode(CacheMode.FIRST_CACHE_THEN_REQUEST)
+				.cacheKey("").cacheTime(5000).params(params).execute(myResultCallback);
 	}
 
 	/**
@@ -98,7 +102,7 @@ public enum OkHttpsImp {
 	private void postProgressResponse(MyResultCallback<String> myResultCallback, Map<String, String> params, String url) {
 		myResultCallback.setContext(context);
 		myResultCallback.setDialog("");
-		OkHttpUtils.post().url(url).params(params).build().execute(myResultCallback);
+		OkGo.post(url).params(params).execute(myResultCallback);
 	}
 
 	/**
@@ -110,55 +114,83 @@ public enum OkHttpsImp {
 	 */
 	private void postNoProgressResponse(MyResultCallback<String> myResultCallback, Map<String, String> params, String url) {
 		myResultCallback.setContext(context);
-		OkHttpUtils.post().url(url).params(params).build().execute(myResultCallback);
+		OkGo.post(url).params(params).execute(myResultCallback);
 	}
 
 	/**
-	 * download下载请求有progress
-	 *
-	 * @param myResultCallback 请求结果回调
-	 * @param filePath         下载文件存储位置
-	 * @param fileName         文件名称
-	 * @param url              请求地址
+	 * 请求Bitmap
 	 */
-	private void downloadProgressResponse(MyDownLoadResultCallback<String> myResultCallback, String filePath, String fileName, String url, ProgressBar p) {
-		myResultCallback.setDialog(p);
-		myResultCallback.setContext(context);
-		OkHttpUtils.get().url(url).build().execute(myResultCallback);
+	private void getBitmapProgressResponse(BitmapDialogCallback bitmapDialogCallback, Map<String, String> params, String url) {
+		bitmapDialogCallback.setContext(context);
+		bitmapDialogCallback.setDialog("下载中...");
+		OkGo.get(url).params(params).execute(bitmapDialogCallback);
 	}
 
 	/**
-	 * form 文件上传
-	 *
-	 * @param myResultCallback
+	 * 文件下载
 	 */
-	public void multiFileUpload(MyResultCallback<String> myResultCallback) {
-		File file = new File(Environment.getExternalStorageDirectory(), "messenger_01.png");
-		File file2 = new File(Environment.getExternalStorageDirectory(), "test1.txt");
-		if (!file.exists()) {
-			return;
+	private void getFileDownloadProgressResponse(FileDialogCallback fileDialogCallback, Map<String, String> params, String url) {
+		fileDialogCallback.setContext(context);
+		fileDialogCallback.setDialog("下载中...");
+		OkGo.get(url).params(params).execute(fileDialogCallback);
+	}
+
+	/**
+	 * 文件上传(同一个key上传多个文件)
+	 */
+	private void formUploadProgressResponse(UploadFileCallback uploadFileCallback, Map<String, String> params,
+											String url, String fileParam, List<File> fileList) {
+		uploadFileCallback.setContext(context);
+		uploadFileCallback.setDialog("上传中...");
+		OkGo.post(url).params(params).addFileParams(fileParam, fileList).execute(uploadFileCallback);
+	}
+
+	/**
+	 * 文件上传(一个key对应多个文件)
+	 *
+	 * @param params  参数
+	 * @param url     路径
+	 * @param fileMap 文件集合
+	 */
+	private void formUploadProgressResponse(UploadFileCallback uploadFileCallback, Map<String, String> params,
+											String url, Map<String, File> fileMap) {
+		uploadFileCallback.setContext(context);
+		uploadFileCallback.setDialog("上传中...");
+
+		PostRequest okGo = OkGo.post(url);
+
+		Iterator<Map.Entry<String, File>> entries = fileMap.entrySet().iterator();
+
+		while (entries.hasNext()) {
+
+			Map.Entry<String, File> entry = entries.next();
+
+			okGo.params(entry.getKey(), entry.getValue());
 		}
-		Map<String, String> params = new HashMap<String, String>();
-		params.put("username", "hgh");
-		params.put("password", "123");
 
-		String url = "" + "user!uploadFile";
-		OkHttpUtils.post().addFile("mFile", "messenger_01.png", file).addFile("mFile", "test1.txt", file2).url(url).params(params)//
-				.build()//
-				.execute(myResultCallback);
+		okGo.execute(uploadFileCallback);
 	}
 
-	public void getUser(MyResultCallback<String> myResultCallback) {
-		Map<String, String> params = new HashMap<String, String>();
-		params.put("type", "1");
-		String url = getAbsoluteUrl("advert/getAdvert.do");
-		getNoProgressResponse(myResultCallback, params, url);
+	/**
+	 * 请求Bitmap例子
+	 */
+	public void getBitmap(BitmapDialogCallback bitmapDialogCallback) {
+		Map<String, String> params = new HashMap<>();
+		params.put("header1", "header1");
+		params.put("param1", "param1");
+		getBitmapProgressResponse(bitmapDialogCallback, params, "http://server.jeasonlzy.com/OkHttpUtils/image");
 	}
 
-	public void downLoad(MyDownLoadResultCallback<String> myResultCallback, ProgressBar p) {
-		String url = "https://github.com/hongyangAndroid/okhttp-utils/blob/master/gson-2.2.1.jar?raw=true";
-		downloadProgressResponse(myResultCallback, Environment.getExternalStorageDirectory().getAbsolutePath(), "gson-2.2.1.jar", url, p);
+	/**
+	 * 请求文件下载例子(构建方法可定义文件名和下载位置)
+	 */
+	public void getFile(FileDialogCallback fileDialogCallback) {
+		Map<String, String> params = new HashMap<>();
+		params.put("header1", "headerValue1");
+		params.put("param1", "paramValue1");
+		getFileDownloadProgressResponse(fileDialogCallback, params, "http://server.jeasonlzy.com/OkHttpUtils/download");
 	}
+
 
 	/**
 	 * 获取广告
@@ -558,7 +590,7 @@ public enum OkHttpsImp {
 		String url = getAbsoluteUrl(API.MEMBER_TYPEUPDATE_LIST);
 		getProgressResponse(myResultCallback, params, url);
 
-//		postProgressResponse(myResultCallback, params, url);
+		//		postProgressResponse(myResultCallback, params, url);
 	}
 
 	/**
@@ -617,8 +649,8 @@ public enum OkHttpsImp {
 		// return "http://172.16.103.153:8085/wcm/serviceMall/".concat(storeId)
 		// .concat("/").concat(methodName);
 		return API.ENVIRONMENTAL + "/msg/querySendMsgStatistic/".concat(storeId);
-//				.concat("/")
-//				.concat(methodName);
+		//				.concat("/")
+		//				.concat(methodName);
 	}
 
 	/**
@@ -636,24 +668,24 @@ public enum OkHttpsImp {
 		String url = getAbsoluteUrl(API.MARKETINGSMS_SENDMSG_LIST);
 		postProgressResponse(myResultCallback, params, url);
 	}
-//	/**
-//	 * 新建营销短信发送短信
-//	 */
-//	public void sendShortMessage(
-//			MyResultCallback<String> myResultCallback, String businessId,
-//			String phone, String members,
-//			String reqTime, String uuid) throws Exception {
-//		Map<String, String> params = new HashMap<String, String>();
-//		params.put("businessID", businessId);
-//		params.put("phone", phone);
-//		params.put("reqTime", reqTime);
-//		params.put("serNum", uuid);
-//		params.put("source", appsource);
-//		String sign = getSign(md5_key, params);
-//		params.put("sign", sign);
-//		String url = getAbsoluteUrl(API.MARKETINGSMS_SENDMSG_LIST);
-//		postProgressResponse(myResultCallback, params, url);
-//	}
+	//	/**
+	//	 * 新建营销短信发送短信
+	//	 */
+	//	public void sendShortMessage(
+	//			MyResultCallback<String> myResultCallback, String businessId,
+	//			String phone, String members,
+	//			String reqTime, String uuid) throws Exception {
+	//		Map<String, String> params = new HashMap<String, String>();
+	//		params.put("businessID", businessId);
+	//		params.put("phone", phone);
+	//		params.put("reqTime", reqTime);
+	//		params.put("serNum", uuid);
+	//		params.put("source", appsource);
+	//		String sign = getSign(md5_key, params);
+	//		params.put("sign", sign);
+	//		String url = getAbsoluteUrl(API.MARKETINGSMS_SENDMSG_LIST);
+	//		postProgressResponse(myResultCallback, params, url);
+	//	}
 
 	/**
 	 * 获取可供购买的短信套餐
@@ -690,14 +722,14 @@ public enum OkHttpsImp {
 	 */
 	//public void smsBulkSend(MyResultCallback<String> myResultCallback, String businessID, String businessName, String phone, String templateMark, String reqTime, String uuid) throws Exception {
 	public void smsBulkSend(
-			MyResultCallback<String> myResultCallback,String businessID,String businessName,
-			String  templateMark,String  phone, String reqTime, String uuid)
+			MyResultCallback<String> myResultCallback, String businessID, String businessName,
+			String templateMark, String phone, String reqTime, String uuid)
 			throws Exception {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("storeId", businessID);
 		params.put("businessName", businessName);
 		params.put("msgId", templateMark);
-		params.put("phones",phone);
+		params.put("phones", phone);
 		params.put("serNum", uuid);
 		params.put("source", appsource);
 		params.put("reqTime", reqTime);
@@ -1550,10 +1582,10 @@ public enum OkHttpsImp {
 	/**
 	 * 获取收入明细
 	 */
-	public void getIsAmtFlow(String md5_key, String accountNo, String storeNo,String optType,
-							 String serNum, String source, String reqTime,String currentPageNum, String pageSize,
+	public void getIsAmtFlow(String md5_key, String accountNo, String storeNo, String optType,
+							 String serNum, String source, String reqTime, String currentPageNum, String pageSize,
 							 MyResultCallback<String> myResultCallback) throws Exception {
-		Map<String, String> params = new HashMap<String,String>();
+		Map<String, String> params = new HashMap<String, String>();
 		params.put("accountNo", accountNo);
 		params.put("storeNo", storeNo);
 		params.put("optType", optType);
@@ -1567,6 +1599,7 @@ public enum OkHttpsImp {
 		String url = getAbsoluteUrl(API.GETINCOME);
 		getProgressResponse(myResultCallback, params, url);
 	}
+
 	/**
 	 * 获取经营总收入
 	 */
@@ -1981,6 +2014,7 @@ public enum OkHttpsImp {
 		String url = getAbsoluteUrl(API.OREDRINFO);
 		getProgressResponse(myResultCallback, params, url);
 	}
+
 	/**
 	 * 3期迭代后
 	 * APP订单明细
@@ -1988,10 +2022,10 @@ public enum OkHttpsImp {
 	public void getqueryOrderInfo(String serNum,
 								  String source, String reqTime,
 								  String isValid, String sourceType,
-								  String merchantSubCode,String orderNo,
+								  String merchantSubCode, String orderNo,
 								  String currentPageNum, String pageSize,
-                                  String  orderStatus,String txnTime,
-								  String startTime,String  endTime,
+								  String orderStatus, String txnTime,
+								  String startTime, String endTime,
 								  MyResultCallback<String> myResultCallback) throws Exception {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("currentPageNum", currentPageNum);
@@ -2011,15 +2045,16 @@ public enum OkHttpsImp {
 		String url = getAbsoluteUrl(API.OREDRINFO);
 		getProgressResponse(myResultCallback, params, url);
 	}
+
 	/**
 	 * 3期迭代后
 	 * APP订单明细删除
 	 */
 	public void getDeleteOrderInfo(String serNum,
-								  String source, String reqTime,
-								  String isValid, String sourceType,
-								  String orderNo,
-								  MyResultCallback<String> myResultCallback) throws Exception {
+								   String source, String reqTime,
+								   String isValid, String sourceType,
+								   String orderNo,
+								   MyResultCallback<String> myResultCallback) throws Exception {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("serNum", serNum);
 		params.put("source", source);
@@ -2334,6 +2369,7 @@ public enum OkHttpsImp {
 		String url = getAbsoluteUrl(API.MEMBERLABELLIST);
 		getProgressResponse(myResultCallback, params, url);
 	}
+
 	/**
 	 * 查询所有未删除的呼叫内容列表
 	 */
@@ -2348,10 +2384,11 @@ public enum OkHttpsImp {
 		params.put("source", source);
 		String sign = getSign(md5_key, params);
 		params.put("sign", sign);
-		String url = getHttpUrl(storeId,API.CALLLIST);
+		String url = getHttpUrl(storeId, API.CALLLIST);
 		postProgressResponse(myResultCallback, params, url);
 
 	}
+
 	/*
    * 优惠券管理（-店铺-优惠券表）按优惠券状态筛选店铺所有的优惠券
    * @param issuedStoreId 商铺ID
@@ -2525,6 +2562,7 @@ public enum OkHttpsImp {
 		String url = getAbsoluteUrl(API.ADDVIPLABEL);
 		getProgressResponse(myResultCallback, params, url);
 	}
+
 	/**
 	 * 添加呼叫标签
 	 */
@@ -2537,9 +2575,10 @@ public enum OkHttpsImp {
 		params.put("content", content);
 		String sign = getSign(md5_key, params);
 		params.put("sign", sign);
-		String url = getHttpUrl(storeId,API.ADDCALLTAG);
+		String url = getHttpUrl(storeId, API.ADDCALLTAG);
 		postProgressResponse(myResultCallback, params, url);
 	}
+
 	/**
 	 * 删除会员标签
 	 */
@@ -2555,11 +2594,12 @@ public enum OkHttpsImp {
 		String url = getAbsoluteUrl(API.DELETELABEL);
 		getProgressResponse(myResultCallback, params, url);
 	}
+
 	/**
 	 * 删除呼叫内容
 	 */
 	public void DeleteCallTag(String serNum, String source, String reqTime, String md5_key,
-							 String callId,String storeId, MyResultCallback<String> myResultCallback) throws Exception {
+							  String callId, String storeId, MyResultCallback<String> myResultCallback) throws Exception {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("serNum", serNum);
 		params.put("source", source);
@@ -2567,9 +2607,10 @@ public enum OkHttpsImp {
 		params.put("callId", callId);
 		String sign = getSign(md5_key, params);
 		params.put("sign", sign);
-		String url = getHttpUrl(storeId,API.DELETECALLLABEL);
+		String url = getHttpUrl(storeId, API.DELETECALLLABEL);
 		postProgressResponse(myResultCallback, params, url);
 	}
+
 	/**
 	 * 删除积分商品
 	 */
@@ -2606,7 +2647,7 @@ public enum OkHttpsImp {
 	 */
 	public void addProduct(String md5_key, String serNum, String source, String reqTime,
 						   String productName, String productType, String productDesc,
-						   String productAmt,String  isOnline, String images, String storeId, String isMain,
+						   String productAmt, String isOnline, String images, String storeId, String isMain,
 						   MyResultCallback<String> myResultCallback) throws Exception {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("serNum", serNum);
@@ -2635,12 +2676,12 @@ public enum OkHttpsImp {
 							  String productType, String productDesc,
 							  String productAmt, String isOnline,
 							  String deleteImageId, String addImages,
-							  String storeId, String isMain,String shopSourceId,
+							  String storeId, String isMain, String shopSourceId,
 							  MyResultCallback<String> myResultCallback) throws Exception {
-//		(OkHttpsImp.md5_key, uuid, "app", reqTime,
-//				productId, productName, "01", productDesc, productAmt, "Y",
-//				delImageUrls, imageStr, userShopInfoBean.getBusinessId(),
-//				isMain, new MyResultCallback<String>()
+		//		(OkHttpsImp.md5_key, uuid, "app", reqTime,
+		//				productId, productName, "01", productDesc, productAmt, "Y",
+		//				delImageUrls, imageStr, userShopInfoBean.getBusinessId(),
+		//				isMain, new MyResultCallback<String>()
 
 
 		Map<String, String> params = new HashMap<String, String>();
@@ -2669,7 +2710,7 @@ public enum OkHttpsImp {
 	 */
 	public void QueryProduct(String serNum, String source, String reqTime, String md5_key,
 
-							 String storeId,MyResultCallback<String> myResultCallback) throws Exception {
+							 String storeId, MyResultCallback<String> myResultCallback) throws Exception {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("serNum", serNum);
 		params.put("source", source);
@@ -2687,7 +2728,7 @@ public enum OkHttpsImp {
 	 */
 	public void QueryFromWinxin(String md5_key, String serNum, String source, String reqTime,
 								String storeId, String pageNo, String pageSize,
-								String productName,MyResultCallback<String> myResultCallback) throws Exception {
+								String productName, MyResultCallback<String> myResultCallback) throws Exception {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("serNum", serNum);
 		params.put("source", source);
@@ -2723,7 +2764,7 @@ public enum OkHttpsImp {
 	* 查询提现状态
 	* */
 	public void queryWithdrawStats(String serNum, String reqTime, String accountNo, String storeNo,
-								   MyResultCallback<String> myResultCallback) throws Exception{
+								   MyResultCallback<String> myResultCallback) throws Exception {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("serNum", serNum);
 		params.put("source", appsource);

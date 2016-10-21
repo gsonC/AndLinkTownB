@@ -304,7 +304,6 @@
         <activity android:name="com.lianbi.mezone.b.ui.PhotoDeleteActivity">
         </activity>
         <activity android:name="com.lianbi.mezone.b.ui.AboutUsActivity"/>
-        <activity android:name="com.lianbi.mezone.b.wxapi.WXPayEntryActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.CouponManagerActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.CouponUsingDetailsActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.SendNewCouponActivity"/>

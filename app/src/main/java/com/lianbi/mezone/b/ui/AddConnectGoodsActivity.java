@@ -1,7 +1,5 @@
 package com.lianbi.mezone.b.ui;
 
-import java.io.File;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -13,17 +11,20 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.lianbi.mezone.b.httpresponse.MyResultCallback;
+import com.lianbi.mezone.b.photo.FileUtils;
+import com.lianbi.mezone.b.photo.PhotoUtills;
+import com.lianbi.mezone.b.photo.PickImageDescribe;
+import com.xizhi.mezone.b.R;
+
+import java.io.File;
+
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.FilePathGet;
 import cn.com.hgh.utils.Picture_Base64;
 import cn.com.hgh.utils.REGX;
 import cn.com.hgh.utils.Result;
-
-import com.xizhi.mezone.b.R;
-import com.lianbi.mezone.b.httpresponse.MyResultCallback;
-import com.lianbi.mezone.b.photo.FileUtils;
-import com.lianbi.mezone.b.photo.PhotoUtills;
-import com.lianbi.mezone.b.photo.PickImageDescribe;
 
 /**
  * 新增联系人 --- 联系货源
@@ -209,5 +210,4 @@ public class AddConnectGoodsActivity extends BaseActivity {
 			return defaultImageDescribe;
 		}
 	}
-
 }

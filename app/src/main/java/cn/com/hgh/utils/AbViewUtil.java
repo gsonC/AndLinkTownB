@@ -63,7 +63,6 @@ public class AbViewUtil {
 	/**
 	 * 计算GridView高度
 	 */
-
 	public static int setGridViewHeightBasedOnChildren(GridView listView,
 			int col) {
 		// 获取listview的adapter
@@ -100,7 +99,6 @@ public class AbViewUtil {
 	 * 
 	 * @param listView
 	 */
-
 	public static void setListViewHeight(ListView listView) {
 		if (listView == null)
 			return;

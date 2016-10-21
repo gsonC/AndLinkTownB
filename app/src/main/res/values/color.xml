@@ -76,4 +76,6 @@
     <color name="grey">#ff999999</color>
     <color name="orange">#F5A100</color><!-- 橙色 -->
     <color name="right_bg">#ff999999</color>
+    <color name="radio_button_selected_color">#ff33b5e5</color>
+    <color name="radio_button_unselected_color">#e0e0e0</color>
 </resources>

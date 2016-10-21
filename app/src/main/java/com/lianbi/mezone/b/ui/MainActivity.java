@@ -153,8 +153,8 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 								mDatas.add(mDatas.size(), endservie);
 								setFill();
 
-								((ShouYeFragment) fm_shouye)
-										.getServiceMall(mDatas);
+							//	((ShouYeFragment) fm_shouye)
+							//			.getServiceMall(mDatas);
 							}
 						} catch (JSONException e) {
 							e.printStackTrace();
@@ -244,7 +244,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 		endservie.setAppCode("fuwushangcheng");
 		mDatas.add(endservie);
 		setFill();
-		((ShouYeFragment) fm_shouye).getServiceMall(mDatas);
+		//((ShouYeFragment) fm_shouye).getServiceMall(mDatas);
 	}
 
 	/**
@@ -288,6 +288,8 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 				PushDemoReceiver.payloadData.length());
 		super.onDestroy();
 	}
+
+
 
 	/**
 	 * status 1:已更新；2：自定义更新；3：必须更新

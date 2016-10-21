@@ -1,55 +1,39 @@
 package com.lianbi.mezone.b.fragment;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ImageView;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.TextView;
+import android.widget.RadioButton;
 
 import com.alibaba.fastjson.JSON;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.lianbi.mezone.b.app.Constants;
 import com.lianbi.mezone.b.bean.ShouYeBannerBean;
-import com.lianbi.mezone.b.bean.ShouyeServiceBean;
-import com.lianbi.mezone.b.httpresponse.API;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
 import com.lianbi.mezone.b.impl.MyShopChange;
 import com.lianbi.mezone.b.ui.BaseActivity;
-import com.lianbi.mezone.b.ui.BookFunctionActivity;
-import com.lianbi.mezone.b.ui.H5WebActivty;
-import com.lianbi.mezone.b.ui.LineTakeNoWebActivity;
 import com.lianbi.mezone.b.ui.MainActivity;
 import com.lianbi.mezone.b.ui.ReceivablesActivity;
 import com.lianbi.mezone.b.ui.ReceivablesQRActivity;
-import com.lianbi.mezone.b.ui.ServiceMallActivity;
-import com.lianbi.mezone.b.ui.TableSetActivity;
-import com.lianbi.mezone.b.ui.WIFIWebActivity;
-import com.lianbi.mezone.b.ui.WebActivty;
 import com.xizhi.mezone.b.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 
-import cn.com.hgh.baseadapter.BaseAdapterHelper;
-import cn.com.hgh.baseadapter.QuickAdapter;
 import cn.com.hgh.playview.BaseSliderView;
 import cn.com.hgh.playview.BaseSliderView.OnSliderClickListener;
 import cn.com.hgh.playview.SliderLayout;
@@ -57,13 +41,8 @@ import cn.com.hgh.playview.imp.TextSliderView;
 import cn.com.hgh.utils.AbDateUtil;
 import cn.com.hgh.utils.AbStrUtil;
 import cn.com.hgh.utils.ContentUtils;
-import cn.com.hgh.utils.CryptTool;
-import cn.com.hgh.utils.JumpIntent;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.utils.ScreenUtils;
-import cn.com.hgh.utils.WebEncryptionUtil;
-import cn.com.hgh.view.ErWeMaDialog;
-import cn.com.hgh.view.MyGridView;
 
 /**
  * @author guanghui.han
@@ -72,24 +51,21 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 		MyShopChange {
 
 	private SliderLayout mDemoSlider;
-	LinearLayout ad_llt;
-	MainActivity mActivity;
+	private LinearLayout ad_llt;
+	private MainActivity mActivity;
 	private OkHttpsImp okHttpsImp;
-	private MyGridView gv_shouyeservice;
-	private ImageView iv_shouye_datu;
 	private SwipeRefreshLayout swipe_shouye;
-	/**
-	 * 广告
-	 */
-	private ArrayList<ShouYeBannerBean> ades_ImageEs = new ArrayList<ShouYeBannerBean>();
-	/**
-	 * 以下载数据
-	 */
-	ArrayList<ShouyeServiceBean> mData = new ArrayList<ShouyeServiceBean>();
-	/**
-	 * 是否广告请求成功
-	 */
+	private ProgressBar ad_siderlayout_progressBar;
+	private ArrayList<ShouYeBannerBean> ades_ImageEs = new ArrayList<>();
 	private boolean isAdSucceedRequest = false;
+	private RadioButton mRadioButton_management,mRadioButton_leagues;
+	public static final int POSITION0 = 0;
+	public static final int POSITION1 = 1;
+	private int clickPosition = 3;
+	private OnCheckedChangeListener checkListener;
+	private FrameLayout mFm_shouye_management,mFm_shouye_leagues;
+	private ShouyeManagementFragment mShouyeManagementFragment;
+	private ShouyeLeaguesFragment mShouyeLeaguesFragment;
 
 	/**
 	 * 刷新fm数据
@@ -97,12 +73,12 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 	public void refreshFMData() {
 		if (ContentUtils.getLoginStatus(mActivity)) {
 			// mDatas.clear();
-			mActivity.getServiceMall();
+			//mActivity.getServiceMall();
 			// getServiceMallAll();
 
 		} else {
 			// mDatas.clear();
-			mActivity.getServiceMall();
+			//mActivity.getServiceMall();
 
 		}
 		if (!isAdSucceedRequest) {
@@ -110,7 +86,6 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 		}
 	}
 
-	ProgressBar ad_siderlayout_progressBar;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater,
@@ -118,75 +93,59 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 		super.onCreateView(inflater, container, savedInstanceState);
 		View view = inflater.inflate(R.layout.fm_shouyefragment, null);
 		mActivity = (MainActivity) getActivity();
-		initView(view);
 		okHttpsImp = OkHttpsImp.SINGLEOKHTTPSIMP.newInstance(mActivity);
-		initListAdapter();
-		listen();
-		// getServiceMallAll();
+		initView(view);
+		initFragment();
+		check_Button();
+		setListen();
+		changeFuncPage(POSITION0);
 		getAadver();
 		return view;
 	}
 
-	private QuickAdapter<ShouyeServiceBean> mAdapter;
-
-	public void initListAdapter() {
-		mAdapter = new QuickAdapter<ShouyeServiceBean>(mActivity,
-				R.layout.grid_item, mData) {
-
-			@Override
-			protected void convert(final BaseAdapterHelper helper,
-								   final ShouyeServiceBean item) {
-				TextView tv_store_service_introduce = helper
-						.getView(R.id.tv_store_service_introduce);
-				final ImageView iv_store_service = helper
-						.getView(R.id.iv_store_service);
-				int serviceid = item.getDefaultservice();
-				switch (serviceid) {
-					case -1:
-						Glide.with(mActivity).load("").error(null)
-								.into(iv_store_service);
-						// Glide.with(mActivity).load(R.drawable.icon_blank)
-						// .error(R.drawable.default_head)
-						// .into(iv_store_service);
-						// iv_store_service.setBackgroundResource(R.drawable.icon_blank);
-						break;
-					case 1:
-						Glide.with(mActivity).load(R.mipmap.icon_servicemall)
-								.error(R.mipmap.default_head)
-								.into(iv_store_service);
-						break;
-					case 2:
-						Glide.with(mActivity).load(R.mipmap.icon_receivables)
-								.error(R.mipmap.default_head)
-								.into(iv_store_service);
-						break;
-					default:
-						if (null != item.getIcoUrl()) {
-							Glide.with(mActivity).load(item.getIcoUrl())
-									.error(R.mipmap.default_head)
-									.into(iv_store_service);
-						}
-						break;
-				}
-
-				tv_store_service_introduce.setText(item.getAppName());
-			}
-		};
-		gv_shouyeservice.setAdapter(mAdapter);
+	private void initFragment() {
+		FragmentManager fm = getFragmentManager();
+		mShouyeManagementFragment = new ShouyeManagementFragment();
+		mShouyeLeaguesFragment = new ShouyeLeaguesFragment();
+		fm.beginTransaction().replace(R.id.fm_shouye_management,mShouyeManagementFragment).commit();
+		fm.beginTransaction().replace(R.id.fm_shouye_leagues,mShouyeLeaguesFragment).commit();
 	}
 
-	private void initView(View view) {
 
+	private void initView(View view) {
 		ad_siderlayout_progressBar = (ProgressBar) view
 				.findViewById(R.id.adeslltview_siderlayout_progressBar);
-		gv_shouyeservice = (MyGridView) view
-				.findViewById(R.id.gv_shouyeservice);
-		iv_shouye_datu = (ImageView) view.findViewById(R.id.iv_shouye_datu);
 		ad_siderlayout_progressBar.setVisibility(View.GONE);
-		intAdView(view);
-		initViewTitle(view);
 		swipe_shouye = (SwipeRefreshLayout) view.findViewById(R.id.swipe_shouye);
 		swipe_shouye.setColorSchemeResources(R.color.colores_news_01, R.color.black);
+		mRadioButton_management = (RadioButton) view.findViewById(R.id.rboButton_shouyefragment_management);//日常经营
+		mRadioButton_leagues = (RadioButton) view.findViewById(R.id.rboButton_shouyefragment_leagues);//商圈联盟
+		mFm_shouye_management = (FrameLayout) view.findViewById(R.id.fm_shouye_management);//日常经营
+		mFm_shouye_leagues = (FrameLayout) view.findViewById(R.id.fm_shouye_leagues);//商圈联盟
+		intAdView(view);
+	}
+
+	/**
+	 * radiobutton监听
+	 */
+	private void check_Button() {
+		checkListener = new OnCheckedChangeListener(){
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				if(isChecked){
+					if(mRadioButton_management==buttonView){
+						mRadioButton_leagues.setChecked(false);
+						changeFuncPage(POSITION0);
+					}else if(mRadioButton_leagues==buttonView){
+						mRadioButton_management.setChecked(false);
+						changeFuncPage(POSITION1);
+					}
+				}
+			}
+		};
+	}
+
+	private void setListen() {
 		swipe_shouye.setOnRefreshListener(new OnRefreshListener() {
 
 			@Override
@@ -195,286 +154,28 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 				swipe_shouye.setRefreshing(false);
 			}
 		});
+		mRadioButton_management.setOnCheckedChangeListener(checkListener);
+		mRadioButton_leagues.setOnCheckedChangeListener(checkListener);
 	}
 
 	/**
-	 * 裁剪view
+	 * 切换页面
+	 * @param position 代表哪页
 	 */
-	private void initViewTitle(View view) {
-
-		// LinearLayout.LayoutParams layoutParamsTitle =
-		// (android.widget.LinearLayout.LayoutParams) iv_banner
-		// .getLayoutParams();
-		// layoutParamsTitle.width = ScreenUtils.getScreenWidth(mActivity);
-		// layoutParamsTitle.height = ScreenUtils.getScreenWidth(mActivity) / 4;
-		gv_shouyeservice.setOnItemClickListener(new OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-			}
-		});
-	}
-
-	private void listen() {
-		gv_shouyeservice.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-									int position, long id) {
-				String appCode = "";
-				try {
-					appCode = mData.get(position).getAppCode();
-				} catch (Exception e) {
-					ContentUtils.showMsg(mActivity, "数据异常,为了您的数据安全,请退出重新登陆");
-				}
-				boolean isLogin = ContentUtils.getLoginStatus(mActivity);
-				boolean re = false;
-
-				if ("tss".equals(appCode)) {// 到店服务
-					re = JumpIntent.jumpLogin_addShop(isLogin, API.SWEEP,
-							mActivity);
-					if (re) {
-						startActivity(new Intent(mActivity,
-								TableSetActivity.class));
-					}
-				} else if ("wcm".equals(appCode)) {// 微信商城
-					if (isLogin) {
-						Intent intent_web = new Intent(mActivity,
-								H5WebActivty.class);
-						intent_web.putExtra(Constants.NEDDLOGIN, false);
-						intent_web.putExtra("NEEDNOTTITLE", false);
-						intent_web.putExtra("Re", true);
-						intent_web.putExtra(WebActivty.T, "微信商城");
-						intent_web.putExtra(WebActivty.U, getSAUrl(API.TOSTORE_MODULE_WCM, 1));
-						mActivity.startActivity(intent_web);
-					}
-				} else if ("sws".equals(appCode)) {//货源批发
-					if (isLogin) {
-						Intent intent_web = new Intent(mActivity,
-								H5WebActivty.class);
-						intent_web.putExtra(Constants.NEDDLOGIN, false);
-						intent_web.putExtra("NEEDNOTTITLE", false);
-						intent_web.putExtra("Re", true);
-						intent_web.putExtra(WebActivty.T, "货源批发");
-						intent_web.putExtra(WebActivty.U, getSAUrl(API.TOSTORE_Supply_Wholesale, 2));
-						mActivity.startActivity(intent_web);
-					}
-				} else if ("rss".equals(appCode)) {//预约界面
-					if (isLogin) {
-						Intent intent = new Intent(mActivity, BookFunctionActivity.class);
-						startActivity(intent);
-					}
-				} else if ("wifi".equals(appCode)) {//智能WIFI
-					if (isLogin) {
-						Intent intent_web = new Intent(mActivity,
-								WIFIWebActivity.class);
-						intent_web.putExtra(Constants.NEDDLOGIN, false);
-						intent_web.putExtra("NEEDNOTTITLE", false);
-						intent_web.putExtra("Re", true);
-						intent_web.putExtra(WIFIWebActivity.U, getSAUrl(API.INTELLIGENT_WIFI, 3));
-						mActivity.startActivity(intent_web);
-					}
-				} else if ("qns".equals(appCode)) {//排队取号
-					if (isLogin) {
-						Intent intent_line = new Intent(mActivity, LineTakeNoWebActivity.class);
-						intent_line.putExtra(Constants.NEDDLOGIN, false);
-						intent_line.putExtra("NEEDNOTTITLE", false);
-						intent_line.putExtra("Re", true);
-						intent_line.putExtra(LineTakeNoWebActivity.U, getSAUrl(API.TOSTORE_Line_TakeNo, 4));
-						mActivity.startActivity(intent_line);
-					}
-				} else if ("shoukuan".equals(appCode)) {// 收款二维码放大
-					re = JumpIntent.jumpLogin_addShop(isLogin, API.SWEEP,
-							mActivity);
-					if (re) {
-						//mActivity.startActivity(new Intent(mActivity, ReceivablesActivity.class));
-						//MagnifyImg();
-						isAgreeAgreement();
-					}
-				} else if ("fuwushangcheng".equals(appCode)) {// 服务商城
-					re = JumpIntent.jumpLogin_addShop(isLogin,
-							API.SERVICESTORE, mActivity);
-					if (re) {
-
-						Intent intent_more = new Intent(mActivity,
-								ServiceMallActivity.class);
-						mActivity.startActivityForResult(intent_more,
-								mActivity.SERVICEMALLSHOP_CODE);
-
-					}
-				}
-/*
-				switch (appCode) {
-					case "tss":
-						re = JumpIntent.jumpLogin_addShop(isLogin, API.SWEEP,
-								mActivity);
-						if (re) {// 到店服务
-							startActivity(new Intent(mActivity,
-									TableSetActivity.class));
-						}
-						break;
-					case "wcm":
-						if (isLogin) {// 微信商城
-							Intent intent_web = new Intent(mActivity,
-									H5WebActivty.class);
-							intent_web.putExtra(Constants.NEDDLOGIN, false);
-							intent_web.putExtra("NEEDNOTTITLE", false);
-							intent_web.putExtra("Re", true);
-							intent_web.putExtra(WebActivty.T, "微信商城");
-							intent_web.putExtra(WebActivty.U, getSAUrl(API.TOSTORE_MODULE_WCM,1));
-							mActivity.startActivity(intent_web);
-						}
-						break;
-					case "sws":
-						if (isLogin) {//货源批发
-							Intent intent_web = new Intent(mActivity,
-									H5WebActivty.class);
-							intent_web.putExtra(Constants.NEDDLOGIN, false);
-							intent_web.putExtra("NEEDNOTTITLE", false);
-							intent_web.putExtra("Re", true);
-							intent_web.putExtra(WebActivty.T, "货源批发");
-							intent_web.putExtra(WebActivty.U, getSAUrl(API.TOSTORE_Supply_Wholesale,2));
-							mActivity.startActivity(intent_web);
-						}
-						break;
-					case "rss":
-						if(isLogin){//预约界面
-							Intent intent = new Intent(mActivity, BookFunctionActivity.class);
-							startActivity(intent);
-						}
-						break;
-					case "wifi":
-						if(isLogin){//智能WIFI
-							Intent intent_web = new Intent(mActivity,
-									WIFIWebActivity.class);
-							intent_web.putExtra(Constants.NEDDLOGIN, false);
-							intent_web.putExtra("NEEDNOTTITLE", false);
-							intent_web.putExtra("Re", true);
-							intent_web.putExtra(WIFIWebActivity.U, getSAUrl(API.INTELLIGENT_WIFI,3));
-							mActivity.startActivity(intent_web);
-						}
-						break;
-
-					case "qns":
-						if(isLogin){//排队取号
-							Intent intent_line=new Intent(mActivity, LineTakeNoWebActivity.class);
-							intent_line.putExtra(Constants.NEDDLOGIN, false);
-							intent_line.putExtra("NEEDNOTTITLE", false);
-							intent_line.putExtra("Re", true);
-							intent_line.putExtra(LineTakeNoWebActivity.U, getSAUrl(API.TOSTORE_Line_TakeNo,4));
-							mActivity.startActivity(intent_line);
-						}
-
-						break;
-
-					case "shoukuan":
-						re = JumpIntent.jumpLogin_addShop(isLogin, API.SWEEP,
-								mActivity);
-						if (re) {
-	//						mActivity.startActivity(new Intent(mActivity, ReceivablesActivity.class));
-	//						MagnifyImg();// 收款二维码放大
-							isAgreeAgreement();
-						}
-						break;
-					case "fuwushangcheng":
-						re = JumpIntent.jumpLogin_addShop(isLogin,
-								API.SERVICESTORE, mActivity);
-						if (re) {// 服务商城
-
-							Intent intent_more = new Intent(mActivity,
-									ServiceMallActivity.class);
-							mActivity.startActivityForResult(intent_more,
-									mActivity.SERVICEMALLSHOP_CODE);
-
-						}
-						break;
-				}*/
-			}
-		});
-	}
-
-	/**
-	 * 用户是否同意协议
-	 */
-	private void isAgreeAgreement() {
-		String reqTime = AbDateUtil.getDateTimeNow();
-		String uuid = AbStrUtil.getUUID();
-		String bussniessId = BaseActivity.userShopInfoBean.getBusinessId();
-		try {
-			okHttpsImp.getMemberAgreement(uuid, "app", reqTime, bussniessId, new MyResultCallback<String>() {
-				@Override
-				public void onResponseResult(Result result) {
-					String reString = result.getData();
-					if (!TextUtils.isEmpty(reString)) {
-						try {
-							JSONObject jsonObject = new JSONObject(reString);
-							boolean results = jsonObject.getBoolean("results");
-							if (results) {
-								mActivity.startActivity(new Intent(mActivity, ReceivablesQRActivity.class));
-							} else {
-								mActivity.startActivity(new Intent(mActivity, ReceivablesActivity.class));
-							}
-						} catch (JSONException e) {
-							e.printStackTrace();
-						}
-
-					}
-				}
-
-				@Override
-				public void onResponseFailed(String msg) {
-					ContentUtils.showMsg(mActivity, "连接超时,请稍后再试");
-				}
-			});
-		} catch (Exception e) {
-			e.printStackTrace();
+	private void changeFuncPage(int position) {
+		this.clickPosition = position;
+		if(position<POSITION0){
+			return;
 		}
-	}
-
-	private String getSAUrl(String address, int type) {
-		String bussniessId = BaseActivity.userShopInfoBean.getBusinessId();
-		switch (type) {
-			case 1://微信商城
-				/*WebProductManagementBean data = new WebProductManagementBean();
-				data.setBusinessId(bussniessId);
-				String dataJson = com.alibaba.fastjson.JSONObject.toJSON(data)
-						.toString();
-				String url = encryptionUrl(address, dataJson);*/
-				//	return encryptionUrl(address, dataJson);
-				return address + "storeId=" + bussniessId;
-			case 2://货源批发
-				return address + "storeId=" + bussniessId;
-			case 3://智能WIFI
-				return address + bussniessId;
-			case 4://排队取号
-				//BDP200eWiZ16cbs041217820
-				return address + bussniessId + "/showUserQueueList";
+		if(position==POSITION0){
+			mRadioButton_management.setChecked(true);
+			mFm_shouye_management.setVisibility(View.VISIBLE);
+			mFm_shouye_leagues.setVisibility(View.GONE);
+		}else if(position==POSITION1){
+			mRadioButton_leagues.setChecked(true);
+			mFm_shouye_leagues.setVisibility(View.VISIBLE);
+			mFm_shouye_management.setVisibility(View.GONE);
 		}
-		return "";
-	}
-
-	/**
-	 * 加密
-	 */
-	private String encryptionUrl(String url, String dataJson) {
-		try {
-			// 获得的明文数据
-			String desStr = dataJson;
-			// 转成字节数组
-			byte src_byte[] = desStr.getBytes();
-
-			// MD5摘要
-			byte[] md5Str = WebEncryptionUtil.md5Digest(src_byte);
-			// 生成最后的SIGN
-			String SING = WebEncryptionUtil.byteArrayToHexString(md5Str);
-
-			desStr = CryptTool.getBASE64(dataJson);
-			// http://localhost:8080/order/orderContler/?sing=key&data=密文
-			return url + "sing=" + SING + "&&data=" + desStr + "&&auth=wcm";
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-		return "";
 	}
 
 	/**
@@ -483,8 +184,6 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 	public void getAadver() {
 		String reqTime = AbDateUtil.getDateTimeNow();
 		String uuid = AbStrUtil.getUUID();
-		String reqTime1 = AbDateUtil.getDateTimeNow();
-		String uuid1 = AbStrUtil.getUUID();
 
 		/**
 		 * 轮播图
@@ -562,52 +261,6 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 			e.printStackTrace();
 		}
 
-		/**
-		 * 大图片
-		 */
-		try {
-			okHttpsImp.getAdvert("F2", new MyResultCallback<String>() {
-
-				@Override
-				public void onResponseResult(Result result) {
-					String reString = result.getData();
-					if (!TextUtils.isEmpty(reString)) {
-						try {
-							JSONObject jsonObject = new JSONObject(reString);
-							reString = jsonObject.getString("list");
-
-							ArrayList<ShouYeBannerBean> mDatas = (ArrayList<ShouYeBannerBean>) JSON
-									.parseArray(reString,
-											ShouYeBannerBean.class);
-
-							if (mDatas.get(0).getImageUrl().endsWith("gif")) {
-								Glide.with(mActivity).load(mDatas.get(0).getImageUrl()).asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(iv_shouye_datu);
-							} else {
-								Glide.with(mActivity)
-										.load(mDatas.get(0).getImageUrl())
-										.dontAnimate()
-										.error(R.mipmap.fm_shouye_in)
-										.into(iv_shouye_datu);
-							}
-
-						} catch (JSONException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-				}
-
-				@Override
-				public void onResponseFailed(String msg) {
-					Glide.with(mActivity).load(R.mipmap.fm_shouye_in)
-							.into(iv_shouye_datu);
-				}
-			}, uuid1, "app", reqTime1);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
 	}
 
 	/**
@@ -624,7 +277,44 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 				LinearLayout.LayoutParams.MATCH_PARENT,
 				ScreenUtils.getScreenWidth(mActivity) / 4);
 		ad_llt.setLayoutParams(params);
+	}
 
+	/**
+	 * 用户是否同意协议
+	 */
+	private void isAgreeAgreement() {
+		String reqTime = AbDateUtil.getDateTimeNow();
+		String uuid = AbStrUtil.getUUID();
+		String bussniessId = BaseActivity.userShopInfoBean.getBusinessId();
+		try {
+			okHttpsImp.getMemberAgreement(uuid, "app", reqTime, bussniessId, new MyResultCallback<String>() {
+				@Override
+				public void onResponseResult(Result result) {
+					String reString = result.getData();
+					if (!TextUtils.isEmpty(reString)) {
+						try {
+							JSONObject jsonObject = new JSONObject(reString);
+							boolean results = jsonObject.getBoolean("results");
+							if (results) {
+								mActivity.startActivity(new Intent(mActivity, ReceivablesQRActivity.class));
+							} else {
+								mActivity.startActivity(new Intent(mActivity, ReceivablesActivity.class));
+							}
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+
+					}
+				}
+
+				@Override
+				public void onResponseFailed(String msg) {
+					ContentUtils.showMsg(mActivity, "连接超时,请稍后再试");
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -642,39 +332,10 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 		*/
 	}
 
-	/**
-	 * 点击二维码放大
-	 */
-	private void MagnifyImg() {
-
-		String shopname = BaseActivity.userShopInfoBean.getShopName();
-		String businessId = BaseActivity.userShopInfoBean.getBusinessId();
-
-		try {
-			shopname = URLEncoder.encode(
-					BaseActivity.userShopInfoBean.getShopName(), "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		String payQR = API.PAYQR + businessId;
-		Bitmap bitmap = ContentUtils.createQrBitmap(payQR, true, 1000, 1000);
-		ErWeMaDialog dialog = new ErWeMaDialog(getActivity());
-		dialog.setBitmap(bitmap);
-		dialog.show();
-	}
-
 	@Override
 	public void reFresh() {
 		mActivity.refreshFMData();
 	}
 
-	public void getServiceMall(ArrayList<ShouyeServiceBean> arraylist) {
-		if (arraylist != null && arraylist.size() > 0) {
-			mData = arraylist;
-			mAdapter.replaceAll(mData);
-		}
-	}
 
 }

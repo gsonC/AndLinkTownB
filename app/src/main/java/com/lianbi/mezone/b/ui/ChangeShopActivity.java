@@ -17,6 +17,7 @@ import com.lianbi.mezone.b.app.Constants;
 import com.lianbi.mezone.b.bean.ChangeShopBean;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.lianbi.mezone.b.impl.MyShopChange;
+import com.lzy.okgo.OkGo;
 import com.xizhi.mezone.b.R;
 
 import org.json.JSONException;
@@ -58,15 +59,16 @@ public class ChangeShopActivity extends BaseActivity {
 		initView();
 		initAdapter();
 		setLisenter();
-	}
-
-
-	@Override
-	protected void onResume() {
-		super.onResume();
 		getBusinessByUser();
 	}
-	
+
+
+	//@Override
+	//protected void onResume() {
+	//	super.onResume();
+	//	getBusinessByUser();
+	//}
+
 	/**
 	 * singletast 返回
 	 */

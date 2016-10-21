@@ -1,10 +1,5 @@
 package com.lianbi.mezone.b.ui;
 
-import java.util.ArrayList;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -13,19 +8,21 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.alibaba.fastjson.JSON;
+import com.bumptech.glide.Glide;
+import com.lianbi.mezone.b.bean.BankBoundInfo;
+import com.lianbi.mezone.b.httpresponse.MyResultCallback;
+import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
+import com.lzy.okgo.OkGo;
+import com.xizhi.mezone.b.R;
+
 import cn.com.hgh.utils.AbDateUtil;
 import cn.com.hgh.utils.AbStrUtil;
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.view.DialogCommon;
 import cn.com.hgh.view.EditJDialogCommon;
-
-import com.alibaba.fastjson.JSON;
-import com.bumptech.glide.Glide;
-import com.xizhi.mezone.b.R;
-import com.lianbi.mezone.b.bean.BankBoundInfo;
-import com.lianbi.mezone.b.httpresponse.MyResultCallback;
-import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
 
 /**
  * 银行卡界面

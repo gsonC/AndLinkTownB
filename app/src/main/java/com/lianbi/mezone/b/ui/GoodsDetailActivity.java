@@ -29,6 +29,7 @@ import cn.com.hgh.utils.SpannableuUtills;
 
 import com.alibaba.fastjson.JSON;
 import com.bumptech.glide.Glide;
+import com.lzy.okgo.OkGo;
 import com.xizhi.mezone.b.R;
 import com.lianbi.mezone.b.bean.Goods_SumbitBean;
 import com.lianbi.mezone.b.bean.PriceUnitBean;

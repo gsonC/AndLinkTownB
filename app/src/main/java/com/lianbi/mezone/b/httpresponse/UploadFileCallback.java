@@ -1,21 +1,27 @@
 package com.lianbi.mezone.b.httpresponse;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
-import com.alibaba.fastjson.JSON;
-import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.callback.AbsCallback;
 import com.lzy.okgo.request.BaseRequest;
 
 import cn.com.hgh.utils.ContentUtils;
-import cn.com.hgh.utils.LogUtils;
-import cn.com.hgh.utils.Result;
 import cn.com.hgh.view.HttpDialog;
 import okhttp3.Call;
 import okhttp3.Response;
 
-public abstract class MyResultCallback<T> extends StringCallback {
+/*
+ * @创建者     master
+ * @创建时间   2016/10/19 10:01
+ * @描述       文件上传
+ *
+ * @更新者     $Author$ 
+ * @更新时间   $Date$
+ * @更新描述   文件上传
+ */
+public abstract class UploadFileCallback<T> extends AbsCallback<T> {
+
 	/**
 	 * 请求的dialog
 	 */
@@ -42,26 +48,9 @@ public abstract class MyResultCallback<T> extends StringCallback {
 	}
 
 	@Override
-	public void onSuccess(String s, Call call, Response response) {
-		LogUtils.i("服务器返回数据----->",s);
-		if (!TextUtils.isEmpty(s)) {
-			try {
-				Result srb = JSON.parseObject(s, Result.class);
-				if (srb != null) {
-					if (srb.getCode() == API.SUCCESS_EXIST) {
-						onResponseResult(srb);
-					} else {
-						onResponseFailed("RESULTERROR");
-						ContentUtils.showMsg(context, srb.getMsg());
-					}
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+	public void onSuccess(T t, Call call, Response response) {
+
 	}
-
-
 
 	@Override
 	public void onError(Call call, Response response, Exception e) {
@@ -71,20 +60,14 @@ public abstract class MyResultCallback<T> extends StringCallback {
 	}
 
 	@Override
-	public void onAfter(@Nullable String s, @Nullable Exception e) {
-		super.onAfter(s, e);
-		try {
-			if (progressDialog != null) {
-				progressDialog.dismiss();
-			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
+	public void upProgress(long currentSize, long totalSize, float progress, long networkSpeed) {
+		super.upProgress(currentSize, totalSize, progress, networkSpeed);
+		onUploadProgress(currentSize,totalSize,progress,networkSpeed);
 	}
 
 	/**
 	 * 设置progressDialog
-	 * 
+	 *
 	 * @param pg
 	 */
 	public void setDialog(String pg) {
@@ -96,7 +79,7 @@ public abstract class MyResultCallback<T> extends StringCallback {
 
 	/**
 	 * 设置上下文
-	 * 
+	 *
 	 * @param ct
 	 */
 	public void setContext(Context ct) {
@@ -106,15 +89,12 @@ public abstract class MyResultCallback<T> extends StringCallback {
 	}
 
 	/**
-	 * 请求成功回调
-	 * 
-	 * @param result
-	 *            返回结果
-	 */
-	public abstract void onResponseResult(Result result);
-
-	/**
 	 * 请求失败回调
 	 */
 	public abstract void onResponseFailed(String msg);
+
+	/**
+	 * 上传进度回掉
+	 */
+	public abstract void onUploadProgress(long currentSize, long totalSize, float progress, long networkSpeed);
 }

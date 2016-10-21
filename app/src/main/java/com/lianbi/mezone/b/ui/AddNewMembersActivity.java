@@ -26,6 +26,7 @@ import com.lianbi.mezone.b.bean.MemberInfoBean;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
 import com.lianbi.mezone.b.photo.PopupWindowHelper;
+import com.lzy.okgo.OkGo;
 import com.xizhi.mezone.b.R;
 
 import java.math.BigDecimal;

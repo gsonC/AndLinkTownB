@@ -3,7 +3,6 @@ package cn.com.hgh.utils;
 import java.io.Serializable;
 
 public class Result implements Serializable {
-	public static final int TWO00 = 000000;
 	private static final long serialVersionUID = 6810038430975058375L;
 	/**
 	 * true:code=200,false:code!=200

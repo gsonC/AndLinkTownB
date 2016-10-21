@@ -7,11 +7,10 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import cn.com.hgh.utils.ContentUtils;
-import cn.com.hgh.utils.Result;
 
 import com.xizhi.mezone.b.R;
-import com.lianbi.mezone.b.httpresponse.MyResultCallback;
+
+import cn.com.hgh.utils.ContentUtils;
 
 /**
  * 意见反馈
