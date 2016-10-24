@@ -31,20 +31,24 @@
         android:layout_weight="1"
         />
 
-    <CheckBox
-        android:id="@+id/chk_oneday"
+    <RadioGroup
+        android:id="@+id/rdoGroup_time"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+    <RadioButton
+        android:id="@+id/rboButton_oneday"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:background="@drawable/selector_shouyetime"
         android:button="@null"
         android:padding="7dp"
-        android:checked="true"
         android:text="日"
         android:textColor="@color/white"/>
 
-    <CheckBox
-        android:id="@+id/chk_oneweek"
+    <RadioButton
+        android:id="@+id/rboButton_oneweek"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
@@ -55,8 +59,8 @@
         android:text="周"
         android:textColor="@color/white"/>
 
-    <CheckBox
-        android:id="@+id/chk_onemouth"
+    <RadioButton
+        android:id="@+id/rboButton_onemouth"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
@@ -67,4 +71,5 @@
         android:padding="7dp"
         android:text="月"
         android:textColor="@color/white"/>
+    </RadioGroup>
 </LinearLayout>

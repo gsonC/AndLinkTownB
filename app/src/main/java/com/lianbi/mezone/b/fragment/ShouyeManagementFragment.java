@@ -7,8 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
@@ -24,15 +25,14 @@ import com.xizhi.mezone.b.R;
  * @更新时间   $Date$
  * @更新描述
  */
-public class ShouyeManagementFragment extends Fragment implements OnClickListener {
+public class ShouyeManagementFragment extends Fragment implements OnClickListener, RadioGroup.OnCheckedChangeListener {
 
 	private MainActivity mActivity;
 	private OkHttpsImp mOkHttpsImp;
-	private TextView mTv_shouyemanagement_pay,mTv_shouyemanagement_callservice,mTv_shouyemanagement_inshopdetail,mTv_shouyemanagement_inshopservice
-			,mTv_include_title_flow,mTv_shouyemanagement_flow_detail,mTv_include_title_membernum,mTv_shouyemanagement_nummember
-			,mTv_shouyemanagement_addmember,mTv_shouyemanagement_memberdetail,mTv_include_othertitle_cashier,mTv_include_othertitle_salenum;
-	private LinearLayout mLlt_shouyemanagement_flow_show,mLlt_shouyemanagement_salenum_show;
-	private CheckBox mChk_oneday_cashier,mChk_oneweek_cashier,mChk_onemouth_cashier,mChk_oneday_salenum,mChk_oneweek_salenum,mChk_onemouth_salenum;
+	private TextView mTv_shouyemanagement_pay, mTv_shouyemanagement_callservice, mTv_shouyemanagement_inshopdetail, mTv_shouyemanagement_inshopservice, mTv_include_title_flow, mTv_shouyemanagement_flow_detail, mTv_include_title_membernum, mTv_shouyemanagement_nummember, mTv_shouyemanagement_addmember, mTv_shouyemanagement_memberdetail, mTv_include_othertitle_cashier, mTv_include_othertitle_salenum;
+	private LinearLayout mLlt_shouyemanagement_flow_show, mLlt_shouyemanagement_salenum_show;
+	private RadioButton mChk_oneday_cashier, mChk_oneweek_cashier, mChk_onemouth_cashier, mChk_oneday_salenum, mChk_oneweek_salenum, mChk_onemouth_salenum;
+	private RadioGroup mRdoGroup_time_cashier,mRdoGroup_time_salenum;
 
 	@Nullable
 	@Override
@@ -60,13 +60,15 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 		mTv_shouyemanagement_addmember = (TextView) view.findViewById(R.id.tv_shouyemanagement_addmember);//今日新增
 		mTv_shouyemanagement_memberdetail = (TextView) view.findViewById(R.id.tv_shouyemanagement_memberdetail);//会员详情
 		mTv_include_othertitle_cashier = (TextView) view.findViewById(R.id.ind_shouyemanagement_cashier).findViewById(R.id.tv_include_othertitle);//收银统计
-		mChk_oneday_cashier = (CheckBox) view.findViewById(R.id.ind_shouyemanagement_cashier).findViewById(R.id.chk_oneday);
-		mChk_oneweek_cashier = (CheckBox) view.findViewById(R.id.ind_shouyemanagement_cashier).findViewById(R.id.chk_oneweek);
-		mChk_onemouth_cashier = (CheckBox) view.findViewById(R.id.ind_shouyemanagement_cashier).findViewById(R.id.chk_onemouth);
+		mRdoGroup_time_cashier = (RadioGroup) view.findViewById(R.id.ind_shouyemanagement_cashier).findViewById(R.id.rdoGroup_time);
+		mChk_oneday_cashier = (RadioButton) view.findViewById(R.id.ind_shouyemanagement_cashier).findViewById(R.id.rboButton_oneday);
+		mChk_oneweek_cashier = (RadioButton) view.findViewById(R.id.ind_shouyemanagement_cashier).findViewById(R.id.rboButton_oneweek);
+		mChk_onemouth_cashier = (RadioButton) view.findViewById(R.id.ind_shouyemanagement_cashier).findViewById(R.id.rboButton_onemouth);
 		mTv_include_othertitle_salenum = (TextView) view.findViewById(R.id.ind_shouyemanagement_salenum).findViewById(R.id.tv_include_othertitle);//销量排行
-		mChk_oneday_salenum = (CheckBox) view.findViewById(R.id.ind_shouyemanagement_salenum).findViewById(R.id.chk_oneday);
-		mChk_oneweek_salenum = (CheckBox) view.findViewById(R.id.ind_shouyemanagement_salenum).findViewById(R.id.chk_oneweek);
-		mChk_onemouth_salenum = (CheckBox) view.findViewById(R.id.ind_shouyemanagement_salenum).findViewById(R.id.chk_onemouth);
+		mRdoGroup_time_salenum = (RadioGroup) view.findViewById(R.id.ind_shouyemanagement_salenum).findViewById(R.id.rdoGroup_time);
+		mChk_oneday_salenum = (RadioButton) view.findViewById(R.id.ind_shouyemanagement_salenum).findViewById(R.id.rboButton_oneday);
+		mChk_oneweek_salenum = (RadioButton) view.findViewById(R.id.ind_shouyemanagement_salenum).findViewById(R.id.rboButton_oneweek);
+		mChk_onemouth_salenum = (RadioButton) view.findViewById(R.id.ind_shouyemanagement_salenum).findViewById(R.id.rboButton_onemouth);
 		mLlt_shouyemanagement_salenum_show = (LinearLayout) view.findViewById(R.id.llt_shouyemanagement_salenum_show);//销量排行内容
 		initViewSize();
 	}
@@ -89,16 +91,19 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 
 		mTv_shouyemanagement_flow_detail.setOnClickListener(this);
 		mTv_shouyemanagement_memberdetail.setOnClickListener(this);
+
+		mRdoGroup_time_cashier.setOnCheckedChangeListener(this);
+		mRdoGroup_time_salenum.setOnCheckedChangeListener(this);
 	}
 
 
-	public void getData(){
+	public void getData() {
 
 	}
 
 	@Override
 	public void onClick(View view) {
-		switch (view.getId()){
+		switch (view.getId()) {
 			case R.id.tv_shouyemanagement_pay://收款
 
 				break;
@@ -120,14 +125,31 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 		}
 	}
 
-	private void addFlowDetailView(int number){
+	private void addFlowDetailView(int number) {
 		mLlt_shouyemanagement_flow_show.removeAllViews();
-		if(number>3){
+		if (number > 3) {
 			number = 3;
 		}
-		for(int i=0;i<number;i++){
+		for (int i = 0; i < number; i++) {
 
 		}
 
+	}
+
+	@Override
+	public void onCheckedChanged(RadioGroup group, int checkedId) {
+		if(checkedId==mChk_oneday_cashier.getId()){
+			System.out.println("11");
+		}else if(checkedId==mChk_oneweek_cashier.getId()){
+			System.out.println("22");
+		}else if(checkedId==mChk_onemouth_cashier.getId()){
+			System.out.println("33");
+		}else if(checkedId==mChk_oneday_salenum.getId()){
+			System.out.println("44");
+		}else if(checkedId==mChk_oneweek_salenum.getId()){
+			System.out.println("55");
+		}else if(checkedId==mChk_onemouth_salenum.getId()){
+			System.out.println("66");
+		}
 	}
 }
