@@ -29,6 +29,7 @@ import com.lianbi.mezone.b.fragment.GlzxPagerFragment;
 import com.lianbi.mezone.b.fragment.JiaoYiGuanLiFragment;
 import com.lianbi.mezone.b.fragment.MineFragment;
 import com.lianbi.mezone.b.fragment.ShouYeFragment;
+import com.lianbi.mezone.b.fragment.ShouyeManagementFragment;
 import com.lianbi.mezone.b.httpresponse.API;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
@@ -1170,5 +1171,10 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 
 	public void reFShouP() {
 
+	}
+
+	public void setPosition(int position) {
+		ShouyeManagementFragment smf =new ShouyeManagementFragment();
+		smf.getData();
 	}
 }

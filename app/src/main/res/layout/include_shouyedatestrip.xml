@@ -32,6 +32,7 @@
         />
 
     <CheckBox
+        android:id="@+id/chk_oneday"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
@@ -43,6 +44,7 @@
         android:textColor="@color/white"/>
 
     <CheckBox
+        android:id="@+id/chk_oneweek"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
@@ -54,6 +56,7 @@
         android:textColor="@color/white"/>
 
     <CheckBox
+        android:id="@+id/chk_onemouth"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"

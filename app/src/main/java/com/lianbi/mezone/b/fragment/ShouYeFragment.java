@@ -66,7 +66,7 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 	private FrameLayout mFm_shouye_management,mFm_shouye_leagues;
 	private ShouyeManagementFragment mShouyeManagementFragment;
 	private ShouyeLeaguesFragment mShouyeLeaguesFragment;
-
+	private FragmentManager mFragmentManager;
 	/**
 	 * 刷新fm数据
 	 */
@@ -104,11 +104,11 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 	}
 
 	private void initFragment() {
-		FragmentManager fm = getFragmentManager();
+		mFragmentManager = getFragmentManager();
 		mShouyeManagementFragment = new ShouyeManagementFragment();
 		mShouyeLeaguesFragment = new ShouyeLeaguesFragment();
-		fm.beginTransaction().replace(R.id.fm_shouye_management,mShouyeManagementFragment).commit();
-		fm.beginTransaction().replace(R.id.fm_shouye_leagues,mShouyeLeaguesFragment).commit();
+		mFragmentManager.beginTransaction().replace(R.id.fm_shouye_management,mShouyeManagementFragment).commit();
+		mFragmentManager.beginTransaction().replace(R.id.fm_shouye_leagues,mShouyeLeaguesFragment).commit();
 	}
 
 
@@ -135,6 +135,7 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 				if(isChecked){
 					if(mRadioButton_management==buttonView){
 						mRadioButton_leagues.setChecked(false);
+						mActivity.setPosition(POSITION0);
 						changeFuncPage(POSITION0);
 					}else if(mRadioButton_leagues==buttonView){
 						mRadioButton_management.setChecked(false);
