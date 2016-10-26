@@ -15,15 +15,16 @@
         android:id="@+id/ind_shouyeLeagues_dynamic"
         layout="@layout/include_shouyestrip"
         />
-
-    <LinearLayout
-        android:id="@+id/llt_shouyeLeagues_flow_show"
+    <ViewFlipper
+        android:id="@+id/vf_shouyeleagues_dyn"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="wrap_content"
+        android:flipInterval="5000"
+        android:autoStart="true"
         android:background="@color/white"
-        android:orientation="vertical"
+        android:inAnimation="@anim/push_up_in"
+        android:outAnimation="@anim/push_up_out"
         />
-
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
@@ -60,7 +61,7 @@
             android:background="@color/colores_news_08"/>
 
         <TextView
-            android:id="@+id/tv_include_othertitle"
+            android:id="@+id/tv_leavemessage_dyn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -85,11 +86,20 @@
         android:id="@+id/ind_shouyeLeagues_hot"
         layout="@layout/include_shouyedatestrip"/>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/llt_shouyeLeagues_salenum_show"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:orientation="vertical"
+        android:layout_height="500dp"
         android:background="@color/white"
+        android:gravity="left"
+        >
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/piec_shouyeLeagues_dyn"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
         />
+    </RelativeLayout>
 </LinearLayout>

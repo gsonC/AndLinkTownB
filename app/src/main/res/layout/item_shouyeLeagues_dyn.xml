@@ -1,0 +1,40 @@
+ <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/lay_shouyeLeagues_dyn"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="top"
+    android:background="#ffffff"
+    android:paddingBottom="5dp"
+    android:paddingTop="5dp"
+   >
+   <RelativeLayout
+       android:id="@+id/ray_shouyeLeagues_item"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:paddingBottom="5dp"
+       >
+        <TextView
+            android:id="@+id/tv_shouyeLeagues_context"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="商圈商圈"
+            android:layout_marginTop="3dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentLeft="true"
+            android:textSize="16sp"
+            />
+       <ImageView
+           android:id="@+id/img_shouyeLeagues_icon"
+           android:layout_width="30dp"
+           android:layout_height="30dp"
+           android:layout_alignParentRight="true"
+           android:scaleType="fitXY"
+           android:background="#000000"
+           android:adjustViewBounds="true"
+           android:layout_marginRight="10dp"
+           />
+
+   </RelativeLayout>
+
+</LinearLayout> 
