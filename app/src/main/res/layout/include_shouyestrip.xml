@@ -24,5 +24,21 @@
         android:singleLine="true"
         android:text="交易流水"
         android:textColor="@color/colores_news_10"/>
-
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/tv_include_more"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="5dp"
+        android:layout_alignParentRight="true"
+        android:ellipsize="end"
+        android:gravity="right"
+        android:padding="10dp"
+        android:singleLine="true"
+        android:text="更多"
+        android:textColor="@color/color_008dda"/>
+    </RelativeLayout>
 </LinearLayout>
