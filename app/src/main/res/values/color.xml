@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="color_ff769c">#ff769c</color>
+    <color name="color_ffba1d">#ffba1d</color>
+    <color name="color_b390fc">#b390fc</color>
+    <color name="color_16cccd">#16cccd</color>
     <color name="color_414141">#414141</color>
     <color name="color_272727">#272727</color>
     <color name="color_fff">#fff</color>

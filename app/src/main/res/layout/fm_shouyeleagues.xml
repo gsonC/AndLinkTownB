@@ -7,14 +7,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="7dp"
+        android:layout_height="5dp"
         android:background="@color/white"/>
-
-
-    <include
-        android:id="@+id/ind_shouyeLeagues_dynamic"
-        layout="@layout/include_shouyestrip"
-        />
     <ViewFlipper
         android:id="@+id/vf_shouyeleagues_dyn"
         android:layout_width="match_parent"
@@ -25,20 +19,145 @@
         android:inAnimation="@anim/push_up_in"
         android:outAnimation="@anim/push_up_out"
         />
+
+    <include
+        android:id="@+id/ind_shouyeLeagues_dynamic"
+        layout="@layout/include_shouyestrip"
+        />
     <View
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
+        android:layout_height="1dp"
         android:background="@color/colores_news_14"/>
-
-    <TextView
-        android:id="@+id/tv_shouyeLeagues_flow_detail"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="@color/white"
-        android:gravity="center"
-        android:text="详情"
-        android:textColor="@color/colores_news_08"/>
-
+    <LinearLayout
+       android:id="@+id/lay_shouyeLeagues_dyn"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="vertical"
+       android:background="@color/white"
+        >
+        <LinearLayout
+            android:id="@+id/lay_shouyeLeagues_first"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            >
+        <ImageView
+            android:id="@+id/iv_shouyeLeagues_recruit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/icon_recruit"
+            android:layout_gravity="center_vertical"
+        />
+        <TextView
+                android:id="@+id/tv_shouyeLeagues_retitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:ellipsize="end"
+                android:paddingLeft="5dp"
+                android:paddingRight="10dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:singleLine="true"
+                android:text="松江商圈商圈商圈松江商圈商圈商圈松江商圈商圈商圈圈商圈商圈"
+                android:textColor="@color/colores_news_10"/>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/tv_shouyeLeagues_recontent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:ellipsize="end"
+            android:padding="10dp"
+            android:singleLine="true"
+            android:text="松江商圈商圈商圈松江商圈商圈商圈松江商圈商圈商圈圈商圈商圈"
+            android:textColor="@color/colores_news_10"/>
+        <LinearLayout
+            android:id="@+id/lay_shouyeLeagues_second"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            >
+            <ImageView
+                android:id="@+id/iv_shouyeLeagues_news"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_news"
+                android:layout_gravity="center_vertical"
+                />
+            <TextView
+                android:id="@+id/tv_shouyeLeagues_newtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="5dp"
+                android:ellipsize="end"
+                android:paddingLeft="5dp"
+                android:paddingRight="10dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:singleLine="true"
+                android:text="松江商圈商圈商圈松江商圈商圈商圈松江商圈商圈商圈圈商圈商圈"
+                android:textColor="@color/colores_news_10"/>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/tv_shouyeLeagues_newcontent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:ellipsize="end"
+            android:padding="10dp"
+            android:singleLine="true"
+            android:text="松江商圈商圈商圈松江商圈商圈商圈松江商圈商圈商圈圈商圈商圈"
+            android:textColor="@color/colores_news_10"/>
+        <LinearLayout
+            android:id="@+id/lay_shouyeLeagues_third"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            >
+            <ImageView
+                android:id="@+id/iv_shouyeLeagues_discount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_discount"
+                android:layout_gravity="center_vertical"
+                />
+            <TextView
+                android:id="@+id/tv_shouyeLeagues_discounttitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="5dp"
+                android:ellipsize="end"
+                android:paddingLeft="5dp"
+                android:paddingRight="10dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:singleLine="true"
+                android:text="松江商圈商圈商圈松江商圈商圈商圈松江商圈商圈商圈圈商圈商圈"
+                android:textColor="@color/colores_news_10"/>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/tv_shouyeLeagues_discountcontent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:ellipsize="end"
+            android:padding="10dp"
+            android:singleLine="true"
+            android:text="松江商圈商圈商圈松江商圈商圈商圈松江商圈商圈商圈圈商圈商圈"
+            android:textColor="@color/colores_news_10"/>
+    </LinearLayout>
 
     <View
         android:layout_width="match_parent"
@@ -49,7 +168,7 @@
         android:id="@+id/ind_shouyeLeagues_area"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:background="@color/white"
         android:orientation="horizontal"
         android:padding="3dp">
@@ -77,29 +196,283 @@
             android:layout_weight="1"
             />
     </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colores_news_14"/>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="@color/white"/>
-
-    <include
-        android:id="@+id/ind_shouyeLeagues_hot"
-        layout="@layout/include_shouyedatestrip"/>
-
-    <RelativeLayout
-        android:id="@+id/llt_shouyeLeagues_salenum_show"
-        android:layout_width="match_parent"
-        android:layout_height="500dp"
-        android:background="@color/white"
-        android:gravity="left"
-        >
-        <com.github.mikephil.charting.charts.PieChart
-            android:id="@+id/piec_shouyeLeagues_dyn"
-            android:layout_width="250dp"
-            android:layout_height="250dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/white">
+        <RelativeLayout
+            android:id="@+id/llt_shouyeLeagues_salenum_show"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:gravity="left"
             android:layout_marginLeft="10dp"
-        />
-    </RelativeLayout>
+            >
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/piec_shouyeLeagues_dyn"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                 />
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginRight="60dp"
+            android:layout_marginTop="30dp"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="30dp"
+            >
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                >
+                <View
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:background="@color/color_ff769c"
+                android:layout_gravity="center_vertical"
+                />
+                <TextView
+                android:id="@+id/tv_shouyeLeagues_restip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="餐饮  10"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="3dp"
+                />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:layout_marginTop="8dp"
+                >
+                <View
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:background="@color/color_ffba1d"
+                    android:layout_gravity="center_vertical"
+                />
+                    <TextView
+                    android:id="@+id/tv_shouyeLeagues_shoppingtip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="购物  10"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="3dp"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:layout_marginTop="8dp"
+            >
+                <View
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:background="@color/color_b390fc"
+                    android:layout_gravity="center_vertical"
+                    />
+            <TextView
+                android:id="@+id/tv_shouyeLeagues_staytip"
+                android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="住宿  10"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="3dp"
+                />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+            >
+            <View
+               android:layout_width="15dp"
+               android:layout_height="15dp"
+               android:background="@color/color_16cccd"
+               android:layout_gravity="center_vertical"
+            />
+            <TextView
+            android:id="@+id/tv_shouyeLeagues_othertip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="其他  10"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="3dp"
+            />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:background="@color/white"
+     android:orientation="horizontal"
+     android:paddingTop="10dp"
+     android:paddingBottom="10dp"
+     >
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginLeft="15dp"
+        android:padding="5dp"
+     >
+     <ImageView
+        android:id="@+id/iv_shouyeLeagues_restaurant"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/icon_rotate"
+     />
+        <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+     >
+     <TextView
+         android:id="@+id/tv_shouyeLeagues_restaurant"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:text="餐饮"
+     />
+     <TextView
+         android:id="@+id/tv_shouyeLeagues_resnum"
+         android:layout_below="@id/tv_shouyeLeagues_restaurant"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:text="+10"
+     />
+     </RelativeLayout>
+     </RelativeLayout>
+     <RelativeLayout
+         android:layout_width="0dp"
+         android:layout_height="wrap_content"
+         android:layout_weight="1"
+         android:layout_marginLeft="35dp"
+         android:padding="5dp"
+         >
+     <ImageView
+         android:id="@+id/iv_shouyeLeagues_shopping"
+         android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:src="@mipmap/icon_rotate"
+     />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            >
+         <TextView
+             android:id="@+id/tv_shouyeLeagues_shopping"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="购物"
+             />
+         <TextView
+             android:id="@+id/tv_shouyeLeagues_shopnum"
+             android:layout_below="@id/tv_shouyeLeagues_shopping"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="+10"
+             />
+          </RelativeLayout>
+     </RelativeLayout>
+     <RelativeLayout
+         android:layout_width="0dp"
+         android:layout_height="wrap_content"
+         android:layout_weight="1"
+         android:layout_marginLeft="35dp"
+         android:padding="5dp"
+         >
+     <ImageView
+         android:id="@+id/iv_shouyeLeagues_stay"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:src="@mipmap/icon_rotate"
+         />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            >
+         <TextView
+             android:id="@+id/tv_shouyeLeagues_stay"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="住宿"
+             />
+         <TextView
+             android:id="@+id/tv_shouyeLeagues_staynum"
+             android:layout_below="@id/tv_shouyeLeagues_stay"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="+10"
+             />
+     </RelativeLayout>
+        </RelativeLayout>
+     <RelativeLayout
+         android:layout_width="0dp"
+         android:layout_height="wrap_content"
+         android:layout_weight="1"
+         android:layout_marginLeft="35dp"
+         android:layout_marginRight="15dp"
+         android:padding="5dp"
+         >
+     <ImageView
+         android:id="@+id/iv_shouyeLeagues_other"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:src="@mipmap/icon_rotate"
+     />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            >
+        <TextView
+             android:id="@+id/tv_shouyeLeagues_other"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="其他"
+             />
+         <TextView
+             android:id="@+id/tv_shouyeLeagues_num"
+             android:layout_below="@id/tv_shouyeLeagues_other"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="+10"
+             />
+         </RelativeLayout>
+     </RelativeLayout>
+
+    </LinearLayout>
+
+
+
 </LinearLayout>
