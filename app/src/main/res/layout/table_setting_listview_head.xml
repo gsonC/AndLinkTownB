@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_ededed"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/view_1"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:background="@android:color/white">
+
+        <RelativeLayout
+            android:id="@+id/switch_state"
+            android:layout_width="112dp"
+            android:layout_height="26dp"
+            android:layout_centerInParent="true">
+
+            <View
+                android:id="@+id/handle"
+                android:layout_width="34dp"
+                android:layout_height="26dp"
+                android:background="@drawable/switch_handle_shape" />
+
+            <TextView
+                android:id="@+id/in_business_or_not"
+                android:layout_width="78dp"
+                android:layout_height="26dp"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/h15" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/view_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="11dp"
+        android:layout_marginTop="11dp"
+        android:background="@android:color/white"
+        android:orientation="horizontal"
+        android:paddingBottom="13dp"
+        android:paddingTop="13dp">
+
+        <LinearLayout
+            android:id="@+id/pay"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="50dp"
+                android:layout_height="50dp">
+
+                <ImageView
+                    android:layout_width="43dp"
+                    android:layout_height="43dp"
+                    android:layout_centerInParent="true"
+                    android:src="@mipmap/wallet" />
+
+                <TextView
+                    android:id="@+id/pay_num"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_alignParentRight="true"
+                    android:background="@mipmap/icon_redpoint"
+                    android:gravity="center"
+                    android:textColor="@android:color/white"
+                    android:textSize="8sp"
+                    android:visibility="invisible" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="消费结算"
+                android:textColor="@color/commo_text_color"
+                android:textSize="@dimen/h14" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/call"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="50dp"
+                android:layout_height="50dp">
+
+                <ImageView
+                    android:layout_width="43dp"
+                    android:layout_height="43dp"
+                    android:layout_centerInParent="true"
+                    android:src="@mipmap/call" />
+
+                <TextView
+                    android:id="@+id/call_num"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_alignParentRight="true"
+                    android:background="@mipmap/icon_redpoint"
+                    android:gravity="center"
+                    android:textColor="@android:color/white"
+                    android:textSize="8sp"
+                    android:visibility="invisible" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="呼叫服务"
+                android:textColor="@color/commo_text_color"
+                android:textSize="@dimen/h14" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/particulars"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="50dp"
+                android:layout_height="50dp">
+
+                <ImageView
+                    android:layout_width="43dp"
+                    android:layout_height="43dp"
+                    android:layout_centerInParent="true"
+                    android:src="@mipmap/service" />
+
+                <TextView
+                    android:id="@+id/particulars_num"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_alignParentRight="true"
+                    android:background="@mipmap/icon_redpoint"
+                    android:gravity="center"
+                    android:textColor="@android:color/white"
+                    android:textSize="8sp"
+                    android:visibility="invisible" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="到店明细"
+                android:textColor="@color/commo_text_color"
+                android:textSize="@dimen/h14" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view_3"
+        android:layout_width="match_parent"
+        android:layout_height="10.5dp"
+        android:background="@android:color/white" />
+</LinearLayout>

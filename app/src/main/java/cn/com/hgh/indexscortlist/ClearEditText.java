@@ -11,7 +11,9 @@ import android.view.View.OnFocusChangeListener;
 import android.widget.EditText;
 
 import com.xizhi.mezone.b.R;
-
+/*
+* 处理价格等需要显示钱款的输入框
+* */
 public class ClearEditText extends EditText implements OnFocusChangeListener,
 		TextWatcher {
 	/**

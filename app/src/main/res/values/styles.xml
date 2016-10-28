@@ -9,8 +9,9 @@
         <item name="android:windowBackground">@color/transparent</item>
         <item name="android:backgroundDimEnabled">false</item>
     </style>
+
     <style name="Theme.CustomDialog1" parent="android:style/Theme.Dialog">
-       <!-- <item name="android:windowBackground">@drawable/filled_box_1</item>-->
+        <!-- <item name="android:windowBackground">@drawable/filled_box_1</item>-->
         <item name="android:windowNoTitle">true</item>
     </style>
     <!-- dialog -->
@@ -94,6 +95,7 @@
     <style name="RadioButtonStyles">
         <item name="android:button">@drawable/rb_selected</item>
     </style>
+
     <style name="RadioButtonGreenStyles">
         <item name="android:button">@drawable/rb_greenselected</item>
     </style>
@@ -110,5 +112,15 @@
         <item name="android:button">@null</item>
         <item name="android:paddingLeft">5dp</item>
         <item name="android:paddingRight">5dp</item>
+    </style>
+    <!--TableHasPaidActivity中TextView的style-->
+    <style name="TableHasPaidActivity_TextView_Style">
+        <item name="android:layout_marginBottom">11dp</item>
+        <item name="android:layout_marginLeft">11dp</item>
+        <item name="android:layout_marginRight">11dp</item>
+        <item name="android:background">@drawable/activity_table_has_paid_shape</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/h13</item>
+        <item name="android:textColor">@color/commo_text_color</item>
     </style>
 </resources>
