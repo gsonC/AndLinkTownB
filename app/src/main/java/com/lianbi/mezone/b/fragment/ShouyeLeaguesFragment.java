@@ -30,6 +30,7 @@ import android.widget.ViewFlipper;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
@@ -157,6 +158,7 @@ public class ShouyeLeaguesFragment extends Fragment {
         piec_shouyeLeagues_dyn.getDescription().setEnabled(false);
         piec_shouyeLeagues_dyn.setExtraOffsets(5, 10, 5, 5);
         piec_shouyeLeagues_dyn.setDragDecelerationFrictionCoef(0.95f);
+        piec_shouyeLeagues_dyn.setExtraOffsets(20.f, 0.f, 20.f, 0.f);
         piec_shouyeLeagues_dyn.setDrawHoleEnabled(true);
         piec_shouyeLeagues_dyn.setHoleColor(Color.WHITE);
         piec_shouyeLeagues_dyn.setTransparentCircleColor(Color.WHITE);
@@ -168,6 +170,13 @@ public class ShouyeLeaguesFragment extends Fragment {
         piec_shouyeLeagues_dyn.setRotationEnabled(true);
         piec_shouyeLeagues_dyn.setHighlightPerTapEnabled(true);
         setData(4, 100);
+        piec_shouyeLeagues_dyn.animateY(1400, Easing.EasingOption.EaseInOutQuad);
+        Legend l = piec_shouyeLeagues_dyn.getLegend();
+        l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
+        l.setOrientation(Legend.LegendOrientation.VERTICAL);
+        l.setDrawInside(false);
+        l.setEnabled(false);
         piec_shouyeLeagues_dyn.animateY(1400, Easing.EasingOption.EaseInOutQuad);
         for (int i = 0; i < COLUMN_COUNT; i++) {
             vfShouyeleaguesDyn.addView(getLinearLayout(i));
@@ -215,7 +224,7 @@ public class ShouyeLeaguesFragment extends Fragment {
             entries.add(new PieEntry((float) ((Math.random() * mult) + mult / 5), mParties[i % mParties.length]));
         }
         PieDataSet dataSet = new PieDataSet(entries, "Election Results");
-        dataSet.setSliceSpace(3f);
+        dataSet.setSliceSpace(0f);
         dataSet.setSelectionShift(5f);
         ArrayList<Integer> colors = new ArrayList<Integer>();
         for (int c : ColorTemplate.VORDIPLOM_COLORS)
@@ -235,10 +244,7 @@ public class ShouyeLeaguesFragment extends Fragment {
         data.setValueTextSize(11f);
         data.setValueTextColor(Color.WHITE);
         piec_shouyeLeagues_dyn.setData(data);
-
-        // undo all highlights
         piec_shouyeLeagues_dyn.highlightValues(null);
-
         piec_shouyeLeagues_dyn.invalidate();
     }
 

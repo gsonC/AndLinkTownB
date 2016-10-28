@@ -4,37 +4,13 @@
     android:layout_height="wrap_content"
     android:layout_gravity="top"
     android:background="#ffffff"
-    android:paddingBottom="15dp"
-    android:paddingTop="15dp"
    >
    <LinearLayout
        android:id="@+id/ray_shouyeLeagues_item"
        android:layout_width="match_parent"
        android:layout_height="60dp"
-       android:paddingBottom="5dp"
        android:orientation="horizontal"
    >
-       <ImageView
-           android:id="@+id/iv_shouyeLeagues_yell"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_alignParentLeft="true"
-           android:scaleType="fitXY"
-           android:src="@mipmap/icon_yell"
-           android:adjustViewBounds="true"
-           android:layout_marginLeft="10dp"
-           />
-       <View
-           android:id="@+id/v_shouyeLeagues_01"
-           android:layout_toRightOf="@id/iv_shouyeLeagues_yell"
-           android:layout_width="1dp"
-           android:layout_marginLeft="8dp"
-           android:layout_marginRight="8dp"
-           android:layout_height="match_parent"
-           android:layout_marginTop="5dp"
-           android:layout_marginBottom="5dp"
-           android:background="@color/colores_news_14"
-           />
        <TextView
             android:id="@+id/tv_shouyeLeagues_context"
             android:layout_width="0dp"
