@@ -27,7 +27,6 @@ import com.lianbi.mezone.b.photo.FileUtils;
 import com.lianbi.mezone.b.photo.PhotoUtills;
 import com.lianbi.mezone.b.photo.PickImageDescribe;
 import com.lianbi.mezone.b.photo.PopupWindowHelper;
-import com.lzy.okgo.OkGo;
 import com.xizhi.mezone.b.R;
 
 import org.json.JSONException;
@@ -46,6 +45,7 @@ import cn.com.hgh.utils.FilePathGet;
 import cn.com.hgh.utils.Picture_Base64;
 import cn.com.hgh.utils.REGX;
 import cn.com.hgh.utils.Result;
+import cn.com.hgh.view.AddressPopView;
 
 /**
  * 新增商铺
@@ -72,14 +72,15 @@ public class AddShopActivity extends BaseActivity {
 	private List<ProvinceBean> provinceBeans = new ArrayList<ProvinceBean>();
 	private String province;
 	private String provinceId;
+	private AddressPopView mAddressPopView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.act_add_shop, HAVETYPE);
 		initView();
-		initPickView();
-		initAdapter();
+		//initPickView2();
+		//initAdapter();
 		setLisenter();
 	}
 
@@ -135,8 +136,30 @@ public class AddShopActivity extends BaseActivity {
 			startActivityForResult(intent_map, REQUEST_ADDRESS);
 			break;
 		case R.id.llt_my_shop_address2:
-			getProvince();
-			pickImage();
+			//getProvince();
+			//pickImage();
+
+			mAddressPopView = new AddressPopView(AddShopActivity.this, new OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					switch (view.getId()){
+						case R.id.tv_guanbi:
+							mAddressPopView.dismiss();
+							break;
+						case R.id.tv_wancheng:
+							String province =mAddressPopView.mCurrentProviceName;//省
+							String city =mAddressPopView.mCurrentCityName;//市
+							String county = mAddressPopView.mCurrentDistrictName;//县
+							String zipcode = mAddressPopView.mCurrentZipCode;//邮编
+							mAddressPopView.dismiss();
+							break;
+					}
+				}
+			});
+
+			mAddressPopView.showAtLocation(AddShopActivity.this
+					.findViewById(R.id.llt_my_shop_address2), Gravity.BOTTOM
+					| Gravity.CENTER_HORIZONTAL, 0, 0);
 			break;
 		case R.id.llt_add_shop_img:
 			photoUtills.pickImage();
@@ -173,7 +196,7 @@ public class AddShopActivity extends BaseActivity {
 				Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM, 0, 0);
 	}
 
-	public void initPickView() {
+	public void initPickView2() {
 		pickView = View.inflate(this, R.layout.provincepop, null);
 		lv_province_pop = (ListView) pickView
 				.findViewById(R.id.lv_province_pop);

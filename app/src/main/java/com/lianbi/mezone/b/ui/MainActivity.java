@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -29,6 +28,7 @@ import com.lianbi.mezone.b.fragment.GlzxPagerFragment;
 import com.lianbi.mezone.b.fragment.JiaoYiGuanLiFragment;
 import com.lianbi.mezone.b.fragment.MineFragment;
 import com.lianbi.mezone.b.fragment.ShouYeFragment;
+import com.lianbi.mezone.b.fragment.ShouyeLeaguesFragment;
 import com.lianbi.mezone.b.fragment.ShouyeManagementFragment;
 import com.lianbi.mezone.b.httpresponse.API;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
@@ -39,9 +39,6 @@ import com.lianbi.mezone.b.push.PushDemoReceiver;
 import com.lianbi.mezone.b.receiver.BDLocation_interface;
 import com.lianbi.mezone.b.receiver.Downloader;
 import com.xizhi.mezone.b.R;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -78,6 +75,8 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 	 * 店铺位置经纬度
 	 */
 	Double mLongitude, mLatitude;
+	private ShouyeManagementFragment mShouyeManagementFragment;
+	private ShouyeLeaguesFragment mShouyeLeaguesFragment;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +86,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 
 		initView();
 
-		initPickView();
+		//initPickView();
 
 		initFragment();
 
@@ -101,8 +100,6 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 
 		LocationUtills.initLocationClient(this, this);
 
-		getServiceMall();
-
 		postCID();
 
 		getUpData();
@@ -115,71 +112,6 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 	}
 
 	private ArrayList<ShouyeServiceBean> mDatas = new ArrayList<ShouyeServiceBean>();
-
-	/**
-	 * 获取已有的服务商城列表
-	 */
-	public void getServiceMall() {
-		if (ContentUtils.getLoginStatus(this)
-				&& !TextUtils.isEmpty(userShopInfoBean.getBusinessId())) {
-			okHttpsImp.getMoreServerMall(new MyResultCallback<String>() {
-
-				@Override
-				public void onResponseResult(Result result) {
-					String reString = result.getData();
-					if (!TextUtils.isEmpty(reString)) {
-						try {
-							JSONObject jsonObject = new JSONObject(reString);
-							reString = jsonObject.getString("appsList");
-							if (null != reString) {
-								mDatas.clear();
-								mDatas = (ArrayList<ShouyeServiceBean>) JSON
-										.parseArray(reString,
-												ShouyeServiceBean.class);
-
-								typeUserDownload(mDatas);
-
-								ShouyeServiceBean service = new ShouyeServiceBean();
-								service.setDefaultservice(2);
-								service.setAppName("收款");
-								service.setId(99);
-								service.setAppCode("shoukuan");
-								mDatas.add(0, service);
-
-								ShouyeServiceBean endservie = new ShouyeServiceBean();
-								endservie.setDefaultservice(1);
-								endservie.setAppName("服务商城");
-								endservie.setId(100);
-								endservie.setAppCode("fuwushangcheng");
-								mDatas.add(mDatas.size(), endservie);
-								setFill();
-
-							//	((ShouYeFragment) fm_shouye)
-							//			.getServiceMall(mDatas);
-							}
-						} catch (JSONException e) {
-							e.printStackTrace();
-						}
-					}
-				}
-
-				@Override
-				public void onResponseFailed(String msg) {
-					filltheseats();
-				}
-			}, BaseActivity.userShopInfoBean.getBusinessId());
-		} else {
-
-			new Handler().postDelayed(new Runnable() {
-
-				@Override
-				public void run() {
-					filltheseats();
-				}
-			}, 50);
-
-		}
-	}
 
 	/**
 	 * 根据用户下载服务对应订单管理显示对应订单项
@@ -226,57 +158,6 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 	}
 
 	/**
-	 * 用户已下载服务添加收款和服务商城
-	 */
-	public void filltheseats() {
-		mDatas.clear();
-		ShouyeServiceBean service = new ShouyeServiceBean();
-		service.setDefaultservice(2);
-		service.setAppName("收款");
-		service.setId(99);
-		service.setAppCode("shoukuan");
-		mDatas.add(service);
-
-		ShouyeServiceBean endservie = new ShouyeServiceBean();
-		endservie.setIcoUrl("http");
-		endservie.setDefaultservice(1);
-		endservie.setAppName("服务商城");
-		endservie.setId(100);
-		endservie.setAppCode("fuwushangcheng");
-		mDatas.add(endservie);
-		setFill();
-		//((ShouYeFragment) fm_shouye).getServiceMall(mDatas);
-	}
-
-	/**
-	 * 补位填充
-	 */
-	public void setFill() {
-		if (0 != mDatas.size() % 4) {
-			int numfill = 0;
-			switch (mDatas.size() % 4) {
-				case 1:
-					numfill = 3;
-					break;
-				case 2:
-					numfill = 2;
-					break;
-				case 3:
-					numfill = 1;
-					break;
-			}
-			for (int i = 0; i < numfill; i++) {
-				ShouyeServiceBean filltheseats2 = new ShouyeServiceBean();
-				filltheseats2.setDefaultservice(-1);
-				filltheseats2.setAppName("");
-				filltheseats2.setId(-1);
-				filltheseats2.setAppCode("");
-				mDatas.add(filltheseats2);
-			}
-		}
-	}
-
-	/**
 	 * 个推服务初始化
 	 */
 	private void initGetui() {
@@ -289,8 +170,6 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 				PushDemoReceiver.payloadData.length());
 		super.onDestroy();
 	}
-
-
 
 	/**
 	 * status 1:已更新；2：自定义更新；3：必须更新
@@ -859,7 +738,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 				// refreshFMData();
 				// break;
 				case SERVICEMALLSHOP_CODE: //服务商城返回
-					getServiceMall();
+					//getServiceMall();
 					break;
 			}
 		}
@@ -1058,7 +937,6 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 	 */
 	private void initView() {
 		titleShouYe();
-
 		fm_funcpage0 = (FrameLayout) findViewById(R.id.fm_funcpage0);
 		fm_funcpage1 = (FrameLayout) findViewById(R.id.fm_funcpage1);
 		fm_funcpage2 = (FrameLayout) findViewById(R.id.fm_funcpage2);
@@ -1068,6 +946,8 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 		rb_caiwushi = (RadioButton) findViewById(R.id.rb_caiwushi);
 		rb_mine = (RadioButton) findViewById(R.id.rb_mine);
 		img_main_red = (ImageView) findViewById(R.id.img_main_red);
+		mShouyeManagementFragment = new ShouyeManagementFragment();
+		mShouyeLeaguesFragment = new ShouyeLeaguesFragment();
 	}
 
 	/**
@@ -1166,15 +1046,22 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 		userShopInfoBean.getSharePreString();
 		initCommonParameter();
 		MainActivity.this.refreshFMData();
-		getServiceMall();
 	}
 
 	public void reFShouP() {
 
 	}
 
-	public void setPosition(int position) {
-		ShouyeManagementFragment smf =new ShouyeManagementFragment();
-		smf.getData();
+	/**
+	 * 首页下拉刷新
+	 * @param position 代表第几页
+	 */
+	public void SwipeRefreshShouyeData(int position){
+		if(POSITION0 == position){
+			mShouyeManagementFragment.SwipeRefreshData();
+		}else{
+
+		}
+
 	}
 }

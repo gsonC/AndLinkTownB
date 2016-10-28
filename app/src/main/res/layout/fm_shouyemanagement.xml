@@ -7,61 +7,118 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="7dp"
-        android:background="@color/white"/>
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:clickable="true"
+        android:layout_marginTop="3dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:scaleType="centerInside"
+            android:src="@mipmap/mine_gongnengjieshao"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:text="到店服务"
+            android:textColor="@color/colores_news_10"
+            android:textSize="15sp"/>
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:scaleType="centerInside"
+            android:src="@mipmap/service_new_right"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line"
+        android:background="@color/colores_news_14"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:padding="10dp"
+        android:orientation="horizontal"
+        android:paddingTop="18dp"
+        android:paddingBottom="13dp"
         >
 
-        <TextView
-            android:id="@+id/tv_shouyemanagement_pay"
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawablePadding="4dp"
-            android:drawableTop="@mipmap/icon_jygl"
             android:gravity="center"
-            android:text="收款"/>
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_shouyemanagement_callservice"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawablePadding="4dp"
-            android:drawableTop="@mipmap/icon_jygl"
-            android:gravity="center"
-            android:text="呼叫服务"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="centerInside"
+                android:src="@mipmap/order_record"
+                />
 
-        <TextView
-            android:id="@+id/tv_shouyemanagement_inshopdetail"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawablePadding="4dp"
-            android:drawableTop="@mipmap/icon_jygl"
-            android:gravity="center"
-            android:text="到店明细"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="9dp"
+                android:text="客户买单"/>
 
-        <TextView
-            android:id="@+id/tv_shouyemanagement_inshopservice"
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawablePadding="4dp"
-            android:drawableTop="@mipmap/icon_jygl"
             android:gravity="center"
-            android:text="到店服务"/>
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="centerInside"
+                android:src="@mipmap/order_record"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="9dp"
+                android:text="响应呼叫"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="centerInside"
+                android:src="@mipmap/order_record"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="9dp"
+                android:text="消费流水"/>
+        </LinearLayout>
+
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="7dp"
-        android:background="@color/white"/>
 
     <include
         android:id="@+id/ind_shouyemanagement_flow"
@@ -74,6 +131,7 @@
         android:layout_height="200dp"
         android:background="@color/white"
         android:orientation="vertical"
+        android:visibility="gone"
         />
 
     <View
@@ -81,82 +139,12 @@
         android:layout_height="0.5dp"
         android:background="@color/colores_news_14"/>
 
-    <TextView
-        android:id="@+id/tv_shouyemanagement_flow_detail"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="@color/white"
-        android:gravity="center"
-        android:text="详情"
-        android:textColor="@color/colores_news_08"/>
 
-    <include
-        android:id="@+id/ind_shouyemanagement_membernum"
-        layout="@layout/include_shouyestrip"
-        />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:orientation="horizontal"
-        android:padding="10dp">
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/tv_shouyemanagement_nummember"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="1000"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="会员总数"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/tv_shouyemanagement_addmember"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="1000"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="今日新增"/>
-
-        </LinearLayout>
-
-    </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:background="@color/colores_news_14"/>
-
-    <TextView
-        android:id="@+id/tv_shouyemanagement_memberdetail"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="@color/white"
-        android:gravity="center"
-        android:text="详情"
-        android:textColor="@color/colores_news_08"/>
 
     <include
         android:id="@+id/ind_shouyemanagement_cashier"
@@ -165,7 +153,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:background="@color/white"/>
+        android:background="@color/white"
+        android:visibility="gone"/>
 
     <include
         android:id="@+id/ind_shouyemanagement_salenum"
@@ -175,7 +164,22 @@
         android:id="@+id/llt_shouyemanagement_salenum_show"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:orientation="vertical"
         android:background="@color/white"
-/>
+        android:orientation="vertical"
+        android:visibility="gone"
+        />
+
+    <include
+        android:id="@+id/ind_shouyemanagement_membernum"
+        layout="@layout/include_shouyestrip"
+        />
+
+
+
+
+    <include
+        android:id="@+id/ind_shouyeLeagues_apprec"
+        layout="@layout/include_shouyemanagement_apprec"
+        />
+
 </LinearLayout>

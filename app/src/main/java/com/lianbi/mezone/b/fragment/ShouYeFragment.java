@@ -135,7 +135,6 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 				if(isChecked){
 					if(mRadioButton_management==buttonView){
 						mRadioButton_leagues.setChecked(false);
-						mActivity.setPosition(POSITION0);
 						changeFuncPage(POSITION0);
 					}else if(mRadioButton_leagues==buttonView){
 						mRadioButton_management.setChecked(false);
@@ -151,7 +150,8 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 
 			@Override
 			public void onRefresh() {
-				getAadver();
+				//getAadver();
+				mActivity.SwipeRefreshShouyeData(clickPosition);
 				swipe_shouye.setRefreshing(false);
 			}
 		});
