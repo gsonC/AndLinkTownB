@@ -1,5 +1,6 @@
 package com.lianbi.mezone.b.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,6 +61,8 @@ public class DiningTableSettingActivity extends BaseActivity implements
     private List<OneItemTableSetBean> data = new ArrayList<>();
 
     private boolean isInBusiness;
+
+    private static final int REQUEST_CODE_ADDTABLE_RESULT = 1010;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -222,17 +225,21 @@ public class DiningTableSettingActivity extends BaseActivity implements
             case R.id.menu_setting:
                 break;
             case R.id.add_table:
+                startActivityForResult(new Intent(this, AddTablesetActivity.class), REQUEST_CODE_ADDTABLE_RESULT);
                 break;
             case R.id.delete_table:
                 break;
             case R.id.switch_state:
                 changeBusinessState();
                 break;
-            case R.id.pay:
+            case R.id.pay://消费结算
+                startActivity(new Intent(DiningTableSettingActivity.this, ConsumptionSettlementActivity.class));
                 break;
-            case R.id.call:
+            case R.id.call://呼叫服务
+                startActivity(new Intent(DiningTableSettingActivity.this, CallServiceActivity.class));
                 break;
-            case R.id.particulars:
+            case R.id.particulars://到店明细
+                startActivity(new Intent(DiningTableSettingActivity.this, ComeDetailActivity.class));
                 break;
         }
     }
@@ -272,5 +279,16 @@ public class DiningTableSettingActivity extends BaseActivity implements
         view2.setBackgroundColor(getResources().getColor(color));
         view3.setBackgroundColor(getResources().getColor(color));
         table_list_view.setBackgroundColor(getResources().getColor(color));
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case REQUEST_CODE_ADDTABLE_RESULT:// 添加桌子
+                    break;
+            }
+        }
     }
 }
