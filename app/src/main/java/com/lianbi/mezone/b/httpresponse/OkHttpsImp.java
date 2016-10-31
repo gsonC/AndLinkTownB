@@ -208,7 +208,86 @@ public enum OkHttpsImp {
 		String url = getAbsoluteUrl(API.GETADVERT);
 		postNoProgressResponse(myResultCallback, params, url);
 	}
-
+	/**
+	 * 获取吆喝
+	 *
+	 * @throws
+	 */
+	public void getAddBusinessDynamic(String businessId,
+									 String area,
+									 String businessCircle,
+									 String messageType,
+									 String pushScope,
+									 String author,
+									 String phone,
+									 String messageTitle,
+									 String messageContent,
+									 String provinces,
+									 String city,
+									 String serNum, String source,
+									 String reqTime,
+									 MyResultCallback<String> myResultCallback
+									 ) throws Exception {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("businessId", businessId);
+		params.put("area", area);
+		params.put("businessCircle", businessCircle);
+		params.put("messageType", messageType);
+		params.put("pushScope", pushScope);
+		params.put("author", author);
+		params.put("phone", phone);
+		params.put("messageTitle", messageTitle);
+		params.put("messageContent", messageContent);
+		params.put("provinces", provinces);
+		params.put("city", city);
+		params.put("reqTime", reqTime);
+		params.put("serNum", serNum);
+		params.put("source", source);
+		String sign = getSign(md5_key, params);
+		params.put("sign", sign);
+		String url = getAbsoluteUrl(API.ADD_LEAGUES_YELL);
+		postNoProgressResponse(myResultCallback, params, url);
+	}
+	/**
+	 * 查询商圈动态
+	 *
+	 * @throws
+	 */
+	public void queryBusinessDynamic(String businessId,
+									 String area,
+									 String businessCircle,
+									 String messageType,
+									 String pushScope,
+									 String author,
+									 String phone,
+									 String messageTitle,
+									 String messageContent,
+									 String pageNum,
+									 String pageSize,
+									 String serNum, String source,
+									 String reqTime,
+									 MyResultCallback<String> myResultCallback
+	) throws Exception {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("businessId", businessId);
+		params.put("area", area);
+		params.put("businessCircle", businessCircle);
+		params.put("messageType", messageType);
+		params.put("pushScope", pushScope);
+		params.put("author", author);
+		params.put("phone", phone);
+		params.put("messageTitle", messageTitle);
+		params.put("messageContent", messageContent);
+		params.put("pageNum", pageNum);
+		params.put("pageSize", pageSize);
+		params.put("reqTime", reqTime);
+		params.put("serNum", serNum);
+		params.put("source", source);
+		String sign = getSign(md5_key, params);
+		params.put("sign", sign);
+		String url = getAbsoluteUrl(API.QUERY_LEAGUES_DYNAMIC);
+		postNoProgressResponse(myResultCallback, params, url);
+	}
 	/**
 	 * 意见反馈
 	 *

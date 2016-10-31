@@ -721,5 +721,9 @@ public class API {
 	public static final String QUERY_AMT_CONFIG = "finance/queryAmtConfig.do";
 	/* 提现状态 */
 	public static final String QUERY_WITHDRAW_STATS = "finance/queryWithdrawStats.do";
+	/* 商圈吆喝接口 */
+	public static final String ADD_LEAGUES_YELL = "business/addBusinessDynamic.do";
+	/* 查询商圈动态 */
+	public static final String QUERY_LEAGUES_DYNAMIC = "business/queryBusinessDynamic.do";
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
