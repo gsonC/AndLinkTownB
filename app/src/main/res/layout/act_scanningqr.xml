@@ -1,45 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center_horizontal"
     android:background="@color/white"
-    android:orientation="vertical" >
-
-    <TextView
-        android:id="@+id/tv_tablename"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:gravity="center_horizontal"
-        android:text="1号桌"
-        android:textSize="16sp" />
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context="com.lianbi.mezone.b.ui.ScanningQRActivity">
 
     <ImageView
         android:id="@+id/iv_scanningqr"
         android:layout_width="250dp"
         android:layout_height="250dp"
-        android:layout_marginTop="20dp"
-        />
-<!-- android:background="@drawable/icon_erweima"  -->
-    <TextView
-        android:layout_width="match_parent"
+        android:layout_marginTop="50dp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:gravity="center_horizontal"
-        android:text="@string/scanningqr"
-        android:textSize="16sp" />
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="50dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_tablename"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="50dp"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="空桌"
+            android:textSize="16sp" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/tv_keepqr"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:padding="5dp"
-        android:gravity="center_horizontal"
-        android:text="@string/keepqr"
+        android:layout_marginTop="50dp"
         android:background="@drawable/shape_search_date_edt_bg_new"
+        android:gravity="center_horizontal"
+        android:padding="5dp"
+        android:text="@string/keepqr"
         android:textColor="@color/color_555555"
         android:textSize="16sp" />
-    
 </LinearLayout>

@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colores_news_14" >
+    android:background="@color/colores_news_14"
+    tools:context="com.lianbi.mezone.b.ui.AddTablesetActivity">
 
     <ImageView
         android:id="@+id/imageView1"
@@ -17,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="160dp"
         android:layout_alignParentBottom="true"
-        android:background="@color/white" >
+        android:background="@color/white">
 
         <TextView
             android:id="@+id/tv_addtableset"
@@ -41,14 +43,29 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/imageView1"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="67dp"
+        android:layout_marginTop="45dp"
         android:background="@drawable/shap_navy"
         android:ems="10"
         android:gravity="center"
-        android:maxLength="4"
         android:hint="请输入桌位名称"
+        android:maxLength="4"
         android:padding="5dp"
         android:textColor="@color/white"
         android:textColorHint="@color/white" />
 
+    <cn.com.hgh.view.ContainsEmojiEditText
+        android:id="@+id/et_table_persion_num"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/et_tablename"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/shap_navy"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="请输入用餐人数"
+        android:maxLength="4"
+        android:padding="5dp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white" />
 </RelativeLayout>
