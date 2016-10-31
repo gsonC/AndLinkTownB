@@ -1,13 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.lianbi.mezone.b.ui.CallServiceActivity">
+    android:orientation="vertical"
+    android:background="@color/colores_news_14"
 
-</RelativeLayout>
+    >
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:layout_marginTop="10dp"
+      >
+      <FrameLayout
+          android:id="@+id/all_container"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:background="@color/color_3987fd">
+          
+          <TextView
+              android:id="@+id/tv_all"
+              android:layout_width="match_parent"
+              android:layout_height="45dp"
+              android:layout_marginBottom="1dp"
+              android:background="@color/white"
+              android:gravity="center"
+              android:text="全部"
+              android:textColor="@color/color_3987fd"
+              android:textSize="15sp"/>
+          
+      </FrameLayout>
+      <FrameLayout
+          android:id="@+id/valid_container"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1">
+
+          <TextView
+              android:id="@+id/tv_vaild"
+              android:layout_width="match_parent"
+              android:layout_height="45dp"
+              android:layout_marginBottom="1dp"
+              android:background="@color/white"
+              android:gravity="center"
+              android:text="已处理"
+              android:textColor="@color/color_3987fd"
+              android:textSize="15sp"/>
+
+      </FrameLayout>
+      <FrameLayout
+          android:id="@+id/invalid_container"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1">
+
+          <TextView
+              android:id="@+id/tv_invalid"
+              android:layout_width="match_parent"
+              android:layout_height="45dp"
+              android:layout_marginBottom="1dp"
+              android:background="@color/white"
+              android:gravity="center"
+              android:text="未处理"
+              android:textColor="@color/color_3c78d8"
+              android:textSize="15sp"/>
+
+      </FrameLayout>
+
+
+  </LinearLayout>
+    <cn.com.hgh.view.AbPullToRefreshView
+        android:id="@+id/pull_to_refresh_coupon_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/iv_empty_act_coupon_detail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerInside"
+            android:src="@mipmap/iv_empty" />
+
+        <ListView
+            android:id="@+id/coupon_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@color/color_e3e3e3"
+            android:dividerHeight="1dp"
+            android:scrollbars="none" />
+    </cn.com.hgh.view.AbPullToRefreshView>
+
+</LinearLayout>

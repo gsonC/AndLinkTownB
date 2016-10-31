@@ -19,6 +19,7 @@ import com.lianbi.mezone.b.bean.WebProductManagementBean;
 import com.lianbi.mezone.b.httpresponse.API;
 import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
 import com.lianbi.mezone.b.ui.BaseActivity;
+import com.lianbi.mezone.b.ui.BusinessMarketingActivity;
 import com.lianbi.mezone.b.ui.DiningTableSettingActivity;
 import com.lianbi.mezone.b.ui.MainActivity;
 import com.lianbi.mezone.b.ui.ServiceMallActivity;
@@ -180,6 +181,10 @@ public class WisdomManagerFragment extends Fragment implements OnClickListener {
 
 				break;
 			case R.id.ll_wisdommanage_marketing://商户营销
+				re = JumpIntent.jumpLogin_addShop(isLogin, API.SWEEP, mMainActivity);
+				if (re) {
+					startActivity(new Intent(getActivity(), BusinessMarketingActivity.class));
+				}
 
 				break;
 			case R.id.ll_wisdommanage_features://店铺特色
