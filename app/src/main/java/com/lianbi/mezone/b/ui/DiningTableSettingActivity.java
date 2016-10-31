@@ -1,5 +1,6 @@
 package com.lianbi.mezone.b.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -228,11 +229,14 @@ public class DiningTableSettingActivity extends BaseActivity implements
             case R.id.switch_state:
                 changeBusinessState();
                 break;
-            case R.id.pay:
+            case R.id.pay://消费结算
+                startActivity(new Intent(DiningTableSettingActivity.this, ConsumptionSettlementActivity.class));
                 break;
-            case R.id.call:
+            case R.id.call://呼叫服务
+                startActivity(new Intent(DiningTableSettingActivity.this, CallServiceActivity.class));
                 break;
-            case R.id.particulars:
+            case R.id.particulars://到店明细
+                startActivity(new Intent(DiningTableSettingActivity.this, ComeDetailActivity.class));
                 break;
         }
     }

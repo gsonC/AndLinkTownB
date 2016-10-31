@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_table_has_paid"
+    android:id="@+id/activity_table_has_ordered"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_ededed"
@@ -19,7 +19,6 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="11dp"
-            android:text="大唐亿豪宅"
             android:textColor="@color/commo_text_color"
             android:textSize="@dimen/h15" />
 
@@ -32,16 +31,6 @@
             android:layout_marginRight="11dp"
             android:text="未支付"
             android:textColor="#3987fd"
-            android:textSize="@dimen/h15" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="15dp"
-            android:layout_toLeftOf="@id/has_paid"
-            android:text="已点单"
-            android:textColor="@color/commo_text_color"
             android:textSize="@dimen/h15" />
     </RelativeLayout>
 
@@ -67,7 +56,6 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/gong"
-            android:text="2"
             android:textColor="@color/commo_text_color"
             android:textSize="@dimen/h15" />
 
@@ -87,12 +75,11 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="11dp"
-            android:text="22.5"
             android:textColor="#ff7e00"
             android:textSize="@dimen/h15" />
 
         <TextView
-            android:id="@+id/yuan"
+            android:id="@+id/yuan_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -106,45 +93,51 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
-            android:layout_toLeftOf="@id/yuan"
+            android:layout_toLeftOf="@id/yuan_1"
             android:text="合计:"
             android:textColor="@color/commo_text_color"
             android:textSize="@dimen/h15" />
     </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        android:orientation="horizontal">
+        android:layout_height="45dp"
+        android:layout_marginTop="1dp"
+        android:background="@android:color/white">
 
         <TextView
-            android:id="@+id/cancel_order"
-            style="@style/TableHasPaidActivity_TextView_Style"
-            android:layout_width="0dp"
-            android:layout_height="30dp"
-            android:layout_weight="1"
-            android:text="取消订单" />
+            android:id="@+id/actually_paid_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="11dp"
+            android:textColor="#ff7e00"
+            android:textSize="@dimen/h15" />
 
         <TextView
-            android:id="@+id/order_price_change"
-            style="@style/TableHasPaidActivity_TextView_Style"
-            android:layout_width="0dp"
-            android:layout_height="30dp"
-            android:layout_weight="1"
-            android:text="订单改价" />
+            android:id="@+id/yuan_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/actually_paid_amount"
+            android:text="¥"
+            android:textColor="#ff7e00"
+            android:textSize="@dimen/h15" />
 
         <TextView
-            android:id="@+id/print_ticket"
-            style="@style/TableHasPaidActivity_TextView_Style"
-            android:layout_width="0dp"
-            android:layout_height="30dp"
-            android:layout_weight="1"
-            android:text="打印小票" />
-    </LinearLayout>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@id/yuan_2"
+            android:text="实付:"
+            android:textColor="@color/commo_text_color"
+            android:textSize="@dimen/h15" />
+    </RelativeLayout>
 
     <cn.com.hgh.view.AbPullToRefreshView
-        android:id="@+id/orders_detail"
+        android:id="@+id/has_paid_orders_detail"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="11dp"
@@ -153,7 +146,7 @@
         android:orientation="vertical">
 
         <ListView
-            android:id="@+id/orders_list_view"
+            android:id="@+id/has_paid_orders_list_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/transparent"
@@ -165,44 +158,26 @@
             android:scrollingCache="true" />
     </cn.com.hgh.view.AbPullToRefreshView>
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/fantai"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="60dp"
+        android:background="#4c93fd">
 
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/line"
             android:background="@color/colores_news_12" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="11dp">
-
-            <TextView
-                android:id="@+id/online_pay"
-                android:layout_width="0dp"
-                android:layout_height="36dp"
-                android:layout_marginRight="11dp"
-                android:layout_weight="1"
-                android:background="@drawable/online_pay_background_shape"
-                android:gravity="center"
-                android:text="在线收款"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/h16" />
-
-            <TextView
-                android:id="@+id/cash_pay"
-                android:layout_width="0dp"
-                android:layout_height="36dp"
-                android:layout_weight="1"
-                android:background="@drawable/cash_pay_background_shape"
-                android:gravity="center"
-                android:text="现金收款"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/h16" />
-        </LinearLayout>
-    </LinearLayout>
+            android:layout_centerInParent="true"
+            android:drawablePadding="10dp"
+            android:drawableRight="@mipmap/fantai"
+            android:gravity="center"
+            android:text="翻台"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/h16" />
+    </RelativeLayout>
 </LinearLayout>

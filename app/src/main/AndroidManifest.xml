@@ -82,6 +82,7 @@
         <activity android:name="com.lianbi.mezone.b.ui.FirstActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -411,9 +412,11 @@
             android:value="@integer/google_play_services_version" />
         <!-- 个推SDK配置结束 -->
         <activity android:name="com.lianbi.mezone.b.ui.IncomeActivity" />
-        <!--<activity
+        <!--
+            <activity
             android:name="com.lianbi.mezone.b.ui.CallSetActivity"
-            android:windowSoftInputMode="stateHidden|adjustPan" />-->
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        -->
         <activity android:name="com.lianbi.mezone.b.ui.DiningTableSettingActivity" />
         <activity android:name="com.lianbi.mezone.b.ui.TableHasPaidActivity" />
         <activity android:name="com.lianbi.mezone.b.ui.TableHasOrderedActivity" />
