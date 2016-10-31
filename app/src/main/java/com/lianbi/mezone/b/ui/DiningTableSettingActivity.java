@@ -62,6 +62,8 @@ public class DiningTableSettingActivity extends BaseActivity implements
 
     private boolean isInBusiness;
 
+    private static final int REQUEST_CODE_ADDTABLE_RESULT = 1010;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -223,6 +225,7 @@ public class DiningTableSettingActivity extends BaseActivity implements
             case R.id.menu_setting:
                 break;
             case R.id.add_table:
+                startActivityForResult(new Intent(this, AddTablesetActivity.class), REQUEST_CODE_ADDTABLE_RESULT);
                 break;
             case R.id.delete_table:
                 break;
@@ -276,5 +279,16 @@ public class DiningTableSettingActivity extends BaseActivity implements
         view2.setBackgroundColor(getResources().getColor(color));
         view3.setBackgroundColor(getResources().getColor(color));
         table_list_view.setBackgroundColor(getResources().getColor(color));
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case REQUEST_CODE_ADDTABLE_RESULT:// 添加桌子
+                    break;
+            }
+        }
     }
 }
