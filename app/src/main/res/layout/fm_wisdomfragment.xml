@@ -1,0 +1,467 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/swipe_jiaoyiguanli"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" android:background="@color/colores_news_14"
+    >
+<!--
+android.support.v4.widget.SwipeRefreshLayout
+-->
+    <ScrollView
+        android:id="@+id/GLZX_sc"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="none" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/white"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="33.5dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="4dp"
+                    android:layout_height="15dp"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="14.5dp"
+                    android:background="@color/color_3c78d8"
+                    />
+
+
+                <TextView
+                    android:layout_marginLeft="12.5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:gravity="center"
+                    android:text="店铺经营"
+                    android:textSize="14.5dp"
+                    android:textColor="@color/tag_mask"
+                    />
+
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@color/colores_news_14"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="89.5dp"
+                android:orientation="horizontal">
+
+
+                <LinearLayout
+                  android:id="@+id/ll_wisdommanage_service"
+                    android:layout_width="120dp"
+                    android:layout_height="89.5dp"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+                       <ImageView
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:src="@mipmap/daodiantt"
+                           android:layout_marginLeft="46dp"
+                           android:layout_marginTop="20dp"
+
+                           />
+                  <TextView
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="@string/shopservice"
+                      android:textSize="14.5dp"
+                      android:textColor="@color/tag_mask"
+                      android:layout_marginLeft="36dp"
+                      android:layout_marginTop="10dp"
+                      />
+
+                </LinearLayout>
+               <View
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:background="@color/colores_news_14"/>
+                <LinearLayout
+                    android:id="@+id/ll_wisdommanage_marketing"
+                    android:layout_width="120dp"
+                    android:layout_height="89.5dp"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/shanghutt"
+                        android:layout_marginLeft="46dp"
+                        android:layout_marginTop="20dp"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/shopmark"
+                        android:textSize="14.5dp"
+                        android:textColor="@color/tag_mask"
+                        android:layout_marginLeft="36dp"
+                        android:layout_marginTop="10dp"
+
+                        />
+
+                </LinearLayout>
+                <View
+                    android:layout_width="0.5dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/colores_news_14"/>
+                <LinearLayout
+                    android:id="@+id/ll_wisdommanage_features"
+                    android:layout_width="120dp"
+                    android:layout_height="89.5dp"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/tesett"
+                        android:layout_marginLeft="46dp"
+                        android:layout_marginTop="20dp"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/shopmarkfeatuer"
+                        android:textSize="14.5dp"
+                        android:textColor="@color/tag_mask"
+                        android:layout_marginLeft="36dp"
+                        android:layout_marginTop="10dp"
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="11dp"
+                android:background="@color/colores_news_14"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="33.5dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="4dp"
+                    android:layout_height="15dp"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="14.5dp"
+                   android:background="@color/color_3c78d8"
+                    />
+
+
+                <TextView
+                    android:layout_marginLeft="12.5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:gravity="center"
+                    android:text="商圈经营"
+                    android:textSize="14.5dp"
+                    android:textColor="@color/tag_mask"
+                    />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="11dp"
+                android:background="@color/colores_news_14"/>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="89.5dp"
+                android:orientation="horizontal">
+
+
+                <LinearLayout
+                    android:id="@+id/ll_wisdommanage_Shouting"
+                    android:layout_width="120dp"
+                    android:layout_height="89.5dp"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/hitt"
+                        android:layout_marginLeft="46dp"
+                        android:layout_marginTop="20dp"
+
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/shopserviceShouting"
+                        android:textSize="14.5dp"
+                        android:textColor="@color/tag_mask"
+                        android:layout_marginLeft="36dp"
+                        android:layout_marginTop="10dp"
+                        />
+
+                </LinearLayout>
+                <View
+                    android:layout_width="0.5dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/colores_news_14"/>
+                <LinearLayout
+                    android:id="@+id/ll_wisdommanage_guidance"
+                    android:layout_width="120dp"
+                    android:layout_height="89.5dp"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/shanghutt"
+                        android:layout_marginLeft="46dp"
+                        android:layout_marginTop="20dp"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/shopserviceguidance"
+                        android:textSize="14.5dp"
+                        android:textColor="@color/tag_mask"
+                        android:layout_marginLeft="36dp"
+                        android:layout_marginTop="10dp"
+
+                        />
+
+                </LinearLayout>
+                <View
+                    android:layout_width="0.5dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/colores_news_14"/>
+                <LinearLayout
+                    android:layout_width="120dp"
+                    android:layout_height="89.5dp"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="46dp"
+                        android:layout_marginTop="20dp"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14.5dp"
+                        android:textColor="@color/color_0000ff"
+                        android:layout_marginLeft="36dp"
+                        android:layout_marginTop="10dp"
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="11dp"
+                android:background="@color/colores_news_14"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="33.5dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="4dp"
+                    android:layout_height="15dp"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="14.5dp"
+                    android:background="@color/color_3c78d8"
+                    />
+
+
+                <TextView
+                    android:layout_marginLeft="12.5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:gravity="center"
+                    android:text="行业定制"
+                    android:textSize="14.5dp"
+                    android:textColor="@color/tag_mask"
+                    />
+
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/colores_news_14"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="89.5dp"
+                android:orientation="horizontal">
+
+
+                <LinearLayout
+                    android:id="@+id/ll_wisdommanage_smalltwo"
+                    android:layout_width="120dp"
+                    android:layout_height="89.5dp"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/xiaoertt"
+                        android:layout_marginLeft="46dp"
+                        android:layout_marginTop="20dp"
+
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/shopservicesmalltwo"
+                        android:textSize="14.5dp"
+                        android:textColor="@color/tag_mask"
+                        android:layout_marginLeft="36dp"
+                        android:layout_marginTop="10dp"
+                        />
+
+                </LinearLayout>
+                <View
+                    android:layout_width="0.5dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/colores_news_14"/>
+                <LinearLayout
+                    android:id="@+id/ll_wisdommanage_shop"
+                    android:layout_width="120dp"
+                    android:layout_height="89.5dp"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/shanghutt"
+                        android:layout_marginLeft="46dp"
+                        android:layout_marginTop="20dp"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/intellginceshopservice"
+                        android:textSize="14.5dp"
+                        android:textColor="@color/tag_mask"
+                        android:layout_marginLeft="36dp"
+                        android:layout_marginTop="10dp"
+
+                        />
+
+                </LinearLayout>
+                <View
+                    android:layout_width="0.5dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/colores_news_14"/>
+                <LinearLayout
+                    android:layout_width="120dp"
+                    android:layout_height="89.5dp"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="46dp"
+                        android:layout_marginTop="20dp"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14.5dp"
+                        android:textColor="@color/color_0000ff"
+                        android:layout_marginLeft="36dp"
+                        android:layout_marginTop="10dp"
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="11dp"
+                android:background="@color/colores_news_14"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="33.5dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="4dp"
+                    android:layout_height="15dp"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="14.5dp"
+                  android:background="@color/color_3c78d8"
+                    />
+
+
+                <TextView
+                    android:layout_marginLeft="12.5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:gravity="center"
+                    android:text="商圈经营"
+                    android:textSize="14.5dp"
+                    android:textColor="@color/tag_mask"
+                    />
+
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/colores_news_14"/>
+            <LinearLayout
+                android:layout_width="120dp"
+                android:layout_height="89.5dp"
+                android:orientation="vertical"
+                android:layout_weight="1">
+                <ImageView
+                    android:id="@+id/ll_wisdommanage_Servicemall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/fuwushangchengtt"
+                    android:layout_marginLeft="46dp"
+                    android:layout_marginTop="20dp"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/laobaninag"
+                    android:textSize="14.5dp"
+                    android:textColor="@color/tag_mask"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginTop="10dp"
+
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/shopservicemall"
+                    android:textSize="14.5dp"
+                    android:textColor="@color/tag_mask"
+                    android:layout_marginLeft="36dp"/>
+
+
+
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/colores_news_14"/>
+            />
+        </LinearLayout>
+
+    </ScrollView>
+
+</android.support.v4.widget.SwipeRefreshLayout>

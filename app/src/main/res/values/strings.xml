@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="laobaninag">老板娘</string>
+    <string name="shopservicemall">服务商城</string>
+    <string name="intellginceshopservice">运营服务</string>
+    <string name="shopservicesmalltwo">智能小二</string>
+    <string name="shopmark">商户营销</string>
+    <string name="shopmarkfeatuer">店铺特色</string>
+    <string name="shopserviceShouting">商圈吆喝</string>
+    <string name="shopserviceguidance">专家指导</string>
+
+    <string name="shopservice">到店服务</string>
     <string name="shopSYAccount">可用余额=店铺总额-冻结金额;</string>
     <string name="shopNumAccount">店铺总额=店铺累计收入-手续费支出-已提现金额-提现中金额;</string>
     <string name="counttime">活动优惠时间:</string>

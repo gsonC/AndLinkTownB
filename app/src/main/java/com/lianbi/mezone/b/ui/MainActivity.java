@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -25,9 +26,9 @@ import com.lianbi.mezone.b.bean.FinancialOfficeAmountBean;
 import com.lianbi.mezone.b.bean.ShouyeServiceBean;
 import com.lianbi.mezone.b.fragment.FinancialOfficeFragment;
 import com.lianbi.mezone.b.fragment.GlzxPagerFragment;
-import com.lianbi.mezone.b.fragment.JiaoYiGuanLiFragment;
 import com.lianbi.mezone.b.fragment.MineFragment;
 import com.lianbi.mezone.b.fragment.ShouYeFragment;
+import com.lianbi.mezone.b.fragment.WisdomManagerFragment;
 import com.lianbi.mezone.b.fragment.ShouyeLeaguesFragment;
 import com.lianbi.mezone.b.fragment.ShouyeManagementFragment;
 import com.lianbi.mezone.b.httpresponse.API;
@@ -70,7 +71,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 	 * 当前的位置
 	 */
 	public int curPosition = -1;
-	Fragment fm_shouye, fm_jiaoyiguanli, fm_caiwushi, fm_mine;
+	Fragment fm_shouye, fm_wisdommanage, fm_caiwushi, fm_mine;
 	/**
 	 * 店铺位置经纬度
 	 */
@@ -783,7 +784,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 	public void refreshFMData() {
 		setShoyYeTitle();
 		((ShouYeFragment) fm_shouye).refreshFMData();
-		((JiaoYiGuanLiFragment) fm_jiaoyiguanli).refreshFMData();
+		((WisdomManagerFragment) fm_wisdommanage).refreshFMData();
 		((FinancialOfficeFragment) fm_caiwushi).refreshFMData();
 		((MineFragment) fm_mine).refreshFMData();
 	}
@@ -793,12 +794,12 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 	 */
 	private void initFragment() {
 		fm_shouye = new ShouYeFragment();
-		fm_jiaoyiguanli = new JiaoYiGuanLiFragment();
+		fm_wisdommanage = new WisdomManagerFragment();
 		fm_caiwushi = new FinancialOfficeFragment();
 		fm_mine = new MineFragment();
 
 		fm.beginTransaction().replace(R.id.fm_funcpage0, fm_shouye).commit();
-		fm.beginTransaction().replace(R.id.fm_funcpage1, fm_jiaoyiguanli)
+		fm.beginTransaction().replace(R.id.fm_funcpage1, fm_wisdommanage)
 				.commit();
 		fm.beginTransaction().replace(R.id.fm_funcpage2, fm_caiwushi).commit();
 		fm.beginTransaction().replace(R.id.fm_funcpage3, fm_mine).commit();
@@ -842,8 +843,8 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 			curPosition = POSITION1;
 			setPageTitleVisibility(View.VISIBLE);
 			setPageRightTextVisibility(View.GONE);
-			((JiaoYiGuanLiFragment) fm_jiaoyiguanli).refreshFMData();
-			setPageTitle("管理中心");
+			((WisdomManagerFragment) fm_wisdommanage).refreshFMData();
+			setPageTitle("智慧经营");
 			tv_title_left.setVisibility(View.GONE);
 			setPageBackVisibility(View.INVISIBLE);
 			setPageRightImageVisibility();

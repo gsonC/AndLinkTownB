@@ -277,7 +277,7 @@ public class TableSetActivity extends BaseActivity implements
 		switch (view.getId()) {
 			case R.id.tv_call_setup://呼叫设置
 
-				startActivity(new Intent(this,CallSetActivity.class));
+
 				break;
 		case R.id.tv_searchtablenum:// 搜索框
 

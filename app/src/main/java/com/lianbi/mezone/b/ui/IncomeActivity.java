@@ -85,7 +85,10 @@ public class IncomeActivity extends BaseActivity implements OnClickListener {
 						tv_income2_title.setText("支出-手续费");
 					}else if("06".equals(item.getOptType())){
 						tv_income2_title.setText("支出-提现手续费");
-					}else{
+					}else if("07".equals(item.getOptType())){
+						tv_income2_title.setText("扫码收入-到店服务");
+					}
+					else{
 						ContentUtils.showMsg(IncomeActivity.this,"业务类型不能为空");
 					}
 
