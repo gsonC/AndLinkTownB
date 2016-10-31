@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:layout_marginTop="10dp"
+              android:layout_marginTop="6dp"
               android:background="@color/white"
               android:orientation="horizontal"
               android:padding="3dp">
@@ -18,12 +18,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_marginLeft="5dp"
+        android:layout_marginLeft="9dp"
         android:ellipsize="end"
-        android:padding="10dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         android:singleLine="true"
         android:text="交易流水"
         android:textColor="@color/colores_news_10"/>
+
+    <TextView
+        android:id="@+id/tv_include_otheryuan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:text=" (份)"
+        android:textColor="@color/showcolor"
+        android:textSize="13sp"
+        android:visibility="invisible"
+        />
+
 
     <TextView
         android:layout_width="0dp"
@@ -52,24 +67,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="12dp"
         android:background="@drawable/selector_shouyetime"
         android:button="@null"
         android:padding="7dp"
         android:text="周"
+        android:layout_marginRight="15dp"
         android:textColor="@color/white"/>
 
-    <RadioButton
-        android:id="@+id/rboButton_onemouth"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="7dp"
-        android:background="@drawable/selector_shouyetime"
-        android:button="@null"
-        android:padding="7dp"
-        android:text="月"
-        android:textColor="@color/white"/>
     </RadioGroup>
 </LinearLayout>

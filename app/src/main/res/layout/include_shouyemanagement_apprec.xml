@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:layout_marginTop="10dp"
+              android:layout_marginTop="9dp"
               android:background="@color/white"
               android:orientation="vertical">
 
@@ -15,29 +15,34 @@
         <View
             android:layout_width="40dp"
             android:layout_height="@dimen/line"
-            android:background="@color/colores_news_14"/>
+            android:background="@color/colores_news_11"/>
 
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:scaleType="centerInside"
-            android:src="@mipmap/mine_gongnengjieshao"/>
+            android:src="@mipmap/icon_shouyemagapp_saas"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="SaaS应用服务推荐"/>
+            android:text="SaaS应用服务推荐"
+            android:textSize="16sp"
+            android:textColor="@color/showcolor"/>
 
         <View
             android:layout_width="40dp"
             android:layout_height="@dimen/line"
-            android:background="@color/colores_news_14"/>
+            android:layout_marginLeft="5dp"
+            android:background="@color/colores_news_11"/>
     </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:textColor="@color/foodcolor"
+        android:textSize="14sp"
         android:text="多样化量身定制,让您的店铺与众不同"/>
 
     <LinearLayout
@@ -45,7 +50,7 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:orientation="horizontal"
-        android:paddingTop="25dp"
+        android:paddingTop="18dp"
         >
 
         <LinearLayout
@@ -59,19 +64,31 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
+                android:textColor="@color/color_4b4b4b"
+                android:textSize="14sp"
                 android:text="吆喝"/>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:scaleType="centerInside"
-                android:src="@mipmap/order_record"
-                />
+            <LinearLayout
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@drawable/shape_coupon_msg_editor"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/img_shouyemagapp_call"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:scaleType="fitCenter"
+                    android:src="@mipmap/icon_shouyemagapp_call"
+                    />
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="3dp"
+                android:textColor="@color/foodcolor"
+                android:textSize="14sp"
                 android:text="已安装"/>
 
         </LinearLayout>
@@ -87,19 +104,31 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
+                android:textColor="@color/color_4b4b4b"
+                android:textSize="14sp"
                 android:text="商圈联盟"/>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:scaleType="centerInside"
-                android:src="@mipmap/order_record"
-                />
+            <LinearLayout
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@drawable/shape_coupon_msg_editor"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/img_shouyemagapp_union"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:scaleType="fitCenter"
+                    android:src="@mipmap/icon_shouyemagapp_union"
+                    />
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="3dp"
+                android:textColor="@color/foodcolor"
+                android:textSize="14sp"
                 android:text="已安装"/>
 
         </LinearLayout>
@@ -115,19 +144,31 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
+                android:textColor="@color/color_4b4b4b"
+                android:textSize="14sp"
                 android:text="场景式销售"/>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:scaleType="centerInside"
-                android:src="@mipmap/order_record"
-                />
+            <LinearLayout
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@drawable/shape_coupon_msg_editor"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/img_shouyemagapp_sale"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:scaleType="fitCenter"
+                    android:src="@mipmap/icon_shouyemagapp_sale"
+                    />
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="3dp"
+                android:textColor="@color/foodcolor"
+                android:textSize="14sp"
                 android:text="已安装"/>
         </LinearLayout>
 
@@ -142,19 +183,31 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
+                android:textColor="@color/color_4b4b4b"
+                android:textSize="14sp"
                 android:text="运营服务"/>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:scaleType="centerInside"
-                android:src="@mipmap/order_record"
-                />
+            <LinearLayout
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@drawable/shape_coupon_msg_editor"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/img_shouyemagapp_opeservice"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:scaleType="fitCenter"
+                    android:src="@mipmap/icon_shouyemagapp_opeservice"
+                    />
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="3dp"
+                android:textColor="@color/foodcolor"
+                android:textSize="14sp"
                 android:text="安装"/>
         </LinearLayout>
 
@@ -165,8 +218,8 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:orientation="horizontal"
-        android:paddingBottom="10dp"
-        android:paddingTop="15dp"
+        android:paddingBottom="20dp"
+        android:paddingTop="30dp"
         >
 
         <LinearLayout
@@ -180,19 +233,31 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
+                android:textColor="@color/color_4b4b4b"
+                android:textSize="14sp"
                 android:text="金融服务"/>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:scaleType="centerInside"
-                android:src="@mipmap/order_record"
-                />
+            <LinearLayout
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@drawable/shape_coupon_msg_editor"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/img_shouyemagapp_finservice"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:scaleType="fitCenter"
+                    android:src="@mipmap/icon_shouyemagapp_finservice"
+                    />
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="3dp"
+                android:textColor="@color/foodcolor"
+                android:textSize="14sp"
                 android:text="安装"/>
 
         </LinearLayout>
@@ -208,19 +273,31 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
+                android:textColor="@color/color_4b4b4b"
+                android:textSize="14sp"
                 android:text="致富宝典"/>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:scaleType="centerInside"
-                android:src="@mipmap/order_record"
-                />
+            <LinearLayout
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@drawable/shape_coupon_msg_editor"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/img_shouyemagapp_richbook"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:scaleType="fitCenter"
+                    android:src="@mipmap/icon_shouyemagapp_richbook"
+                    />
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="3dp"
+                android:textColor="@color/foodcolor"
+                android:textSize="14sp"
                 android:text="安装"/>
 
         </LinearLayout>
@@ -236,19 +313,31 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
+                android:textColor="@color/color_4b4b4b"
+                android:textSize="14sp"
                 android:text="商圈大数据"/>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:scaleType="centerInside"
-                android:src="@mipmap/order_record"
-                />
+            <LinearLayout
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@drawable/shape_coupon_msg_editor"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/img_shouyemagapp_busdata"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:scaleType="fitCenter"
+                    android:src="@mipmap/icon_shouyemagapp_busdata"
+                    />
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="3dp"
+                android:textColor="@color/foodcolor"
+                android:textSize="14sp"
                 android:text="安装"/>
         </LinearLayout>
 
@@ -262,25 +351,38 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="客户买单"
                 android:layout_marginBottom="5dp"
+                android:textColor="@color/color_4b4b4b"
+                android:textSize="14sp"
                 android:visibility="invisible"/>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:scaleType="centerInside"
-                android:src="@mipmap/order_record"
-                />
+            <LinearLayout
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@drawable/shape_coupon_msg_editor"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/icon_shouyemagapp_more"
+                    />
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="3dp"
-                android:text="消费流水"
+                android:textColor="@color/foodcolor"
+                android:textSize="14sp"
                 android:visibility="invisible"/>
         </LinearLayout>
 
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="6dp"
+        android:background="@color/colores_news_14"/>
 </LinearLayout>

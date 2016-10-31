@@ -1,76 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.SwipeRefreshLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:segmentedgroup="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/swipe_shouye"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/colores_news_14"
+              android:orientation="vertical">
 
-    <ScrollView
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@color/colores_news_14"
-        android:fillViewport="true"
-        android:scrollbars="none">
-
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
-            <include layout="@layout/adeslltview"/>
+            <View
+                android:layout_width="80dp"
+                android:layout_height="48dp"
+                android:background="@color/white"/>
 
-            <cn.com.hgh.view.SegmentedGroup
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:orientation="horizontal"
-                segmentedgroup:sc_border_width="1dp"
-                segmentedgroup:sc_checked_text_color="#fff"
-                segmentedgroup:sc_corner_radius="10dp"
-                segmentedgroup:sc_tint_color="#ff33b5e5"
-                segmentedgroup:sc_unchecked_tint_color="#fff"
-                >
+            <cn.com.hgh.view.PagerSlidingTabStrip
+                android:id="@+id/tabs_fm_shouye"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:background="@android:color/white"
+                app:pstsDividerColor="@color/transparent"
+                app:pstsIndicatorColor="@color/colores_news_20"
+                app:pstsIndicatorHeight="3dp"
+                app:pstsShouldExpand="true"
+                app:pstsTabBackground="@drawable/background_tab"
+                app:pstsUnderlineHeight="3dp"
+                app:selectedTabTextColor="@color/colores_news_20"
+                />
 
-                <RadioButton
-                    android:id="@+id/rboButton_shouyefragment_management"
-                    style="@style/RadioButton"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/dailyoperation"/>
-
-                <RadioButton
-                    android:id="@+id/rboButton_shouyefragment_leagues"
-                    style="@style/RadioButton"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/shopalliance"/>
-            </cn.com.hgh.view.SegmentedGroup>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
-
-                <FrameLayout
-                    android:id="@+id/fm_shouye_management"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="gone">
-                </FrameLayout>
-
-                <FrameLayout
-                    android:id="@+id/fm_shouye_leagues"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="gone">
-                </FrameLayout>
-            </FrameLayout>
+            <View
+                android:layout_width="80dp"
+                android:layout_height="48dp"
+                android:background="@color/white"/>
         </LinearLayout>
-    </ScrollView>
 
-</android.support.v4.widget.SwipeRefreshLayout>
+        <include layout="@layout/adeslltview"/>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/pager_fm_shouye"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+    </LinearLayout>
+
+</LinearLayout>

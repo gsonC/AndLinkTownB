@@ -82,7 +82,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.act_mainactivity, NOTYPE);
+		setContentView(R.layout.act_mainactivity, HAVETYPE);
 
 		initView();
 
@@ -829,9 +829,10 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 			return;
 		if (position == POSITION0) {
 			curPosition = POSITION0;
-			titleShouYe();
-			setPageBackVisibility(View.INVISIBLE);
-			setPageRightImageVisibility();
+		//	titleShouYe();
+		//	setPageBackVisibility(View.INVISIBLE);
+			setPageTitleVisibility(View.GONE);
+		//	setPageRightImageVisibility();
 			rb_shouye.setChecked(true);
 			fm_funcpage0.setVisibility(View.VISIBLE);
 			fm_funcpage1.setVisibility(View.GONE);
@@ -839,6 +840,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 			fm_funcpage3.setVisibility(View.GONE);
 		} else if (position == POSITION1) {
 			curPosition = POSITION1;
+			setPageTitleVisibility(View.VISIBLE);
 			setPageRightTextVisibility(View.GONE);
 			((JiaoYiGuanLiFragment) fm_jiaoyiguanli).refreshFMData();
 			setPageTitle("管理中心");
@@ -852,6 +854,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 			fm_funcpage1.setVisibility(View.VISIBLE);
 		} else if (position == POSITION2) {
 			curPosition = POSITION2;
+			setPageTitleVisibility(View.VISIBLE);
 		//	setPageRightTextVisibility(View.GONE);
 			setPageTitle("财务室");
 			setPageRightText("明细");
@@ -869,6 +872,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 			getFinancialOfficeClick();// 刷新财务室价格
 		} else if (position == POSITION3) {
 			curPosition = POSITION3;
+			setPageTitleVisibility(View.VISIBLE);
 			((MineFragment) fm_mine).refreshFMData();
 			setPageTitle("我的");
 			setPageRightText("退出登录");
@@ -936,7 +940,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 	 * 初始化视图
 	 */
 	private void initView() {
-		titleShouYe();
+	//	titleShouYe();
 		fm_funcpage0 = (FrameLayout) findViewById(R.id.fm_funcpage0);
 		fm_funcpage1 = (FrameLayout) findViewById(R.id.fm_funcpage1);
 		fm_funcpage2 = (FrameLayout) findViewById(R.id.fm_funcpage2);

@@ -2,21 +2,125 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:layout_marginTop="10dp"
               android:background="@color/white"
               android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="100dp"
-        android:orientation="horizontal">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:padding="20dp">
 
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:scaleType="fitXY"
+                android:src="@mipmap/icon_shouyemagvip_addmember"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="+"
+                        android:textColor="@color/color_00b4d9"
+                        android:textSize="20sp"/>
+
+                    <TextView
+                        android:id="@+id/tv_shouyemanagement_todayvip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="20"
+                        android:textColor="@color/color_00b4d9"
+                        android:textSize="33sp"/>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="今日总数"
+                    android:textColor="@color/color_999999"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="@dimen/line"
+            android:layout_height="match_parent"
+            android:background="@color/color_e3e3e3"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:scaleType="fitXY"
+                android:src="@mipmap/icon_shouyemagvip_nummember"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="+"
+                        android:textColor="@color/color_00b4d9"
+                        android:textSize="20sp"/>
+
+                    <TextView
+                        android:id="@+id/tv_shouyemanagement_numvip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="20"
+                        android:textColor="@color/color_00b4d9"
+                        android:textSize="33sp"/>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="会员总数"
+                    android:textColor="@color/color_999999"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/line"
-        android:background="@color/colores_news_14"/>
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:background="@color/color_e3e3e3"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,23 +137,27 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tv_shouyemanagement_nummember"
+                android:id="@+id/tv_shouyemanagement_muchtoday"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1000"/>
+                android:text="1000"
+                android:textColor="@color/color_00b4d9"
+                android:textSize="29sp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="会员总数"/>
+                android:text="日客最高单价"
+                android:textColor="@color/color_999999"
+                android:textSize="14sp"/>
 
         </LinearLayout>
 
         <View
             android:layout_width="@dimen/line"
             android:layout_height="match_parent"
-            android:background="@color/colores_news_14"/>
+            android:background="@color/color_e3e3e3"/>
 
         <LinearLayout
             android:layout_width="0dp"
@@ -59,16 +167,20 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tv_shouyemanagement_addmember"
+                android:id="@+id/tv_shouyemanagement_muchweek"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1000"/>
+                android:text="1000"
+                android:textColor="@color/color_00b4d9"
+                android:textSize="29sp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="今日新增"/>
+                android:text="周客最高单价"
+                android:textColor="@color/color_999999"
+                android:textSize="14sp"/>
 
         </LinearLayout>
 
@@ -77,14 +189,14 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/line"
-        android:background="@color/colores_news_14"/>
+        android:background="@color/color_e3e3e3"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:orientation="horizontal"
-        android:paddingBottom="20dp"
+        android:paddingBottom="22dp"
         android:paddingTop="20dp"
         >
 
@@ -95,24 +207,47 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:text="金融服务"/>
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_shouyevip_service_first"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:text="20"
+                    android:textColor="@color/color_CF412C"
+                    android:textSize="25sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="2dp"
+                    android:text="次服务"
+                    android:textColor="@color/color_CF412C"
+                    android:textSize="17sp"/>
+
+            </LinearLayout>
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/img_shouyevip_name_first"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
                 android:scaleType="centerInside"
-                android:src="@mipmap/order_record"
+                android:src="@mipmap/defaultimg_11"
                 />
 
             <TextView
+                android:id="@+id/tv_shouyevip_name_first"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="3dp"
-                android:text="安装"/>
+                android:text="小虎牙"
+                android:textColor="@color/showcolor"
+                android:textSize="16sp"/>
 
         </LinearLayout>
 
@@ -123,24 +258,47 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:text="致富宝典"/>
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_shouyevip_service_second"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:text="10"
+                    android:textColor="@color/color_CF412C"
+                    android:textSize="25sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="2dp"
+                    android:text="次服务"
+                    android:textColor="@color/color_CF412C"
+                    android:textSize="17sp"/>
+
+            </LinearLayout>
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/img_shouyevip_name_second"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
                 android:scaleType="centerInside"
-                android:src="@mipmap/order_record"
+                android:src="@mipmap/defaultimg_11"
                 />
 
             <TextView
+                android:id="@+id/tv_shouyevip_name_second"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="3dp"
-                android:text="安装"/>
+                android:text="乘风雨欲来"
+                android:textColor="@color/showcolor"
+                android:textSize="16sp"/>
 
         </LinearLayout>
 
@@ -151,24 +309,47 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:text="商圈大数据"/>
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_shouyevip_service_third"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:text="5"
+                    android:textColor="@color/color_CF412C"
+                    android:textSize="25sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="2dp"
+                    android:text="次服务"
+                    android:textColor="@color/color_CF412C"
+                    android:textSize="17sp"/>
+
+            </LinearLayout>
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/img_shouyevip_name_third"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
                 android:scaleType="centerInside"
-                android:src="@mipmap/order_record"
+                android:src="@mipmap/defaultimg_11"
                 />
 
             <TextView
+                android:id="@+id/tv_shouyevip_name_third"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="3dp"
-                android:text="安装"/>
+                android:text="萍水相逢"
+                android:textColor="@color/showcolor"
+                android:textSize="16sp"/>
         </LinearLayout>
 
     </LinearLayout>
