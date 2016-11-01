@@ -40,6 +40,7 @@
                  android:background="@color/white"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
+
                 >
                  <!--android:clickable="true"-->
               <TextView
@@ -91,25 +92,7 @@
                     android:layout_height="30dp"
                     android:scaleType="centerInside"
                     android:src="@mipmap/service_new_right" />
-<!--                 <TextView
-                    android:id="@+id/tv_download"
-                    android:layout_width="wrap_content"
-                    android:layout_height="25dp"
-                    android:layout_marginLeft="10dp"
-                    android:gravity="center"
-                    android:padding="3dp"
-                    android:singleLine="true"
-                    android:text="下载"
-                    android:textColor="@color/color_6bb4ff"
-                    android:textSize="14sp"
-                     />
 
-                <ImageView
-                    android:id="@+id/img_right"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/service_new_right" />
- -->            </LinearLayout>
+            </LinearLayout>
 
 </LinearLayout>

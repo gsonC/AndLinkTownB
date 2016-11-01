@@ -42,7 +42,10 @@ public class BusinessMarketingActivity extends BaseActivity {
 		super.onClick(view);
 		switch (view.getId()){
 			case R.id.ll_bussinessMaking_manage://会员管理
-				startActivity(new Intent(this,MembersManagementTwoActivity.class));
+				Intent intent=new Intent(this,MembersManagementTwoActivity.class);
+				startActivity(intent);
+
+				/*startActivity(new Intent(this,MembersManagementTwoActivity.class));*/
 				break;
 			case R.id.ll_bussinessMaking_youhuijuan://优惠券管理
 				startActivity(new Intent(this,CouponManagerActivity.class));

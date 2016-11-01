@@ -162,22 +162,22 @@ public class ServiceMallActivity extends BaseActivity {
 								    return;
 								}
 								if(isfdownload.equals("Y")){
-
+/*
 									if ("tss".equals(appCode)) {// 到店服务
 										simpleJump(TableSetActivity.class);
-									} else if ("wcm".equals(appCode)) {// 微信商城
+									} else*/ if ("wcm".equals(appCode)) {// 微信商城
 										JumpIntent.jumpWebActivty
 												(ServiceMallActivity.this,H5WebActivty.class,
 														isLogin,API.TOSTORE_MODULE_WCM,WECHATMALL,
 														false,false,true,"");
-									} else if ("sws".equals(appCode)) {//货源批发
+									} /*else if ("sws".equals(appCode)) {//货源批发
 										JumpIntent.jumpWebActivty
 												(ServiceMallActivity.this,H5WebActivty.class,
 														isLogin,API.TOSTORE_Supply_Wholesale,SUPPLYWHOLESALE,
 														false,false,true,isappname);
-									} else if ("rss".equals(appCode)) {//预约界面
+									}*//* else if ("rss".equals(appCode)) {//预约界面
 										simpleJump(BookFunctionActivity.class);
-									} else if ("wifi".equals(appCode)) {//智能WIFI
+									}*/ else if ("wifi".equals(appCode)) {//智能WIFI
 										JumpIntent.jumpWebActivty
 												(ServiceMallActivity.this,WIFIWebActivity.class,
 														isLogin,API.INTELLIGENT_WIFI,INTELLIGENTWIFI,
@@ -190,39 +190,7 @@ public class ServiceMallActivity extends BaseActivity {
 									}
 
 
-									/*switch (primaryID) {
-										case TABLESETTING:
-											simpleJump(TableSetActivity.class);
-										break;
-										case WECHATMALL:
-											JumpIntent.jumpWebActivty
-													(ServiceMallActivity.this,H5WebActivty.class,
-													isLogin,API.TOSTORE_MODULE_WCM,WECHATMALL,
-													false,false,true,"");
-											break;
-										case SUPPLYWHOLESALE:
-											JumpIntent.jumpWebActivty
-													(ServiceMallActivity.this,H5WebActivty.class,
-															isLogin,API.TOSTORE_Supply_Wholesale,SUPPLYWHOLESALE,
-															false,false,true,isappname);
-											break;
-										case RESERVATION:
-											simpleJump(BookFunctionActivity.class);
-											break;
-										case INTELLIGENTWIFI:
-											JumpIntent.jumpWebActivty
-													(ServiceMallActivity.this,WIFIWebActivity.class,
-															isLogin,API.INTELLIGENT_WIFI,INTELLIGENTWIFI,
-															false,false,true,"");
-											break;
-										case LINETAKENO:
-											JumpIntent.jumpWebActivty
-													(ServiceMallActivity.this,LineTakeNoWebActivity.class,
-															isLogin,API.TOSTORE_Line_TakeNo,LINETAKENO,
-															false,false,true,"");
-											break;
-									}*/
-							        
+
 								}else if(isfdownload.equals("N")){
 									  
 									  Intent intent = new Intent(
