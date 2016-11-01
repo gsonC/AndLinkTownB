@@ -2,6 +2,7 @@ package com.lianbi.mezone.b.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -36,7 +37,7 @@ import static cn.com.hgh.utils.CryptTool.encryptionUrl;
 /*
 * 桌面设置
 * */
-public class DiningTableSettingActivity extends BaseActivity implements
+public class DiningTableSettingActivity extends BluetoothBaseActivity implements
         AbPullToRefreshView.OnHeaderRefreshListener, AbPullToRefreshView.OnFooterLoadListener {
     @Bind(R.id.back)
     ImageView back;
