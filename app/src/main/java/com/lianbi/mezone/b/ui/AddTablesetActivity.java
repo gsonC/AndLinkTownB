@@ -15,7 +15,7 @@ import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.Result;
 
 /*
-* 添加桌面
+* 添加桌位
 * */
 public class AddTablesetActivity extends BaseActivity {
 

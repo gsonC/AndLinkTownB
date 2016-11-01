@@ -126,7 +126,7 @@ public class ScanningQRActivity extends BaseActivity {
     }
 
     private void initView() {
-        setPageTitle("扫二维码");
+        setPageTitle("空桌");
         String tablename = getIntent().getStringExtra("TABLENAME");
         String tableqr = getIntent().getStringExtra("TABLEQR");
         tableid = getIntent().getStringExtra("TABLEID");
