@@ -15,6 +15,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,22 +32,31 @@ import android.widget.ViewFlipper;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.PercentFormatter;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.lianbi.mezone.b.httpresponse.API;
+import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
 import com.lianbi.mezone.b.ui.MainActivity;
 import com.xizhi.mezone.b.R;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.com.hgh.utils.Result;
 
-public class ShouyeLeaguesFragment extends Fragment {
+public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelectedListener {
 
     @Nullable
     @Bind(R.id.vf_shouyeleagues_dyn)
@@ -148,6 +158,7 @@ public class ShouyeLeaguesFragment extends Fragment {
         mActivity = (MainActivity) getActivity();
         mOkHttpsImp = OkHttpsImp.SINGLEOKHTTPSIMP.newInstance(mActivity);
         initViewAndData();
+        getYellData();
         initAnimation();
         return view;
     }
@@ -158,7 +169,6 @@ public class ShouyeLeaguesFragment extends Fragment {
         piec_shouyeLeagues_dyn.getDescription().setEnabled(false);
         piec_shouyeLeagues_dyn.setExtraOffsets(5, 10, 5, 5);
         piec_shouyeLeagues_dyn.setDragDecelerationFrictionCoef(0.95f);
-        piec_shouyeLeagues_dyn.setExtraOffsets(20.f, 0.f, 20.f, 0.f);
         piec_shouyeLeagues_dyn.setDrawHoleEnabled(true);
         piec_shouyeLeagues_dyn.setHoleColor(Color.WHITE);
         piec_shouyeLeagues_dyn.setTransparentCircleColor(Color.WHITE);
@@ -169,6 +179,7 @@ public class ShouyeLeaguesFragment extends Fragment {
         piec_shouyeLeagues_dyn.setRotationAngle(0);
         piec_shouyeLeagues_dyn.setRotationEnabled(true);
         piec_shouyeLeagues_dyn.setHighlightPerTapEnabled(true);
+        piec_shouyeLeagues_dyn.setOnChartValueSelectedListener(this);
         setData(4, 100);
         piec_shouyeLeagues_dyn.animateY(1400, Easing.EasingOption.EaseInOutQuad);
         Legend l = piec_shouyeLeagues_dyn.getLegend();
@@ -176,13 +187,30 @@ public class ShouyeLeaguesFragment extends Fragment {
         l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
         l.setOrientation(Legend.LegendOrientation.VERTICAL);
         l.setDrawInside(false);
+        l.setXEntrySpace(7f);
+        l.setYEntrySpace(0f);
+        l.setYOffset(0f);
         l.setEnabled(false);
-        piec_shouyeLeagues_dyn.animateY(1400, Easing.EasingOption.EaseInOutQuad);
+        piec_shouyeLeagues_dyn.setEntryLabelColor(Color.WHITE);
+        piec_shouyeLeagues_dyn.setEntryLabelTextSize(12f);
         for (int i = 0; i < COLUMN_COUNT; i++) {
             vfShouyeleaguesDyn.addView(getLinearLayout(i));
             vfShouyeleaguesDyn.addView(getLinearLayout(i));
             vfShouyeleaguesDyn.addView(getLinearLayout(i));
         }
+    }
+    @Override
+    public void onValueSelected(Entry e, Highlight h) {
+
+        if (e == null)
+            return;
+        Log.i("VAL SELECTED",
+                "Value: " + e.getY() + ", index: " + h.getX()
+                        + ", DataSet index: " + h.getDataSetIndex());
+    }
+    @Override
+    public void onNothingSelected() {
+        Log.i("PieChart", "nothing selected");
     }
 
     /**
@@ -192,7 +220,58 @@ public class ShouyeLeaguesFragment extends Fragment {
         tvIncludeTitle.setText("商圈动态");
         tvLeavemessageDyn.setText("松江商圈");
     }
+    /**
+     * 获取绝对路径
+     */
+    private String getAbsoluteUrl(String relativeUrl) {
+        if (relativeUrl.startsWith("http://"))
+            return relativeUrl;
+        return API.HOST + relativeUrl;
+    }
+    /**
+     * 查询吆喝和商圈动态
+     */
+    private void getYellData() {
+        try {
+            mOkHttpsImp.queryBusinessDynamic(
+                    mActivity.BusinessId,
+                    "area",
+                    "businessCircle",
+                    "messageType",
+                    "pushScope",
+                    "author",
+                    "phone",
+                    "messageTitle",
+                    "messageContent",
+                    "F1",
+                    "F1",
+                    mActivity.uuid,
+                    "app",
+                    mActivity.reqTime,
+                    new MyResultCallback<String>() {
+                @Override
+                public void onResponseResult(Result result) {
+                    String resString = result.getData();
+                    try {
+                        JSONObject jsonObject = new JSONObject(resString);
+                        resString = jsonObject.getString("list");
 
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
+                @Override
+                public void onResponseFailed(String msg) {
+
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     //初始化动画
     private void initAnimation() {
         Animation animation = AnimationUtils.loadAnimation(mActivity, R.anim.img_animation);
