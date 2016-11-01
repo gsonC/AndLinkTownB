@@ -3,6 +3,9 @@ package com.lianbi.mezone.b.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.RelativeSizeSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -25,6 +28,7 @@ import com.zbar.lib.animationslib.YoYo;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.com.hgh.utils.AbStrUtil;
 import cn.com.hgh.utils.ContentUtils;
 
 /*
@@ -36,14 +40,12 @@ import cn.com.hgh.utils.ContentUtils;
  * @更新时间   $Date$
  * @更新描述
  */
-public class ShouyeManagementFragment extends Fragment implements OnClickListener, RadioGroup.OnCheckedChangeListener
-		 {
+public class ShouyeManagementFragment extends Fragment implements OnClickListener, RadioGroup.OnCheckedChangeListener {
 
 	private MainActivity mActivity;
 	private OkHttpsImp mOkHttpsImp;
 	private TextView mTv_include_title_flow, mTv_include_title_membernum, mTv_include_othertitle_cashier,
 			mTv_include_othertitle_salenum;
-	private LinearLayout mLlt_shouyemanagement_salenum_show;
 	private RadioButton mChk_oneday_salenum, mChk_oneweek_salenum;
 	private RadioGroup mRdoGroup_time_salenum;
 	private YoYo.YoYoString rope;
@@ -67,7 +69,8 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 	/**
 	 * 到店服务
 	 */
-	private LinearLayout mLlt_shouyemag_inshopservice;
+	private TextView mTv_include_title;
+	private View mInd_shouyemanagement_inshop;
 	private ImageView mImg_shouyemag_order, mImg_shouyemag_call, mImg_shouyemag_condetail;
 	/**
 	 * 消费曲线
@@ -83,13 +86,33 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 		mOkHttpsImp = OkHttpsImp.SINGLEOKHTTPSIMP.newInstance(mActivity);
 		intView(view);
 		getData();
+		getData1();
 		setLinten();
 		return view;
 
 	}
 
 	/**
-	 * 测试数据
+	 * (本店会员)测试数据
+	 */
+	private long testData = 123456;
+	private void getData1() {
+		String ss = "";
+		try {
+			ss = AbStrUtil.changeF2Y(testData);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		/**
+		 * SpannableString 使一个textView展示不同文字大小 new RelativeSizeSpan(0.8f)代表正常字体的0.8倍
+		 */
+		SpannableString msp = new SpannableString(ss);
+		msp.setSpan(new RelativeSizeSpan(0.8f), ss.length()-2, ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+		mTv_shouyemanagement_muchtoday.setText(msp);
+	}
+
+	/**
+	 * (实时消费)测试数据
 	 */
 	private List<TestBean> mDatas = new ArrayList<>();
 
@@ -111,15 +134,20 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 
 	}
 
+
 	private void intView(View view) {
 
 		//到店服务
-		mLlt_shouyemag_inshopservice = (LinearLayout) view.findViewById(R.id.llt_shouyemag_inshopservice);
+		mTv_include_title = (TextView) view.findViewById(R.id.ind_shouyemanagement_inshop).findViewById(R.id.tv_include_title);//include到店服务title
+		view.findViewById(R.id.ind_shouyemanagement_inshop).findViewById(R.id.tv_include_more).setVisibility(View.INVISIBLE);//include到店服务 更多隐藏
+		view.findViewById(R.id.ind_shouyemanagement_inshop).findViewById(R.id.img_include_arrow).setVisibility(View.VISIBLE);//include到店服务 箭头显示
+		mInd_shouyemanagement_inshop = view.findViewById(R.id.ind_shouyemanagement_inshop);
 
 		mImg_shouyemag_order = (ImageView) view.findViewById(R.id.img_shouyemag_order);//客户买单
 		mImg_shouyemag_call = (ImageView) view.findViewById(R.id.img_shouyemag_call);//响应呼叫
 		mImg_shouyemag_condetail = (ImageView) view.findViewById(R.id.img_shouyemag_condetail);//消费流水
-		BadgeView badgeView = new BadgeView(mActivity,mImg_shouyemag_order);
+		BadgeView badgeView = new BadgeView(mActivity, mImg_shouyemag_order);
+		badgeView.setBadgeMargin(0, 0);
 		badgeView.setText("88");
 		badgeView.show();
 
@@ -149,7 +177,6 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 		mChk_oneday_salenum = (RadioButton) view.findViewById(R.id.ind_shouyemanagement_salenum).findViewById(R.id.rboButton_oneday);//日
 		mChk_oneday_salenum.setChecked(true);
 		mChk_oneweek_salenum = (RadioButton) view.findViewById(R.id.ind_shouyemanagement_salenum).findViewById(R.id.rboButton_oneweek);//周
-		mLlt_shouyemanagement_salenum_show = (LinearLayout) view.findViewById(R.id.llt_shouyemanagement_salenum_show);//销量排行内容
 
 		/**
 		 * 首页--本店会员ID
@@ -190,7 +217,7 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 			@Override
 			public void onClick(View v) {
 				System.out.println("点击");
-				ContentUtils.showMsg(mActivity,"点击");
+				ContentUtils.showMsg(mActivity, "点击");
 				rope = YoYo.with(Techniques.FlipInY).duration(1000)
 
 						.playOn(mLlt_shouyemanagement_comsum);
@@ -211,11 +238,11 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 	 * 设置首页各个title一级文字大小
 	 */
 	private void initViewSize() {
+		mTv_include_title.setText("到店服务");
 		mTv_include_title_flow.setText("实时消费");
 		mTv_include_othertitle_cashier.setText("消费曲线");
 		mTv_include_title_membernum.setText("本店会员");
 		mTv_include_othertitle_salenum.setText("销量排行");
-
 	}
 
 	/**
@@ -227,7 +254,7 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 		/**
 		 * 到店服务
 		 */
-		mLlt_shouyemag_inshopservice.setOnClickListener(this);
+		mInd_shouyemanagement_inshop.setOnClickListener(this);
 		mImg_shouyemag_order.setOnClickListener(this);
 		mImg_shouyemag_call.setOnClickListener(this);
 		mImg_shouyemag_condetail.setOnClickListener(this);
@@ -259,7 +286,7 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 			/**
 			 * 到店服务
 			 */
-			case R.id.llt_shouyemag_inshopservice://到店服务
+			case R.id.ind_shouyemanagement_inshop:
 				ContentUtils.showMsg(mActivity, "到店服务");
 				break;
 			case R.id.img_shouyemag_order://客户买单
@@ -299,6 +326,14 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 	}
 
 	/**
+	 * 本店会员数据填充
+	 */
+	private void setMyShopVIPData(){
+
+	}
+
+
+	/**
 	 * add实时消费View
 	 *
 	 * @param number 数量控制
@@ -332,22 +367,6 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 
 		}
 
-	}
-
-	/**
-	 * add销量排行View
-	 *
-	 * @param number 数量控制
-	 */
-	private void addSalenumDetailView(int number) {
-		mLlt_shouyemanagement_salenum_show.removeAllViews();
-		if (number > 3) {
-			number = 3;
-		}
-		for (int i = 0; i < number; i++) {
-
-
-		}
 	}
 
 	@Override

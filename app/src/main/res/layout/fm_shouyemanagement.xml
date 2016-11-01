@@ -12,41 +12,10 @@
         android:orientation="vertical"
         >
 
-        <LinearLayout
-            android:id="@+id/llt_shouyemag_inshopservice"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
-            android:background="@color/white"
-            android:clickable="true"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="5dp">
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginLeft="18dp"
-                android:scaleType="centerInside"
-                android:src="@mipmap/icon_shouyemag_inshop"/>
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:singleLine="true"
-                android:text="到店服务"
-                android:textColor="@color/colores_news_10"
-                android:textSize="14sp"/>
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:scaleType="centerInside"
-                android:src="@mipmap/service_new_right"/>
-        </LinearLayout>
+        <include
+            android:id="@+id/ind_shouyemanagement_inshop"
+            layout="@layout/include_shouyestrip"
+            />
 
         <View
             android:layout_width="match_parent"
@@ -73,8 +42,8 @@
                     android:id="@+id/img_shouyemag_order"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:scaleType="fitCenter"
                     android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
                     android:src="@mipmap/icon_shouyemag_order"
                     />
 
@@ -187,12 +156,9 @@
             android:id="@+id/ind_shouyemanagement_salenum"
             layout="@layout/include_shouyedatestrip"/>
 
-        <LinearLayout
-            android:id="@+id/llt_shouyemanagement_salenum_show"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:background="@color/white"
-            android:orientation="vertical"
+        <include
+            android:id="@+id/ind_shouyemanagement_salerank"
+            layout="@layout/include_shouyesalerank"
             />
 
         <include
