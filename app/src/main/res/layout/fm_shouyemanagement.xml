@@ -26,8 +26,8 @@
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:scaleType="centerInside"
                 android:layout_marginLeft="18dp"
+                android:scaleType="centerInside"
                 android:src="@mipmap/icon_shouyemag_inshop"/>
 
             <TextView
@@ -71,9 +71,10 @@
 
                 <ImageView
                     android:id="@+id/img_shouyemag_order"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:scaleType="fitCenter"
+                    android:adjustViewBounds="true"
                     android:src="@mipmap/icon_shouyemag_order"
                     />
 
@@ -81,9 +82,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingTop="9dp"
+                    android:text="客户买单"
                     android:textColor="@color/showcolor"
-                    android:textSize="16sp"
-                    android:text="客户买单"/>
+                    android:textSize="16sp"/>
 
             </LinearLayout>
 
@@ -96,8 +97,8 @@
 
                 <ImageView
                     android:id="@+id/img_shouyemag_call"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:scaleType="fitCenter"
                     android:src="@mipmap/icon_shouyemag_call"
                     />
@@ -106,9 +107,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingTop="9dp"
+                    android:text="响应呼叫"
                     android:textColor="@color/showcolor"
-                    android:textSize="16sp"
-                    android:text="响应呼叫"/>
+                    android:textSize="16sp"/>
 
             </LinearLayout>
 
@@ -121,8 +122,8 @@
 
                 <ImageView
                     android:id="@+id/img_shouyemag_condetail"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:scaleType="fitCenter"
                     android:src="@mipmap/icon_shouyemag_condetail"
                     />
@@ -131,9 +132,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingTop="9dp"
-                    android:textSize="16sp"
+                    android:text="消费流水"
                     android:textColor="@color/showcolor"
-                    android:text="消费流水"/>
+                    android:textSize="16sp"/>
             </LinearLayout>
 
         </LinearLayout>
@@ -143,14 +144,22 @@
             layout="@layout/include_shouyestrip"
             />
 
+
         <LinearLayout
-            android:id="@+id/llt_shouyemanagement_flow_show"
+            android:id="@+id/llt_shouyemanagement_comsum"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="wrap_content"
             android:background="@color/white"
             android:orientation="vertical"
+            android:visibility="gone"
+            >
+        </LinearLayout>
 
-            />
+        <View
+            android:id="@+id/view_fillview"
+            android:layout_width="match_parent"
+            android:layout_height="13dp"
+            android:background="@color/white"/>
 
         <View
             android:layout_width="match_parent"
@@ -167,7 +176,8 @@
             android:id="@+id/ind_shouyemanagement_cashier"
             layout="@layout/include_shouyestrip"/>
 
-        <LinearLayout
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/chart_shouyemanagement"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:background="@color/white"
