@@ -10,8 +10,11 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.lianbi.mezone.b.app.Constants;
 import com.lianbi.mezone.b.bean.OneItemTableSetBean;
 import com.lianbi.mezone.b.bean.TableSetBean;
+import com.lianbi.mezone.b.bean.WebProductManagementBean;
+import com.lianbi.mezone.b.httpresponse.API;
 import com.xizhi.mezone.b.R;
 
 import java.util.ArrayList;
@@ -22,8 +25,13 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.QuickAdapter;
+import cn.com.hgh.utils.AbViewUtil;
+import cn.com.hgh.utils.ContentUtils;
+import cn.com.hgh.utils.JumpIntent;
 import cn.com.hgh.view.AbPullToRefreshView;
 import cn.com.hgh.view.ClearEditText;
+
+import static cn.com.hgh.utils.CryptTool.encryptionUrl;
 
 /*
 * 桌面设置
@@ -49,8 +57,10 @@ public class DiningTableSettingActivity extends BaseActivity implements
 
     private RelativeLayout view1;
     private RelativeLayout switch_state;
-    private View handleView;
-    private TextView in_business_or_not;//是否营业中
+    private View in_business_handle;
+    private TextView in_business;//营业中
+    private View out_business_handle;
+    private TextView out_business;//休息中
     private LinearLayout view2;
     private TextView pay_num;
     private TextView call_num;
@@ -129,13 +139,15 @@ public class DiningTableSettingActivity extends BaseActivity implements
         View headerView = LayoutInflater.from(this).inflate(R.layout.table_setting_listview_head, null);
         view1 = (RelativeLayout) headerView.findViewById(R.id.view_1);
         switch_state = (RelativeLayout) headerView.findViewById(R.id.switch_state);
-        handleView = headerView.findViewById(R.id.handle);
-        in_business_or_not = (TextView) headerView.findViewById(R.id.in_business_or_not);
+        in_business_handle = headerView.findViewById(R.id.in_business_handle);
+        in_business = (TextView) headerView.findViewById(R.id.in_business);//营业中
+        out_business_handle = headerView.findViewById(R.id.out_business_handle);
+        out_business = (TextView) headerView.findViewById(R.id.out_business);//休息中
         view2 = (LinearLayout) headerView.findViewById(R.id.view_2);
         pay_num = (TextView) headerView.findViewById(R.id.pay_num);
         call_num = (TextView) headerView.findViewById(R.id.call_num);
         particulars_num = (TextView) headerView.findViewById(R.id.particulars_num);
-        view3 = findViewById(R.id.view_3);
+        view3 = headerView.findViewById(R.id.view_3);
 
         switch_state.setOnClickListener(this);
         headerView.findViewById(R.id.pay).setOnClickListener(this);
@@ -148,38 +160,32 @@ public class DiningTableSettingActivity extends BaseActivity implements
     }
 
     private void initBusinessState() {
-        RelativeLayout.LayoutParams handleViewLayoutParams = (RelativeLayout.LayoutParams) handleView.getLayoutParams();
-        RelativeLayout.LayoutParams businessLayoutParams = (RelativeLayout.LayoutParams) in_business_or_not.getLayoutParams();
-        String state;
         int resid;
-        int handleVerb;
-        int businessVerb;
-        int anchor = RelativeLayout.TRUE;
         int color;
+        int in_business_visibility;
+        int out_business_visibility;
         if (isInBusiness) {
-            state = "营业中";
             resid = R.drawable.switch_background_shape_1;
-            handleVerb = RelativeLayout.ALIGN_PARENT_LEFT;
-            businessVerb = RelativeLayout.ALIGN_PARENT_RIGHT;
             color = android.R.color.white;
+            in_business_visibility = View.VISIBLE;
+            out_business_visibility = View.GONE;
         } else {
-            state = "休息中";
             resid = R.drawable.switch_background_shape_2;
-            handleVerb = RelativeLayout.ALIGN_PARENT_RIGHT;
-            businessVerb = RelativeLayout.ALIGN_PARENT_LEFT;
             color = R.color.color_ededed;
+            in_business_visibility = View.GONE;
+            out_business_visibility = View.VISIBLE;
         }
         switch_state.setBackgroundResource(resid);
-        in_business_or_not.setText(state);
-        handleViewLayoutParams.addRule(handleVerb, anchor);
-        businessLayoutParams.addRule(businessVerb, anchor);
-        handleView.setLayoutParams(handleViewLayoutParams);
-        in_business_or_not.setLayoutParams(businessLayoutParams);
+        in_business_handle.setVisibility(in_business_visibility);
+        in_business.setVisibility(in_business_visibility);//营业中
+        out_business_handle.setVisibility(out_business_visibility);
+        out_business.setVisibility(out_business_visibility);//休息中
         bottom.setBackgroundColor(getResources().getColor(color));
         view1.setBackgroundColor(getResources().getColor(color));
         view2.setBackgroundColor(getResources().getColor(color));
         view3.setBackgroundColor(getResources().getColor(color));
         table_list_view.setBackgroundColor(getResources().getColor(color));
+        add_table.setBackgroundColor(getResources().getColor(color));
     }
 
     private void setListener() {
@@ -223,6 +229,30 @@ public class DiningTableSettingActivity extends BaseActivity implements
                 onTitleLeftClick();
                 break;
             case R.id.menu_setting:
+                boolean isLogin = ContentUtils.getLoginStatus(DiningTableSettingActivity.this);
+                boolean re = JumpIntent
+                        .jumpLogin_addShop(isLogin, API.TRADE, DiningTableSettingActivity.this);
+                if (re) {
+                    boolean hasProduct = ContentUtils.getSharePreBoolean(DiningTableSettingActivity.this,
+                            Constants.SHARED_PREFERENCE_NAME,
+                            Constants.HAS_PRODUCT);
+                    if (hasProduct) {
+                        Intent intent_web = new Intent(DiningTableSettingActivity.this,
+                                H5WebActivty.class);
+                        intent_web.putExtra(Constants.NEDDLOGIN, false);
+                        intent_web.putExtra("NEEDNOTTITLE", false);
+                        intent_web.putExtra("Re", true);
+                        intent_web.putExtra(WebActivty.T, "产品管理");
+                        intent_web.putExtra(WebActivty.U, getUrl());
+                        DiningTableSettingActivity.this.startActivity(intent_web);
+                    } else {
+//                        Intent intent_more = new Intent(DiningTableSettingActivity.this,
+//                                ServiceMallActivity.class);
+//                        DiningTableSettingActivity.this.startActivityForResult(intent_more,
+//                                MainActivity.this.SERVICEMALLSHOP_CODE);
+//                        ContentUtils.showMsg(mMainActivity, "请下载对应模块进行产品编辑");
+                    }
+                }
                 break;
             case R.id.add_table:
                 startActivityForResult(new Intent(this, AddTablesetActivity.class), REQUEST_CODE_ADDTABLE_RESULT);
@@ -244,41 +274,52 @@ public class DiningTableSettingActivity extends BaseActivity implements
         }
     }
 
+    public String getUrl() {
+        String url = API.TOSTORE_PRODUCT_MANAGEMENT;
+        String bussniessId = BaseActivity.userShopInfoBean.getBusinessId();
+        WebProductManagementBean data = new WebProductManagementBean();
+        data.setBusinessId(bussniessId);
+        // String dataJson = JSONObject.fromObject(data).toString();
+        String dataJson = com.alibaba.fastjson.JSONObject.toJSON(data)
+                .toString();
+        // JSONObject jsonObject = new JSONObject();
+        // jsonObject.
+
+        url = encryptionUrl(url, dataJson);
+        return url;
+    }
+
     private void changeBusinessState() {
-        RelativeLayout.LayoutParams handleViewLayoutParams = (RelativeLayout.LayoutParams) handleView.getLayoutParams();
-        RelativeLayout.LayoutParams businessLayoutParams = (RelativeLayout.LayoutParams) in_business_or_not.getLayoutParams();
-        String state;
         int resid;
-        int handleVerb;
-        int businessVerb;
-        int anchor = RelativeLayout.TRUE;
         int color;
+        int in_business_visibility;
+        int out_business_visibility;
         if (isInBusiness) {
-            state = "休息中";
             resid = R.drawable.switch_background_shape_2;
-            handleVerb = RelativeLayout.ALIGN_PARENT_RIGHT;
-            businessVerb = RelativeLayout.ALIGN_PARENT_LEFT;
+            in_business_visibility = View.GONE;
+            out_business_visibility = View.VISIBLE;
             color = R.color.color_ededed;
             isInBusiness = false;
         } else {
-            state = "营业中";
             resid = R.drawable.switch_background_shape_1;
-            handleVerb = RelativeLayout.ALIGN_PARENT_LEFT;
-            businessVerb = RelativeLayout.ALIGN_PARENT_RIGHT;
+            in_business_visibility = View.VISIBLE;
+            out_business_visibility = View.GONE;
             color = android.R.color.white;
             isInBusiness = true;
         }
         switch_state.setBackgroundResource(resid);
-        in_business_or_not.setText(state);
-        handleViewLayoutParams.addRule(handleVerb, anchor);
-        businessLayoutParams.addRule(businessVerb, anchor);
-        handleView.setLayoutParams(handleViewLayoutParams);
-        in_business_or_not.setLayoutParams(businessLayoutParams);
+
+        in_business_handle.setVisibility(in_business_visibility);
+        in_business.setVisibility(in_business_visibility);//营业中
+        out_business_handle.setVisibility(out_business_visibility);
+        out_business.setVisibility(out_business_visibility);//休息中
+
         bottom.setBackgroundColor(getResources().getColor(color));
         view1.setBackgroundColor(getResources().getColor(color));
         view2.setBackgroundColor(getResources().getColor(color));
         view3.setBackgroundColor(getResources().getColor(color));
         table_list_view.setBackgroundColor(getResources().getColor(color));
+        add_table.setBackgroundColor(getResources().getColor(color));
     }
 
     @Override

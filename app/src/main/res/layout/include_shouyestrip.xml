@@ -11,7 +11,7 @@
         android:layout_width="3dp"
         android:layout_height="20dp"
         android:layout_gravity="center_vertical"
-        android:background="@color/colores_news_08"/>
+        android:background="@color/color_ff9023"/>
 
     <TextView
         android:id="@+id/tv_include_title"

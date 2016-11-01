@@ -12,8 +12,10 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
 
 import com.alibaba.fastjson.JSON;
 import com.lianbi.mezone.b.bean.ShouYeBannerBean;
@@ -37,11 +39,10 @@ import cn.com.hgh.playview.SliderLayout;
 import cn.com.hgh.playview.imp.TextSliderView;
 import cn.com.hgh.utils.AbDateUtil;
 import cn.com.hgh.utils.AbStrUtil;
-import cn.com.hgh.utils.AbViewUtil;
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.utils.ScreenUtils;
-import cn.com.hgh.view.PagerSlidingTabStrip;
+import cn.com.hgh.view.SegmentedGroup;
 
 /**
  * @author guanghui.han
@@ -57,14 +58,16 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 	private ArrayList<ShouYeBannerBean> ades_ImageEs = new ArrayList<>();
 	private boolean isAdSucceedRequest = false;
 	private FragmentManager mFragmentManager;
-	final String[] titles = {"智慧经营","商圈联盟"};
+	final String[] titles = {"智慧经营", "商圈联盟"};
 	public static final int POSITION0 = 0;
 	public static final int POSITION1 = 1;
 	private ShouyeLeaguesFragment mShouyeLeaguesFragment;
 	private ShouyeManagementFragment mShouyeManagementFragment;
-	private PagerSlidingTabStrip tabs;
 	private ViewPager pager;
 	private LinearLayout ad_llt;
+	private RadioButton mRbt_shouye_mag;
+	private RadioButton mRbt_shouye_union;
+	private SegmentedGroup mSeg;
 
 	/**
 	 * 刷新fm数据
@@ -100,14 +103,14 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 	}
 
 
-
 	private void initView(View view) {
 		mFragmentManager = getFragmentManager();
-		tabs = (PagerSlidingTabStrip) view.findViewById(R.id.tabs_fm_shouye);
+		mSeg = (SegmentedGroup) view.findViewById(R.id.seg);
+		mRbt_shouye_mag = (RadioButton) view.findViewById(R.id.rbt_shouye_mag);
+		mRbt_shouye_union = (RadioButton) view.findViewById(R.id.rbt_shouye_union);
+		mRbt_shouye_mag.setChecked(true);
 		pager = (ViewPager) view.findViewById(R.id.pager_fm_shouye);
-		tabs.setTextSize((int) AbViewUtil.sp2px(mActivity, 13));
-		pager.setAdapter(new MyAdapter(mFragmentManager,titles));
-		tabs.setViewPager(pager);
+		pager.setAdapter(new MyAdapter(mFragmentManager));
 		intBannerView(view);
 	}
 
@@ -127,22 +130,47 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 	}
 
 	private void listen() {
-			tabs.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-				@Override
-				public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+		pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+			@Override
+			public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
+			}
+
+			@Override
+			public void onPageSelected(int position) {
+				switch (position){
+					case POSITION0:
+						mRbt_shouye_mag.setChecked(true);
+						mRbt_shouye_union.setChecked(false);
+						break;
+					case POSITION1:
+						mRbt_shouye_mag.setChecked(false);
+						mRbt_shouye_union.setChecked(true);
+						break;
 				}
+			}
 
-				@Override
-				public void onPageSelected(int position) {
+			@Override
+			public void onPageScrollStateChanged(int state) {
 
+			}
+		});
+		mRbt_shouye_mag.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				if(isChecked){
+					pager.setCurrentItem(0);
 				}
-
-				@Override
-				public void onPageScrollStateChanged(int state) {
-
+			}
+		});
+		mRbt_shouye_union.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				if(isChecked){
+					pager.setCurrentItem(1);
 				}
-			});
+			}
+		});
 	}
 
 	/**
@@ -287,39 +315,32 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 		*/
 	}
 
-	public class MyAdapter extends FragmentPagerAdapter{
-		String[] _titles;
+	private class MyAdapter extends FragmentPagerAdapter {
 
-		public MyAdapter(FragmentManager fm,String[] titles){
+		public MyAdapter(FragmentManager fm) {
 			super(fm);
-			_titles = titles;
-		}
-
-		@Override
-		public CharSequence getPageTitle(int position) {
-			return _titles[position];
-		}
-
-		@Override
-		public int getCount() {
-			return _titles.length;
 		}
 
 		@Override
 		public Fragment getItem(int position) {
-			switch (position){
+			switch (position) {
 				case POSITION0:
-					if(mShouyeManagementFragment ==null){
+					if (null == mShouyeManagementFragment) {
 						mShouyeManagementFragment = new ShouyeManagementFragment();
 					}
 					return mShouyeManagementFragment;
 				case POSITION1:
-					if(mShouyeLeaguesFragment==null){
+					if (null == mShouyeLeaguesFragment) {
 						mShouyeLeaguesFragment = new ShouyeLeaguesFragment();
 					}
 					return mShouyeLeaguesFragment;
 			}
 			return null;
+		}
+
+		@Override
+		public int getCount() {
+			return 2;
 		}
 	}
 

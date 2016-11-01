@@ -1,56 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:segmentedgroup="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="@color/colores_news_14"
               android:orientation="vertical">
 
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colores_news_14"
-        android:orientation="vertical">
+        android:layout_height="48dp"
+        android:background="#008dda"
+        android:gravity="center"
+        android:orientation="horizontal">
 
-        <LinearLayout
+        <cn.com.hgh.view.SegmentedGroup
+            android:id="@+id/seg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:orientation="horizontal"
+            segmentedgroup:sc_border_width="1dp"
+            segmentedgroup:sc_checked_text_color="#008dda"
+            segmentedgroup:sc_corner_radius="10dp"
+            segmentedgroup:sc_tint_color="#FFF"
+            segmentedgroup:sc_unchecked_tint_color="#008dda"
+            >
 
-            <View
-                android:layout_width="80dp"
-                android:layout_height="48dp"
-                android:background="@color/white"/>
-
-            <cn.com.hgh.view.PagerSlidingTabStrip
-                android:id="@+id/tabs_fm_shouye"
+            <RadioButton
+                android:id="@+id/rbt_shouye_mag"
+                style="@style/RadioButton"
                 android:layout_width="0dp"
-                android:layout_height="48dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@android:color/white"
-                app:pstsDividerColor="@color/transparent"
-                app:pstsIndicatorColor="@color/colores_news_20"
-                app:pstsIndicatorHeight="3dp"
-                app:pstsShouldExpand="true"
-                app:pstsTabBackground="@drawable/background_tab"
-                app:pstsUnderlineHeight="3dp"
-                app:selectedTabTextColor="@color/colores_news_20"
-                />
+                android:clickable="true"
+                android:text="日常经营"/>
 
-            <View
-                android:layout_width="80dp"
-                android:layout_height="48dp"
-                android:background="@color/white"/>
-        </LinearLayout>
+            <RadioButton
+                android:id="@+id/rbt_shouye_union"
+                style="@style/RadioButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="商圈联盟"/>
+        </cn.com.hgh.view.SegmentedGroup>
 
-        <include layout="@layout/adeslltview"/>
+    </RelativeLayout>
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/pager_fm_shouye"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            />
-    </LinearLayout>
+    <include layout="@layout/adeslltview"/>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager_fm_shouye"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
 
 </LinearLayout>
