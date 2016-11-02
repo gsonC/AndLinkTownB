@@ -10,11 +10,13 @@ package com.lianbi.mezone.b.fragment;
  * @更新描述
  */
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,9 +28,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ViewFlipper;
 
+import com.alibaba.fastjson.JSON;
+import com.bumptech.glide.Glide;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
@@ -39,10 +42,13 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
-import com.github.mikephil.charting.utils.ColorTemplate;
+import com.lianbi.mezone.b.bean.LeaguesYellBean;
 import com.lianbi.mezone.b.httpresponse.API;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
+import com.lianbi.mezone.b.ui.LeaguesDynamicListActivity;
+import com.lianbi.mezone.b.ui.LeaguesStorelistActivity;
+import com.lianbi.mezone.b.ui.LeaguesYellListActivity;
 import com.lianbi.mezone.b.ui.MainActivity;
 import com.xizhi.mezone.b.R;
 
@@ -54,6 +60,7 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.Result;
 
 public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelectedListener {
@@ -133,19 +140,26 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
     TextView tvShouyeLeaguesNum;
     private MainActivity mActivity;
     private OkHttpsImp mOkHttpsImp;
+    private ArrayList<LeaguesYellBean> mData = new ArrayList<LeaguesYellBean>();
+    private ArrayList<LeaguesYellBean> mDataZxy = new ArrayList<LeaguesYellBean>();
     private final static int COLUMN_COUNT = 6;
     LinearLayout lay_shouyeLeagues_child;
     private Typeface tf;
     protected String[] mParties = new String[]{
             "餐饮", "购物", "住宿", "其他"
     };
-
+    public static final int[] PIECHART_COLORS = {
+            Color.rgb(255,188, 156), Color.rgb(255,186,29), Color.rgb(179,144,252),
+            Color.rgb(22, 204, 205)
+    };
     @OnClick({R.id.tv_include_more})
     public void OnClick(View v) {
         switch (v.getId()) {
             case R.id.tv_include_more:
-
-                break;
+                Intent   intent=new Intent();
+                intent.setClass(mActivity, LeaguesDynamicListActivity.class);
+                startActivity(intent);
+            break;
         }
     }
 
@@ -193,17 +207,15 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
         l.setEnabled(false);
         piec_shouyeLeagues_dyn.setEntryLabelColor(Color.WHITE);
         piec_shouyeLeagues_dyn.setEntryLabelTextSize(12f);
-        for (int i = 0; i < COLUMN_COUNT; i++) {
-            vfShouyeleaguesDyn.addView(getLinearLayout(i));
-            vfShouyeleaguesDyn.addView(getLinearLayout(i));
-            vfShouyeleaguesDyn.addView(getLinearLayout(i));
-        }
     }
     @Override
     public void onValueSelected(Entry e, Highlight h) {
 
         if (e == null)
             return;
+        Intent   intent=new Intent();
+        intent.setClass(mActivity, LeaguesStorelistActivity.class);
+        startActivity(intent);
         Log.i("VAL SELECTED",
                 "Value: " + e.getY() + ", index: " + h.getX()
                         + ", DataSet index: " + h.getDataSetIndex());
@@ -232,30 +244,59 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
      * 查询吆喝和商圈动态
      */
     private void getYellData() {
+//        ic(String businessId,
+//                String area,
+//                String businessCircle,
+//                String messageType,
+//                String pushScope,
+//                String author,
+//                String phone,
+//                String messageTitle,
+//                String messageContent,
+//                String pageNum,
+//                String pageSize,
+//                String serNum, String source,
+//                String reqTime,
         try {
             mOkHttpsImp.queryBusinessDynamic(
-                    mActivity.BusinessId,
+                    "BD2016052013475900000010",
                     "area",
-                    "businessCircle",
-                    "messageType",
-                    "pushScope",
-                    "author",
-                    "phone",
-                    "messageTitle",
-                    "messageContent",
-                    "F1",
-                    "F1",
+                    "310117",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
                     mActivity.uuid,
                     "app",
                     mActivity.reqTime,
                     new MyResultCallback<String>() {
                 @Override
                 public void onResponseResult(Result result) {
-                    String resString = result.getData();
+                    String reString = result.getData();
+                    Log.i("tag","resString 274----->"+reString);
                     try {
-                        JSONObject jsonObject = new JSONObject(resString);
-                        resString = jsonObject.getString("list");
+                        JSONObject jsonObject= new JSONObject(reString);
+                        reString = jsonObject.getString("list");
+                        if (!TextUtils.isEmpty(reString)) {
+                            mData.clear();
+                            ArrayList<LeaguesYellBean> leaguesyellbeanlist = (ArrayList<LeaguesYellBean>) JSON
+                                    .parseArray(reString,
+                                            LeaguesYellBean.class);
+                            mData.addAll(leaguesyellbeanlist);
+                            updateview(mData);
 
+                            mDataZxy.clear();
+                            for(LeaguesYellBean  LeaguesZxy:leaguesyellbeanlist){
+                              if(!LeaguesZxy.getMessageType().equals("MT0000")){
+                                  mDataZxy.addAll(leaguesyellbeanlist);
+                              }
+                            }
+                            showdynamic(mDataZxy);
+                        }
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -265,13 +306,62 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
 
                 @Override
                 public void onResponseFailed(String msg) {
-
+                    ContentUtils.showMsg(mActivity, "网络访问失败");
                 }
             });
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+    protected void updateview(ArrayList<LeaguesYellBean> arrayList) {
+        for(LeaguesYellBean   leaguesyellbean:arrayList){
+            vfShouyeleaguesDyn.addView(getLinearLayout(leaguesyellbean));
+        }
+    }
+    protected void showdynamic(ArrayList<LeaguesYellBean> arrayList) {
+        Glide.with(mActivity).load(compareMessageType(arrayList.get(0).getMessageType())).
+                error(R.mipmap.default_head).into(ivShouyeLeaguesRecruit);
+        tvShouyeLeaguesRetitle.setText(arrayList.get(0).getMessageTitle());
+        tvShouyeLeaguesRecontent.setText(arrayList.get(0).getMessageContent());
+        Glide.with(mActivity).load(compareMessageType(arrayList.get(1).getMessageType())).
+                error(R.mipmap.default_head).into(ivShouyeLeaguesNews);
+        tvShouyeLeaguesNewtitle.setText(arrayList.get(1).getMessageTitle());
+        tvShouyeLeaguesNewcontent.setText(arrayList.get(1).getMessageContent());
+        Glide.with(mActivity).load(compareMessageType(arrayList.get(2).getMessageType())).
+                error(R.mipmap.default_head).into(ivShouyeLeaguesDiscount);
+        tvShouyeLeaguesDiscounttitle.setText(arrayList.get(2).getMessageTitle());
+        tvShouyeLeaguesDiscountcontent.setText(arrayList.get(2).getMessageContent());
+    }
+    protected  int  compareMessageType(String messagetype){
+        if(messagetype.equals("MT0001")){
+            return R.mipmap.icon_recruit;
+        }
+        else
+        if(messagetype.equals("MT0002")){
+            return R.mipmap.icon_news;
+        }
+        else
+        if(messagetype.equals("MT0003")){
+            return R.mipmap.icon_discount;
+        }
+        return R.mipmap.icon_recruit;
+    }
+    private LinearLayout getLinearLayout(LeaguesYellBean leaguesyellbean) {
+        lay_shouyeLeagues_child = (LinearLayout) LayoutInflater.from(mActivity).inflate(
+                R.layout.item_shouyeleagues_dyn, null);
+        TextView   tv_shouyeLeagues_title=(TextView)lay_shouyeLeagues_child.findViewById(R.id.tv_shouyeLeagues_title);
+        tv_shouyeLeagues_title.setText(leaguesyellbean.getMessageTitle());
+        lay_shouyeLeagues_child.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent   intent=new Intent();
+                intent.setClass(mActivity, LeaguesYellListActivity.class);
+                startActivity(intent);
+            }
+        });
+        return lay_shouyeLeagues_child;
+    }
+
     //初始化动画
     private void initAnimation() {
         Animation animation = AnimationUtils.loadAnimation(mActivity, R.anim.img_animation);
@@ -281,18 +371,6 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
         ivShouyeLeaguesShopping.startAnimation(animation);
         ivShouyeLeaguesStay.startAnimation(animation);
         ivShouyeLeaguesOther.startAnimation(animation);
-    }
-
-    private LinearLayout getLinearLayout(final int i) {
-        lay_shouyeLeagues_child = (LinearLayout) LayoutInflater.from(mActivity).inflate(
-                R.layout.item_shouyeleagues_dyn, null);
-        lay_shouyeLeagues_child.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(mActivity, "点击--->" + i, Toast.LENGTH_SHORT).show();
-            }
-        });
-        return lay_shouyeLeagues_child;
     }
 
     private void setData(int count, float range) {
@@ -306,17 +384,8 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
         dataSet.setSliceSpace(0f);
         dataSet.setSelectionShift(5f);
         ArrayList<Integer> colors = new ArrayList<Integer>();
-        for (int c : ColorTemplate.VORDIPLOM_COLORS)
+        for (int c : PIECHART_COLORS)
             colors.add(c);
-        for (int c : ColorTemplate.JOYFUL_COLORS)
-            colors.add(c);
-        for (int c : ColorTemplate.COLORFUL_COLORS)
-            colors.add(c);
-        for (int c : ColorTemplate.LIBERTY_COLORS)
-            colors.add(c);
-        for (int c : ColorTemplate.PASTEL_COLORS)
-            colors.add(c);
-        colors.add(ColorTemplate.getHoloBlue());
         dataSet.setColors(colors);
         PieData data = new PieData(dataSet);
         data.setValueFormatter(new PercentFormatter());

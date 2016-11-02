@@ -10,24 +10,21 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:background="@color/white"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:background="@color/white"
-        android:paddingBottom="12dp"
-        android:paddingTop="12dp"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp"
         >
         <ImageView
             android:id="@+id/iv_shouyeLeagues_yell"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_alignParentLeft="true"
             android:scaleType="fitXY"
+            android:layout_gravity="center_vertical"
             android:src="@mipmap/icon_yell"
             android:adjustViewBounds="true"
             android:layout_marginLeft="10dp"
@@ -49,15 +46,82 @@
         android:layout_weight="1"
         android:flipInterval="5000"
         android:autoStart="true"
+        android:layout_gravity="center_vertical"
         android:background="@color/white"
         android:inAnimation="@anim/push_up_in"
         android:outAnimation="@anim/push_up_out"
         />
+        <View
+            android:id="@+id/v_shouyeLeagues_02"
+            android:layout_width="1dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@color/colores_news_14"
+            />
+        <ImageView
+            android:id="@+id/img_shouyeLeagues_response"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:scaleType="fitXY"
+            android:src="@mipmap/icon_response"
+            android:adjustViewBounds="true"
+            android:layout_marginRight="10dp"
+            />
     </LinearLayout>
-    <include
-        android:id="@+id/ind_shouyeLeagues_dynamic"
-        layout="@layout/include_shouyestrip"
-        />
+    <!--<include-->
+        <!--android:id="@+id/ind_shouyeLeagues_dynamic"-->
+        <!--layout="@layout/include_shouyestrip"-->
+        <!--/>-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp"
+        android:padding="3dp">
+        <View
+            android:layout_width="3dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center_vertical"
+            android:background="@color/color_ff9023"/>
+
+        <TextView
+            android:id="@+id/tv_include_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="9dp"
+            android:ellipsize="end"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="交易流水"
+            android:textColor="@color/showcolor"
+            android:textSize="16sp"
+            />
+        <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_include_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="5dp"
+            android:ellipsize="end"
+            android:gravity="right"
+            android:padding="8dp"
+            android:singleLine="true"
+            android:text="更多"
+            android:textColor="@color/color_008dda"/>
+        </RelativeLayout>
+    </LinearLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -74,6 +138,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_marginTop="10dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             >
@@ -92,8 +157,8 @@
                 android:ellipsize="end"
                 android:paddingLeft="5dp"
                 android:paddingRight="10dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
                 android:singleLine="true"
                 android:text="松江商圈商圈商圈松江商圈商圈商圈松江商圈商圈商圈圈商圈商圈"
                 android:textColor="@color/colores_news_10"/>
@@ -105,10 +170,13 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="5dp"
             android:ellipsize="end"
-            android:padding="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
             android:singleLine="true"
             android:text="松江商圈商圈商圈松江商圈商圈商圈松江商圈商圈商圈圈商圈商圈"
-            android:textColor="@color/colores_news_10"/>
+            android:textColor="@color/color_999999"/>
         <LinearLayout
             android:id="@+id/lay_shouyeLeagues_second"
             android:layout_width="match_parent"
@@ -133,8 +201,8 @@
                 android:ellipsize="end"
                 android:paddingLeft="5dp"
                 android:paddingRight="10dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
                 android:singleLine="true"
                 android:text="松江商圈商圈商圈松江商圈商圈商圈松江商圈商圈商圈圈商圈商圈"
                 android:textColor="@color/colores_news_10"/>
@@ -146,10 +214,13 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="5dp"
             android:ellipsize="end"
-            android:padding="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
             android:singleLine="true"
             android:text="松江商圈商圈商圈松江商圈商圈商圈松江商圈商圈商圈圈商圈商圈"
-            android:textColor="@color/colores_news_10"/>
+            android:textColor="@color/color_999999"/>
         <LinearLayout
             android:id="@+id/lay_shouyeLeagues_third"
             android:layout_width="match_parent"
@@ -174,8 +245,8 @@
                 android:ellipsize="end"
                 android:paddingLeft="5dp"
                 android:paddingRight="10dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
                 android:singleLine="true"
                 android:text="松江商圈商圈商圈松江商圈商圈商圈松江商圈商圈商圈圈商圈商圈"
                 android:textColor="@color/colores_news_10"/>
@@ -187,10 +258,13 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="5dp"
             android:ellipsize="end"
-            android:padding="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
             android:singleLine="true"
             android:text="松江商圈商圈商圈松江商圈商圈商圈松江商圈商圈商圈圈商圈商圈"
-            android:textColor="@color/colores_news_10"/>
+            android:textColor="@color/color_999999"/>
     </LinearLayout>
 
     <View
@@ -202,7 +276,7 @@
         android:id="@+id/ind_shouyeLeagues_area"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="5dp"
         android:background="@color/white"
         android:orientation="horizontal"
         android:padding="3dp">
@@ -211,24 +285,21 @@
             android:layout_width="3dp"
             android:layout_height="20dp"
             android:layout_gravity="center_vertical"
-            android:background="@color/colores_news_08"/>
+            android:background="@color/color_ff9023"/>
 
         <TextView
             android:id="@+id/tv_leavemessage_dyn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="9dp"
             android:ellipsize="end"
-            android:padding="10dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
             android:singleLine="true"
             android:text="交易流水"
+            android:textSize="16sp"
             android:textColor="@color/colores_news_10"/>
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            />
     </LinearLayout>
     <View
         android:layout_width="match_parent"
@@ -248,12 +319,10 @@
             android:gravity="left"
             android:layout_marginLeft="10dp"
             >
-            <com.github.mikephil.charting.charts.PieChart
+             <com.github.mikephil.charting.charts.PieChart
                 android:id="@+id/piec_shouyeLeagues_dyn"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
                 android:layout_marginLeft="10dp"
                  />
         </RelativeLayout>
@@ -261,10 +330,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginRight="60dp"
-            android:layout_marginTop="30dp"
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_gravity="center_vertical"
             >
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -283,9 +350,9 @@
                 android:id="@+id/tv_shouyeLeagues_restip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="餐饮  10"
+                android:text="餐饮"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="3dp"
+                android:layout_marginLeft="15dp"
                 />
             </LinearLayout>
             <LinearLayout
@@ -306,9 +373,9 @@
                     android:id="@+id/tv_shouyeLeagues_shoppingtip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="购物  10"
+                    android:text="购物"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="3dp"
+                    android:layout_marginLeft="15dp"
                     />
             </LinearLayout>
             <LinearLayout
@@ -328,10 +395,10 @@
             <TextView
                 android:id="@+id/tv_shouyeLeagues_staytip"
                 android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="住宿  10"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="3dp"
+                android:layout_height="wrap_content"
+                android:text="住宿"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="15dp"
                 />
             </LinearLayout>
             <LinearLayout
@@ -352,9 +419,9 @@
             android:id="@+id/tv_shouyeLeagues_othertip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="其他  10"
+            android:text="其他"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="3dp"
+            android:layout_marginLeft="15dp"
             />
             </LinearLayout>
         </LinearLayout>
@@ -364,15 +431,14 @@
      android:layout_height="wrap_content"
      android:background="@color/white"
      android:orientation="horizontal"
-     android:paddingTop="10dp"
-     android:paddingBottom="10dp"
      >
     <RelativeLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:layout_marginLeft="15dp"
-        android:padding="5dp"
+        android:layout_marginLeft="20dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
      >
      <ImageView
         android:id="@+id/iv_shouyeLeagues_restaurant"
@@ -405,9 +471,9 @@
          android:layout_width="0dp"
          android:layout_height="wrap_content"
          android:layout_weight="1"
-         android:layout_marginLeft="35dp"
-         android:padding="5dp"
-         >
+         android:layout_marginLeft="30dp"
+         android:paddingLeft="5dp"
+         android:paddingRight="5dp"         >
      <ImageView
          android:id="@+id/iv_shouyeLeagues_shopping"
          android:layout_width="wrap_content"
@@ -439,9 +505,9 @@
          android:layout_width="0dp"
          android:layout_height="wrap_content"
          android:layout_weight="1"
-         android:layout_marginLeft="35dp"
-         android:padding="5dp"
-         >
+         android:layout_marginLeft="30dp"
+         android:paddingLeft="5dp"
+         android:paddingRight="5dp"         >
      <ImageView
          android:id="@+id/iv_shouyeLeagues_stay"
          android:layout_width="wrap_content"
@@ -473,10 +539,10 @@
          android:layout_width="0dp"
          android:layout_height="wrap_content"
          android:layout_weight="1"
-         android:layout_marginLeft="35dp"
-         android:layout_marginRight="15dp"
-         android:padding="5dp"
-         >
+         android:layout_marginLeft="30dp"
+         android:layout_marginRight="20dp"
+         android:paddingLeft="5dp"
+         android:paddingRight="5dp"         >
      <ImageView
          android:id="@+id/iv_shouyeLeagues_other"
          android:layout_width="wrap_content"

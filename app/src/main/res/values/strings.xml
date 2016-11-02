@@ -185,4 +185,8 @@
     <string name="load_fail">加载失败</string>
     <string name="dailyoperation">日常经营</string>
     <string name="shopalliance">商圈联盟</string>
+    <string name="entertitle">请输入标题</string>
+    <string name="entercontactnum">请输入联系方式</string>
+    <string name="entersaysomething">要说点儿啥...</string>
+    <string name="publish">发布</string>
 </resources>

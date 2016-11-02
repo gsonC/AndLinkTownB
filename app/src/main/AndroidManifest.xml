@@ -423,6 +423,12 @@
         -->
         <activity android:name="com.lianbi.mezone.b.ui.TableHasPaidActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.TableHasOrderedActivity"/>
+        <activity android:name="com.lianbi.mezone.b.ui.LeaguesDynamicListActivity"/>
+        <activity android:name="com.lianbi.mezone.b.ui.LeaguesPublishYellActivity"/>
+        <activity android:name="com.lianbi.mezone.b.ui.LeaguesStorelistActivity"/>
+        <activity android:name="com.lianbi.mezone.b.ui.LeaguesYellListActivity"/>
+        <activity android:name="com.lianbi.mezone.b.ui.LeaguesYellDetailsActivity"/>
+
     </application>
 
 </manifest>
