@@ -1,34 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
-              android:layout_height="35dp"
-
+              android:layout_height="match_parent"
               android:background="@color/white"
               android:orientation="horizontal">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
         android:layout_weight="1"
         android:clickable="false"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/tv_shouyecomsum_much1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="7dp"
+            android:ellipsize="end"
+            android:maxLength="7"
+            android:singleLine="true"
             android:text="1000.00"
-            android:textColor="@color/color_be3320"
+            android:textColor="@color/colore_0084a0"
             android:textSize="13sp"/>
 
         <TextView
             android:id="@+id/tv_shouyecomsum_table1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="13dp"
-            android:text="1号桌"
+            android:layout_marginLeft="7dp"
+            android:layout_toRightOf="@id/tv_shouyecomsum_much1"
+            android:ellipsize="end"
+            android:maxEms="5"
+            android:singleLine="true"
+            android:text="花好月圆桌"
             android:textColor="@color/color_4b4b4b"
             android:textSize="13sp"/>
 
@@ -36,39 +44,52 @@
             android:id="@+id/tv_shouyecomsum_time1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp"
             android:text="23:06"
             android:textColor="@color/foodcolor"
             android:textSize="13sp"/>
-    </LinearLayout>
+    </RelativeLayout>
 
-    <View
-        android:layout_width="@dimen/line"
+    <cn.com.hgh.view.DottedLine
+        android:id="@+id/dottline"
+        android:layout_width="2dp"
         android:layout_height="match_parent"
-        android:background="@color/colores_news_11"/>
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        />
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
         android:layout_weight="1"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/tv_shouyecomsum_much2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="7dp"
+            android:ellipsize="end"
+            android:maxLength="7"
+            android:singleLine="true"
             android:text="1000.00"
-            android:textColor="@color/color_be3320"
+            android:textColor="@color/colore_0084a0"
             android:textSize="13sp"/>
 
         <TextView
             android:id="@+id/tv_shouyecomsum_table2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="13dp"
-            android:text="1号桌"
+            android:layout_marginLeft="7dp"
+            android:layout_toRightOf="@id/tv_shouyecomsum_much2"
+            android:ellipsize="end"
+            android:maxEms="5"
+            android:singleLine="true"
+            android:text="1号桌桌的士大夫"
             android:textColor="@color/color_4b4b4b"
             android:textSize="13sp"/>
 
@@ -76,9 +97,10 @@
             android:id="@+id/tv_shouyecomsum_time2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp"
             android:text="23:06"
             android:textColor="@color/foodcolor"
             android:textSize="13sp"/>
-    </LinearLayout>
+    </RelativeLayout>
 </LinearLayout>

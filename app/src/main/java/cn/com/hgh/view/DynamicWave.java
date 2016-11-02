@@ -94,7 +94,7 @@ public class DynamicWave extends View {
 		r2.top = 0;
 		r2.right = mTotalWidth;
 		r2.bottom = mTotalHeight;
-		canvas.drawRoundRect(r2, 7, 7, roundRectPaint);
+		canvas.drawRoundRect(r2, 8, 8, roundRectPaint);
 
 		if (height != 0) {
 

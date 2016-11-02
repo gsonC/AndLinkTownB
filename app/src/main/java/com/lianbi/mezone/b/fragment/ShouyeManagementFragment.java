@@ -1,5 +1,7 @@
 package com.lianbi.mezone.b.fragment;
 
+import android.graphics.Color;
+import android.graphics.DashPathEffect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -7,6 +9,7 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.RelativeSizeSpan;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -17,6 +20,19 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.listener.ChartTouchListener;
+import com.github.mikephil.charting.listener.OnChartGestureListener;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.lianbi.mezone.b.bean.TestBean;
 import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
 import com.lianbi.mezone.b.ui.MainActivity;
@@ -30,6 +46,7 @@ import java.util.List;
 
 import cn.com.hgh.utils.AbStrUtil;
 import cn.com.hgh.utils.ContentUtils;
+import cn.com.hgh.view.DynamicWave;
 
 /*
  * @创建者     master
@@ -40,7 +57,7 @@ import cn.com.hgh.utils.ContentUtils;
  * @更新时间   $Date$
  * @更新描述
  */
-public class ShouyeManagementFragment extends Fragment implements OnClickListener, RadioGroup.OnCheckedChangeListener {
+public class ShouyeManagementFragment extends Fragment implements OnClickListener, RadioGroup.OnCheckedChangeListener, OnChartGestureListener, OnChartValueSelectedListener {
 
 	private MainActivity mActivity;
 	private OkHttpsImp mOkHttpsImp;
@@ -76,6 +93,17 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 	 * 消费曲线
 	 */
 	private LineChart mChart_shouyemanagement;
+	/**
+	 * 销量排行
+	 */
+	private TextView mTv_includesalerank_one, mTv_includesalerank_two, mTv_includesalerank_three,
+			mTv_includesalerank_four, mTv_includesalerank_five, mTv_includesalerank_six, mTv_includesalerank_seven;
+	private TextView mTv_includesalerank_onebottom, mTv_includesalerank_twobottom, mTv_includesalerank_threebottom,
+			mTv_includesalerank_fourbottom, mTv_includesalerank_fivebottom, mTv_includesalerank_sixbottom,
+			mTv_includesalerank_sevenbottom;
+	private DynamicWave mDyw_includesalerank_one, mDyw_includesalerank_two, mDyw_includesalerank_three,
+			mDyw_includesalerank_four, mDyw_includesalerank_five, mDyw_includesalerank_six,
+			mDyw_includesalerank_seven;
 
 	@Nullable
 	@Override
@@ -96,6 +124,7 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 	 * (本店会员)测试数据
 	 */
 	private long testData = 123456;
+
 	private void getData1() {
 		String ss = "";
 		try {
@@ -107,7 +136,7 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 		 * SpannableString 使一个textView展示不同文字大小 new RelativeSizeSpan(0.8f)代表正常字体的0.8倍
 		 */
 		SpannableString msp = new SpannableString(ss);
-		msp.setSpan(new RelativeSizeSpan(0.8f), ss.length()-2, ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+		msp.setSpan(new RelativeSizeSpan(0.8f), ss.length() - 2, ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 		mTv_shouyemanagement_muchtoday.setText(msp);
 	}
 
@@ -126,6 +155,7 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 		}
 		if (null != mDatas && mDatas.size() > 0) {
 			mLlt_shouyemanagement_comsum.setVisibility(View.VISIBLE);
+			mView_fillview.setVisibility(View.VISIBLE);
 			addComsumDetailView(10);
 		} else {
 			mLlt_shouyemanagement_comsum.setVisibility(View.GONE);
@@ -177,6 +207,29 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 		mChk_oneday_salenum = (RadioButton) view.findViewById(R.id.ind_shouyemanagement_salenum).findViewById(R.id.rboButton_oneday);//日
 		mChk_oneday_salenum.setChecked(true);
 		mChk_oneweek_salenum = (RadioButton) view.findViewById(R.id.ind_shouyemanagement_salenum).findViewById(R.id.rboButton_oneweek);//周
+		mTv_includesalerank_one = (TextView) view.findViewById(R.id.ind_shouyemanagement_salerank).findViewById(R.id.tv_includesalerank_one);
+		mTv_includesalerank_two = (TextView) view.findViewById(R.id.ind_shouyemanagement_salerank).findViewById(R.id.tv_includesalerank_two);
+		mTv_includesalerank_three = (TextView) view.findViewById(R.id.ind_shouyemanagement_salerank).findViewById(R.id.tv_includesalerank_three);
+		mTv_includesalerank_four = (TextView) view.findViewById(R.id.ind_shouyemanagement_salerank).findViewById(R.id.tv_includesalerank_four);
+		mTv_includesalerank_five = (TextView) view.findViewById(R.id.ind_shouyemanagement_salerank).findViewById(R.id.tv_includesalerank_five);
+		mTv_includesalerank_six = (TextView) view.findViewById(R.id.ind_shouyemanagement_salerank).findViewById(R.id.tv_includesalerank_six);
+		mTv_includesalerank_seven = (TextView) view.findViewById(R.id.ind_shouyemanagement_salerank).findViewById(R.id.tv_includesalerank_seven);
+
+		mDyw_includesalerank_one = (DynamicWave) view.findViewById(R.id.ind_shouyemanagement_salerank).findViewById(R.id.dyw_includesalerank_one);
+		mDyw_includesalerank_two = (DynamicWave) view.findViewById(R.id.ind_shouyemanagement_salerank).findViewById(R.id.dyw_includesalerank_two);
+		mDyw_includesalerank_three = (DynamicWave) view.findViewById(R.id.ind_shouyemanagement_salerank).findViewById(R.id.dyw_includesalerank_three);
+		mDyw_includesalerank_four = (DynamicWave) view.findViewById(R.id.ind_shouyemanagement_salerank).findViewById(R.id.dyw_includesalerank_four);
+		mDyw_includesalerank_five = (DynamicWave) view.findViewById(R.id.ind_shouyemanagement_salerank).findViewById(R.id.dyw_includesalerank_five);
+		mDyw_includesalerank_six = (DynamicWave) view.findViewById(R.id.ind_shouyemanagement_salerank).findViewById(R.id.dyw_includesalerank_six);
+		mDyw_includesalerank_seven = (DynamicWave) view.findViewById(R.id.ind_shouyemanagement_salerank).findViewById(R.id.dyw_includesalerank_seven);
+
+		mTv_includesalerank_onebottom = (TextView) view.findViewById(R.id.ind_shouyemanagement_salerank).findViewById(R.id.tv_includesalerank_onebottom);
+		mTv_includesalerank_twobottom = (TextView) view.findViewById(R.id.ind_shouyemanagement_salerank).findViewById(R.id.tv_includesalerank_twobottom);
+		mTv_includesalerank_threebottom = (TextView) view.findViewById(R.id.ind_shouyemanagement_salerank).findViewById(R.id.tv_includesalerank_threebottom);
+		mTv_includesalerank_fourbottom = (TextView) view.findViewById(R.id.ind_shouyemanagement_salerank).findViewById(R.id.tv_includesalerank_fourbottom);
+		mTv_includesalerank_fivebottom = (TextView) view.findViewById(R.id.ind_shouyemanagement_salerank).findViewById(R.id.tv_includesalerank_fivebottom);
+		mTv_includesalerank_sixbottom = (TextView) view.findViewById(R.id.ind_shouyemanagement_salerank).findViewById(R.id.tv_includesalerank_sixbottom);
+		mTv_includesalerank_sevenbottom = (TextView) view.findViewById(R.id.ind_shouyemanagement_salerank).findViewById(R.id.tv_includesalerank_sevenbottom);
 
 		/**
 		 * 首页--本店会员ID
@@ -230,9 +283,159 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 	 * 初始化折线图数据
 	 */
 	private void initLineChart() {
+		//mChart_shouyemanagement
+		mChart_shouyemanagement.setOnChartGestureListener(this);
+		mChart_shouyemanagement.setOnChartValueSelectedListener(this);
+		//是否绘制北京颜色
+		mChart_shouyemanagement.setDrawGridBackground(false);
+		//设置描述信息为false
+		mChart_shouyemanagement.getDescription().setEnabled(false);
+		//设置手势
+		mChart_shouyemanagement.setTouchEnabled(true);
+		//启用缩放和拖动
+		mChart_shouyemanagement.setDragEnabled(true);
+		mChart_shouyemanagement.setScaleEnabled(true);
+		//如果金庸,缩放可在X轴Y轴分别作
+		mChart_shouyemanagement.setPinchZoom(true);
+		//设置折线图说明隐藏
+		mChart_shouyemanagement.getLegend().setEnabled(false);
+		//设置动画
+		mChart_shouyemanagement.animateY(2000);
+		mChart_shouyemanagement.getAxisRight().setEnabled(false);
+
+		//获取X轴
+		XAxis xAxis = mChart_shouyemanagement.getXAxis();
+		//设置网格线
+		xAxis.enableGridDashedLine(10f, 10f, 0);
+		//设置X轴颜色
+		xAxis.setGridColor(Color.parseColor("#99e9fc"));
+		//设置X轴位置
+		xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+		//设置X轴轴体是否绘制
+		xAxis.setDrawAxisLine(false);
+		//设置X轴一共多少标签
+		xAxis.setLabelCount(8);
+
+		//获取Y轴
+		YAxis leftAxis = mChart_shouyemanagement.getAxisLeft();
+		//重置所有限制线,避免重叠线
+		leftAxis.removeAllLimitLines();
+		//设置最大值
+		leftAxis.setAxisMaximum(200f);
+		//设置最小值
+		leftAxis.setAxisMinimum(0f);
+		//设置Y轴颜色
+		leftAxis.setGridColor(Color.parseColor("#99e9fc"));
+		//设置Y轴轴体是否绘制
+		leftAxis.setDrawAxisLine(false);
+		//设置Y轴网格线
+		leftAxis.enableGridDashedLine(10f, 10f, 0);
+		//设置0线是否绘制
+		leftAxis.setDrawZeroLine(true);
+		//设置Y轴轴体隐藏
+		leftAxis.setDrawLabels(false);
+		//限制线是落后的数据(而不是顶部)
+		leftAxis.setDrawLimitLinesBehindData(true);
+
+		xAxis.setValueFormatter(new IAxisValueFormatter() {
+			@Override
+			public String getFormattedValue(float value, AxisBase axis) {
+				if (value == 0) {
+					return "09:00";
+				} else if (value == 1) {
+					return "10:00";
+				} else if (value == 2) {
+					return "11:00";
+				} else if (value == 3) {
+					return "12:00";
+				} else if (value == 4) {
+					return "13:00";
+				} else if (value == 5) {
+					return "14:00";
+				} else if (value == 6) {
+					return "15:00";
+				} else if (value == 7) {
+					return "16:00";
+				} else if (value == 8) {
+					return "17:00";
+				}
+				return "数据异常";
+			}
+
+			@Override
+			public int getDecimalDigits() {
+				return 0;
+			}
+		});
+
+
+		//添加数据
+		setChartData(9, 100);
+
+		mChart_shouyemanagement.animateX(2000);
+		//获取图例(这能在设置数据之后)
+		Legend l = mChart_shouyemanagement.getLegend();
+		//修改图纸
+		l.setForm(Legend.LegendForm.LINE);
+		//刷新图例
+		//mChart_shouyemanagement.invalidate();
 
 	}
 
+	private void setChartData(int count, int range) {
+		ArrayList<Entry> values = new ArrayList<>();
+		for (int i = 0; i < count; i++) {
+			float val = (float) (Math.random() * range) + 3;
+			values.add(new Entry(i, val));
+		}
+		LineDataSet set1;
+		if (mChart_shouyemanagement.getData() != null && mChart_shouyemanagement.getData().getDataSetCount() > 0) {
+			set1 = (LineDataSet) mChart_shouyemanagement.getData().getDataSetByIndex(0);
+			set1.setValues(values);
+			mChart_shouyemanagement.getData().notifyDataChanged();
+			mChart_shouyemanagement.notifyDataSetChanged();
+		} else {
+			//创建一个数据集并给它一个类型
+			set1 = new LineDataSet(values, "消费曲线");
+
+			//设置这样的虚线“- - -”
+			//set1.enableDashedLine(10f, 5f, 0f);
+			//set1.enableDashedHighlightLine(10f, 5f, 0f);
+			set1.setColor(Color.parseColor("#4ccdb9"));
+
+			set1.setCircleColor(Color.parseColor("#ff9421"));//设置折现圆点颜色
+			set1.setLineWidth(2f);//设置线宽
+			set1.setCircleRadius(3f);//设置折线处圆点大小
+			set1.setDrawCircleHole(true);//设置折线出圆点时候是否有孔
+			set1.setValueTextSize(11f);//设置文字大小
+			set1.setValueTextColor(Color.parseColor("#00b4d9"));
+			set1.setDrawFilled(false);//设置包括的范围区域填充颜色
+			set1.setFormLineWidth(1f);//设置下面线宽度
+			set1.setFormLineDashEffect(new DashPathEffect(new float[]{10f, 5f}, 0f));//设置下面线为虚线
+			set1.setFormSize(15.f);//设置下面线长度
+
+			/**
+			 * 设置折现下面背景色 判断API18
+			 */
+			//if (Utils.getSDKInt() >= 18) {
+			// 填冲在API级别18及以上的支持
+			//	Drawable drawable = ContextCompat.getDrawable(getActivity(), R.drawable.fade_red);
+			//	set1.setFillDrawable(drawable);
+			//}
+			//else {
+			set1.setFillColor(Color.WHITE);
+			//}
+
+			ArrayList<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
+			dataSets.add(set1); // 添加数据集
+
+			// 创建数据集的数据对象
+			LineData data = new LineData(dataSets);
+
+			// 设置数据
+			mChart_shouyemanagement.setData(data);
+		}
+	}
 
 	/**
 	 * 设置首页各个title一级文字大小
@@ -241,7 +444,7 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 		mTv_include_title.setText("到店服务");
 		mTv_include_title_flow.setText("实时消费");
 		mTv_include_othertitle_cashier.setText("消费曲线");
-		mTv_include_title_membernum.setText("本店会员");
+		mTv_include_title_membernum.setText("会员营销");
 		mTv_include_othertitle_salenum.setText("销量排行");
 	}
 
@@ -328,7 +531,7 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 	/**
 	 * 本店会员数据填充
 	 */
-	private void setMyShopVIPData(){
+	private void setMyShopVIPData() {
 
 	}
 
@@ -377,4 +580,59 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 			System.out.println("55");
 		}
 	}
+
+	// 折线图手势监听---------------------------------------------------------------
+
+	@Override
+	public void onChartGestureStart(MotionEvent me, ChartTouchListener.ChartGesture lastPerformedGesture) {
+
+	}
+
+	@Override
+	public void onChartGestureEnd(MotionEvent me, ChartTouchListener.ChartGesture lastPerformedGesture) {
+
+	}
+
+	@Override
+	public void onChartLongPressed(MotionEvent me) {
+
+	}
+
+	@Override
+	public void onChartDoubleTapped(MotionEvent me) {
+
+	}
+
+	@Override
+	public void onChartSingleTapped(MotionEvent me) {
+
+	}
+
+	@Override
+	public void onChartFling(MotionEvent me1, MotionEvent me2, float velocityX, float velocityY) {
+
+	}
+
+	@Override
+	public void onChartScale(MotionEvent me, float scaleX, float scaleY) {
+
+	}
+
+	@Override
+	public void onChartTranslate(MotionEvent me, float dX, float dY) {
+
+	}
+
+	// 折线图选中监听---------------------------------------------------------------
+	@Override
+	public void onValueSelected(Entry e, Highlight h) {
+
+	}
+
+	@Override
+	public void onNothingSelected() {
+
+	}
+
+
 }

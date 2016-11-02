@@ -113,6 +113,10 @@
             layout="@layout/include_shouyestrip"
             />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line"
+            android:background="@color/color_e3e3e3"/>
 
         <LinearLayout
             android:id="@+id/llt_shouyemanagement_comsum"
@@ -128,6 +132,7 @@
             android:id="@+id/view_fillview"
             android:layout_width="match_parent"
             android:layout_height="13dp"
+            android:visibility="gone"
             android:background="@color/white"/>
 
         <View
@@ -148,9 +153,14 @@
         <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/chart_shouyemanagement"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="220dp"
             android:background="@color/white"
             />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/white"/>
 
         <include
             android:id="@+id/ind_shouyemanagement_salenum"
