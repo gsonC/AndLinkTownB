@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -143,7 +144,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 				ContentUtils.putSharePre(MainActivity.this,
 						Constants.SHARED_PREFERENCE_NAME,
 						Constants.DDFW, "1");
-			} else if (3 == datas.get(i).getId()) {
+			} else if (2 == datas.get(i).getId()) {
 				ContentUtils.putSharePre(MainActivity.this,
 						Constants.SHARED_PREFERENCE_NAME,
 						Constants.HHPF, "3");
@@ -1098,21 +1099,21 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 										.parseArray(reString,
 												ShouyeServiceBean.class);
 
-								typeUserDownload(mDatas);
-
+//								typeUserDownload(mDatas);
+/*
 								ShouyeServiceBean service = new ShouyeServiceBean();
 								service.setDefaultservice(2);
 								service.setAppName("收款");
 								service.setId(99);
-								mDatas.add(0, service);
-
-								ShouyeServiceBean endservie = new ShouyeServiceBean();
-								endservie.setDefaultservice(1);
-								endservie.setAppName("服务商城");
-								endservie.setId(100);
-								mDatas.add(mDatas.size(), endservie);
-								setFill();
-
+								mDatas.add(0, service);*/
+//
+//								ShouyeServiceBean endservie = new ShouyeServiceBean();
+//								endservie.setDefaultservice(1);
+//								endservie.setAppName("服务商城");
+//								endservie.setId(100);
+//								mDatas.add(mDatas.size(), endservie);
+//								setFill();
+                                Log.i("tag","  "+mDatas.size());
 								((WisdomManagerFragment) fm_wisdommanage)
 										.getServiceMall(mDatas);
 							}
@@ -1143,19 +1144,19 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 	 * 用户已下载服务添加收款和服务商城
 	 */
 	public void filltheseats() {
-		mDatas.clear();
+		/*mDatas.clear();
 		ShouyeServiceBean service = new ShouyeServiceBean();
 		service.setDefaultservice(2);
 		service.setAppName("收款");
 		service.setId(99);
-		mDatas.add(service);
+		mDatas.add(service);*/
 
-		ShouyeServiceBean endservie = new ShouyeServiceBean();
+		/*ShouyeServiceBean endservie = new ShouyeServiceBean();
 		endservie.setIcoUrl("http");
 		endservie.setDefaultservice(1);
 		endservie.setAppName("服务商城");
 		endservie.setId(100);
-		mDatas.add(endservie);
+		mDatas.add(endservie);*/
 		setFill();
 		((WisdomManagerFragment) fm_wisdommanage).getServiceMall(mDatas);
 	}
@@ -1164,17 +1165,17 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 	 * 补位填充
 	 */
 	public void setFill() {
-		if (0 != mDatas.size() % 4) {
+		if (0 != mDatas.size() % 3) {
 			int numfill = 0;
-			switch (mDatas.size() % 4) {
+			switch (mDatas.size() % 3) {
 				case 1:
-					numfill = 3;
-					break;
-				case 2:
 					numfill = 2;
 					break;
-				case 3:
+				case 2:
 					numfill = 1;
+					break;
+				case 3:
+					numfill = 0;
 					break;
 			}
 			for (int i = 0; i < numfill; i++) {

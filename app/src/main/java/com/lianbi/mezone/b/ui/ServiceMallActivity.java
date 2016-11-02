@@ -10,6 +10,7 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -23,6 +24,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.QuickAdapter;
@@ -44,6 +46,8 @@ public class ServiceMallActivity extends BaseActivity {
 	private ListView  listview_service;
 	private ImageView iv_store_service,iv_servicemall_empty;
 	private ServiceMallBean  mServiceMallBean;
+	private TextView tv_BussinessMaking;
+	private RelativeLayout ray_right;
 	//桌位设置
 	public static final int   TABLESETTING=1;
 	//微信商城
@@ -84,6 +88,8 @@ public class ServiceMallActivity extends BaseActivity {
 					final ServiceMallBean item) {
 				LinearLayout  llt_servicemall = helper
 						.getView(R.id.llt_servicemall);
+				ray_right = helper.getView(R.id.ray_right);
+				tv_BussinessMaking = helper.getView(R.id.tv_BussinessMaking);
 				ImageView img_itemmall = helper
 						.getView(R.id.img_itemmall);
 				TextView tv_servicename = helper
@@ -110,8 +116,11 @@ public class ServiceMallActivity extends BaseActivity {
 				  tv_download.setVisibility(View.GONE);
 				  img_right.setVisibility(View.VISIBLE);
 				}
-
-
+                if(item.getAppCode().equals("wcm")||item.getAppCode().equals("wifi")||item.getAppCode().equals("qns")){
+					llt_servicemall.setVisibility(View.VISIBLE);
+				}else{
+					llt_servicemall.setVisibility(View.GONE);
+				}
 				if(item.getAppCode().equals("mms")){
 					tv_download.setVisibility(View.GONE);
 					tv_oldprice.setVisibility(View.GONE);
@@ -142,7 +151,7 @@ public class ServiceMallActivity extends BaseActivity {
 								}
 							} 
 						});
-				
+
 				helper.getView(R.id.llt_servicemall).setOnClickListener(
 						new OnClickListener() {
 
@@ -170,14 +179,14 @@ public class ServiceMallActivity extends BaseActivity {
 												(ServiceMallActivity.this,H5WebActivty.class,
 														isLogin,API.TOSTORE_MODULE_WCM,WECHATMALL,
 														false,false,true,"");
-									} /*else if ("sws".equals(appCode)) {//货源批发
+									} else if ("sws".equals(appCode)) {//货源批发
 										JumpIntent.jumpWebActivty
 												(ServiceMallActivity.this,H5WebActivty.class,
 														isLogin,API.TOSTORE_Supply_Wholesale,SUPPLYWHOLESALE,
 														false,false,true,isappname);
-									}*//* else if ("rss".equals(appCode)) {//预约界面
+									} else if ("rss".equals(appCode)) {//预约界面
 										simpleJump(BookFunctionActivity.class);
-									}*/ else if ("wifi".equals(appCode)) {//智能WIFI
+									} else if ("wifi".equals(appCode)) {//智能WIFI
 										JumpIntent.jumpWebActivty
 												(ServiceMallActivity.this,WIFIWebActivity.class,
 														isLogin,API.INTELLIGENT_WIFI,INTELLIGENTWIFI,
@@ -210,8 +219,9 @@ public class ServiceMallActivity extends BaseActivity {
 
 	private void initView() {
 		setPageTitle("服务商城");
-		listview_service= (ListView) findViewById(R.id.activity_servicemall_list);
+		listview_service = (ListView) findViewById(R.id.activity_servicemall_list);
 		iv_servicemall_empty = (ImageView) findViewById(R.id.iv_servicemall_empty);
+
 	}
 
 	private void  goDownloadMall(String  serviceId,final ServiceMallBean  mServiceMallBean){
@@ -224,6 +234,8 @@ public class ServiceMallActivity extends BaseActivity {
 					JSONObject jsonObject;
 					try {
 					ContentUtils.showMsg(ServiceMallActivity.this, "下载成功");
+						ray_right.setVisibility(View.GONE);
+						tv_BussinessMaking.setVisibility(View.GONE);
 					mServiceMallBean.setDownload("Y");
 					updateView(mData);
 					finish();
@@ -256,9 +268,14 @@ public class ServiceMallActivity extends BaseActivity {
 						if (!TextUtils.isEmpty(reString)) {
 							mData.clear();
 							ArrayList<ServiceMallBean> downloadListMall = (ArrayList<ServiceMallBean>) JSON
-									.parseArray(reString,
-											ServiceMallBean.class);
-							mData.addAll(downloadListMall);
+									.parseArray(reString, ServiceMallBean.class);
+							List a=new ArrayList();
+                             for(ServiceMallBean  ss: downloadListMall ){
+								 if(ss.getAppCode().equals("wcm")||ss.getAppCode().equals("qns")||ss.getAppCode().equals("wifi")){
+									 a.add(ss);
+								 }
+							 }
+							mData.addAll(a);
 							updateView(mData);
 						}
 					} catch (JSONException e) {

@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -35,6 +36,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -119,7 +121,6 @@ public class WisdomManagerFragment extends Fragment implements OnClickListener {
 		initView(view);
 		listen();
 		initListAdapter();
-		listen();
 		return view;
 	}
 
@@ -130,29 +131,37 @@ public class WisdomManagerFragment extends Fragment implements OnClickListener {
 
 			@Override
 			protected void convert(final BaseAdapterHelper helper, final ShouyeServiceBean item) {
+				RelativeLayout  sss=helper.getView(R.id.dsa);
 				TextView tv_store_service_introduce = helper.getView(R.id.tv_store_service_introduce);
-				final ImageView iv_store_service = helper.getView(R.id.iv_store_service);
+				ImageView iv_store_service = helper.getView(R.id.iv_store_service);
 				int serviceid = item.getDefaultservice();
 				switch (serviceid) {
 					case -1:
-						Glide.with(mMainActivity).load("").error(null).into(iv_store_service);
+						/*Glide.with(mMainActivity).load("").error(null).into(iv_store_service);
+						tv_store_service_introduce.setText(item.getAppName());*/
 						break;
+
 					case 1:
-						Glide.with(mMainActivity).load(R.mipmap.icon_servicemall).error(R.mipmap.default_head).into(iv_store_service);
+
+						//Glide.with(mMainActivity).load(R.mipmap.icon_servicemall).error(R.mipmap.default_head).into(iv_store_service);
 						break;
 					case 2:
-/*
-						Glide.with(mMainActivity).load(R.mipmap.icon_receivables).error(R.mipmap.default_head).into(iv_store_service);
-*/
+						/*Glide.with(mMainActivity).load(R.mipmap.icon_receivables).error(R.mipmap.default_head).into(iv_store_service);*/
 						break;
 					default:
-						if (null != item.getIcoUrl()) {
+//						if (null != item.getIcoUrl()&&item.getAppCode().equals("wcm")||item.getAppCode().equals("wifi")
+//								||item.getAppCode().equals("qns")) {
 							Glide.with(mMainActivity).load(item.getIcoUrl()).error(R.mipmap.default_head).into(iv_store_service);
-						}
+							tv_store_service_introduce.setText(item.getAppName());
+//							sss.setVisibility(View.VISIBLE);
+
+//						}else{
+//							sss.setVisibility(View.GONE);
+//						}
 						break;
 				}
 
-				tv_store_service_introduce.setText(item.getAppName());
+
 			}
 		};
 		gv_shouyeservice.setAdapter(mAdapter);
@@ -195,6 +204,7 @@ public class WisdomManagerFragment extends Fragment implements OnClickListener {
 	 * 初始化试图
 	 */
 	private void initView(View view) {
+		llWisdommanageServicemall.setOnClickListener(this);
 		swipe_jiaoyiguanli = (SwipeRefreshLayout) view.findViewById(R.id.swipe_jiaoyiguanli);
 		swipe_jiaoyiguanli.setColorSchemeResources(R.color.colores_news_01, R.color.black);
 		swipe_jiaoyiguanli.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -207,6 +217,35 @@ public class WisdomManagerFragment extends Fragment implements OnClickListener {
 		});
 	}
 
+	@Override
+	public void onClick(View view) {
+		boolean isLogin = ContentUtils.getLoginStatus(mMainActivity);
+		boolean re = false;
+		switch (view.getId()) {
+
+			case R.id.ll_wisdommanage_Shouting://商圈吆喝
+
+				break;
+			case R.id.ll_wisdommanage_guidance://专家指导
+
+				break;
+			case R.id.ll_wisdommanage_smalltwo://智能小二
+
+				break;
+			case R.id.ll_wisdommanage_shop://运营服务
+
+				break;
+			case R.id.ll_wisdommanage_Servicemall://服务商城
+				re = JumpIntent.jumpLogin_addShop(isLogin, API.SERVICESTORE, mMainActivity);
+				if (re) {// 服务商城
+
+					Intent intent_more = new Intent(mMainActivity, ServiceMallActivity.class);
+					mMainActivity.startActivityForResult(intent_more, mMainActivity.SERVICEMALLSHOP_CODE);
+
+				}
+				break;
+		}
+	}
 
 
 
@@ -278,7 +317,7 @@ public class WisdomManagerFragment extends Fragment implements OnClickListener {
 							isAgreeAgreement();
 						}
 						break;*/
-					case 100:
+					/*case 100:
 						re = JumpIntent.jumpLogin_addShop(isLogin, API.SERVICESTORE, mMainActivity);
 						if (re) {// 服务商城
 
@@ -286,7 +325,7 @@ public class WisdomManagerFragment extends Fragment implements OnClickListener {
 							mMainActivity.startActivityForResult(intent_more, mMainActivity.SERVICEMALLSHOP_CODE);
 
 						}
-						break;
+						break;*/
 				}
 			}
 		});
@@ -337,7 +376,18 @@ public class WisdomManagerFragment extends Fragment implements OnClickListener {
 
 	public void getServiceMall(ArrayList<ShouyeServiceBean> arraylist) {
 		if (arraylist != null && arraylist.size() > 0) {
-			mData = arraylist;
+			mData.clear();
+//			mData = arraylist;
+
+			List a=new ArrayList();
+			for(ShouyeServiceBean ss: arraylist ){
+				if(ss!=null&&
+						ss.getAppCode().equals("wcm")
+						||ss.getAppCode().equals("qns")
+						||ss.getAppCode().equals("wifi")){
+					mData.add(ss);
+				}
+			}
 			mAdapter.replaceAll(mData);
 		}
 	}
@@ -353,18 +403,15 @@ public class WisdomManagerFragment extends Fragment implements OnClickListener {
 				String url = encryptionUrl(address, dataJson);*/
 				//	return encryptionUrl(address, dataJson);
 				return address + "storeId=" + bussniessId;
-			case 2://货源批发
-				return address + "storeId=" + bussniessId;
+			/*case 2://货源批发
+				return address + "storeId=" + bussniessId;*/
 			case 3://智能WIFI
 				return address + bussniessId;
 		}
 		return "";
 	}
 
-	@Override
-	public void onClick(View v) {
 
-	}
 }
 
 
