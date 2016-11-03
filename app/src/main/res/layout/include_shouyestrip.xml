@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:layout_marginTop="6dp"
+              android:layout_marginTop="10dp"
               android:background="@color/white"
               android:orientation="horizontal"
               android:padding="3dp">
@@ -20,8 +20,8 @@
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="9dp"
         android:ellipsize="end"
-        android:paddingTop="10dp"
         android:paddingBottom="10dp"
+        android:paddingTop="10dp"
         android:singleLine="true"
         android:text="交易流水"
         android:textColor="@color/showcolor"
@@ -59,6 +59,19 @@
             android:singleLine="true"
             android:text="更多"
             android:textColor="@color/color_008dda"/>
+
+        <ImageView
+            android:id="@+id/img_include_arrow"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="5dp"
+            android:gravity="right"
+            android:scaleType="centerInside"
+            android:src="@mipmap/service_new_right"
+            android:visibility="gone"/>
+
     </RelativeLayout>
 </LinearLayout>
 

@@ -10,6 +10,7 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -23,6 +24,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.QuickAdapter;
@@ -44,6 +46,8 @@ public class ServiceMallActivity extends BaseActivity {
 	private ListView  listview_service;
 	private ImageView iv_store_service,iv_servicemall_empty;
 	private ServiceMallBean  mServiceMallBean;
+	private TextView tv_BussinessMaking;
+	private RelativeLayout ray_right;
 	//桌位设置
 	public static final int   TABLESETTING=1;
 	//微信商城
@@ -84,6 +88,8 @@ public class ServiceMallActivity extends BaseActivity {
 					final ServiceMallBean item) {
 				LinearLayout  llt_servicemall = helper
 						.getView(R.id.llt_servicemall);
+				ray_right = helper.getView(R.id.ray_right);
+				tv_BussinessMaking = helper.getView(R.id.tv_BussinessMaking);
 				ImageView img_itemmall = helper
 						.getView(R.id.img_itemmall);
 				TextView tv_servicename = helper
@@ -94,8 +100,7 @@ public class ServiceMallActivity extends BaseActivity {
 						.getView(R.id.tv_newprice);
 				TextView tv_oldprice = helper
 						.getView(R.id.tv_oldprice);
-				ImageView img_right = helper
-						.getView(R.id.img_right);
+
 				tv_oldprice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG );
 				tv_oldprice.setText("¥"+String.valueOf(item.getOriginalPrice())+String.valueOf(item.getUnit()));
 				tv_newprice.setText("¥"+String.valueOf(item.getPresentPrice())+String.valueOf(item.getUnit()));
@@ -103,15 +108,18 @@ public class ServiceMallActivity extends BaseActivity {
 				if(item.getDownload().equals("N")){
 				  Glide.with(ServiceMallActivity.this).load(item.getIcoUrl()).error(R.mipmap.default_head).into(img_itemmall);
 				  tv_download.setVisibility(View.VISIBLE);
-				  img_right.setVisibility(View.INVISIBLE);
-				}else 
+				}else
 			    if(item.getDownload().equals("Y")){
 				  Glide.with(ServiceMallActivity.this).load(item.getIcoUrl()).error(R.mipmap.default_head).into(img_itemmall);
 				  tv_download.setVisibility(View.GONE);
-				  img_right.setVisibility(View.VISIBLE);
+					tv_BussinessMaking.setVisibility(View.VISIBLE);
+					ray_right.setVisibility(View.GONE);
 				}
-
-
+                if(item.getAppCode().equals("wcm")||item.getAppCode().equals("wifi")||item.getAppCode().equals("qns")){
+					llt_servicemall.setVisibility(View.VISIBLE);
+				}else{
+					llt_servicemall.setVisibility(View.GONE);
+				}
 				if(item.getAppCode().equals("mms")){
 					tv_download.setVisibility(View.GONE);
 					tv_oldprice.setVisibility(View.GONE);
@@ -142,7 +150,7 @@ public class ServiceMallActivity extends BaseActivity {
 								}
 							} 
 						});
-				
+
 				helper.getView(R.id.llt_servicemall).setOnClickListener(
 						new OnClickListener() {
 
@@ -162,10 +170,10 @@ public class ServiceMallActivity extends BaseActivity {
 								    return;
 								}
 								if(isfdownload.equals("Y")){
-
+/*
 									if ("tss".equals(appCode)) {// 到店服务
 										simpleJump(TableSetActivity.class);
-									} else if ("wcm".equals(appCode)) {// 微信商城
+									} else*/ if ("wcm".equals(appCode)) {// 微信商城
 										JumpIntent.jumpWebActivty
 												(ServiceMallActivity.this,H5WebActivty.class,
 														isLogin,API.TOSTORE_MODULE_WCM,WECHATMALL,
@@ -190,39 +198,7 @@ public class ServiceMallActivity extends BaseActivity {
 									}
 
 
-									/*switch (primaryID) {
-										case TABLESETTING:
-											simpleJump(TableSetActivity.class);
-										break;
-										case WECHATMALL:
-											JumpIntent.jumpWebActivty
-													(ServiceMallActivity.this,H5WebActivty.class,
-													isLogin,API.TOSTORE_MODULE_WCM,WECHATMALL,
-													false,false,true,"");
-											break;
-										case SUPPLYWHOLESALE:
-											JumpIntent.jumpWebActivty
-													(ServiceMallActivity.this,H5WebActivty.class,
-															isLogin,API.TOSTORE_Supply_Wholesale,SUPPLYWHOLESALE,
-															false,false,true,isappname);
-											break;
-										case RESERVATION:
-											simpleJump(BookFunctionActivity.class);
-											break;
-										case INTELLIGENTWIFI:
-											JumpIntent.jumpWebActivty
-													(ServiceMallActivity.this,WIFIWebActivity.class,
-															isLogin,API.INTELLIGENT_WIFI,INTELLIGENTWIFI,
-															false,false,true,"");
-											break;
-										case LINETAKENO:
-											JumpIntent.jumpWebActivty
-													(ServiceMallActivity.this,LineTakeNoWebActivity.class,
-															isLogin,API.TOSTORE_Line_TakeNo,LINETAKENO,
-															false,false,true,"");
-											break;
-									}*/
-							        
+
 								}else if(isfdownload.equals("N")){
 									  
 									  Intent intent = new Intent(
@@ -242,8 +218,9 @@ public class ServiceMallActivity extends BaseActivity {
 
 	private void initView() {
 		setPageTitle("服务商城");
-		listview_service= (ListView) findViewById(R.id.activity_servicemall_list);
+		listview_service = (ListView) findViewById(R.id.activity_servicemall_list);
 		iv_servicemall_empty = (ImageView) findViewById(R.id.iv_servicemall_empty);
+
 	}
 
 	private void  goDownloadMall(String  serviceId,final ServiceMallBean  mServiceMallBean){
@@ -256,6 +233,7 @@ public class ServiceMallActivity extends BaseActivity {
 					JSONObject jsonObject;
 					try {
 					ContentUtils.showMsg(ServiceMallActivity.this, "下载成功");
+
 					mServiceMallBean.setDownload("Y");
 					updateView(mData);
 					finish();
@@ -269,6 +247,8 @@ public class ServiceMallActivity extends BaseActivity {
 			@Override
 			public void onResponseFailed(String msg) {
 				dialog.dismiss();
+				ray_right.setVisibility(View.VISIBLE);
+				tv_BussinessMaking.setVisibility(View.GONE);
 			}
 		}, userShopInfoBean.getBusinessId(),serviceId);
 		
@@ -288,10 +268,17 @@ public class ServiceMallActivity extends BaseActivity {
 						if (!TextUtils.isEmpty(reString)) {
 							mData.clear();
 							ArrayList<ServiceMallBean> downloadListMall = (ArrayList<ServiceMallBean>) JSON
-									.parseArray(reString,
-											ServiceMallBean.class);
-							mData.addAll(downloadListMall);
+									.parseArray(reString, ServiceMallBean.class);
+							List a=new ArrayList();
+                             for(ServiceMallBean  ss: downloadListMall ){
+								 if(ss.getAppCode().equals("wcm")||ss.getAppCode().equals("qns")||ss.getAppCode().equals("wifi")){
+									 a.add(ss);
+								 }
+							 }
+							mData.addAll(a);
 							updateView(mData);
+							ray_right.setVisibility(View.GONE);
+							tv_BussinessMaking.setVisibility(View.VISIBLE);
 						}
 					} catch (JSONException e) {
 						e.printStackTrace();

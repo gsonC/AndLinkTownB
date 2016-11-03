@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -28,9 +29,9 @@ import com.lianbi.mezone.b.fragment.FinancialOfficeFragment;
 import com.lianbi.mezone.b.fragment.GlzxPagerFragment;
 import com.lianbi.mezone.b.fragment.MineFragment;
 import com.lianbi.mezone.b.fragment.ShouYeFragment;
-import com.lianbi.mezone.b.fragment.WisdomManagerFragment;
 import com.lianbi.mezone.b.fragment.ShouyeLeaguesFragment;
 import com.lianbi.mezone.b.fragment.ShouyeManagementFragment;
+import com.lianbi.mezone.b.fragment.WisdomManagerFragment;
 import com.lianbi.mezone.b.httpresponse.API;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
@@ -40,6 +41,9 @@ import com.lianbi.mezone.b.push.PushDemoReceiver;
 import com.lianbi.mezone.b.receiver.BDLocation_interface;
 import com.lianbi.mezone.b.receiver.Downloader;
 import com.xizhi.mezone.b.R;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -67,6 +71,11 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 	public static final int POSITION2 = 2;
 	public static final int POSITION3 = 3;
 	public static boolean isChangSHpe = false;
+	MainActivity mActivity;
+	/**
+	 * 以下载数据
+	 */
+	ArrayList<ShouyeServiceBean> mData = new ArrayList<ShouyeServiceBean>();
 	/**
 	 * 当前的位置
 	 */
@@ -135,7 +144,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 				ContentUtils.putSharePre(MainActivity.this,
 						Constants.SHARED_PREFERENCE_NAME,
 						Constants.DDFW, "1");
-			} else if (3 == datas.get(i).getId()) {
+			} else if (2 == datas.get(i).getId()) {
 				ContentUtils.putSharePre(MainActivity.this,
 						Constants.SHARED_PREFERENCE_NAME,
 						Constants.HHPF, "3");
@@ -844,7 +853,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 			setPageTitleVisibility(View.VISIBLE);
 			setPageRightTextVisibility(View.GONE);
 			((WisdomManagerFragment) fm_wisdommanage).refreshFMData();
-			setPageTitle("智慧经营");
+			setPageTitle("智慧应用");
 			tv_title_left.setVisibility(View.GONE);
 			setPageBackVisibility(View.INVISIBLE);
 			setPageRightImageVisibility();
@@ -1069,4 +1078,115 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 		}
 
 	}
+	/**
+	 * 获取已有的服务商城列表
+	 */
+	public void getServiceMall() {
+		if (ContentUtils.getLoginStatus(this)
+				&& !TextUtils.isEmpty(userShopInfoBean.getBusinessId())) {
+			okHttpsImp.getMoreServerMall(new MyResultCallback<String>() {
+
+				@Override
+				public void onResponseResult(Result result) {
+					String reString = result.getData();
+					if (!TextUtils.isEmpty(reString)) {
+						try {
+							JSONObject jsonObject = new JSONObject(reString);
+							reString = jsonObject.getString("appsList");
+							if (null != reString) {
+								mDatas.clear();
+								mDatas = (ArrayList<ShouyeServiceBean>) JSON
+										.parseArray(reString,
+												ShouyeServiceBean.class);
+
+//								typeUserDownload(mDatas);
+/*
+								ShouyeServiceBean service = new ShouyeServiceBean();
+								service.setDefaultservice(2);
+								service.setAppName("收款");
+								service.setId(99);
+								mDatas.add(0, service);*/
+//
+//								ShouyeServiceBean endservie = new ShouyeServiceBean();
+//								endservie.setDefaultservice(1);
+//								endservie.setAppName("服务商城");
+//								endservie.setId(100);
+//								mDatas.add(mDatas.size(), endservie);
+//								setFill();
+                                Log.i("tag","  "+mDatas.size());
+								((WisdomManagerFragment) fm_wisdommanage)
+										.getServiceMall(mDatas);
+							}
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+
+				@Override
+				public void onResponseFailed(String msg) {
+					filltheseats();
+				}
+			}, BaseActivity.userShopInfoBean.getBusinessId());
+		} else {
+
+			new Handler().postDelayed(new Runnable() {
+
+				@Override
+				public void run() {
+					filltheseats();
+				}
+			}, 50);
+
+		}
+	}
+	/**
+	 * 用户已下载服务添加收款和服务商城
+	 */
+	public void filltheseats() {
+		/*mDatas.clear();
+		ShouyeServiceBean service = new ShouyeServiceBean();
+		service.setDefaultservice(2);
+		service.setAppName("收款");
+		service.setId(99);
+		mDatas.add(service);*/
+
+		/*ShouyeServiceBean endservie = new ShouyeServiceBean();
+		endservie.setIcoUrl("http");
+		endservie.setDefaultservice(1);
+		endservie.setAppName("服务商城");
+		endservie.setId(100);
+		mDatas.add(endservie);*/
+		setFill();
+		((WisdomManagerFragment) fm_wisdommanage).getServiceMall(mDatas);
+	}
+
+	/**
+	 * 补位填充
+	 */
+	public void setFill() {
+		if (0 != mDatas.size() % 3) {
+			int numfill = 0;
+			switch (mDatas.size() % 3) {
+				case 1:
+					numfill = 2;
+					break;
+				case 2:
+					numfill = 1;
+					break;
+				case 3:
+					numfill = 0;
+					break;
+			}
+			for (int i = 0; i < numfill; i++) {
+				ShouyeServiceBean filltheseats2 = new ShouyeServiceBean();
+				filltheseats2.setDefaultservice(-1);
+				filltheseats2.setAppName("");
+				filltheseats2.setId(-1);
+				mDatas.add(filltheseats2);
+			}
+		}
+	}
+
+
 }

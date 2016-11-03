@@ -2,11 +2,10 @@
 <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/swipe_jiaoyiguanli"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" android:background="@color/colores_news_14"
+    android:layout_height="match_parent"
+              android:background="@color/colores_news_14"
     >
-<!--
-android.support.v4.widget.SwipeRefreshLayout
--->
+
     <ScrollView
         android:id="@+id/GLZX_sc"
         android:layout_width="match_parent"
@@ -16,7 +15,7 @@ android.support.v4.widget.SwipeRefreshLayout
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             android:background="@color/white"
             >
@@ -41,73 +40,69 @@ android.support.v4.widget.SwipeRefreshLayout
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
                     android:gravity="center"
-                    android:text="店铺经营"
-                    android:textSize="14.5dp"
+                    android:text="我的应用"
+                    android:textSize="14.5sp"
                     android:textColor="@color/tag_mask"
                     />
 
             </LinearLayout>
             <View
                 android:layout_width="match_parent"
-                android:layout_height="10dp"
+                android:layout_height="0.5dp"
+                android:background="@color/colores_news_14"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="33.5dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+                <TextView
+                    android:layout_width="4dp"
+                    android:layout_height="15dp"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="14.5dp"
+
+                    />
+
+
+                <TextView
+                    android:layout_marginLeft="12.5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:text="店铺经营"
+                    android:textSize="14sp"
+                    android:textColor="@color/tag_mask"
+                    />
+
+        </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
                 android:background="@color/colores_news_14"/>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="89.5dp"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
-
-
                 <LinearLayout
-                  android:id="@+id/ll_wisdommanage_service"
-                    android:layout_width="120dp"
-                    android:layout_height="89.5dp"
+                    android:id="@+id/ll_wisdommanage_shopservice"
+                    android:layout_width="0dp"
+                    android:layout_height="85dp"
                     android:orientation="vertical"
-                    android:layout_weight="1">
-                       <ImageView
-                           android:layout_width="wrap_content"
-                           android:layout_height="wrap_content"
-                           android:src="@mipmap/daodiantt"
-                           android:layout_marginLeft="46dp"
-                           android:layout_marginTop="20dp"
-
-                           />
-                  <TextView
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:text="@string/shopservice"
-                      android:textSize="14.5dp"
-                      android:textColor="@color/tag_mask"
-                      android:layout_marginLeft="36dp"
-                      android:layout_marginTop="10dp"
-                      />
-
-                </LinearLayout>
-               <View
-                android:layout_width="0.5dp"
-                android:layout_height="match_parent"
-                android:background="@color/colores_news_14"/>
-                <LinearLayout
-                    android:id="@+id/ll_wisdommanage_marketing"
-                    android:layout_width="120dp"
-                    android:layout_height="89.5dp"
-                    android:orientation="vertical"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:gravity="center">
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/shanghutt"
-                        android:layout_marginLeft="46dp"
                         android:layout_marginTop="20dp"
+                        android:src="@mipmap/daodiantt"
                         />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/shopmark"
+                        android:text="@string/shopservice"
                         android:textSize="14.5dp"
+                        android:layout_marginTop="8dp"
                         android:textColor="@color/tag_mask"
-                        android:layout_marginLeft="36dp"
-                        android:layout_marginTop="10dp"
-
                         />
 
                 </LinearLayout>
@@ -116,29 +111,84 @@ android.support.v4.widget.SwipeRefreshLayout
                     android:layout_height="match_parent"
                     android:background="@color/colores_news_14"/>
                 <LinearLayout
-                    android:id="@+id/ll_wisdommanage_features"
-                    android:layout_width="120dp"
-                    android:layout_height="89.5dp"
+                    android:id="@+id/ll_wisdommanage_yingxiao"
+                    android:layout_width="0dp"
+                    android:layout_height="85dp"
                     android:orientation="vertical"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:gravity="center">
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/tesett"
-                        android:layout_marginLeft="46dp"
                         android:layout_marginTop="20dp"
+                        android:src="@mipmap/shanghutt"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/shopmark"
+                        android:textSize="14.5dp"
+                        android:layout_marginTop="8dp"
+                        android:textColor="@color/tag_mask"
+                        />
+
+                </LinearLayout>
+                <View
+                    android:layout_width="0.5dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/colores_news_14"/>
+                <LinearLayout
+                    android:id="@+id/ll_wisdommanage_tese"
+                    android:layout_width="0dp"
+                    android:layout_height="85dp"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:gravity="center">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:src="@mipmap/tesett"
                         />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/shopmarkfeatuer"
                         android:textSize="14.5dp"
+                        android:layout_marginTop="8dp"
                         android:textColor="@color/tag_mask"
-                        android:layout_marginLeft="36dp"
-                        android:layout_marginTop="10dp"
                         />
 
                 </LinearLayout>
+                <View
+                    android:layout_width="0.5dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/colores_news_14"/>
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/colores_news_14"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center_vertical"
+                >
+                <cn.com.hgh.view.MyGridView
+                    android:id="@+id/gv_shouyeservice"
+                    android:layout_width="fill_parent"
+                    android:layout_height="2dp"
+                    android:horizontalSpacing="0.0dip"
+                    android:listSelector="@null"
+                    android:numColumns="3"
+                    android:scrollbars="none"
+                    android:stretchMode="columnWidth"
+                    android:verticalSpacing="0.0dip" >
+                </cn.com.hgh.view.MyGridView>
+
+
 
             </LinearLayout>
 
@@ -157,7 +207,6 @@ android.support.v4.widget.SwipeRefreshLayout
                     android:layout_height="15dp"
                     android:gravity="center_vertical"
                     android:layout_marginLeft="14.5dp"
-                   android:background="@color/color_3c78d8"
                     />
 
 
@@ -187,26 +236,24 @@ android.support.v4.widget.SwipeRefreshLayout
 
                 <LinearLayout
                     android:id="@+id/ll_wisdommanage_Shouting"
-                    android:layout_width="120dp"
-                    android:layout_height="89.5dp"
+                    android:layout_width="0dp"
+                    android:layout_height="85dp"
                     android:orientation="vertical"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:gravity="center">
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/hitt"
-                        android:layout_marginLeft="46dp"
                         android:layout_marginTop="20dp"
-
+                        android:src="@mipmap/hitt"
                         />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/shopserviceShouting"
                         android:textSize="14.5dp"
+                        android:layout_marginTop="8dp"
                         android:textColor="@color/tag_mask"
-                        android:layout_marginLeft="36dp"
-                        android:layout_marginTop="10dp"
                         />
 
                 </LinearLayout>
@@ -216,16 +263,16 @@ android.support.v4.widget.SwipeRefreshLayout
                     android:background="@color/colores_news_14"/>
                 <LinearLayout
                     android:id="@+id/ll_wisdommanage_guidance"
-                    android:layout_width="120dp"
+                    android:layout_width="0dp"
                     android:layout_height="89.5dp"
                     android:orientation="vertical"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:gravity="center">
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@mipmap/shanghutt"
-                        android:layout_marginLeft="46dp"
-                        android:layout_marginTop="20dp"
+                       android:layout_marginTop="20dp"
                         />
                     <TextView
                         android:layout_width="wrap_content"
@@ -233,8 +280,7 @@ android.support.v4.widget.SwipeRefreshLayout
                         android:text="@string/shopserviceguidance"
                         android:textSize="14.5dp"
                         android:textColor="@color/tag_mask"
-                        android:layout_marginLeft="36dp"
-                        android:layout_marginTop="10dp"
+                       android:layout_marginTop="8dp"
 
                         />
 
@@ -244,9 +290,10 @@ android.support.v4.widget.SwipeRefreshLayout
                     android:layout_height="match_parent"
                     android:background="@color/colores_news_14"/>
                 <LinearLayout
-                    android:layout_width="120dp"
+                    android:layout_width="0dp"
                     android:layout_height="89.5dp"
                     android:orientation="vertical"
+                    android:gravity="center"
                     android:layout_weight="1">
                     <ImageView
                         android:layout_width="wrap_content"
@@ -281,7 +328,6 @@ android.support.v4.widget.SwipeRefreshLayout
                     android:layout_height="15dp"
                     android:gravity="center_vertical"
                     android:layout_marginLeft="14.5dp"
-                    android:background="@color/color_3c78d8"
                     />
 
 
@@ -309,16 +355,15 @@ android.support.v4.widget.SwipeRefreshLayout
                 <LinearLayout
                     android:id="@+id/ll_wisdommanage_smalltwo"
                     android:layout_width="120dp"
-                    android:layout_height="89.5dp"
+                    android:layout_height="85dp"
                     android:orientation="vertical"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:gravity="center">
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@mipmap/xiaoertt"
-                        android:layout_marginLeft="46dp"
                         android:layout_marginTop="20dp"
-
                         />
                     <TextView
                         android:layout_width="wrap_content"
@@ -326,8 +371,7 @@ android.support.v4.widget.SwipeRefreshLayout
                         android:text="@string/shopservicesmalltwo"
                         android:textSize="14.5dp"
                         android:textColor="@color/tag_mask"
-                        android:layout_marginLeft="36dp"
-                        android:layout_marginTop="10dp"
+                       android:layout_marginTop="8dp"
                         />
 
                 </LinearLayout>
@@ -340,23 +384,21 @@ android.support.v4.widget.SwipeRefreshLayout
                     android:layout_width="120dp"
                     android:layout_height="89.5dp"
                     android:orientation="vertical"
-                    android:layout_weight="1">
-                    <ImageView
+                    android:layout_weight="1"
+                    android:gravity="center">
+                      <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@mipmap/shanghutt"
-                        android:layout_marginLeft="46dp"
                         android:layout_marginTop="20dp"
-                        />
+                          />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/intellginceshopservice"
                         android:textSize="14.5dp"
                         android:textColor="@color/tag_mask"
-                        android:layout_marginLeft="36dp"
-                        android:layout_marginTop="10dp"
-
+                        android:layout_marginTop="8dp"
                         />
 
                 </LinearLayout>
@@ -411,7 +453,7 @@ android.support.v4.widget.SwipeRefreshLayout
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
                     android:gravity="center"
-                    android:text="商圈经营"
+                    android:text="应用商店"
                     android:textSize="14.5dp"
                     android:textColor="@color/tag_mask"
                     />
@@ -422,17 +464,18 @@ android.support.v4.widget.SwipeRefreshLayout
                 android:layout_height="0.5dp"
                 android:background="@color/colores_news_14"/>
             <LinearLayout
+                android:id="@+id/ll_wisdommanage_Servicemall"
                 android:layout_width="120dp"
-                android:layout_height="89.5dp"
+                android:layout_height="100dp"
                 android:orientation="vertical"
-                android:layout_weight="1">
+                android:gravity="center"
+               >
                 <ImageView
-                    android:id="@+id/ll_wisdommanage_Servicemall"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@mipmap/fuwushangchengtt"
-                    android:layout_marginLeft="46dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     />
                 <TextView
                     android:layout_width="wrap_content"
@@ -440,9 +483,7 @@ android.support.v4.widget.SwipeRefreshLayout
                     android:text="@string/laobaninag"
                     android:textSize="14.5dp"
                     android:textColor="@color/tag_mask"
-                    android:layout_marginLeft="40dp"
-                    android:layout_marginTop="10dp"
-
+                    android:layout_marginTop="4dp"
                     />
                 <TextView
                     android:layout_width="wrap_content"
@@ -450,7 +491,7 @@ android.support.v4.widget.SwipeRefreshLayout
                     android:text="@string/shopservicemall"
                     android:textSize="14.5dp"
                     android:textColor="@color/tag_mask"
-                    android:layout_marginLeft="36dp"/>
+                   />
 
 
 
@@ -459,9 +500,12 @@ android.support.v4.widget.SwipeRefreshLayout
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:background="@color/colores_news_14"/>
-            />
         </LinearLayout>
-
+        <!--<View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/colores_news_14"/>
+        />-->
     </ScrollView>
 
 </android.support.v4.widget.SwipeRefreshLayout>

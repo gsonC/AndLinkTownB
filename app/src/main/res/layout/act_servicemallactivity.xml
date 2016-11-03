@@ -1,33 +1,776 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colores_news_14"
     android:orientation="vertical" >
 
-    <GridView
-        android:visibility="gone"
-        android:id="@+id/gview"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:horizontalSpacing="0.0dip"
-        android:listSelector="@null"
-        android:numColumns="3"
-        android:scrollbars="none"
-        android:stretchMode="columnWidth"
-        android:verticalSpacing="0.0dip" >
-    </GridView>
-<ListView 
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colores_news_14">
+
+<com.lianbi.mezone.b.bean.NoScrollListview
     android:id="@+id/activity_servicemall_list"
     android:layout_width="match_parent"
     android:paddingTop="10dp"
-    android:layout_height="match_parent"
+    android:layout_height="180dp"
     android:background="@color/colores_news_14"
     android:divider="@color/colores_news_14"
     android:dividerHeight="1dp"
     android:scrollbars="none" >
 
-</ListView>
+</com.lianbi.mezone.b.bean.NoScrollListview>
+   <!-- <ImageView
+        android:id="@+id/iv_servicemall_empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerInside"
+        android:src="@mipmap/iv_empty"
+        android:visibility="gone" />
+-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/colores_news_14"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="33.5dp"
+        android:orientation="vertical"
+        android:gravity="center_vertical"
+        android:background="@color/white"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="商圈联营"
+            android:textSize="14.5sp"
+            android:textColor="@color/tag_mask"
+            android:layout_marginLeft="10dp"
+            />
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:id="@+id/llt_servicemall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp" >
+
+        <ImageView
+            android:id="@+id/img_itemmall"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:scaleType="centerInside"
+            android:src="@mipmap/youhuiquantt"/>
+
+        <TextView
+            android:id="@+id/tv_servicename"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="2.5"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:text="商圈优惠券"
+            android:textColor="@color/colores_news_10"
+            android:textSize="17sp" />
+
+        <RelativeLayout
+            android:id="@+id/ray_rightt"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="@drawable/shape_price"
+            android:gravity="center_vertical"
+            android:visibility="visible"
+            >
+            <!--android:clickable="true"-->
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/tv_downloadd"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:padding="3dp"
+                android:singleLine="true"
+                android:text="下载"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/color_6bb4ff"
+                android:textSize="16sp"
+                />
+            <TextView
+                android:id="@+id/tv_newpricee"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:padding="3dp"
+                android:singleLine="true"
+                android:text="¥0.01/年"
+                android:layout_below="@id/tv_downloadd"
+                android:textColor="@color/colores_news_04"
+                android:textSize="16sp"
+                />
+
+            <TextView
+                android:id="@+id/tv_oldpricee"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginLeft="10dp"
+                android:layout_below="@id/tv_downloadd"
+                android:layout_toRightOf="@id/tv_newpricee"
+                android:gravity="center"
+                android:padding="3dp"
+                android:singleLine="true"
+                android:text="¥100/年"
+                android:textColor="@color/colores_news_11"
+                android:textSize="16sp"
+                />
+        </RelativeLayout>
+       <!-- <ImageView
+
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:scaleType="centerInside"
+            android:src="@mipmap/service_new_right" />-->
+
+    </LinearLayout>
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp" >
+
+        <ImageView
+
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:scaleType="centerInside"
+            android:src="@mipmap/huodongtt"/>
+
+        <TextView
+
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="2.5"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:text="商圈活动"
+            android:textColor="@color/colores_news_10"
+            android:textSize="17sp" />
+        <TextView
+            android:id="@+id/tv_BussinessMaking"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:textColor="@color/color_3987fd"
+            android:text="已安装"
+            android:textSize="16sp"
+            android:visibility="gone"
+            android:gravity="center"
+            />
+        <RelativeLayout
+            android:id="@+id/ray_right"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="@drawable/shape_price"
+            android:gravity="center_vertical"
+            android:visibility="visible"
+            >
+            <!--android:clickable="true"-->
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/tv_download"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:padding="3dp"
+                android:singleLine="true"
+                android:text="下载"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/color_6bb4ff"
+                android:textSize="16sp"
+                />
+            <TextView
+                android:id="@+id/tv_newprice"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:padding="3dp"
+                android:singleLine="true"
+                android:text="¥0.01/年"
+                android:layout_below="@id/tv_download"
+                android:textColor="@color/colores_news_04"
+                android:textSize="16sp"
+                />
+
+            <TextView
+                android:id="@+id/tv_oldprice"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginLeft="10dp"
+                android:layout_below="@id/tv_download"
+                android:layout_toRightOf="@id/tv_newprice"
+                android:gravity="center"
+                android:padding="3dp"
+                android:singleLine="true"
+                android:text="¥100/年"
+                android:textColor="@color/colores_news_11"
+                android:textSize="16sp"
+                />
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp" >
+
+        <ImageView
+
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:scaleType="centerInside"
+            android:src="@mipmap/fenxitt"/>
+        <TextView
+
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="2.5"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:text="商圈分析"
+            android:textColor="@color/colores_news_10"
+            android:textSize="17sp" />
+        <TextView
+            android:id="@+id/tv_BussinessMakinggg"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:textColor="@color/color_3987fd"
+            android:text="已安装"
+            android:textSize="16sp"
+            android:visibility="gone"
+            android:gravity="center"
+            />
+        <RelativeLayout
+            android:id="@+id/ray_righttttv"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="@drawable/shape_price"
+            android:gravity="center_vertical"
+            android:visibility="visible"
+            >
+            <!--android:clickable="true"-->
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/ttv_downloaddd"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:padding="3dp"
+                android:singleLine="true"
+                android:text="下载"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/color_6bb4ff"
+                android:textSize="16sp"
+                />
+            <TextView
+                android:id="@+id/tv_newpriceee"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:padding="3dp"
+                android:singleLine="true"
+                android:text="¥0.01/年"
+                android:layout_below="@id/ttv_downloaddd"
+                android:textColor="@color/colores_news_04"
+                android:textSize="16sp"
+                />
+
+            <TextView
+                android:id="@+id/tv_oldpriceee"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginLeft="10dp"
+                android:layout_below="@id/ttv_downloaddd"
+                android:layout_toRightOf="@id/tv_newpriceee"
+                android:gravity="center"
+                android:padding="3dp"
+                android:singleLine="true"
+                android:text="¥100/年"
+                android:textColor="@color/colores_news_11"
+                android:textSize="16sp"
+                />
+        </RelativeLayout>
+
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/colores_news_14"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="33.5dp"
+        android:orientation="vertical"
+        android:gravity="center_vertical"
+        android:background="@color/white"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="经营教育"
+            android:textSize="14.5sp"
+            android:textColor="@color/tag_mask"
+            android:layout_marginLeft="10dp"
+            />
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp" >
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:scaleType="centerInside"
+            android:src="@mipmap/zhifujingtt"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="2.5"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:text="致富经"
+            android:textColor="@color/colores_news_10"
+            android:textSize="17sp" />
+
+        <RelativeLayout
+            android:id="@+id/ray_righttt"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="@drawable/shape_price"
+            android:gravity="center_vertical"
+            android:visibility="visible"
+            >
+            <!--android:clickable="true"-->
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/tv_downloaddd"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:padding="3dp"
+                android:singleLine="true"
+                android:text="下载"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/color_6bb4ff"
+                android:textSize="16sp"
+                />
+            <TextView
+                android:id="@+id/tv_newpriceeee"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:padding="3dp"
+                android:singleLine="true"
+                android:text="¥0.01/年"
+                android:layout_below="@id/tv_downloaddd"
+                android:textColor="@color/colores_news_04"
+                android:textSize="16sp"
+                />
+
+            <TextView
+                android:id="@+id/tv_oldpriceeee"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginLeft="10dp"
+                android:layout_below="@id/tv_downloaddd"
+                android:layout_toRightOf="@id/tv_newpriceeee"
+                android:gravity="center"
+                android:padding="3dp"
+                android:singleLine="true"
+                android:text="¥100/年"
+                android:textColor="@color/colores_news_11"
+                android:textSize="16sp"
+                />
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp" >
+
+        <ImageView
+
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:scaleType="centerInside"
+            android:src="@mipmap/daodiantt"/>
+        <TextView
+
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="2.5"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:text="大牛叫你做营销"
+            android:textColor="@color/colores_news_10"
+            android:textSize="17sp" />
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="@drawable/shape_price"
+            android:gravity="center_vertical"
+            android:visibility="visible"
+            >
+            <!--android:clickable="true"-->
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/ttv_downloaddddv"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:padding="3dp"
+                android:singleLine="true"
+                android:text="下载"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/color_6bb4ff"
+                android:textSize="16sp"
+                />
+            <TextView
+                android:id="@+id/tv_newpriceeeeeq"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:padding="3dp"
+                android:singleLine="true"
+                android:text="¥0.01/年"
+                android:layout_below="@id/ttv_downloaddddv"
+                android:textColor="@color/colores_news_04"
+                android:textSize="16sp"
+                />
+
+            <TextView
+                android:id="@+id/tv_oldpriceeeeeq"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginLeft="10dp"
+                android:layout_below="@id/ttv_downloaddddv"
+                android:layout_toRightOf="@id/tv_newpriceeeeeq"
+                android:gravity="center"
+                android:padding="3dp"
+                android:singleLine="true"
+                android:text="¥100/年"
+                android:textColor="@color/colores_news_11"
+                android:textSize="16sp"
+                />
+        </RelativeLayout>
+
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/colores_news_14"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="33.5dp"
+        android:orientation="vertical"
+        android:gravity="center_vertical"
+        android:background="@color/white"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="行业应用"
+            android:textSize="14.5sp"
+            android:textColor="@color/tag_mask"
+            android:layout_marginLeft="10dp"
+            />
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp" >
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:scaleType="centerInside"
+            android:src="@mipmap/lingshoutt"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="2.5"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:text="零售批发"
+            android:textColor="@color/colores_news_10"
+            android:textSize="17sp" />
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="@drawable/shape_price"
+            android:gravity="center_vertical"
+            android:visibility="visible"
+            >
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/tv_downloadddv"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:padding="3dp"
+                android:singleLine="true"
+                android:text="下载"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/color_6bb4ff"
+                android:textSize="16sp"
+                />
+            <TextView
+                android:id="@+id/tv_newpriceeeev"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:padding="3dp"
+                android:singleLine="true"
+                android:text="¥0.01/年"
+                android:layout_below="@id/tv_downloadddv"
+                android:textColor="@color/colores_news_04"
+                android:textSize="16sp"
+                />
+
+            <TextView
+                android:id="@+id/tv_oldpriceeeev"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginLeft="10dp"
+                android:layout_below="@id/tv_downloadddv"
+                android:layout_toRightOf="@id/tv_newpriceeeev"
+                android:gravity="center"
+                android:padding="3dp"
+                android:singleLine="true"
+                android:text="¥100/年"
+                android:textColor="@color/colores_news_11"
+                android:textSize="16sp"
+                />
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp" >
+
+        <ImageView
+
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:scaleType="centerInside"
+            android:src="@mipmap/lakett"/>
+        <TextView
+
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="2.5"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:text="智能景点拉客"
+            android:textColor="@color/colores_news_10"
+            android:textSize="17sp" />
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="@drawable/shape_price"
+            android:gravity="center_vertical"
+            android:visibility="visible"
+            >
+            <!--android:clickable="true"-->
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/ttv_downloaddddz"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:padding="3dp"
+                android:singleLine="true"
+                android:text="下载"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/color_6bb4ff"
+                android:textSize="16sp"
+                />
+            <TextView
+                android:id="@+id/tv_newpriceeeeez"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:padding="3dp"
+                android:singleLine="true"
+                android:text="¥0.01/年"
+                android:layout_below="@id/ttv_downloaddddz"
+                android:textColor="@color/colores_news_04"
+                android:textSize="16sp"
+                />
+
+            <TextView
+                android:id="@+id/tv_oldpriceeeeez"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginLeft="10dp"
+                android:layout_below="@id/ttv_downloaddddz"
+                android:layout_toRightOf="@id/tv_newpriceeeeez"
+                android:gravity="center"
+                android:padding="3dp"
+                android:singleLine="true"
+                android:text="¥100/年"
+                android:textColor="@color/colores_news_11"
+                android:textSize="16sp"
+                />
+        </RelativeLayout>
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/colores_news_14"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="33.5dp"
+        android:orientation="vertical"
+        android:gravity="center_vertical"
+        android:background="@color/white"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="其他应用"
+            android:textSize="14.5sp"
+            android:textColor="@color/tag_mask"
+            android:layout_marginLeft="10dp"
+            />
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp" >
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:scaleType="centerInside"
+            android:src="@mipmap/dasanfangtt"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="2.5"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:text="第三方应用"
+            android:textColor="@color/colores_news_10"
+            android:textSize="17sp" />
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:textColor="@color/color_3987fd"
+            android:text="已安装"
+            android:textSize="16sp"
+            android:gravity="center"/>
+
+    </LinearLayout>
+
     <ImageView
         android:id="@+id/iv_servicemall_empty"
         android:layout_width="match_parent"
@@ -36,3 +779,5 @@
         android:src="@mipmap/iv_empty"
         android:visibility="gone" />
 </LinearLayout>
+
+</ScrollView>

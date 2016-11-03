@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="220dp"
+              android:background="@color/white"
+              android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/tv_includesalerank_one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="700"
+            android:textColor="@color/color_4b4b4b"
+            android:textSize="12sp"/>
+
+        <cn.com.hgh.view.DynamicWave
+            android:id="@+id/dyw_includesalerank_one"
+            android:layout_width="30dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="3dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            />
+
+        <TextView
+            android:id="@+id/tv_includesalerank_onebottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxEms="3"
+            android:maxLines="2"
+            android:scrollbars="vertical"
+            android:singleLine="false"
+            android:text="六字大明咒"
+            android:textColor="@color/showcolor"
+            android:textSize="10sp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/tv_includesalerank_two"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="700"
+            android:textColor="@color/color_4b4b4b"
+            android:textSize="12sp"/>
+
+        <cn.com.hgh.view.DynamicWave
+            android:id="@+id/dyw_includesalerank_two"
+            android:layout_width="30dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="3dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            />
+
+        <TextView
+            android:id="@+id/tv_includesalerank_twobottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxEms="3"
+            android:maxLines="2"
+            android:scrollbars="vertical"
+            android:singleLine="false"
+            android:text="六字大明咒"
+            android:textColor="@color/showcolor"
+            android:textSize="10sp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/tv_includesalerank_three"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="700"
+            android:textColor="@color/color_4b4b4b"
+            android:textSize="12sp"/>
+
+        <cn.com.hgh.view.DynamicWave
+            android:id="@+id/dyw_includesalerank_three"
+            android:layout_width="30dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="3dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            />
+
+        <TextView
+            android:id="@+id/tv_includesalerank_threebottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxEms="3"
+            android:maxLines="2"
+            android:scrollbars="vertical"
+            android:singleLine="false"
+            android:text="六字大明咒"
+            android:textColor="@color/showcolor"
+            android:textSize="10sp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/tv_includesalerank_four"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="700"
+            android:textColor="@color/color_4b4b4b"
+            android:textSize="12sp"/>
+
+        <cn.com.hgh.view.DynamicWave
+            android:id="@+id/dyw_includesalerank_four"
+            android:layout_width="30dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="3dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            />
+
+        <TextView
+            android:id="@+id/tv_includesalerank_fourbottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxEms="3"
+            android:maxLines="2"
+            android:scrollbars="vertical"
+            android:singleLine="false"
+            android:text="六字大明咒"
+            android:textColor="@color/showcolor"
+            android:textSize="10sp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/tv_includesalerank_five"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="700"
+            android:textColor="@color/color_4b4b4b"
+            android:textSize="12sp"/>
+
+        <cn.com.hgh.view.DynamicWave
+            android:id="@+id/dyw_includesalerank_five"
+            android:layout_width="30dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="3dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            />
+
+        <TextView
+            android:id="@+id/tv_includesalerank_fivebottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxEms="3"
+            android:maxLines="2"
+            android:scrollbars="vertical"
+            android:singleLine="false"
+            android:text="六字大明咒"
+            android:textColor="@color/showcolor"
+            android:textSize="10sp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/tv_includesalerank_six"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="700"
+            android:textColor="@color/color_4b4b4b"
+            android:textSize="12sp"/>
+
+        <cn.com.hgh.view.DynamicWave
+            android:id="@+id/dyw_includesalerank_six"
+            android:layout_width="30dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="3dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            />
+
+        <TextView
+            android:id="@+id/tv_includesalerank_sixbottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxEms="3"
+            android:maxLines="2"
+            android:scrollbars="vertical"
+            android:singleLine="false"
+            android:text="六字大明咒"
+            android:textColor="@color/showcolor"
+            android:textSize="10sp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/tv_includesalerank_seven"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="700"
+            android:textColor="@color/color_4b4b4b"
+            android:textSize="12sp"/>
+
+        <cn.com.hgh.view.DynamicWave
+            android:id="@+id/dyw_includesalerank_seven"
+            android:layout_width="30dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="3dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            />
+
+        <TextView
+            android:id="@+id/tv_includesalerank_sevenbottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxEms="3"
+            android:maxLines="2"
+            android:scrollbars="vertical"
+            android:singleLine="false"
+            android:text="六字大明咒"
+            android:textColor="@color/showcolor"
+            android:textSize="10sp"/>
+    </LinearLayout>
+</LinearLayout>

@@ -8,16 +8,18 @@
    <LinearLayout
        android:id="@+id/ray_shouyeLeagues_item"
        android:layout_width="match_parent"
-       android:layout_height="60dp"
-       android:orientation="horizontal"
+       android:layout_height="wrap_content"
+       android:orientation="vertical"
+       android:paddingTop="8dp"
+       android:paddingBottom="8dp"
+       android:paddingLeft="8dp"
+       android:paddingRight="8dp"
    >
        <TextView
-            android:id="@+id/tv_shouyeLeagues_context"
-            android:layout_width="0dp"
+            android:id="@+id/tv_shouyeLeagues_title"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="商圈商圈商圈商圈商圈商圈商圈商圈商圈商圈商圈商圈商圈商圈商圈商圈商圈商圈"
-            android:layout_marginTop="3dp"
+            android:text="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
             android:layout_marginRight="10dp"
             android:gravity="center_vertical"
             android:layout_gravity="center_vertical"
@@ -25,16 +27,6 @@
             android:maxLines="2"
             android:textSize="16sp"
             />
-       <ImageView
-           android:id="@+id/img_shouyeLeagues_response"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:scaleType="fitXY"
-           android:src="@mipmap/icon_response"
-           android:adjustViewBounds="true"
-           android:layout_marginRight="10dp"
-       />
-
    </LinearLayout>
 
 </LinearLayout> 
