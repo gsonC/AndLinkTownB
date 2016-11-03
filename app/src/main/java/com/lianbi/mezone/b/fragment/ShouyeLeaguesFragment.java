@@ -159,7 +159,7 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
                 Intent   intent=new Intent();
                 intent.setClass(mActivity, LeaguesDynamicListActivity.class);
                 startActivity(intent);
-            break;
+                break;
         }
     }
 
@@ -274,41 +274,41 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
                     "app",
                     mActivity.reqTime,
                     new MyResultCallback<String>() {
-                @Override
-                public void onResponseResult(Result result) {
-                    String reString = result.getData();
-                    Log.i("tag","resString 274----->"+reString);
-                    try {
-                        JSONObject jsonObject= new JSONObject(reString);
-                        reString = jsonObject.getString("list");
-                        if (!TextUtils.isEmpty(reString)) {
-                            mData.clear();
-                            ArrayList<LeaguesYellBean> leaguesyellbeanlist = (ArrayList<LeaguesYellBean>) JSON
-                                    .parseArray(reString,
-                                            LeaguesYellBean.class);
-                            mData.addAll(leaguesyellbeanlist);
-                            updateview(mData);
+                        @Override
+                        public void onResponseResult(Result result) {
+                            String reString = result.getData();
+                            Log.i("tag","resString 274----->"+reString);
+                            try {
+                                JSONObject jsonObject= new JSONObject(reString);
+                                reString = jsonObject.getString("list");
+                                if (!TextUtils.isEmpty(reString)) {
+                                    mData.clear();
+                                    ArrayList<LeaguesYellBean> leaguesyellbeanlist = (ArrayList<LeaguesYellBean>) JSON
+                                            .parseArray(reString,
+                                                    LeaguesYellBean.class);
+                                    mData.addAll(leaguesyellbeanlist);
+                                    updateview(mData);
 
-                            mDataZxy.clear();
-                            for(LeaguesYellBean  LeaguesZxy:leaguesyellbeanlist){
-                              if(!LeaguesZxy.getMessageType().equals("MT0000")){
-                                  mDataZxy.addAll(leaguesyellbeanlist);
-                              }
+                                    mDataZxy.clear();
+                                    for(LeaguesYellBean  LeaguesZxy:leaguesyellbeanlist){
+                                        if(!LeaguesZxy.getMessageType().equals("MT0000")){
+                                            mDataZxy.addAll(leaguesyellbeanlist);
+                                        }
+                                    }
+                                    showdynamic(mDataZxy);
+                                }
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
-                            showdynamic(mDataZxy);
+
                         }
 
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-
-                @Override
-                public void onResponseFailed(String msg) {
-                    ContentUtils.showMsg(mActivity, "网络访问失败");
-                }
-            });
+                        @Override
+                        public void onResponseFailed(String msg) {
+                            ContentUtils.showMsg(mActivity, "网络访问失败");
+                        }
+                    });
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -100,8 +100,7 @@ public class ServiceMallActivity extends BaseActivity {
 						.getView(R.id.tv_newprice);
 				TextView tv_oldprice = helper
 						.getView(R.id.tv_oldprice);
-				ImageView img_right = helper
-						.getView(R.id.img_right);
+
 				tv_oldprice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG );
 				tv_oldprice.setText("¥"+String.valueOf(item.getOriginalPrice())+String.valueOf(item.getUnit()));
 				tv_newprice.setText("¥"+String.valueOf(item.getPresentPrice())+String.valueOf(item.getUnit()));
@@ -109,12 +108,12 @@ public class ServiceMallActivity extends BaseActivity {
 				if(item.getDownload().equals("N")){
 				  Glide.with(ServiceMallActivity.this).load(item.getIcoUrl()).error(R.mipmap.default_head).into(img_itemmall);
 				  tv_download.setVisibility(View.VISIBLE);
-				  img_right.setVisibility(View.INVISIBLE);
-				}else 
+				}else
 			    if(item.getDownload().equals("Y")){
 				  Glide.with(ServiceMallActivity.this).load(item.getIcoUrl()).error(R.mipmap.default_head).into(img_itemmall);
 				  tv_download.setVisibility(View.GONE);
-				  img_right.setVisibility(View.VISIBLE);
+					tv_BussinessMaking.setVisibility(View.VISIBLE);
+					ray_right.setVisibility(View.GONE);
 				}
                 if(item.getAppCode().equals("wcm")||item.getAppCode().equals("wifi")||item.getAppCode().equals("qns")){
 					llt_servicemall.setVisibility(View.VISIBLE);
@@ -234,8 +233,7 @@ public class ServiceMallActivity extends BaseActivity {
 					JSONObject jsonObject;
 					try {
 					ContentUtils.showMsg(ServiceMallActivity.this, "下载成功");
-						ray_right.setVisibility(View.GONE);
-						tv_BussinessMaking.setVisibility(View.GONE);
+
 					mServiceMallBean.setDownload("Y");
 					updateView(mData);
 					finish();
@@ -249,6 +247,8 @@ public class ServiceMallActivity extends BaseActivity {
 			@Override
 			public void onResponseFailed(String msg) {
 				dialog.dismiss();
+				ray_right.setVisibility(View.VISIBLE);
+				tv_BussinessMaking.setVisibility(View.GONE);
 			}
 		}, userShopInfoBean.getBusinessId(),serviceId);
 		
@@ -277,6 +277,8 @@ public class ServiceMallActivity extends BaseActivity {
 							 }
 							mData.addAll(a);
 							updateView(mData);
+							ray_right.setVisibility(View.GONE);
+							tv_BussinessMaking.setVisibility(View.VISIBLE);
 						}
 					} catch (JSONException e) {
 						e.printStackTrace();

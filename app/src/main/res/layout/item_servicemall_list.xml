@@ -95,12 +95,12 @@
                     android:textSize="16sp"
                      />
              </RelativeLayout>
-              <ImageView
+             <!-- <ImageView
                     android:id="@+id/img_right"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:scaleType="centerInside"
-                    android:src="@mipmap/service_new_right" />
+                    android:src="@mipmap/service_new_right" />-->
 
             </LinearLayout>
 

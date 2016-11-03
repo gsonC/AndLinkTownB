@@ -71,7 +71,7 @@ public class WisdomManagerFragment extends Fragment implements OnClickListener {
 	@Bind(R.id.ll_wisdommanage_smalltwo)
 	LinearLayout llWisdommanageSmalltwo;
 	@Bind(R.id.ll_wisdommanage_Servicemall)
-	ImageView llWisdommanageServicemall;
+	LinearLayout llWisdommanageServicemall;
 	@Bind(R.id.GLZX_sc)
 	ScrollView GLZXSc;
 	@Bind(R.id.swipe_jiaoyiguanli)
@@ -80,6 +80,12 @@ public class WisdomManagerFragment extends Fragment implements OnClickListener {
 	LinearLayout llWisdommanageShop;
 	@Bind(R.id.gv_shouyeservice)
 	MyGridView gv_shouyeservice;
+	@Bind(R.id.ll_wisdommanage_shopservice)
+	LinearLayout llWisdommanageShopservice;
+	@Bind(R.id.ll_wisdommanage_yingxiao)
+	LinearLayout llWisdommanageYingxiao;
+	@Bind(R.id.ll_wisdommanage_tese)
+	LinearLayout llWisdommanageTese;
 	private OkHttpsImp httpsImp;
 	private MainActivity mMainActivity;
 	public static WisdomManagerFragment jiaoYiGuanLiFragment;
@@ -131,7 +137,7 @@ public class WisdomManagerFragment extends Fragment implements OnClickListener {
 
 			@Override
 			protected void convert(final BaseAdapterHelper helper, final ShouyeServiceBean item) {
-				RelativeLayout  sss=helper.getView(R.id.dsa);
+				RelativeLayout sss = helper.getView(R.id.dsa);
 				TextView tv_store_service_introduce = helper.getView(R.id.tv_store_service_introduce);
 				ImageView iv_store_service = helper.getView(R.id.iv_store_service);
 				int serviceid = item.getDefaultservice();
@@ -151,8 +157,8 @@ public class WisdomManagerFragment extends Fragment implements OnClickListener {
 					default:
 //						if (null != item.getIcoUrl()&&item.getAppCode().equals("wcm")||item.getAppCode().equals("wifi")
 //								||item.getAppCode().equals("qns")) {
-							Glide.with(mMainActivity).load(item.getIcoUrl()).error(R.mipmap.default_head).into(iv_store_service);
-							tv_store_service_introduce.setText(item.getAppName());
+						Glide.with(mMainActivity).load(item.getIcoUrl()).error(R.mipmap.default_head).into(iv_store_service);
+						tv_store_service_introduce.setText(item.getAppName());
 //							sss.setVisibility(View.VISIBLE);
 
 //						}else{
@@ -205,6 +211,7 @@ public class WisdomManagerFragment extends Fragment implements OnClickListener {
 	 */
 	private void initView(View view) {
 		llWisdommanageServicemall.setOnClickListener(this);
+		llWisdommanageShopservice.setOnClickListener(this);
 		swipe_jiaoyiguanli = (SwipeRefreshLayout) view.findViewById(R.id.swipe_jiaoyiguanli);
 		swipe_jiaoyiguanli.setColorSchemeResources(R.color.colores_news_01, R.color.black);
 		swipe_jiaoyiguanli.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -222,18 +229,8 @@ public class WisdomManagerFragment extends Fragment implements OnClickListener {
 		boolean isLogin = ContentUtils.getLoginStatus(mMainActivity);
 		boolean re = false;
 		switch (view.getId()) {
-
-			case R.id.ll_wisdommanage_Shouting://商圈吆喝
-
-				break;
-			case R.id.ll_wisdommanage_guidance://专家指导
-
-				break;
-			case R.id.ll_wisdommanage_smalltwo://智能小二
-
-				break;
-			case R.id.ll_wisdommanage_shop://运营服务
-
+			case R.id.ll_wisdommanage_shopservice:
+				 startActivity(new Intent(getActivity(),DiningTableSettingActivity.class));
 				break;
 			case R.id.ll_wisdommanage_Servicemall://服务商城
 				re = JumpIntent.jumpLogin_addShop(isLogin, API.SERVICESTORE, mMainActivity);
@@ -246,7 +243,6 @@ public class WisdomManagerFragment extends Fragment implements OnClickListener {
 				break;
 		}
 	}
-
 
 
 	private void listen() {
@@ -379,12 +375,9 @@ public class WisdomManagerFragment extends Fragment implements OnClickListener {
 			mData.clear();
 //			mData = arraylist;
 
-			List a=new ArrayList();
-			for(ShouyeServiceBean ss: arraylist ){
-				if(ss!=null&&
-						ss.getAppCode().equals("wcm")
-						||ss.getAppCode().equals("qns")
-						||ss.getAppCode().equals("wifi")){
+			List a = new ArrayList();
+			for (ShouyeServiceBean ss : arraylist) {
+				if (ss != null && ss.getAppCode().equals("wcm") || ss.getAppCode().equals("qns") || ss.getAppCode().equals("wifi")) {
 					mData.add(ss);
 				}
 			}

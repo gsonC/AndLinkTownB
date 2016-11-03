@@ -853,7 +853,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 			setPageTitleVisibility(View.VISIBLE);
 			setPageRightTextVisibility(View.GONE);
 			((WisdomManagerFragment) fm_wisdommanage).refreshFMData();
-			setPageTitle("智慧经营");
+			setPageTitle("智慧应用");
 			tv_title_left.setVisibility(View.GONE);
 			setPageBackVisibility(View.INVISIBLE);
 			setPageRightImageVisibility();
