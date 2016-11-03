@@ -55,16 +55,16 @@
         android:id="@+id/dottline"
         android:layout_width="2dp"
         android:layout_height="match_parent"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginTop="4dp"
         />
 
     <RelativeLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
