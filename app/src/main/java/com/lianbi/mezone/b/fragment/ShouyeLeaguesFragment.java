@@ -172,7 +172,8 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
         mActivity = (MainActivity) getActivity();
         mOkHttpsImp = OkHttpsImp.SINGLEOKHTTPSIMP.newInstance(mActivity);
         initViewAndData();
-        getYellData();
+        getYellAndDynamicData();
+        getDistrictCount();
         initAnimation();
         return view;
     }
@@ -241,10 +242,59 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
         return API.HOST + relativeUrl;
     }
     /**
+     * 查询商圈统计
+     */
+    private void getDistrictCount() {
+        try {
+            mOkHttpsImp.districtCount(
+                    "310117",
+                    mActivity.uuid,
+                    mActivity.reqTime,
+                    new MyResultCallback<String>() {
+                        @Override
+                        public void onResponseResult(Result result) {
+                            String reString = result.getData();
+                            Log.i("tag","查询商圈统计返回 257----->"+reString);
+                            try {
+                                JSONObject jsonObject= new JSONObject(reString);
+                                reString = jsonObject.getString("list");
+                                if (!TextUtils.isEmpty(reString)) {
+                                    mData.clear();
+                                    ArrayList<LeaguesYellBean> leaguesyellbeanlist = (ArrayList<LeaguesYellBean>) JSON
+                                            .parseArray(reString,
+                                                    LeaguesYellBean.class);
+                                    mData.addAll(leaguesyellbeanlist);
+                                    updateview(mData);
+
+                                    mDataZxy.clear();
+                                    for(LeaguesYellBean  LeaguesZxy:leaguesyellbeanlist){
+                                        if(!LeaguesZxy.getMessageType().equals("MT0000")){
+                                            mDataZxy.addAll(leaguesyellbeanlist);
+                                        }
+                                    }
+                                    showdynamic(mDataZxy);
+                                }
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+
+                        @Override
+                        public void onResponseFailed(String msg) {
+                            ContentUtils.showMsg(mActivity, "网络访问失败");
+                        }
+                    });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    /**
      * 查询吆喝和商圈动态
      */
-    private void getYellData() {
-//        ic(String businessId,
+    private void getYellAndDynamicData() {
+///amic(String businessId,
 //                String area,
 //                String businessCircle,
 //                String messageType,
@@ -253,6 +303,7 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
 //                String phone,
 //                String messageTitle,
 //                String messageContent,
+//                String provinces,
 //                String pageNum,
 //                String pageSize,
 //                String serNum, String source,
@@ -260,8 +311,9 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
         try {
             mOkHttpsImp.queryBusinessDynamic(
                     "BD2016052013475900000010",
-                    "area",
+                    "",
                     "310117",
+                    "",
                     "",
                     "",
                     "",
@@ -334,11 +386,11 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
     }
     protected  int  compareMessageType(String messagetype){
         if(messagetype.equals("MT0001")){
-            return R.mipmap.icon_recruit;
+            return R.mipmap.icon_news;
         }
         else
         if(messagetype.equals("MT0002")){
-            return R.mipmap.icon_news;
+            return R.mipmap.icon_recruit;
         }
         else
         if(messagetype.equals("MT0003")){

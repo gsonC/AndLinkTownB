@@ -209,7 +209,7 @@ public enum OkHttpsImp {
 		postNoProgressResponse(myResultCallback, params, url);
 	}
 	/**
-	 * 获取吆喝
+	 * 发布吆喝
 	 *
 	 * @throws
 	 */
@@ -218,12 +218,14 @@ public enum OkHttpsImp {
 									 String businessCircle,
 									 String messageType,
 									 String pushScope,
+									 String pushTime,
 									 String author,
 									 String phone,
 									 String messageTitle,
 									 String messageContent,
-									 String provinces,
 									 String city,
+									 String address,
+									 String logoUrl,
 									 String serNum, String source,
 									 String reqTime,
 									 MyResultCallback<String> myResultCallback
@@ -234,12 +236,14 @@ public enum OkHttpsImp {
 		params.put("businessCircle", businessCircle);
 		params.put("messageType", messageType);
 		params.put("pushScope", pushScope);
+		params.put("pushTime", pushTime);
 		params.put("author", author);
 		params.put("phone", phone);
 		params.put("messageTitle", messageTitle);
 		params.put("messageContent", messageContent);
-		params.put("provinces", provinces);
 		params.put("city", city);
+		params.put("address", address);
+		params.put("logoUrl", logoUrl);
 		params.put("reqTime", reqTime);
 		params.put("serNum", serNum);
 		params.put("source", source);
@@ -262,6 +266,7 @@ public enum OkHttpsImp {
 									 String phone,
 									 String messageTitle,
 									 String messageContent,
+									 String provinces,
 									 String pageNum,
 									 String pageSize,
 									 String serNum, String source,
@@ -278,6 +283,7 @@ public enum OkHttpsImp {
 		params.put("phone", phone);
 		params.put("messageTitle", messageTitle);
 		params.put("messageContent", messageContent);
+		params.put("provinces", provinces);
 		params.put("pageNum", pageNum);
 		params.put("pageSize", pageSize);
 		params.put("reqTime", reqTime);
@@ -288,6 +294,47 @@ public enum OkHttpsImp {
 		String url = getAbsoluteUrl(API.QUERY_LEAGUES_DYNAMIC);
 		postNoProgressResponse(myResultCallback, params, url);
 	}
+	/**
+	 * 商圈统计
+	 *
+	 * @throws
+	 */
+	public void districtCount(String areaCode,
+									 String serNum,
+									 String reqTime,
+									 MyResultCallback<String> myResultCallback
+	) throws Exception {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("areaCode", areaCode);
+		params.put("serNum", serNum);
+		params.put("reqTime", reqTime);
+		params.put("source", appsource);
+		String sign = getSign(md5_key, params);
+		params.put("sign", sign);
+		String url = getAbsoluteUrl(API.QUERY_LEAGUES_DISTRICTCOUNT);
+		postNoProgressResponse(myResultCallback, params, url);
+	}
+	/**
+	 * 店铺列表
+	 *
+	 * @throws
+	 */
+	public void getBusinessList(String userId,
+							  String serNum,
+							  String reqTime,
+							  MyResultCallback<String> myResultCallback
+	) throws Exception {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("userId", userId);
+		params.put("serNum", serNum);
+		params.put("reqTime", reqTime);
+		params.put("source", appsource);
+		String sign = getSign(md5_key, params);
+		params.put("sign", sign);
+		String url = getAbsoluteUrl(API.QUERY_LEAGUES_BUSINESSLIST);
+		postNoProgressResponse(myResultCallback, params, url);
+	}
+
 	/**
 	 * 意见反馈
 	 *

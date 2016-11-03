@@ -13,7 +13,10 @@ public class LeaguesYellBean {
     String  phone;
     String  messageTitle;
     String  messageContent;
+    String  address;
+    String  logoUrl;
 
+    boolean  isExpanded;//商圈动态列表用于判断列表是否是展开状态
     public String getArea() {
         return area;
     }
@@ -76,5 +79,28 @@ public class LeaguesYellBean {
 
     public void setMessageContent(String messageContent) {
         this.messageContent = messageContent;
+    }
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getLogoUrl() {
+        return logoUrl;
+    }
+
+    public void setLogoUrl(String logoUrl) {
+        this.logoUrl = logoUrl;
+    }
+
+    public boolean isExpanded() {
+        return isExpanded;
+    }
+
+    public void setExpanded(boolean expanded) {
+        isExpanded = expanded;
     }
 }

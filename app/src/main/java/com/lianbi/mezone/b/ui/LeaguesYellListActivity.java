@@ -2,13 +2,20 @@ package com.lianbi.mezone.b.ui;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.bumptech.glide.Glide;
 import com.lianbi.mezone.b.bean.LeaguesYellBean;
+import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.xizhi.mezone.b.R;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -16,6 +23,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.QuickAdapter;
+import cn.com.hgh.utils.ContentUtils;
+import cn.com.hgh.utils.Result;
 import cn.com.hgh.view.AbPullToRefreshView;
 
 /*
@@ -34,6 +43,7 @@ public class LeaguesYellListActivity extends BaseActivity {
     @Bind(R.id.act_leaguesyell_abpulltorefreshview)
     AbPullToRefreshView actLeaguesyellAbpulltorefreshview;
     private Context mContext;
+    private ArrayList<LeaguesYellBean> mData = new ArrayList<LeaguesYellBean>();
     private ArrayList<LeaguesYellBean> mDatas = new ArrayList<LeaguesYellBean>();
     private QuickAdapter<LeaguesYellBean> mAdapter;
 
@@ -51,7 +61,7 @@ public class LeaguesYellListActivity extends BaseActivity {
     private void initData() {
         setPageTitle("吆喝列表");
         initAdapter();
-        getYellList();
+        getYellData();
     }
     private void initAdapter() {
         mAdapter = new QuickAdapter<LeaguesYellBean>(this,
@@ -83,10 +93,79 @@ public class LeaguesYellListActivity extends BaseActivity {
     }
 
     /**
-     *获取吆喝数据
+     * 查询吆喝和商圈动态
      */
-    private void getYellList() {
+    private void getYellData() {
+//        ic(String businessId,
+//                String area,
+//                String businessCircle,
+//                String messageType,
+//                String pushScope,
+//                String author,
+//                String phone,
+//                String messageTitle,
+//                String messageContent,
+//                String pageNum,
+//                String pageSize,
+//                String serNum, String source,
+//                String reqTime,
+        try {
+            okHttpsImp.queryBusinessDynamic(
+                    "BD2016052013475900000010",
+                    "area",
+                    "310117",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    uuid,
+                    "app",
+                    reqTime,
+                    new MyResultCallback<String>() {
+                        @Override
+                        public void onResponseResult(Result result) {
+                            String reString = result.getData();
+                            Log.i("tag","resString 132----->"+reString);
+                            try {
+                                JSONObject jsonObject= new JSONObject(reString);
+                                reString = jsonObject.getString("list");
+                                if (!TextUtils.isEmpty(reString)) {
+                                    mData.clear();
+                                    ArrayList<LeaguesYellBean> leaguesyellbeanlist = (ArrayList<LeaguesYellBean>) JSON
+                                            .parseArray(reString,
+                                                    LeaguesYellBean.class);
+                                    for(LeaguesYellBean  LeaguesZxy:leaguesyellbeanlist){
+                                        if(!LeaguesZxy.getMessageType().equals("MT0000")){
+                                            mData.addAll(leaguesyellbeanlist);
+                                        }
+                                    }
+                                    updateView(mData);
 
+                                }
 
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+
+                        @Override
+                        public void onResponseFailed(String msg) {
+                            ContentUtils.showMsg(LeaguesYellListActivity.this, "网络访问失败");
+                        }
+                    });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    protected void updateView(ArrayList<LeaguesYellBean> arrayList) {
+        mDatas.clear();
+        mDatas.addAll(arrayList);
+        mAdapter.notifyDataSetChanged();
     }
 }
