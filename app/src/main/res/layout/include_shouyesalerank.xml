@@ -5,26 +5,26 @@
               android:background="@color/white"
               android:orientation="horizontal">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical"
         android:padding="10dp">
 
         <TextView
             android:id="@+id/tv_includesalerank_one"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="700"
+            android:layout_centerHorizontal="true"
+            android:text="0"
             android:textColor="@color/color_4b4b4b"
             android:textSize="12sp"/>
 
         <cn.com.hgh.view.DynamicWave
             android:id="@+id/dyw_includesalerank_one"
             android:layout_width="30dp"
-            android:layout_height="0dp"
+            android:layout_height="150dp"
+            android:layout_below="@id/tv_includesalerank_one"
             android:layout_marginBottom="3dp"
             android:layout_marginTop="5dp"
             android:layout_weight="1"
@@ -34,21 +34,21 @@
             android:id="@+id/tv_includesalerank_onebottom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/dyw_includesalerank_one"
             android:ellipsize="end"
             android:maxEms="3"
             android:maxLines="2"
             android:scrollbars="vertical"
             android:singleLine="false"
-            android:text="六字大明咒"
+            android:text="待上架待上架"
             android:textColor="@color/showcolor"
             android:textSize="10sp"/>
-    </LinearLayout>
+    </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:gravity="center"
         android:orientation="vertical"
         android:padding="10dp">
 
@@ -56,38 +56,39 @@
             android:id="@+id/tv_includesalerank_two"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="700"
+            android:layout_centerHorizontal="true"
+            android:text="0"
             android:textColor="@color/color_4b4b4b"
             android:textSize="12sp"/>
 
         <cn.com.hgh.view.DynamicWave
             android:id="@+id/dyw_includesalerank_two"
             android:layout_width="30dp"
-            android:layout_height="0dp"
+            android:layout_height="150dp"
+            android:layout_below="@id/tv_includesalerank_two"
             android:layout_marginBottom="3dp"
             android:layout_marginTop="5dp"
-            android:layout_weight="1"
             />
 
         <TextView
             android:id="@+id/tv_includesalerank_twobottom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/dyw_includesalerank_two"
             android:ellipsize="end"
             android:maxEms="3"
             android:maxLines="2"
             android:scrollbars="vertical"
             android:singleLine="false"
-            android:text="六字大明咒"
+            android:text="待上架"
             android:textColor="@color/showcolor"
             android:textSize="10sp"/>
-    </LinearLayout>
+    </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:gravity="center"
         android:orientation="vertical"
         android:padding="10dp">
 
@@ -95,14 +96,16 @@
             android:id="@+id/tv_includesalerank_three"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="700"
+            android:layout_centerHorizontal="true"
+            android:text="0"
             android:textColor="@color/color_4b4b4b"
             android:textSize="12sp"/>
 
         <cn.com.hgh.view.DynamicWave
             android:id="@+id/dyw_includesalerank_three"
             android:layout_width="30dp"
-            android:layout_height="0dp"
+            android:layout_height="150dp"
+            android:layout_below="@id/tv_includesalerank_three"
             android:layout_marginBottom="3dp"
             android:layout_marginTop="5dp"
             android:layout_weight="1"
@@ -112,21 +115,21 @@
             android:id="@+id/tv_includesalerank_threebottom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/dyw_includesalerank_three"
             android:ellipsize="end"
             android:maxEms="3"
             android:maxLines="2"
             android:scrollbars="vertical"
             android:singleLine="false"
-            android:text="六字大明咒"
+            android:text="待上架"
             android:textColor="@color/showcolor"
             android:textSize="10sp"/>
-    </LinearLayout>
+    </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:gravity="center"
         android:orientation="vertical"
         android:padding="10dp">
 
@@ -134,14 +137,16 @@
             android:id="@+id/tv_includesalerank_four"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="700"
+            android:layout_centerHorizontal="true"
+            android:text="0"
             android:textColor="@color/color_4b4b4b"
             android:textSize="12sp"/>
 
         <cn.com.hgh.view.DynamicWave
             android:id="@+id/dyw_includesalerank_four"
             android:layout_width="30dp"
-            android:layout_height="0dp"
+            android:layout_height="150dp"
+            android:layout_below="@id/tv_includesalerank_four"
             android:layout_marginBottom="3dp"
             android:layout_marginTop="5dp"
             android:layout_weight="1"
@@ -151,21 +156,21 @@
             android:id="@+id/tv_includesalerank_fourbottom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/dyw_includesalerank_four"
             android:ellipsize="end"
             android:maxEms="3"
             android:maxLines="2"
             android:scrollbars="vertical"
             android:singleLine="false"
-            android:text="六字大明咒"
+            android:text="待上架"
             android:textColor="@color/showcolor"
             android:textSize="10sp"/>
-    </LinearLayout>
+    </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:gravity="center"
         android:orientation="vertical"
         android:padding="10dp">
 
@@ -173,14 +178,16 @@
             android:id="@+id/tv_includesalerank_five"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="700"
+            android:layout_centerHorizontal="true"
+            android:text="0"
             android:textColor="@color/color_4b4b4b"
             android:textSize="12sp"/>
 
         <cn.com.hgh.view.DynamicWave
             android:id="@+id/dyw_includesalerank_five"
             android:layout_width="30dp"
-            android:layout_height="0dp"
+            android:layout_height="150dp"
+            android:layout_below="@id/tv_includesalerank_five"
             android:layout_marginBottom="3dp"
             android:layout_marginTop="5dp"
             android:layout_weight="1"
@@ -190,21 +197,21 @@
             android:id="@+id/tv_includesalerank_fivebottom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/dyw_includesalerank_five"
             android:ellipsize="end"
             android:maxEms="3"
             android:maxLines="2"
             android:scrollbars="vertical"
             android:singleLine="false"
-            android:text="六字大明咒"
+            android:text="待上架"
             android:textColor="@color/showcolor"
             android:textSize="10sp"/>
-    </LinearLayout>
+    </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:gravity="center"
         android:orientation="vertical"
         android:padding="10dp">
 
@@ -212,14 +219,16 @@
             android:id="@+id/tv_includesalerank_six"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="700"
+            android:layout_centerHorizontal="true"
+            android:text="0"
             android:textColor="@color/color_4b4b4b"
             android:textSize="12sp"/>
 
         <cn.com.hgh.view.DynamicWave
             android:id="@+id/dyw_includesalerank_six"
             android:layout_width="30dp"
-            android:layout_height="0dp"
+            android:layout_height="150dp"
+            android:layout_below="@id/tv_includesalerank_six"
             android:layout_marginBottom="3dp"
             android:layout_marginTop="5dp"
             android:layout_weight="1"
@@ -229,21 +238,21 @@
             android:id="@+id/tv_includesalerank_sixbottom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/dyw_includesalerank_six"
             android:ellipsize="end"
             android:maxEms="3"
             android:maxLines="2"
             android:scrollbars="vertical"
             android:singleLine="false"
-            android:text="六字大明咒"
+            android:text="待上架"
             android:textColor="@color/showcolor"
             android:textSize="10sp"/>
-    </LinearLayout>
+    </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:gravity="center"
         android:orientation="vertical"
         android:padding="10dp">
 
@@ -251,23 +260,25 @@
             android:id="@+id/tv_includesalerank_seven"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="700"
+            android:layout_centerHorizontal="true"
+            android:text="0"
             android:textColor="@color/color_4b4b4b"
             android:textSize="12sp"/>
 
         <cn.com.hgh.view.DynamicWave
             android:id="@+id/dyw_includesalerank_seven"
             android:layout_width="30dp"
-            android:layout_height="0dp"
+            android:layout_height="150dp"
+            android:layout_below="@id/tv_includesalerank_seven"
             android:layout_marginBottom="3dp"
             android:layout_marginTop="5dp"
-            android:layout_weight="1"
             />
 
         <TextView
             android:id="@+id/tv_includesalerank_sevenbottom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/dyw_includesalerank_seven"
             android:ellipsize="end"
             android:maxEms="3"
             android:maxLines="2"
@@ -276,5 +287,5 @@
             android:text="六字大明咒"
             android:textColor="@color/showcolor"
             android:textSize="10sp"/>
-    </LinearLayout>
+    </RelativeLayout>
 </LinearLayout>

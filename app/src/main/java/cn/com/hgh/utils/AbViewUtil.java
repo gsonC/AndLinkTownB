@@ -15,8 +15,6 @@
  */
 package cn.com.hgh.utils;
 
-import java.io.InputStream;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -27,12 +25,17 @@ import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.View.MeasureSpec;
-import android.view.ViewGroup.MarginLayoutParams;
 import android.view.ViewGroup;
+import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+
+import java.io.InputStream;
 
 /**
  * © 2012 amsoft.cn 名称：AbViewUtil.java 描述：View工具类.
@@ -501,4 +504,15 @@ public class AbViewUtil {
 
 	}
 
+	/**
+	 *  设置圆角图片
+	 * @param imageView imageView ID
+	 * @param imgUrl 路径
+	 * @param imgRadian	弧度
+	 */
+	public static void filletImageView(Context context, ImageView imageView, String imgUrl, int imgRadian){
+
+		Glide.with(context).load(imgUrl).transform(new GlideRoundTransform(context,imgRadian)).into(imageView);
+
+	}
 }

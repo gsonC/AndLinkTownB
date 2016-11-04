@@ -170,7 +170,7 @@ public class DynamicWave extends View {
 			this.height = 1000;
 		else
 			this.height = filledPercent;
-		//invalidate();
+
 	}
 
 	private int dipToPx(Context context, int dip) {
