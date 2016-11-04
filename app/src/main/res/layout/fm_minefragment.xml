@@ -172,7 +172,7 @@
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:scaleType="centerInside"
-                        android:src="@mipmap/caiwushithree"/>
+                        android:src="@mipmap/icon_financial"/>
                 </LinearLayout>
 
                 <View
@@ -291,13 +291,13 @@
                     android:clickable="true"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:padding="10dp">
-
+                    android:padding="10dp"
+                    >
                     <ImageView
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:scaleType="centerInside"
-                        android:src="@mipmap/changjingthree"/>
+                        android:src="@mipmap/icon_scene"/>
 
                     <TextView
                         android:layout_width="0dp"
