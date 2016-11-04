@@ -3,7 +3,7 @@
 
     <corners android:radius="1dp" />
 
-    <solid android:color="@color/colores_news_08" />
+    <solid android:color="@color/colore_ffa650" />
 
     <corners
         android:bottomLeftRadius="1dp"

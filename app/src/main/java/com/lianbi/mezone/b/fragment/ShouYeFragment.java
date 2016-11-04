@@ -138,7 +138,7 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 
 			@Override
 			public void onPageSelected(int position) {
-				switch (position){
+				switch (position) {
 					case POSITION0:
 						mRbt_shouye_mag.setChecked(true);
 						mRbt_shouye_union.setChecked(false);
@@ -158,7 +158,7 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 		mRbt_shouye_mag.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				if(isChecked){
+				if (isChecked) {
 					pager.setCurrentItem(0);
 				}
 			}
@@ -166,7 +166,7 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 		mRbt_shouye_union.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				if(isChecked){
+				if (isChecked) {
 					pager.setCurrentItem(1);
 				}
 			}
@@ -224,7 +224,6 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 								.setPresetIndicatorV(SliderLayout.PresetIndicators.Center_Bottom);
 						ad_siderlayout_progressBar.setVisibility(View.GONE);
 						mDemoSlider.setVisibility(View.VISIBLE);
-
 
 					} catch (JSONException e) {
 						// TODO Auto-generated catch block

@@ -98,17 +98,21 @@ public class LeaguesPublishYellActivity extends BaseActivity {
         return  true;
     }
     private   void  goPublishYell(){
-//        (String businessId,
+//        getAddBusinessDynamic(
+//                String businessId,
 //                String area,
 //                String businessCircle,
 //                String messageType,
 //                String pushScope,
+//                String pushTime,
 //                String author,
 //                String phone,
 //                String messageTitle,
 //                String messageContent,
 //                String provinces,
 //                String city,
+//                String address,
+//                String logoUrl,
 //                String serNum, String source,
 //                String reqTime,
 //                MyResultCallback<String> myResultCallback
@@ -126,6 +130,8 @@ public class LeaguesPublishYellActivity extends BaseActivity {
                     strTitle,
                     strSaysomething,
                     "",
+                    "",
+                    "",
                     uuid,
                     "app",
                     reqTime,
@@ -134,6 +140,7 @@ public class LeaguesPublishYellActivity extends BaseActivity {
                         public void onResponseResult(Result result) {
                             String reString = result.getData();
                             Log.i("tag","resString 92----->"+reString);
+                            ContentUtils.showMsg(LeaguesPublishYellActivity.this, "发布成功");
                             try {
                                 JSONObject jsonObject= new JSONObject(reString);
 //                                reString = jsonObject.getString("list");

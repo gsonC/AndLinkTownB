@@ -22,6 +22,14 @@
             android:listSelector="@color/transparent"
             android:scrollbars="none">
         </ListView>
-    </cn.com.hgh.view.AbPullToRefreshView>
 
+    </cn.com.hgh.view.AbPullToRefreshView>
+    <ImageView
+        android:visibility="gone"
+        android:id="@+id/iv_leaguesstorelist_empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerInside"
+        android:src="@mipmap/iv_empty"
+        />
 </RelativeLayout>

@@ -50,7 +50,7 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:orientation="horizontal"
-        android:paddingTop="20dp"
+        android:paddingTop="23dp"
         >
 
         <LinearLayout
@@ -72,7 +72,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:paddingTop="10dp"
+                android:paddingTop="15dp"
                 android:text="吆喝"
                 android:textColor="@color/color_4b4b4b"
                 android:textSize="14sp"/>
@@ -99,7 +99,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:paddingTop="10dp"
+                android:paddingTop="15dp"
                 android:text="商圈联盟"
                 android:textColor="@color/color_4b4b4b"
                 android:textSize="14sp"/>
@@ -126,7 +126,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:paddingTop="10dp"
+                android:paddingTop="15dp"
                 android:text="场景式销售"
                 android:textColor="@color/color_4b4b4b"
                 android:textSize="14sp"/>
@@ -152,7 +152,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:paddingTop="10dp"
+                android:paddingTop="15dp"
                 android:text="运营服务"
                 android:textColor="@color/color_4b4b4b"
                 android:textSize="14sp"/>
@@ -189,7 +189,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:paddingTop="10dp"
+                android:paddingTop="15dp"
                 android:text="金融服务"
                 android:textColor="@color/color_4b4b4b"
                 android:textSize="14sp"/>
@@ -216,7 +216,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:paddingTop="10dp"
+                android:paddingTop="15dp"
                 android:text="致富宝典"
                 android:textColor="@color/color_4b4b4b"
                 android:textSize="14sp"/>
@@ -243,7 +243,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:paddingTop="10dp"
+                android:paddingTop="15dp"
                 android:text="商圈大数据"
                 android:textColor="@color/color_4b4b4b"
                 android:textSize="14sp"/>
@@ -268,7 +268,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:paddingTop="10dp"
+                android:paddingTop="15dp"
                 android:text="应用商城"
                 android:textColor="@color/color_4b4b4b"
                 android:textSize="14sp"/>
