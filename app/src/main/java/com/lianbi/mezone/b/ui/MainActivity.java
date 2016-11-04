@@ -668,8 +668,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 			setPageTitle("我的");
 			setPageRightText("退出登录");
 			setPageRightTextColor(R.color.black);
-			tv_title_left.setText("退出登录");
-			tv_title_left.setVisibility(View.INVISIBLE);
+
 			setPageBackVisibility(View.INVISIBLE);
 			setPageRightImageVisibility();
 			rb_mine.setChecked(true);

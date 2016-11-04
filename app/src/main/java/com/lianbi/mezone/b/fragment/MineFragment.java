@@ -55,17 +55,17 @@ public class MineFragment extends Fragment implements OnClickListener,
 	CircularImageView circularimageview_fm_mine;
 	LinearLayout llt_fm_mine_nologin, llt_fm_mine_info, llt_mine_message,
 			llt_mine_function, llt_mine_phone_vip, llt_mine_about_us,
-			llt_mine_fm_title_bg, llt_feedback;
+			llt_mine_fm_title_bg, llt_feedback,llt_mine_meyaohe,llt_mine_changjing;
 	TextView fm_mine_name, fm_mine_vip, fm_mine_adress, mine_fm_tv_num_message,
 			tv_mine_vision_fm, mine_fm_phone_num;
-	ImageView fm_mine_textinfo, fm_mine_bussiness, fm_mine_product_f, img_update_red;
+	ImageView fm_mine_textinfo, fm_mine_bussiness, fm_mine_product_f, img_update_red,fm_mine_textcaiwushi;
 	RelativeLayout rlt_update;
 
 	private MainActivity maActivity;
 	private final int LOGINACTIVITY_CODE = 2000;
 	private final int MINETEXTINFOACTIVITY_CODE = 2002;
 	private final int MINEMSGACTIVITY_CODE = 2003;
-
+	private final int MINEMSGACAIWUSHI_CODE = 2004;
 	private final int MYSUPPLYGOODSACTIVITY_CODE = 2005;
 	private SwipeRefreshLayout swipe_mine;
 	private boolean mUpgrade = false;
@@ -191,6 +191,8 @@ public class MineFragment extends Fragment implements OnClickListener,
 	}
 
 	private void listen() {
+		llt_mine_changjing.setOnClickListener(this);
+		llt_mine_meyaohe.setOnClickListener(this);
 		llt_fm_mine_info.setOnClickListener(this);
 		llt_mine_message.setOnClickListener(this);
 		llt_mine_function.setOnClickListener(this);
@@ -200,11 +202,16 @@ public class MineFragment extends Fragment implements OnClickListener,
 		// fm_mine_product_f.setOnClickListener(this);
 		fm_mine_bussiness.setOnClickListener(this);
 		fm_mine_textinfo.setOnClickListener(this);
+		fm_mine_textcaiwushi.setOnClickListener(this);
 		llt_feedback.setOnClickListener(this);
 		rlt_update.setOnClickListener(this);
 	}
 
 	private void initView(View view) {
+		llt_mine_meyaohe = (LinearLayout) view
+				.findViewById(R.id.llt_mine_meyaohe);
+		llt_mine_changjing = (LinearLayout) view
+				.findViewById(R.id.llt_mine_changjing);
 		circularimageview_fm_mine = (CircularImageView) view
 				.findViewById(R.id.circularimageview_fm_mine);
 		llt_fm_mine_nologin = (LinearLayout) view
@@ -236,6 +243,7 @@ public class MineFragment extends Fragment implements OnClickListener,
 		mine_fm_phone_num = (TextView) view
 				.findViewById(R.id.mine_fm_phone_num);
 		fm_mine_textinfo = (ImageView) view.findViewById(R.id.fm_mine_textinfo);
+		fm_mine_textcaiwushi = (ImageView) view.findViewById(R.id.fm_mine_textcaiwushi);
 		fm_mine_bussiness = (ImageView) view
 				.findViewById(R.id.fm_mine_bussiness);
 		llt_feedback = (LinearLayout) view.findViewById(R.id.llt_feedback);
@@ -261,6 +269,13 @@ public class MineFragment extends Fragment implements OnClickListener,
 		boolean isLogin = ContentUtils.getLoginStatus(maActivity);
 		boolean re = false;
 		switch (arg0.getId()) {
+
+			case R.id.llt_mine_changjing://我的场景
+
+				break;
+			case R.id.llt_mine_meyaohe://我的吆喝
+
+				break;
 			case R.id.llt_fm_mine_info:// 切换店铺
 
 				break;
@@ -317,6 +332,16 @@ public class MineFragment extends Fragment implements OnClickListener,
 
 				}
 				break;
+			case R.id.fm_mine_textcaiwushi://财务室
+
+				re = JumpIntent.jumpLogin_addShop1(isLogin, API.MATERIAL,
+						maActivity);
+				if (re) {
+					startActivityForResult(new Intent(maActivity,
+							FinancialOfficeFragment.class), MINEMSGACAIWUSHI_CODE);
+
+				}
+				break;
 			case R.id.fm_mine_bussiness:// 我的商铺
 				re = JumpIntent.jumpLogin_addShop(isLogin, API.STORE, maActivity);
 				if (re) {
@@ -361,7 +386,9 @@ public class MineFragment extends Fragment implements OnClickListener,
 				case MYSUPPLYGOODSACTIVITY_CODE:// 我的货源回调
 					setDataLogin();
 					break;
-
+				case MINEMSGACAIWUSHI_CODE:// 我的财务室回调
+					setDataLogin();
+					break;
 			}
 		}
 	}

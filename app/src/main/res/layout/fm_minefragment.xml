@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                              android:id="@+id/swipe_mine"
-                                              android:layout_width="match_parent"
-                                              android:layout_height="match_parent">
+<android.support.v4.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/swipe_mine"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -158,7 +159,28 @@
                     android:layout_marginBottom="10dp"
                     android:layout_marginTop="10dp"
                     android:background="@color/colores_news_14"/>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="5dp">
 
+                    <ImageView
+                        android:id="@+id/fm_mine_textcaiwushi"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:scaleType="centerInside"
+                        android:src="@mipmap/icon_financial"/>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="@dimen/line"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/colores_news_14"/>
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -208,7 +230,112 @@
                 android:background="@color/white"
                 android:gravity="center_vertical"
                 android:orientation="vertical">
+                <LinearLayout
+                    android:id="@+id/llt_mine_meyaohe"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="10dp">
 
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:scaleType="centerInside"
+                        android:src="@mipmap/hitt"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:singleLine="true"
+                        android:text="我的吆喝"
+                        android:textColor="@color/colores_news_10"
+                        android:textSize="15sp"/>
+
+                    <TextView
+                        android:id="@+id/mine_fm_tv_teyaohe"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/overl_red_shap"
+                        android:gravity="center"
+                        android:padding="3dp"
+                        android:singleLine="true"
+                        android:text="99+"
+                        android:textColor="@color/white"
+                        android:textSize="10sp"
+                        android:visibility="gone"/>
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:scaleType="centerInside"
+                        android:src="@mipmap/service_new_right"/>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/line"
+                    android:layout_marginLeft="15dp"
+                    android:background="@color/colores_news_14"/>
+                <LinearLayout
+                    android:id="@+id/llt_mine_changjing"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="10dp"
+                    >
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:scaleType="centerInside"
+                        android:src="@mipmap/icon_scene"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:singleLine="true"
+                        android:text="我的场景"
+                        android:textColor="@color/colores_news_10"
+                        android:textSize="15sp"/>
+
+                    <TextView
+                        android:id="@+id/mine_fm_tv_changjing"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/overl_red_shap"
+                        android:gravity="center"
+                        android:padding="3dp"
+                        android:singleLine="true"
+                        android:text="99+"
+                        android:textColor="@color/white"
+                        android:textSize="10sp"
+                        android:visibility="gone"/>
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:scaleType="centerInside"
+                        android:src="@mipmap/service_new_right"/>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/line"
+                    android:layout_marginLeft="15dp"
+                    android:background="@color/colores_news_14"/>
                 <LinearLayout
                     android:id="@+id/llt_mine_message"
                     android:layout_width="match_parent"
