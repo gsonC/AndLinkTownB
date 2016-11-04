@@ -1,15 +1,16 @@
 package com.lianbi.mezone.b.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
-import com.bumptech.glide.Glide;
 import com.lianbi.mezone.b.bean.LeaguesYellBean;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.xizhi.mezone.b.R;
@@ -46,6 +47,7 @@ public class LeaguesYellListActivity extends BaseActivity {
     private ArrayList<LeaguesYellBean> mData = new ArrayList<LeaguesYellBean>();
     private ArrayList<LeaguesYellBean> mDatas = new ArrayList<LeaguesYellBean>();
     private QuickAdapter<LeaguesYellBean> mAdapter;
+    private static final int REQUEST_CODE_RESULT = 1009;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +62,7 @@ public class LeaguesYellListActivity extends BaseActivity {
      */
     private void initData() {
         setPageTitle("吆喝列表");
+        setPageRightText("发起吆喝");
         initAdapter();
         getYellData();
     }
@@ -79,19 +82,34 @@ public class LeaguesYellListActivity extends BaseActivity {
                 TextView iv_leaguesyelllist_phone = helper.getView(R.id.iv_leaguesyelllist_phone);//
                 TextView iv_leaguesyelllist_address = helper.getView(R.id.iv_leaguesyelllist_address);//
 
-                Glide.with(LeaguesYellListActivity.this).load(item.getArea()).error(R.mipmap.default_head).into(iv_leaguesyelllist_icon);
+//                Glide.with(LeaguesYellListActivity.this).load(item.getArea()).error(R.mipmap.default_head).into(iv_leaguesyelllist_icon);
                 iv_leaguesyelllist_name.setText(item.getAuthor());
-                iv_leaguesyelllist_name.setText(item.getAuthor());
-                iv_leaguesyelllist_name.setText(item.getAuthor());
-                iv_leaguesyelllist_name.setText(item.getAuthor());
-                iv_leaguesyelllist_name.setText(item.getAuthor());
-                iv_leaguesyelllist_name.setText(item.getAuthor());
-                iv_leaguesyelllist_name.setText(item.getAuthor());
+                iv_leaguesyelllist_time.setText(item.getMessageType());
+                iv_leaguesyelllist_title.setText(item.getMessageTitle());
+                iv_leaguesyelllist_content.setText(item.getMessageContent());
+                iv_leaguesyelllist_phone.setText(item.getPhone());
+                iv_leaguesyelllist_address.setText(item.getAddress());
+                helper.getView(R.id.iv_leaguesyelllist_readmore).setOnClickListener(
+                        new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View v) {
+                            Intent   intent=new Intent();
+                            intent.setClass(LeaguesYellListActivity.this, LeaguesYellDetailsActivity.class);
+                            startActivity(intent);
+
+                        }
+                });
             }
         };
         actLeaguesyellListview.setAdapter(mAdapter);
     }
-
+    @Override
+    protected void onTitleRightClickTv() {
+        super.onTitleRightClickTv();
+        Intent intent = new Intent(this, LeaguesPublishYellActivity.class);
+        startActivityForResult(intent, REQUEST_CODE_RESULT);
+    }
     /**
      * 查询吆喝和商圈动态
      */
@@ -112,7 +130,7 @@ public class LeaguesYellListActivity extends BaseActivity {
         try {
             okHttpsImp.queryBusinessDynamic(
                     "BD2016052013475900000010",
-                    "area",
+                    "",
                     "310117",
                     "",
                     "",
@@ -120,7 +138,7 @@ public class LeaguesYellListActivity extends BaseActivity {
                     "",
                     "",
                     "",
-                    "",
+                    "310000",
                     "",
                     "",
                     uuid,
@@ -141,7 +159,7 @@ public class LeaguesYellListActivity extends BaseActivity {
                                                     LeaguesYellBean.class);
                                     for(LeaguesYellBean  LeaguesZxy:leaguesyellbeanlist){
                                         if(!LeaguesZxy.getMessageType().equals("MT0000")){
-                                            mData.addAll(leaguesyellbeanlist);
+                                            mData.add(LeaguesZxy);
                                         }
                                     }
                                     updateView(mData);
@@ -166,6 +184,17 @@ public class LeaguesYellListActivity extends BaseActivity {
     protected void updateView(ArrayList<LeaguesYellBean> arrayList) {
         mDatas.clear();
         mDatas.addAll(arrayList);
-        mAdapter.notifyDataSetChanged();
+        mAdapter.replaceAll(mDatas);
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case REQUEST_CODE_RESULT:
+                    getYellData();
+                    break;
+            }
+        }
     }
 }

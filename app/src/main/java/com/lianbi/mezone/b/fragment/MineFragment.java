@@ -27,6 +27,7 @@ import com.lianbi.mezone.b.ui.AboutUsActivity;
 import com.lianbi.mezone.b.ui.ActionProduceActivity;
 import com.lianbi.mezone.b.ui.BaseActivity;
 import com.lianbi.mezone.b.ui.FeedBackActivity;
+import com.lianbi.mezone.b.ui.LeaguesYellListActivity;
 import com.lianbi.mezone.b.ui.LoginActivity;
 import com.lianbi.mezone.b.ui.MainActivity;
 import com.lianbi.mezone.b.ui.MineMsgActivity;
@@ -274,6 +275,7 @@ public class MineFragment extends Fragment implements OnClickListener,
 
 				break;
 			case R.id.llt_mine_meyaohe://我的吆喝
+				startActivity(new Intent(maActivity, LeaguesYellListActivity.class));
 
 				break;
 			case R.id.llt_fm_mine_info:// 切换店铺

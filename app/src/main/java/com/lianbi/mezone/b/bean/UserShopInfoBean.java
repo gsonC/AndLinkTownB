@@ -40,6 +40,14 @@ public class UserShopInfoBean implements Serializable {
 	 */
 	String shopName = " ";
 	/**
+	 * 店铺标志
+	 */
+	String LoGoUrl = "";
+	/**
+	 * 店铺所在省份编号
+	 */
+	String shopRovinceid = "";
+	/**
 	 * 当前店铺负责人名称
 	 */
 	String nikeName = " ";
@@ -57,6 +65,8 @@ public class UserShopInfoBean implements Serializable {
 		personHeadUrl=ContentUtils.getSharePreString(context, Constants.USERTAG, Constants.USERHEADURL);
 		businessId=ContentUtils.getSharePreString(context, Constants.USERTAG, Constants.USERBUSINESSID);
 		shopName=ContentUtils.getSharePreString(context, Constants.USERTAG, Constants.USERSHOPNAME);
+		LoGoUrl=ContentUtils.getSharePreString(context, Constants.USERTAG, Constants.USERSHOPLOGOURL);
+		shopRovinceid=ContentUtils.getSharePreString(context, Constants.USERTAG, Constants.USERSHOPPROVINCEID);
 		phone=ContentUtils.getSharePreString(context, Constants.USERTAG, Constants.BUSINESSPHONE);
 	}
 	public String getIndustry_id() {
@@ -129,5 +139,21 @@ public class UserShopInfoBean implements Serializable {
 
 	public void setBusinessId(String businessId) {
 		this.businessId = businessId;
+	}
+
+	public String getLoGoUrl() {
+		return LoGoUrl;
+	}
+
+	public void setLoGoUrl(String loGoUrl) {
+		LoGoUrl = loGoUrl;
+	}
+
+	public String getShopRovinceid() {
+		return shopRovinceid;
+	}
+
+	public void setShopRovinceid(String shopRovinceid) {
+		this.shopRovinceid = shopRovinceid;
 	}
 }

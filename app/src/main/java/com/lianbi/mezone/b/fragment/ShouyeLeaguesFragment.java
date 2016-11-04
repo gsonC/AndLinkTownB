@@ -267,11 +267,11 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
                                     updateview(mData);
 
                                     mDataZxy.clear();
-                                    for(LeaguesYellBean  LeaguesZxy:leaguesyellbeanlist){
-                                        if(!LeaguesZxy.getMessageType().equals("MT0000")){
-                                            mDataZxy.addAll(leaguesyellbeanlist);
-                                        }
-                                    }
+//                                    for(LeaguesYellBean  LeaguesZxy:leaguesyellbeanlist){
+//                                        if(!LeaguesZxy.getMessageType().equals("MT0000")){
+//                                            mDataZxy.addAll(leaguesyellbeanlist);
+//                                        }
+//                                    }
                                     showdynamic(mDataZxy);
                                 }
 
@@ -294,7 +294,7 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
      * 查询吆喝和商圈动态
      */
     private void getYellAndDynamicData() {
-///amic(String businessId,
+//        (String businessId,
 //                String area,
 //                String businessCircle,
 //                String messageType,
@@ -309,6 +309,7 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
 //                String serNum, String source,
 //                String reqTime,
         try {
+            Log.i("tag","省份代码code--->"+mActivity.shopRovinceid);
             mOkHttpsImp.queryBusinessDynamic(
                     "BD2016052013475900000010",
                     "",
@@ -319,7 +320,7 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
                     "",
                     "",
                     "",
-                    "",
+                    "310000",
                     "",
                     "",
                     mActivity.uuid,
@@ -338,13 +339,17 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
                                     ArrayList<LeaguesYellBean> leaguesyellbeanlist = (ArrayList<LeaguesYellBean>) JSON
                                             .parseArray(reString,
                                                     LeaguesYellBean.class);
-                                    mData.addAll(leaguesyellbeanlist);
+                                    for(LeaguesYellBean  LeaguesZxy:leaguesyellbeanlist){
+                                        if(LeaguesZxy.getMessageType().equals("MT0000")){
+                                            mData.add(LeaguesZxy);
+                                        }
+                                    }
                                     updateview(mData);
 
                                     mDataZxy.clear();
                                     for(LeaguesYellBean  LeaguesZxy:leaguesyellbeanlist){
                                         if(!LeaguesZxy.getMessageType().equals("MT0000")){
-                                            mDataZxy.addAll(leaguesyellbeanlist);
+                                            mDataZxy.add(LeaguesZxy);
                                         }
                                     }
                                     showdynamic(mDataZxy);

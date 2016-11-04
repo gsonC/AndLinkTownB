@@ -18,8 +18,10 @@
             android:id="@+id/act_leaguesdynamiclist_listview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:divider="@null"
             android:listSelector="@color/transparent"
+            android:divider="@color/color_e3e3e3"
+            android:childDivider="@color/color_e3e3e3"
+            android:dividerHeight="1dp"
             android:scrollbars="none">
         </ListView>
     </cn.com.hgh.view.AbPullToRefreshView>

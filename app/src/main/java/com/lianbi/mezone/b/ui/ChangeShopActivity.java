@@ -17,7 +17,6 @@ import com.lianbi.mezone.b.app.Constants;
 import com.lianbi.mezone.b.bean.ChangeShopBean;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.lianbi.mezone.b.impl.MyShopChange;
-import com.lzy.okgo.OkGo;
 import com.xizhi.mezone.b.R;
 
 import org.json.JSONException;
@@ -52,6 +51,9 @@ public class ChangeShopActivity extends BaseActivity {
 	private ImageView img_change_shop_add_empty;
 	private String business_id = "", address;
 	private String shopName = "";
+	private String LoGoUrl = "";
+	private String shopRovinceid = "";
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -112,6 +114,10 @@ public class ChangeShopActivity extends BaseActivity {
 													.getBusiness_id();
 											shopName= datas.get(0)
 													.getBusinessName();
+											LoGoUrl= datas.get(0)
+													.getLogoUrl();
+											shopRovinceid= datas.get(0)
+													.getProvinceId();
 											setBino();
 										} else {
 											for (int i = 0; i < datas.size(); i++) {
@@ -127,6 +133,10 @@ public class ChangeShopActivity extends BaseActivity {
 															.getBusiness_id();
 													shopName= datas.get(i)
 															.getBusinessName();
+													LoGoUrl= datas.get(i)
+															.getLogoUrl();
+													shopRovinceid= datas.get(i)
+															.getProvinceId();
 												}
 											}
 										}
@@ -221,6 +231,8 @@ public class ChangeShopActivity extends BaseActivity {
 					chbx_change_shop.setChecked(isSel);
 					business_id = item.getBusiness_id();
 					shopName=item.getBusinessName();
+					LoGoUrl=item.getLogoUrl();
+					shopRovinceid=item.getProvinceId();
 				} else {
 					chbx_change_shop.setChecked(isSel);
 				}
@@ -347,6 +359,10 @@ public class ChangeShopActivity extends BaseActivity {
 				Constants.USERTAG, Constants.USERBUSINESSID, business_id);
 		ContentUtils.putSharePre(ChangeShopActivity.this,
 				Constants.USERTAG, Constants.USERSHOPNAME, shopName);
+		ContentUtils.putSharePre(ChangeShopActivity.this,
+				Constants.USERTAG, Constants.USERSHOPLOGOURL, LoGoUrl);
+		ContentUtils.putSharePre(ChangeShopActivity.this,
+				Constants.USERTAG, Constants.USERSHOPPROVINCEID,shopRovinceid);
 		userShopInfoBean.setBusinessId(business_id);
 		userShopInfoBean.setShopName(shopName);
 		userShopInfoBean.setIndustry_id(datas.get(position).getIndustry_id());

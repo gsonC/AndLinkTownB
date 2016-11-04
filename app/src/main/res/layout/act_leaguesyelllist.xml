@@ -7,9 +7,8 @@
     <cn.com.hgh.view.AbPullToRefreshView
         android:id="@+id/act_leaguesyell_abpulltorefreshview"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
         android:layout_marginTop="10dp"
-        android:layout_weight="1"
         android:background="@color/white"
         android:orientation="vertical"
         android:visibility="visible">
@@ -18,7 +17,9 @@
             android:id="@+id/act_leaguesyell_listview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:divider="@null"
+            android:divider="@color/color_e3e3e3"
+            android:childDivider="@color/color_e3e3e3"
+            android:dividerHeight="5dp"
             android:listSelector="@color/transparent"
             android:scrollbars="none">
         </ListView>

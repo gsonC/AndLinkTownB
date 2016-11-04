@@ -69,6 +69,8 @@ public class BaseActivity extends FragmentActivity implements OnClickListener {
 	public String BusinessId="";
 	public String ShopName="";
 	public String UserId="";
+	public String LoGoUrl = "";
+	public String shopRovinceid = "";
 	public String reqTime="";
 	public String uuid="";
 	@Override
@@ -103,6 +105,8 @@ public class BaseActivity extends FragmentActivity implements OnClickListener {
 		BusinessId=userShopInfoBean.getBusinessId();
 		ShopName=userShopInfoBean.getShopName();
 		UserId=userShopInfoBean.getUserId();
+		LoGoUrl=userShopInfoBean.getLoGoUrl();
+		shopRovinceid=userShopInfoBean.getShopRovinceid();
 	}
 	@Override
 	protected void onRestart() {
