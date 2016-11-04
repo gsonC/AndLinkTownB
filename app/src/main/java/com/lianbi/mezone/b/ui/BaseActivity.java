@@ -356,6 +356,7 @@ public class BaseActivity extends FragmentActivity implements OnClickListener {
 		tvTitleRight.setText(txt);
 	}
 
+
 	/**
 	 * 设置右边图片隐藏
 	 */
@@ -378,6 +379,9 @@ public class BaseActivity extends FragmentActivity implements OnClickListener {
 	public void setPageRightTextVisibility(int visibility) {
 		tvTitleRight.setVisibility(visibility);
 	}
+	public void setPageLeftTextVisibility(int visibility) {
+		tv_title_left.setVisibility(visibility);
+	}
 	/**
 	 * 得到右边显示文字
 	 *
@@ -393,7 +397,16 @@ public class BaseActivity extends FragmentActivity implements OnClickListener {
 		}
         return  temp;
 	}
-
+	public String   getPageLeftText() {
+		String   temp="";
+		if(tv_title_left.getVisibility()==View.GONE){
+			temp="";
+		}else
+		if(tv_title_left.getVisibility()==View.VISIBLE){
+			temp=tv_title_left.getText().toString();
+		}
+		return  temp;
+	}
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();

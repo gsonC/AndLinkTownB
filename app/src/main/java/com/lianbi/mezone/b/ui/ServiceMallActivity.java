@@ -70,8 +70,8 @@ public class ServiceMallActivity extends BaseActivity {
 		Glide.get(this).clearMemory();
 		initView();
 		initListAdapter();
-		dialog = new HttpDialog(this);
-		dialog.show();
+		//dialog = new HttpDialog(this);
+		//dialog.show();
 		getCandownloadMall();// 获取可供下载服务商城列表
 	}
 	private void  simpleJump(Class activity){
