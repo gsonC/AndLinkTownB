@@ -1,9 +1,11 @@
 package com.lianbi.mezone.b.bean;
 
+import java.io.Serializable;
+
 /**
  * 店铺列表
  */
-public class BusinessListBean {
+public class BusinessListBean implements Serializable {
 
     String  businessId;
     String  businessName;

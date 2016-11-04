@@ -1,9 +1,11 @@
 package com.lianbi.mezone.b.bean;
 
+import java.io.Serializable;
+
 /**
  * 商圈吆喝动态实体类
  */
-public class LeaguesYellBean {
+public class LeaguesYellBean implements Serializable {
 
     String  area;
     String  businessCircle;

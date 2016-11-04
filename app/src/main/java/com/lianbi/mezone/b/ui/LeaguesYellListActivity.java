@@ -71,7 +71,7 @@ public class LeaguesYellListActivity extends BaseActivity {
                 R.layout.item_leaguesyelllist, mDatas) {
 
             @Override
-            protected void convert(BaseAdapterHelper helper, LeaguesYellBean item) {
+            protected void convert(BaseAdapterHelper helper, final LeaguesYellBean item) {
                 ImageView iv_leaguesyelllist_icon = helper.getView(R.id.iv_leaguesyelllist_icon);//
                 TextView iv_leaguesyelllist_name = helper.getView(R.id.iv_leaguesyelllist_name);//
                 TextView iv_leaguesyelllist_time = helper.getView(R.id.iv_leaguesyelllist_time);//
@@ -96,6 +96,7 @@ public class LeaguesYellListActivity extends BaseActivity {
                         public void onClick(View v) {
                             Intent   intent=new Intent();
                             intent.setClass(LeaguesYellListActivity.this, LeaguesYellDetailsActivity.class);
+                            intent.putExtra("leaguesyellbean", item);
                             startActivity(intent);
 
                         }
