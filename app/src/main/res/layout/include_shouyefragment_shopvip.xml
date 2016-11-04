@@ -47,7 +47,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
-                        android:maxLength="4"
+                        android:maxEms="4"
                         android:singleLine="true"
                         android:text="20"
                         android:textColor="@color/color_00b4d9"
@@ -104,9 +104,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
-                        android:maxLength="4"
+                        android:maxEms="4"
                         android:singleLine="true"
-                        android:text="20000000"
+                        android:text="2000"
                         android:textColor="@color/color_00b4d9"
                         android:textSize="33sp"/>
                 </LinearLayout>
@@ -120,13 +120,6 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/line"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:background="@color/color_e3e3e3"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -147,6 +140,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1000"
+                android:singleLine="true"
+                android:maxEms="6"
                 android:textColor="@color/color_00b4d9"
                 android:textSize="29sp"/>
 
@@ -177,6 +172,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1000"
+                android:singleLine="true"
+                android:maxEms="6"
                 android:textColor="@color/color_00b4d9"
                 android:textSize="29sp"/>
 
@@ -240,7 +237,7 @@
         android:background="@color/white"
         android:orientation="horizontal"
         android:paddingBottom="22dp"
-        android:paddingTop="10dp"
+        android:paddingTop="13dp"
         >
 
         <LinearLayout
@@ -256,7 +253,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:ellipsize="end"
-                android:maxLength="6"
+                android:maxEms="6"
                 android:singleLine="true"
                 android:text="20次"
                 android:textColor="@color/color_4b4b4b"
@@ -275,7 +272,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
-                android:maxLength="8"
+                android:maxEms="6"
                 android:paddingTop="3dp"
                 android:singleLine="true"
                 android:text="小虎牙"
@@ -298,7 +295,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:ellipsize="end"
-                android:maxLength="6"
+                android:maxEms="6"
                 android:singleLine="true"
                 android:text="10次"
                 android:textColor="@color/color_4b4b4b"
@@ -318,7 +315,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
-                android:maxLength="8"
+                android:maxEms="6"
                 android:paddingTop="3dp"
                 android:singleLine="true"
                 android:text="乘风雨欲来"
@@ -341,7 +338,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:ellipsize="end"
-                android:maxLength="6"
+                android:maxEms="6"
                 android:singleLine="true"
                 android:text="5次"
                 android:textColor="@color/color_4b4b4b"
@@ -361,7 +358,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
-                android:maxLength="8"
+                android:maxEms="6"
                 android:paddingTop="3dp"
                 android:singleLine="true"
                 android:text="萍水相逢"

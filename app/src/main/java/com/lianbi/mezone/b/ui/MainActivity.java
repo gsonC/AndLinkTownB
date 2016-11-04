@@ -29,8 +29,6 @@ import com.lianbi.mezone.b.fragment.FinancialOfficeFragment;
 import com.lianbi.mezone.b.fragment.GlzxPagerFragment;
 import com.lianbi.mezone.b.fragment.MineFragment;
 import com.lianbi.mezone.b.fragment.ShouYeFragment;
-import com.lianbi.mezone.b.fragment.ShouyeLeaguesFragment;
-import com.lianbi.mezone.b.fragment.ShouyeManagementFragment;
 import com.lianbi.mezone.b.fragment.WisdomManagerFragment;
 import com.lianbi.mezone.b.httpresponse.API;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
@@ -45,7 +43,6 @@ import com.xizhi.mezone.b.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import cn.com.hgh.utils.AbAppUtil;
@@ -85,8 +82,6 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 	 * 店铺位置经纬度
 	 */
 	Double mLongitude, mLatitude;
-	private ShouyeManagementFragment mShouyeManagementFragment;
-	private ShouyeLeaguesFragment mShouyeLeaguesFragment;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -198,7 +193,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 									.parseObject(result.getData(),
 											AppUpDataBean.class);
 							String status = uB.getCoerceModify();
-							if(!uB.getVersion().equals("V"+AbAppUtil.getAppVersionName(MainActivity.this))) {
+							if (!uB.getVersion().equals("V" + AbAppUtil.getAppVersionName(MainActivity.this))) {
 								((MineFragment) fm_mine).setRedDotShow();
 								if (status.equals("Y")) {
 									mustUp = true;
@@ -268,7 +263,6 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 						}
 					});
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -334,220 +328,6 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 
 						}
 
-					});
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * 冻结中金额
-	 */
-	private void getFreezingAmount() {
-		String reqTime = AbDateUtil.getDateTimeNow();
-		String uuid = AbStrUtil.getUUID();
-		try {
-			// 用okHttpsImp.getFreezingAmount替换
-			okHttpsImp.getMyAmount(OkHttpsImp.md5_key, uuid, "app", reqTime,
-					userShopInfoBean.getUserId(),
-
-					new MyResultCallback<String>() {
-
-						@Override
-						public void onResponseResult(Result result) {
-							String reString = result.getData();
-							if (!TextUtils.isEmpty(reString)) {
-								mFreezingAmount = BigDecimal
-										.valueOf(Long.valueOf(result.getData()))
-										.divide(new BigDecimal(100))
-										.doubleValue();
-								// 填充布局
-							}
-							((FinancialOfficeFragment) fm_caiwushi)
-									.setPriceTotal(mFreezingAmount, 5);
-						}
-
-						@Override
-						public void onResponseFailed(String msg) {
-						}
-					});
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * 账户总额
-	 */
-	public void getUserAccount() {
-		String reqTime = AbDateUtil.getDateTimeNow();
-		String uuid = AbStrUtil.getUUID();
-		try {
-			okHttpsImp.getMyAmount(OkHttpsImp.md5_key, uuid, "app", reqTime,
-					userShopInfoBean.getUserId(),
-
-					new MyResultCallback<String>() {
-
-						@Override
-						public void onResponseResult(Result result) {
-							String reString = result.getData();
-							if (!TextUtils.isEmpty(reString)) {
-								mTotalAccount = BigDecimal
-										.valueOf(Long.valueOf(result.getData()))
-										.divide(new BigDecimal(100))
-										.doubleValue();
-								// 填充布局
-							}
-							((FinancialOfficeFragment) fm_caiwushi)
-									.setPriceTotal(mTotalAccount, 0);
-						}
-
-						@Override
-						public void onResponseFailed(String msg) {
-						}
-					});
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * 店铺总额
-	 */
-	public void getShopAccount() {
-		String reqTime = AbDateUtil.getDateTimeNow();
-		String uuid = AbStrUtil.getUUID();
-		try {
-			okHttpsImp.getShopAllIncome(OkHttpsImp.md5_key, uuid, "app",
-					reqTime, userShopInfoBean.getUserId(),
-					userShopInfoBean.getBusinessId(),
-					new MyResultCallback<String>() {
-
-						@Override
-						public void onResponseResult(Result result) {
-							String reString = result.getData();
-							if (!TextUtils.isEmpty(reString)) {
-								mShopAccount = BigDecimal
-										.valueOf(Long.valueOf(result.getData()))
-										.divide(new BigDecimal(100))
-										.doubleValue();
-							}
-							((FinancialOfficeFragment) fm_caiwushi)
-									.setPriceTotal(mShopAccount, 1);
-						}
-
-						@Override
-						public void onResponseFailed(String msg) {
-						}
-					});
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-	}
-
-	/**
-	 * 可用余额
-	 */
-	public void getBalance() {
-		String reqTime = AbDateUtil.getDateTimeNow();
-		String uuid = AbStrUtil.getUUID();
-		try {
-			okHttpsImp.getBalance(OkHttpsImp.md5_key, uuid, "app", reqTime,
-					userShopInfoBean.getUserId(),
-					userShopInfoBean.getBusinessId(),
-
-					new MyResultCallback<String>() {
-
-						@Override
-						public void onResponseResult(Result result) {
-							String resString = result.getData();
-							if (!TextUtils.isEmpty(resString)) {
-
-								mAvailableBalance = BigDecimal
-										.valueOf(Long.valueOf(result.getData()))
-										.divide(new BigDecimal(100))
-										.doubleValue();
-							}
-							((FinancialOfficeFragment) fm_caiwushi)
-									.setPriceTotal(mAvailableBalance, 2);
-						}
-
-						@Override
-						public void onResponseFailed(String msg) {
-						}
-					});
-		} catch (Exception e) {
-
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * 提现中金额
-	 */
-	public void getAmountinCash() {
-		String reqTime = AbDateUtil.getDateTimeNow();
-		String uuid = AbStrUtil.getUUID();
-		try {
-			okHttpsImp.getqueryStoreWithdraw(OkHttpsImp.md5_key,
-					userShopInfoBean.getUserId(),
-					userShopInfoBean.getBusinessId(), "01", uuid, "app",
-					reqTime, new MyResultCallback<String>() {
-
-						@Override
-						public void onResponseResult(Result result) {
-							String reString = result.getData();
-							if (!TextUtils.isEmpty(reString)) {
-								mTakeinMoney = BigDecimal
-										.valueOf(Long.valueOf(result.getData()))
-										.divide(new BigDecimal(100))
-										.doubleValue();
-
-							}
-							((FinancialOfficeFragment) fm_caiwushi)
-									.setPriceTotal(mTakeinMoney, 3);
-						}
-
-						@Override
-						public void onResponseFailed(String msg) {
-
-						}
-					});
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * 店铺今日收入
-	 */
-	public void getShopAccountToday() {
-		String reqTime = AbDateUtil.getDateTimeNow();
-		String uuid = AbStrUtil.getUUID();
-		try {
-			okHttpsImp.getTodayShopIncome(OkHttpsImp.md5_key, uuid, "app",
-					reqTime, userShopInfoBean.getBusinessId(),
-					userShopInfoBean.getUserId(),
-
-					new MyResultCallback<String>() {
-
-						@Override
-						public void onResponseResult(Result result) {
-							String reString = result.getData();
-							if (!TextUtils.isEmpty(reString)) {
-								mShopinComeToday = BigDecimal
-										.valueOf(Long.valueOf(result.getData()))
-										.divide(new BigDecimal(100))
-										.doubleValue();
-							}
-							((FinancialOfficeFragment) fm_caiwushi)
-									.setPriceTotal(mShopinComeToday, 4);
-						}
-
-						@Override
-						public void onResponseFailed(String msg) {
-						}
 					});
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -717,6 +497,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 				break;
 		}
 	}
+
 	public static final int REQUEST_CHANKAN = 12453;
 	private final int OTHERACTIVITY_CODE = 3002;
 	public final int SERVICESHOPACTIVITY_CODE = 30089;
@@ -839,10 +620,10 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 			return;
 		if (position == POSITION0) {
 			curPosition = POSITION0;
-		//	titleShouYe();
-		//	setPageBackVisibility(View.INVISIBLE);
+			//	titleShouYe();
+			//	setPageBackVisibility(View.INVISIBLE);
 			setPageTitleVisibility(View.GONE);
-		//	setPageRightImageVisibility();
+			//	setPageRightImageVisibility();
 			rb_shouye.setChecked(true);
 			fm_funcpage0.setVisibility(View.VISIBLE);
 			fm_funcpage1.setVisibility(View.GONE);
@@ -865,7 +646,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 		} else if (position == POSITION2) {
 			curPosition = POSITION2;
 			setPageTitleVisibility(View.VISIBLE);
-		//	setPageRightTextVisibility(View.GONE);
+			//	setPageRightTextVisibility(View.GONE);
 			setPageTitle("财务室");
 			setPageRightText("明细");
 			tv_title_left.setText("明细");
@@ -896,9 +677,9 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 			fm_funcpage0.setVisibility(View.GONE);
 			fm_funcpage3.setVisibility(View.VISIBLE);
 			fm_funcpage1.setVisibility(View.GONE);
-			if (ContentUtils.getLoginStatus(this)){
+			if (ContentUtils.getLoginStatus(this)) {
 				setPageRightTextVisibility(View.VISIBLE);
-			}else{
+			} else {
 				setPageRightTextVisibility(View.INVISIBLE);
 			}
 		}
@@ -950,7 +731,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 	 * 初始化视图
 	 */
 	private void initView() {
-	//	titleShouYe();
+		//	titleShouYe();
 		fm_funcpage0 = (FrameLayout) findViewById(R.id.fm_funcpage0);
 		fm_funcpage1 = (FrameLayout) findViewById(R.id.fm_funcpage1);
 		fm_funcpage2 = (FrameLayout) findViewById(R.id.fm_funcpage2);
@@ -960,8 +741,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 		rb_caiwushi = (RadioButton) findViewById(R.id.rb_caiwushi);
 		rb_mine = (RadioButton) findViewById(R.id.rb_mine);
 		img_main_red = (ImageView) findViewById(R.id.img_main_red);
-		mShouyeManagementFragment = new ShouyeManagementFragment();
-		mShouyeLeaguesFragment = new ShouyeLeaguesFragment();
+
 	}
 
 	/**
@@ -989,6 +769,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 			setPageTitle("首页");
 		}
 	}
+
 	/**
 	 * 首页title
 	 */
@@ -998,6 +779,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 		tv_title_left.setText("财务室");
 		tv_title_left.setVisibility(View.INVISIBLE);
 	}
+
 	/**
 	 * 返回键时间间隔
 	 */
@@ -1068,16 +850,18 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 
 	/**
 	 * 首页下拉刷新
+	 *
 	 * @param position 代表第几页
 	 */
-	public void SwipeRefreshShouyeData(int position){
-		if(POSITION0 == position){
-			mShouyeManagementFragment.SwipeRefreshData();
-		}else{
+	public void SwipeRefreshShouyeData(int position) {
+		if (POSITION0 == position) {
+			//((ShouyeManagementFragment) mShouyeManagementFragment).SwipeRefreshData();
+		} else {
 
 		}
 
 	}
+
 	/**
 	 * 获取已有的服务商城列表
 	 */
@@ -1099,21 +883,21 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 										.parseArray(reString,
 												ShouyeServiceBean.class);
 
-//								typeUserDownload(mDatas);
+								//								typeUserDownload(mDatas);
 /*
 								ShouyeServiceBean service = new ShouyeServiceBean();
 								service.setDefaultservice(2);
 								service.setAppName("收款");
 								service.setId(99);
 								mDatas.add(0, service);*/
-//
-//								ShouyeServiceBean endservie = new ShouyeServiceBean();
-//								endservie.setDefaultservice(1);
-//								endservie.setAppName("服务商城");
-//								endservie.setId(100);
-//								mDatas.add(mDatas.size(), endservie);
-//								setFill();
-                                Log.i("tag","  "+mDatas.size());
+								//
+								//								ShouyeServiceBean endservie = new ShouyeServiceBean();
+								//								endservie.setDefaultservice(1);
+								//								endservie.setAppName("服务商城");
+								//								endservie.setId(100);
+								//								mDatas.add(mDatas.size(), endservie);
+								//								setFill();
+								Log.i("tag", "  " + mDatas.size());
 								((WisdomManagerFragment) fm_wisdommanage)
 										.getServiceMall(mDatas);
 							}
@@ -1140,6 +924,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 
 		}
 	}
+
 	/**
 	 * 用户已下载服务添加收款和服务商城
 	 */
