@@ -29,7 +29,6 @@ import com.lianbi.mezone.b.fragment.FinancialOfficeFragment;
 import com.lianbi.mezone.b.fragment.GlzxPagerFragment;
 import com.lianbi.mezone.b.fragment.MineFragment;
 import com.lianbi.mezone.b.fragment.ShouYeFragment;
-import com.lianbi.mezone.b.fragment.ShouyeManagementFragment;
 import com.lianbi.mezone.b.fragment.WisdomManagerFragment;
 import com.lianbi.mezone.b.httpresponse.API;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
@@ -130,9 +129,9 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 					try {
 						JSONObject jsonObject = new JSONObject(resString);
 						resString = jsonObject.getString("list");
-
-						ShouyeManagementFragment shouyeManagementFragment = new ShouyeManagementFragment();
-						shouyeManagementFragment.getBannerData(resString);
+                        Log.i("tag","133 MainActivity---->"+resString);
+//						ShouyeManagementFragment shouyeManagementFragment = new ShouyeManagementFragment();
+//						shouyeManagementFragment.getBannerData(resString);
 
 
 
