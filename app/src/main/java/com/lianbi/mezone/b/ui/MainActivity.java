@@ -29,6 +29,7 @@ import com.lianbi.mezone.b.fragment.FinancialOfficeFragment;
 import com.lianbi.mezone.b.fragment.GlzxPagerFragment;
 import com.lianbi.mezone.b.fragment.MineFragment;
 import com.lianbi.mezone.b.fragment.ShouYeFragment;
+import com.lianbi.mezone.b.fragment.ShouyeManagementFragment;
 import com.lianbi.mezone.b.fragment.WisdomManagerFragment;
 import com.lianbi.mezone.b.httpresponse.API;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
@@ -108,6 +109,55 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 		postCID();
 
 		getUpData();
+
+		getShouyeBanner();
+	}
+
+	private void getShouyeBanner() {
+
+		String reqTime = AbDateUtil.getDateTimeNow();
+		String uuid = AbStrUtil.getUUID();
+
+		/**
+		 * 轮播图
+		 */
+		try {
+			okHttpsImp.getAdvert("F1", new MyResultCallback<String>() {
+
+				@Override
+				public void onResponseResult(Result result) {
+					String resString = result.getData();
+					try {
+						JSONObject jsonObject = new JSONObject(resString);
+						resString = jsonObject.getString("list");
+
+						ShouyeManagementFragment shouyeManagementFragment = new ShouyeManagementFragment();
+						shouyeManagementFragment.getBannerData(resString);
+
+
+
+
+
+
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+				}
+
+				@Override
+				public void onResponseFailed(String msg) {
+
+
+				}
+			}, uuid, "app", reqTime);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
 	}
 
 	public void postCID() {
@@ -290,12 +340,6 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 	public void getCount() {
 		if (ContentUtils.getLoginStatus(this)) {// 获取登陆状态
 			if (!TextUtils.isEmpty(userShopInfoBean.getBusinessId())) {// 获取店铺id是否为空
-				//	getUserAccount();// 账户总额
-				//	getShopAccount();// 店铺总额
-				//	getFreezingAmount();//冻结中金额
-				//	getBalance();// 可用余额
-				//	getAmountinCash();// 提现中金额
-				//	getShopAccountToday();// 店铺今日收入
 				getFinancialOfficeAmount();//财务室所有金额
 			}
 		}
@@ -511,7 +555,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 			switch (requestCode) {
 				case REQUEST_CHANKAN:// 登录成功返回
 					// getServiceMall();
-					postClientId();
+					//postClientId();
 					userShopInfoBean.getSharePreString();
 					initCommonParameter();
 					refreshFMData();

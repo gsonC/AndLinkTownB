@@ -3,6 +3,7 @@ package com.lianbi.mezone.b.fragment;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,10 +13,12 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.XAxis;
@@ -31,7 +34,9 @@ import com.github.mikephil.charting.listener.ChartTouchListener;
 import com.github.mikephil.charting.listener.OnChartGestureListener;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ViewPortHandler;
+import com.lianbi.mezone.b.bean.ShouYeBannerBean;
 import com.lianbi.mezone.b.bean.TestBean;
+import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
 import com.lianbi.mezone.b.ui.MainActivity;
 import com.readystatesoftware.viewbadger.BadgeView;
@@ -39,14 +44,22 @@ import com.xizhi.mezone.b.R;
 import com.zbar.lib.animationslib.Techniques;
 import com.zbar.lib.animationslib.YoYo;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 
+import cn.com.hgh.playview.SliderLayout;
+import cn.com.hgh.playview.imp.TextSliderView;
+import cn.com.hgh.utils.AbDateUtil;
 import cn.com.hgh.utils.AbStrUtil;
 import cn.com.hgh.utils.AbViewUtil;
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.DynamicWaveTask;
+import cn.com.hgh.utils.Result;
+import cn.com.hgh.utils.ScreenUtils;
 import cn.com.hgh.view.DynamicWave;
 
 /*
@@ -122,9 +135,147 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 		getData1();
 		getData2();
 		getData3(true);
+		getBanner();
 		setLinten();
 		return view;
+	}
 
+	private void getBanner() {
+		String reqTime = AbDateUtil.getDateTimeNow();
+		String uuid = AbStrUtil.getUUID();
+
+		/**
+		 * 轮播图
+		 */
+		try {
+			mOkHttpsImp.getAdvert("F1", new MyResultCallback<String>() {
+
+				@Override
+				public void onResponseResult(Result result) {
+					mDemoSlider.removeAllSliders();
+					String resString = result.getData();
+					try {
+						JSONObject jsonObject = new JSONObject(resString);
+						resString = jsonObject.getString("list");
+
+						ades_ImageEs = (ArrayList<ShouYeBannerBean>) JSON
+								.parseArray(resString,
+										ShouYeBannerBean.class);
+
+						//getBannerData(resString);
+
+						/*if (ades_ImageEs != null && ades_ImageEs.size() > 0) {
+							for (int i = 0; i < ades_ImageEs.size(); i++) {
+								TextSliderView textSliderView = new TextSliderView(
+										mActivity, i);
+								textSliderView
+										.image(ades_ImageEs.get(i).getImageUrl())
+										.error(R.mipmap.adshouye);
+								//textSliderView
+								//		.setOnSliderClickListener(ShouYeFragment.this);
+								mDemoSlider.addSlider(textSliderView);
+							}
+						} else {
+							for (int i = 0; i < 3; i++) {
+								TextSliderView textSliderView = new TextSliderView(
+										mActivity, i);
+								textSliderView.image(R.mipmap.adshouye);
+								//textSliderView
+								//		.setOnSliderClickListener(ShouYeFragment.this);
+								mDemoSlider.addSlider(textSliderView);
+							}
+						}
+						mDemoSlider
+								.setPresetIndicatorV(SliderLayout.PresetIndicators.Center_Bottom);
+						ad_siderlayout_progressBar.setVisibility(View.GONE);
+						mDemoSlider.setVisibility(View.VISIBLE);*/
+
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+				}
+
+				@Override
+				public void onResponseFailed(String msg) {
+					mDemoSlider.removeAllSliders();
+					for (int i = 0; i < 3; i++) {
+						TextSliderView textSliderView = new TextSliderView(
+								mActivity, i);
+						textSliderView.image(R.mipmap.adshouye);
+						//textSliderView
+						//		.setOnSliderClickListener(ShouYeFragment.this);
+						mDemoSlider.addSlider(textSliderView);
+					}
+					mDemoSlider
+							.setPresetIndicatorV(SliderLayout.PresetIndicators.Center_Bottom);
+					ad_siderlayout_progressBar.setVisibility(View.GONE);
+					mDemoSlider.setVisibility(View.VISIBLE);
+
+				}
+			}, uuid, "app", reqTime);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	private ProgressBar ad_siderlayout_progressBar;
+	private SliderLayout mDemoSlider;
+	private LinearLayout ad_llt;
+	private ArrayList<ShouYeBannerBean> ades_ImageEs = new ArrayList<>();
+
+	private void initBanner(View view){
+		ad_siderlayout_progressBar = (ProgressBar) view.findViewById(R.id.adeslltview_siderlayout_progressBar);
+		ad_siderlayout_progressBar.setVisibility(View.GONE);
+		mDemoSlider = (SliderLayout) view.findViewById(R.id.adeslltview_siderlayout);
+		ad_llt = (LinearLayout) view.findViewById(R.id.adeslltview_llt);
+		mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Default);
+		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+				LinearLayout.LayoutParams.MATCH_PARENT,
+				ScreenUtils.getScreenWidth(mActivity) / 4);
+		ad_llt.setLayoutParams(params);
+	}
+
+
+	public void getBannerData(String banner){
+		System.out.println("广告-------"+banner);
+		ArrayList<ShouYeBannerBean> ades_ImageEs = (ArrayList<ShouYeBannerBean>) JSON
+				.parseArray(banner,
+						ShouYeBannerBean.class);
+		System.out.println(ades_ImageEs.size());
+		if (ades_ImageEs.size() > 0) {
+			System.out.println("进入-----");
+			for (int i = 0; i < ades_ImageEs.size(); i++) {
+
+				TextSliderView textSliderView = new TextSliderView(
+						mActivity, i);
+				textSliderView
+						.image(ades_ImageEs.get(i).getImageUrl())
+						.error(R.mipmap.adshouye);
+				//textSliderView
+				//		.setOnSliderClickListener(ShouYeFragment.this);
+				mDemoSlider.addSlider(textSliderView);
+			}
+		} else {
+			System.out.println("进入+++");
+			for (int i = 0; i < 3; i++) {
+				System.out.println("+++++++++++++++");
+				TextSliderView textSliderView = new TextSliderView(
+						mActivity, i);
+				textSliderView.image(R.mipmap.adshouye);
+				//textSliderView
+				//		.setOnSliderClickListener(ShouYeFragment.this);
+				mDemoSlider.addSlider(textSliderView);
+			}
+		}
+		System.out.println("---------------");
+		mDemoSlider
+				.setPresetIndicatorV(SliderLayout.PresetIndicators.Center_Bottom);
+		ad_siderlayout_progressBar.setVisibility(View.GONE);
+		mDemoSlider.setVisibility(View.VISIBLE);
 	}
 
 	/**
@@ -288,6 +439,8 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 
 	private void intView(View view) {
 
+		initBanner(view);
+
 		//到店服务
 		mTv_include_title = (TextView) view.findViewById(R.id.ind_shouyemanagement_inshop).findViewById(R.id.tv_include_title);//include到店服务title
 		view.findViewById(R.id.ind_shouyemanagement_inshop).findViewById(R.id.tv_include_more).setVisibility(View.INVISIBLE);//include到店服务 更多隐藏
@@ -392,11 +545,20 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 		mLlt_shouyemanagement_comsum.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				System.out.println("点击");
-				ContentUtils.showMsg(mActivity, "点击");
-				rope = YoYo.with(Techniques.FlipInY).duration(1000)
+				rope = YoYo.with(Techniques.ZoomOutLeft).duration(1000)
 
 						.playOn(mLlt_shouyemanagement_comsum);
+
+				new Handler().postDelayed(new Runnable() {
+
+					@Override
+					public void run() {
+						rope = YoYo.with(Techniques.ZoomInRight).duration(1000)
+
+								.playOn(mLlt_shouyemanagement_comsum);
+					}
+				}, 1000);
+
 			}
 		});
 

@@ -46,9 +46,19 @@
                 android:text="商圈联盟"/>
         </cn.com.hgh.view.SegmentedGroup>
 
+        <ImageView
+            android:id="@+id/img_shouye_cheques"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_marginRight="8dp"
+            android:layout_alignParentRight="true"
+            android:scaleType="centerInside"
+            android:src="@mipmap/icon_shouyerecqr"
+            />
+
     </RelativeLayout>
 
-    <include   layout="@layout/adeslltview"/>
+    <include layout="@layout/adeslltview"/>
 
 
     <android.support.v4.view.ViewPager

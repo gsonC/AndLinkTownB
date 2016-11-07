@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
@@ -68,6 +69,7 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 	private RadioButton mRbt_shouye_mag;
 	private RadioButton mRbt_shouye_union;
 	private SegmentedGroup mSeg;
+	private ImageView mImg_shouye_cheques;
 
 	/**
 	 * 刷新fm数据
@@ -108,6 +110,7 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 		mSeg = (SegmentedGroup) view.findViewById(R.id.seg);
 		mRbt_shouye_mag = (RadioButton) view.findViewById(R.id.rbt_shouye_mag);
 		mRbt_shouye_union = (RadioButton) view.findViewById(R.id.rbt_shouye_union);
+		mImg_shouye_cheques = (ImageView) view.findViewById(R.id.img_shouye_cheques);
 		mRbt_shouye_mag.setChecked(true);
 		pager = (ViewPager) view.findViewById(R.id.pager_fm_shouye);
 		pager.setAdapter(new MyAdapter(mFragmentManager));
@@ -130,6 +133,12 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 	}
 
 	private void listen() {
+		mImg_shouye_cheques.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				isAgreeAgreement();
+			}
+		});
 		pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 			@Override
 			public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -224,7 +233,6 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 								.setPresetIndicatorV(SliderLayout.PresetIndicators.Center_Bottom);
 						ad_siderlayout_progressBar.setVisibility(View.GONE);
 						mDemoSlider.setVisibility(View.VISIBLE);
-
 					} catch (JSONException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
