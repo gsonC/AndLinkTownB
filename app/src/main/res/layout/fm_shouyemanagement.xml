@@ -13,6 +13,8 @@
         android:orientation="vertical"
         >
 
+        <include layout="@layout/adeslltview"/>
+
         <include
             android:id="@+id/ind_shouyemanagement_inshop"
             layout="@layout/include_shouyestrip"
