@@ -27,6 +27,7 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
 import com.alibaba.fastjson.JSON;
+import com.bumptech.glide.Glide;
 import com.lianbi.mezone.b.bean.MemberInfoBean;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
@@ -90,7 +91,7 @@ public class MembersListActivity extends BaseActivity {
 		setLisenter();
 		initAdapter();
 		initGetIntent();
-		getMembersList(true, "",typeID);
+		getMembersList(true);
 	}
     private   void  initGetIntent(){
 		String typeID=getIntent().getStringExtra("typeId");
@@ -110,7 +111,7 @@ public class MembersListActivity extends BaseActivity {
 		super.onResume();
 	//	mAct_member_list_edit.setText("");
 		mDrawableinitial.setBounds(0, 0, mDrawableinitial.getMinimumWidth(), mDrawableinitial.getMinimumHeight());
-		mTvIntegral.setCompoundDrawables(null, null, mDrawableinitial, null);
+		//mTvIntegral.setCompoundDrawables(null, null, mDrawableinitial, null);
 	}
 
 	private void initAdapter() {
@@ -119,29 +120,30 @@ public class MembersListActivity extends BaseActivity {
 
 			@Override
 			protected void convert(BaseAdapterHelper helper, MemberInfoBean item) {
-				TextView tv_mb_phone = helper.getView(R.id.tv_mb_phone);//电话
-				TextView tv_mb_category = helper.getView(R.id.tv_mb_category);//类别
-				TextView tv_mb_source = helper.getView(R.id.tv_mb_source);//来源
-				TextView tv_mb_label = helper.getView(R.id.tv_mb_label);//标签
-				TextView tv_mb_integral = helper.getView(R.id.tv_mb_integral);//积分
-				ScreenUtils.textAdaptationOn720(tv_mb_phone, MembersListActivity.this, 24);//本周新增会员
+				ImageView tv_mb_photo = helper.getView(R.id.tv_mb_photo);//头像
+
+				TextView tv_mb_nickname = helper.getView(R.id.tv_mb_nickname);//昵称
+				TextView tv_mb_vipType = helper.getView(R.id.tv_mb_vipType);//类别
+				TextView tv_mb_vipPhone = helper.getView(R.id.tv_mb_vipPhone);//手机号
+				/*ScreenUtils.textAdaptationOn720(tv_mb_phone, MembersListActivity.this, 24);//本周新增会员
 				ScreenUtils.textAdaptationOn720(tv_mb_category, MembersListActivity.this, 24);//本周新增会员
 				ScreenUtils.textAdaptationOn720(tv_mb_source, MembersListActivity.this, 24);//本周新增会员
 				ScreenUtils.textAdaptationOn720(tv_mb_label, MembersListActivity.this, 24);//本周新增会员
-				ScreenUtils.textAdaptationOn720(tv_mb_integral, MembersListActivity.this, 24);//本周新增会员
-				tv_mb_phone.setText(item.getVipPhone());
+				ScreenUtils.textAdaptationOn720(tv_mb_integral, MembersListActivity.this, 24);//本周新增会员*/
+				Glide.with(MembersListActivity.this).load(item.getVipPhoto()).error(R.mipmap.default_head).into(tv_mb_photo);
+				tv_mb_nickname.setText(item.getNickName());
 				if(!AbStrUtil.isEmpty(item.getVipType())){
-					tv_mb_category.setText(item.getVipType());
+					tv_mb_vipType.setText(item.getVipType());
 				}else{
-					tv_mb_category.setText("普通会员");
+					tv_mb_vipType.setText("普通会员");
 				}
-				tv_mb_source.setText(item.getVipSource());
-				if(!AbStrUtil.isEmpty(item.getLabelName())){
-					tv_mb_label.setText(item.getLabelName());
+				tv_mb_vipPhone.setText(item.getVipPhone());
+				/*if(!AbStrUtil.isEmpty(item.getLabelName())){
+					tv_mb_label.setText(item.getVipPhone());
 				}else{
 					tv_mb_label.setText("无");
 				}
-				tv_mb_integral.setText(item.getVipIntegral() + "");
+				tv_mb_integral.setText(item.getVipIntegral() + "");*/
 
 			}
 		};
@@ -160,12 +162,12 @@ public class MembersListActivity extends BaseActivity {
 		mTvMembercategory = (TextView) findViewById(R.id.tv_membercategory);//类别
 		mTvMembersource = (TextView) findViewById(R.id.tv_membersource);//来源
 		mTvMemberlable = (TextView) findViewById(R.id.tv_memberlable);//标签
-		mTvIntegral = (TextView) findViewById(R.id.tv_integral);//积分
+		//mTvIntegral = (TextView) findViewById(R.id.tv_integral);//积分
 		mAct_addmembers_abpulltorefreshview = (AbPullToRefreshView) findViewById(R.id.act_addmembers_abpulltorefreshview);//AbPullToRefreshView
 		mAct_addmembers_listview = (ListView) findViewById(R.id.act_addmembers_listview);//列表
 		mTv_addnewmember = (TextView) findViewById(R.id.tv_addnewmember);//新增会员
 		mImg_ememberslist_empty = (ImageView) findViewById(R.id.img_ememberslist_empty);//图片
-		mLltIntegral = (LinearLayout) findViewById(R.id.llt_integral);//积分排序
+	//	mLltIntegral = (LinearLayout) findViewById(R.id.llt_integral);//积分排序
 		viewAdapter();
 		mDrawableDowm = ContextCompat.getDrawable(this, R.mipmap.tma_down);
 		mDrawableUp = ContextCompat.getDrawable(this, R.mipmap.tma_up);
@@ -182,13 +184,13 @@ public class MembersListActivity extends BaseActivity {
 		ScreenUtils.textAdaptationOn720(mTvMembercategory, this, 32);//类别
 		ScreenUtils.textAdaptationOn720(mTvMembersource, this, 32);//来源
 		ScreenUtils.textAdaptationOn720(mTvMemberlable, this, 32);//标签
-		ScreenUtils.textAdaptationOn720(mTvIntegral, this, 32);//积分
+		//ScreenUtils.textAdaptationOn720(mTvIntegral, this, 32);//积分
 	}
 
 	/**
 	 * 获取会员列表
 	 */
-	private void getMembersList(final boolean isResh, final String paramLike,final String typeId) {
+	private void getMembersList(final boolean isResh) {
 
 		if (isResh) {
 			page = 1;
@@ -200,17 +202,20 @@ public class MembersListActivity extends BaseActivity {
 
 		try {
 			okHttpsImp.getMembersList(uuid, "app", reqTime, OkHttpsImp.md5_key,
-					userShopInfoBean.getBusinessId(), paramLike,typeId, page + "", 20 + "", new MyResultCallback<String>() {
+					userShopInfoBean.getBusinessId(), page + "", 20 + "", new MyResultCallback<String>() {
 
 						@Override
 						public void onResponseResult(Result result) {
 							page++;
-							String reString = result.getData();
+							String reString= result.getData();
+							System.out.println("reString209"+reString);
 							if (!AbStrUtil.isEmpty(reString)) {
 
 								try {
 									JSONObject jsonObject = new JSONObject(reString);
-									reString = jsonObject.getString("businessVipList");
+									reString = jsonObject.getString("businessVipWXList");
+									System.out.println("reString215"+reString);
+
 									mTv_newaddmember.setText("本周新增会员:"+jsonObject.getInt("vipWeekCount"));
 									mTv_cumulativemember.setText("累计会员数:"+jsonObject.getInt("vipCount"));
 									ArrayList<MemberInfoBean> mDatasL = (ArrayList<MemberInfoBean>) JSON
@@ -309,9 +314,9 @@ public class MembersListActivity extends BaseActivity {
 					@Override
 					public void onHeaderRefresh(AbPullToRefreshView view) {
 						mDrawableinitial.setBounds(0, 0, mDrawableinitial.getMinimumWidth(), mDrawableinitial.getMinimumHeight());
-						mTvIntegral.setCompoundDrawables(null, null, mDrawableinitial, null);
+					//	mTvIntegral.setCompoundDrawables(null, null, mDrawableinitial, null);
 						String params = mAct_member_list_edit.getText().toString().trim();
-						getMembersList(true, params,typeID);
+						getMembersList(true);
 					}
 
 				});
@@ -321,9 +326,9 @@ public class MembersListActivity extends BaseActivity {
 					@Override
 					public void onFooterLoad(AbPullToRefreshView view) {
 						mDrawableinitial.setBounds(0, 0, mDrawableinitial.getMinimumWidth(), mDrawableinitial.getMinimumHeight());
-						mTvIntegral.setCompoundDrawables(null, null, mDrawableinitial, null);
+					//	mTvIntegral.setCompoundDrawables(null, null, mDrawableinitial, null);
 						String params = mAct_member_list_edit.getText().toString().trim();
-						getMembersList(false, params,typeID);
+						getMembersList(false);
 					}
 				});
 
@@ -346,7 +351,7 @@ public class MembersListActivity extends BaseActivity {
 				});
 
 		mTv_addnewmember.setOnClickListener(this);
-		mLltIntegral.setOnClickListener(this);
+		//.setOnClickListener(this);
 	}
 
 	@Override
@@ -357,12 +362,12 @@ public class MembersListActivity extends BaseActivity {
 				if (isSort) {
 					isSort = false;
 					mDrawableDowm.setBounds(0, 0, mDrawableDowm.getMinimumWidth(), mDrawableDowm.getMinimumHeight());
-					mTvIntegral.setCompoundDrawables(null, null, mDrawableDowm, null);
+					//mTvIntegral.setCompoundDrawables(null, null, mDrawableDowm, null);
 					startSort(isSort);
 				} else {
 					isSort = true;
 					mDrawableUp.setBounds(0, 0, mDrawableUp.getMinimumWidth(), mDrawableUp.getMinimumHeight());
-					mTvIntegral.setCompoundDrawables(null, null, mDrawableUp, null);
+					//mTvIntegral.setCompoundDrawables(null, null, mDrawableUp, null);
 					startSort(isSort);
 				}
 				break;
@@ -405,10 +410,10 @@ public class MembersListActivity extends BaseActivity {
 		if (resultCode == RESULT_OK) {
 			switch (requestCode) {
 				case REQUEST_ADDMEMBER://添加会员返回
-					getMembersList(true, "","");
+					getMembersList(true);
 					break;
 				case REQUEST_CHANGMEMBERINFO://修改会员信息返回
-					getMembersList(true, "","");
+					getMembersList(true);
 					break;
 			}
 		}
@@ -419,7 +424,7 @@ public class MembersListActivity extends BaseActivity {
 	 */
 	private void filterData(String filterStr) {
 	//	if (!AbStrUtil.isEmpty(filterStr)) {
-			getMembersList(true, filterStr,typeID);
+			getMembersList(true);
 	//	}else{
 	//		System.out.println("SourceDateList"+SourceDateList.size());
 	//		mAdapter.replaceAll(SourceDateList);

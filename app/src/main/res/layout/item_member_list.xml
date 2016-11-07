@@ -11,37 +11,39 @@
         android:orientation="horizontal"
         android:padding="10dp">
 
-        <TextView
-            android:id="@+id/tv_mb_phone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:layout_weight="1"
+            android:id="@+id/tv_mb_photo"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:gravity="center"
-            android:singleLine="true"
             android:textColor="@color/colores_news_17"
             />
 
+
+
         <TextView
-            android:id="@+id/tv_mb_category"
+            android:id="@+id/tv_mb_nickname"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
             android:singleLine="true"
             android:textColor="@color/colores_news_17"
+            android:textSize="14sp"
             />
-
         <TextView
-            android:id="@+id/tv_mb_source"
+            android:id="@+id/tv_mb_vipType"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
             android:singleLine="true"
             android:textColor="@color/colores_news_17"
+            android:textSize="14sp"
             />
-
         <TextView
-            android:id="@+id/tv_mb_label"
+            android:id="@+id/tv_mb_vipPhone"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -50,16 +52,8 @@
             android:maxEms="3"
             android:singleLine="true"
             android:textColor="@color/colores_news_17"
+            android:textSize="14sp"
             />
-
-        <TextView
-            android:id="@+id/tv_mb_integral"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:singleLine="true"
-            android:textColor="@color/colores_news_17"/>
 
         <ImageView
             android:layout_width="12dp"

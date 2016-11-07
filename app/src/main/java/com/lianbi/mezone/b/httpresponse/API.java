@@ -624,7 +624,7 @@ public class API {
 	/**
 	 * 会员列表
 	 */
-	public static final String MEMBERSLIST = "businessVIP/vipList.do";
+	public static final String MEMBERSLIST = "businessVIP/vipWXList.do";
 	/**
 	 * 添加会员和修改会员信息
 	 */

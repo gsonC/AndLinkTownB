@@ -39,7 +39,8 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="本周新增会员:0"
-            android:textColor="@color/colores_news_11"/>
+            android:textColor="@color/colores_news_11"
+            />
 
         <TextView
             android:id="@+id/tv_cumulativemember"
@@ -71,8 +72,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="会员电话"
-            android:textColor="@color/colores_news_10"
+            android:text="头像"
+            android:textColor="@color/colores_news_19"
+            android:textSize="14sp"
             />
 
         <TextView
@@ -81,8 +83,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="类别"
-            android:textColor="@color/colores_news_10"
+            android:text="昵称"
+            android:textColor="@color/colores_news_19"
+            android:textSize="14sp"
             />
 
         <TextView
@@ -91,8 +94,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="来源"
-            android:textColor="@color/colores_news_10"
+            android:text="类别"
+            android:textColor="@color/colores_news_19"
+            android:textSize="14sp"
             />
 
         <TextView
@@ -101,26 +105,12 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="标签"
-            android:textColor="@color/colores_news_10"
+            android:text="手机号"
+            android:textColor="@color/colores_news_19"
+            android:textSize="14sp"
             />
 
-        <LinearLayout
-            android:id="@+id/llt_integral"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center">
 
-            <TextView
-                android:id="@+id/tv_integral"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawableRight="@mipmap/tma_initialdown"
-                android:gravity="center"
-                android:text="积分"
-                android:textColor="@color/colores_news_10"/>
-        </LinearLayout>
 
     </LinearLayout>
 

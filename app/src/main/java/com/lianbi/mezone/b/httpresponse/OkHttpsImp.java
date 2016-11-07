@@ -2405,16 +2405,15 @@ public enum OkHttpsImp {
 	/**
 	 * 获取会员列表
 	 */
-	public void getMembersList(String serNum, String source, String reqTime, String md5_key, String businessId, String paramLike, String typeId, String pageNo, String pageSize, MyResultCallback<String> myResultCallback) throws Exception {
+	public void getMembersList(String serNum, String source, String reqTime, String md5_key, String businessId,
+							  String pageNo, String pageSize, MyResultCallback<String> myResultCallback) throws Exception {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("businessId", businessId);
 		params.put("pageNo", pageNo);
 		params.put("pageSize", pageSize);
-		params.put("paramLike", paramLike);
 		params.put("reqTime", reqTime);
 		params.put("serNum", serNum);
 		params.put("source", source);
-		params.put("typeId", typeId);
 		String sign = getSign(md5_key, params);
 		params.put("sign", sign);
 		String url = getAbsoluteUrl(API.MEMBERSLIST);

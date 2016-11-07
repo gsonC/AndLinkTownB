@@ -254,7 +254,7 @@ public class MineFragment extends Fragment implements OnClickListener,
 		// .findViewById(R.id.fm_mine_product_f);
 		String vName = AbAppUtil.getAppVersionName(maActivity);
 		tv_mine_vision_fm.setText(vName);
-		swipe_mine = (SwipeRefreshLayout) view.findViewById(R.id.swipe_mine);
+		swipe_mine= (SwipeRefreshLayout) view.findViewById(R.id.swipe_mine);
 		swipe_mine.setColorSchemeResources(R.color.colores_news_01, R.color.black);
 		swipe_mine.setOnRefreshListener(new OnRefreshListener() {
 
