@@ -726,7 +726,7 @@ public class API {
 	/* 查询商圈动态 */
 	public static final String QUERY_LEAGUES_DYNAMIC = "business/queryBusinessDynamic.do";
 	/* 商圈统计 */
-	public static final String QUERY_LEAGUES_DISTRICTCOUNT = "businessVIP/districtCount.do";
+	public static final String QUERY_LEAGUES_DISTRICTCOUNT = "business/districtCount.do";
 	/* 店铺列表 */
 	public static final String QUERY_LEAGUES_BUSINESSLIST = "business/getBusinessList.do";
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

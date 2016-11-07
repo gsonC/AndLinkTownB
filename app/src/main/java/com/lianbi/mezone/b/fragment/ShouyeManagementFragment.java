@@ -51,6 +51,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 
+import cn.com.hgh.playview.BaseSliderView;
+import cn.com.hgh.playview.BaseSliderView.OnSliderClickListener;
 import cn.com.hgh.playview.SliderLayout;
 import cn.com.hgh.playview.imp.TextSliderView;
 import cn.com.hgh.utils.AbDateUtil;
@@ -71,7 +73,9 @@ import cn.com.hgh.view.DynamicWave;
  * @更新时间   $Date$
  * @更新描述
  */
-public class ShouyeManagementFragment extends Fragment implements OnClickListener, RadioGroup.OnCheckedChangeListener, OnChartGestureListener, OnChartValueSelectedListener {
+public class ShouyeManagementFragment extends Fragment implements OnClickListener, RadioGroup.OnCheckedChangeListener, OnChartGestureListener,
+		OnSliderClickListener,
+		OnChartValueSelectedListener {
 
 	private MainActivity mActivity;
 	private OkHttpsImp mOkHttpsImp;
@@ -135,7 +139,7 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 		getData1();
 		getData2();
 		getData3(true);
-		getBanner();
+//		getBanner();
 		setLinten();
 		return view;
 	}
@@ -241,43 +245,35 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 
 
 	public void getBannerData(String banner){
-		System.out.println("广告-------"+banner);
-		ArrayList<ShouYeBannerBean> ades_ImageEs = (ArrayList<ShouYeBannerBean>) JSON
-				.parseArray(banner,
-						ShouYeBannerBean.class);
-		System.out.println(ades_ImageEs.size());
-		if (ades_ImageEs.size() > 0) {
-			System.out.println("进入-----");
-			for (int i = 0; i < ades_ImageEs.size(); i++) {
-
-				TextSliderView textSliderView = new TextSliderView(
-						mActivity, i);
-				textSliderView
-						.image(ades_ImageEs.get(i).getImageUrl())
-						.error(R.mipmap.adshouye);
-				//textSliderView
-				//		.setOnSliderClickListener(ShouYeFragment.this);
-				mDemoSlider.addSlider(textSliderView);
+		ades_ImageEs = (ArrayList<ShouYeBannerBean>) JSON
+								.parseArray(banner,
+										ShouYeBannerBean.class);
+			if (ades_ImageEs != null && ades_ImageEs.size() > 0) {
+							for (int i = 0; i < ades_ImageEs.size(); i++) {
+								TextSliderView textSliderView = new TextSliderView(
+										mActivity, i);
+								textSliderView
+										.image(ades_ImageEs.get(i).getImageUrl())
+										.error(R.mipmap.adshouye);
+								textSliderView
+										.setOnSliderClickListener(ShouyeManagementFragment.this);
+								mDemoSlider.addSlider(textSliderView);
+							}
+			} else {
+							for (int i = 0; i < 3; i++) {
+								TextSliderView textSliderView = new TextSliderView(
+										mActivity, i);
+								textSliderView.image(R.mipmap.adshouye);
+								textSliderView
+										.setOnSliderClickListener(ShouyeManagementFragment.this);
+								mDemoSlider.addSlider(textSliderView);
+							}
 			}
-		} else {
-			System.out.println("进入+++");
-			for (int i = 0; i < 3; i++) {
-				System.out.println("+++++++++++++++");
-				TextSliderView textSliderView = new TextSliderView(
-						mActivity, i);
-				textSliderView.image(R.mipmap.adshouye);
-				//textSliderView
-				//		.setOnSliderClickListener(ShouYeFragment.this);
-				mDemoSlider.addSlider(textSliderView);
-			}
-		}
-		System.out.println("---------------");
-		mDemoSlider
-				.setPresetIndicatorV(SliderLayout.PresetIndicators.Center_Bottom);
-		ad_siderlayout_progressBar.setVisibility(View.GONE);
-		mDemoSlider.setVisibility(View.VISIBLE);
+			mDemoSlider
+								.setPresetIndicatorV(SliderLayout.PresetIndicators.Center_Bottom);
+			ad_siderlayout_progressBar.setVisibility(View.GONE);
+			mDemoSlider.setVisibility(View.VISIBLE);
 	}
-
 	/**
 	 * 销量排行
 	 */
@@ -1050,6 +1046,12 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 	@Override
 	public void onNothingSelected() {
 
+	}
+	/**
+	 * banner点击
+	 */
+	@Override
+	public void onSliderClick(BaseSliderView slider) {
 	}
 
 

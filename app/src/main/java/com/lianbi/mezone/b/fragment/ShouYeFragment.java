@@ -18,7 +18,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 
-import com.alibaba.fastjson.JSON;
 import com.lianbi.mezone.b.bean.ShouYeBannerBean;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
@@ -37,7 +36,6 @@ import java.util.ArrayList;
 import cn.com.hgh.playview.BaseSliderView;
 import cn.com.hgh.playview.BaseSliderView.OnSliderClickListener;
 import cn.com.hgh.playview.SliderLayout;
-import cn.com.hgh.playview.imp.TextSliderView;
 import cn.com.hgh.utils.AbDateUtil;
 import cn.com.hgh.utils.AbStrUtil;
 import cn.com.hgh.utils.ContentUtils;
@@ -70,7 +68,6 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 	private RadioButton mRbt_shouye_union;
 	private SegmentedGroup mSeg;
 	private ImageView mImg_shouye_cheques;
-
 	/**
 	 * 刷新fm数据
 	 */
@@ -100,10 +97,15 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 		okHttpsImp = OkHttpsImp.SINGLEOKHTTPSIMP.newInstance(mActivity);
 		initView(view);
 		listen();
-		getAadver();
 		return view;
 	}
 
+	@Override
+	public void onStart() {
+		super.onStart();
+		getAadver();
+
+	}
 
 	private void initView(View view) {
 		mFragmentManager = getFragmentManager();
@@ -130,6 +132,7 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 				LinearLayout.LayoutParams.MATCH_PARENT,
 				ScreenUtils.getScreenWidth(mActivity) / 4);
 		ad_llt.setLayoutParams(params);
+		ad_llt.setVisibility(View.GONE);
 	}
 
 	private void listen() {
@@ -202,38 +205,43 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 					try {
 						JSONObject jsonObject = new JSONObject(resString);
 						resString = jsonObject.getString("list");
-
-						ades_ImageEs = (ArrayList<ShouYeBannerBean>) JSON
-								.parseArray(resString,
-										ShouYeBannerBean.class);
-						isAdSucceedRequest = true;
-
-						if (ades_ImageEs != null && ades_ImageEs.size() > 0) {
-							for (int i = 0; i < ades_ImageEs.size(); i++) {
-								TextSliderView textSliderView = new TextSliderView(
-										mActivity, i);
-								textSliderView
-										.image(ades_ImageEs.get(i).getImageUrl())
-										.error(R.mipmap.adshouye);
-								textSliderView
-										.setOnSliderClickListener(ShouYeFragment.this);
-								mDemoSlider.addSlider(textSliderView);
-							}
-						} else {
-							for (int i = 0; i < 3; i++) {
-								TextSliderView textSliderView = new TextSliderView(
-										mActivity, i);
-								textSliderView.image(R.mipmap.adshouye);
-								textSliderView
-										.setOnSliderClickListener(ShouYeFragment.this);
-								mDemoSlider.addSlider(textSliderView);
-							}
+						if (mShouyeManagementFragment != null) {
+							mShouyeManagementFragment.getBannerData(resString);
 						}
-						mDemoSlider
-								.setPresetIndicatorV(SliderLayout.PresetIndicators.Center_Bottom);
-						ad_siderlayout_progressBar.setVisibility(View.GONE);
-						mDemoSlider.setVisibility(View.VISIBLE);
-					} catch (JSONException e) {
+						if (mShouyeLeaguesFragment != null) {
+							mShouyeLeaguesFragment.getBannerData(resString);
+						}
+//						ades_ImageEs = (ArrayList<ShouYeBannerBean>) JSON
+//								.parseArray(resString,
+//										ShouYeBannerBean.class);
+//						isAdSucceedRequest = true;
+//
+//						if (ades_ImageEs != null && ades_ImageEs.size() > 0) {
+//							for (int i = 0; i < ades_ImageEs.size(); i++) {
+//								TextSliderView textSliderView = new TextSliderView(
+//										mActivity, i);
+//								textSliderView
+//										.image(ades_ImageEs.get(i).getImageUrl())
+//										.error(R.mipmap.adshouye);
+//								textSliderView
+//										.setOnSliderClickListener(ShouYeFragment.this);
+//								mDemoSlider.addSlider(textSliderView);
+//							}
+//						} else {
+//							for (int i = 0; i < 3; i++) {
+//								TextSliderView textSliderView = new TextSliderView(
+//										mActivity, i);
+//								textSliderView.image(R.mipmap.adshouye);
+//								textSliderView
+//										.setOnSliderClickListener(ShouYeFragment.this);
+//								mDemoSlider.addSlider(textSliderView);
+//							}
+//						}
+//						mDemoSlider
+//								.setPresetIndicatorV(SliderLayout.PresetIndicators.Center_Bottom);
+//						ad_siderlayout_progressBar.setVisibility(View.GONE);
+//						mDemoSlider.setVisibility(View.VISIBLE);
+					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
@@ -242,19 +250,25 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 
 				@Override
 				public void onResponseFailed(String msg) {
-					mDemoSlider.removeAllSliders();
-					for (int i = 0; i < 3; i++) {
-						TextSliderView textSliderView = new TextSliderView(
-								mActivity, i);
-						textSliderView.image(R.mipmap.adshouye);
-						textSliderView
-								.setOnSliderClickListener(ShouYeFragment.this);
-						mDemoSlider.addSlider(textSliderView);
+					if (mShouyeManagementFragment != null) {
+						mShouyeManagementFragment.getBannerData("");
 					}
-					mDemoSlider
-							.setPresetIndicatorV(SliderLayout.PresetIndicators.Center_Bottom);
-					ad_siderlayout_progressBar.setVisibility(View.GONE);
-					mDemoSlider.setVisibility(View.VISIBLE);
+					if (mShouyeLeaguesFragment != null) {
+						mShouyeLeaguesFragment.getBannerData("");
+					}
+//					mDemoSlider.removeAllSliders();
+//					for (int i = 0; i < 3; i++) {
+//						TextSliderView textSliderView = new TextSliderView(
+//								mActivity, i);
+//						textSliderView.image(R.mipmap.adshouye);
+//						textSliderView
+//								.setOnSliderClickListener(ShouYeFragment.this);
+//						mDemoSlider.addSlider(textSliderView);
+//					}
+//					mDemoSlider
+//							.setPresetIndicatorV(SliderLayout.PresetIndicators.Center_Bottom);
+//					ad_siderlayout_progressBar.setVisibility(View.GONE);
+//					mDemoSlider.setVisibility(View.VISIBLE);
 
 				}
 			}, uuid, "app", reqTime);
