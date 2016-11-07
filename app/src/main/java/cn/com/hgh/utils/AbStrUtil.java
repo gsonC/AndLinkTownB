@@ -15,6 +15,11 @@
  */
 package cn.com.hgh.utils;
 
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.RelativeSizeSpan;
+import android.widget.TextView;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -602,6 +607,18 @@ public class AbStrUtil {
 			temp=src.replace(wait,aim);
 		}
 		return temp.toString();
+	}
+
+	/**
+	 * SpannableString 使一个textView展示不同文字大小
+	 */
+	public static void formatTextSize(TextView tv, String textString, int whichNum) {
+		/**
+		 * SpannableString 使一个textView展示不同文字大小 new RelativeSizeSpan(0.8f)代表正常字体的0.8倍
+		 */
+		SpannableString spannableString = new SpannableString(textString);
+		spannableString.setSpan(new RelativeSizeSpan(0.8f), textString.length() - whichNum, textString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+		tv.setText(spannableString);
 	}
 }
 

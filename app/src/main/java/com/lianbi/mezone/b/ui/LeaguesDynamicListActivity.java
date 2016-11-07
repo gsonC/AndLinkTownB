@@ -29,6 +29,7 @@ import cn.com.hgh.utils.AbPullHide;
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.view.AbPullToRefreshView;
+import cn.com.hgh.view.HttpDialog;
 
 /*
  * @创建者     master
@@ -52,6 +53,9 @@ public class LeaguesDynamicListActivity extends BaseActivity {
     private ArrayList<LeaguesYellBean> mDatas = new ArrayList<LeaguesYellBean>();
     private QuickAdapter<LeaguesYellBean> mAdapter;
     boolean isExpanded = false;
+    private int page = 1;
+    HttpDialog dialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,7 +110,7 @@ public class LeaguesDynamicListActivity extends BaseActivity {
                 TextView tv_leaguesdynamiclist_content = helper.getView(R.id.tv_leaguesdynamiclist_content);
 
                 Glide.with(LeaguesDynamicListActivity.this).load
-                        (compareMessageType(item.getMessageType())).error(R.mipmap.default_head).into(iv_leaguesdynamiclist_icon);
+                        (compareMessageType(item.getMessageType())).error(R.mipmap.icon_addtable).into(iv_leaguesdynamiclist_icon);
                 tv_leaguesdynamiclist_firsttitle.setText(item.getMessageTitle());
                 tv_leaguesdynamiclist_content.setText(item.getMessageContent());
                 if (!item.isExpanded()) {
@@ -152,7 +156,7 @@ public class LeaguesDynamicListActivity extends BaseActivity {
         if(messagetype.equals("MT0003")){
             return R.mipmap.icon_discount;
         }
-        return R.mipmap.icon_recruit;
+        return 0;
     }
     /**
      * 查询吆喝和商圈动态
@@ -171,10 +175,14 @@ public class LeaguesDynamicListActivity extends BaseActivity {
 //                String pageSize,
 //                String serNum, String source,
 //                String reqTime,
+        if (isResh) {
+            page = 1;
+            mDatas.clear();
+        }
         try {
             okHttpsImp.queryBusinessDynamic(
                     "BD2016052013475900000010",
-                    "area",
+                    "",
                     "310117",
                     "",
                     "",
@@ -182,8 +190,8 @@ public class LeaguesDynamicListActivity extends BaseActivity {
                     "",
                     "",
                     "",
-                    "",
-                    "",
+                    "310000",
+                    page+"",
                     "",
                     uuid,
                     "app",
@@ -191,6 +199,7 @@ public class LeaguesDynamicListActivity extends BaseActivity {
                     new MyResultCallback<String>() {
                         @Override
                         public void onResponseResult(Result result) {
+                            page++;
                             String reString = result.getData();
                             Log.i("tag","resString 132----->"+reString);
                             try {
@@ -205,7 +214,7 @@ public class LeaguesDynamicListActivity extends BaseActivity {
                                                     LeaguesYellBean.class);
                                     for(LeaguesYellBean  LeaguesZxy:leaguesyellbeanlist){
                                         if(!LeaguesZxy.getMessageType().equals("MT0000")){
-                                            mData.addAll(leaguesyellbeanlist);
+                                            mData.add(LeaguesZxy);
                                         }
                                     }
                                     AbPullHide.hideRefreshView(isResh,actLeaguesdynamiclistAbpulltorefreshview);

@@ -213,6 +213,22 @@ public enum OkHttpsImp {
 	 *
 	 * @throws
 	 */
+//	"BD2016052013475900000010",
+//			"",
+//			"310117",
+//			"",
+//			"",
+//	pushTime,
+//			"",
+//	strContactnum,
+//	strTitle,
+//	strSaysomething,
+//			"310000",
+//			"上海市",
+//			"http://172.16.103.153:9005/wcm/resources/jpg/wechatmall/rss_ico.png",
+//	uuid,
+//			"app",
+//	reqTime,
 	public void getAddBusinessDynamic(String businessId,
 									 String area,
 									 String businessCircle,
@@ -223,6 +239,7 @@ public enum OkHttpsImp {
 									 String phone,
 									 String messageTitle,
 									 String messageContent,
+									 String provinces,
 									 String city,
 									 String address,
 									 String logoUrl,
@@ -241,6 +258,7 @@ public enum OkHttpsImp {
 		params.put("phone", phone);
 		params.put("messageTitle", messageTitle);
 		params.put("messageContent", messageContent);
+		params.put("provinces", provinces);
 		params.put("city", city);
 		params.put("address", address);
 		params.put("logoUrl", logoUrl);

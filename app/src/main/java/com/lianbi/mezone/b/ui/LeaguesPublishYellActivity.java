@@ -1,5 +1,6 @@
 package com.lianbi.mezone.b.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -16,6 +17,7 @@ import org.json.JSONObject;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.com.hgh.utils.AbDateUtil;
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.REGX;
 import cn.com.hgh.utils.Result;
@@ -75,11 +77,11 @@ public class LeaguesPublishYellActivity extends BaseActivity {
         String strTitle = etLeaguespublishyellTitle.getText().toString().trim();//
         String strContactnum = etLeaguespublishyellContactnum.getText().toString().trim();//
         String strSaysomething = etLeaguespublishyellSaysomething.getText().toString().trim();//
-        if (!TextUtils.isEmpty(strTitle)) {
+        if (TextUtils.isEmpty(strTitle)) {
             ContentUtils.showMsg(LeaguesPublishYellActivity.this, "请输入标题");
             return  false;
         }
-        if (!TextUtils.isEmpty(strSaysomething)) {
+        if (TextUtils.isEmpty(strSaysomething)) {
             ContentUtils.showMsg(LeaguesPublishYellActivity.this, "请输入吆喝内容");
             return  false;
         }
@@ -98,8 +100,7 @@ public class LeaguesPublishYellActivity extends BaseActivity {
         return  true;
     }
     private   void  goPublishYell(){
-//        getAddBusinessDynamic(
-//                String businessId,
+///       (String businessId,
 //                String area,
 //                String businessCircle,
 //                String messageType,
@@ -109,29 +110,28 @@ public class LeaguesPublishYellActivity extends BaseActivity {
 //                String phone,
 //                String messageTitle,
 //                String messageContent,
-//                String provinces,
 //                String city,
 //                String address,
 //                String logoUrl,
 //                String serNum, String source,
 //                String reqTime,
-//                MyResultCallback<String> myResultCallback
-//        )
+        String  pushTime=AbDateUtil.getDateTimeNow();
         try {
             okHttpsImp.getAddBusinessDynamic(
                     "BD2016052013475900000010",
-                    "area",
+                    "",
                     "310117",
                     "",
                     "",
-                    "",
+                    pushTime,
                     "",
                     strContactnum,
                     strTitle,
                     strSaysomething,
-                    "",
-                    "",
-                    "",
+                    "310000",
+                    "310117",
+                    "上海市",
+                    "http://172.16.103.153:9005/wcm/resources/jpg/wechatmall/rss_ico.png",
                     uuid,
                     "app",
                     reqTime,
@@ -141,6 +141,9 @@ public class LeaguesPublishYellActivity extends BaseActivity {
                             String reString = result.getData();
                             Log.i("tag","resString 92----->"+reString);
                             ContentUtils.showMsg(LeaguesPublishYellActivity.this, "发布成功");
+                            Intent intent = new Intent(LeaguesPublishYellActivity.this, LeaguesYellListActivity.class);
+                            setResult(RESULT_OK, intent);
+                            finish();
                             try {
                                 JSONObject jsonObject= new JSONObject(reString);
 //                                reString = jsonObject.getString("list");

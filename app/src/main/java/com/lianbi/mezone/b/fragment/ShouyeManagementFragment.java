@@ -5,9 +5,6 @@ import android.graphics.DashPathEffect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.style.RelativeSizeSpan;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -44,9 +41,12 @@ import com.zbar.lib.animationslib.YoYo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
 
 import cn.com.hgh.utils.AbStrUtil;
+import cn.com.hgh.utils.AbViewUtil;
 import cn.com.hgh.utils.ContentUtils;
+import cn.com.hgh.utils.DynamicWaveTask;
 import cn.com.hgh.view.DynamicWave;
 
 /*
@@ -105,7 +105,9 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 	private DynamicWave mDyw_includesalerank_one, mDyw_includesalerank_two, mDyw_includesalerank_three,
 			mDyw_includesalerank_four, mDyw_includesalerank_five, mDyw_includesalerank_six,
 			mDyw_includesalerank_seven;
-
+	private List<DynamicWave> mDynamicWaveList;
+	private List<TextView> mSaleRankTopList;
+	private List<TextView> mSaleRankBottomList;
 
 	@Nullable
 	@Override
@@ -119,10 +121,85 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 		getData();
 		getData1();
 		getData2();
+		getData3(true);
 		setLinten();
 		return view;
 
 	}
+
+	/**
+	 * 销量排行
+	 */
+	private void getData3(boolean whichone) {
+		List<TextData3> arraylist = new ArrayList<>();
+		arraylist.clear();
+		if (whichone) {
+			for (int i = 0; i < 7; i++) {
+				TextData3 tt3 = new TextData3();
+				tt3.setTop(i * 10);
+				tt3.setCenter(150 + i * 10);
+				tt3.setBottom("黄鹤楼" + i);
+				arraylist.add(tt3);
+			}
+		} else {
+			for (int i = 0; i < 7; i++) {
+				TextData3 tt3 = new TextData3();
+				tt3.setTop(i * 10);
+				tt3.setCenter(100 + i * 10);
+				tt3.setBottom("黄鹤楼" + i);
+				arraylist.add(tt3);
+			}
+		}
+
+		//设置数据
+		int j = arraylist.size();
+		if (j > 7)
+			j = 7;
+		for (int i = 0; i < j; i++) {
+			Timer timer = new Timer();
+
+
+			mSaleRankTopList.get(i).setText(arraylist.get(i).getTop() + "");
+			//mDynamicWave.get(i).setHeight(arraylist.get(i).getCenter());
+
+			timer.schedule(new DynamicWaveTask(timer, mDynamicWaveList.get(i), arraylist.get(i).getCenter()), 0, 10);
+
+			mSaleRankBottomList.get(i).setText(arraylist.get(i).getBottom());
+		}
+
+	}
+
+	public class TextData3 {
+		private int top;
+		private int center;
+		private String bottom;
+
+		public int getTop() {
+			return top;
+		}
+
+		public void setTop(int top) {
+			this.top = top;
+		}
+
+		public int getCenter() {
+			return center;
+		}
+
+		public void setCenter(int center) {
+			this.center = center;
+		}
+
+		public String getBottom() {
+			return bottom;
+		}
+
+		public void setBottom(String bottom) {
+			this.bottom = bottom;
+		}
+	}
+
+
 	/**
 	 * 折线图测试数据
 	 */
@@ -143,23 +220,36 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 
 
 	/**
-	 * (本店会员)测试数据
+	 * (会员营销)测试数据
 	 */
-	private long testData = 123456;
+	private long testData = 1;
 
 	private void getData1() {
-		String ss = "";
+		mTv_shouyemanagement_todayvip.setText(String.valueOf(testData));//设置今日会员数
+		mTv_shouyemanagement_numvip.setText(String.valueOf(testData));//设置总共会员数
+		String todaymuch = "";
+		String weekmuch = "";
 		try {
-			ss = AbStrUtil.changeF2Y(testData);
+			todaymuch = AbStrUtil.changeF2Y(testData);
+			weekmuch = AbStrUtil.changeF2Y(testData);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		/**
-		 * SpannableString 使一个textView展示不同文字大小 new RelativeSizeSpan(0.8f)代表正常字体的0.8倍
-		 */
-		SpannableString msp = new SpannableString(ss);
-		msp.setSpan(new RelativeSizeSpan(0.8f), ss.length() - 2, ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-		mTv_shouyemanagement_muchtoday.setText(msp);
+		AbStrUtil.formatTextSize(mTv_shouyemanagement_muchtoday, todaymuch, 2);//设置日客最高单价
+		AbStrUtil.formatTextSize(mTv_shouyemanagement_muchweek, weekmuch, 2);//设置周客最高单价
+
+		//第一位会员信息
+		AbStrUtil.formatTextSize(mTv_shouyevip_service_first, 20 + " 次", 1);
+		AbViewUtil.filletImageView(mActivity, mImg_shouyevip_name_first, "http://172.16.103.154/group1/M00/00/11/rBBnmlffUdiAdm2UAAAb5M8npfY133.jpg", 8);
+		mTv_shouyevip_name_first.setText("黄鹤楼上看黄河");
+		//第二位会员信息
+		AbStrUtil.formatTextSize(mTv_shouyevip_service_second, 10 + " 次", 1);
+		AbViewUtil.filletImageView(mActivity, mImg_shouyevip_name_second, "http://172.16.103.154/group1/M00/00/11/rBBnmlffUdiAdm2UAAAb5M8npfY133.jpg", 8);
+		mTv_shouyevip_name_second.setText("黄鹤楼上看黄河");
+		//第三位会员信息
+		AbStrUtil.formatTextSize(mTv_shouyevip_service_third, 5 + " 次", 1);
+		AbViewUtil.filletImageView(mActivity, mImg_shouyevip_name_third, "http://172.16.103.154/group1/M00/00/11/rBBnmlffUdiAdm2UAAAb5M8npfY133.jpg", 8);
+		mTv_shouyevip_name_third.setText("黄鹤楼上看黄河");
 	}
 
 	/**
@@ -168,17 +258,27 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 	private List<TestBean> mDatas = new ArrayList<>();
 
 	private void getData() {
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 7; i++) {
 			TestBean bean = new TestBean();
 			bean.setMuch("100" + i);
 			bean.setTable(i + "号桌");
 			bean.setTime("21:0" + i);
 			mDatas.add(bean);
 		}
+
+		int x = mDatas.size();
+
+		if (x % 2 != 0) {
+			TestBean bean = new TestBean();
+			bean.setMuch("");
+			bean.setTable("");
+			bean.setTime("");
+			mDatas.add(bean);
+		}
 		if (null != mDatas && mDatas.size() > 0) {
 			mLlt_shouyemanagement_comsum.setVisibility(View.VISIBLE);
 			mView_fillview.setVisibility(View.VISIBLE);
-			addComsumDetailView(10);
+			addComsumDetailView(x);
 		} else {
 			mLlt_shouyemanagement_comsum.setVisibility(View.GONE);
 			mView_fillview.setVisibility(View.GONE);
@@ -197,7 +297,7 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 		mImg_shouyemag_order = (ImageView) view.findViewById(R.id.img_shouyemag_order);//客户买单
 		mImg_shouyemag_call = (ImageView) view.findViewById(R.id.img_shouyemag_call);//响应呼叫
 		mImg_shouyemag_condetail = (ImageView) view.findViewById(R.id.img_shouyemag_condetail);//消费流水
-		BadgeView badgeView = new BadgeView(mActivity, mImg_shouyemag_order);
+		BadgeView badgeView = new BadgeView(mActivity, mImg_shouyemag_condetail);
 		badgeView.setBadgeMargin(0, 0);
 		badgeView.setText("88");
 		badgeView.show();
@@ -253,11 +353,11 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 		mTv_includesalerank_sevenbottom = (TextView) view.findViewById(R.id.ind_shouyemanagement_salerank).findViewById(R.id.tv_includesalerank_sevenbottom);
 
 		/**
-		 * 首页--本店会员ID
+		 * 首页--会员营销ID
 		 */
 		mTv_include_title_membernum = (TextView) view.findViewById(R.id.ind_shouyemanagement_membernum).findViewById(R.id.tv_include_title);//会员统计title
 		view.findViewById(R.id.ind_shouyemanagement_membernum).findViewById(R.id.tv_include_more).setVisibility(View.INVISIBLE);//inculde实时消费 更多隐藏
-		mTv_shouyemanagement_todayvip = (TextView) view.findViewById(R.id.ind_shouyemanagement_shopvip).findViewById(R.id.tv_shouyemanagement_todayvip);//今日新增
+		mTv_shouyemanagement_todayvip = (TextView) view.findViewById(R.id.ind_shouyemanagement_shopvip).findViewById(R.id.tv_shouyemanagement_todayvip);//今日总数
 		mTv_shouyemanagement_numvip = (TextView) view.findViewById(R.id.ind_shouyemanagement_shopvip).findViewById(R.id.tv_shouyemanagement_numvip);//会员总数
 		mTv_shouyemanagement_muchtoday = (TextView) view.findViewById(R.id.ind_shouyemanagement_shopvip).findViewById(R.id.tv_shouyemanagement_muchtoday);//日最高客单价
 		mTv_shouyemanagement_muchweek = (TextView) view.findViewById(R.id.ind_shouyemanagement_shopvip).findViewById(R.id.tv_shouyemanagement_muchweek);//周最高客单价
@@ -282,6 +382,7 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 		mImg_shouyemagapp_richbook = (ImageView) view.findViewById(R.id.ind_shouyeLeagues_apprec).findViewById(R.id.img_shouyemagapp_richbook);//支付宝典
 		mImg_shouyemagapp_busdata = (ImageView) view.findViewById(R.id.ind_shouyeLeagues_apprec).findViewById(R.id.img_shouyemagapp_busdata);//商圈大数据
 		initViewSize();
+		initSaleRank();
 
 		//initLineChart();
 		/**
@@ -298,6 +399,39 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 						.playOn(mLlt_shouyemanagement_comsum);
 			}
 		});
+
+	}
+
+	/**
+	 * 销量排行View整理
+	 */
+	private void initSaleRank() {
+		mDynamicWaveList = new ArrayList<>();
+		mSaleRankTopList = new ArrayList<>();
+		mSaleRankBottomList = new ArrayList<>();
+		mSaleRankTopList.add(mTv_includesalerank_one);
+		mSaleRankTopList.add(mTv_includesalerank_two);
+		mSaleRankTopList.add(mTv_includesalerank_three);
+		mSaleRankTopList.add(mTv_includesalerank_four);
+		mSaleRankTopList.add(mTv_includesalerank_five);
+		mSaleRankTopList.add(mTv_includesalerank_six);
+		mSaleRankTopList.add(mTv_includesalerank_seven);
+
+		mDynamicWaveList.add(mDyw_includesalerank_one);
+		mDynamicWaveList.add(mDyw_includesalerank_two);
+		mDynamicWaveList.add(mDyw_includesalerank_three);
+		mDynamicWaveList.add(mDyw_includesalerank_four);
+		mDynamicWaveList.add(mDyw_includesalerank_five);
+		mDynamicWaveList.add(mDyw_includesalerank_six);
+		mDynamicWaveList.add(mDyw_includesalerank_seven);
+
+		mSaleRankBottomList.add(mTv_includesalerank_onebottom);
+		mSaleRankBottomList.add(mTv_includesalerank_twobottom);
+		mSaleRankBottomList.add(mTv_includesalerank_threebottom);
+		mSaleRankBottomList.add(mTv_includesalerank_fourbottom);
+		mSaleRankBottomList.add(mTv_includesalerank_fivebottom);
+		mSaleRankBottomList.add(mTv_includesalerank_sixbottom);
+		mSaleRankBottomList.add(mTv_includesalerank_sevenbottom);
 
 	}
 
@@ -566,14 +700,6 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 	}
 
 	/**
-	 * 本店会员数据填充
-	 */
-	private void setMyShopVIPData() {
-
-	}
-
-
-	/**
 	 * add实时消费View
 	 *
 	 * @param number 数量控制
@@ -612,9 +738,10 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 	@Override
 	public void onCheckedChanged(RadioGroup group, int checkedId) {
 		if (checkedId == mChk_oneday_salenum.getId()) {
-			System.out.println("44");
+			getData3(true);
 		} else if (checkedId == mChk_oneweek_salenum.getId()) {
 			System.out.println("55");
+			getData3(false);
 		}
 	}
 
@@ -762,7 +889,6 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 	public void onNothingSelected() {
 
 	}
-
 
 
 }

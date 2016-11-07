@@ -166,7 +166,10 @@ public class LoginActivity extends BaseActivity {
 										.getContactPhone());
 								ContentUtils.putSharePre(LoginActivity.this,
 										Constants.USERTAG, Constants.USERSHOPNAME, myShopInfoBean.getBusinessName());
-
+								ContentUtils.putSharePre(LoginActivity.this,
+										Constants.USERTAG, Constants.USERSHOPLOGOURL, myShopInfoBean.getLogoUrl());
+								ContentUtils.putSharePre(LoginActivity.this,
+										Constants.USERTAG, Constants.USERSHOPPROVINCEID,myShopInfoBean.getProvinceId());
 							}
 						}
 						String user = (String) jsonObject
