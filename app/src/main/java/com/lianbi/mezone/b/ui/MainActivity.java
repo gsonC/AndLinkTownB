@@ -108,55 +108,8 @@ public class MainActivity extends BaseActivity implements BDLocation_interface, 
 
 		getUpData();
 
-		getShouyeBanner();
 	}
 
-	private void getShouyeBanner() {
-
-		String reqTime = AbDateUtil.getDateTimeNow();
-		String uuid = AbStrUtil.getUUID();
-
-		/**
-		 * 轮播图
-		 */
-		try {
-			okHttpsImp.getAdvert("F1", new MyResultCallback<String>() {
-
-				@Override
-				public void onResponseResult(Result result) {
-					String resString = result.getData();
-					try {
-						JSONObject jsonObject = new JSONObject(resString);
-						resString = jsonObject.getString("list");
-                        Log.i("tag","133 MainActivity---->"+resString);
-//						ShouyeManagementFragment shouyeManagementFragment = new ShouyeManagementFragment();
-//						shouyeManagementFragment.getBannerData(resString);
-
-
-
-
-
-
-					} catch (JSONException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-
-				}
-
-				@Override
-				public void onResponseFailed(String msg) {
-
-
-				}
-			}, uuid, "app", reqTime);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-
-	}
 
 	public void postCID() {
 		if (ContentUtils.getLoginStatus(this)) {

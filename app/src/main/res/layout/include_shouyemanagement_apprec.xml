@@ -258,6 +258,7 @@
 
 
             <ImageView
+                android:id="@+id/img_shouyemagapp_appstore"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:scaleType="fitCenter"

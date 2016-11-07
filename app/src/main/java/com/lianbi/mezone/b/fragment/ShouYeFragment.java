@@ -82,9 +82,9 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 			//mActivity.getServiceMall();
 
 		}
-		if (!isAdSucceedRequest) {
-			getAadver();
-		}
+		//if (!isAdSucceedRequest) {
+		//	getAadver();
+		//}
 	}
 
 
@@ -103,7 +103,11 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 	@Override
 	public void onStart() {
 		super.onStart();
-		getAadver();
+
+		if (!isAdSucceedRequest) {
+			getAadver();
+		}
+		//getAadver();
 
 	}
 
@@ -205,44 +209,14 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 					try {
 						JSONObject jsonObject = new JSONObject(resString);
 						resString = jsonObject.getString("list");
+						isAdSucceedRequest = true;
 						if (mShouyeManagementFragment != null) {
 							mShouyeManagementFragment.getBannerData(resString);
 						}
 						if (mShouyeLeaguesFragment != null) {
 							mShouyeLeaguesFragment.getBannerData(resString);
 						}
-//						ades_ImageEs = (ArrayList<ShouYeBannerBean>) JSON
-//								.parseArray(resString,
-//										ShouYeBannerBean.class);
-//						isAdSucceedRequest = true;
-//
-//						if (ades_ImageEs != null && ades_ImageEs.size() > 0) {
-//							for (int i = 0; i < ades_ImageEs.size(); i++) {
-//								TextSliderView textSliderView = new TextSliderView(
-//										mActivity, i);
-//								textSliderView
-//										.image(ades_ImageEs.get(i).getImageUrl())
-//										.error(R.mipmap.adshouye);
-//								textSliderView
-//										.setOnSliderClickListener(ShouYeFragment.this);
-//								mDemoSlider.addSlider(textSliderView);
-//							}
-//						} else {
-//							for (int i = 0; i < 3; i++) {
-//								TextSliderView textSliderView = new TextSliderView(
-//										mActivity, i);
-//								textSliderView.image(R.mipmap.adshouye);
-//								textSliderView
-//										.setOnSliderClickListener(ShouYeFragment.this);
-//								mDemoSlider.addSlider(textSliderView);
-//							}
-//						}
-//						mDemoSlider
-//								.setPresetIndicatorV(SliderLayout.PresetIndicators.Center_Bottom);
-//						ad_siderlayout_progressBar.setVisibility(View.GONE);
-//						mDemoSlider.setVisibility(View.VISIBLE);
 					} catch (Exception e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 
@@ -256,24 +230,9 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 					if (mShouyeLeaguesFragment != null) {
 						mShouyeLeaguesFragment.getBannerData("");
 					}
-//					mDemoSlider.removeAllSliders();
-//					for (int i = 0; i < 3; i++) {
-//						TextSliderView textSliderView = new TextSliderView(
-//								mActivity, i);
-//						textSliderView.image(R.mipmap.adshouye);
-//						textSliderView
-//								.setOnSliderClickListener(ShouYeFragment.this);
-//						mDemoSlider.addSlider(textSliderView);
-//					}
-//					mDemoSlider
-//							.setPresetIndicatorV(SliderLayout.PresetIndicators.Center_Bottom);
-//					ad_siderlayout_progressBar.setVisibility(View.GONE);
-//					mDemoSlider.setVisibility(View.VISIBLE);
-
 				}
 			}, uuid, "app", reqTime);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
