@@ -206,20 +206,22 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 				public void onResponseResult(Result result) {
 					mDemoSlider.removeAllSliders();
 					String resString = result.getData();
-					try {
-						JSONObject jsonObject = new JSONObject(resString);
-						resString = jsonObject.getString("list");
-						isAdSucceedRequest = true;
-						if (mShouyeManagementFragment != null) {
-							mShouyeManagementFragment.getBannerData(resString);
-						}
-						if (mShouyeLeaguesFragment != null) {
-							mShouyeLeaguesFragment.getBannerData(resString);
-						}
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
+					if (!AbStrUtil.isEmpty(resString)) {
 
+						try {
+							JSONObject jsonObject = new JSONObject(resString);
+							resString = jsonObject.optString("list");
+							isAdSucceedRequest = true;
+							if (mShouyeManagementFragment != null) {
+								mShouyeManagementFragment.getBannerData(resString);
+							}
+							if (mShouyeLeaguesFragment != null) {
+								mShouyeLeaguesFragment.getBannerData(resString);
+							}
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
 				}
 
 				@Override

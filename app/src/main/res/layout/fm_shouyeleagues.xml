@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<cn.com.hgh.view.ListenedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/sv_shouyeLeagues"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/colores_news_14"
@@ -577,4 +578,4 @@
 
 
 </LinearLayout>
-</ScrollView>
+</cn.com.hgh.view.ListenedScrollView>

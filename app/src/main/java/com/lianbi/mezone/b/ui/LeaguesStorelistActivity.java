@@ -24,6 +24,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.QuickAdapter;
+import cn.com.hgh.utils.AbPullHide;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.view.AbPullToRefreshView;
 
@@ -48,6 +49,7 @@ public class LeaguesStorelistActivity extends BaseActivity {
     private ArrayList<BusinessListBean> mData = new ArrayList<BusinessListBean>();
     private ArrayList<BusinessListBean> mDatas = new ArrayList<BusinessListBean>();
     private QuickAdapter<BusinessListBean> mAdapter;
+    private int page = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,9 +66,30 @@ public class LeaguesStorelistActivity extends BaseActivity {
     private void initData() {
         setPageTitle("店铺列表");
         initAdapter();
-        getLeaguesStorelist();
+        setLisenter();
+        getLeaguesStorelist(true);
     }
+    private void setLisenter() {
+        actLeaguesstorelistAbpulltorefreshview.setLoadMoreEnable(true);
+        actLeaguesstorelistAbpulltorefreshview.setPullRefreshEnable(true);
+        actLeaguesstorelistAbpulltorefreshview
+                .setOnHeaderRefreshListener(new AbPullToRefreshView.OnHeaderRefreshListener() {
 
+                    @Override
+                    public void onHeaderRefresh(AbPullToRefreshView view) {
+                        getLeaguesStorelist(true);
+                    }
+
+                });
+        actLeaguesstorelistAbpulltorefreshview
+                .setOnFooterLoadListener(new AbPullToRefreshView.OnFooterLoadListener() {
+
+                    @Override
+                    public void onFooterLoad(AbPullToRefreshView view) {
+                        getLeaguesStorelist(false);
+                    }
+                });
+    }
     private void initAdapter() {
         mAdapter = new QuickAdapter<BusinessListBean>(this,
                 R.layout.item_leaguesstorelist, mDatas) {
@@ -90,7 +113,11 @@ public class LeaguesStorelistActivity extends BaseActivity {
     /**
      * 获取店铺列表数据
      */
-    private void getLeaguesStorelist() {
+    private void getLeaguesStorelist(final boolean isResh) {
+        if (isResh) {
+            page = 1;
+            mDatas.clear();
+        }
         try {
             okHttpsImp.getBusinessList(
                     UserId,
@@ -99,21 +126,24 @@ public class LeaguesStorelistActivity extends BaseActivity {
                     new MyResultCallback<String>() {
                         @Override
                         public void onResponseResult(Result result) {
+                            page++;
                             String reString = result.getData();
                             Log.i("tag", "resString 274----->" + reString);
                             try {
                                 JSONObject jsonObject = new JSONObject(reString);
-                                reString = jsonObject.getString("list");
+                                reString = jsonObject.getString("modelList");
                                 if (!TextUtils.isEmpty(reString)) {
                                     mData.clear();
                                     ArrayList<BusinessListBean> businessbeanlist = (ArrayList<BusinessListBean>) JSON
                                             .parseArray(reString,
                                                     BusinessListBean.class);
                                     mData.addAll(businessbeanlist);
+                                    AbPullHide.hideRefreshView(isResh,actLeaguesstorelistAbpulltorefreshview);
                                     updateView(mData);
                                     ivLeaguesstorelistEmpty.setVisibility(View.GONE);
                                     actLeaguesstorelistAbpulltorefreshview.setVisibility(View.VISIBLE);
                                 }else{
+                                    AbPullHide.hideRefreshView(isResh,actLeaguesstorelistAbpulltorefreshview);
                                     ivLeaguesstorelistEmpty.setVisibility(View.VISIBLE);
                                     actLeaguesstorelistAbpulltorefreshview.setVisibility(View.GONE);
                                 }
@@ -140,6 +170,6 @@ public class LeaguesStorelistActivity extends BaseActivity {
     protected void updateView(ArrayList<BusinessListBean> arrayList) {
         mDatas.clear();
         mDatas.addAll(arrayList);
-        mAdapter.notifyDataSetChanged();
+        mAdapter.replaceAll(arrayList);
     }
 }

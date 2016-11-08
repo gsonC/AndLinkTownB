@@ -43,6 +43,7 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
+import com.lianbi.mezone.b.bean.DistrictCountBean;
 import com.lianbi.mezone.b.bean.LeaguesYellBean;
 import com.lianbi.mezone.b.bean.ShouYeBannerBean;
 import com.lianbi.mezone.b.httpresponse.API;
@@ -69,8 +70,9 @@ import cn.com.hgh.playview.imp.TextSliderView;
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.utils.ScreenUtils;
+import cn.com.hgh.view.ListenedScrollView;
 
-public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelectedListener, OnSliderClickListener {
+public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelectedListener, OnSliderClickListener{
 
     @Nullable
     @Bind(R.id.vf_shouyeleagues_dyn)
@@ -151,16 +153,21 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
     ProgressBar ad_siderlayout_progressBar;
     @Bind(R.id.adeslltview_llt)
     LinearLayout ad_llt;
+    @Bind(R.id.sv_shouyeLeagues)
+    ListenedScrollView svShouyeLeagues;
     private MainActivity mActivity;
     private OkHttpsImp mOkHttpsImp;
+    private ArrayList<DistrictCountBean> mAllCountList = new ArrayList<DistrictCountBean>();
+
     private ArrayList<LeaguesYellBean> mData = new ArrayList<LeaguesYellBean>();
     private ArrayList<LeaguesYellBean> mDataZxy = new ArrayList<LeaguesYellBean>();
     private final static int COLUMN_COUNT = 6;
     LinearLayout lay_shouyeLeagues_child;
     private Typeface tf;
-    protected String[] mParties = new String[]{
-            "餐饮", "购物", "住宿", "其他"
-    };
+    //    protected String[] mParties = new String[]{
+//            "餐饮", "购物", "住宿", "其他"
+//    };
+    protected String[] mParties = null;
     public static final int[] PIECHART_COLORS = {
             Color.rgb(255, 188, 156), Color.rgb(255, 186, 29), Color.rgb(179, 144, 252),
             Color.rgb(22, 204, 205)
@@ -189,10 +196,29 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
         initViewAndData();
         getYellAndDynamicData();
         getDistrictCount();
+        setLisenter();
         initAnimation();
         return view;
     }
+    private void setLisenter() {
+        //设置监听。
+        svShouyeLeagues.setOnScrollListener(new ListenedScrollView.OnScrollListener(){
+            @Override
+            public void onBottomArrived() {
+                //滑倒底部了
+            }
 
+            @Override
+            public void onScrollStateChanged(ListenedScrollView view, int scrollState) {
+                //滑动状态改变
+            }
+
+            @Override
+            public void onScrollChanged(int l, int t, int oldl, int oldt) {
+                //滑动位置改变
+            }
+        });
+    }
     public void initViewAndData() {
         initViewSize();
         mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Default);
@@ -200,7 +226,7 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 ScreenUtils.getScreenWidth(mActivity) / 4);
         ad_llt.setLayoutParams(params);
-        piec_shouyeLeagues_dyn.setUsePercentValues(true);
+        piec_shouyeLeagues_dyn.setUsePercentValues(false);
         piec_shouyeLeagues_dyn.getDescription().setEnabled(false);
         piec_shouyeLeagues_dyn.setExtraOffsets(5, 10, 5, 5);
         piec_shouyeLeagues_dyn.setDragDecelerationFrictionCoef(0.95f);
@@ -212,10 +238,9 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
         piec_shouyeLeagues_dyn.setTransparentCircleRadius(61f);
         piec_shouyeLeagues_dyn.setDrawCenterText(true);
         piec_shouyeLeagues_dyn.setRotationAngle(0);
-        piec_shouyeLeagues_dyn.setRotationEnabled(true);
+        piec_shouyeLeagues_dyn.setRotationEnabled(false);
         piec_shouyeLeagues_dyn.setHighlightPerTapEnabled(true);
         piec_shouyeLeagues_dyn.setOnChartValueSelectedListener(this);
-        setData(4, 100);
         piec_shouyeLeagues_dyn.animateY(1400, Easing.EasingOption.EaseInOutQuad);
         Legend l = piec_shouyeLeagues_dyn.getLegend();
         l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
@@ -281,22 +306,27 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
                             Log.i("tag", "查询商圈统计返回 257----->" + reString);
                             try {
                                 JSONObject jsonObject = new JSONObject(reString);
-                                reString = jsonObject.getString("list");
-                                if (!TextUtils.isEmpty(reString)) {
-                                    mData.clear();
-                                    ArrayList<LeaguesYellBean> leaguesyellbeanlist = (ArrayList<LeaguesYellBean>) JSON
-                                            .parseArray(reString,
-                                                    LeaguesYellBean.class);
-                                    mData.addAll(leaguesyellbeanlist);
-                                    updateview(mData);
+                                String straddCount = jsonObject.getString("addCountList");
+                                String strallCount = jsonObject.getString("allCountList");
+                                String strcutCount = jsonObject.getString("cutCountList");
 
-                                    mDataZxy.clear();
-//                                    for(LeaguesYellBean  LeaguesZxy:leaguesyellbeanlist){
-//                                        if(!LeaguesZxy.getMessageType().equals("MT0000")){
-//                                            mDataZxy.addAll(leaguesyellbeanlist);
-//                                        }
-//                                    }
-                                    showdynamic(mDataZxy);
+                                ArrayList<DistrictCountBean> addCountList = (ArrayList<DistrictCountBean>) JSON
+                                        .parseArray(straddCount,
+                                                DistrictCountBean.class);
+
+                                ArrayList<DistrictCountBean> cutCountList = (ArrayList<DistrictCountBean>) JSON
+                                        .parseArray(strcutCount,
+                                                DistrictCountBean.class);
+                                if (!TextUtils.isEmpty(strallCount)) {
+                                    mAllCountList.clear();
+                                    ArrayList<DistrictCountBean> allCountList = (ArrayList<DistrictCountBean>) JSON
+                                            .parseArray(strallCount,
+                                                    DistrictCountBean.class);
+                                    mAllCountList.addAll(allCountList);
+
+                                    setPieNetData();
+
+
                                 }
 
                             } catch (JSONException e) {
@@ -313,6 +343,51 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void setPieNetData() {
+        String first = "0";
+        String two = "0";
+        String three = "0";
+        try {
+            if (mAllCountList.get(0) != null) {
+                tvShouyeLeaguesRestip.setText(mAllCountList.get(0).getBusinessType() + "");
+                first = mAllCountList.get(0).getAllCount();
+            }
+            if (mAllCountList.get(1) != null) {
+                tvShouyeLeaguesShoppingtip.setText(mAllCountList.get(1).getBusinessType() + "");
+                two = mAllCountList.get(1).getAllCount();
+            }
+            if (mAllCountList.get(2) != null) {
+                tvShouyeLeaguesStaytip.setText(mAllCountList.get(2).getBusinessType() + "");
+                three = mAllCountList.get(2).getAllCount();
+            }
+            tvShouyeLeaguesOthertip.setText("其他");
+            int allcount = 0;
+            for (DistrictCountBean districtcountbean : mAllCountList) {
+                allcount = allcount + stringChangeInt(districtcountbean.getAllCount());
+            }
+            allcount = allcount - stringChangeInt(first) -
+                    stringChangeInt(two) -
+                    stringChangeInt(three);
+            mParties = new String[]{
+                    first,
+                    two,
+                    three,
+                    allcount + ""
+            };
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        setData(4, 100);
+    }
+
+    private int stringChangeInt(String count) {
+        int temp = 0;
+        if (!TextUtils.isEmpty(count)) {
+            temp = Integer.parseInt(count);
+        }
+        return temp;
     }
 
     /**
@@ -459,12 +534,19 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
 
         float mult = range;
         ArrayList<PieEntry> entries = new ArrayList<PieEntry>();
+//        for (int i = 0; i < count; i++) {
+//            entries.add(new PieEntry((float) ((Math.random() * mult) + mult / 5), mParties[i % mParties.length]));
+//        }
+//        for (int i = 0; i < count; i++) {
+//            entries.add(new PieEntry((float)stringChangeInt(mParties[i % mParties.length]), mParties[i % mParties.length]));
+//        }
         for (int i = 0; i < count; i++) {
-            entries.add(new PieEntry((float) ((Math.random() * mult) + mult / 5), mParties[i % mParties.length]));
+            entries.add(new PieEntry((float) (stringChangeInt(mParties[i % mParties.length]) + mult / 5), mParties[i % mParties.length]));
         }
         PieDataSet dataSet = new PieDataSet(entries, "Election Results");
+        dataSet.setDrawValues(false);
         dataSet.setSliceSpace(0f);
-        dataSet.setSelectionShift(5f);
+        dataSet.setSelectionShift(0f);
         ArrayList<Integer> colors = new ArrayList<Integer>();
         for (int c : PIECHART_COLORS)
             colors.add(c);
@@ -522,6 +604,5 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
     @Override
     public void onSliderClick(BaseSliderView slider) {
     }
-
 
 }

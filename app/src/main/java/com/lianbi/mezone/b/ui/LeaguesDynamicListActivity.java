@@ -114,10 +114,10 @@ public class LeaguesDynamicListActivity extends BaseActivity {
                 tv_leaguesdynamiclist_firsttitle.setText(item.getMessageTitle());
                 tv_leaguesdynamiclist_content.setText(item.getMessageContent());
                 if (!item.isExpanded()) {
-                    iv_leaguesdynamiclist_expand.setImageResource(R.mipmap.up2);
+                    iv_leaguesdynamiclist_expand.setImageResource(R.mipmap.down12);
                     tv_leaguesdynamiclist_content.setVisibility(View.GONE);
                 } else {
-                    iv_leaguesdynamiclist_expand.setImageResource(R.mipmap.down12);
+                    iv_leaguesdynamiclist_expand.setImageResource(R.mipmap.up2);
                     tv_leaguesdynamiclist_content.setVisibility(View.VISIBLE);
                 }
                 helper.getView(R.id.lay_leaguesdynamiclist_firsttitle).setOnClickListener(
