@@ -43,9 +43,9 @@ public class FirstActivity extends BaseActivity {
 		 * 如果登录过自动登录
 		 */
 		final boolean isLogin = ContentUtils.getLoginStatus(this);
-		//if (isLogin) {
-		//	autoLogin();
-		// }
+		if (isLogin) {
+			autoLogin();
+		 }
 		/**
 		 * 是否第一次
 		 */
@@ -66,7 +66,9 @@ public class FirstActivity extends BaseActivity {
 					//intent.setClass(FirstActivity.this, MainActivity.class);
 					//startActivity(intent);
 					if (isLogin) {
-						autoLogin();
+						Intent intent = new Intent();
+						intent.setClass(FirstActivity.this, MainActivity.class);
+						startActivity(intent);
 					} else {
 						Intent intent = new Intent();
 						intent.setClass(FirstActivity.this, LoginActivity.class);
@@ -127,10 +129,9 @@ public class FirstActivity extends BaseActivity {
 							userShopInfoBean.setPersonHeadUrl(backBean
 									.getUserImage());
 						}
-						Intent intent = new Intent();
-						intent.setClass(FirstActivity.this, MainActivity.class);
-						startActivity(intent);
-						finish();
+						//Intent intent = new Intent();
+						//intent.setClass(FirstActivity.this, MainActivity.class);
+						//startActivity(intent);
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}

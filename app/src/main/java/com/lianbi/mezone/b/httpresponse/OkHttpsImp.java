@@ -2942,6 +2942,22 @@ public enum OkHttpsImp {
 	}
 
 	/**
+	 * 首页销量排行
+	 */
+	public void getShopSaleRank(String serNum, String reqTime, String storeNo,
+								MyResultCallback<String> myResultCallback)throws Exception {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("serNum", serNum);
+		params.put("source", appsource);
+		params.put("reqTime", reqTime);
+		params.put("businessId", storeNo);
+		String sign = getSign(md5_key, params);
+		params.put("sign", sign);
+		String url = getAbsoluteUrl(API.SHOUYE_SHOPVIP_SALERANK);
+		getProgressResponse(myResultCallback, params, url);
+	}
+
+	/**
 	 * 签名方法
 	 */
 	private static String getSign(String md5_key, Map<String, String> dataMap) throws Exception {

@@ -163,10 +163,30 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 		initLineChartView();
 		getData();
 		getShopVipMarket();
+		getShopSaleRank();
 		getData2();
 		getData3(true);
 		setLinten();
 		return view;
+	}
+
+	private void getShopSaleRank() {
+		try {
+			mOkHttpsImp.getShopSaleRank(mActivity.uuid, mActivity.reqTime,
+					BaseActivity.userShopInfoBean.getBusinessId(), new MyResultCallback<String>() {
+						@Override
+						public void onResponseResult(Result result) {
+
+						}
+
+						@Override
+						public void onResponseFailed(String msg) {
+
+						}
+					});
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**

@@ -734,4 +734,8 @@ public class API {
 	 * 首页--会员营销
 	 */
 	public static final String SHOUYE_SHOPVIP_MARKET = "order/assemblyResult.do";
+	/**
+	 * 首页--销量排行
+	 */
+	public static final String SHOUYE_SHOPVIP_SALERANK = "order/getPerHourseAmt.do";
 }
