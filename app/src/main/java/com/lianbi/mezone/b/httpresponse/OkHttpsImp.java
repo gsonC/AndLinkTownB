@@ -2535,7 +2535,43 @@ public enum OkHttpsImp {
 		postProgressResponse(myResultCallback, params, url);
 
 	}
+	/**
+	 * 4.13	查询推送消息
+	 */
+	public void getPushMessages(
+			String serNum, String source, String reqTime,
+			String md5_key,
+			String storeId, String isRead, MyResultCallback<String> myResultCallback) throws Exception {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("storeId", storeId);
+		params.put("reqTime", reqTime);
+		params.put("serNum", serNum);
+		params.put("source", source);
+		params.put("isRead", isRead);
+		String sign = getSign(md5_key, params);
+		params.put("sign", sign);
+		String url = getHttpUrl(storeId, API.PUSHMESSAGE);
+		postProgressResponse(myResultCallback, params, url);
 
+	}
+	/**
+	 * 4.20	查询店铺的待支付信息
+	 */
+	public void getUnPaidOrder(
+			String serNum, String source, String reqTime,
+			String md5_key,
+			String storeId, MyResultCallback<String> myResultCallback) throws Exception {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("storeId", storeId);
+		params.put("reqTime", reqTime);
+		params.put("serNum", serNum);
+		params.put("source", source);
+		String sign = getSign(md5_key, params);
+		params.put("sign", sign);
+		String url = getHttpUrl(storeId, API.GETONPAIDUUID);
+		postProgressResponse(myResultCallback, params, url);
+
+	}
 	/*
    * 优惠券管理（-店铺-优惠券表）按优惠券状态筛选店铺所有的优惠券
    * @param issuedStoreId 商铺ID

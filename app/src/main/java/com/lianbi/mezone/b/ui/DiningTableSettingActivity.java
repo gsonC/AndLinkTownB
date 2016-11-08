@@ -25,7 +25,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.QuickAdapter;
-import cn.com.hgh.utils.AbViewUtil;
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.JumpIntent;
 import cn.com.hgh.view.AbPullToRefreshView;
@@ -262,7 +261,7 @@ public class DiningTableSettingActivity extends BaseActivity implements
             case R.id.switch_state:
                 changeBusinessState();
                 break;
-            case R.id.pay://消费结算
+            case R.id.pay://客户买单
                 startActivity(new Intent(DiningTableSettingActivity.this, ConsumptionSettlementActivity.class));
                 break;
             case R.id.call://呼叫服务

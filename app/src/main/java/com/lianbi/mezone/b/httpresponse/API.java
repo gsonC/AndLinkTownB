@@ -642,6 +642,14 @@ public class API {
 	 */
 	public static final String CALLLIST = "getTssCallTypeList.do";
 	/**
+	 * 4.13	查询推送消息
+	 */
+	public static final String PUSHMESSAGE = "getPushMessages.do";
+	/**
+	 * 4.20	查询店铺的待支付信息
+	 */
+	public static final String GETONPAIDUUID = "getUnPaidOrder.do";
+	/**
 	 * 增加会员标签
 	 */
 	public static final String ADDVIPLABEL = "vipLabel/addVipLabel.do";

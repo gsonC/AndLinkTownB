@@ -18,7 +18,6 @@ import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -208,14 +207,11 @@ public class MembersListActivity extends BaseActivity {
 						public void onResponseResult(Result result) {
 							page++;
 							String reString= result.getData();
-							System.out.println("reString209"+reString);
 							if (!AbStrUtil.isEmpty(reString)) {
 
 								try {
 									JSONObject jsonObject = new JSONObject(reString);
 									reString = jsonObject.getString("businessVipWXList");
-									System.out.println("reString215"+reString);
-
 									mTv_newaddmember.setText("本周新增会员:"+jsonObject.getInt("vipWeekCount"));
 									mTv_cumulativemember.setText("累计会员数:"+jsonObject.getInt("vipCount"));
 									ArrayList<MemberInfoBean> mDatasL = (ArrayList<MemberInfoBean>) JSON
@@ -335,7 +331,7 @@ public class MembersListActivity extends BaseActivity {
 		/**
 		 * 点击跳转
 		 */
-		mAct_addmembers_listview
+	/*	mAct_addmembers_listview
 				.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
 					@Override
@@ -348,7 +344,7 @@ public class MembersListActivity extends BaseActivity {
 						startActivityForResult(file_intent, REQUEST_CHANGMEMBERINFO);
 	//					mAct_member_list_edit.setText("");
 					}
-				});
+				});*/
 
 		mTv_addnewmember.setOnClickListener(this);
 		//.setOnClickListener(this);
