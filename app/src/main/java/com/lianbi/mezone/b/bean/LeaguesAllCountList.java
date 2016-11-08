@@ -3,9 +3,9 @@ package com.lianbi.mezone.b.bean;
 import java.io.Serializable;
 
 /**
- * Created by chen.sun on 2016/11/7.
+ * Created by chen.sun on 2016/11/8.
  */
-public class DistrictCountBean  implements Serializable {
+public class LeaguesAllCountList implements Serializable {
 
     String  allCount;
     String  businessType;

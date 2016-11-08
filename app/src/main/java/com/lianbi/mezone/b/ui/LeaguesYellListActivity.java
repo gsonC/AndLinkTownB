@@ -110,7 +110,9 @@ public class LeaguesYellListActivity extends BaseActivity {
                 TextView iv_leaguesyelllist_address = helper.getView(R.id.iv_leaguesyelllist_address);//
 
                 Glide.with(LeaguesYellListActivity.this).load(item.getLogoUrl()).error(R.mipmap.demo).into(iv_leaguesyelllist_icon);
-                iv_leaguesyelllist_name.setText(item.getAuthor());
+                if(!TextUtils.isEmpty(item.getBusinessName())) {
+                    iv_leaguesyelllist_name.setText(item.getBusinessName());
+                }
                 if(!TextUtils.isEmpty(item.getCreateTime())) {
                     String time = item.getCreateTime();
                     String year = time.substring(0, 4);

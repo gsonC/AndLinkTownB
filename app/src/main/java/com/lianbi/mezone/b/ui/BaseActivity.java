@@ -90,7 +90,7 @@ public class BaseActivity extends FragmentActivity implements OnClickListener {
 		okHttpsImp = OkHttpsImp.SINGLEOKHTTPSIMP.newInstance(this);
 
 		if (!ISCONNECTED) {
-			ContentUtils.showMsg(this, "当前网络连接不可用");
+            ContentUtils.showMsg(this, getString(R.string.currentnetworkisnotavailable));
 		}
 		activityManager.putActivity(this);
 		if (userShopInfoBean == null) {

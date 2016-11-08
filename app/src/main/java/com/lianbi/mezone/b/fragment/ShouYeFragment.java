@@ -77,6 +77,8 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 			//mActivity.getServiceMall();
 			// getServiceMallAll();
 			mShouyeManagementFragment.userLoginStatus(true);
+			mShouyeLeaguesFragment.userLoginStatus(true);
+
 		} else {
 			// mDatas.clear();
 			//mActivity.getServiceMall();

@@ -43,7 +43,8 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
-import com.lianbi.mezone.b.bean.DistrictCountBean;
+import com.lianbi.mezone.b.bean.LeaguesAddCountlist;
+import com.lianbi.mezone.b.bean.LeaguesAllCountList;
 import com.lianbi.mezone.b.bean.LeaguesYellBean;
 import com.lianbi.mezone.b.bean.ShouYeBannerBean;
 import com.lianbi.mezone.b.httpresponse.API;
@@ -55,7 +56,6 @@ import com.lianbi.mezone.b.ui.LeaguesYellListActivity;
 import com.lianbi.mezone.b.ui.MainActivity;
 import com.xizhi.mezone.b.R;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -157,11 +157,16 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
     ListenedScrollView svShouyeLeagues;
     private MainActivity mActivity;
     private OkHttpsImp mOkHttpsImp;
-    private ArrayList<DistrictCountBean> mAllCountList = new ArrayList<DistrictCountBean>();
+    private ArrayList<LeaguesAllCountList> mAllCountList =
+            new ArrayList<LeaguesAllCountList>();
+    private ArrayList<LeaguesAddCountlist> mAddCountList =
+            new ArrayList<LeaguesAddCountlist>();
 
     private ArrayList<LeaguesYellBean> mData = new ArrayList<LeaguesYellBean>();
     private ArrayList<LeaguesYellBean> mDataZxy = new ArrayList<LeaguesYellBean>();
     private final static int COLUMN_COUNT = 6;
+    private int page = 1;
+
     LinearLayout lay_shouyeLeagues_child;
     private Typeface tf;
     //    protected String[] mParties = new String[]{
@@ -197,9 +202,9 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
         mActivity = (MainActivity) getActivity();
         mOkHttpsImp = OkHttpsImp.SINGLEOKHTTPSIMP.newInstance(mActivity);
         initViewAndData();
+        setLisenter();
         getYellAndDynamicData();
         getDistrictCount();
-        setLisenter();
         return view;
     }
     private void setLisenter() {
@@ -257,6 +262,15 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
         piec_shouyeLeagues_dyn.setEntryLabelColor(Color.WHITE);
         piec_shouyeLeagues_dyn.setEntryLabelTextSize(12f);
     }
+    public void userLoginStatus(boolean isLogin) {
+        if (isLogin) {
+            getYellAndDynamicData();
+            getDistrictCount();
+        } else {
+
+
+        }
+    }
 
     @Override
     public void onValueSelected(Entry e, Highlight h) {
@@ -266,9 +280,6 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
         Intent intent = new Intent();
         intent.setClass(mActivity, LeaguesStorelistActivity.class);
         startActivity(intent);
-        Log.i("VAL SELECTED",
-                "Value: " + e.getY() + ", index: " + h.getX()
-                        + ", DataSet index: " + h.getDataSetIndex());
     }
 
     @Override
@@ -306,33 +317,38 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
                         @Override
                         public void onResponseResult(Result result) {
                             String reString = result.getData();
-                            Log.i("tag", "查询商圈统计返回 257----->" + reString);
+                            Log.i("tag", "查询商圈统计返回 317----->" + reString);
                             try {
                                 JSONObject jsonObject = new JSONObject(reString);
-                                String straddCount = jsonObject.getString("addCountList");
-                                String strallCount = jsonObject.getString("allCountList");
-                                String strcutCount = jsonObject.getString("cutCountList");
-
-                                ArrayList<DistrictCountBean> addCountList = (ArrayList<DistrictCountBean>) JSON
-                                        .parseArray(straddCount,
-                                                DistrictCountBean.class);
-
-                                ArrayList<DistrictCountBean> cutCountList = (ArrayList<DistrictCountBean>) JSON
-                                        .parseArray(strcutCount,
-                                                DistrictCountBean.class);
-                                if (!TextUtils.isEmpty(strallCount)) {
+                                String str_allCountList = jsonObject.getString("allCountList");
+                                String str_addCountList = jsonObject.getString("addCountList");
+//                                String strcutCount = jsonObject.getString("cutCountList");
+                                /**
+                                 * 总数量
+                                 */
+                                if (!TextUtils.isEmpty(str_allCountList)) {
                                     mAllCountList.clear();
-                                    ArrayList<DistrictCountBean> allCountList = (ArrayList<DistrictCountBean>) JSON
-                                            .parseArray(strallCount,
-                                                    DistrictCountBean.class);
+                                    ArrayList<LeaguesAllCountList> allCountList =
+                                            (ArrayList<LeaguesAllCountList>) JSON
+                                            .parseArray(str_allCountList,
+                                                    LeaguesAllCountList.class);
                                     mAllCountList.addAll(allCountList);
 
                                     setPieNetData();
-
-
                                 }
-
-                            } catch (JSONException e) {
+                                /**
+                                 * 新增数量
+                                 */
+                                if (!TextUtils.isEmpty(str_addCountList)) {
+                                    mAddCountList.clear();
+                                    ArrayList<LeaguesAddCountlist> addCountList =
+                                            (ArrayList<LeaguesAddCountlist>) JSON
+                                            .parseArray(str_addCountList,
+                                                    LeaguesAddCountlist.class);
+                                    mAddCountList.addAll(addCountList);
+                                    setAnimationData();
+                                }
+                            } catch (Exception e) {
                                 e.printStackTrace();
                             }
 
@@ -347,8 +363,39 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
             e.printStackTrace();
         }
     }
+    private void  setAnimationData(){
+        int allcount = 0;
+        String first = "0";
+        String two = "0";
+        String three = "0";
+        if(mAddCountList.get(0) != null){
+            tvShouyeLeaguesRestaurant.setText(mAddCountList.get(0).getBusinessType());
+            tvShouyeLeaguesResnum.setText("+"+mAddCountList.get(0).getAddCount());
+            first=mAddCountList.get(0).getAddCount();
+        }
+        if(mAddCountList.get(1) != null){
+            tvShouyeLeaguesShopping.setText(mAddCountList.get(1).getBusinessType());
+            tvShouyeLeaguesShopnum.setText("+"+mAddCountList.get(1).getAddCount());
+            two=mAddCountList.get(1).getAddCount();
+        }
+        if(mAddCountList.get(2) != null){
+            tvShouyeLeaguesStay.setText(mAddCountList.get(2).getBusinessType());
+            tvShouyeLeaguesStaynum.setText("+"+mAddCountList.get(2).getAddCount());
+            three=mAddCountList.get(2).getAddCount();
+        }
 
+        for (LeaguesAddCountlist mAdddistrictcountbean : mAddCountList) {
+            allcount = allcount + stringChangeInt(mAdddistrictcountbean.getAddCount());
+        }
+        allcount = allcount - stringChangeInt(first) -
+                stringChangeInt(two) -
+                stringChangeInt(three);
+
+        tvShouyeLeaguesNum.setText("+"+String.valueOf(allcount));
+
+    }
     private void setPieNetData() {
+        int allcount = 0;
         String first = "0";
         String two = "0";
         String three = "0";
@@ -366,9 +413,8 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
                 three = mAllCountList.get(2).getAllCount();
             }
             tvShouyeLeaguesOthertip.setText("其他");
-            int allcount = 0;
-            for (DistrictCountBean districtcountbean : mAllCountList) {
-                allcount = allcount + stringChangeInt(districtcountbean.getAllCount());
+            for (LeaguesAllCountList  mAlldistrictcountbean : mAllCountList) {
+                allcount = allcount + stringChangeInt(mAlldistrictcountbean.getAllCount());
             }
             allcount = allcount - stringChangeInt(first) -
                     stringChangeInt(two) -
@@ -377,7 +423,7 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
                     first,
                     two,
                     three,
-                    allcount + ""
+                    String.valueOf(allcount)
             };
         } catch (Exception e) {
             e.printStackTrace();
@@ -397,38 +443,24 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
      * 查询吆喝和商圈动态
      */
     private void getYellAndDynamicData() {
-//        (String businessId,
-//                String area,
-//                String businessCircle,
-//                String messageType,
-//                String pushScope,
-//                String author,
-//                String phone,
-//                String messageTitle,
-//                String messageContent,
-//                String provinces,
-//                String pageNum,
-//                String pageSize,
-//                String serNum, String source,
-//                String reqTime,
         try {
             Log.i("tag", "省份代码code--->" + mActivity.shopRovinceid);
             mOkHttpsImp.queryBusinessDynamic(
-                    "BD2016052013475900000010",
-                    "",
-                    "310117",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "310000",
-                    "",
-                    "",
-                    mActivity.uuid,
-                    "app",
-                    mActivity.reqTime,
+                    "BD2016052013475900000010",//businessId
+                    "",                           //area
+                    "310117",                    //businessCircle
+                    "",                           //messageType
+                    "",                           //pushScope
+                    "",                           //businessName mActivity.ShopName
+                    "",                           //phone
+                    "",                           //messageTitle
+                    "",                           //messageContent
+                    "310000",                    //provinces
+                    page+"",                     //pageNum
+                    "15",                        //pageSize
+                    mActivity.uuid,             //serNum
+                    "app",                       //source
+                    mActivity.reqTime,          //reqTime
                     new MyResultCallback<String>() {
                         @Override
                         public void onResponseResult(Result result) {
@@ -458,7 +490,7 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
                                     showdynamic(mDataZxy);
                                 }
 
-                            } catch (JSONException e) {
+                            } catch (Exception e) {
                                 e.printStackTrace();
                             }
 

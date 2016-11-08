@@ -236,7 +236,7 @@ public enum OkHttpsImp {
 									  String messageType,
 									  String pushScope,
 									  String pushTime,
-									  String author,
+									  String businessName,
 									  String phone,
 									  String messageTitle,
 									  String messageContent,
@@ -255,7 +255,7 @@ public enum OkHttpsImp {
 		params.put("messageType", messageType);
 		params.put("pushScope", pushScope);
 		params.put("pushTime", pushTime);
-		params.put("author", author);
+		params.put("businessName", businessName);
 		params.put("phone", phone);
 		params.put("messageTitle", messageTitle);
 		params.put("messageContent", messageContent);
@@ -282,7 +282,7 @@ public enum OkHttpsImp {
 									 String businessCircle,
 									 String messageType,
 									 String pushScope,
-									 String author,
+									 String businessName,
 									 String phone,
 									 String messageTitle,
 									 String messageContent,
@@ -299,7 +299,7 @@ public enum OkHttpsImp {
 		params.put("businessCircle", businessCircle);
 		params.put("messageType", messageType);
 		params.put("pushScope", pushScope);
-		params.put("author", author);
+		params.put("businessName", businessName);
 		params.put("phone", phone);
 		params.put("messageTitle", messageTitle);
 		params.put("messageContent", messageContent);
