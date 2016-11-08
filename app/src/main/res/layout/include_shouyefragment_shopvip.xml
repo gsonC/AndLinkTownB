@@ -49,7 +49,7 @@
                         android:ellipsize="end"
                         android:maxEms="4"
                         android:singleLine="true"
-                        android:text="20"
+                        android:text="0"
                         android:textColor="@color/color_00b4d9"
                         android:textSize="33sp"/>
                 </LinearLayout>
@@ -106,7 +106,7 @@
                         android:ellipsize="end"
                         android:maxEms="4"
                         android:singleLine="true"
-                        android:text="2000"
+                        android:text="0"
                         android:textColor="@color/color_00b4d9"
                         android:textSize="33sp"/>
                 </LinearLayout>
@@ -139,7 +139,7 @@
                 android:id="@+id/tv_shouyemanagement_muchtoday"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1000"
+                android:text="0"
                 android:singleLine="true"
                 android:maxEms="6"
                 android:textColor="@color/color_00b4d9"
@@ -171,7 +171,7 @@
                 android:id="@+id/tv_shouyemanagement_muchweek"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1000"
+                android:text="0"
                 android:singleLine="true"
                 android:maxEms="6"
                 android:textColor="@color/color_00b4d9"
@@ -255,7 +255,7 @@
                 android:ellipsize="end"
                 android:maxEms="6"
                 android:singleLine="true"
-                android:text="20次"
+                android:text="暂无数据"
                 android:textColor="@color/color_4b4b4b"
                 android:textSize="20sp"/>
 
@@ -275,7 +275,7 @@
                 android:maxEms="5"
                 android:paddingTop="3dp"
                 android:singleLine="true"
-                android:text="黄鹤楼上看黄河"
+                android:text="暂无数据"
                 android:textColor="@color/showcolor"
                 android:textSize="16sp"/>
 
@@ -297,7 +297,7 @@
                 android:ellipsize="end"
                 android:maxEms="6"
                 android:singleLine="true"
-                android:text="10次"
+                android:text="暂无数据"
                 android:textColor="@color/color_4b4b4b"
                 android:textSize="20sp"/>
 
@@ -318,7 +318,7 @@
                 android:maxEms="5"
                 android:paddingTop="3dp"
                 android:singleLine="true"
-                android:text="乘风雨欲来"
+                android:text="暂无数据"
                 android:textColor="@color/showcolor"
                 android:textSize="16sp"/>
 
@@ -340,7 +340,7 @@
                 android:ellipsize="end"
                 android:maxEms="6"
                 android:singleLine="true"
-                android:text="5次"
+                android:text="暂无数据"
                 android:textColor="@color/color_4b4b4b"
                 android:textSize="20sp"/>
 
@@ -361,7 +361,7 @@
                 android:maxEms="5"
                 android:paddingTop="3dp"
                 android:singleLine="true"
-                android:text="萍水相逢"
+                android:text="暂无数据"
                 android:textColor="@color/showcolor"
                 android:textSize="16sp"/>
         </LinearLayout>

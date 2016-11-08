@@ -34,6 +34,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.xizhi.mezone.b.R;
 
 import java.io.InputStream;
 
@@ -512,7 +513,7 @@ public class AbViewUtil {
 	 */
 	public static void filletImageView(Context context, ImageView imageView, String imgUrl, int imgRadian){
 
-		Glide.with(context).load(imgUrl).transform(new GlideRoundTransform(context,imgRadian)).into(imageView);
+		Glide.with(context).load(imgUrl).error(R.mipmap.defaultimg_11).transform(new GlideRoundTransform(context,imgRadian)).into(imageView);
 
 	}
 }

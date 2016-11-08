@@ -23,7 +23,6 @@ import com.alibaba.fastjson.JSON;
 import com.igexin.sdk.PushManager;
 import com.lianbi.mezone.b.app.Constants;
 import com.lianbi.mezone.b.bean.AppUpDataBean;
-import com.lianbi.mezone.b.bean.FinancialOfficeAmountBean;
 import com.lianbi.mezone.b.bean.ShouyeServiceBean;
 import com.lianbi.mezone.b.fragment.FinancialOfficeFragment;
 import com.lianbi.mezone.b.fragment.GlzxPagerFragment;
@@ -32,7 +31,6 @@ import com.lianbi.mezone.b.fragment.ShouYeFragment;
 import com.lianbi.mezone.b.fragment.WisdomManagerFragment;
 import com.lianbi.mezone.b.httpresponse.API;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
-import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
 import com.lianbi.mezone.b.impl.MyShopChange;
 import com.lianbi.mezone.b.photo.PopupWindowHelper;
 import com.lianbi.mezone.b.push.PushDemoReceiver;
@@ -57,8 +55,7 @@ import cn.com.hgh.view.DialogCommon;
 import cn.com.hgh.view.HttpDialog;
 
 @SuppressLint({"ResourceAsColor", "HandlerLeak"})
-public class MainActivity extends BaseActivity implements BDLocation_interface,
-		MyShopChange {
+public class MainActivity extends BaseActivity implements BDLocation_interface, MyShopChange {
 	FrameLayout fm_funcpage0, fm_funcpage1, fm_funcpage2, fm_funcpage3;
 	RadioButton rb_shouye, rb_jiaoyiguanli, rb_caiwushi, rb_mine;
 	private ImageView img_main_red;
@@ -109,55 +106,8 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 
 		getUpData();
 
-		getShouyeBanner();
 	}
 
-	private void getShouyeBanner() {
-
-		String reqTime = AbDateUtil.getDateTimeNow();
-		String uuid = AbStrUtil.getUUID();
-
-		/**
-		 * 轮播图
-		 */
-		try {
-			okHttpsImp.getAdvert("F1", new MyResultCallback<String>() {
-
-				@Override
-				public void onResponseResult(Result result) {
-					String resString = result.getData();
-					try {
-						JSONObject jsonObject = new JSONObject(resString);
-						resString = jsonObject.getString("list");
-                        Log.i("tag","133 MainActivity---->"+resString);
-//						ShouyeManagementFragment shouyeManagementFragment = new ShouyeManagementFragment();
-//						shouyeManagementFragment.getBannerData(resString);
-
-
-
-
-
-
-					} catch (JSONException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-
-				}
-
-				@Override
-				public void onResponseFailed(String msg) {
-
-
-				}
-			}, uuid, "app", reqTime);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-
-	}
 
 	public void postCID() {
 		if (ContentUtils.getLoginStatus(this)) {
@@ -171,41 +121,23 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 	 * 根据用户下载服务对应订单管理显示对应订单项
 	 */
 	private void typeUserDownload(ArrayList<ShouyeServiceBean> datas) {
-		ContentUtils.putSharePre(MainActivity.this,
-				Constants.SHARED_PREFERENCE_NAME,
-				Constants.DDFW, "0");
-		ContentUtils.putSharePre(MainActivity.this,
-				Constants.SHARED_PREFERENCE_NAME,
-				Constants.HHPF, "0");
-		ContentUtils.putSharePre(MainActivity.this,
-				Constants.SHARED_PREFERENCE_NAME,
-				Constants.YYDD, "0");
-		ContentUtils.putSharePre(MainActivity.this,
-				Constants.SHARED_PREFERENCE_NAME,
-				Constants.HAS_PRODUCT, false);
+		ContentUtils.putSharePre(MainActivity.this, Constants.SHARED_PREFERENCE_NAME, Constants.DDFW, "0");
+		ContentUtils.putSharePre(MainActivity.this, Constants.SHARED_PREFERENCE_NAME, Constants.HHPF, "0");
+		ContentUtils.putSharePre(MainActivity.this, Constants.SHARED_PREFERENCE_NAME, Constants.YYDD, "0");
+		ContentUtils.putSharePre(MainActivity.this, Constants.SHARED_PREFERENCE_NAME, Constants.HAS_PRODUCT, false);
 		for (int i = 0; i < datas.size(); i++) {
 			if (1 == datas.get(i).getId()) {
-				ContentUtils.putSharePre(MainActivity.this,
-						Constants.SHARED_PREFERENCE_NAME,
-						Constants.DDFW, "1");
+				ContentUtils.putSharePre(MainActivity.this, Constants.SHARED_PREFERENCE_NAME, Constants.DDFW, "1");
 			} else if (2 == datas.get(i).getId()) {
-				ContentUtils.putSharePre(MainActivity.this,
-						Constants.SHARED_PREFERENCE_NAME,
-						Constants.HHPF, "3");
+				ContentUtils.putSharePre(MainActivity.this, Constants.SHARED_PREFERENCE_NAME, Constants.HHPF, "3");
 			} else if (4 == datas.get(i).getId()) {
-				ContentUtils.putSharePre(MainActivity.this,
-						Constants.SHARED_PREFERENCE_NAME,
-						Constants.YYDD, "4");
+				ContentUtils.putSharePre(MainActivity.this, Constants.SHARED_PREFERENCE_NAME, Constants.YYDD, "4");
 			}
 		}
 		for (int i = 0; i < datas.size(); i++) {
 			ShouyeServiceBean bean = datas.get(i);
-			if (bean != null
-					&& !TextUtils.isEmpty(bean.getHasProduct())
-					&& bean.getHasProduct().equals("Y")) {
-				ContentUtils.putSharePre(MainActivity.this,
-						Constants.SHARED_PREFERENCE_NAME,
-						Constants.HAS_PRODUCT, true);
+			if (bean != null && !TextUtils.isEmpty(bean.getHasProduct()) && bean.getHasProduct().equals("Y")) {
+				ContentUtils.putSharePre(MainActivity.this, Constants.SHARED_PREFERENCE_NAME, Constants.HAS_PRODUCT, true);
 				break;
 			}
 		}
@@ -220,8 +152,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 
 	@Override
 	protected void onDestroy() {
-		PushDemoReceiver.payloadData.delete(0,
-				PushDemoReceiver.payloadData.length());
+		PushDemoReceiver.payloadData.delete(0, PushDemoReceiver.payloadData.length());
 		super.onDestroy();
 	}
 
@@ -233,84 +164,76 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 		String reqTime = AbDateUtil.getDateTimeNow();
 		String uuid = AbStrUtil.getUUID();
 		try {
-			okHttpsImp.getEdition(uuid, "app", reqTime, vName,
-					new MyResultCallback<String>() {
+			okHttpsImp.getEdition(uuid, "app", reqTime, vName, new MyResultCallback<String>() {
 
-						@Override
-						public void onResponseResult(Result result) {
-							final AppUpDataBean uB = com.alibaba.fastjson.JSONObject
-									.parseObject(result.getData(),
-											AppUpDataBean.class);
-							String status = uB.getCoerceModify();
-							if (!uB.getVersion().equals("V" + AbAppUtil.getAppVersionName(MainActivity.this))) {
-								((MineFragment) fm_mine).setRedDotShow();
-								if (status.equals("Y")) {
-									mustUp = true;
-									DialogCommon dialogCommon = new DialogCommon(
-											MainActivity.this) {
+				@Override
+				public void onResponseResult(Result result) {
+					final AppUpDataBean uB = com.alibaba.fastjson.JSONObject.parseObject(result.getData(), AppUpDataBean.class);
+					String status = uB.getCoerceModify();
+					if (!uB.getVersion().equals("V" + AbAppUtil.getAppVersionName(MainActivity.this))) {
+						((MineFragment) fm_mine).setRedDotShow();
+						if (status.equals("Y")) {
+							mustUp = true;
+							DialogCommon dialogCommon = new DialogCommon(MainActivity.this) {
 
-										@Override
-										public void onOkClick() {
-											mustUp = false;
-											downApp(uB);
-											dismiss();
-										}
-
-										@Override
-										public void onCheckClick() {
-											dismiss();
-
-										}
-									};
-									dialogCommon
-											.setOnDismissListener(new DialogInterface.OnDismissListener() {
-
-												@Override
-												public void onDismiss(
-														DialogInterface arg0) {
-													if (mustUp) {
-														MainActivity.this.exit();
-													}
-
-												}
-											});
-									dialogCommon.setTextTitle("必须更新了:"
-											+ uB.getVersion());
-									dialogCommon.setTv_dialog_common_ok("更新");
-									dialogCommon
-											.setTv_dialog_common_cancelV(View.GONE);
-									dialogCommon.show();
-								} else if (status.equals("N")) {
-									String edition = "V" + vName;
-									if (!edition.equals(uB.getVersion())) {
-										DialogCommon dialogCommon = new DialogCommon(MainActivity.this) {
-
-											@Override
-											public void onOkClick() {
-												dismiss();
-												downApp(uB);
-											}
-
-											@Override
-											public void onCheckClick() {
-												dismiss();
-											}
-										};
-										dialogCommon.setTextTitle("有更新了:" + uB.getVersion());
-										dialogCommon.setTv_dialog_common_ok("更新");
-										dialogCommon.setTv_dialog_common_cancel("取消");
-										dialogCommon.show();
-									}
+								@Override
+								public void onOkClick() {
+									mustUp = false;
+									downApp(uB);
+									dismiss();
 								}
+
+								@Override
+								public void onCheckClick() {
+									dismiss();
+
+								}
+							};
+							dialogCommon.setOnDismissListener(new DialogInterface.OnDismissListener() {
+
+								@Override
+								public void onDismiss(DialogInterface arg0) {
+									if (mustUp) {
+										MainActivity.this.exit();
+									}
+
+								}
+							});
+							dialogCommon.setTextTitle("必须更新了:" + uB.getVersion());
+							dialogCommon.setTv_dialog_common_ok("更新");
+							dialogCommon.setTv_dialog_common_cancelV(View.GONE);
+							dialogCommon.show();
+						} else if (status.equals("N")) {
+							String edition = "V" + vName;
+							if (!edition.equals(uB.getVersion())) {
+								DialogCommon dialogCommon = new DialogCommon(MainActivity.this) {
+
+									@Override
+									public void onOkClick() {
+										dismiss();
+										downApp(uB);
+									}
+
+									@Override
+									public void onCheckClick() {
+										dismiss();
+									}
+								};
+								dialogCommon.setTextTitle("有更新了:" + uB.getVersion());
+								dialogCommon.setTv_dialog_common_ok("更新");
+								dialogCommon.setTv_dialog_common_cancel("取消");
+								dialogCommon.show();
 							}
-
 						}
+					}
 
-						@Override
-						public void onResponseFailed(String msg) {
+				}
 
-						}
-					});
+				@Override
+				public void onResponseFailed(String msg) {
+
+				}
+			});
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -326,56 +249,11 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 		String url = uB.getUrl();
 		Downloader downloader = Downloader.getInstance(MainActivity.this);
 		long id = downloader.download(url);
-		ContentUtils.putSharePre(MainActivity.this,
-				Constants.SHARED_PREFERENCE_NAME, Constants.APPDOWNLOAD_ID, id);
+		ContentUtils.putSharePre(MainActivity.this, Constants.SHARED_PREFERENCE_NAME, Constants.APPDOWNLOAD_ID, id);
 	}
 
-	public double mTotalAccount = 0, mShopAccount = 0, mAvailableBalance = 0,
-			mTakeinMoney = 0, mShopinComeToday = 0, mFreezingAmount = 0;
+	public double mTotalAccount = 0, mShopAccount = 0, mAvailableBalance = 0, mTakeinMoney = 0, mShopinComeToday = 0, mFreezingAmount = 0;
 
-	/**
-	 * 获取财务室各项收入
-	 */
-	public void getCount() {
-		if (ContentUtils.getLoginStatus(this)) {// 获取登陆状态
-			if (!TextUtils.isEmpty(userShopInfoBean.getBusinessId())) {// 获取店铺id是否为空
-				getFinancialOfficeAmount();//财务室所有金额
-			}
-		}
-	}
-
-	/**
-	 * 财务室所有金额
-	 */
-	private void getFinancialOfficeAmount() {
-		String reqTime = AbDateUtil.getDateTimeNow();
-		String uuid = AbStrUtil.getUUID();
-		try {
-			okHttpsImp.getFinancialOfficeAmount(OkHttpsImp.md5_key, uuid, "app", reqTime,
-					userShopInfoBean.getUserId(), userShopInfoBean.getBusinessId(), new MyResultCallback<String>() {
-						@Override
-						public void onResponseResult(Result result) {
-							String reString = result.getData();
-							if (!TextUtils.isEmpty(reString)) {
-								FinancialOfficeAmountBean financialOfficeAmountBean = JSON.parseObject(reString,
-										FinancialOfficeAmountBean.class);
-								if (null != financialOfficeAmountBean) {
-									((FinancialOfficeFragment) fm_caiwushi)
-											.setFinancialOfficeAmount(financialOfficeAmountBean);
-								}
-							}
-						}
-
-						@Override
-						public void onResponseFailed(String msg) {
-
-						}
-
-					});
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
 	HttpDialog httpDialog;
 
@@ -404,9 +282,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 
 	public void pickImage() {
 		if (pw == null) {
-			pw = PopupWindowHelper.createPopupWindow(pickView,
-					(int) AbViewUtil.dip2px(this, 120),
-					(int) AbViewUtil.dip2px(this, 100));
+			pw = PopupWindowHelper.createPopupWindow(pickView, (int) AbViewUtil.dip2px(this, 120), (int) AbViewUtil.dip2px(this, 100));
 			pw.setAnimationStyle(R.style.slide_up_in_down_out);
 		}
 		pw.showAsDropDown(ivTitleRight, 0, (int) AbViewUtil.dip2px(this, 2));
@@ -417,18 +293,15 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 	 */
 	public void initPickView() {
 		pickView = View.inflate(this, R.layout.mainpoplayout, null);
-		TextView mainpoplayout_tvlist = (TextView) pickView
-				.findViewById(R.id.mainpoplayout_tvlist);
-		TextView mainpoplayout_tvxia = (TextView) pickView
-				.findViewById(R.id.mainpoplayout_tvxia);
+		TextView mainpoplayout_tvlist = (TextView) pickView.findViewById(R.id.mainpoplayout_tvlist);
+		TextView mainpoplayout_tvxia = (TextView) pickView.findViewById(R.id.mainpoplayout_tvxia);
 		mainpoplayout_tvlist.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
 				// 订单列表
 				pw.dismiss();
-				Intent intent_more = new Intent(MainActivity.this,
-						OrderProductListActivity.class);
+				Intent intent_more = new Intent(MainActivity.this, OrderProductListActivity.class);
 				startActivity(intent_more);
 			}
 		});
@@ -438,8 +311,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 			public void onClick(View arg0) {
 				// 订单生成
 				pw.dismiss();
-				startActivity(new Intent(MainActivity.this,
-						OrderProductActivity.class));
+				startActivity(new Intent(MainActivity.this, OrderProductActivity.class));
 			}
 		});
 
@@ -515,17 +387,17 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 
 						@Override
 						public void onOkClick() {
-							ContentUtils.putSharePre(MainActivity.this,
-									Constants.SHARED_PREFERENCE_NAME, Constants.USERHEADURL,
-									userShopInfoBean.getPersonHeadUrl());
+							ContentUtils.putSharePre(MainActivity.this, Constants.SHARED_PREFERENCE_NAME, Constants.USERHEADURL, userShopInfoBean.getPersonHeadUrl());
 
-							ContentUtils.putSharePre(MainActivity.this,
-									Constants.SHARED_PREFERENCE_NAME, Constants.LOGINED_IN,
-									false);
+							ContentUtils.putSharePre(MainActivity.this, Constants.SHARED_PREFERENCE_NAME, Constants.LOGINED_IN, false);
 							userShopInfoBean = null;
 							refreshFMData();
 							setPageRightTextVisibility(View.INVISIBLE);
+							Intent intent = new Intent();
+							intent.setClass(MainActivity.this,LoginActivity.class);
+							startActivity(intent);
 							dismiss();
+							finish();
 							ContentUtils.showMsg(MainActivity.this, "已退出登录");
 						}
 					};
@@ -572,7 +444,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 				// refreshFMData();
 				// break;
 				case SERVICEMALLSHOP_CODE: //服务商城返回
-					//getServiceMall();
+					getServiceMall();
 					break;
 			}
 		}
@@ -591,20 +463,17 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 			String reqTime = AbDateUtil.getDateTimeNow();
 			String uuid = AbStrUtil.getUUID();
 			try {
-				okHttpsImp.postPhoneClientId(uuid, "app", reqTime,
-						userShopInfoBean.getUserId(),
-						userShopInfoBean.getBusinessId(), mClientId, "01",
-						new MyResultCallback<String>() {
+				okHttpsImp.postPhoneClientId(uuid, "app", reqTime, userShopInfoBean.getUserId(), userShopInfoBean.getBusinessId(), mClientId, "01", new MyResultCallback<String>() {
 
-							@Override
-							public void onResponseResult(Result result) {
-							}
+					@Override
+					public void onResponseResult(Result result) {
+					}
 
-							@Override
-							public void onResponseFailed(String msg) {
+					@Override
+					public void onResponseFailed(String msg) {
 
-							}
-						});
+					}
+				});
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -618,7 +487,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 		setShoyYeTitle();
 		((ShouYeFragment) fm_shouye).refreshFMData();
 		((WisdomManagerFragment) fm_wisdommanage).refreshFMData();
-		((FinancialOfficeFragment) fm_caiwushi).refreshFMData();
+		//((FinancialOfficeFragment) fm_caiwushi).refreshFMData();
 		((MineFragment) fm_mine).refreshFMData();
 	}
 
@@ -632,8 +501,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 		fm_mine = new MineFragment();
 
 		fm.beginTransaction().replace(R.id.fm_funcpage0, fm_shouye).commit();
-		fm.beginTransaction().replace(R.id.fm_funcpage1, fm_wisdommanage)
-				.commit();
+		fm.beginTransaction().replace(R.id.fm_funcpage1, fm_wisdommanage).commit();
 		fm.beginTransaction().replace(R.id.fm_funcpage2, fm_caiwushi).commit();
 		fm.beginTransaction().replace(R.id.fm_funcpage3, fm_mine).commit();
 
@@ -659,8 +527,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 	 */
 	public void changeFuncPage(int position) {
 		this.clickPosition = position;
-		if (position < POSITION0)
-			return;
+		if (position < POSITION0) return;
 		if (position == POSITION0) {
 			curPosition = POSITION0;
 			//	titleShouYe();
@@ -690,12 +557,12 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 			curPosition = POSITION2;
 			setPageTitleVisibility(View.VISIBLE);
 			//	setPageRightTextVisibility(View.GONE);
-			setPageTitle("财务室");
+			setPageTitle("发现场景");
 			setPageRightText("明细");
 			tv_title_left.setText("明细");
 			setPageRightTextColor(R.color.commo_text_color);
 			tv_title_left.setVisibility(View.INVISIBLE);
-			((FinancialOfficeFragment) fm_caiwushi).refreshFMData();
+			((FinancialOfficeFragment) fm_caiwushi).setUrl("http://www.baidu.com");
 			setPageBackVisibility(View.INVISIBLE);
 			setPageRightImageVisibility();
 			rb_caiwushi.setChecked(true);
@@ -703,15 +570,15 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 			fm_funcpage0.setVisibility(View.GONE);
 			fm_funcpage3.setVisibility(View.GONE);
 			fm_funcpage1.setVisibility(View.GONE);
-			getFinancialOfficeClick();// 刷新财务室价格
 		} else if (position == POSITION3) {
 			curPosition = POSITION3;
 			setPageTitleVisibility(View.VISIBLE);
 			((MineFragment) fm_mine).refreshFMData();
 			setPageTitle("我的");
 			setPageRightText("退出登录");
-			setPageRightTextColor(R.color.black);
-
+			setPageRightTextColor(R.color.commo_text_color);
+			tv_title_left.setText("退出登录");
+			tv_title_left.setVisibility(View.INVISIBLE);
 			setPageBackVisibility(View.INVISIBLE);
 			setPageRightImageVisibility();
 			rb_mine.setChecked(true);
@@ -727,11 +594,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 		}
 	}
 
-	/**
-	 * 点击财务室图标刷新财务室各项收入
-	 */
 	private void getFinancialOfficeClick() {
-		getCount();
 	}
 
 	/**
@@ -740,8 +603,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 	private void check_button() {
 		checkListener = new OnCheckedChangeListener() {
 			@Override
-			public void onCheckedChanged(CompoundButton buttonView,
-										 boolean isChecked) {
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				if (isChecked) {
 					if (rb_shouye == buttonView) {
 						rb_mine.setChecked(false);
@@ -836,8 +698,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 
 			if ((System.currentTimeMillis() - mExitTime) > 1000) {
-				ContentUtils.showMsg(this,
-						getResources().getString(R.string.balck_tuichu));
+				ContentUtils.showMsg(this, getResources().getString(R.string.balck_tuichu));
 
 				mExitTime = System.currentTimeMillis();
 
@@ -871,12 +732,9 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 		if (httpDialog != null) {
 			httpDialog.dismiss();
 		}
-		ContentUtils.putSharePre(this, Constants.SHARED_PREFERENCE_NAME,
-				Constants.LATITUDE, lat + "");
-		ContentUtils.putSharePre(this, Constants.SHARED_PREFERENCE_NAME,
-				Constants.LONGITUDE, lng + "");
-		ContentUtils.putSharePre(this, Constants.SHARED_PREFERENCE_NAME,
-				Constants.ADDRESS, address);
+		ContentUtils.putSharePre(this, Constants.SHARED_PREFERENCE_NAME, Constants.LATITUDE, lat + "");
+		ContentUtils.putSharePre(this, Constants.SHARED_PREFERENCE_NAME, Constants.LONGITUDE, lng + "");
+		ContentUtils.putSharePre(this, Constants.SHARED_PREFERENCE_NAME, Constants.ADDRESS, address);
 	}
 
 	@Override
@@ -908,8 +766,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 	 * 获取已有的服务商城列表
 	 */
 	public void getServiceMall() {
-		if (ContentUtils.getLoginStatus(this)
-				&& !TextUtils.isEmpty(userShopInfoBean.getBusinessId())) {
+		if (ContentUtils.getLoginStatus(this) && !TextUtils.isEmpty(userShopInfoBean.getBusinessId())) {
 			okHttpsImp.getMoreServerMall(new MyResultCallback<String>() {
 
 				@Override
@@ -921,9 +778,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 							reString = jsonObject.getString("appsList");
 							if (null != reString) {
 								mDatas.clear();
-								mDatas = (ArrayList<ShouyeServiceBean>) JSON
-										.parseArray(reString,
-												ShouyeServiceBean.class);
+								mDatas = (ArrayList<ShouyeServiceBean>) JSON.parseArray(reString, ShouyeServiceBean.class);
 
 								//								typeUserDownload(mDatas);
 /*
@@ -940,8 +795,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface,
 								//								mDatas.add(mDatas.size(), endservie);
 								//								setFill();
 								Log.i("tag", "  " + mDatas.size());
-								((WisdomManagerFragment) fm_wisdommanage)
-										.getServiceMall(mDatas);
+								((WisdomManagerFragment) fm_wisdommanage).getServiceMall(mDatas);
 							}
 						} catch (JSONException e) {
 							e.printStackTrace();

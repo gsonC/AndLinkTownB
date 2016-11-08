@@ -35,6 +35,11 @@ public class BusinessMarketingActivity extends BaseActivity {
 
 	private void initView() {
 		setPageTitle("商户营销");
+		llBussinessMakingManage.setOnClickListener(this);
+		llBussinessMakingYouhuijuan.setOnClickListener(this);
+		llBussinessMakingWenzhang.setOnClickListener(this);
+		llBussinessMakingMessage.setOnClickListener(this);
+
 	}
 
 	@Override
@@ -44,8 +49,6 @@ public class BusinessMarketingActivity extends BaseActivity {
 			case R.id.ll_bussinessMaking_manage://会员管理
 				Intent intent=new Intent(this,MembersManagementTwoActivity.class);
 				startActivity(intent);
-
-				/*startActivity(new Intent(this,MembersManagementTwoActivity.class));*/
 				break;
 			case R.id.ll_bussinessMaking_youhuijuan://优惠券管理
 				startActivity(new Intent(this,CouponManagerActivity.class));
@@ -59,4 +62,5 @@ public class BusinessMarketingActivity extends BaseActivity {
 
 		}
 	}
+
 }

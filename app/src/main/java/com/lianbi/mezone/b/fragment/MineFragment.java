@@ -27,6 +27,7 @@ import com.lianbi.mezone.b.ui.AboutUsActivity;
 import com.lianbi.mezone.b.ui.ActionProduceActivity;
 import com.lianbi.mezone.b.ui.BaseActivity;
 import com.lianbi.mezone.b.ui.FeedBackActivity;
+import com.lianbi.mezone.b.ui.FinancialActivity;
 import com.lianbi.mezone.b.ui.LeaguesYellListActivity;
 import com.lianbi.mezone.b.ui.LoginActivity;
 import com.lianbi.mezone.b.ui.MainActivity;
@@ -70,7 +71,7 @@ public class MineFragment extends Fragment implements OnClickListener,
 	private final int MYSUPPLYGOODSACTIVITY_CODE = 2005;
 	private SwipeRefreshLayout swipe_mine;
 	private boolean mUpgrade = false;
-
+	private final int POSITION = 2;
 
 	/**
 	 * 刷新fm数据
@@ -254,7 +255,7 @@ public class MineFragment extends Fragment implements OnClickListener,
 		// .findViewById(R.id.fm_mine_product_f);
 		String vName = AbAppUtil.getAppVersionName(maActivity);
 		tv_mine_vision_fm.setText(vName);
-		swipe_mine = (SwipeRefreshLayout) view.findViewById(R.id.swipe_mine);
+		swipe_mine= (SwipeRefreshLayout) view.findViewById(R.id.swipe_mine);
 		swipe_mine.setColorSchemeResources(R.color.colores_news_01, R.color.black);
 		swipe_mine.setOnRefreshListener(new OnRefreshListener() {
 
@@ -272,7 +273,7 @@ public class MineFragment extends Fragment implements OnClickListener,
 		switch (arg0.getId()) {
 
 			case R.id.llt_mine_changjing://我的场景
-
+				maActivity.changeFuncPage(POSITION);
 				break;
 			case R.id.llt_mine_meyaohe://我的吆喝
 				startActivity(new Intent(maActivity, LeaguesYellListActivity.class));
@@ -339,8 +340,7 @@ public class MineFragment extends Fragment implements OnClickListener,
 				re = JumpIntent.jumpLogin_addShop1(isLogin, API.MATERIAL,
 						maActivity);
 				if (re) {
-					startActivityForResult(new Intent(maActivity,
-							FinancialOfficeFragment.class), MINEMSGACAIWUSHI_CODE);
+					startActivity(new Intent(maActivity, FinancialActivity.class));
 
 				}
 				break;

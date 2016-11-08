@@ -24,6 +24,7 @@ import com.lianbi.mezone.b.bean.WebProductManagementBean;
 import com.lianbi.mezone.b.httpresponse.API;
 import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
 import com.lianbi.mezone.b.ui.BaseActivity;
+import com.lianbi.mezone.b.ui.BusinessMarketingActivity;
 import com.lianbi.mezone.b.ui.DiningTableSettingActivity;
 import com.lianbi.mezone.b.ui.H5WebActivty;
 import com.lianbi.mezone.b.ui.MainActivity;
@@ -212,6 +213,7 @@ public class WisdomManagerFragment extends Fragment implements OnClickListener {
 	private void initView(View view) {
 		llWisdommanageServicemall.setOnClickListener(this);
 		llWisdommanageShopservice.setOnClickListener(this);
+		llWisdommanageYingxiao.setOnClickListener(this);
 		swipe_jiaoyiguanli = (SwipeRefreshLayout) view.findViewById(R.id.swipe_jiaoyiguanli);
 		swipe_jiaoyiguanli.setColorSchemeResources(R.color.colores_news_01, R.color.black);
 		swipe_jiaoyiguanli.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -240,6 +242,11 @@ public class WisdomManagerFragment extends Fragment implements OnClickListener {
 					mMainActivity.startActivityForResult(intent_more, mMainActivity.SERVICEMALLSHOP_CODE);
 
 				}
+
+				break;
+			case R.id.ll_wisdommanage_yingxiao:
+				Intent intent_yingxiao = new Intent(mMainActivity, BusinessMarketingActivity.class);
+				startActivity(intent_yingxiao);
 				break;
 		}
 	}

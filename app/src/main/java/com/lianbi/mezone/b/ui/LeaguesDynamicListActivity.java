@@ -110,14 +110,14 @@ public class LeaguesDynamicListActivity extends BaseActivity {
                 TextView tv_leaguesdynamiclist_content = helper.getView(R.id.tv_leaguesdynamiclist_content);
 
                 Glide.with(LeaguesDynamicListActivity.this).load
-                        (compareMessageType(item.getMessageType())).error(R.mipmap.icon_addtable).into(iv_leaguesdynamiclist_icon);
+                        (compareMessageType(item.getMessageType())).error(R.mipmap.icon).into(iv_leaguesdynamiclist_icon);
                 tv_leaguesdynamiclist_firsttitle.setText(item.getMessageTitle());
                 tv_leaguesdynamiclist_content.setText(item.getMessageContent());
                 if (!item.isExpanded()) {
-                    iv_leaguesdynamiclist_expand.setImageResource(R.mipmap.up2);
+                    iv_leaguesdynamiclist_expand.setImageResource(R.mipmap.down12);
                     tv_leaguesdynamiclist_content.setVisibility(View.GONE);
                 } else {
-                    iv_leaguesdynamiclist_expand.setImageResource(R.mipmap.down12);
+                    iv_leaguesdynamiclist_expand.setImageResource(R.mipmap.up2);
                     tv_leaguesdynamiclist_content.setVisibility(View.VISIBLE);
                 }
                 helper.getView(R.id.lay_leaguesdynamiclist_firsttitle).setOnClickListener(
@@ -150,7 +150,7 @@ public class LeaguesDynamicListActivity extends BaseActivity {
         }
         else
         if(messagetype.equals("MT0002")){
-            return R.mipmap.icon_recruit;
+            return R.mipmap.icon_cooperate;
         }
         else
         if(messagetype.equals("MT0003")){

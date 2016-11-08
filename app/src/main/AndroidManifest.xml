@@ -98,6 +98,7 @@
         <activity
             android:name="com.lianbi.mezone.b.ui.NewIntegralGoodsActivity"
             android:windowSoftInputMode="stateHidden|stateUnchanged"/>
+        <activity android:name="com.lianbi.mezone.b.ui.FinancialActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.ReceivablesQRActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.ReceivablesActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.MarketingBuySMSActivity"/>
@@ -179,6 +180,9 @@
         <activity android:name="com.lianbi.mezone.b.ui.MineMsgActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.ServiceShopActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.ActionProduceActivity"/>
+        <activity android:name="com.lianbi.mezone.b.ui.ConsumptionSettlementActivity"/>
+        <activity android:name="com.lianbi.mezone.b.ui.CallServiceActivity"/>
+        <activity android:name="com.lianbi.mezone.b.ui.ComeDetailActivity"/>
         <activity
             android:name="com.lianbi.mezone.b.ui.OrderProductListActivity"
             android:launchMode="singleTask"/>
@@ -416,11 +420,10 @@
             android:value="@integer/google_play_services_version"/>
         <!-- 个推SDK配置结束 -->
         <activity android:name="com.lianbi.mezone.b.ui.IncomeActivity"/>
-        <!--
+
             <activity
             android:name="com.lianbi.mezone.b.ui.CallSetActivity"
             android:windowSoftInputMode="stateHidden|adjustPan" />
-        -->
         <activity android:name="com.lianbi.mezone.b.ui.TableHasPaidActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.TableHasOrderedActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.LeaguesDynamicListActivity"/>

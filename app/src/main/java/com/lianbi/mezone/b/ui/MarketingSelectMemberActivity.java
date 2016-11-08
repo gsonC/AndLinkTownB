@@ -335,7 +335,7 @@ public class MarketingSelectMemberActivity extends BaseActivity {
     private void getMembersSelsectList(final  boolean isResh) {
         try {
             okHttpsImp.getMembersList(uuid, "app", reqTime, OkHttpsImp.md5_key,
-                    userShopInfoBean.getBusinessId(), paramLike,"", page + "", 20 + "", new MyResultCallback<String>() {
+                    userShopInfoBean.getBusinessId(), page + "", 20 + "", new MyResultCallback<String>() {
 
                         @Override
                         public void onResponseResult(Result result) {

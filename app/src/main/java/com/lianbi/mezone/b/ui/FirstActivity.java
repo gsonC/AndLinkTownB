@@ -24,9 +24,8 @@ import cn.com.hgh.utils.Result;
 
 /**
  * 启动页
- * 
+ *
  * @author guanghui.han
- * 
  */
 public class FirstActivity extends BaseActivity {
 
@@ -43,10 +42,10 @@ public class FirstActivity extends BaseActivity {
 		/**
 		 * 如果登录过自动登录
 		 */
-		boolean isLogin = ContentUtils.getLoginStatus(this);
-		if (isLogin) {
-			autoLogin();
-		}
+		final boolean isLogin = ContentUtils.getLoginStatus(this);
+		//if (isLogin) {
+		//	autoLogin();
+		// }
 		/**
 		 * 是否第一次
 		 */
@@ -63,9 +62,16 @@ public class FirstActivity extends BaseActivity {
 					startActivity(new Intent(FirstActivity.this,
 							GuiderActivity.class));
 				} else {
-					Intent intent = new Intent();
-					intent.setClass(FirstActivity.this, MainActivity.class);
-					startActivity(intent);
+					//Intent intent = new Intent();
+					//intent.setClass(FirstActivity.this, MainActivity.class);
+					//startActivity(intent);
+					if (isLogin) {
+						autoLogin();
+					} else {
+						Intent intent = new Intent();
+						intent.setClass(FirstActivity.this, LoginActivity.class);
+						startActivity(intent);
+					}
 				}
 				finish();
 			}
@@ -121,6 +127,10 @@ public class FirstActivity extends BaseActivity {
 							userShopInfoBean.setPersonHeadUrl(backBean
 									.getUserImage());
 						}
+						Intent intent = new Intent();
+						intent.setClass(FirstActivity.this, MainActivity.class);
+						startActivity(intent);
+						finish();
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}
@@ -132,11 +142,11 @@ public class FirstActivity extends BaseActivity {
 							Constants.SHARED_PREFERENCE_NAME, Constants.LOGINED_IN,
 							false);
 				}
-			},uuid,"app",reqTime,  username, password);
+			}, uuid, "app", reqTime, username, password);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
+
 }

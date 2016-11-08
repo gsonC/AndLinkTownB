@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colores_news_14"
+    android:orientation="vertical"
+    >
+
+    <cn.com.hgh.view.AbPullToRefreshView
+        android:id="@+id/act_Call_abpulltorefreshview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <cn.com.hgh.view.SlideListView2
+            android:id="@+id/fm_Call_listView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:cacheColorHint="#00000000"
+            android:divider="#dddbdb"
+            android:dividerHeight="1.0px"
+            android:drawSelectorOnTop="false"
+            android:listSelector="#00000000"
+            android:scrollbars="none">
+        </cn.com.hgh.view.SlideListView2>
+    </cn.com.hgh.view.AbPullToRefreshView>
+    <ImageView
+        android:id="@+id/img_callset_empty"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scaleType="fitCenter"
+        android:src="@mipmap/iv_empty"
+        android:visibility="gone"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line"
+        android:background="@color/colores_news_14"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="bottom"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        >
+
+        <cn.com.hgh.view.ContainsEmojiEditText
+            android:id="@+id/tv_call"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:padding="7dp"
+            android:background="@drawable/shape_addnewmember"
+            android:hint="请输入呼叫内容"
+            android:maxLength="10"
+            android:singleLine="true"
+            android:textColor="@color/colores_news_10"
+            android:textColorHint="@color/colores_news_11"
+            android:textSize="14sp"
+            />
+
+        <TextView
+            android:id="@+id/bt_call_sure"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/shape_addnewmember"
+            android:gravity="center"
+            android:padding="7dp"
+            android:text="确定"
+            android:textColor="@color/colores_news_18"
+            android:textSize="14sp"
+            />
+    </LinearLayout>
+
+</LinearLayout>

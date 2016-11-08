@@ -4,9 +4,12 @@ package com.lianbi.mezone.b.ui;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.lianbi.mezone.b.bean.Consumption;
 import com.xizhi.mezone.b.R;
+
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -25,7 +28,8 @@ public class ConsumptionSettlementActivity extends BaseActivity {
 	AbPullToRefreshView actCumptionAbpulltorefreshview;
 	@Bind(R.id.img_cumption_empty)
 	ImageView imgCumptionEmpty;
-
+   private int page=1;
+	ArrayList<Consumption> mDatas=new ArrayList<Consumption>();
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -62,9 +66,16 @@ public class ConsumptionSettlementActivity extends BaseActivity {
 		mAdapter = new QuickAdapter<Consumption>(this, R.layout.activity_consumption_item) {
 			@Override
 			protected void convert(BaseAdapterHelper helper, Consumption item) {
-
+				TextView tv_consum_total=helper.getView(R.id.tv_consum_total);
+				TextView tv_consum_time=helper.getView(R.id.tv_consum_time);
+				TextView tv_consum_price=helper.getView(R.id.tv_consum_price);
+				TextView tv_consum_daytime=helper.getView(R.id.tv_consum_daytime);
+				TextView tv_consum_where=helper.getView(R.id.tv_consum_where);
+				TextView tv_consum_shoukuan=helper.getView(R.id.tv_consum_shoukuan);
 			}
 		};
 		actCumptionListview.setAdapter(mAdapter);
 	}
+
+
 }

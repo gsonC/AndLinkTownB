@@ -33,7 +33,13 @@ public class MembersManagementTwoActivity extends BaseActivity {
 		initView();
 		initData();
 		mainlistview.setAdapter(new MyAdapter());
+		int groupCount = mainlistview.getCount();
 
+		for (int i=0; i<groupCount; i++) {
+
+			mainlistview.expandGroup(i);
+
+		};
 	}
 
 	private void initView() {
@@ -56,7 +62,7 @@ public class MembersManagementTwoActivity extends BaseActivity {
 		List<String> list1 = new ArrayList<String>();
 		list1.add("会员列表");
 		list1.add("会员分类");
-		list1.add("标签管理");
+		/*list1.add("标签管理");*/
 
 		map.put("会员信息管理", list1);
 

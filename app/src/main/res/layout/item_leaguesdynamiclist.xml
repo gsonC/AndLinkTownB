@@ -19,7 +19,7 @@
             android:id="@+id/iv_leaguesdynamiclist_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/icon_recruit"
+            android:src="@mipmap/icon_cooperate"
             android:layout_gravity="center_vertical"
             />
         <TextView

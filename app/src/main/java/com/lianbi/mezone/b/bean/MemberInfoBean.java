@@ -10,7 +10,7 @@ package com.lianbi.mezone.b.bean;/*
 
 import java.io.Serializable;
 
-public class MemberInfoBean implements Serializable {
+public class  MemberInfoBean implements Serializable {
 	private static final long serialVersionUID = -5076976047607374205L;
 
 	/**
@@ -58,6 +58,15 @@ public class MemberInfoBean implements Serializable {
 	private int vipSex;
 	private String labelName;
 	private String vipType;
+    private String nickName;
+
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
 
 	public String getVipType() {
 		return vipType;

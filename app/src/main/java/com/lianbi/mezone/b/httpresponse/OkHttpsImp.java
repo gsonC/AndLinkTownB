@@ -208,45 +208,46 @@ public enum OkHttpsImp {
 		String url = getAbsoluteUrl(API.GETADVERT);
 		postNoProgressResponse(myResultCallback, params, url);
 	}
+
 	/**
 	 * 发布吆喝
 	 *
 	 * @throws
 	 */
-//	"BD2016052013475900000010",
-//			"",
-//			"310117",
-//			"",
-//			"",
-//	pushTime,
-//			"",
-//	strContactnum,
-//	strTitle,
-//	strSaysomething,
-//			"310000",
-//			"上海市",
-//			"http://172.16.103.153:9005/wcm/resources/jpg/wechatmall/rss_ico.png",
-//	uuid,
-//			"app",
-//	reqTime,
+	//	"BD2016052013475900000010",
+	//			"",
+	//			"310117",
+	//			"",
+	//			"",
+	//	pushTime,
+	//			"",
+	//	strContactnum,
+	//	strTitle,
+	//	strSaysomething,
+	//			"310000",
+	//			"上海市",
+	//			"http://172.16.103.153:9005/wcm/resources/jpg/wechatmall/rss_ico.png",
+	//	uuid,
+	//			"app",
+	//	reqTime,
 	public void getAddBusinessDynamic(String businessId,
-									 String area,
-									 String businessCircle,
-									 String messageType,
-									 String pushScope,
-									 String pushTime,
-									 String author,
-									 String phone,
-									 String messageTitle,
-									 String messageContent,
-									 String provinces,
-									 String city,
-									 String address,
-									 String logoUrl,
-									 String serNum, String source,
-									 String reqTime,
-									 MyResultCallback<String> myResultCallback
-									 ) throws Exception {
+									  String area,
+									  String businessCircle,
+									  String messageType,
+									  String pushScope,
+									  String pushTime,
+									  String author,
+									  String phone,
+									  String messageTitle,
+									  String messageContent,
+									  String provinces,
+									  String city,
+									  String address,
+									  String logoUrl,
+									  String serNum, String source,
+									  String reqTime,
+									  MyResultCallback<String> myResultCallback
+	) throws Exception {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("businessId", businessId);
 		params.put("area", area);
@@ -270,6 +271,7 @@ public enum OkHttpsImp {
 		String url = getAbsoluteUrl(API.ADD_LEAGUES_YELL);
 		postNoProgressResponse(myResultCallback, params, url);
 	}
+
 	/**
 	 * 查询商圈动态
 	 *
@@ -312,15 +314,16 @@ public enum OkHttpsImp {
 		String url = getAbsoluteUrl(API.QUERY_LEAGUES_DYNAMIC);
 		postNoProgressResponse(myResultCallback, params, url);
 	}
+
 	/**
 	 * 商圈统计
 	 *
 	 * @throws
 	 */
 	public void districtCount(String areaCode,
-									 String serNum,
-									 String reqTime,
-									 MyResultCallback<String> myResultCallback
+							  String serNum,
+							  String reqTime,
+							  MyResultCallback<String> myResultCallback
 	) throws Exception {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("areaCode", areaCode);
@@ -332,15 +335,16 @@ public enum OkHttpsImp {
 		String url = getAbsoluteUrl(API.QUERY_LEAGUES_DISTRICTCOUNT);
 		postNoProgressResponse(myResultCallback, params, url);
 	}
+
 	/**
 	 * 店铺列表
 	 *
 	 * @throws
 	 */
 	public void getBusinessList(String userId,
-							  String serNum,
-							  String reqTime,
-							  MyResultCallback<String> myResultCallback
+								String serNum,
+								String reqTime,
+								MyResultCallback<String> myResultCallback
 	) throws Exception {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("userId", userId);
@@ -2405,16 +2409,15 @@ public enum OkHttpsImp {
 	/**
 	 * 获取会员列表
 	 */
-	public void getMembersList(String serNum, String source, String reqTime, String md5_key, String businessId, String paramLike, String typeId, String pageNo, String pageSize, MyResultCallback<String> myResultCallback) throws Exception {
+	public void getMembersList(String serNum, String source, String reqTime, String md5_key, String businessId,
+							  String pageNo, String pageSize, MyResultCallback<String> myResultCallback) throws Exception {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("businessId", businessId);
 		params.put("pageNo", pageNo);
 		params.put("pageSize", pageSize);
-		params.put("paramLike", paramLike);
 		params.put("reqTime", reqTime);
 		params.put("serNum", serNum);
 		params.put("source", source);
-		params.put("typeId", typeId);
 		String sign = getSign(md5_key, params);
 		params.put("sign", sign);
 		String url = getAbsoluteUrl(API.MEMBERSLIST);
@@ -2919,6 +2922,23 @@ public enum OkHttpsImp {
 		params.put("sign", sign);
 		String url = getAbsoluteUrl(API.QUERY_WITHDRAW_STATS);
 		getProgressResponse(myResultCallback, params, url);
+	}
+
+	/**
+	 * 首页会员营销
+	 */
+	public void getShopVipMarket(String serNum, String reqTime, String storeNo,
+								 MyResultCallback<String> myResultCallback) throws Exception {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("serNum", serNum);
+		params.put("source", appsource);
+		params.put("reqTime", reqTime);
+		params.put("businessId", storeNo);
+		String sign = getSign(md5_key, params);
+		params.put("sign", sign);
+		String url = getAbsoluteUrl(API.SHOUYE_SHOPVIP_MARKET);
+		getProgressResponse(myResultCallback, params, url);
+
 	}
 
 	/**

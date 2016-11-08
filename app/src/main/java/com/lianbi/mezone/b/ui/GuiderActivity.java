@@ -4,26 +4,26 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+
+import com.xizhi.mezone.b.R;
+
 import cn.com.hgh.playview.BaseSliderView;
 import cn.com.hgh.playview.BaseSliderView.OnSliderClickListener;
 import cn.com.hgh.playview.SliderLayout;
 import cn.com.hgh.playview.imp.GuiderSliderView;
 
-import com.xizhi.mezone.b.R;
-
 /**
  * 初次使用导航页面
- * 
+ *
  * @author guanghui.han
- * 
  */
 
 public class GuiderActivity extends BaseActivity implements
 		OnSliderClickListener {
 
 	SliderLayout pager_act_guider;
-	final int[] imges = { R.mipmap.guider1,
-			R.mipmap.guider3, R.mipmap.guider2 };
+	final int[] imges = {R.mipmap.guider1,
+			R.mipmap.guider3, R.mipmap.guider2};
 	TextView act_guideractivity_tv;
 
 	@Override
@@ -40,7 +40,7 @@ public class GuiderActivity extends BaseActivity implements
 			pager_act_guider.addSlider(guiderSliderView);
 		}
 		pager_act_guider
-		.setPresetIndicatorV(SliderLayout.PresetIndicators.Center_Bottom);
+				.setPresetIndicatorV(SliderLayout.PresetIndicators.Center_Bottom);
 	}
 
 	@Override

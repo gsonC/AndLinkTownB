@@ -624,7 +624,7 @@ public class API {
 	/**
 	 * 会员列表
 	 */
-	public static final String MEMBERSLIST = "businessVIP/vipList.do";
+	public static final String MEMBERSLIST = "businessVIP/vipWXList.do";
 	/**
 	 * 添加会员和修改会员信息
 	 */
@@ -730,4 +730,8 @@ public class API {
 	/* 店铺列表 */
 	public static final String QUERY_LEAGUES_BUSINESSLIST = "business/getBusinessList.do";
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	/**
+	 * 首页--会员营销
+	 */
+	public static final String SHOUYE_SHOPVIP_MARKET = "order/assemblyResult.do";
 }
