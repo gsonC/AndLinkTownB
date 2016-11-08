@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -195,11 +196,12 @@ public class LoginActivity extends BaseActivity {
 							ContentUtils.putSharePre(LoginActivity.this,
 									Constants.USERTAG, Constants.BUSINESSPHONE,backBean.getMobile());
 
-//							postClientId();
 						}
 						Intent intent = new Intent();
 						intent.putExtra("LoginBackBean", backBean);
+						intent.setClass(LoginActivity.this,MainActivity.class);
 						setResult(RESULT_OK, intent);
+						startActivity(intent);
 						finish();
 					} catch (JSONException e) {
 						e.printStackTrace();
@@ -220,33 +222,6 @@ public class LoginActivity extends BaseActivity {
 
 	}
 
-	/**
-	 * 发送手机唯一识别标识
-	 */
-	protected void postClientId() {
-		String reqTime = AbDateUtil.getDateTimeNow();
-		String uuid = AbStrUtil.getUUID();
-		try {
-			okHttpsImp.postPhoneClientId(uuid, "app", reqTime,
-					userShopInfoBean.getUserId(),
-					userShopInfoBean.getBusinessId(), mClientId, "01",
-					new MyResultCallback<String>() {
-
-						@Override
-						public void onResponseResult(Result result) {
-							ContentUtils.showMsg(LoginActivity.this, "上传成功");
-						}
-
-						@Override
-						public void onResponseFailed(String msg) {
-
-						}
-					});
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
@@ -264,4 +239,37 @@ public class LoginActivity extends BaseActivity {
 			}
 		}
 	}
+
+	/**
+	 * 返回键时间间隔
+	 */
+	private long mExitTime;
+
+	/**
+	 * 返回键监听
+	 */
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+
+			if ((System.currentTimeMillis() - mExitTime) > 1000) {
+				ContentUtils.showMsg(this, getResources().getString(R.string.balck_tuichu));
+
+				mExitTime = System.currentTimeMillis();
+
+			} else {
+
+				finish();
+
+			}
+
+			return true;
+
+		}
+
+		return super.onKeyDown(keyCode, event);
+
+	}
+
 }

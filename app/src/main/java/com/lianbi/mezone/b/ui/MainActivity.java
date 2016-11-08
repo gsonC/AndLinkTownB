@@ -393,7 +393,11 @@ public class MainActivity extends BaseActivity implements BDLocation_interface, 
 							userShopInfoBean = null;
 							refreshFMData();
 							setPageRightTextVisibility(View.INVISIBLE);
+							Intent intent = new Intent();
+							intent.setClass(MainActivity.this,LoginActivity.class);
+							startActivity(intent);
 							dismiss();
+							finish();
 							ContentUtils.showMsg(MainActivity.this, "已退出登录");
 						}
 					};
