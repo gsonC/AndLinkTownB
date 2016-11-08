@@ -1,5 +1,6 @@
 package com.lianbi.mezone.b.fragment;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.os.Bundle;
@@ -40,6 +41,12 @@ import com.lianbi.mezone.b.bean.TestBean;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
 import com.lianbi.mezone.b.ui.BaseActivity;
+import com.lianbi.mezone.b.ui.CallServiceActivity;
+import com.lianbi.mezone.b.ui.ComeDetailActivity;
+import com.lianbi.mezone.b.ui.ConsumptionSettlementActivity;
+import com.lianbi.mezone.b.ui.DiningTableSettingActivity;
+import com.lianbi.mezone.b.ui.LeaguesStorelistActivity;
+import com.lianbi.mezone.b.ui.LeaguesYellListActivity;
 import com.lianbi.mezone.b.ui.MainActivity;
 import com.readystatesoftware.viewbadger.BadgeView;
 import com.xizhi.mezone.b.R;
@@ -82,6 +89,7 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 	private RadioButton mChk_oneday_salenum, mChk_oneweek_salenum;
 	private RadioGroup mRdoGroup_time_salenum;
 	private YoYo.YoYoString rope;
+	private final int POSITION = 2;
 	/**
 	 * 广告
 	 */
@@ -93,7 +101,7 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 	 * 首页--SaaS应用服务推荐ID(7张图片ID)
 	 */
 	private ImageView mImg_shouyemagapp_call, mImg_shouyemagapp_union, mImg_shouyemagapp_sale, mImg_shouyemagapp_opeservice,
-			mImg_shouyemagapp_finservice, mImg_shouyemagapp_richbook, mImg_shouyemagapp_busdata;
+			mImg_shouyemagapp_finservice, mImg_shouyemagapp_richbook, mImg_shouyemagapp_busdata,mImg_shouyemagapp_appstore;
 	/**
 	 * 首页--本店会员
 	 */
@@ -427,6 +435,7 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 		mImg_shouyemagapp_finservice = (ImageView) view.findViewById(R.id.ind_shouyeLeagues_apprec).findViewById(R.id.img_shouyemagapp_finservice);//金融服务
 		mImg_shouyemagapp_richbook = (ImageView) view.findViewById(R.id.ind_shouyeLeagues_apprec).findViewById(R.id.img_shouyemagapp_richbook);//支付宝典
 		mImg_shouyemagapp_busdata = (ImageView) view.findViewById(R.id.ind_shouyeLeagues_apprec).findViewById(R.id.img_shouyemagapp_busdata);//商圈大数据
+		mImg_shouyemagapp_appstore = (ImageView) view.findViewById(R.id.img_shouyemagapp_appstore);
 		initViewSize();
 		initSaleRank();
 
@@ -713,6 +722,7 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 		mImg_shouyemagapp_finservice.setOnClickListener(this);
 		mImg_shouyemagapp_richbook.setOnClickListener(this);
 		mImg_shouyemagapp_busdata.setOnClickListener(this);
+		mImg_shouyemagapp_appstore.setOnClickListener(this);
 	}
 
 
@@ -731,28 +741,28 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 			 * 到店服务
 			 */
 			case R.id.ind_shouyemanagement_inshop:
-				ContentUtils.showMsg(mActivity, "到店服务");
+				startActivity(new Intent(mActivity, DiningTableSettingActivity.class));
 				break;
 			case R.id.img_shouyemag_order://客户买单
-				ContentUtils.showMsg(mActivity, "客户买单");
+				startActivity(new Intent(mActivity, ConsumptionSettlementActivity.class));
 				break;
 			case R.id.img_shouyemag_call://响应呼叫
-				ContentUtils.showMsg(mActivity, "响应呼叫");
+				startActivity(new Intent(mActivity, CallServiceActivity.class));
 				break;
 			case R.id.img_shouyemag_condetail://消费流水
-				ContentUtils.showMsg(mActivity, "消费流水");
+				startActivity(new Intent(mActivity, ComeDetailActivity.class));
 				break;
 			/**
 			 * 首页--SaaS应用服务推荐ID(7张图片ID)
 			 */
 			case R.id.img_shouyemagapp_call://吆喝
-				ContentUtils.showMsg(mActivity, "吆喝");
+				startActivity(new Intent(mActivity, LeaguesYellListActivity.class));
 				break;
 			case R.id.img_shouyemagapp_union://商圈联盟
-				ContentUtils.showMsg(mActivity, "商圈联盟");
+				startActivity(new Intent(mActivity, LeaguesStorelistActivity.class));
 				break;
 			case R.id.img_shouyemagapp_sale://场景式销售
-				ContentUtils.showMsg(mActivity, "场景式销售");
+				mActivity.changeFuncPage(POSITION);
 				break;
 			case R.id.img_shouyemagapp_opeservice://运营服务
 				ContentUtils.showMsg(mActivity, "运营服务");
@@ -765,6 +775,12 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 				break;
 			case R.id.img_shouyemagapp_busdata://商圈大数据
 				ContentUtils.showMsg(mActivity, "商圈大数据");
+				break;
+			case R.id.img_shouyemagapp_appstore://跳转铃铛
+
+
+
+
 				break;
 		}
 	}

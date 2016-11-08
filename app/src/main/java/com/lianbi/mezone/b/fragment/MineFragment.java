@@ -27,6 +27,7 @@ import com.lianbi.mezone.b.ui.AboutUsActivity;
 import com.lianbi.mezone.b.ui.ActionProduceActivity;
 import com.lianbi.mezone.b.ui.BaseActivity;
 import com.lianbi.mezone.b.ui.FeedBackActivity;
+import com.lianbi.mezone.b.ui.FinancialActivity;
 import com.lianbi.mezone.b.ui.LeaguesYellListActivity;
 import com.lianbi.mezone.b.ui.LoginActivity;
 import com.lianbi.mezone.b.ui.MainActivity;
@@ -339,8 +340,7 @@ public class MineFragment extends Fragment implements OnClickListener,
 				re = JumpIntent.jumpLogin_addShop1(isLogin, API.MATERIAL,
 						maActivity);
 				if (re) {
-					startActivityForResult(new Intent(maActivity,
-							FinancialOfficeFragment.class), MINEMSGACAIWUSHI_CODE);
+					startActivity(new Intent(maActivity, FinancialActivity.class));
 
 				}
 				break;
