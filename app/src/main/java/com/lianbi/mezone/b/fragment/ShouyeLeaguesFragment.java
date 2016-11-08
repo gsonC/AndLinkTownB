@@ -174,13 +174,16 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
     };
     private ArrayList<ShouYeBannerBean> ades_ImageEs = new ArrayList<>();
 
-    @OnClick({R.id.tv_include_more})
+    @OnClick({R.id.tv_include_more,R.id.img_shouyeLeagues_response})
     public void OnClick(View v) {
         switch (v.getId()) {
             case R.id.tv_include_more:
                 Intent intent = new Intent();
                 intent.setClass(mActivity, LeaguesDynamicListActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.img_shouyeLeagues_response:
+                ContentUtils.showMsg(mActivity, getString(R.string.underconstruction));
                 break;
         }
     }
@@ -197,7 +200,6 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
         getYellAndDynamicData();
         getDistrictCount();
         setLisenter();
-        initAnimation();
         return view;
     }
     private void setLisenter() {
@@ -206,6 +208,7 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
             @Override
             public void onBottomArrived() {
                 //滑倒底部了
+                initAnimation();
             }
 
             @Override
@@ -496,11 +499,11 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
         if (messagetype.equals("MT0001")) {
             return R.mipmap.icon_news;
         } else if (messagetype.equals("MT0002")) {
-            return R.mipmap.icon_recruit;
+            return R.mipmap.icon_cooperate;
         } else if (messagetype.equals("MT0003")) {
             return R.mipmap.icon_discount;
         }
-        return R.mipmap.icon_recruit;
+        return R.mipmap.icon_news;
     }
 
     private LinearLayout getLinearLayout(LeaguesYellBean leaguesyellbean) {

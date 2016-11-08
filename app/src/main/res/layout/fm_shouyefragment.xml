@@ -35,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:clickable="true"
-                android:text="日常经营"/>
+                android:text="@string/intelligentmanagement"/>
 
             <RadioButton
                 android:id="@+id/rbt_shouye_union"
@@ -43,7 +43,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="商圈联盟"/>
+                android:text="@string/businesscircle"/>
         </cn.com.hgh.view.SegmentedGroup>
 
         <ImageView

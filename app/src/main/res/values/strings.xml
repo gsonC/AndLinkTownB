@@ -189,4 +189,7 @@
     <string name="entercontactnum">请输入联系方式</string>
     <string name="entersaysomething">要说点儿啥...</string>
     <string name="publish">发布</string>
+    <string name="intelligentmanagement">智慧经营</string>
+    <string name="businesscircle">商圈联营</string>
+    <string name="underconstruction">正在建设中</string>
 </resources>

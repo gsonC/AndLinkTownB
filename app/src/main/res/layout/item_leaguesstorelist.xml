@@ -15,9 +15,9 @@
         >
         <ImageView
             android:id="@+id/iv_leaguesstoreclist_storelogo"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:src="@mipmap/icon_recruit"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@mipmap/icon_cooperate"
             android:layout_gravity="center_vertical"
             />
         <LinearLayout
@@ -27,8 +27,8 @@
             android:orientation="vertical"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
             >
         <TextView
             android:id="@+id/tv_leaguesstoreclis_name"
@@ -52,7 +52,7 @@
                 android:id="@+id/iv_leaguesstoreclist_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/icon_recruit"
+                android:src="@mipmap/icon_cooperate"
                 android:layout_gravity="center_vertical"
                 />
         <TextView

@@ -39,6 +39,7 @@ import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.lianbi.mezone.b.bean.ShopVipMarket;
 import com.lianbi.mezone.b.bean.ShouYeBannerBean;
 import com.lianbi.mezone.b.bean.TestBean;
+import com.lianbi.mezone.b.httpresponse.API;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
 import com.lianbi.mezone.b.ui.BaseActivity;
@@ -49,6 +50,7 @@ import com.lianbi.mezone.b.ui.DiningTableSettingActivity;
 import com.lianbi.mezone.b.ui.LeaguesStorelistActivity;
 import com.lianbi.mezone.b.ui.LeaguesYellListActivity;
 import com.lianbi.mezone.b.ui.MainActivity;
+import com.lianbi.mezone.b.ui.WebMoreServiceActivty;
 import com.readystatesoftware.viewbadger.BadgeView;
 import com.xizhi.mezone.b.R;
 import com.zbar.lib.animationslib.Techniques;
@@ -66,6 +68,7 @@ import cn.com.hgh.utils.AbStrUtil;
 import cn.com.hgh.utils.AbViewUtil;
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.DynamicWaveTask;
+import cn.com.hgh.utils.JumpIntent;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.utils.ScreenUtils;
 import cn.com.hgh.view.DynamicWave;
@@ -91,6 +94,9 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 	private RadioGroup mRdoGroup_time_salenum;
 	private YoYo.YoYoString rope;
 	private final int POSITION = 2;
+	//更多服务
+	public static final int   MORESERVICE=7;
+	boolean isLogin;
 	/**
 	 * 广告
 	 */
@@ -152,6 +158,7 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 		View view = inflater.inflate(R.layout.fm_shouyemanagement, null);
 		mActivity = (MainActivity) getActivity();
 		mOkHttpsImp = OkHttpsImp.SINGLEOKHTTPSIMP.newInstance(mActivity);
+		isLogin = ContentUtils.getLoginStatus(mActivity);
 		intView(view);
 		initLineChartView();
 		getData();
@@ -802,6 +809,10 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 				break;
 			case R.id.img_shouyemagapp_appstore://跳转铃铛
 
+				JumpIntent.jumpWebActivty
+						(mActivity,WebMoreServiceActivty.class,
+								isLogin, API.WEB_MORESERVICE,MORESERVICE,
+								false,false,true,"应用商城");
 
 				break;
 		}

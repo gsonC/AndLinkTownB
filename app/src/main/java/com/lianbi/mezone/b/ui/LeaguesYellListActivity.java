@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.bumptech.glide.Glide;
 import com.lianbi.mezone.b.bean.LeaguesYellBean;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.xizhi.mezone.b.R;
@@ -24,6 +25,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.QuickAdapter;
+import cn.com.hgh.utils.AbPullHide;
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.view.AbPullToRefreshView;
@@ -43,11 +45,14 @@ public class LeaguesYellListActivity extends BaseActivity {
     ListView actLeaguesyellListview;
     @Bind(R.id.act_leaguesyell_abpulltorefreshview)
     AbPullToRefreshView actLeaguesyellAbpulltorefreshview;
+    @Bind(R.id.iv_leaguesyell_empty)
+    ImageView ivLeaguesyellEmpty;
     private Context mContext;
     private ArrayList<LeaguesYellBean> mData = new ArrayList<LeaguesYellBean>();
     private ArrayList<LeaguesYellBean> mDatas = new ArrayList<LeaguesYellBean>();
     private QuickAdapter<LeaguesYellBean> mAdapter;
     private static final int REQUEST_CODE_RESULT = 1009;
+    private int page = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,8 +68,30 @@ public class LeaguesYellListActivity extends BaseActivity {
     private void initData() {
         setPageTitle("吆喝列表");
         setPageRightText("发起吆喝");
+        setLisenter();
         initAdapter();
-        getYellData();
+        getYellData(true);
+    }
+    private void setLisenter() {
+        actLeaguesyellAbpulltorefreshview.setLoadMoreEnable(true);
+        actLeaguesyellAbpulltorefreshview.setPullRefreshEnable(true);
+        actLeaguesyellAbpulltorefreshview
+                .setOnHeaderRefreshListener(new AbPullToRefreshView.OnHeaderRefreshListener() {
+
+                    @Override
+                    public void onHeaderRefresh(AbPullToRefreshView view) {
+                        getYellData(true);
+                    }
+
+                });
+        actLeaguesyellAbpulltorefreshview
+                .setOnFooterLoadListener(new AbPullToRefreshView.OnFooterLoadListener() {
+
+                    @Override
+                    public void onFooterLoad(AbPullToRefreshView view) {
+                        getYellData(false);
+                    }
+                });
     }
     private void initAdapter() {
         mAdapter = new QuickAdapter<LeaguesYellBean>(this,
@@ -82,13 +109,28 @@ public class LeaguesYellListActivity extends BaseActivity {
                 TextView iv_leaguesyelllist_phone = helper.getView(R.id.iv_leaguesyelllist_phone);//
                 TextView iv_leaguesyelllist_address = helper.getView(R.id.iv_leaguesyelllist_address);//
 
-//                Glide.with(LeaguesYellListActivity.this).load(item.getArea()).error(R.mipmap.default_head).into(iv_leaguesyelllist_icon);
+                Glide.with(LeaguesYellListActivity.this).load(item.getLogoUrl()).error(R.mipmap.demo).into(iv_leaguesyelllist_icon);
                 iv_leaguesyelllist_name.setText(item.getAuthor());
-                iv_leaguesyelllist_time.setText(item.getMessageType());
-                iv_leaguesyelllist_title.setText(item.getMessageTitle());
-                iv_leaguesyelllist_content.setText(item.getMessageContent());
-                iv_leaguesyelllist_phone.setText(item.getPhone());
-                iv_leaguesyelllist_address.setText(item.getAddress());
+                if(!TextUtils.isEmpty(item.getCreateTime())) {
+                    String time = item.getCreateTime();
+                    String year = time.substring(0, 4);
+                    String months = time.substring(4, 6);
+                    String daytime = time.substring(6, 8);
+                    iv_leaguesyelllist_time.setText(year + "-" + months + "-"
+                            + daytime );
+                }
+                if(!TextUtils.isEmpty(item.getMessageTitle())) {
+                    iv_leaguesyelllist_title.setText(item.getMessageTitle());
+                }
+                if(!TextUtils.isEmpty(item.getMessageContent())) {
+                    iv_leaguesyelllist_content.setText(item.getMessageContent());
+                }
+                if(!TextUtils.isEmpty(item.getPhone())) {
+                    iv_leaguesyelllist_phone.setText(item.getPhone());
+                }
+                if(!TextUtils.isEmpty(item.getAddress())) {
+                    iv_leaguesyelllist_address.setText(item.getAddress());
+                }
                 helper.getView(R.id.iv_leaguesyelllist_readmore).setOnClickListener(
                         new View.OnClickListener() {
 
@@ -101,6 +143,14 @@ public class LeaguesYellListActivity extends BaseActivity {
 
                         }
                 });
+                helper.getView(R.id.iv_leaguesyelllist_response).setOnClickListener(
+                        new View.OnClickListener() {
+
+                            @Override
+                            public void onClick(View v) {
+                                ContentUtils.showMsg(LeaguesYellListActivity.this, getString(R.string.underconstruction));
+                            }
+                        });
             }
         };
         actLeaguesyellListview.setAdapter(mAdapter);
@@ -114,7 +164,7 @@ public class LeaguesYellListActivity extends BaseActivity {
     /**
      * 查询吆喝和商圈动态
      */
-    private void getYellData() {
+    private void getYellData(final boolean isResh) {
 //        ic(String businessId,
 //                String area,
 //                String businessCircle,
@@ -128,6 +178,10 @@ public class LeaguesYellListActivity extends BaseActivity {
 //                String pageSize,
 //                String serNum, String source,
 //                String reqTime,
+        if (isResh) {
+            page = 1;
+            mDatas.clear();
+        }
         try {
             okHttpsImp.queryBusinessDynamic(
                     "BD2016052013475900000010",
@@ -148,6 +202,7 @@ public class LeaguesYellListActivity extends BaseActivity {
                     new MyResultCallback<String>() {
                         @Override
                         public void onResponseResult(Result result) {
+                            page++;
                             String reString = result.getData();
                             Log.i("tag","resString 132----->"+reString);
                             try {
@@ -163,18 +218,27 @@ public class LeaguesYellListActivity extends BaseActivity {
                                             mData.add(LeaguesZxy);
                                         }
                                     }
-                                    updateView(mData);
 
+                                    updateView(mData);
+                                    actLeaguesyellAbpulltorefreshview.setVisibility(View.VISIBLE);
+                                    ivLeaguesyellEmpty.setVisibility(View.GONE);
+                                }else{
+                                    ivLeaguesyellEmpty.setVisibility(View.VISIBLE);
+                                    actLeaguesyellAbpulltorefreshview.setVerticalGravity(View.GONE);
                                 }
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
+                            AbPullHide.hideRefreshView(isResh,actLeaguesyellAbpulltorefreshview);
 
                         }
 
                         @Override
                         public void onResponseFailed(String msg) {
+                            AbPullHide.hideRefreshView(isResh,actLeaguesyellAbpulltorefreshview);
+                            ivLeaguesyellEmpty.setVisibility(View.VISIBLE);
+                            actLeaguesyellAbpulltorefreshview.setVerticalGravity(View.GONE);
                             ContentUtils.showMsg(LeaguesYellListActivity.this, "网络访问失败");
                         }
                     });
@@ -193,7 +257,7 @@ public class LeaguesYellListActivity extends BaseActivity {
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case REQUEST_CODE_RESULT:
-                    getYellData();
+                    getYellData(true);
                     break;
             }
         }
