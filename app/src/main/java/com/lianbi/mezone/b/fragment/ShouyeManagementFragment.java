@@ -65,6 +65,7 @@ import cn.com.hgh.utils.AbStrUtil;
 import cn.com.hgh.utils.AbViewUtil;
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.DynamicWaveTask;
+import cn.com.hgh.utils.LogUtils;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.utils.ScreenUtils;
 import cn.com.hgh.view.DynamicWave;
@@ -957,6 +958,11 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 		ad_siderlayout_progressBar.setVisibility(View.GONE);
 		mDemoSlider.setVisibility(View.VISIBLE);
 	}
+
+	public void userLoginStatus(boolean isLogin){
+		LogUtils.i("登陆",isLogin+"");
+	}
+
 
 	// 折线图手势监听---------------------------------------------------------------
 

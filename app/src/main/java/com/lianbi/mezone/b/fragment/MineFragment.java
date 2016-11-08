@@ -71,7 +71,7 @@ public class MineFragment extends Fragment implements OnClickListener,
 	private final int MYSUPPLYGOODSACTIVITY_CODE = 2005;
 	private SwipeRefreshLayout swipe_mine;
 	private boolean mUpgrade = false;
-
+	private final int POSITION = 2;
 
 	/**
 	 * 刷新fm数据
@@ -273,7 +273,7 @@ public class MineFragment extends Fragment implements OnClickListener,
 		switch (arg0.getId()) {
 
 			case R.id.llt_mine_changjing://我的场景
-
+				maActivity.changeFuncPage(POSITION);
 				break;
 			case R.id.llt_mine_meyaohe://我的吆喝
 				startActivity(new Intent(maActivity, LeaguesYellListActivity.class));

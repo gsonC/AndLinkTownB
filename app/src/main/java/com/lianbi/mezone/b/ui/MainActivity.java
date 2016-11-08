@@ -23,7 +23,6 @@ import com.alibaba.fastjson.JSON;
 import com.igexin.sdk.PushManager;
 import com.lianbi.mezone.b.app.Constants;
 import com.lianbi.mezone.b.bean.AppUpDataBean;
-import com.lianbi.mezone.b.bean.FinancialOfficeAmountBean;
 import com.lianbi.mezone.b.bean.ShouyeServiceBean;
 import com.lianbi.mezone.b.fragment.FinancialOfficeFragment;
 import com.lianbi.mezone.b.fragment.GlzxPagerFragment;
@@ -32,7 +31,6 @@ import com.lianbi.mezone.b.fragment.ShouYeFragment;
 import com.lianbi.mezone.b.fragment.WisdomManagerFragment;
 import com.lianbi.mezone.b.httpresponse.API;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
-import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
 import com.lianbi.mezone.b.impl.MyShopChange;
 import com.lianbi.mezone.b.photo.PopupWindowHelper;
 import com.lianbi.mezone.b.push.PushDemoReceiver;
@@ -256,46 +254,6 @@ public class MainActivity extends BaseActivity implements BDLocation_interface, 
 
 	public double mTotalAccount = 0, mShopAccount = 0, mAvailableBalance = 0, mTakeinMoney = 0, mShopinComeToday = 0, mFreezingAmount = 0;
 
-	/**
-	 * 获取财务室各项收入
-	 */
-	public void getCount() {
-		if (ContentUtils.getLoginStatus(this)) {// 获取登陆状态
-			if (!TextUtils.isEmpty(userShopInfoBean.getBusinessId())) {// 获取店铺id是否为空
-				getFinancialOfficeAmount();//财务室所有金额
-			}
-		}
-	}
-
-	/**
-	 * 财务室所有金额
-	 */
-	private void getFinancialOfficeAmount() {
-		String reqTime = AbDateUtil.getDateTimeNow();
-		String uuid = AbStrUtil.getUUID();
-		try {
-			okHttpsImp.getFinancialOfficeAmount(OkHttpsImp.md5_key, uuid, "app", reqTime, userShopInfoBean.getUserId(), userShopInfoBean.getBusinessId(), new MyResultCallback<String>() {
-				@Override
-				public void onResponseResult(Result result) {
-					String reString = result.getData();
-					if (!TextUtils.isEmpty(reString)) {
-						FinancialOfficeAmountBean financialOfficeAmountBean = JSON.parseObject(reString, FinancialOfficeAmountBean.class);
-						if (null != financialOfficeAmountBean) {
-							((FinancialOfficeFragment) fm_caiwushi).setFinancialOfficeAmount(financialOfficeAmountBean);
-						}
-					}
-				}
-
-				@Override
-				public void onResponseFailed(String msg) {
-
-				}
-
-			});
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
 	HttpDialog httpDialog;
 
@@ -524,9 +482,8 @@ public class MainActivity extends BaseActivity implements BDLocation_interface, 
 	public void refreshFMData() {
 		setShoyYeTitle();
 		((ShouYeFragment) fm_shouye).refreshFMData();
-
 		((WisdomManagerFragment) fm_wisdommanage).refreshFMData();
-		((FinancialOfficeFragment) fm_caiwushi).refreshFMData();
+		//((FinancialOfficeFragment) fm_caiwushi).refreshFMData();
 		((MineFragment) fm_mine).refreshFMData();
 	}
 
@@ -596,12 +553,12 @@ public class MainActivity extends BaseActivity implements BDLocation_interface, 
 			curPosition = POSITION2;
 			setPageTitleVisibility(View.VISIBLE);
 			//	setPageRightTextVisibility(View.GONE);
-			setPageTitle("财务室");
+			setPageTitle("发现场景");
 			setPageRightText("明细");
 			tv_title_left.setText("明细");
 			setPageRightTextColor(R.color.commo_text_color);
 			tv_title_left.setVisibility(View.INVISIBLE);
-			((FinancialOfficeFragment) fm_caiwushi).refreshFMData();
+			((FinancialOfficeFragment) fm_caiwushi).setUrl("http://www.baidu.com");
 			setPageBackVisibility(View.INVISIBLE);
 			setPageRightImageVisibility();
 			rb_caiwushi.setChecked(true);
@@ -609,7 +566,6 @@ public class MainActivity extends BaseActivity implements BDLocation_interface, 
 			fm_funcpage0.setVisibility(View.GONE);
 			fm_funcpage3.setVisibility(View.GONE);
 			fm_funcpage1.setVisibility(View.GONE);
-			getFinancialOfficeClick();// 刷新财务室价格
 		} else if (position == POSITION3) {
 			curPosition = POSITION3;
 			setPageTitleVisibility(View.VISIBLE);
@@ -633,11 +589,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface, 
 		}
 	}
 
-	/**
-	 * 点击财务室图标刷新财务室各项收入
-	 */
 	private void getFinancialOfficeClick() {
-		getCount();
 	}
 
 	/**

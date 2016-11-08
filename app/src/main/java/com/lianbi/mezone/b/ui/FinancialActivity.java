@@ -111,7 +111,11 @@ public class FinancialActivity extends BaseActivity {
 
 				@Override
 				public void onResponseFailed(String msg) {
-
+					tv_totalaccount.setText(MathExtend.roundNew(0, 2));
+					tv_shopaccount.setText(MathExtend.roundNew(0, 2));
+					tv_availablebalance.setText(MathExtend.roundNew(0, 2));
+					tv_takeinmoney.setText(MathExtend.roundNew(0, 2));
+					tv_shopincometoday.setText(MathExtend.roundNew(0, 2));
 				}
 
 			});
