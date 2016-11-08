@@ -36,6 +36,7 @@ import com.github.mikephil.charting.listener.ChartTouchListener;
 import com.github.mikephil.charting.listener.OnChartGestureListener;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ViewPortHandler;
+import com.lianbi.mezone.b.bean.ShopVipMarket;
 import com.lianbi.mezone.b.bean.ShouYeBannerBean;
 import com.lianbi.mezone.b.bean.TestBean;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
@@ -65,7 +66,6 @@ import cn.com.hgh.utils.AbStrUtil;
 import cn.com.hgh.utils.AbViewUtil;
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.DynamicWaveTask;
-import cn.com.hgh.utils.LogUtils;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.utils.ScreenUtils;
 import cn.com.hgh.view.DynamicWave;
@@ -102,14 +102,18 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 	 * 首页--SaaS应用服务推荐ID(7张图片ID)
 	 */
 	private ImageView mImg_shouyemagapp_call, mImg_shouyemagapp_union, mImg_shouyemagapp_sale, mImg_shouyemagapp_opeservice,
-			mImg_shouyemagapp_finservice, mImg_shouyemagapp_richbook, mImg_shouyemagapp_busdata,mImg_shouyemagapp_appstore;
+			mImg_shouyemagapp_finservice, mImg_shouyemagapp_richbook, mImg_shouyemagapp_busdata, mImg_shouyemagapp_appstore;
 	/**
-	 * 首页--本店会员
+	 * 首页--会员营销
 	 */
+	private ShopVipMarket mShopVipMarket;
 	private TextView mTv_shouyemanagement_todayvip, mTv_shouyemanagement_numvip, mTv_shouyemanagement_muchtoday,
 			mTv_shouyemanagement_muchweek, mTv_shouyevip_service_first, mTv_shouyevip_name_first, mTv_shouyevip_service_second,
 			mTv_shouyevip_name_second, mTv_shouyevip_service_third, mTv_shouyevip_name_third;
 	private ImageView mImg_shouyevip_name_first, mImg_shouyevip_name_second, mImg_shouyevip_name_third;
+	private List<TextView> VipFrequency;
+	private List<ImageView> VipHead;
+	private List<TextView> VipName;
 	/**
 	 * 实时消费
 	 */
@@ -140,6 +144,7 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 	private List<TextView> mSaleRankTopList;
 	private List<TextView> mSaleRankBottomList;
 
+
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -150,7 +155,6 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 		intView(view);
 		initLineChartView();
 		getData();
-		getData1();
 		getShopVipMarket();
 		getData2();
 		getData3(true);
@@ -165,18 +169,51 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 		try {
 			mOkHttpsImp.getShopVipMarket(mActivity.uuid, mActivity.reqTime,
 					BaseActivity.userShopInfoBean.getBusinessId(), new MyResultCallback<String>() {
-				@Override
-				public void onResponseResult(Result result) {
-					System.out.println("----"+result.getData());
-				}
+						@Override
+						public void onResponseResult(Result result) {
+							String reString = result.getData();
+							if (!AbStrUtil.isEmpty(reString)) {
 
-				@Override
-				public void onResponseFailed(String msg) {
+								mShopVipMarket = JSON.parseObject(
+										reString, ShopVipMarket.class);
+								setShopVipView(mShopVipMarket);
+							}
+						}
 
-				}
-			});
+						@Override
+						public void onResponseFailed(String msg) {
+							setShopVipView(mShopVipMarket);
+						}
+					});
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 填充会员营销View
+	 */
+	private void setShopVipView(ShopVipMarket shopVipMarket) {
+		if (null != shopVipMarket) {
+			mTv_shouyemanagement_todayvip.setText(shopVipMarket.getVipWXCountResponseModel().getNewVipCount() + "");//设置今日会员数
+			mTv_shouyemanagement_numvip.setText(shopVipMarket.getVipWXCountResponseModel().getDataSize() + "");//设置总共会员数
+			String todaymuch = "";
+			String weekmuch = "";
+			try {
+				todaymuch = AbStrUtil.changeF2Y(Long.parseLong(shopVipMarket.getWeekAndDayMaxAmtResponseModel().getDayMaxAmt()));
+				weekmuch = AbStrUtil.changeF2Y(Long.parseLong(shopVipMarket.getWeekAndDayMaxAmtResponseModel().getWeekMaxAmt()));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			AbStrUtil.formatTextSize(mTv_shouyemanagement_muchtoday, todaymuch, 2);//设置日客最高单价
+			AbStrUtil.formatTextSize(mTv_shouyemanagement_muchweek, weekmuch, 2);//设置周客最高单价
+
+			int j = shopVipMarket.getGetConsumptionVipMaxResponseModel().getVipList().size();
+			for (int i = 0; i < j; i++) {
+				AbStrUtil.formatTextSize(VipFrequency.get(i), shopVipMarket.getGetConsumptionVipMaxResponseModel().getVipList().get(i).getConsumptionCount() + " 次", 1);
+				AbViewUtil.filletImageView(mActivity, VipHead.get(i), shopVipMarket.getGetConsumptionVipMaxResponseModel().getVipList().get(i).getPhoto(), 8);
+				VipName.get(i).setText(shopVipMarket.getGetConsumptionVipMaxResponseModel().getVipList().get(i).getNickName());
+			}
 		}
 	}
 
@@ -252,7 +289,6 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 		}
 	}
 
-
 	/**
 	 * 折线图测试数据
 	 */
@@ -269,40 +305,6 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 		//l.setForm(Legend.LegendForm.LINE);
 		//刷新图例
 		//mChart_shouyemanagement.invalidate();
-	}
-
-
-	/**
-	 * (会员营销)测试数据
-	 */
-	private long testData = 1;
-
-	private void getData1() {
-		mTv_shouyemanagement_todayvip.setText(String.valueOf(testData));//设置今日会员数
-		mTv_shouyemanagement_numvip.setText(String.valueOf(testData));//设置总共会员数
-		String todaymuch = "";
-		String weekmuch = "";
-		try {
-			todaymuch = AbStrUtil.changeF2Y(testData);
-			weekmuch = AbStrUtil.changeF2Y(testData);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		AbStrUtil.formatTextSize(mTv_shouyemanagement_muchtoday, todaymuch, 2);//设置日客最高单价
-		AbStrUtil.formatTextSize(mTv_shouyemanagement_muchweek, weekmuch, 2);//设置周客最高单价
-
-		//第一位会员信息
-		AbStrUtil.formatTextSize(mTv_shouyevip_service_first, 20 + " 次", 1);
-		AbViewUtil.filletImageView(mActivity, mImg_shouyevip_name_first, "http://172.16.103.154/group1/M00/00/11/rBBnmlffUdiAdm2UAAAb5M8npfY133.jpg", 8);
-		mTv_shouyevip_name_first.setText("黄鹤楼上看黄河");
-		//第二位会员信息
-		AbStrUtil.formatTextSize(mTv_shouyevip_service_second, 10 + " 次", 1);
-		AbViewUtil.filletImageView(mActivity, mImg_shouyevip_name_second, "http://172.16.103.154/group1/M00/00/11/rBBnmlffUdiAdm2UAAAb5M8npfY133.jpg", 8);
-		mTv_shouyevip_name_second.setText("黄鹤楼上看黄河");
-		//第三位会员信息
-		AbStrUtil.formatTextSize(mTv_shouyevip_service_third, 5 + " 次", 1);
-		AbViewUtil.filletImageView(mActivity, mImg_shouyevip_name_third, "http://172.16.103.154/group1/M00/00/11/rBBnmlffUdiAdm2UAAAb5M8npfY133.jpg", 8);
-		mTv_shouyevip_name_third.setText("黄鹤楼上看黄河");
 	}
 
 	/**
@@ -439,7 +441,7 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 		mImg_shouyemagapp_appstore = (ImageView) view.findViewById(R.id.img_shouyemagapp_appstore);
 		initViewSize();
 		initSaleRank();
-
+		initShopVip();
 		//initLineChart();
 		/**
 		 * 设置动画
@@ -465,6 +467,27 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 			}
 		});
 
+	}
+
+	/**
+	 * 会员营销View整理
+	 */
+	private void initShopVip() {
+
+		VipFrequency = new ArrayList<>();
+		VipHead = new ArrayList<>();
+		VipName = new ArrayList<>();
+		VipFrequency.add(mTv_shouyevip_service_first);
+		VipFrequency.add(mTv_shouyevip_service_second);
+		VipFrequency.add(mTv_shouyevip_service_third);
+
+		VipHead.add(mImg_shouyevip_name_first);
+		VipHead.add(mImg_shouyevip_name_second);
+		VipHead.add(mImg_shouyevip_name_third);
+
+		VipName.add(mTv_shouyevip_name_first);
+		VipName.add(mTv_shouyevip_name_second);
+		VipName.add(mTv_shouyevip_name_third);
 	}
 
 	/**
@@ -780,8 +803,6 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 			case R.id.img_shouyemagapp_appstore://跳转铃铛
 
 
-
-
 				break;
 		}
 	}
@@ -959,8 +980,13 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 		mDemoSlider.setVisibility(View.VISIBLE);
 	}
 
-	public void userLoginStatus(boolean isLogin){
-		LogUtils.i("登陆",isLogin+"");
+	public void userLoginStatus(boolean isLogin) {
+		if (isLogin) {
+			System.out.println("登陆或者切换");
+			getShopVipMarket();
+		} else {
+			System.out.println("退出");
+		}
 	}
 
 

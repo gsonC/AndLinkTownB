@@ -80,7 +80,7 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 		} else {
 			// mDatas.clear();
 			//mActivity.getServiceMall();
-				mShouyeManagementFragment.userLoginStatus(false);
+			mShouyeManagementFragment.userLoginStatus(false);
 		}
 		//if (!isAdSucceedRequest) {
 		//	getAadver();
