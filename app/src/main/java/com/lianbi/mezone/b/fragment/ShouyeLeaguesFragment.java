@@ -43,7 +43,7 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
-import com.lianbi.mezone.b.bean.LeaguesAddCountlist;
+import com.lianbi.mezone.b.bean.LeaguesAddcountlist;
 import com.lianbi.mezone.b.bean.LeaguesAllCountList;
 import com.lianbi.mezone.b.bean.LeaguesYellBean;
 import com.lianbi.mezone.b.bean.ShouYeBannerBean;
@@ -159,8 +159,8 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
     private OkHttpsImp mOkHttpsImp;
     private ArrayList<LeaguesAllCountList> mAllCountList =
             new ArrayList<LeaguesAllCountList>();
-    private ArrayList<LeaguesAddCountlist> mAddCountList =
-            new ArrayList<LeaguesAddCountlist>();
+    private ArrayList<LeaguesAddcountlist> mAddCountList =
+            new ArrayList<LeaguesAddcountlist>();
 
     private ArrayList<LeaguesYellBean> mData = new ArrayList<LeaguesYellBean>();
     private ArrayList<LeaguesYellBean> mDataZxy = new ArrayList<LeaguesYellBean>();
@@ -341,10 +341,10 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
                                  */
                                 if (!TextUtils.isEmpty(str_addCountList)) {
                                     mAddCountList.clear();
-                                    ArrayList<LeaguesAddCountlist> addCountList =
-                                            (ArrayList<LeaguesAddCountlist>) JSON
+                                    ArrayList<LeaguesAddcountlist> addCountList =
+                                            (ArrayList<LeaguesAddcountlist>) JSON
                                             .parseArray(str_addCountList,
-                                                    LeaguesAddCountlist.class);
+                                                    LeaguesAddcountlist.class);
                                     mAddCountList.addAll(addCountList);
                                     setAnimationData();
                                 }
@@ -384,7 +384,7 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
             three=mAddCountList.get(2).getAddCount();
         }
 
-        for (LeaguesAddCountlist mAdddistrictcountbean : mAddCountList) {
+        for (LeaguesAddcountlist mAdddistrictcountbean : mAddCountList) {
             allcount = allcount + stringChangeInt(mAdddistrictcountbean.getAddCount());
         }
         allcount = allcount - stringChangeInt(first) -

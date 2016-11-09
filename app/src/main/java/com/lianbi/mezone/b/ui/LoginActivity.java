@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -244,32 +243,5 @@ public class LoginActivity extends BaseActivity {
 	 * 返回键时间间隔
 	 */
 	private long mExitTime;
-
-	/**
-	 * 返回键监听
-	 */
-	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
-
-		if (keyCode == KeyEvent.KEYCODE_BACK) {
-
-			if ((System.currentTimeMillis() - mExitTime) > 1000) {
-				ContentUtils.showMsg(this, getResources().getString(R.string.balck_tuichu));
-
-				mExitTime = System.currentTimeMillis();
-
-			} else {
-
-				finish();
-
-			}
-
-			return true;
-
-		}
-
-		return super.onKeyDown(keyCode, event);
-
-	}
 
 }

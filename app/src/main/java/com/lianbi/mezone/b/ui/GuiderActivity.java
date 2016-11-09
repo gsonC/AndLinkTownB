@@ -53,7 +53,7 @@ public class GuiderActivity extends BaseActivity implements
 	 * 进入主页
 	 */
 	private void startMain() {
-		Intent intent = new Intent(GuiderActivity.this, MainActivity.class);
+		Intent intent = new Intent(GuiderActivity.this, FourSecondActivity.class);
 		startActivity(intent);
 		finish();
 	}
