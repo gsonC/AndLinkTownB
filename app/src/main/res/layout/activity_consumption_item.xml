@@ -5,7 +5,10 @@
               android:layout_height="match_parent"
     android:background="@color/colores_news_14">
 
-
+  <View
+      android:layout_width="match_parent"
+      android:layout_height="11.5dp"
+      />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="117dp"
@@ -83,15 +86,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="7:42"
                 android:layout_marginTop="11dp"
                 />
 
         </LinearLayout>
-        <View
-            android:layout_width="0.5dp"
-            android:layout_height="match_parent"
-            android:background="@color/color_e3e3e3"/>
+
         
         <LinearLayout
             android:layout_width="0dp"
@@ -105,7 +104,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="花色满楼"
+                android:text="一号桌"
                 android:layout_gravity="center"
                 android:layout_marginTop="24.5dp"
                 />
@@ -113,7 +112,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="一号楼"
                 android:layout_gravity="center"/>
             <TextView
                 android:id="@+id/tv_consum_shoukuan"
@@ -130,5 +128,8 @@
 
         </LinearLayout>
     </LinearLayout>
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="11.5dp"
+        />
 </LinearLayout>

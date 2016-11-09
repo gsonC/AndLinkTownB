@@ -46,6 +46,7 @@ public class LeaguesPublishYellActivity extends BaseActivity {
     String strTitle="";
     String strContactnum="";
     String strSaysomething="";
+
     @OnClick({R.id.lay_leaguespublishyell_publish})
     public void OnClick(View v) {
         switch (v.getId()) {
@@ -124,14 +125,14 @@ public class LeaguesPublishYellActivity extends BaseActivity {
                     "",
                     "",
                     pushTime,
-                    "",
+                    ShopName,
                     strContactnum,
                     strTitle,
                     strSaysomething,
                     "310000",
                     "310117",
                     "上海市",
-                    "http://172.16.103.153:9005/wcm/resources/jpg/wechatmall/rss_ico.png",
+                    LoGoUrl,
                     uuid,
                     "app",
                     reqTime,
@@ -146,9 +147,6 @@ public class LeaguesPublishYellActivity extends BaseActivity {
                             finish();
                             try {
                                 JSONObject jsonObject= new JSONObject(reString);
-//                                reString = jsonObject.getString("list");
-//                                if (!TextUtils.isEmpty(reString)) {
-//                                }
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -158,7 +156,7 @@ public class LeaguesPublishYellActivity extends BaseActivity {
 
                         @Override
                         public void onResponseFailed(String msg) {
-                            Log.i("tag","msg- 282-->"+msg);
+                            ContentUtils.showMsg(LeaguesPublishYellActivity.this, "发布失败");
                         }
                     });
         } catch (Exception e) {

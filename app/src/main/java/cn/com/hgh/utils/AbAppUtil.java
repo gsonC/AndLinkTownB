@@ -15,16 +15,8 @@
  */
 package cn.com.hgh.utils;
 
-import java.io.File;
-import java.io.FileFilter;
-import java.util.Iterator;
-import java.util.List;
-import java.util.regex.Pattern;
-
 import android.app.Activity;
 import android.app.ActivityManager;
-import android.app.ActivityManager.MemoryInfo;
-import android.app.ActivityManager.RunningAppProcessInfo;
 import android.app.ActivityManager.RunningServiceInfo;
 import android.content.Context;
 import android.content.Intent;
@@ -36,10 +28,15 @@ import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
-import android.os.Debug;
 import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.view.inputmethod.InputMethodManager;
+
+import java.io.File;
+import java.io.FileFilter;
+import java.util.Iterator;
+import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * © 2012 amsoft.cn 名称：AbAppUtil.java 描述：应用工具类.

@@ -38,7 +38,7 @@
             android:ellipsize="end"
             android:padding="5dp"
             android:singleLine="true"
-            android:textSize="@dimen/h15"
+            android:textSize="@dimen/h16"
             android:text="松江商圈商圈商圈松江商圈商圈商圈松江商圈商圈商圈圈商圈商圈"
             android:textColor="@color/colores_news_10"/>
         <LinearLayout
@@ -46,13 +46,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="5dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
             >
         <ImageView
                 android:id="@+id/iv_leaguesstoreclist_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/icon_cooperate"
+                android:src="@mipmap/icon_settled"
                 android:layout_gravity="center_vertical"
                 />
         <TextView
@@ -72,7 +73,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:ellipsize="end"
-                android:padding="5dp"
+                android:paddingTop="5dp"
+                android:paddingRight="5dp"
+                android:paddingBottom="5dp"
                 android:text="2015-06-15"
                 android:textSize="@dimen/h14"
                 android:singleLine="true"

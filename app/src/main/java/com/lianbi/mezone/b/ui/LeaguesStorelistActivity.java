@@ -101,9 +101,12 @@ public class LeaguesStorelistActivity extends BaseActivity {
                 TextView tv_leaguesstoreclis_time = helper.getView(R.id.tv_leaguesstoreclis_time);//
                 TextView tv_leaguesstoreclis_address = helper.getView(R.id.tv_leaguesstoreclis_address);
 
-                Glide.with(LeaguesStorelistActivity.this).load(item.getHeaderUrl()).error(R.mipmap.default_head).into(iv_leaguesstoreclist_storelogo);
+                Glide.with(LeaguesStorelistActivity.this).load(item.getHeaderUrl()).error(R.mipmap.demo).into(iv_leaguesstoreclist_storelogo);
                 tv_leaguesstoreclis_name.setText(item.getBusinessName());
-                tv_leaguesstoreclis_time.setText(item.getCreateTime());
+                if(!TextUtils.isEmpty(item.getCreateTime())){
+                    String time=item.getCreateTime().substring(0,10);
+                    tv_leaguesstoreclis_time.setText(item.getCreateTime());
+                }
                 tv_leaguesstoreclis_address.setText(item.getAddress());
             }
         };

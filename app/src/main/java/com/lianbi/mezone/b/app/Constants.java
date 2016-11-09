@@ -81,11 +81,11 @@ public class Constants {
 	 */
 	public static final String USERSHOPNAME = "usershopName";
 	/**
-	 * 用户商铺所在省份
+	 * 用户商铺LoGo
 	 */
 	public static final String USERSHOPLOGOURL = "usershoplogourl";
 	/**
-	 * 用户商铺LoGo
+	 * 用户商铺所在省份
 	 */
 	public static final String USERSHOPPROVINCEID = "usershopprovinceid";
 	/**

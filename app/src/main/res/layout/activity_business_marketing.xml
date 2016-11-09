@@ -68,6 +68,15 @@
                     android:textSize="14sp"
                     android:textColor="@color/colores_news_10"/>
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="建设中"
+                    android:layout_marginTop="7dp"
+                    android:textSize="10.5sp"
+                    android:textColor="@color/color_ff555555"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="11.5dp"/>
             </LinearLayout>
 
         </LinearLayout>
@@ -100,6 +109,14 @@
                     android:textColor="@color/colores_news_10"
                     android:layout_marginLeft="11.5dp"
                     android:layout_marginTop="18.5dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="建设中"
+                    android:layout_marginTop="7dp"
+                    android:textSize="10.5sp"
+                    android:textColor="@color/color_ff555555"
+                    android:layout_marginLeft="5dp"/>
 
             </LinearLayout>
             <LinearLayout
@@ -122,7 +139,15 @@
                     android:text="营销消息管理"
                     android:layout_marginTop="18.5dp"
                     android:layout_marginLeft="11.5dp"/>
-
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="建设中"
+                    android:layout_marginTop="7dp"
+                    android:textSize="10.5sp"
+                    android:textColor="@color/color_ff555555"
+                    android:layout_marginRight="11.5dp"
+                  />
             </LinearLayout>
 
         </LinearLayout>

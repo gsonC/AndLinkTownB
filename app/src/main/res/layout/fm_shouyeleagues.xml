@@ -459,13 +459,16 @@
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
          android:text="餐饮"
+         android:layout_centerHorizontal="true"
+         android:singleLine="true"
      />
      <TextView
          android:id="@+id/tv_shouyeLeagues_resnum"
          android:layout_below="@id/tv_shouyeLeagues_restaurant"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
-         android:text="+10"
+         android:layout_centerHorizontal="true"
+         android:text="+0"
      />
      </RelativeLayout>
      </RelativeLayout>
@@ -493,13 +496,16 @@
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:text="购物"
+             android:layout_centerHorizontal="true"
+             android:singleLine="true"
              />
          <TextView
              android:id="@+id/tv_shouyeLeagues_shopnum"
              android:layout_below="@id/tv_shouyeLeagues_shopping"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
-             android:text="+10"
+             android:text="+0"
+             android:layout_centerHorizontal="true"
              />
           </RelativeLayout>
      </RelativeLayout>
@@ -527,13 +533,16 @@
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:text="住宿"
+             android:layout_centerHorizontal="true"
+             android:singleLine="true"
              />
          <TextView
              android:id="@+id/tv_shouyeLeagues_staynum"
              android:layout_below="@id/tv_shouyeLeagues_stay"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
-             android:text="+10"
+             android:text="+0"
+             android:layout_centerHorizontal="true"
              />
      </RelativeLayout>
         </RelativeLayout>
@@ -562,13 +571,16 @@
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:text="其他"
-             />
+             android:layout_centerHorizontal="true"
+             android:singleLine="true"
+            />
          <TextView
              android:id="@+id/tv_shouyeLeagues_num"
              android:layout_below="@id/tv_shouyeLeagues_other"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
-             android:text="+10"
+             android:text="+0"
+             android:layout_centerHorizontal="true"
              />
          </RelativeLayout>
      </RelativeLayout>

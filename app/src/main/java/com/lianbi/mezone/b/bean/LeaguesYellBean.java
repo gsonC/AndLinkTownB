@@ -18,6 +18,7 @@ public class LeaguesYellBean implements Serializable {
     String  address;
     String  logoUrl;
     String  createTime;
+    String  businessName;
     boolean  isExpanded;//商圈动态列表用于判断列表是否是展开状态
     public String getArea() {
         return area;
@@ -112,5 +113,13 @@ public class LeaguesYellBean implements Serializable {
 
     public void setCreateTime(String createTime) {
         this.createTime = createTime;
+    }
+
+    public String getBusinessName() {
+        return businessName;
+    }
+
+    public void setBusinessName(String businessName) {
+        this.businessName = businessName;
     }
 }

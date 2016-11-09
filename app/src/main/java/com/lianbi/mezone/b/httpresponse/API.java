@@ -642,6 +642,14 @@ public class API {
 	 */
 	public static final String CALLLIST = "getTssCallTypeList.do";
 	/**
+	 * 4.13	查询推送消息
+	 */
+	public static final String PUSHMESSAGE = "getPushMessages.do";
+	/**
+	 * 4.20	查询店铺的待支付信息
+	 */
+	public static final String GETONPAIDUUID = "getUnPaidOrder.do";
+	/**
 	 * 增加会员标签
 	 */
 	public static final String ADDVIPLABEL = "vipLabel/addVipLabel.do";
@@ -734,4 +742,8 @@ public class API {
 	 * 首页--会员营销
 	 */
 	public static final String SHOUYE_SHOPVIP_MARKET = "order/assemblyResult.do";
+	/**
+	 * 首页--销量排行
+	 */
+	public static final String SHOUYE_SHOPVIP_SALERANK = "order/getPerHourseAmt.do";
 }

@@ -112,11 +112,11 @@ public class MembersManagementTwoActivity extends BaseActivity {
 					if(groupPosition==0&&childPosition==1) {
 						startActivity(new Intent(MembersManagementTwoActivity.this,MemberClassifyActivity.class));
 					}
-					//标签管理
+					/*//标签管理
 					if(groupPosition==0&&childPosition==2){
 						startActivity(new Intent(MembersManagementTwoActivity.this,TagManagerActivity.class));
-					}
-					//优惠券管理
+					}*/
+				/*	//优惠券管理
 					if(groupPosition==1&&childPosition==0) {
 						startActivity(new Intent(MembersManagementTwoActivity.this,CouponManagerActivity.class));
 					}
@@ -127,7 +127,7 @@ public class MembersManagementTwoActivity extends BaseActivity {
 					//积分商城管理
 					if(groupPosition==1&&childPosition==2) {
 						startActivity(new Intent(MembersManagementTwoActivity.this,MemberPointManage.class));
-					}
+					}*/
 
 				}
 			});

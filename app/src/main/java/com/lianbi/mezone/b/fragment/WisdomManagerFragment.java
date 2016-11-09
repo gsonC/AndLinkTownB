@@ -230,21 +230,19 @@ public class WisdomManagerFragment extends Fragment implements OnClickListener {
 	public void onClick(View view) {
 		boolean isLogin = ContentUtils.getLoginStatus(mMainActivity);
 		boolean re = false;
-		switch (view.getId()) {
+		switch (view.getId()) {//到店服务
 			case R.id.ll_wisdommanage_shopservice:
 				 startActivity(new Intent(getActivity(),DiningTableSettingActivity.class));
 				break;
 			case R.id.ll_wisdommanage_Servicemall://服务商城
 				re = JumpIntent.jumpLogin_addShop(isLogin, API.SERVICESTORE, mMainActivity);
-				if (re) {// 服务商城
+				if (re) {
 
 					Intent intent_more = new Intent(mMainActivity, ServiceMallActivity.class);
 					mMainActivity.startActivityForResult(intent_more, mMainActivity.SERVICEMALLSHOP_CODE);
-
 				}
-
 				break;
-			case R.id.ll_wisdommanage_yingxiao:
+			case R.id.ll_wisdommanage_yingxiao://商户营销
 				Intent intent_yingxiao = new Intent(mMainActivity, BusinessMarketingActivity.class);
 				startActivity(intent_yingxiao);
 				break;

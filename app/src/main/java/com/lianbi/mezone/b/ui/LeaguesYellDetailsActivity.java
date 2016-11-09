@@ -75,8 +75,8 @@ public class LeaguesYellDetailsActivity extends BaseActivity {
         mLeaguesYellBean=(LeaguesYellBean)getIntent.getSerializableExtra("leaguesyellbean");
         Glide.with(LeaguesYellDetailsActivity.this).load
                 (mLeaguesYellBean.getLogoUrl()).error(R.mipmap.demo).into(ivLeaguesyelllistdetailsIcon);
-        if(!TextUtils.isEmpty(mLeaguesYellBean.getAuthor())) {
-            ivLeaguesyelllistdetailsName.setText(mLeaguesYellBean.getAuthor());
+        if(!TextUtils.isEmpty(mLeaguesYellBean.getBusinessName())) {
+            ivLeaguesyelllistdetailsName.setText(mLeaguesYellBean.getBusinessName());
         }
         if(!TextUtils.isEmpty(mLeaguesYellBean.getCreateTime())) {
             String time = mLeaguesYellBean.getCreateTime();

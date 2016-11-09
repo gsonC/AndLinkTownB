@@ -396,8 +396,8 @@ public class MainActivity extends BaseActivity implements BDLocation_interface, 
 							Intent intent = new Intent();
 							intent.setClass(MainActivity.this,LoginActivity.class);
 							startActivity(intent);
-							dismiss();
 							finish();
+							dismiss();
 							ContentUtils.showMsg(MainActivity.this, "已退出登录");
 						}
 					};

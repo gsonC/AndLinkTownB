@@ -51,10 +51,12 @@ public class BusinessMarketingActivity extends BaseActivity {
 				startActivity(intent);
 				break;
 			case R.id.ll_bussinessMaking_youhuijuan://优惠券管理
-				startActivity(new Intent(this,CouponManagerActivity.class));
+				//startActivity(new Intent(this,CouponManagerActivity.class));
+				ContentUtils.showMsg(this,"正在建设中");
 				break;
 			case R.id.ll_bussinessMaking_wenzhang://营销信息管理
-				startActivity(new Intent(this,MarketingMsgGlActivity.class));
+				//startActivity(new Intent(this,MarketingMsgGlActivity.class));
+				ContentUtils.showMsg(this,"正在建设中");
 				break;
 			case R.id.ll_bussinessMaking_message://营销文章
 				ContentUtils.showMsg(this,"正在建设中");
