@@ -546,6 +546,10 @@ public class API {
 	 */
 	public static final String OREDRINFO = "order/queryOrder.do";
 	/**
+	 * 到店明细接口
+	 */
+	public static final String OREDR= "order.do";
+	/**
 	 * APP删除订单明细
 	 */
 	public static final String UPDATEORDER = "order/updateOrder.do";
