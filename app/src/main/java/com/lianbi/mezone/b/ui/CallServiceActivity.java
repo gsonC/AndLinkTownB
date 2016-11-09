@@ -22,6 +22,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.QuickAdapter;
 import cn.com.hgh.utils.AbDateUtil;
@@ -95,6 +96,7 @@ public class CallServiceActivity extends BaseActivity {
 	}
 
 	@Override
+	@OnClick({R.id.all_container, R.id.valid_container, R.id.invalid_container})
 	public void onClick(View view) {
 		super.onClick(view);
 		switch (view.getId()) {
@@ -105,6 +107,7 @@ public class CallServiceActivity extends BaseActivity {
 				tvVaild.setBackgroundColor(getResources().getColor((R.color.colores_news_10)));
 				invalidContainer.setBackgroundColor(getResources().getColor((R.color.white)));
 				tvInvalid.setBackgroundColor(getResources().getColor((R.color.colores_news_10)));
+				currShowingIs = ALL_IS_SHOWING;
 				switchAdapter();
 				break;
 			case R.id.valid_container:
@@ -114,6 +117,7 @@ public class CallServiceActivity extends BaseActivity {
 				tvVaild.setBackgroundColor(getResources().getColor((R.color.color_3987fd)));
 				invalidContainer.setBackgroundColor(getResources().getColor((R.color.white)));
 				tvInvalid.setBackgroundColor(getResources().getColor((R.color.colores_news_10)));
+				currShowingIs = VALID_IS_SHOWING;
 				switchAdapter();
 				break;
 			case R.id.invalid_container:
@@ -123,6 +127,7 @@ public class CallServiceActivity extends BaseActivity {
 				tvVaild.setBackgroundColor(getResources().getColor((R.color.colores_news_10)));
 				invalidContainer.setBackgroundColor(getResources().getColor((R.color.color_3987fd)));
 				tvInvalid.setBackgroundColor(getResources().getColor((R.color.color_3987fd)));
+				currShowingIs = INVALID_IS_SHOWING;
 				switchAdapter();
 				break;
 		}
@@ -151,10 +156,10 @@ public class CallServiceActivity extends BaseActivity {
 	private void showingSelect(List<CallService> list) {
 		if (list.isEmpty()) {
 			listView.setVisibility(View.GONE);
-			callserviceList.setVisibility(View.VISIBLE);
+			ivEmptyactCalldetail.setVisibility(View.VISIBLE);
 		} else {
 			listView.setVisibility(View.VISIBLE);
-			callserviceList.setVisibility(View.GONE);
+			ivEmptyactCalldetail.setVisibility(View.GONE);
 			mAdapter.replaceAll(list);
 		}
 

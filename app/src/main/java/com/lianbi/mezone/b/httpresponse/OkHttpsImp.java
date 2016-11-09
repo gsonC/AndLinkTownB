@@ -2193,6 +2193,37 @@ public enum OkHttpsImp {
 		String url = getAbsoluteUrl(API.OREDRINFO);
 		getProgressResponse(myResultCallback, params, url);
 	}
+/**
+ * 到店明细接口
+ *
+ */
+public void getOrderInfo(String serNum,
+							  String source, String reqTime,
+							  String userId, String businessId,
+							  String startTime, String endTime,
+							  String sourceType, String orderStatus,
+							  String dateStatus, String curPage,
+							  String pageSize,
+							  MyResultCallback<String> myResultCallback) throws Exception {
+	Map<String, String> params = new HashMap<String, String>();
+	params.put("userId", userId);
+	params.put("pageSize", pageSize);
+	params.put("businessId", businessId);
+	params.put("dateStatus", dateStatus);
+	params.put("orderStatus", orderStatus);
+	params.put("curPage", curPage);
+	params.put("startTime", startTime);
+	params.put("endTime", endTime);
+	params.put("reqTime", reqTime);
+	params.put("serNum", serNum);
+	params.put("source", source);
+	params.put("sourceType", sourceType);
+	String sign = getSign(md5_key, params);
+	params.put("sign", sign);
+	String url = getAbsoluteUrl(API.OREDR);
+	getProgressResponse(myResultCallback, params, url);
+}
+
 
 	/**
 	 * 3期迭代后

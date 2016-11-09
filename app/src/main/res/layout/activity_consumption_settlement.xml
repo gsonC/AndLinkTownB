@@ -29,12 +29,33 @@
 
   </cn.com.hgh.view.AbPullToRefreshView>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+       android:gravity="right"
+        android:orientation="horizontal">
+        <Button
+            android:alpha="0"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0" />
+
+        <ImageView
+            android:id="@+id/im_comestore_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/buttontt"
+            android:visibility="visible"
+            />
+    </LinearLayout>
+
+
     <ImageView
         android:id="@+id/img_cumption_empty"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:scaleType="fitCenter"
+        android:scaleType="fitXY"
         android:src="@mipmap/iv_empty"
         android:visibility="gone"/>
 

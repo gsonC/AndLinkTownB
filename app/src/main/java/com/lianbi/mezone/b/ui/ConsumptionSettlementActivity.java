@@ -1,7 +1,9 @@
 package com.lianbi.mezone.b.ui;
 
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -39,8 +41,10 @@ public class ConsumptionSettlementActivity extends BaseActivity {
 	AbPullToRefreshView actCumptionAbpulltorefreshview;
 	@Bind(R.id.img_cumption_empty)
 	ImageView imgCumptionEmpty;
+	ArrayList<Consumption> mDatas = new ArrayList<Consumption>();
+	@Bind(R.id.im_comestore_detail)
+	ImageView imComestoreDetail;
 
-	ArrayList<Consumption> mDatas=new ArrayList<Consumption>();
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -49,10 +53,35 @@ public class ConsumptionSettlementActivity extends BaseActivity {
 		initview();
 		initListAdapter();
 		getUnPaidOrder(true);
+		setlisten();
 	}
+
+	private void setlisten(){
+		actCumptionListview.setOnTouchListener(new View.OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				switch (event.getAction()) {
+					case MotionEvent.ACTION_MOVE:
+						imComestoreDetail.setVisibility(View.GONE);
+						break;
+				}
+
+				return false;
+			}
+		});
+	}
+
+
 
 	private void initview() {
 		setPageTitle("客户买单");
+		imComestoreDetail.setOnClickListener(this);
+		imComestoreDetail.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				startActivity(new Intent(ConsumptionSettlementActivity.this,DiningTableSettingActivity.class));
+			}
+		});
 		//刷新设置
 		actCumptionAbpulltorefreshview.setLoadMoreEnable(true);
 		actCumptionAbpulltorefreshview.setPullRefreshEnable(true);
@@ -75,15 +104,15 @@ public class ConsumptionSettlementActivity extends BaseActivity {
 	public QuickAdapter<Consumption> mAdapter;
 
 	private void initListAdapter() {
-		mAdapter = new QuickAdapter<Consumption>(this, R.layout.activity_consumption_item,mDatas) {
+		mAdapter = new QuickAdapter<Consumption>(this, R.layout.activity_consumption_item, mDatas) {
 			@Override
 			protected void convert(BaseAdapterHelper helper, Consumption item) {
-				TextView tv_consum_total=helper.getView(R.id.tv_consum_total);
-				TextView tv_consum_time=helper.getView(R.id.tv_consum_time);
-				TextView tv_consum_price=helper.getView(R.id.tv_consum_price);
-				TextView tv_consum_daytime=helper.getView(R.id.tv_consum_daytime);
-				TextView tv_consum_where=helper.getView(R.id.tv_consum_where);
-				TextView tv_consum_shoukuan=helper.getView(R.id.tv_consum_shoukuan);
+				TextView tv_consum_total = helper.getView(R.id.tv_consum_total);
+				TextView tv_consum_time = helper.getView(R.id.tv_consum_time);
+				TextView tv_consum_price = helper.getView(R.id.tv_consum_price);
+				TextView tv_consum_daytime = helper.getView(R.id.tv_consum_daytime);
+				TextView tv_consum_where = helper.getView(R.id.tv_consum_where);
+				TextView tv_consum_shoukuan = helper.getView(R.id.tv_consum_shoukuan);
 
 
 				tv_consum_where.setText(item.getTableName());
@@ -99,54 +128,54 @@ public class ConsumptionSettlementActivity extends BaseActivity {
 	 * 4.20	查询店铺的待支付信息
 	 */
 
-	private void getUnPaidOrder(final boolean isResh){
-        String reqTime= AbDateUtil.getDateTimeNow();
-		String uuid= AbStrUtil.getUUID();
+	private void getUnPaidOrder(final boolean isResh) {
+		String reqTime = AbDateUtil.getDateTimeNow();
+		String uuid = AbStrUtil.getUUID();
 		try {
-			okHttpsImp.getUnPaidOrder(uuid,"app",reqTime, OkHttpsImp.md5_key,
-					userShopInfoBean.getBusinessId(),new MyResultCallback<String>() {
-						@Override
-						public void onResponseResult(Result result) {
-	                      String reString=result.getData();
-							mDatas.clear();
-							if(reString!=null){
-								try {
-									JSONObject jsonObject=new JSONObject(reString);
-									reString=jsonObject.getString("orderList");
-									ArrayList<Consumption> mDatasL= (ArrayList<Consumption>) JSON.parseArray(reString,Consumption.class);
+			okHttpsImp.getUnPaidOrder(uuid, "app", reqTime, OkHttpsImp.md5_key, userShopInfoBean.getBusinessId(), new MyResultCallback<String>() {
+				@Override
+				public void onResponseResult(Result result) {
+					String reString = result.getData();
+					mDatas.clear();
+					if (reString != null) {
+						try {
+							JSONObject jsonObject = new JSONObject(reString);
+							reString = jsonObject.getString("orderList");
+							ArrayList<Consumption> mDatasL = (ArrayList<Consumption>) JSON.parseArray(reString, Consumption.class);
 
-									if (mDatasL != null && mDatasL.size() > 0) {
+							if (mDatasL != null && mDatasL.size() > 0) {
 
-										mDatas.addAll(mDatasL);
+								mDatas.addAll(mDatasL);
 
-									}
-									if(mDatas!=null&&mDatas.size()>0){
-										actCumptionAbpulltorefreshview.setVisibility(View.VISIBLE);
-										imgCumptionEmpty.setVisibility(View.GONE);
-									}else{
-										actCumptionAbpulltorefreshview.setVisibility(View.GONE);
-										imgCumptionEmpty.setVisibility(View.VISIBLE);
-									}
-									AbPullHide.hideRefreshView(isResh,actCumptionAbpulltorefreshview);
-									mAdapter.replaceAll(mDatas);
-								} catch (JSONException e) {
-									e.printStackTrace();
-								}
 							}
+							if (mDatas != null && mDatas.size() > 0) {
+								actCumptionAbpulltorefreshview.setVisibility(View.VISIBLE);
+								imgCumptionEmpty.setVisibility(View.GONE);
+							} else {
+								actCumptionAbpulltorefreshview.setVisibility(View.GONE);
+								imgCumptionEmpty.setVisibility(View.VISIBLE);
+							}
+							AbPullHide.hideRefreshView(isResh, actCumptionAbpulltorefreshview);
+							mAdapter.replaceAll(mDatas);
+						} catch (JSONException e) {
+							e.printStackTrace();
 						}
+					}
+				}
 
-						@Override
-						public void onResponseFailed(String msg) {
-                          if(isResh){
-							  actCumptionAbpulltorefreshview.setVisibility(View.GONE);
-							  imgCumptionEmpty.setVisibility(View.VISIBLE);
-						  }
-							AbPullHide.hideRefreshView(isResh,actCumptionAbpulltorefreshview);
-						}
-					});
+				@Override
+				public void onResponseFailed(String msg) {
+					if (isResh) {
+						actCumptionAbpulltorefreshview.setVisibility(View.GONE);
+						imgCumptionEmpty.setVisibility(View.VISIBLE);
+					}
+					AbPullHide.hideRefreshView(isResh, actCumptionAbpulltorefreshview);
+				}
+			});
 		} catch (Exception e) {
 			e.printStackTrace();
-		} {
+		}
+		{
 
 		}
 	}
