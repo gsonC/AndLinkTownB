@@ -11,9 +11,6 @@ import android.widget.LinearLayout;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.xizhi.mezone.b.R;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -21,6 +18,7 @@ import cn.com.hgh.utils.AbDateUtil;
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.REGX;
 import cn.com.hgh.utils.Result;
+import cn.com.hgh.view.DialogCommon;
 
 /*
  * @创建者     master
@@ -101,22 +99,8 @@ public class LeaguesPublishYellActivity extends BaseActivity {
         return  true;
     }
     private   void  goPublishYell(){
-///       (String businessId,
-//                String area,
-//                String businessCircle,
-//                String messageType,
-//                String pushScope,
-//                String pushTime,
-//                String author,
-//                String phone,
-//                String messageTitle,
-//                String messageContent,
-//                String city,
-//                String address,
-//                String logoUrl,
-//                String serNum, String source,
-//                String reqTime,
-        String  pushTime=AbDateUtil.getDateTimeNow();
+        Log.i("tag","商铺名称----->"+ShopName);
+        String  pushTime= AbDateUtil.getDateTimeNow();
         try {
             okHttpsImp.getAddBusinessDynamic(
                     "BD2016052013475900000010",
@@ -140,28 +124,60 @@ public class LeaguesPublishYellActivity extends BaseActivity {
                         @Override
                         public void onResponseResult(Result result) {
                             String reString = result.getData();
-                            Log.i("tag","resString 92----->"+reString);
-                            ContentUtils.showMsg(LeaguesPublishYellActivity.this, "发布成功");
-                            Intent intent = new Intent(LeaguesPublishYellActivity.this, LeaguesYellListActivity.class);
-                            setResult(RESULT_OK, intent);
-                            finish();
-                            try {
-                                JSONObject jsonObject= new JSONObject(reString);
+                            DialogCommon dialog = new DialogCommon(LeaguesPublishYellActivity.this) {
+                                @Override
+                                public void onCheckClick() {
 
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
+                                    Intent intent = new Intent(LeaguesPublishYellActivity.this, LeaguesYellListActivity.class);
+                                    setResult(RESULT_OK, intent);
+                                    finish();
+                                }
+
+                                @Override
+                                public void onOkClick() {
+                                    dismiss();
+                                    etLeaguespublishyellTitle.setText("");
+                                    etLeaguespublishyellContactnum.setText("");
+                                    etLeaguespublishyellSaysomething.setText("");
+                                    strTitle="";
+                                    strContactnum="";
+                                    strSaysomething="";
+                                }
+                            };
+                            dialog.setCancelable(false);
+                            dialog.setCanceledOnTouchOutside(false);
+                            dialog.setTextTitle("发布成功");
+                            dialog.setTv_dialog_common_ok("再发一条");
+                            dialog.setTv_dialog_common_cancel("查看详情");
+                            dialog.show();
 
                         }
 
                         @Override
                         public void onResponseFailed(String msg) {
-                            ContentUtils.showMsg(LeaguesPublishYellActivity.this, "发布失败");
+                            DialogCommon dialog = new DialogCommon(LeaguesPublishYellActivity.this) {
+                                @Override
+                                public void onCheckClick() {
+                                    dismiss();
+                                }
+                                @Override
+                                public void onOkClick() {
+                                    dismiss();
+
+                                }
+                            };
+                            dialog.setCancelable(false);
+                            dialog.setCanceledOnTouchOutside(false);
+                            dialog.setTextTitle("发布失败");
+                            dialog.setTv_dialog_common_ok("重新发送");
+                            dialog.setTv_dialog_common_cancel("取消");
+                            dialog.show();
+
                         }
                     });
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-    };
+    }
 }

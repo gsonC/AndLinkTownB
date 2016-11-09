@@ -353,6 +353,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="餐饮"
+                android:textColor="@color/colores_news_19"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="15dp"
                 />
@@ -376,6 +377,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="购物"
+                    android:textColor="@color/colores_news_19"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="15dp"
                     />
@@ -399,6 +401,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="住宿"
+                android:textColor="@color/colores_news_19"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="15dp"
                 />
@@ -422,6 +425,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="其他"
+            android:textColor="@color/colores_news_19"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="15dp"
             />
@@ -439,13 +443,11 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:layout_marginLeft="20dp"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
      >
      <ImageView
         android:id="@+id/iv_shouyeLeagues_restaurant"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:src="@mipmap/icon_rotate"
      />
         <RelativeLayout
@@ -458,7 +460,8 @@
          android:id="@+id/tv_shouyeLeagues_restaurant"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
-         android:text="餐饮"
+         android:text="餐饮餐饮"
+         android:textSize="@dimen/h12"
          android:layout_centerHorizontal="true"
          android:singleLine="true"
      />
@@ -469,16 +472,16 @@
          android:layout_height="wrap_content"
          android:layout_centerHorizontal="true"
          android:text="+0"
-     />
+         android:textSize="@dimen/h14"
+         />
      </RelativeLayout>
      </RelativeLayout>
      <RelativeLayout
          android:layout_width="0dp"
          android:layout_height="wrap_content"
          android:layout_weight="1"
-         android:layout_marginLeft="30dp"
-         android:paddingLeft="5dp"
-         android:paddingRight="5dp"         >
+         android:layout_marginLeft="20dp"
+               >
      <ImageView
          android:id="@+id/iv_shouyeLeagues_shopping"
          android:layout_width="wrap_content"
@@ -495,7 +498,8 @@
              android:id="@+id/tv_shouyeLeagues_shopping"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
-             android:text="购物"
+             android:text="餐饮餐饮"
+             android:textSize="@dimen/h12"
              android:layout_centerHorizontal="true"
              android:singleLine="true"
              />
@@ -505,6 +509,7 @@
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:text="+0"
+             android:textSize="@dimen/h14"
              android:layout_centerHorizontal="true"
              />
           </RelativeLayout>
@@ -513,9 +518,8 @@
          android:layout_width="0dp"
          android:layout_height="wrap_content"
          android:layout_weight="1"
-         android:layout_marginLeft="30dp"
-         android:paddingLeft="5dp"
-         android:paddingRight="5dp"         >
+         android:layout_marginLeft="20dp"
+                >
      <ImageView
          android:id="@+id/iv_shouyeLeagues_stay"
          android:layout_width="wrap_content"
@@ -532,7 +536,8 @@
              android:id="@+id/tv_shouyeLeagues_stay"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
-             android:text="住宿"
+             android:text="餐饮餐饮"
+             android:textSize="@dimen/h12"
              android:layout_centerHorizontal="true"
              android:singleLine="true"
              />
@@ -542,6 +547,7 @@
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:text="+0"
+             android:textSize="@dimen/h14"
              android:layout_centerHorizontal="true"
              />
      </RelativeLayout>
@@ -550,10 +556,9 @@
          android:layout_width="0dp"
          android:layout_height="wrap_content"
          android:layout_weight="1"
-         android:layout_marginLeft="30dp"
+         android:layout_marginLeft="20dp"
          android:layout_marginRight="20dp"
-         android:paddingLeft="5dp"
-         android:paddingRight="5dp"         >
+              >
      <ImageView
          android:id="@+id/iv_shouyeLeagues_other"
          android:layout_width="wrap_content"
@@ -570,8 +575,9 @@
              android:id="@+id/tv_shouyeLeagues_other"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
-             android:text="其他"
-             android:layout_centerHorizontal="true"
+             android:text="餐饮餐饮"
+            android:textSize="@dimen/h12"
+            android:layout_centerHorizontal="true"
              android:singleLine="true"
             />
          <TextView
@@ -580,6 +586,7 @@
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:text="+0"
+             android:textSize="@dimen/h14"
              android:layout_centerHorizontal="true"
              />
          </RelativeLayout>

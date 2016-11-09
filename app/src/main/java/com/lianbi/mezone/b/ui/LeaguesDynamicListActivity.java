@@ -26,7 +26,6 @@ import butterknife.ButterKnife;
 import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.QuickAdapter;
 import cn.com.hgh.utils.AbPullHide;
-import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.view.AbPullToRefreshView;
 import cn.com.hgh.view.HttpDialog;
@@ -181,7 +180,7 @@ public class LeaguesDynamicListActivity extends BaseActivity {
         }
         try {
             okHttpsImp.queryBusinessDynamic(
-                    "BD2016052013475900000010",
+                    "",                        //BD2016052013475900000010
                     "",
                     "310117",
                     "",
@@ -218,7 +217,12 @@ public class LeaguesDynamicListActivity extends BaseActivity {
                                         }
                                     }
                                     AbPullHide.hideRefreshView(isResh,actLeaguesdynamiclistAbpulltorefreshview);
-                                    updateView(mData);
+                                    if(mData.size()==0){
+                                        ivLeaguesDynamicListEmpty.setVisibility(View.VISIBLE);
+                                        actLeaguesdynamiclistAbpulltorefreshview.setVerticalGravity(View.GONE);
+                                    }else{
+                                        updateView(mData);
+                                    }
                                 }else{
                                     ivLeaguesDynamicListEmpty.setVisibility(View.VISIBLE);
                                     actLeaguesdynamiclistAbpulltorefreshview.setVerticalGravity(View.GONE);
@@ -233,7 +237,6 @@ public class LeaguesDynamicListActivity extends BaseActivity {
                         @Override
                         public void onResponseFailed(String msg) {
                             AbPullHide.hideRefreshView(isResh,actLeaguesdynamiclistAbpulltorefreshview);
-                            ContentUtils.showMsg(LeaguesDynamicListActivity.this, "网络访问失败");
                             ivLeaguesDynamicListEmpty.setVisibility(View.VISIBLE);
                             actLeaguesdynamiclistAbpulltorefreshview.setVerticalGravity(View.GONE);
                         }

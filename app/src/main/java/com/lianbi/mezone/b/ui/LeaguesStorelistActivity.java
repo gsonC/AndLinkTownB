@@ -15,7 +15,6 @@ import com.lianbi.mezone.b.bean.BusinessListBean;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.xizhi.mezone.b.R;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -105,7 +104,7 @@ public class LeaguesStorelistActivity extends BaseActivity {
                 tv_leaguesstoreclis_name.setText(item.getBusinessName());
                 if(!TextUtils.isEmpty(item.getCreateTime())){
                     String time=item.getCreateTime().substring(0,10);
-                    tv_leaguesstoreclis_time.setText(item.getCreateTime());
+                    tv_leaguesstoreclis_time.setText(time);
                 }
                 tv_leaguesstoreclis_address.setText(item.getAddress());
             }
@@ -151,7 +150,7 @@ public class LeaguesStorelistActivity extends BaseActivity {
                                     actLeaguesstorelistAbpulltorefreshview.setVisibility(View.GONE);
                                 }
 
-                            } catch (JSONException e) {
+                            } catch (Exception e) {
                                 e.printStackTrace();
                             }
 
