@@ -52,36 +52,32 @@ public class AddTablesetActivity extends BaseActivity {
                     ContentUtils.showMsg(AddTablesetActivity.this, "桌位名称不能为空");
                     return;
                 }
-                getAddTable(tablename);
+                String presetCount = et_table_persion_num.getText().toString().trim();
+                if (TextUtils.isEmpty(presetCount)) {
+                    ContentUtils.showMsg(AddTablesetActivity.this, "用餐人数不能为空");
+                    return;
+                }
+                if (presetCount.startsWith("0")) {
+                    ContentUtils.showMsg(AddTablesetActivity.this, "用餐人数不能以0开头");
+                    return;
+                }
+                getAddTable(tablename, presetCount);
                 break;
-
         }
     }
 
-    private void getAddTable(String tablename) {
+    private void getAddTable(String tablename, String presetCount) {
         okHttpsImp.getAddTable(new MyResultCallback<String>() {
 
             @Override
             public void onResponseResult(Result result) {
-                String reString = result.getData();
-                if (reString != null) {
-                    JSONObject jsonObject;
-                    try {
-                        setResult(RESULT_OK);
-                        finish();
-                        ContentUtils.showMsg(AddTablesetActivity.this, "添加成功");
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
+                finish();
+                ContentUtils.showMsg(AddTablesetActivity.this, "添加成功");
             }
 
             @Override
             public void onResponseFailed(String msg) {
-
             }
-        }, userShopInfoBean.getBusinessId(), tablename);
-
-
+        }, userShopInfoBean.getBusinessId(), tablename, presetCount, userShopInfoBean.getUserId());
     }
 }

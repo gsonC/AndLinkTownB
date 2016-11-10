@@ -64,6 +64,7 @@
         android:ems="10"
         android:gravity="center"
         android:hint="请输入用餐人数"
+        android:inputType="number"
         android:maxLength="4"
         android:padding="5dp"
         android:textColor="@color/white"

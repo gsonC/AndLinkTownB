@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="0dp"
-    android:layout_height="match_parent"
-    android:layout_marginLeft="3dp"
-    android:layout_marginRight="3dp"
-    android:layout_weight="1"
-    android:background="@drawable/table_background_shape"
-    android:visibility="invisible">
+    android:layout_width="match_parent"
+    android:layout_height="118dp"
+    android:background="@drawable/table_background_shape">
 
     <TextView
         android:id="@+id/table_state"
@@ -46,6 +42,7 @@
         android:gravity="center" />
 
     <LinearLayout
+        android:id="@+id/pay_number_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@id/curr_table_may_do"
@@ -99,5 +96,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true" />
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="5dp"
+        android:layout_marginRight="5dp" />
 </RelativeLayout>

@@ -130,8 +130,6 @@
         <activity android:name="com.lianbi.mezone.b.ui.InfoDetailsActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.ScanningQRActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.AddTablesetActivity"/>
-        <activity android:name="com.lianbi.mezone.b.ui.SearchActivity"/>
-        <activity android:name="com.lianbi.mezone.b.ui.TableSetActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.ServiceMallActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.ChoiceDingdanInfoWayActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.IncomeDetailActivity"/>
@@ -300,7 +298,9 @@
         <activity android:name="com.lianbi.mezone.b.ui.WebMoreServiceActivty"/>
         <activity android:name="com.lianbi.mezone.b.ui.BusinessMarketingActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.MembersManagementTwoActivity"/>
-        <activity android:name="com.lianbi.mezone.b.ui.DiningTableSettingActivity"/>
+        <activity
+            android:name="com.lianbi.mezone.b.ui.DiningTableSettingActivity"
+            android:theme="@style/DiningTableSettingActivityTheme.NoActionBar"/>
 
         <!-- 个推SDK配置开始 -->
         <!-- 配置的第三方参数属性 -->

@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by chen.sun on 2016/11/7.
  */
-public class LeaguesAddcountlist implements Serializable {
+public class LeaguesAddCountlist implements Serializable {
 
         String  addCount;
         String  businessType;

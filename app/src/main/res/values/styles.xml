@@ -123,4 +123,15 @@
         <item name="android:textSize">@dimen/h13</item>
         <item name="android:textColor">@color/commo_text_color</item>
     </style>
+
+    <style name="DiningTableSettingActivityTheme" parent="Theme.AppCompat.Light.DarkActionBar"/>
+
+    <style name="DiningTableSettingActivityTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="DiningTableSettingActivityTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="DiningTableSettingActivityTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
