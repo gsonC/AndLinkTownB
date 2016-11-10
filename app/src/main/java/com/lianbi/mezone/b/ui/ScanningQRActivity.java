@@ -128,9 +128,7 @@ public class ScanningQRActivity extends BaseActivity {
     private void initView() {
         setPageTitle("空桌");
         String tablename = getIntent().getStringExtra("TABLENAME");
-        String tableqr = getIntent().getStringExtra("TABLEQR");
         tableid = getIntent().getStringExtra("TABLEID");
-//		Glide.with(ScanningQRActivity.this).load(tableqr).error(R.id.defaultimg_11).into(iv_scanningqr);
         tv_tablename = (TextView) findViewById(R.id.tv_tablename);
         if (!(null == tablename && TextUtils.isEmpty(tablename))) {
             tv_tablename.setText(tablename);
@@ -139,7 +137,6 @@ public class ScanningQRActivity extends BaseActivity {
         }
         tv_keepqr = (TextView) findViewById(R.id.tv_keepqr);
         iv_scanningqr = (ImageView) findViewById(R.id.iv_scanningqr);
-//		iv_scanningqr.setBackgroundResource(R.drawable.addtableset);
     }
 
     @Override
@@ -204,7 +201,6 @@ public class ScanningQRActivity extends BaseActivity {
                         url = mQrcodeDetails.getCodeUrl();
                         http = jsonObject.getString("httpInfo").toString();
                         imageUrl = http + url;
-//						Glide.with(ScanningQRActivity.this).load(imageUrl).error(R.drawable.about_us).into(iv_scanningqr);
                         getHttpBitmap(imageUrl, iv_scanningqr);
 
                     } catch (Exception e) {

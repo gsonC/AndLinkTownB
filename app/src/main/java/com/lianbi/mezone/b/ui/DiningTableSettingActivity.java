@@ -634,7 +634,7 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
         int s = data.size();
         if (enity != null) {
             for (int i = 0; i < s; i++) {
-                if (enity.getTableId() == data.get(i).getTableId()) {
+                if (enity.getTableId().equals(data.get(i).getTableId())) {
                     return true;
                 }
             }
@@ -722,19 +722,37 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
     @Override
     @OnItemClick({R.id.tables_grid_view})
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        TableSetBean bean = data.get(position);
         if (delSelectButtonIsShowing) {
-//            switch ()
-//            TableSetBean bean = data.get(position);
-//            bean.setSelectStatus(2);
-//            data.remove(position);
-//            data.add(position, bean);
-//            adapter
-
-//            Error:(1, 1) A problem occurred evaluating project ':app'.
-//                    > Failed to apply plugin [id 'com.android.application']
-//            > No enum constant com.android.build.gradle.OptionalCompilationStep.FULL_APK
+            switch (bean.getSelectStatus()) {
+                case 1:
+                    bean.setSelectStatus(2);
+                    needDelList.add(bean.getTableId());
+                    break;
+                case 2:
+                    bean.setSelectStatus(1);
+                    needDelList.remove(bean.getTableId());
+                    break;
+            }
+            data.remove(position);
+            data.add(position, bean);
+            adapter.replaceAll(data);
         } else {
+            switch (bean.getTableStatus()) {
+                case 0:
+                    Intent i1 = new Intent(DiningTableSettingActivity.this, ScanningQRActivity.class);
+                    i1.putExtra("TABLENAME", bean.getTableName());
+                    i1.putExtra("TABLEID", bean.getTableId());
+                    startActivity(i1);
+                    break;
+                case 1:
+                    Intent i2 = new Intent(DiningTableSettingActivity.this, TableHasOrderedActivity.class);
 
+                    break;
+                case 2:
+                    Intent i3 = new Intent(DiningTableSettingActivity.this, TableHasPaidActivity.class);
+                    break;
+            }
         }
     }
 

@@ -9,20 +9,20 @@ public class TableSetBean implements Serializable {
      */
     private static final long serialVersionUID = 8927806972434126948L;
 
-    int tableId;//主键唯一标识
-    String createTime;//创建时间
-    int tradeStatus;//店铺营业标识 0休息 1 营业
-    int tableStatus;//桌位状态 0灰色 1绿色 2红色 3黄色 4蓝色
-    String callTime;//呼叫时间
-    String tableName;//桌位名称
-    String codeUrl;//二维码相对路径
-    String modifyTime;//修改时间
-    String storeId;//店铺id
-    int selectStatus;//
-    boolean isNew;
-    String presetCount;
-    String orderAmt;
-    String actualCount;
+    private String tableId;//主键唯一标识
+    private String createTime;//创建时间
+    private int tradeStatus;//店铺营业标识 0休息 1 营业
+    private int tableStatus;//桌位状态 0-空位，1-已下单，2-已支付
+    private String tableName;//桌位名称
+    private String codeUrl;//二维码相对路径
+    private String modifyTime;//修改时间
+    private String storeId;//店铺id
+    private int selectStatus;//0代表删除选择按钮不显示，1代表删除选择按钮显示但未被选择，2代表删除选择按钮显示且已被选择
+    private boolean isNew;
+    private String presetCount;
+    private String orderAmt;
+    private String actualCount;
+
 
     public String getActualCount() {
         return actualCount;
@@ -72,11 +72,11 @@ public class TableSetBean implements Serializable {
         this.storeId = storeId;
     }
 
-    public int getTableId() {
+    public String getTableId() {
         return tableId;
     }
 
-    public void setTableId(int tableId) {
+    public void setTableId(String tableId) {
         this.tableId = tableId;
     }
 
@@ -102,14 +102,6 @@ public class TableSetBean implements Serializable {
 
     public void setTableStatus(int tableStatus) {
         this.tableStatus = tableStatus;
-    }
-
-    public String getCallTime() {
-        return callTime;
-    }
-
-    public void setCallTime(String callTime) {
-        this.callTime = callTime;
     }
 
     public String getTableName() {
