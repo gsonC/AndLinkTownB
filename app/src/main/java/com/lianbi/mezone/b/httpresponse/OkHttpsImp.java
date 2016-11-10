@@ -2200,10 +2200,9 @@ public enum OkHttpsImp {
 public void getOrderInfo(String serNum,
 							  String source, String reqTime,
 							  String userId, String businessId,
-							  String startTime, String endTime,
 							  String sourceType, String orderStatus,
 							  String dateStatus, String curPage,
-							  String pageSize,
+							  String pageSize,  String startTime, String endTime,
 							  MyResultCallback<String> myResultCallback) throws Exception {
 	Map<String, String> params = new HashMap<String, String>();
 	params.put("userId", userId);
@@ -2220,7 +2219,7 @@ public void getOrderInfo(String serNum,
 	params.put("sourceType", sourceType);
 	String sign = getSign(md5_key, params);
 	params.put("sign", sign);
-	String url = getAbsoluteUrl(API.OREDR);
+	String url = API.OREDR;
 	getProgressResponse(myResultCallback, params, url);
 }
 

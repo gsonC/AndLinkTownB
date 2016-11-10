@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -26,15 +25,16 @@ import butterknife.OnClick;
 import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.QuickAdapter;
 import cn.com.hgh.utils.AbDateUtil;
-import cn.com.hgh.utils.AbPullHide;
 import cn.com.hgh.utils.AbStrUtil;
+import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.view.AbPullToRefreshView;
+import cn.com.hgh.view.SlideListView2;
 
 /**
  * 呼叫服务
  */
-public class CallServiceActivity extends BaseActivity {
+public class CallServiceActivity extends BaseActivity implements AbPullToRefreshView.OnFooterLoadListener, AbPullToRefreshView.OnHeaderRefreshListener {
 
 	@Bind(R.id.tv_all)
 	TextView tvAll;
@@ -50,20 +50,21 @@ public class CallServiceActivity extends BaseActivity {
 	FrameLayout invalidContainer;
 	@Bind(R.id.iv_emptyact_calldetail)
 	ImageView ivEmptyactCalldetail;
-	@Bind(R.id.callservice_list)
-	ListView callserviceList;
+
 	@Bind(R.id.pulltorefresh_calllist)
 	AbPullToRefreshView pulltorefreshCalllist;
-
+	@Bind(R.id.fm_call_listView)
+	SlideListView2 fmCallListView;
+	private String labelId;
+	private QuickAdapter<CallService> mAdapter;
+	private TextView tv_callset_deal;
 	private int currShowingIs;
 	private static final int ALL_IS_SHOWING = 0;
 	private static final int VALID_IS_SHOWING = 1;
 	private static final int INVALID_IS_SHOWING = -1;
-	private int page = 1;
-	private ArrayList<CallService> mDatas = new ArrayList<CallService>();
-	private List<CallService> mData = new ArrayList<>();
-	private List<CallService> mValideData = new ArrayList<>();
-	private List<CallService> mInvalideData = new ArrayList<>();
+	private List<CallService> mData = new ArrayList<>();//全部
+	private List<CallService> mValideData = new ArrayList<>();//已经处理
+	private List<CallService> mInvalideData = new ArrayList<>();//未处理
 	/**
 	 * 正在下拉刷新.
 	 */
@@ -72,6 +73,7 @@ public class CallServiceActivity extends BaseActivity {
 	 * 正在加载更多.
 	 */
 	private boolean mPullLoading = false;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -79,19 +81,21 @@ public class CallServiceActivity extends BaseActivity {
 		ButterKnife.bind(this);
 		initView();
 		initAdapter();
-
 	}
+
 	@Override
 	protected void onResume() {
 		super.onResume();
-
-		getPushMessages(true,"");
+		getPushMessages();
 	}
 
 	private void initView() {
 		setPageTitle("呼叫服务");
 		setPageRightText("服务设置");
 		currShowingIs = ALL_IS_SHOWING;
+		pulltorefreshCalllist.setOnFooterLoadListener(this);
+		pulltorefreshCalllist.setOnHeaderRefreshListener(this);
+		fmCallListView.initSlideMode(SlideListView2.MOD_RIGHT);
 
 	}
 
@@ -102,31 +106,31 @@ public class CallServiceActivity extends BaseActivity {
 		switch (view.getId()) {
 			case R.id.all_container:
 				allContainer.setBackgroundColor(getResources().getColor((R.color.color_3987fd)));
-				tvAll.setBackgroundColor(getResources().getColor((R.color.color_3987fd)));
+				tvAll.setTextColor(getResources().getColor((R.color.color_3987fd)));
 				validContainer.setBackgroundColor(getResources().getColor((R.color.white)));
-				tvVaild.setBackgroundColor(getResources().getColor((R.color.colores_news_10)));
+				tvVaild.setTextColor(getResources().getColor((R.color.colores_news_10)));
 				invalidContainer.setBackgroundColor(getResources().getColor((R.color.white)));
-				tvInvalid.setBackgroundColor(getResources().getColor((R.color.colores_news_10)));
+				tvInvalid.setTextColor(getResources().getColor((R.color.colores_news_10)));
 				currShowingIs = ALL_IS_SHOWING;
 				switchAdapter();
 				break;
 			case R.id.valid_container:
 				allContainer.setBackgroundColor(getResources().getColor((R.color.white)));
-				tvAll.setBackgroundColor(getResources().getColor((R.color.colores_news_10)));
+				tvAll.setTextColor(getResources().getColor((R.color.colores_news_10)));
 				validContainer.setBackgroundColor(getResources().getColor((R.color.color_3987fd)));
-				tvVaild.setBackgroundColor(getResources().getColor((R.color.color_3987fd)));
+				tvVaild.setTextColor(getResources().getColor((R.color.color_3987fd)));
 				invalidContainer.setBackgroundColor(getResources().getColor((R.color.white)));
-				tvInvalid.setBackgroundColor(getResources().getColor((R.color.colores_news_10)));
+				tvInvalid.setTextColor(getResources().getColor((R.color.colores_news_10)));
 				currShowingIs = VALID_IS_SHOWING;
 				switchAdapter();
 				break;
 			case R.id.invalid_container:
 				allContainer.setBackgroundColor(getResources().getColor((R.color.white)));
-				tvAll.setBackgroundColor(getResources().getColor((R.color.colores_news_10)));
+				tvAll.setTextColor(getResources().getColor((R.color.colores_news_10)));
 				validContainer.setBackgroundColor(getResources().getColor((R.color.white)));
-				tvVaild.setBackgroundColor(getResources().getColor((R.color.colores_news_10)));
+				tvVaild.setTextColor(getResources().getColor((R.color.colores_news_10)));
 				invalidContainer.setBackgroundColor(getResources().getColor((R.color.color_3987fd)));
-				tvInvalid.setBackgroundColor(getResources().getColor((R.color.color_3987fd)));
+				tvInvalid.setTextColor(getResources().getColor((R.color.color_3987fd)));
 				currShowingIs = INVALID_IS_SHOWING;
 				switchAdapter();
 				break;
@@ -141,30 +145,22 @@ public class CallServiceActivity extends BaseActivity {
 			case VALID_IS_SHOWING:
 				showingSelect(mValideData);
 				break;
-
 			case INVALID_IS_SHOWING:
 				showingSelect(mInvalideData);
-
 				break;
-
 		}
-
 	}
-
-	ListView listView;
 
 	private void showingSelect(List<CallService> list) {
 		if (list.isEmpty()) {
-			listView.setVisibility(View.GONE);
+			fmCallListView.setVisibility(View.GONE);
 			ivEmptyactCalldetail.setVisibility(View.VISIBLE);
 		} else {
-			listView.setVisibility(View.VISIBLE);
+			fmCallListView.setVisibility(View.VISIBLE);
 			ivEmptyactCalldetail.setVisibility(View.GONE);
 			mAdapter.replaceAll(list);
 		}
-
 	}
-
 
 	@Override
 	protected void onTitleRightClickTv() {
@@ -175,74 +171,157 @@ public class CallServiceActivity extends BaseActivity {
 	/**
 	 * 初始化适配器
 	 */
-	private QuickAdapter<CallService> mAdapter;
-
 	private void initAdapter() {
-		mAdapter = new QuickAdapter<CallService>(this, R.layout.consumption_item) {
+		mAdapter = new QuickAdapter<CallService>(this, R.layout.consumption_item, mData) {
 			@Override
-			protected void convert(BaseAdapterHelper helper, CallService item) {
+			protected void convert(BaseAdapterHelper helper, final CallService item) {
 				TextView tv_callset_table = helper.getView(R.id.tv_callset_table);
 				TextView tv_callset_content = helper.getView(R.id.tv_callset_content);
 				TextView tv_callset_time = helper.getView(R.id.tv_callset_time);
 				TextView tv_callset_yartime = helper.getView(R.id.tv_callset_yartime);
-				TextView tv_callset_deal = helper.getView(R.id.tv_callset_deal);
+				tv_callset_deal = helper.getView(R.id.tv_callset_deal);
 
-				tv_callset_yartime.setText(item.getTv_callset_yartime());
-				tv_callset_table.setText(item.getTv_callset_table());
-				tv_callset_content.setText(item.getTv_callset_content());
-				tv_callset_table.setText(item.getTv_callset_table());
-				helper.getView(R.id.tv_callset_deal).setOnClickListener(new View.OnClickListener() {
+				tv_callset_yartime.setText(item.getModifyTime());
+				tv_callset_table.setText(item.getTableName());
+				tv_callset_content.setText(item.getMsgContent());
+				helper.getView(R.id.tv_chdelete).setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View v) {
+						fmCallListView.slideBack();
+						labelId=item.getPushId();
+						DeletevipLabel();
+					}
+				});
+				tv_callset_deal.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						getMessage(item.getPushId());
 
 					}
 				});
 			}
 		};
+		fmCallListView.setAdapter(mAdapter);
 	}
 
 	/**
 	 * 4.13	查询推送消息
 	 */
-
-	private void getPushMessages(final boolean isResh, String isRead) {
+	private void getPushMessages() {
 
 		String reqTime = AbDateUtil.getDateTimeNow();
 		String uuid = AbStrUtil.getUUID();
 		try {
-			okHttpsImp.getPushMessages(uuid, "app", reqTime, OkHttpsImp.md5_key, userShopInfoBean.getBusinessId(), isRead, new MyResultCallback<String>() {
+			okHttpsImp.getPushMessages(uuid, "app", reqTime, OkHttpsImp.md5_key, userShopInfoBean.getBusinessId(), "", new MyResultCallback<String>() {
 				@Override
 				public void onResponseResult(Result result) {
 					String reString = result.getData();
-					mDatas.clear();
+					mData.clear();
+					mInvalideData.clear();
+					mValideData.clear();
 					if (!reString.isEmpty()) {
 						try {
 							JSONObject jsonObject = new JSONObject(reString);
 							reString = jsonObject.getString("msgList");
 							ArrayList<CallService> mDatasL = (ArrayList<CallService>) JSON.parseArray(reString, CallService.class);
-							if (mDatasL != null && mDatasL.size() > 0) {
-								mDatas.addAll(mDatasL);
+							if (mDatasL.size() > 0) {
+								mData.addAll(mDatasL);
 							}
-							if (mDatas != null && mDatas.size() > 0) {
-								pulltorefreshCalllist.setVisibility(View.VISIBLE);
-								ivEmptyactCalldetail.setVisibility(View.GONE);
-							}else{
-								pulltorefreshCalllist.setVisibility(View.GONE);
-								ivEmptyactCalldetail.setVisibility(View.VISIBLE);
+							for (CallService bean : mDatasL) {
+								if (bean.getIsRead().equals("0")) {
+									mInvalideData.add(bean);
+								}
+								if (bean.getIsRead().equals("1")) {
+									mValideData.add(bean);
+								}
 							}
-							AbPullHide.hideRefreshView(isResh,pulltorefreshCalllist);
 						} catch (JSONException e) {
 							e.printStackTrace();
 						}
+						switchAdapter();
 					}
+					refreshingFinish();
 				}
 
 				@Override
 				public void onResponseFailed(String msg) {
-                      if(isResh){
-						  pulltorefreshCalllist.setVisibility(View.GONE);
-						  ivEmptyactCalldetail.setVisibility(View.VISIBLE);
-					  }
+					refreshingFinish();
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 修改推送消息已读状态
+	 */
+	private void getMessage(String id) {
+		okHttpsImp.modifyPushMessage(new MyResultCallback<String>() {
+
+			@Override
+			public void onResponseResult(Result result) {
+				getPushMessages();
+				tv_callset_deal.setText("已处理");
+			}
+
+			@Override
+			public void onResponseFailed(String msg) {
+
+			}
+		}, BaseActivity.userShopInfoBean.getBusinessId(), id);
+
+	}
+
+	@Override
+	public void onFooterLoad(AbPullToRefreshView view) {
+		if (!mPullRefreshing && !mPullLoading) {
+			mPullLoading = true;
+			getPushMessages();
+		}
+	}
+
+	@Override
+	public void onHeaderRefresh(AbPullToRefreshView view) {
+		if (!mPullRefreshing && !mPullLoading) {
+			mPullRefreshing = true;
+			getPushMessages();
+		}
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		ButterKnife.unbind(this);
+	}
+
+	private void refreshingFinish() {
+		if (mPullRefreshing) {
+			pulltorefreshCalllist.onHeaderRefreshFinish();
+			mPullRefreshing = false;
+		}
+		if (mPullLoading) {
+			pulltorefreshCalllist.onFooterLoadFinish();
+			mPullLoading = false;
+		}
+	}
+	/**
+	 * 删除标签
+	 */
+	private void DeletevipLabel() {
+		String reqTime = AbDateUtil.getDateTimeNow();
+		String uuid = AbStrUtil.getUUID();
+		try {
+			okHttpsImp.DeleteMemberTag(uuid, "app", reqTime, OkHttpsImp.md5_key, userShopInfoBean.getBusinessId(), labelId, new MyResultCallback<String>() {
+				@Override
+				public void onResponseResult(Result result) {
+					getPushMessages();
+					ContentUtils.showMsg(CallServiceActivity.this, "删除标签成功");
+				}
+
+				@Override
+				public void onResponseFailed(String msg) {
+					ContentUtils.showMsg(CallServiceActivity.this, "删除标签失败");
 				}
 			});
 		} catch (Exception e) {
@@ -253,5 +332,4 @@ public class CallServiceActivity extends BaseActivity {
 		}
 
 	}
-
 }

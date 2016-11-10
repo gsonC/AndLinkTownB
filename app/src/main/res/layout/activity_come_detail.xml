@@ -24,6 +24,12 @@
         >
 
 
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:scaleType="centerInside"
+            android:src="@mipmap/icon_back" />
 
         <TextView
             android:id="@+id/tv_starttime"
@@ -204,12 +210,33 @@
         android:layout_height="6dp"
         android:background="@color/colores_news_14"
         />
-    <cn.com.hgh.view.NoScrollViewPager
+   <!-- <cn.com.hgh.view.NoScrollViewPager
         android:id="@+id/vp_orderpager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" >
     </cn.com.hgh.view.NoScrollViewPager>
+-->
+
+    <cn.com.hgh.view.AbPullToRefreshView
+        android:id="@+id/act_comedeatil_abpulltorefreshview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <ListView
+            android:id="@+id/act_comedeatil_listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@null"
+            android:listSelector="@color/transparent"
+            android:scrollbars="none">
+        </ListView>
+    </cn.com.hgh.view.AbPullToRefreshView>
 
     <ImageView
         android:id="@+id/img_empty"
@@ -233,8 +260,46 @@
         android:paddingRight="15dp"
         android:gravity="right"
         >
-
-
+        <TextView
+            android:id="@+id/tv_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/pay_type_select"
+            android:button="@null"
+            android:gravity="center"
+            android:text="共计"
+            android:textSize="14sp"
+            android:textColor="@color/colores_news_19"/>
+        <TextView
+            android:id="@+id/tv_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/pay_type_select"
+            android:button="@null"
+            android:gravity="center"
+            android:text="0"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@color/colores_news_19"/>
+        <TextView
+            android:id="@+id/tv_unit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/pay_type_select"
+            android:button="@null"
+            android:gravity="center"
+            android:text="个订单"
+            android:textSize="14sp"
+            android:textColor="@color/colores_news_19"/>
         <TextView
             android:id="@+id/tv_addupto"
             android:layout_width="wrap_content"
@@ -245,7 +310,7 @@
             android:background="@drawable/pay_type_select"
             android:button="@null"
             android:gravity="center"
-            android:text="累计收银"
+            android:text="合计"
             android:textSize="14sp"
             android:textColor="@color/colores_news_19"/>
         <TextView
@@ -262,6 +327,5 @@
             android:textSize="14sp"
             android:textColor="@color/colores_news_04"/>
     </LinearLayout>
-
 
 </LinearLayout>

@@ -74,6 +74,11 @@ public class API {
 	 */
 	public static final String WEBCUR = HOST + "template/product/release.html";
 	/**
+	 *到店明细接口
+	 */
+	public static final String OREDR = TOSTORESERVICE + "/wcm/tssOrder/order.do";
+
+	/**
 	 * 产品管理
 	 */
 	public static final String TOSTORE_PRODUCT_MANAGEMENT = TOSTORESERVICE + "/wcm/product/enterIntoProductManager?";
@@ -545,10 +550,7 @@ public class API {
 	 * APP订单明细
 	 */
 	public static final String OREDRINFO = "order/queryOrder.do";
-	/**
-	 * 到店明细接口
-	 */
-	public static final String OREDR= "order.do";
+
 	/**
 	 * APP删除订单明细
 	 */

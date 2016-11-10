@@ -189,6 +189,7 @@ public class OrderContentActivity extends BaseActivity implements
                 tvStarttime.setText("");
                 tvFinishtime.setText("");
                 tvToday.setChecked(true);
+
                 tvThreeday.setChecked(false);
                 tvOnemonth.setChecked(false);
                 String  txnTime=AbDateUtil.getDateYearMonthDayNowPlus("yyyyMMdd");

@@ -12,53 +12,80 @@ import java.io.Serializable;
  */
 public class CallService implements Serializable {
 	private static final long serialVersionUID = 5653463899216784845L;
-	String tv_callset_table;
-	String tv_callset_content;
-	String tv_callset_time;
-	String tv_callset_yartime;
-	String tv_callset_deal;
 
-	public static long getSerialVersionUID() {
-		return serialVersionUID;
+	private String createTime;
+	private String pushId;
+	private String tableId;
+	private String tableName;
+	private String msgContent;
+	private String modifyTime;
+	private String storeId;
+	private String isRead;
+
+	public String getIsRead() {
+		return isRead;
 	}
 
-	public String getTv_callset_table() {
-		return tv_callset_table;
+	public void setIsRead(String isRead) {
+		this.isRead = isRead;
 	}
 
-	public void setTv_callset_table(String tv_callset_table) {
-		this.tv_callset_table = tv_callset_table;
+	public String getCreateTime() {
+		return createTime;
 	}
 
-	public String getTv_callset_content() {
-		return tv_callset_content;
+	public void setCreateTime(String createTime) {
+		this.createTime = createTime;
 	}
 
-	public void setTv_callset_content(String tv_callset_content) {
-		this.tv_callset_content = tv_callset_content;
+	public String getPushId() {
+		return pushId;
 	}
 
-	public String getTv_callset_time() {
-		return tv_callset_time;
+	public void setPushId(String pushId) {
+		this.pushId = pushId;
 	}
 
-	public void setTv_callset_time(String tv_callset_time) {
-		this.tv_callset_time = tv_callset_time;
+	public String getTableId() {
+		return tableId;
 	}
 
-	public String getTv_callset_yartime() {
-		return tv_callset_yartime;
+	public void setTableId(String tableId) {
+		this.tableId = tableId;
 	}
 
-	public void setTv_callset_yartime(String tv_callset_yartime) {
-		this.tv_callset_yartime = tv_callset_yartime;
+	public String getMsgContent() {
+		return msgContent;
 	}
 
-	public String getTv_callset_deal() {
-		return tv_callset_deal;
+	public void setMsgContent(String msgContent) {
+		this.msgContent = msgContent;
 	}
 
-	public void setTv_callset_deal(String tv_callset_deal) {
-		this.tv_callset_deal = tv_callset_deal;
+	public String getTableName() {
+		return tableName;
+	}
+
+	public void setTableName(String tableName) {
+		this.tableName = tableName;
+	}
+
+	public String getStoreId() {
+		return storeId;
+	}
+
+	public void setStoreId(String storeId) {
+		this.storeId = storeId;
+	}
+
+	public String getModifyTime() {
+		return modifyTime;
+	}
+
+	public void setModifyTime(String modifyTime) {
+		this.modifyTime = modifyTime;
+	}
+
+	public CallService() {
 	}
 }
