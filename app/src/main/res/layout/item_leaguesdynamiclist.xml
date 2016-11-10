@@ -34,7 +34,7 @@
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
             android:singleLine="true"
-            android:textSize="@dimen/h16"
+            android:textSize="@dimen/h15"
             android:textStyle="bold"
             android:text="松江商圈商圈商圈松江商圈商圈商圈松江商圈商圈商圈圈商圈商圈"
             android:textColor="@color/colores_news_10"/>

@@ -342,13 +342,13 @@ public enum OkHttpsImp {
      *
      * @throws
      */
-    public void getBusinessList(String userId,
+    public void getBusinessList(String areaCode,
                                 String serNum,
                                 String reqTime,
                                 MyResultCallback<String> myResultCallback
     ) throws Exception {
         Map<String, String> params = new HashMap<String, String>();
-        params.put("userId", userId);
+        params.put("areaCode", areaCode);
         params.put("serNum", serNum);
         params.put("reqTime", reqTime);
         params.put("source", appsource);

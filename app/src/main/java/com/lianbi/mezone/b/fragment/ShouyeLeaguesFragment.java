@@ -59,6 +59,8 @@ import com.xizhi.mezone.b.R;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -165,7 +167,7 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
     private ArrayList<LeaguesYellBean> mData = new ArrayList<LeaguesYellBean>();
     private ArrayList<LeaguesYellBean> mDataZxy = new ArrayList<LeaguesYellBean>();
     private final static int COLUMN_COUNT = 6;
-    private int page = 1;
+    private int page = 0;
     boolean  ScrollChanged=false;
 
     LinearLayout lay_shouyeLeagues_child;
@@ -333,7 +335,7 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
                                 JSONObject jsonObject = new JSONObject(reString);
                                 String str_allCountList = jsonObject.getString("allCountList");
                                 String str_addCountList = jsonObject.getString("addCountList");
-//                                String strcutCount = jsonObject.getString("cutCountList");
+//                              String strcutCount = jsonObject.getString("cutCountList");
                                 /**
                                  * 总数量
                                  */
@@ -343,6 +345,7 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
                                             (ArrayList<LeaguesAllCountList>) JSON
                                             .parseArray(str_allCountList,
                                                     LeaguesAllCountList.class);
+                                    startSort(false);
                                     mAllCountList.addAll(allCountList);
 
                                     setPieNetData();
@@ -356,7 +359,27 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
                                             (ArrayList<LeaguesAddCountlist>) JSON
                                             .parseArray(str_addCountList,
                                                     LeaguesAddCountlist.class);
-                                    mAddCountList.addAll(addCountList);
+                                    //排序取出
+                                    for(LeaguesAddCountlist  leaguesaddcountlist:addCountList){
+                                        if(mAllCountList.get(0).getBusinessType().equals
+                                                (leaguesaddcountlist.getBusinessType())
+                                                ){
+                                           mAddCountList.add(leaguesaddcountlist);
+                                        }else
+                                        if(mAllCountList.get(1).getBusinessType().equals
+                                                (leaguesaddcountlist.getBusinessType())
+                                                ){
+                                            mAddCountList.add(leaguesaddcountlist);
+                                        }else
+                                        if(mAllCountList.get(2).getBusinessType().equals
+                                                (leaguesaddcountlist.getBusinessType())
+                                                ){
+                                            mAddCountList.add(leaguesaddcountlist);
+                                        }
+                                        else{
+                                            mAddCountList.add(leaguesaddcountlist);
+                                        }
+                                    }
                                     setAnimationData();
                                 }
                             } catch (Exception e) {
@@ -379,31 +402,55 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
         String first = "0";
         String two = "0";
         String three = "0";
-        if(mAddCountList.get(0) != null){
-            tvShouyeLeaguesRestaurant.setText(mAddCountList.get(0).getBusinessType());
-            tvShouyeLeaguesResnum.setText("+"+mAddCountList.get(0).getAddCount());
-            first=mAddCountList.get(0).getAddCount();
-        }
-        if(mAddCountList.get(1) != null){
-            tvShouyeLeaguesShopping.setText(mAddCountList.get(1).getBusinessType());
-            tvShouyeLeaguesShopnum.setText("+"+mAddCountList.get(1).getAddCount());
-            two=mAddCountList.get(1).getAddCount();
-        }
-        if(mAddCountList.get(2) != null){
-            tvShouyeLeaguesStay.setText(mAddCountList.get(2).getBusinessType());
-            tvShouyeLeaguesStaynum.setText("+"+mAddCountList.get(2).getAddCount());
-            three=mAddCountList.get(2).getAddCount();
-        }
-        tvShouyeLeaguesOther.setText("其他");
-        for (LeaguesAddCountlist mAdddistrictcountbean : mAddCountList) {
-            allcount = allcount + stringChangeInt(mAdddistrictcountbean.getAddCount());
-        }
-        allcount = allcount - stringChangeInt(first) -
-                stringChangeInt(two) -
-                stringChangeInt(three);
+        try {
+            for(LeaguesAddCountlist  leaguesaddcountlist:mAddCountList){
+                if(leaguesaddcountlist.getBusinessType().equals(mAllCountList.get(0).getBusinessType())
+                        ){
+                    tvShouyeLeaguesRestaurant.setText(leaguesaddcountlist.getBusinessType());
+                    tvShouyeLeaguesResnum.setText("+" + leaguesaddcountlist.getAddCount());
+                    first = String.valueOf(leaguesaddcountlist.getAddCount());
+                }else
+                if(leaguesaddcountlist.getBusinessType().equals(mAllCountList.get(1).getBusinessType())
+                        ){
+                    tvShouyeLeaguesShopping.setText(leaguesaddcountlist.getBusinessType());
+                    tvShouyeLeaguesShopnum.setText("+" + leaguesaddcountlist.getAddCount());
+                    two = String.valueOf(leaguesaddcountlist.getAddCount());
+                }else
+                if(leaguesaddcountlist.getBusinessType().equals(mAllCountList.get(2).getBusinessType())
+                        ){
+                    tvShouyeLeaguesStay.setText(leaguesaddcountlist.getBusinessType());
+                    tvShouyeLeaguesStay.setText("+" + leaguesaddcountlist.getAddCount());
+                    three = String.valueOf(leaguesaddcountlist.getAddCount());
+                }
+            }
 
-        tvShouyeLeaguesNum.setText("+"+String.valueOf(allcount));
+            if (!tvShouyeLeaguesRestaurant.getText().equals(mAllCountList.get(0).getBusinessType())) {
+                tvShouyeLeaguesRestaurant.setText(mAllCountList.get(0).getBusinessType());
+                tvShouyeLeaguesResnum.setText("+" + 0);
+                first = String.valueOf(0);
+            }
+            if (!tvShouyeLeaguesShopping.getText().equals(mAllCountList.get(1).getBusinessType())) {
+                tvShouyeLeaguesShopping.setText(mAllCountList.get(1).getBusinessType());
+                tvShouyeLeaguesShopnum.setText("+" + 0);
+                two = String.valueOf(0);
+            }
+            if (!tvShouyeLeaguesStay.getText().equals(mAllCountList.get(2).getBusinessType())) {
+                tvShouyeLeaguesStay.setText(mAllCountList.get(2).getBusinessType());
+                tvShouyeLeaguesStaynum.setText("+" + 0);
+                three = String.valueOf(0);
+            }
+            tvShouyeLeaguesOther.setText("其他");
+            for (LeaguesAddCountlist mAdddistrictcountbean : mAddCountList) {
+                allcount = allcount + stringChangeInt(mAdddistrictcountbean.getAddCount());
+            }
+            allcount = allcount - stringChangeInt(first) -
+                    stringChangeInt(two) -
+                    stringChangeInt(three);
 
+            tvShouyeLeaguesNum.setText("+" + String.valueOf(allcount));
+        }catch (Exception  e){
+            e.printStackTrace();
+        }
     }
     private void setPieNetData() {
         int allcount = 0;
@@ -527,15 +574,15 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
     protected void showdynamic(ArrayList<LeaguesYellBean> arrayList) {
         try {
             Glide.with(mActivity).load(compareMessageType(arrayList.get(0).getMessageType())).
-                    error(R.mipmap.default_head).into(ivShouyeLeaguesRecruit);
+                    error(R.mipmap.demo).into(ivShouyeLeaguesRecruit);
             tvShouyeLeaguesRetitle.setText(arrayList.get(0).getMessageTitle());
             tvShouyeLeaguesRecontent.setText(arrayList.get(0).getMessageContent());
             Glide.with(mActivity).load(compareMessageType(arrayList.get(1).getMessageType())).
-                    error(R.mipmap.default_head).into(ivShouyeLeaguesNews);
+                    error(R.mipmap.demo).into(ivShouyeLeaguesNews);
             tvShouyeLeaguesNewtitle.setText(arrayList.get(1).getMessageTitle());
             tvShouyeLeaguesNewcontent.setText(arrayList.get(1).getMessageContent());
             Glide.with(mActivity).load(compareMessageType(arrayList.get(2).getMessageType())).
-                    error(R.mipmap.default_head).into(ivShouyeLeaguesDiscount);
+                    error(R.mipmap.demo).into(ivShouyeLeaguesDiscount);
             tvShouyeLeaguesDiscounttitle.setText(arrayList.get(2).getMessageTitle());
             tvShouyeLeaguesDiscountcontent.setText(arrayList.get(2).getMessageContent());
         }catch (Exception e){
@@ -641,6 +688,26 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+    }
+    /**
+     * 排序
+     *
+     * @param beginsort true 从小到大 false 从大到小
+     */
+    private void startSort(final boolean beginsort) {
+        Collections.sort(mAllCountList, new Comparator<LeaguesAllCountList>() {
+            @Override
+            public int compare(LeaguesAllCountList lhs, LeaguesAllCountList rhs) {
+                Integer id1 = Integer.parseInt(lhs.getAllCount());
+                Integer id2 = Integer.parseInt(rhs.getAllCount());
+                if (beginsort) {
+                    return id1.compareTo(id2);
+                } else {
+                    return id2.compareTo(id1);
+                }
+            }
+        });
+
     }
 
     /**

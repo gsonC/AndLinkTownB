@@ -53,7 +53,7 @@ public class LeaguesYellListActivity extends BaseActivity {
     LeaguesYellBean  mLeaguesYellBean;
     private QuickAdapter<LeaguesYellBean> mAdapter;
     private static final int REQUEST_CODE_RESULT = 1009;
-    private int page = 1;
+    private int page =0;
     private Intent  getIntent;
       int whatchild=0;
     @Override
@@ -197,7 +197,7 @@ public class LeaguesYellListActivity extends BaseActivity {
 //                String serNum, String source,
 //                String reqTime,
         if (isResh) {
-            page = 1;
+            page = 0;
             mDatas.clear();
             mSortData.clear();
         }
@@ -221,7 +221,6 @@ public class LeaguesYellListActivity extends BaseActivity {
                     new MyResultCallback<String>() {
                         @Override
                         public void onResponseResult(Result result) {
-                            page++;
                             String reString = result.getData();
                             Log.i("tag","resString 132----->"+reString);
                             try {
@@ -237,18 +236,23 @@ public class LeaguesYellListActivity extends BaseActivity {
                                             mData.add(LeaguesZxy);
                                         }
                                     }
-                                    Log.i("tag","AA--->"+whatchild);
-                                    int datasize=mData.size();
-                                    for(int i=0;i<datasize;i++){
-                                      if(i==whatchild){
-                                          mLeaguesYellBean=mData.get(i);
-                                          mData.remove(i);
-                                      }
+                                    if(page==0) {
+                                        int datasize = mData.size();
+                                        for (int i = 0; i < datasize; i++) {
+                                            if (i == whatchild) {
+                                                mLeaguesYellBean = mData.get(i);
+                                                mData.remove(i);
+                                            }
 
+                                        }
+                                        mSortData.add(mLeaguesYellBean);
+                                        mSortData.addAll(mData);
+                                        updateView(mSortData);
+                                    }else{
+                                        mSortData.addAll(mData);
+                                        updateView(mSortData);
                                     }
-                                    mSortData.add(mLeaguesYellBean);
-                                    mSortData.addAll(mData);
-                                    updateView(mSortData);
+                                    page++;
                                     actLeaguesyellAbpulltorefreshview.setVisibility(View.VISIBLE);
                                     ivLeaguesyellEmpty.setVisibility(View.GONE);
                                 }else{

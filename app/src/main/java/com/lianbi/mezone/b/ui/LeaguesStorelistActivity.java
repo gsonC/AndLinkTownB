@@ -99,8 +99,12 @@ public class LeaguesStorelistActivity extends BaseActivity {
                 TextView tv_leaguesstoreclis_name = helper.getView(R.id.tv_leaguesstoreclis_name);//
                 TextView tv_leaguesstoreclis_time = helper.getView(R.id.tv_leaguesstoreclis_time);//
                 TextView tv_leaguesstoreclis_address = helper.getView(R.id.tv_leaguesstoreclis_address);
+                if(item.getLogoUrl()!=null) {
+                    Glide.with(LeaguesStorelistActivity.this).load(item.getLogoUrl()).error(R.mipmap.demo).into(iv_leaguesstoreclist_storelogo);
+                }else{
+                    Glide.with(LeaguesStorelistActivity.this).load(R.mipmap.demo).error(R.mipmap.demo).into(iv_leaguesstoreclist_storelogo);
 
-                Glide.with(LeaguesStorelistActivity.this).load(item.getHeaderUrl()).error(R.mipmap.demo).into(iv_leaguesstoreclist_storelogo);
+                }
                 tv_leaguesstoreclis_name.setText(item.getBusinessName());
                 if(!TextUtils.isEmpty(item.getCreateTime())){
                     String time=item.getCreateTime().substring(0,10);
@@ -122,7 +126,7 @@ public class LeaguesStorelistActivity extends BaseActivity {
         }
         try {
             okHttpsImp.getBusinessList(
-                    UserId,
+                    "120101",
                     uuid,
                     reqTime,
                     new MyResultCallback<String>() {

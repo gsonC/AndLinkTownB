@@ -742,7 +742,7 @@ public class API {
 	/* 商圈统计 */
 	public static final String QUERY_LEAGUES_DISTRICTCOUNT = "business/districtCount.do";
 	/* 店铺列表 */
-	public static final String QUERY_LEAGUES_BUSINESSLIST = "business/getBusinessList.do";
+	public static final String QUERY_LEAGUES_BUSINESSLIST = "business/selectBusinessListByAreaCode.do";
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	/**
 	 * 首页--会员营销

@@ -52,7 +52,7 @@ public class LeaguesDynamicListActivity extends BaseActivity {
     private ArrayList<LeaguesYellBean> mDatas = new ArrayList<LeaguesYellBean>();
     private QuickAdapter<LeaguesYellBean> mAdapter;
     boolean isExpanded = false;
-    private int page = 1;
+    private int page = 0;
     HttpDialog dialog;
 
     @Override
@@ -175,7 +175,7 @@ public class LeaguesDynamicListActivity extends BaseActivity {
 //                String serNum, String source,
 //                String reqTime,
         if (isResh) {
-            page = 1;
+            page = 0;
             mDatas.clear();
         }
         try {
@@ -216,7 +216,6 @@ public class LeaguesDynamicListActivity extends BaseActivity {
                                             mData.add(LeaguesZxy);
                                         }
                                     }
-                                    AbPullHide.hideRefreshView(isResh,actLeaguesdynamiclistAbpulltorefreshview);
                                     if(mData.size()==0){
                                         ivLeaguesDynamicListEmpty.setVisibility(View.VISIBLE);
                                         actLeaguesdynamiclistAbpulltorefreshview.setVerticalGravity(View.GONE);
@@ -227,6 +226,7 @@ public class LeaguesDynamicListActivity extends BaseActivity {
                                     ivLeaguesDynamicListEmpty.setVisibility(View.VISIBLE);
                                     actLeaguesdynamiclistAbpulltorefreshview.setVerticalGravity(View.GONE);
                                 }
+                                AbPullHide.hideRefreshView(isResh,actLeaguesdynamiclistAbpulltorefreshview);
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
