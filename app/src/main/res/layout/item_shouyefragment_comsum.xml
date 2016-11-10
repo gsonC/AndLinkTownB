@@ -102,5 +102,18 @@
             android:text="23:06"
             android:textColor="@color/foodcolor"
             android:textSize="13sp"/>
+
+        <TextView
+            android:id="@+id/tv_shouyecomsum_tv2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:layout_centerHorizontal="true"
+            android:text="暂无消费记录"
+            android:visibility="gone"
+            android:textColor="@color/color_4b4b4b"
+            android:textSize="13sp"/>
+
     </RelativeLayout>
 </LinearLayout>

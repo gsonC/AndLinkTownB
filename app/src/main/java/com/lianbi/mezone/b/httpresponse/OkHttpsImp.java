@@ -2441,7 +2441,7 @@ public void getOrderInfo(String serNum,
 	 * 获取会员列表
 	 */
 	public void getMembersList(String serNum, String source, String reqTime, String md5_key, String businessId,
-							  String pageNo, String pageSize, MyResultCallback<String> myResultCallback) throws Exception {
+							   String pageNo, String pageSize, MyResultCallback<String> myResultCallback) throws Exception {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("businessId", businessId);
 		params.put("pageNo", pageNo);
@@ -3009,10 +3009,10 @@ public void getOrderInfo(String serNum,
 	}
 
 	/**
-	 * 首页销量排行
+	 * 首页销量曲线
 	 */
-	public void getShopSaleRank(String serNum, String reqTime, String storeNo,
-								MyResultCallback<String> myResultCallback)throws Exception {
+	public void getShopConsumptionCurve(String serNum, String reqTime, String storeNo,
+										MyResultCallback<String> myResultCallback) throws Exception {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("serNum", serNum);
 		params.put("source", appsource);
@@ -3020,8 +3020,51 @@ public void getOrderInfo(String serNum,
 		params.put("businessId", storeNo);
 		String sign = getSign(md5_key, params);
 		params.put("sign", sign);
-		String url = getAbsoluteUrl(API.SHOUYE_SHOPVIP_SALERANK);
+		String url = getAbsoluteUrl(API.SHOUYE_SHOPVIP_CONSUMPTIONCURVE);
 		getProgressResponse(myResultCallback, params, url);
+	}
+
+	/**
+	 * 首页有多少消息记录
+	 */
+	public void getShopCountPushOrder(String serNum, String reqTime, String storeId, String userId,
+									  MyResultCallback<String> myResultCallback) throws Exception {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("serNum", serNum);
+		params.put("source", appsource);
+		params.put("reqTime", reqTime);
+		params.put("storeId", storeId);
+		params.put("userId", userId);
+		params.put("flagStr", "111");
+		String sign = getSign(md5_key, params);
+		params.put("sign", sign);
+		String url = getHttpUrl(storeId, API.SHOUYE_SHOPVIP_ORDERCOUNT);
+		getNoProgressResponse(myResultCallback, params, url);
+	}
+
+	/**
+	 * 首页实时消费记录
+	 */
+	public void getShopConsumption(String businessId, String userId, MyResultCallback<String> myResultCallback) throws Exception {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("businessId", businessId);
+		params.put("userId", userId);
+		params.put("sourceType", "tss");
+		params.put("curPage", "0");
+		params.put("pageSize", "8");
+		String url = API.TOSTORESERVICE + "/wcm" + API.SHOUYE_SHOPVIP_CONSUMPTION;
+		getNoProgressResponse(myResultCallback, params, url);
+	}
+
+	/**
+	 * 首页销量排行榜
+	 */
+	public void getShopSaleRank(String flag, String storeId, MyResultCallback<String> myResultCallback) throws Exception {
+		Map<String, String> params = new HashMap<>();
+		params.put("flag", flag);
+		params.put("storeId", storeId);
+		String url = API.TOSTORESERVICE + "/wcm" + API.SHOUYE_SHOPVIP_SALERANK;
+		getNoProgressResponse(myResultCallback, params, url);
 	}
 
 	/**

@@ -36,9 +36,12 @@ import com.github.mikephil.charting.listener.ChartTouchListener;
 import com.github.mikephil.charting.listener.OnChartGestureListener;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ViewPortHandler;
+import com.lianbi.mezone.b.bean.OrderPushCount;
+import com.lianbi.mezone.b.bean.ShopConsumption;
+import com.lianbi.mezone.b.bean.ShopConsumptionCurve;
+import com.lianbi.mezone.b.bean.ShopSaleRank;
 import com.lianbi.mezone.b.bean.ShopVipMarket;
 import com.lianbi.mezone.b.bean.ShouYeBannerBean;
-import com.lianbi.mezone.b.bean.TestBean;
 import com.lianbi.mezone.b.httpresponse.API;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
@@ -56,6 +59,10 @@ import com.xizhi.mezone.b.R;
 import com.zbar.lib.animationslib.Techniques;
 import com.zbar.lib.animationslib.YoYo;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -69,6 +76,7 @@ import cn.com.hgh.utils.AbViewUtil;
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.DynamicWaveTask;
 import cn.com.hgh.utils.JumpIntent;
+import cn.com.hgh.utils.MathExtend;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.utils.ScreenUtils;
 import cn.com.hgh.view.DynamicWave;
@@ -94,8 +102,9 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 	private RadioGroup mRdoGroup_time_salenum;
 	private YoYo.YoYoString rope;
 	private final int POSITION = 2;
+	private OrderPushCount mOrderPushCount;
 	//更多服务
-	public static final int   MORESERVICE=7;
+	public static final int MORESERVICE = 7;
 	boolean isLogin;
 	/**
 	 * 广告
@@ -125,6 +134,8 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 	 */
 	private LinearLayout mLlt_shouyemanagement_comsum;
 	private View mView_fillview;
+	private ArrayList<ShopConsumption> mShopConsumptionList;
+	private LinearLayout mLlt_shouyemanagement_consum_img;
 	/**
 	 * 到店服务
 	 */
@@ -135,6 +146,9 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 	 * 消费曲线
 	 */
 	private LineChart mChart_shouyemanagement;
+	private ArrayList<ShopConsumptionCurve> mShopConsumptionCurve;
+	private XAxis mXAxis;
+	private YAxis mLeftAxis;
 	/**
 	 * 销量排行
 	 */
@@ -149,7 +163,7 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 	private List<DynamicWave> mDynamicWaveList;
 	private List<TextView> mSaleRankTopList;
 	private List<TextView> mSaleRankBottomList;
-
+	private ArrayList<ShopSaleRank> mShopSaleRankList;
 
 	@Nullable
 	@Override
@@ -161,31 +175,330 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 		isLogin = ContentUtils.getLoginStatus(mActivity);
 		intView(view);
 		initLineChartView();
-		getData();
+		//getData();
+		getShopPushCount();
+		getShopConsumption();
+		getShopSaleRank(true);
 		getShopVipMarket();
-		getShopSaleRank();
-		getData2();
-		getData3(true);
+		getShopConsumptionCurve();
+		//getData3(true);
 		setLinten();
 		return view;
 	}
 
-	private void getShopSaleRank() {
+	/**
+	 * 首页销量排行
+	 */
+	private void getShopSaleRank(boolean whickone) {
+		if (whickone) {
+			try {
+				mOkHttpsImp.getShopSaleRank("day", "BD2016053018405200000042", new MyResultCallback<String>() {
+					@Override
+					public void onResponseResult(Result result) {
+						String reString = result.getData();
+						if (!AbStrUtil.isEmpty(reString)) {
+							mShopSaleRankList = (ArrayList<ShopSaleRank>) JSON.parseArray(reString, ShopSaleRank.class);
+							setShopSaleRank(mShopSaleRankList);
+						}
+					}
+
+					@Override
+					public void onResponseFailed(String msg) {
+						setShopSaleRank(mShopSaleRankList);
+					}
+				});
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else {
+			try {
+				mOkHttpsImp.getShopSaleRank("week", "BD2016053018405200000042", new MyResultCallback<String>() {
+					@Override
+					public void onResponseResult(Result result) {
+						String reString = result.getData();
+						if (!AbStrUtil.isEmpty(reString)) {
+							mShopSaleRankList = (ArrayList<ShopSaleRank>) JSON.parseArray(reString, ShopSaleRank.class);
+							setShopSaleRank(mShopSaleRankList);
+						}
+					}
+
+					@Override
+					public void onResponseFailed(String msg) {
+						setShopSaleRank(mShopSaleRankList);
+					}
+				});
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	/**
+	 * 销量排行
+	 */
+	private void setShopSaleRank(ArrayList<ShopSaleRank> shopSaleRankList) {
+
+		if (null != shopSaleRankList && shopSaleRankList.size() > 0) {
+
+			int j = shopSaleRankList.size();
+			if (j > 7)
+				j = 7;
+
+			int total = shopSaleRankList.get(0).getSaleNum();
+
+			for (int i = 0; i < j; i++) {
+				Timer timer = new Timer();
+				mSaleRankTopList.get(i).setText(shopSaleRankList.get(i).getSaleNum() + "");
+				timer.schedule(new DynamicWaveTask(timer, mDynamicWaveList.get(i), shopSaleRankList.get(i).getSaleNum(),
+						MathExtend.divide((double) (3 * shopSaleRankList.get(i).getSaleNum()), (double) (4 * total))), 0, 10);
+				mSaleRankBottomList.get(i).setText(shopSaleRankList.get(i).getPro_name() + "");
+			}
+		}
+
+	}
+
+	/**
+	 * 实时消费接口
+	 */
+	private void getShopConsumption() {
 		try {
-			mOkHttpsImp.getShopSaleRank(mActivity.uuid, mActivity.reqTime,
-					BaseActivity.userShopInfoBean.getBusinessId(), new MyResultCallback<String>() {
+			mOkHttpsImp.getShopConsumption("BD2016053018405200000042"
+					, "VI082016110712224600004578", new MyResultCallback<String>() {
 						@Override
 						public void onResponseResult(Result result) {
-
+							String reString = result.getData();
+							if (!AbStrUtil.isEmpty(reString)) {
+								try {
+									JSONObject jsonObject = new JSONObject(reString);
+									reString = jsonObject.getString("responsePageList");
+									mShopConsumptionList = (ArrayList<ShopConsumption>) JSON.parseArray(reString, ShopConsumption.class);
+									int x = mShopConsumptionList.size();
+									if (x != 0 && x % 2 != 0) {
+										ShopConsumption bean = new ShopConsumption();
+										bean.setSign(true);
+									}
+									setComsumDetailView(mShopConsumptionList);
+								} catch (JSONException e) {
+									e.printStackTrace();
+								}
+							}
 						}
 
 						@Override
 						public void onResponseFailed(String msg) {
-
+							setComsumDetailView(mShopConsumptionList);
 						}
 					});
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 设置实时消费几面
+	 */
+	private void setComsumDetailView(ArrayList<ShopConsumption> shopConsumptionList) {
+		mLlt_shouyemanagement_comsum.removeAllViews();
+		if (null != mShopConsumptionList && shopConsumptionList.size() > 0) {
+			mLlt_shouyemanagement_comsum.setVisibility(View.VISIBLE);
+			mView_fillview.setVisibility(View.VISIBLE);
+			mLlt_shouyemanagement_consum_img.setVisibility(View.GONE);
+			int number = shopConsumptionList.size();
+			if (number > 8)
+				number = 8;
+			number = number / 2 + number % 2;
+			for (int i = 0; i < number; i++) {
+				View view = LayoutInflater.from(mActivity).inflate(R.layout.item_shouyefragment_comsum, null);
+				//addView ID
+				TextView tv_shouyecomsum_much1 = (TextView) view.findViewById(R.id.tv_shouyecomsum_much1);
+				TextView tv_shouyecomsum_table1 = (TextView) view.findViewById(R.id.tv_shouyecomsum_table1);
+				TextView tv_shouyecomsum_time1 = (TextView) view.findViewById(R.id.tv_shouyecomsum_time1);
+				TextView tv_shouyecomsum_much2 = (TextView) view.findViewById(R.id.tv_shouyecomsum_much2);
+				TextView tv_shouyecomsum_table2 = (TextView) view.findViewById(R.id.tv_shouyecomsum_table2);
+				TextView tv_shouyecomsum_time2 = (TextView) view.findViewById(R.id.tv_shouyecomsum_time2);
+				TextView tv_shouyecomsum_tv2 = (TextView) view.findViewById(R.id.tv_shouyecomsum_tv2);
+
+				mLlt_shouyemanagement_comsum.addView(view, i);
+				ShopConsumption bean = shopConsumptionList.get(i * 2);
+				ShopConsumption bean1 = shopConsumptionList.get(i * 2 + 1);
+
+				String bean1money = "";
+				String bean2money = "";
+				try {
+					bean1money = AbStrUtil.changeF2Y(Long.parseLong(bean.getOrderPrice()));
+					bean2money = AbStrUtil.changeF2Y(Long.parseLong(bean1.getOrderPrice()));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
+				tv_shouyecomsum_much1.setText(bean1money);
+				tv_shouyecomsum_table1.setText(bean.getTableNum());
+				tv_shouyecomsum_time1.setText(bean.getStringCreatTime());
+
+				if (bean1.isSign()) {
+					tv_shouyecomsum_much2.setVisibility(View.GONE);
+					tv_shouyecomsum_tv2.setVisibility(View.VISIBLE);
+					tv_shouyecomsum_table2.setVisibility(View.GONE);
+					tv_shouyecomsum_time2.setVisibility(View.GONE);
+				} else {
+					tv_shouyecomsum_much2.setText(bean2money);
+					tv_shouyecomsum_table2.setText(bean1.getTableNum());
+					tv_shouyecomsum_time2.setText(bean1.getStringCreatTime());
+				}
+
+			}
+
+		} else {
+			mLlt_shouyemanagement_comsum.setVisibility(View.GONE);
+			mView_fillview.setVisibility(View.GONE);
+			mLlt_shouyemanagement_consum_img.setVisibility(View.VISIBLE);
+		}
+
+	}
+
+	/**
+	 * 首页消息记录接口
+	 */
+	private void getShopPushCount() {
+		try {
+			mOkHttpsImp.getShopCountPushOrder(mActivity.uuid, mActivity.reqTime, BaseActivity.userShopInfoBean.getBusinessId()
+					, BaseActivity.userShopInfoBean.getUserId(), new MyResultCallback<String>() {
+						@Override
+						public void onResponseResult(Result result) {
+							String reString = result.getData();
+							if (!AbStrUtil.isEmpty(reString)) {
+								mOrderPushCount = JSON.parseObject(reString, OrderPushCount.class);
+								setShopPushOrderCount(mOrderPushCount);
+							}
+						}
+
+						@Override
+						public void onResponseFailed(String msg) {
+							setShopPushOrderCount(mOrderPushCount);
+						}
+					});
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 设置首页消息推送界面
+	 */
+	private void setShopPushOrderCount(OrderPushCount orderPushCount) {
+		if (null != orderPushCount) {
+			setShopPushOrderCount(mImg_shouyemag_order, orderPushCount.getPaidCount());
+			setShopPushOrderCount(mImg_shouyemag_call, orderPushCount.getPushCount());
+			setShopPushOrderCount(mImg_shouyemag_condetail, orderPushCount.getOrderCount());
+		}
+	}
+
+	/**
+	 * 设置首页消息推送界面
+	 */
+	private void setShopPushOrderCount(ImageView imageView, int count) {
+		if (0 != count) {
+			BadgeView badgeView = new BadgeView(mActivity, imageView);
+			badgeView.setBadgeMargin(0, 0);
+			badgeView.setText(count + "");
+			badgeView.show();
+		}
+	}
+
+	/**
+	 * 首页销量曲线接口
+	 */
+	private void getShopConsumptionCurve() {
+		try {
+			mOkHttpsImp.getShopConsumptionCurve(mActivity.uuid, mActivity.reqTime,
+					BaseActivity.userShopInfoBean.getBusinessId(), new MyResultCallback<String>() {
+						@Override
+						public void onResponseResult(Result result) {
+							String reString = result.getData();
+							if (!TextUtils.isEmpty(reString)) {
+								try {
+									JSONObject jsonObject = new JSONObject(reString);
+									reString = jsonObject.getString("perHourseAmtList");
+									mShopConsumptionCurve = (ArrayList<ShopConsumptionCurve>) JSON.parseArray(reString, ShopConsumptionCurve.class);
+									if (null != mShopConsumptionCurve && 9 == mShopConsumptionCurve.size()) {
+										setShopConsumptionCurve(mShopConsumptionCurve);
+									}
+								} catch (JSONException e) {
+									e.printStackTrace();
+								}
+							}
+						}
+
+						@Override
+						public void onResponseFailed(String msg) {
+							setShopConsumptionCurve(mShopConsumptionCurve);
+						}
+					});
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 设置折线图数据源界面
+	 */
+	private void setShopConsumptionCurve(final ArrayList<ShopConsumptionCurve> shopConsumptionCurve) {
+		if (null != shopConsumptionCurve) {
+			mXAxis.setValueFormatter(new IAxisValueFormatter() {
+				@Override
+				public String getFormattedValue(float value, AxisBase axis) {
+					if (value == 0) {
+						return shopConsumptionCurve.get(0).getTime();
+					} else if (value == 1) {
+						return shopConsumptionCurve.get(1).getTime();
+					} else if (value == 2) {
+						return shopConsumptionCurve.get(2).getTime();
+					} else if (value == 3) {
+						return shopConsumptionCurve.get(3).getTime();
+					} else if (value == 4) {
+						return shopConsumptionCurve.get(4).getTime();
+					} else if (value == 5) {
+						return shopConsumptionCurve.get(5).getTime();
+					} else if (value == 6) {
+						return shopConsumptionCurve.get(6).getTime();
+					} else if (value == 7) {
+						return shopConsumptionCurve.get(7).getTime();
+					} else if (value == 8) {
+						return shopConsumptionCurve.get(8).getTime();
+					}
+					return "数据异常";
+				}
+
+				@Override
+				public int getDecimalDigits() {
+					return 0;
+				}
+			});
+
+			float[] LineChartData = new float[9];
+			int j = shopConsumptionCurve.size();
+			float baseFloat = 0;
+
+			for (int i = 0; i < j; i++) {
+				try {
+					String yuan = AbStrUtil.changeF2Y(Long.parseLong(shopConsumptionCurve.get(i).getConsumption()));
+					float data = Float.valueOf(yuan);
+					LineChartData[i] = data;
+					if (data > baseFloat) {
+						baseFloat = data;
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+
+			//设置最大值
+			if (0 != baseFloat) {
+				mLeftAxis.setAxisMaximum(baseFloat * 1 / 3 + baseFloat);
+			} else {
+				mLeftAxis.setAxisMaximum(200f);
+			}
+			setChartData(LineChartData);
 		}
 	}
 
@@ -254,8 +567,9 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 			for (int i = 0; i < 7; i++) {
 				TextData3 tt3 = new TextData3();
 				tt3.setTop(i * 10);
-				tt3.setCenter(150 + i * 10);
+				tt3.setCenter(150 - i * 10);
 				tt3.setBottom("黄鹤楼" + i);
+				tt3.setXxx(0.2 + MathExtend.multiply((double) i, (double) 0.1));
 				arraylist.add(tt3);
 			}
 		} else {
@@ -272,14 +586,17 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 		int j = arraylist.size();
 		if (j > 7)
 			j = 7;
+		int total = arraylist.get(0).getCenter();
 		for (int i = 0; i < j; i++) {
 			Timer timer = new Timer();
-
 
 			mSaleRankTopList.get(i).setText(arraylist.get(i).getTop() + "");
 			//mDynamicWave.get(i).setHeight(arraylist.get(i).getCenter());
 
-			timer.schedule(new DynamicWaveTask(timer, mDynamicWaveList.get(i), arraylist.get(i).getCenter()), 0, 10);
+			System.out.println("---" + arraylist.get(i).getXxx());
+
+			timer.schedule(new DynamicWaveTask(timer, mDynamicWaveList.get(i), arraylist.get(i).getCenter(),
+					MathExtend.divide((double) (3 * arraylist.get(i).getCenter()), (double) (4 * total))), 0, 10);
 
 			mSaleRankBottomList.get(i).setText(arraylist.get(i).getBottom());
 		}
@@ -290,6 +607,15 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 		private int top;
 		private int center;
 		private String bottom;
+		private double xxx;
+
+		public double getXxx() {
+			return xxx;
+		}
+
+		public void setXxx(double xxx) {
+			this.xxx = xxx;
+		}
 
 		public int getTop() {
 			return top;
@@ -316,58 +642,6 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 		}
 	}
 
-	/**
-	 * 折线图测试数据
-	 */
-	private void getData2() {
-
-		float[] LineChartData = {10.11f, 20.11f, 30.11f, 40.11f, 50.11f, 60.11f, 77.11f, 88.11f, 99.11f};
-		//添加数据
-		setChartData(LineChartData);
-
-		//mChart_shouyemanagement.animateX(2000);
-		//获取图例(这能在设置数据之后)
-		//=/Legend l = mChart_shouyemanagement.getLegend();
-		//修改图纸
-		//l.setForm(Legend.LegendForm.LINE);
-		//刷新图例
-		//mChart_shouyemanagement.invalidate();
-	}
-
-	/**
-	 * (实时消费)测试数据
-	 */
-	private List<TestBean> mDatas = new ArrayList<>();
-
-	private void getData() {
-		for (int i = 0; i < 7; i++) {
-			TestBean bean = new TestBean();
-			bean.setMuch("100" + i);
-			bean.setTable(i + "号桌");
-			bean.setTime("21:0" + i);
-			mDatas.add(bean);
-		}
-
-		int x = mDatas.size();
-
-		if (x % 2 != 0) {
-			TestBean bean = new TestBean();
-			bean.setMuch("");
-			bean.setTable("");
-			bean.setTime("");
-			mDatas.add(bean);
-		}
-		if (null != mDatas && mDatas.size() > 0) {
-			mLlt_shouyemanagement_comsum.setVisibility(View.VISIBLE);
-			mView_fillview.setVisibility(View.VISIBLE);
-			addComsumDetailView(x);
-		} else {
-			mLlt_shouyemanagement_comsum.setVisibility(View.GONE);
-			mView_fillview.setVisibility(View.GONE);
-		}
-
-	}
-
 	private void intView(View view) {
 
 		initBanner(view);
@@ -381,10 +655,6 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 		mImg_shouyemag_order = (ImageView) view.findViewById(R.id.img_shouyemag_order);//客户买单
 		mImg_shouyemag_call = (ImageView) view.findViewById(R.id.img_shouyemag_call);//响应呼叫
 		mImg_shouyemag_condetail = (ImageView) view.findViewById(R.id.img_shouyemag_condetail);//消费流水
-		BadgeView badgeView = new BadgeView(mActivity, mImg_shouyemag_condetail);
-		badgeView.setBadgeMargin(0, 0);
-		badgeView.setText("88");
-		badgeView.show();
 
 		/**
 		 * 实时消费
@@ -393,6 +663,7 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 		view.findViewById(R.id.ind_shouyemanagement_flow).findViewById(R.id.tv_include_more).setVisibility(View.INVISIBLE);//inculde实时消费 更多隐藏
 		mView_fillview = view.findViewById(R.id.view_fillview);//补位View 如果数据为null GONE
 		mLlt_shouyemanagement_comsum = (LinearLayout) view.findViewById(R.id.llt_shouyemanagement_comsum);//实时消费展示View
+		mLlt_shouyemanagement_consum_img = (LinearLayout) view.findViewById(R.id.llt_shouyemanagement_consum_img);//实时消费空白imageview
 
 		/**
 		 * 消费曲线
@@ -566,112 +837,6 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 	}
 
 	/**
-	 * 初始化折线图数据
-	 */
-	/*
-	private void initLineChart() {
-		//mChart_shouyemanagement
-		mChart_shouyemanagement.setOnChartGestureListener(this);
-		mChart_shouyemanagement.setOnChartValueSelectedListener(this);
-		//是否绘制北京颜色
-		mChart_shouyemanagement.setDrawGridBackground(false);
-		//设置描述信息为false
-		mChart_shouyemanagement.getDescription().setEnabled(false);
-		//设置手势
-		mChart_shouyemanagement.setTouchEnabled(false);
-		//启用缩放和拖动
-		mChart_shouyemanagement.setDragEnabled(false);
-		mChart_shouyemanagement.setScaleEnabled(false);
-		//如果金庸,缩放可在X轴Y轴分别作
-		mChart_shouyemanagement.setPinchZoom(true);
-		//设置折线图说明隐藏
-		mChart_shouyemanagement.getLegend().setEnabled(false);
-		//设置动画
-		mChart_shouyemanagement.animateY(2000);
-		mChart_shouyemanagement.getAxisRight().setEnabled(false);
-
-		//获取X轴
-		XAxis xAxis = mChart_shouyemanagement.getXAxis();
-		//设置网格线
-		xAxis.enableGridDashedLine(10f, 10f, 0);
-		//设置X轴颜色
-		xAxis.setGridColor(Color.parseColor("#99e9fc"));
-		//设置X轴位置
-		xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-		//设置X轴轴体是否绘制
-		xAxis.setDrawAxisLine(false);
-		//设置X轴一共多少标签
-		xAxis.setLabelCount(8);
-
-		//获取Y轴
-		YAxis leftAxis = mChart_shouyemanagement.getAxisLeft();
-		//重置所有限制线,避免重叠线
-		leftAxis.removeAllLimitLines();
-		//设置最大值
-		leftAxis.setAxisMaximum(200f);
-		//设置最小值
-		leftAxis.setAxisMinimum(0f);
-		//设置Y轴颜色
-		leftAxis.setGridColor(Color.parseColor("#99e9fc"));
-		//设置Y轴轴体是否绘制
-		leftAxis.setDrawAxisLine(false);
-		//设置Y轴网格线
-		leftAxis.enableGridDashedLine(10f, 10f, 0);
-		//设置0线是否绘制
-		leftAxis.setDrawZeroLine(true);
-		//设置Y轴轴体隐藏
-		leftAxis.setDrawLabels(false);
-		//限制线是落后的数据(而不是顶部)
-		leftAxis.setDrawLimitLinesBehindData(true);
-
-		xAxis.setValueFormatter(new IAxisValueFormatter() {
-			@Override
-			public String getFormattedValue(float value, AxisBase axis) {
-				if (value == 0) {
-					return "09:00";
-				} else if (value == 1) {
-					return "10:00";
-				} else if (value == 2) {
-					return "11:00";
-				} else if (value == 3) {
-					return "12:00";
-				} else if (value == 4) {
-					return "13:00";
-				} else if (value == 5) {
-					return "14:00";
-				} else if (value == 6) {
-					return "15:00";
-				} else if (value == 7) {
-					return "16:00";
-				} else if (value == 8) {
-					return "17:00";
-				}
-				return "数据异常";
-			}
-
-			@Override
-			public int getDecimalDigits() {
-				return 0;
-			}
-		});
-
-
-		//添加数据
-		setChartData(9, 100);
-
-		mChart_shouyemanagement.animateX(2000);
-		//获取图例(这能在设置数据之后)
-		Legend l = mChart_shouyemanagement.getLegend();
-		//修改图纸
-		l.setForm(Legend.LegendForm.LINE);
-		//刷新图例
-		//mChart_shouyemanagement.invalidate();
-
-		mChart_shouyemanagement.invalidate();
-	}
-*/
-
-	/**
 	 * 设置数据
 	 */
 	private void setChartData(float[] lineChartFloatData) {
@@ -709,9 +874,10 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 			set1.setValueFormatter(new IValueFormatter() {
 				@Override
 				public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
-					return "" + value;
+					return "" + new DecimalFormat("#0.00").format(value);
 				}
 			});
+
 
 			/**
 			 * 设置折现下面背景色 判断API18
@@ -733,8 +899,6 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 
 			// 设置数据
 			mChart_shouyemanagement.setData(data);
-
-
 		}
 	}
 
@@ -830,48 +994,12 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 			case R.id.img_shouyemagapp_appstore://跳转铃铛
 
 				JumpIntent.jumpWebActivty
-						(mActivity,WebMoreServiceActivty.class,
-								isLogin, API.WEB_MORESERVICE,MORESERVICE,
-								false,false,true,"应用商城");
+						(mActivity, WebMoreServiceActivty.class,
+								isLogin, API.WEB_MORESERVICE, MORESERVICE,
+								false, false, true, "应用商城");
 
 				break;
 		}
-	}
-
-	/**
-	 * add实时消费View
-	 *
-	 * @param number 数量控制
-	 */
-	private void addComsumDetailView(int number) {
-		mLlt_shouyemanagement_comsum.removeAllViews();
-		if (number > 8) {
-			number = 8;
-		}
-		number = number / 2 + number % 2;
-
-		for (int i = 0; i < number; i++) {
-			View view = LayoutInflater.from(mActivity).inflate(R.layout.item_shouyefragment_comsum, null);
-			//addView ID
-			TextView tv_shouyecomsum_much1 = (TextView) view.findViewById(R.id.tv_shouyecomsum_much1);
-			TextView tv_shouyecomsum_table1 = (TextView) view.findViewById(R.id.tv_shouyecomsum_table1);
-			TextView tv_shouyecomsum_time1 = (TextView) view.findViewById(R.id.tv_shouyecomsum_time1);
-			TextView tv_shouyecomsum_much2 = (TextView) view.findViewById(R.id.tv_shouyecomsum_much2);
-			TextView tv_shouyecomsum_table2 = (TextView) view.findViewById(R.id.tv_shouyecomsum_table2);
-			TextView tv_shouyecomsum_time2 = (TextView) view.findViewById(R.id.tv_shouyecomsum_time2);
-
-			mLlt_shouyemanagement_comsum.addView(view, i);
-			TestBean bean = mDatas.get(i * 2);
-			tv_shouyecomsum_much1.setText(bean.getMuch());
-			tv_shouyecomsum_table1.setText(bean.getTable());
-			tv_shouyecomsum_time1.setText(bean.getTime());
-			TestBean bean1 = mDatas.get(i * 2 + 1);
-			tv_shouyecomsum_much2.setText(bean1.getMuch());
-			tv_shouyecomsum_table2.setText(bean1.getTable());
-			tv_shouyecomsum_time2.setText(bean1.getTime());
-
-		}
-
 	}
 
 	/**
@@ -910,69 +1038,38 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 		mChart_shouyemanagement.getAxisRight().setEnabled(false);
 
 		//获取X轴
-		XAxis xAxis = mChart_shouyemanagement.getXAxis();
+		mXAxis = mChart_shouyemanagement.getXAxis();
 		//设置网格线
-		xAxis.enableGridDashedLine(10f, 10f, 0);
+		mXAxis.enableGridDashedLine(10f, 10f, 0);
 		//设置X轴颜色
-		xAxis.setGridColor(Color.parseColor("#99e9fc"));
+		mXAxis.setGridColor(Color.parseColor("#99e9fc"));
 		//设置X轴位置
-		xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+		mXAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
 		//设置X轴轴体是否绘制
-		xAxis.setDrawAxisLine(false);
+		mXAxis.setDrawAxisLine(false);
 		//设置X轴一共多少标签
-		xAxis.setLabelCount(8);
+		mXAxis.setLabelCount(8);
 
 		//获取Y轴
-		YAxis leftAxis = mChart_shouyemanagement.getAxisLeft();
+		mLeftAxis = mChart_shouyemanagement.getAxisLeft();
 		//重置所有限制线,避免重叠线
-		leftAxis.removeAllLimitLines();
-		//设置最大值
-		leftAxis.setAxisMaximum(200f);
+		mLeftAxis.removeAllLimitLines();
+
 		//设置最小值
-		leftAxis.setAxisMinimum(0f);
+		mLeftAxis.setAxisMinimum(0f);
 		//设置Y轴颜色
-		leftAxis.setGridColor(Color.parseColor("#99e9fc"));
+		mLeftAxis.setGridColor(Color.parseColor("#99e9fc"));
 		//设置Y轴轴体是否绘制
-		leftAxis.setDrawAxisLine(false);
+		mLeftAxis.setDrawAxisLine(false);
 		//设置Y轴网格线
-		leftAxis.enableGridDashedLine(10f, 10f, 0);
+		mLeftAxis.enableGridDashedLine(10f, 10f, 0);
 		//设置0线是否绘制
-		leftAxis.setDrawZeroLine(true);
+		mLeftAxis.setDrawZeroLine(true);
 		//设置Y轴轴体隐藏
-		leftAxis.setDrawLabels(false);
+		mLeftAxis.setDrawLabels(false);
 		//限制线是落后的数据(而不是顶部)
-		leftAxis.setDrawLimitLinesBehindData(true);
+		mLeftAxis.setDrawLimitLinesBehindData(true);
 
-		xAxis.setValueFormatter(new IAxisValueFormatter() {
-			@Override
-			public String getFormattedValue(float value, AxisBase axis) {
-				if (value == 0) {
-					return "09:00";
-				} else if (value == 1) {
-					return "10:00";
-				} else if (value == 2) {
-					return "11:00";
-				} else if (value == 3) {
-					return "12:00";
-				} else if (value == 4) {
-					return "13:00";
-				} else if (value == 5) {
-					return "14:00";
-				} else if (value == 6) {
-					return "15:00";
-				} else if (value == 7) {
-					return "16:00";
-				} else if (value == 8) {
-					return "17:00";
-				}
-				return "数据异常";
-			}
-
-			@Override
-			public int getDecimalDigits() {
-				return 0;
-			}
-		});
 
 	}
 

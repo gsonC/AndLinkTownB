@@ -12,6 +12,8 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.WindowManager;
 
+import cn.com.hgh.utils.MathExtend;
+
 /*
  * @创建者     master
  * @创建时间   2016/11/1 19:34
@@ -164,6 +166,8 @@ public class DynamicWave extends View {
 	}
 
 	public void setHeight(int filledPercent) {
+		int mTotalHeight;
+
 		if (filledPercent < 0)
 			this.height = 0;
 		else if (filledPercent > 1000)
@@ -172,6 +176,16 @@ public class DynamicWave extends View {
 			this.height = filledPercent;
 
 	}
+
+	public void setHeightPercentage(int filledPercent, double percentage) {
+		if (filledPercent <= 0)
+			this.height = 0;
+		else if (filledPercent > 1000)
+			this.height = 1000;
+		else
+			this.height = (int) MathExtend.multiply((double) mTotalHeight, percentage);
+	}
+
 
 	private int dipToPx(Context context, int dip) {
 		try {

@@ -749,5 +749,17 @@ public class API {
 	/**
 	 * 首页--销量排行
 	 */
-	public static final String SHOUYE_SHOPVIP_SALERANK = "order/getPerHourseAmt.do";
+	public static final String SHOUYE_SHOPVIP_CONSUMPTIONCURVE = "order/getPerHourseAmt.do";
+	/**
+	 * 首页--消息记录
+	 */
+	public static final String SHOUYE_SHOPVIP_ORDERCOUNT = "getCountPaidPushOrder";
+	/**
+	 * 首页--实时消费
+	 */
+	public static final String SHOUYE_SHOPVIP_CONSUMPTION = "/tssOrder/order";
+	/**
+	 * 首页--销量排行
+	 */
+	public static final String SHOUYE_SHOPVIP_SALERANK = "/tss/getProductSalsRank";
 }

@@ -34,14 +34,15 @@
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
             android:singleLine="true"
+            android:textSize="@dimen/h16"
+            android:textStyle="bold"
             android:text="松江商圈商圈商圈松江商圈商圈商圈松江商圈商圈商圈圈商圈商圈"
             android:textColor="@color/colores_news_10"/>
         <ImageView
             android:id="@+id/iv_leaguesdynamiclist_expand"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
             android:padding="10dp"
             android:scaleType="centerInside"
             />
@@ -53,9 +54,9 @@
         android:layout_gravity="center_vertical"
         android:ellipsize="end"
         android:paddingLeft="40dp"
-        android:paddingRight="15dp"
-        android:paddingTop="10dp"
+        android:paddingRight="40dp"
         android:paddingBottom="10dp"
+        android:textSize="@dimen/h14"
         android:text="松江商圈商圈商圈松江商圈商圈商圈松江商圈商圈商圈圈商圈商圈"
         android:textColor="@color/colores_news_10"/>
 </LinearLayout>

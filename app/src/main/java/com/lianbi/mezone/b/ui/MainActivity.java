@@ -704,7 +704,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface, 
 
 			} else {
 
-				finish();
+				activityManager.exit();
 
 			}
 

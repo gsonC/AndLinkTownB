@@ -79,13 +79,16 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@android:style/Theme.Light.NoTitleBar">
-        <activity android:name="com.lianbi.mezone.b.ui.FirstActivity">
+        <activity android:name="com.lianbi.mezone.b.ui.JumpActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <!--<activity android:name="com.lianbi.mezone.b.ui.JumpActivity"/>-->
+        <activity android:name="com.lianbi.mezone.b.ui.FourSecondActivity"/>
+        <activity android:name="com.lianbi.mezone.b.ui.LoginAndRegisterActivity"/>
         <activity
             android:name="com.lianbi.mezone.b.ui.MemberPointManage"
             android:launchMode="singleTask"
