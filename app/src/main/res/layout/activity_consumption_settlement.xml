@@ -29,11 +29,21 @@
 
   </cn.com.hgh.view.AbPullToRefreshView>
 
+    <ImageView
+        android:id="@+id/img_cumption_empty"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scaleType="fitXY"
+        android:src="@mipmap/iv_empty"
+        android:visibility="gone"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-       android:gravity="right"
-        android:orientation="horizontal">
+        android:background="@color/white"
+        android:gravity="bottom"
+        android:orientation="horizontal"
+        android:padding="10dp">
         <Button
             android:alpha="0"
             android:layout_width="0dp"
@@ -50,13 +60,5 @@
     </LinearLayout>
 
 
-    <ImageView
-        android:id="@+id/img_cumption_empty"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:scaleType="fitXY"
-        android:src="@mipmap/iv_empty"
-        android:visibility="gone"/>
 
 </LinearLayout>

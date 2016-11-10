@@ -154,6 +154,7 @@ public class ConsumptionSettlementActivity extends BaseActivity {
 							} else {
 								actCumptionAbpulltorefreshview.setVisibility(View.GONE);
 								imgCumptionEmpty.setVisibility(View.VISIBLE);
+								imComestoreDetail.setVisibility(View.GONE);
 							}
 							AbPullHide.hideRefreshView(isResh, actCumptionAbpulltorefreshview);
 							mAdapter.replaceAll(mDatas);
@@ -168,6 +169,7 @@ public class ConsumptionSettlementActivity extends BaseActivity {
 					if (isResh) {
 						actCumptionAbpulltorefreshview.setVisibility(View.GONE);
 						imgCumptionEmpty.setVisibility(View.VISIBLE);
+						imgCumptionEmpty.setVisibility(View.GONE);
 					}
 					AbPullHide.hideRefreshView(isResh, actCumptionAbpulltorefreshview);
 				}
