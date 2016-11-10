@@ -481,7 +481,6 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
     protected void onResume() {
         super.onResume();
         getTableinfo();
-        getDiningTableSettingDetail();
     }
 
     /**
@@ -499,6 +498,7 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
             public void onAfter(@Nullable String s, @Nullable Exception e) {
                 super.onAfter(s, e);
                 isRequestingOtherData = false;
+                setSwipeRefreshLoadedState();
             }
 
             @Override
@@ -549,6 +549,7 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
             public void onAfter(@Nullable String s, @Nullable Exception e) {
                 super.onAfter(s, e);
                 isRequestingTablesData = false;
+                getDiningTableSettingDetail();
             }
 
             @Override
@@ -693,14 +694,24 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
 
     @Override
     public void onRefresh() {
+        if (isDeletingTablesData)
+            return;
+        if (isRequestingTablesData)
+            return;
+        if (isRequestingOtherData)
+            return;
+
+        setSwipeRefreshLoadingState();
+
+        getTableinfo();
     }
 
     @Override
     public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-        if (verticalOffset >= 0) {
-            swipeRefreshLayout.setEnabled(true);
-        } else {
+        if (verticalOffset < 0 || isDeletingTablesData) {
             swipeRefreshLayout.setEnabled(false);
+        } else {
+            swipeRefreshLayout.setEnabled(true);
         }
     }
 
@@ -755,6 +766,27 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
                     Intent i3 = new Intent(DiningTableSettingActivity.this, TableHasPaidActivity.class);
                     break;
             }
+        }
+    }
+
+    /**
+     * 设置顶部加载完毕的状态
+     */
+    private void setSwipeRefreshLoadedState() {
+        if (swipeRefreshLayout != null) {
+            swipeRefreshLayout.setRefreshing(false);
+            swipeRefreshLayout.setEnabled(true);
+        }
+    }
+
+    /**
+     * 设置顶部正在加载的状态
+     */
+    private void setSwipeRefreshLoadingState() {
+        if (swipeRefreshLayout != null) {
+            swipeRefreshLayout.setRefreshing(true);
+            // 防止多次重复刷新
+            swipeRefreshLayout.setEnabled(false);
         }
     }
 
