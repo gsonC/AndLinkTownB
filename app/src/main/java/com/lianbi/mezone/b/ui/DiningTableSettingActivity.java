@@ -560,6 +560,8 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
             @Override
             public void onResponseResult(Result result) {
                 String reString = result.getData();
+                delSelectButtonIsShowing = false;
+                needDelList.clear();
                 data.clear();
                 int isfbusiness;
                 if (reString != null) {
