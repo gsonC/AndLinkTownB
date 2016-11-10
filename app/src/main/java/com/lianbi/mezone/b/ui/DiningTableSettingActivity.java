@@ -727,7 +727,6 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
 
             @Override
             public void onResponseFailed(String msg) {
-
             }
         }, userShopInfoBean.getBusinessId(), isInBusiness ? "0" : "1");
     }
