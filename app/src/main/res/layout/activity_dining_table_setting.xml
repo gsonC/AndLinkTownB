@@ -138,7 +138,8 @@
                         android:layout_height="wrap_content"
                         android:background="@color/color_ededed"
                         android:orientation="vertical"
-                        android:theme="@style/DiningTableSettingActivityTheme.PopupOverlay">
+                        app:layout_collapseMode="pin"
+                        app:popupTheme="@style/DiningTableSettingActivityTheme.PopupOverlay">
 
                         <RelativeLayout
                             android:id="@+id/view_1"
