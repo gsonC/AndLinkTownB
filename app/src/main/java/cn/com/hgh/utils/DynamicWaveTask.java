@@ -21,7 +21,7 @@ public class DynamicWaveTask extends TimerTask {
 	private int mHeight;
 	private int start = 1;
 
-	private double first = 0.01;
+	private double first = 0.00;
 	private double end;
 
 	public DynamicWaveTask(Timer timer, DynamicWave dynamicWave, int height, double end) {

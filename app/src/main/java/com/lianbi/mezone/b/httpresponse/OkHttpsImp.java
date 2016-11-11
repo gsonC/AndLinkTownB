@@ -154,15 +154,6 @@ public enum OkHttpsImp {
 		uploadFileCallback.setDialog("上传中...");
 		OkGo.post(url).params(params).addFileParams(fileParam, fileList).execute(uploadFileCallback);
 	}
-    /**
-     * 文件上传(同一个key上传多个文件)
-     */
-    private void formUploadProgressResponse(UploadFileCallback uploadFileCallback, Map<String, String> params,
-                                            String url, String fileParam, List<File> fileList) {
-        uploadFileCallback.setContext(context);
-        uploadFileCallback.setDialog("上传中...");
-        OkGo.post(url).params(params).addFileParams(fileParam, fileList).execute(uploadFileCallback);
-    }
 
     /**
      * 文件上传(一个key对应多个文件)
@@ -3220,9 +3211,13 @@ public enum OkHttpsImp {
     /**
      * 首页销量排行榜
      */
-    public void getShopSaleRank(String flag, String storeId, MyResultCallback<String> myResultCallback) throws Exception {
+    public void getShopSaleRank(boolean condition,String storeId, MyResultCallback<String> myResultCallback) throws Exception {
         Map<String, String> params = new HashMap<>();
-        params.put("flag", flag);
+        if(condition){
+            params.put("flag", "day");
+        }else{
+            params.put("flag", "week");
+        }
         params.put("storeId", storeId);
         String url = API.TOSTORESERVICE + "/wcm" + API.SHOUYE_SHOPVIP_SALERANK;
         getNoProgressResponse(myResultCallback, params, url);

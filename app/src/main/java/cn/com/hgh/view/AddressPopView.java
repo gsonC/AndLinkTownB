@@ -27,8 +27,6 @@ import com.zbar.lib.addresspop.adapter.ArrayWheelAdapter;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -73,7 +71,7 @@ public class AddressPopView extends PopupWindow implements OnWheelChangedListene
 	// key - 区 values - 邮编
 	public Map<String, String> mZipcodeDatasMap = new HashMap<String, String>();
 	// key - 区 values - 邮编Code
-	public IdentityHashMap<String, String> mZipcodeCodeDatasMap = new IdentityHashMap<String, String>();
+	public Map<String, String> mZipcodeCodeDatasMap = new IdentityHashMap<String, String>();
 
 	// 当前省的名称
 	public String mCurrentProviceName;
@@ -248,16 +246,16 @@ public class AddressPopView extends PopupWindow implements OnWheelChangedListene
 			// 获取解析出来的数据
 			//provinceList = handler.getDataList();
 
-			File jsonFile = new File("sdcard/download/json.json");
+			//File jsonFile = new File("sdcard/download/json.json");
 			BufferedReader br = null;
 
-			if(jsonFile.exists()&&jsonFile.length()>0){
-				InputStream is = new FileInputStream(jsonFile);
-				br = new BufferedReader(new InputStreamReader(is,"GB2312"));
-			}else{
+			//if(jsonFile.exists()&&jsonFile.length()>0){
+			//	InputStream is = new FileInputStream(jsonFile);
+			//	br = new BufferedReader(new InputStreamReader(is,"GB2312"));
+			//}else{
 				InputStream other = mContext.getResources().getAssets().open("json.json");
 				br = new BufferedReader(new InputStreamReader(other));
-			}
+			//}
 			//InputStream other = mContext.getResources().getAssets().open("json.json");
 			//InputStream is = new FileInputStream(jsonFile);
 			//BufferedReader br = new BufferedReader(new InputStreamReader(is,"GB2312"));
@@ -270,6 +268,9 @@ public class AddressPopView extends PopupWindow implements OnWheelChangedListene
 			String citylist = (String) jsonObject
 					.getString("window.LocalList");
 			provinceList = (ArrayList<ProvincesBean>) JSON.parseArray(citylist, ProvincesBean.class);
+			provinceList.remove(provinceList.size()-1);
+			provinceList.remove(provinceList.size()-1);
+			provinceList.remove(provinceList.size()-1);
 			System.out.println("--------"+provinceList.size());
 			// */ 初始化默认选中的省、市、区
 			if (provinceList != null && !provinceList.isEmpty()) {

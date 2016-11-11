@@ -163,7 +163,7 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 	private List<DynamicWave> mDynamicWaveList;
 	private List<TextView> mSaleRankTopList;
 	private List<TextView> mSaleRankBottomList;
-	private ArrayList<ShopSaleRank> mShopSaleRankList;
+	private ArrayList<ShopSaleRank> mShopSaleRankList = new ArrayList<>();
 
 	@Nullable
 	@Override
@@ -190,14 +190,16 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 	 * 首页销量排行
 	 */
 	private void getShopSaleRank(boolean whickone) {
-		if (whickone) {
 			try {
-				mOkHttpsImp.getShopSaleRank("day", "BD2016053018405200000042", new MyResultCallback<String>() {
+				mOkHttpsImp.getShopSaleRank(whickone, "BD2016053018405200000042", new MyResultCallback<String>() {
 					@Override
 					public void onResponseResult(Result result) {
+						mShopSaleRankList.clear();
 						String reString = result.getData();
 						if (!AbStrUtil.isEmpty(reString)) {
 							mShopSaleRankList = (ArrayList<ShopSaleRank>) JSON.parseArray(reString, ShopSaleRank.class);
+							setShopSaleRank(mShopSaleRankList);
+						}else{
 							setShopSaleRank(mShopSaleRankList);
 						}
 					}
@@ -210,27 +212,7 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} else {
-			try {
-				mOkHttpsImp.getShopSaleRank("week", "BD2016053018405200000042", new MyResultCallback<String>() {
-					@Override
-					public void onResponseResult(Result result) {
-						String reString = result.getData();
-						if (!AbStrUtil.isEmpty(reString)) {
-							mShopSaleRankList = (ArrayList<ShopSaleRank>) JSON.parseArray(reString, ShopSaleRank.class);
-							setShopSaleRank(mShopSaleRankList);
-						}
-					}
 
-					@Override
-					public void onResponseFailed(String msg) {
-						setShopSaleRank(mShopSaleRankList);
-					}
-				});
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
 	}
 
 	/**
@@ -239,6 +221,13 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 	private void setShopSaleRank(ArrayList<ShopSaleRank> shopSaleRankList) {
 
 		if (null != shopSaleRankList && shopSaleRankList.size() > 0) {
+
+			for(int i=0;i<7;i++){
+				Timer timer = new Timer();
+				mSaleRankTopList.get(i).setText("0");
+				timer.schedule(new DynamicWaveTask(timer, mDynamicWaveList.get(i), 0,0), 0, 10);
+				mSaleRankBottomList.get(i).setText("待上架");
+			}
 
 			int j = shopSaleRankList.size();
 			if (j > 7)
@@ -252,6 +241,13 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 				timer.schedule(new DynamicWaveTask(timer, mDynamicWaveList.get(i), shopSaleRankList.get(i).getSaleNum(),
 						MathExtend.divide((double) (3 * shopSaleRankList.get(i).getSaleNum()), (double) (4 * total))), 0, 10);
 				mSaleRankBottomList.get(i).setText(shopSaleRankList.get(i).getPro_name() + "");
+			}
+		}else{
+			for(int i=0;i<7;i++){
+				Timer timer = new Timer();
+				mSaleRankTopList.get(i).setText("0");
+				timer.schedule(new DynamicWaveTask(timer, mDynamicWaveList.get(i), 0,0), 0, 10);
+				mSaleRankBottomList.get(i).setText("待上架");
 			}
 		}
 
@@ -560,10 +556,27 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 	/**
 	 * 销量排行
 	 */
+
+	private List<TextData3> arraylist = new ArrayList<>();
+
 	private void getData3(boolean whichone) {
-		List<TextData3> arraylist = new ArrayList<>();
 		arraylist.clear();
+
+		for (int i =0;i<7;i++){
+			Timer timer = new Timer();
+			mSaleRankTopList.get(i).setText("0");
+			//mDynamicWave.get(i).setHeight(arraylist.get(i).getCenter());
+
+			timer.schedule(new DynamicWaveTask(timer, mDynamicWaveList.get(i), 0,0), 0, 10);
+
+			mSaleRankBottomList.get(i).setText("待上架");
+		}
+
+		System.out.println("+++++"+arraylist.size());
 		if (whichone) {
+
+			initSaleRank();
+
 			for (int i = 0; i < 7; i++) {
 				TextData3 tt3 = new TextData3();
 				tt3.setTop(i * 10);
@@ -573,15 +586,15 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 				arraylist.add(tt3);
 			}
 		} else {
-			for (int i = 0; i < 7; i++) {
+			for (int i = 0; i < 5; i++) {
 				TextData3 tt3 = new TextData3();
 				tt3.setTop(i * 10);
-				tt3.setCenter(100 + i * 10);
+				tt3.setCenter(100 - i * 10);
 				tt3.setBottom("黄鹤楼" + i);
 				arraylist.add(tt3);
 			}
 		}
-
+		System.out.println("-----"+arraylist.size());
 		//设置数据
 		int j = arraylist.size();
 		if (j > 7)
@@ -590,10 +603,8 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 		for (int i = 0; i < j; i++) {
 			Timer timer = new Timer();
 
-			mSaleRankTopList.get(i).setText(arraylist.get(i).getTop() + "");
+			mSaleRankTopList.get(i).setText(arraylist.get(i).getCenter() + "");
 			//mDynamicWave.get(i).setHeight(arraylist.get(i).getCenter());
-
-			System.out.println("---" + arraylist.get(i).getXxx());
 
 			timer.schedule(new DynamicWaveTask(timer, mDynamicWaveList.get(i), arraylist.get(i).getCenter(),
 					MathExtend.divide((double) (3 * arraylist.get(i).getCenter()), (double) (4 * total))), 0, 10);
@@ -1008,9 +1019,13 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 	@Override
 	public void onCheckedChanged(RadioGroup group, int checkedId) {
 		if (checkedId == mChk_oneday_salenum.getId()) {
+			//mShopSaleRankList.clear();
 			getShopSaleRank(true);
+			//getData3(true);
 		} else if (checkedId == mChk_oneweek_salenum.getId()) {
+			//mShopSaleRankList.clear();
 			getShopSaleRank(false);
+			//getData3(false);
 		}
 	}
 
