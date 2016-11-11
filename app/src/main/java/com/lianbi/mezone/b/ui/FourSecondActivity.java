@@ -1,6 +1,12 @@
 package com.lianbi.mezone.b.ui;
 
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
@@ -15,6 +21,8 @@ import com.xizhi.mezone.b.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.List;
 
 import cn.com.hgh.utils.AbDateUtil;
 import cn.com.hgh.utils.AbStrUtil;
@@ -35,6 +43,8 @@ public class FourSecondActivity extends BaseActivity {
 	private TextView mTv_daojishi;
 	private MyCountDownTimer mc;
 	private boolean mIsLogin;
+	private MsgReceiver mMsgReceiver;
+	private Intent mIntent;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +57,11 @@ public class FourSecondActivity extends BaseActivity {
 		mc.start();
 		//mc.cancel();
 
+
+		/**
+		 * 启动下载省市区Code Service
+		 */
+		startDownLoadAreaCodeService();
 
 		/**
 		 * 如果登录过自动登录
@@ -71,6 +86,69 @@ public class FourSecondActivity extends BaseActivity {
 				finish();
 			}
 		}, 4000);*/
+	}
+
+	/**
+	 * 启动下载省市区Code Service
+	 */
+	private void startDownLoadAreaCodeService() {
+		/**
+		 * 动态注册广播
+		 */
+		mMsgReceiver = new MsgReceiver();
+		IntentFilter intentFilter = new IntentFilter();
+		intentFilter.addAction("com.lianbi.mezone.b.service.RECEIVER");
+		registerReceiver(mMsgReceiver,intentFilter);
+		mIntent = new Intent();
+		mIntent.setAction("com.lianbi.mezone.b.MSG_ACTION");
+		Intent eintent = new Intent(createExplicitFromImplicitIntent(this,mIntent));
+		startService(eintent);
+	}
+
+	/**
+	 * 下载广播回掉
+	 */
+	public class MsgReceiver extends BroadcastReceiver {
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			float progress = intent.getFloatExtra("progress",0);
+			System.out.println("progress---"+progress);
+		}
+	}
+
+	/**
+	 * 解决android5.0隐式启动问题
+	 */
+	public static Intent createExplicitFromImplicitIntent(Context context, Intent implicitIntent) {
+		// Retrieve all services that can match the given intent
+		PackageManager pm = context.getPackageManager();
+		List<ResolveInfo> resolveInfo = pm.queryIntentServices(implicitIntent, 0);
+
+		// Make sure only one match was found
+		if (resolveInfo == null || resolveInfo.size() != 1) {
+			return null;
+		}
+
+		// Get component info and create ComponentName
+		ResolveInfo serviceInfo = resolveInfo.get(0);
+		String packageName = serviceInfo.serviceInfo.packageName;
+		String className = serviceInfo.serviceInfo.name;
+		ComponentName component = new ComponentName(packageName, className);
+
+		// Create a new intent. Use the old one for extras and such reuse
+		Intent explicitIntent = new Intent(implicitIntent);
+
+		// Set the component to be explicit
+		explicitIntent.setComponent(component);
+
+		return explicitIntent;
+	}
+
+	@Override
+	protected void onDestroy() {
+		unregisterReceiver(mMsgReceiver);
+		super.onDestroy();
 	}
 
 	/**

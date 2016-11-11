@@ -764,4 +764,8 @@ public class API {
 	 * 首页--销量排行
 	 */
 	public static final String SHOUYE_SHOPVIP_SALERANK = "/tss/getProductSalsRank";
+	/**
+	 * 首页--省市区
+	 */
+	public static final String SHOUYE_SHOPVIP_PROVINCE = "download/pcdJson.do";
 }

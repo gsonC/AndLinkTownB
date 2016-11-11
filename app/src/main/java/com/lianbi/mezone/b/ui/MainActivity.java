@@ -36,6 +36,7 @@ import com.lianbi.mezone.b.photo.PopupWindowHelper;
 import com.lianbi.mezone.b.push.PushDemoReceiver;
 import com.lianbi.mezone.b.receiver.BDLocation_interface;
 import com.lianbi.mezone.b.receiver.Downloader;
+import com.lianbi.mezone.b.service.MyService;
 import com.xizhi.mezone.b.R;
 
 import org.json.JSONException;
@@ -66,6 +67,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface, 
 	public static final int POSITION3 = 3;
 	public static boolean isChangSHpe = false;
 	MainActivity mActivity;
+
 	/**
 	 * 以下载数据
 	 */
@@ -153,6 +155,8 @@ public class MainActivity extends BaseActivity implements BDLocation_interface, 
 	@Override
 	protected void onDestroy() {
 		PushDemoReceiver.payloadData.delete(0, PushDemoReceiver.payloadData.length());
+		Intent mIntentService = new Intent(MainActivity.this, MyService.class);
+		stopService(mIntentService);
 		super.onDestroy();
 	}
 
@@ -631,6 +635,9 @@ public class MainActivity extends BaseActivity implements BDLocation_interface, 
 		};
 	}
 
+	//private MsgReceiver mMsgReceiver;
+	//private Intent mIntent;
+
 	/**
 	 * 初始化视图
 	 */
@@ -645,8 +652,60 @@ public class MainActivity extends BaseActivity implements BDLocation_interface, 
 		rb_caiwushi = (RadioButton) findViewById(R.id.rb_caiwushi);
 		rb_mine = (RadioButton) findViewById(R.id.rb_mine);
 		img_main_red = (ImageView) findViewById(R.id.img_main_red);
-
+		/**
+		 * 动态注册广播
+		 */
+		//mMsgReceiver = new MsgReceiver();
+		//IntentFilter intentFilter = new IntentFilter();
+		//intentFilter.addAction("com.lianbi.mezone.b.service.RECEIVER");
+		//registerReceiver(mMsgReceiver,intentFilter);
+		//mIntent = new Intent();
+		//mIntent.setAction("com.lianbi.mezone.b.MSG_ACTION");
+		//Intent eintent = new Intent(createExplicitFromImplicitIntent(this,mIntent));
+		//startService(eintent);
 	}
+
+/*
+	*/
+/**
+	 * 下载广播回掉
+	 *//*
+
+	public class MsgReceiver extends BroadcastReceiver{
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			float progress = intent.getFloatExtra("progress",0);
+			//System.out.println("progress---"+progress);
+		}
+	}
+
+	public static Intent createExplicitFromImplicitIntent(Context context, Intent implicitIntent) {
+		// Retrieve all services that can match the given intent
+		PackageManager pm = context.getPackageManager();
+		List<ResolveInfo> resolveInfo = pm.queryIntentServices(implicitIntent, 0);
+
+		// Make sure only one match was found
+		if (resolveInfo == null || resolveInfo.size() != 1) {
+			return null;
+		}
+
+		// Get component info and create ComponentName
+		ResolveInfo serviceInfo = resolveInfo.get(0);
+		String packageName = serviceInfo.serviceInfo.packageName;
+		String className = serviceInfo.serviceInfo.name;
+		ComponentName component = new ComponentName(packageName, className);
+
+		// Create a new intent. Use the old one for extras and such reuse
+		Intent explicitIntent = new Intent(implicitIntent);
+
+		// Set the component to be explicit
+		explicitIntent.setComponent(component);
+
+		return explicitIntent;
+	}
+*/
+
 
 	/**
 	 * 首页title

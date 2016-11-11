@@ -136,6 +136,24 @@ public enum OkHttpsImp {
         OkGo.get(url).params(params).execute(fileDialogCallback);
     }
 
+	/**
+	 * 文件下载无progress
+	 */
+	private void getFileDownloadNOProgressResponse(FileDialogCallback fileDialogCallback, Map<String, String> params, String url) {
+		fileDialogCallback.setContext(context);
+		OkGo.get(url).params(params).execute(fileDialogCallback);
+	}
+
+
+	/**
+	 * 文件上传(同一个key上传多个文件)
+	 */
+	private void formUploadProgressResponse(UploadFileCallback uploadFileCallback, Map<String, String> params,
+											String url, String fileParam, List<File> fileList) {
+		uploadFileCallback.setContext(context);
+		uploadFileCallback.setDialog("上传中...");
+		OkGo.post(url).params(params).addFileParams(fileParam, fileList).execute(uploadFileCallback);
+	}
     /**
      * 文件上传(同一个key上传多个文件)
      */
@@ -3210,35 +3228,51 @@ public enum OkHttpsImp {
         getNoProgressResponse(myResultCallback, params, url);
     }
 
-    /**
-     * 签名方法
-     */
-    private static String getSign(String md5_key, Map<String, String> dataMap) throws Exception {
-        List<String> keyList = new ArrayList<String>(dataMap.keySet());
-        Collections.sort(keyList);
-        StringBuilder builder = new StringBuilder();
-        for (String mapKey : keyList) {
-            // builder.append(mapKey).append("=").append(dataMap.get(mapKey))
-            // .append("&");
-            if (!isChinese(dataMap.get(mapKey))) {
-                builder.append(dataMap.get(mapKey));
-            }
-        }
-        // builder.append("key=").append(md5_key);
-        builder.append(md5_key);
-        MessageDigest md5 = MessageDigest.getInstance(SignType);
-        md5.update(builder.toString().getBytes(inputCharset));
-        byte[] md5Bytes = md5.digest();
-        StringBuffer hexValue = new StringBuffer();
-        for (int i = 0; i < md5Bytes.length; i++) {
-            int val = ((int) md5Bytes[i]) & 0xff;
-            if (val < 16) {
-                hexValue.append("0");
-            }
-            hexValue.append(Integer.toHexString(val));
-        }
-        return hexValue.toString();
-    }
+	/**
+	 * 获取省市区接口
+	 */
+	public void getProvinceCode(String serNum, String reqTime, FileDialogCallback fileDialogCallback)
+							throws Exception{
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("serNum", serNum);
+		params.put("source", appsource);
+		params.put("reqTime", reqTime);
+		String sign = getSign(md5_key, params);
+		params.put("sign", sign);
+		String url = getAbsoluteUrl(API.SHOUYE_SHOPVIP_PROVINCE);
+		//String url = "http://server.jeasonlzy.com/OkHttpUtils/download";
+		getFileDownloadNOProgressResponse(fileDialogCallback, params, url);
+	}
+
+	/**
+	 * 签名方法
+	 */
+	private static String getSign(String md5_key, Map<String, String> dataMap) throws Exception {
+		List<String> keyList = new ArrayList<String>(dataMap.keySet());
+		Collections.sort(keyList);
+		StringBuilder builder = new StringBuilder();
+		for (String mapKey : keyList) {
+			// builder.append(mapKey).append("=").append(dataMap.get(mapKey))
+			// .append("&");
+			if (!isChinese(dataMap.get(mapKey))) {
+				builder.append(dataMap.get(mapKey));
+			}
+		}
+		// builder.append("key=").append(md5_key);
+		builder.append(md5_key);
+		MessageDigest md5 = MessageDigest.getInstance(SignType);
+		md5.update(builder.toString().getBytes(inputCharset));
+		byte[] md5Bytes = md5.digest();
+		StringBuffer hexValue = new StringBuffer();
+		for (int i = 0; i < md5Bytes.length; i++) {
+			int val = ((int) md5Bytes[i]) & 0xff;
+			if (val < 16) {
+				hexValue.append("0");
+			}
+			hexValue.append(Integer.toHexString(val));
+		}
+		return hexValue.toString();
+	}
 
     /**
      * 判断是否有中文

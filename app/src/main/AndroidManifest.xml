@@ -86,6 +86,11 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <service android:name="com.lianbi.mezone.b.service.MyService">
+            <intent-filter>
+                <action android:name="com.lianbi.mezone.b.MSG_ACTION"/>
+            </intent-filter>
+        </service>
         <!--<activity android:name="com.lianbi.mezone.b.ui.JumpActivity"/>-->
         <activity android:name="com.lianbi.mezone.b.ui.FourSecondActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.LoginAndRegisterActivity"/>

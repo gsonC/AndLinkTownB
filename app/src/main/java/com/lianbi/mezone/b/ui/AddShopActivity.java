@@ -2,6 +2,7 @@ package com.lianbi.mezone.b.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.lianbi.mezone.b.app.Constants;
 import com.lianbi.mezone.b.bean.ProvinceBean;
+import com.lianbi.mezone.b.bean.ProvincesBean;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.lianbi.mezone.b.photo.FileUtils;
 import com.lianbi.mezone.b.photo.PhotoUtills;
@@ -32,7 +34,11 @@ import com.xizhi.mezone.b.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,11 +55,10 @@ import cn.com.hgh.view.AddressPopView;
 
 /**
  * 新增商铺
- * 
+ *
+ * @author hongyu.yang
  * @time 下午12:28:32
  * @date 2016-1-13
- * @author hongyu.yang
- * 
  */
 public class AddShopActivity extends BaseActivity {
 	private static final int REQUEST_TYPE = 1245;
@@ -62,11 +67,11 @@ public class AddShopActivity extends BaseActivity {
 			llt_add_shop_img, llt_my_shop_address2;
 	private ImageView img_add_shop;
 	private EditText edt_add_shop_name, edt_add_shop_connect_name,
-			edt_add_shop_phone,edt_add_shop_detail_address;
+			edt_add_shop_phone, edt_add_shop_detail_address;
 	private MyPhotoUtills photoUtills;
 	private TextView tv_my_shop_type, tv_my_shop_address, tv_add_shop_summbit,
 			tv_my_shop_address2;
-	private String phone, name, address, parant_id, connect_name, parant_name,shop_detailaddress;
+	private String phone, name, address, parant_id, connect_name, parant_name, shop_detailaddress;
 	private File file = null;
 	private String latitude, longitude;
 	private List<ProvinceBean> provinceBeans = new ArrayList<ProvinceBean>();
@@ -81,8 +86,45 @@ public class AddShopActivity extends BaseActivity {
 		initView();
 		//initPickView2();
 		//initAdapter();
+
+		//String name = FileUtils.getFileNameFromPath("sdcard/download/OkHttpUtils.apk");
+		//File f = new File("sdcard/download/OkHttpUtils.apk");
+		//System.out.println(f.exists() + "");
+		//System.out.println("name"+name);
+		//getProvinceCode();
 		setLisenter();
 	}
+
+	/**
+	 * 获取省市区Code
+	 */
+	private void getProvinceCode() {
+		AssetManager assetManager = getAssets();
+		try {
+			File jsonFile = new File("sdcard/download/json.json");
+			InputStream is = new FileInputStream(jsonFile);
+			//InputStreamReader isr = new InputStreamReader(is,"UTF-8");
+			//InputStream is = assetManager.open("json.json");
+			BufferedReader br = new BufferedReader(new InputStreamReader(is,"GB2312"));
+			StringBuffer stringBuffer = new StringBuffer();
+			String str = null;
+			while ((str = br.readLine()) != null) {
+				stringBuffer.append(str);
+			}
+			System.out.println(stringBuffer.toString());
+			JSONObject jsonObject = new JSONObject(stringBuffer.toString());
+			String citylist = (String) jsonObject
+					.getString("window.LocalList");
+			List<ProvincesBean> mDatas = (ArrayList<ProvincesBean>) JSON.parseArray(citylist, ProvincesBean.class);
+			System.out.println(mDatas.size());
+			//JSONReader reader = new JSONReader(new BufferedReader(br));
+			//reader.readObject(new TypeReference<Object>(){}.getType());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
 
 	/**
 	 * 初始化View
@@ -126,52 +168,60 @@ public class AddShopActivity extends BaseActivity {
 	@Override
 	protected void onChildClick(View view) {
 		switch (view.getId()) {
-		case R.id.llt_my_shop_type:// 行业分类
-			Intent intent_type = new Intent(this, SelectTypeActivity.class);
-			intent_type.putExtra("isMyShop", false);
-			startActivityForResult(intent_type, REQUEST_TYPE);
-			break;
-		case R.id.llt_my_shop_address1://商铺地址
-			Intent intent_map = new Intent(this, MapActivity.class);
-			startActivityForResult(intent_map, REQUEST_ADDRESS);
-			break;
-		case R.id.llt_my_shop_address2:
-			//getProvince();
-			//pickImage();
+			case R.id.llt_my_shop_type:// 行业分类
+				Intent intent_type = new Intent(this, SelectTypeActivity.class);
+				intent_type.putExtra("isMyShop", false);
+				startActivityForResult(intent_type, REQUEST_TYPE);
+				break;
+			case R.id.llt_my_shop_address1://商铺地址
+				Intent intent_map = new Intent(this, MapActivity.class);
+				startActivityForResult(intent_map, REQUEST_ADDRESS);
+				break;
+			case R.id.llt_my_shop_address2:
+				//getProvince();
+				//pickImage();
 
-			mAddressPopView = new AddressPopView(AddShopActivity.this, new OnClickListener() {
-				@Override
-				public void onClick(View view) {
-					switch (view.getId()){
-						case R.id.tv_guanbi:
-							mAddressPopView.dismiss();
-							break;
-						case R.id.tv_wancheng:
-							String province =mAddressPopView.mCurrentProviceName;//省
-							String city =mAddressPopView.mCurrentCityName;//市
-							String county = mAddressPopView.mCurrentDistrictName;//县
-							String zipcode = mAddressPopView.mCurrentZipCode;//邮编
-							mAddressPopView.dismiss();
-							break;
+				mAddressPopView = new AddressPopView(AddShopActivity.this, new OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						switch (view.getId()) {
+							case R.id.tv_guanbi:
+								mAddressPopView.dismiss();
+								break;
+							case R.id.tv_wancheng:
+								String province = mAddressPopView.mCurrentProviceName;//省
+								String provinceCode = mAddressPopView.mCurrentProviceCode;//省Code
+								String city = mAddressPopView.mCurrentCityName;//市
+								String cityCode = mAddressPopView.mCurrentCityCode;//市Code
+								String county = mAddressPopView.mCurrentDistrictName;//县
+								String zipcode = mAddressPopView.mCurrentZipCode;//县Code
+								System.out.println("province"+province);
+								System.out.println("provinceCode"+provinceCode);
+								System.out.println("city"+city);
+								System.out.println("cityCode"+cityCode);
+								System.out.println("county"+county);
+								System.out.println("zipcode"+zipcode);
+								mAddressPopView.dismiss();
+								break;
+						}
 					}
-				}
-			});
+				});
 
-			mAddressPopView.showAtLocation(AddShopActivity.this
-					.findViewById(R.id.llt_my_shop_address2), Gravity.BOTTOM
-					| Gravity.CENTER_HORIZONTAL, 0, 0);
-			break;
-		case R.id.llt_add_shop_img:
-			photoUtills.pickImage();
-			break;
-		case R.id.tv_add_shop_summbit:
-			phone = edt_add_shop_phone.getText().toString().trim();
-			name = edt_add_shop_name.getText().toString().trim();
-			connect_name = edt_add_shop_connect_name.getText().toString()
-					.trim();
-			shop_detailaddress = edt_add_shop_detail_address.getText().toString().trim();
-			verify();
-			break;
+				mAddressPopView.showAtLocation(AddShopActivity.this
+						.findViewById(R.id.llt_my_shop_address2), Gravity.BOTTOM
+						| Gravity.CENTER_HORIZONTAL, 0, 0);
+				break;
+			case R.id.llt_add_shop_img:
+				photoUtills.pickImage();
+				break;
+			case R.id.tv_add_shop_summbit:
+				phone = edt_add_shop_phone.getText().toString().trim();
+				name = edt_add_shop_name.getText().toString().trim();
+				connect_name = edt_add_shop_connect_name.getText().toString()
+						.trim();
+				shop_detailaddress = edt_add_shop_detail_address.getText().toString().trim();
+				verify();
+				break;
 		}
 	}
 
@@ -204,7 +254,7 @@ public class AddShopActivity extends BaseActivity {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
+									int position, long id) {
 				province = provinceBeans.get(position).getProvince();
 				provinceId = provinceBeans.get(position).getProvinceId();
 				tv_my_shop_address2.setText(province);
@@ -283,8 +333,8 @@ public class AddShopActivity extends BaseActivity {
 		String license = "";
 		try {
 			license = Picture_Base64.GetImageStr(file.toString());
-		}catch (Exception e){
-			ContentUtils.showMsg(AddShopActivity.this,"图片获取失败,请稍后重试");
+		} catch (Exception e) {
+			ContentUtils.showMsg(AddShopActivity.this, "图片获取失败,请稍后重试");
 			e.printStackTrace();
 		}
 		String reqTime = AbDateUtil.getDateTimeNow();
@@ -411,12 +461,12 @@ public class AddShopActivity extends BaseActivity {
 			ContentUtils.showMsg(AddShopActivity.this, "请选择地址");
 			return;
 		}
-//		if (TextUtils.isEmpty(latitude) || TextUtils.isEmpty(longitude)) {
-//			ContentUtils.showMsg(AddShopActivity.this, "定位失败,请到首页定位");
-//			return;
-//		}
+		//		if (TextUtils.isEmpty(latitude) || TextUtils.isEmpty(longitude)) {
+		//			ContentUtils.showMsg(AddShopActivity.this, "定位失败,请到首页定位");
+		//			return;
+		//		}
 		if (TextUtils.isEmpty(userShopInfoBean.getUserId())
-				|| null==userShopInfoBean.getUserId()) {
+				|| null == userShopInfoBean.getUserId()) {
 			ContentUtils.showMsg(AddShopActivity.this, "数据异常,为了您的数据安全,请退出重新登陆");
 			return;
 		}
@@ -434,38 +484,37 @@ public class AddShopActivity extends BaseActivity {
 		} finally {
 			if (resultCode == RESULT_OK) {
 				switch (requestCode) {
-				case PhotoUtills.REQUEST_IMAGE_FROM_ALBUM_AND_CROP:
-				try {
-					Uri uri = data.getData();
-					String filePath = PhotoUtills.getPath(this, uri);
-					FileUtils.copyFile(filePath,
-							PhotoUtills.photoCurrentFile.toString(), true);
-					photoUtills.startCropImage();
-				}
-				catch (Exception  e){
-					ContentUtils.showMsg(AddShopActivity.this, "图片过大，加载失败");
-					e.printStackTrace();
-				}
-					break;
-				case PhotoUtills.REQUEST_IMAGE_FROM_CAMERA_AND_CROP:
-					photoUtills.startCropImage();
-					break;
-				case PhotoUtills.REQUEST_IMAGE_CROP:
-					Bitmap bm = PhotoUtills.getBitmap(200, 150);
-					img_add_shop.setImageBitmap(bm);
-					file = FilePathGet.saveBitmap(bm);
-					break;
-				case REQUEST_TYPE:
-					parant_id = data.getStringExtra("parant_id");
-					parant_name = data.getStringExtra("parant_name");
-					tv_my_shop_type.setText(parant_name);
-					break;
-				case REQUEST_ADDRESS:
-					address = data.getStringExtra("address");
-					latitude = data.getStringExtra("lat");
-					longitude = data.getStringExtra("lng");
-					tv_my_shop_address.setText(address);
-					break;
+					case PhotoUtills.REQUEST_IMAGE_FROM_ALBUM_AND_CROP:
+						try {
+							Uri uri = data.getData();
+							String filePath = PhotoUtills.getPath(this, uri);
+							FileUtils.copyFile(filePath,
+									PhotoUtills.photoCurrentFile.toString(), true);
+							photoUtills.startCropImage();
+						} catch (Exception e) {
+							ContentUtils.showMsg(AddShopActivity.this, "图片过大，加载失败");
+							e.printStackTrace();
+						}
+						break;
+					case PhotoUtills.REQUEST_IMAGE_FROM_CAMERA_AND_CROP:
+						photoUtills.startCropImage();
+						break;
+					case PhotoUtills.REQUEST_IMAGE_CROP:
+						Bitmap bm = PhotoUtills.getBitmap(200, 150);
+						img_add_shop.setImageBitmap(bm);
+						file = FilePathGet.saveBitmap(bm);
+						break;
+					case REQUEST_TYPE:
+						parant_id = data.getStringExtra("parant_id");
+						parant_name = data.getStringExtra("parant_name");
+						tv_my_shop_type.setText(parant_name);
+						break;
+					case REQUEST_ADDRESS:
+						address = data.getStringExtra("address");
+						latitude = data.getStringExtra("lat");
+						longitude = data.getStringExtra("lng");
+						tv_my_shop_address.setText(address);
+						break;
 				}
 			}
 		}
@@ -473,9 +522,8 @@ public class AddShopActivity extends BaseActivity {
 
 	/**
 	 * 图像裁剪实现类
-	 * 
+	 *
 	 * @author guanghui.han
-	 * 
 	 */
 	class MyPhotoUtills extends PhotoUtills {
 

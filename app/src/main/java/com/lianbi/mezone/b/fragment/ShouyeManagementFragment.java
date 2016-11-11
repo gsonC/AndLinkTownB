@@ -1008,9 +1008,9 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 	@Override
 	public void onCheckedChanged(RadioGroup group, int checkedId) {
 		if (checkedId == mChk_oneday_salenum.getId()) {
-			getData3(true);
+			getShopSaleRank(true);
 		} else if (checkedId == mChk_oneweek_salenum.getId()) {
-			getData3(false);
+			getShopSaleRank(false);
 		}
 	}
 
@@ -1110,8 +1110,12 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 
 	public void userLoginStatus(boolean isLogin) {
 		if (isLogin) {
-			System.out.println("登陆或者切换");
+			mChk_oneday_salenum.setChecked(true);
+			getShopPushCount();
+			getShopConsumption();
+			getShopSaleRank(true);
 			getShopVipMarket();
+			getShopConsumptionCurve();
 		} else {
 			System.out.println("退出");
 		}

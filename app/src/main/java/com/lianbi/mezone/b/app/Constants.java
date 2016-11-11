@@ -117,6 +117,10 @@ public class Constants {
 	 */
 	public static final String HAS_PRODUCT = "has_product";
 	/**
+	 * 省市区Code是否现在完成
+	 */
+	public static final String AREA_CODE = "has_product";
+	/**
 	 * 跳转h5界面传参
 	 */
 	public static final String WEBURL= "url";
