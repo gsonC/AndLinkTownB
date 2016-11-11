@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/shape_dialog_white_round_bg"
+              android:orientation="vertical"
+              android:padding="5dp" >
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="17dp">
+
+        <TextView
+            android:id="@+id/tv_dialog_shoukuan_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="10dp"
+            android:paddingBottom="15dp"
+            android:paddingTop="10dp"
+            android:background="@color/color_3c78d8"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:layout_weight="1"
+            android:text="在线收款"
+            android:layout_marginLeft="8dp"/>
+
+        <TextView
+            android:id="@+id/tv_dialog_shoukuan_titlee"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="10dp"
+            android:paddingBottom="15dp"
+            android:paddingTop="10dp"
+            android:background="#dd7e6b"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:layout_weight="1"
+            android:text="现金收款"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="8dp"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line"
+        android:background="#dbdbdb"
+        android:layout_marginTop="20dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal"
+        android:layout_marginTop="10.5dp">
+
+        <TextView
+            android:id="@+id/tv_dialog_shoukuan_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="取消"
+            android:textColor="#7f7f7f"
+            android:textSize="16sp" />
+
+        <View
+            android:id="@+id/line_dialog_shoukuan_cancel"
+            android:layout_width="@dimen/line"
+            android:layout_height="match_parent"
+            android:background="#dbdbdb" />
+
+    </LinearLayout>
+
+</LinearLayout>

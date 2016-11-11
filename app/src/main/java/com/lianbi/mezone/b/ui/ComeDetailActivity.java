@@ -129,7 +129,7 @@ public class ComeDetailActivity extends BaseActivity implements AbPullToRefreshV
 				tvAll.setChecked(true);
 				tvSuccess.setChecked(false);
 				tvFail.setChecked(false);
-				initSearch("", "", txnTime, beginTime, endTime);
+				initSearch( "", txnTime, beginTime, endTime);
 				this.intentLayout = POSITION0;
 				if (timeNoselected()) {
 					ContentUtils.showMsg(ComeDetailActivity.this, "请选择查询时间");
@@ -147,7 +147,7 @@ public class ComeDetailActivity extends BaseActivity implements AbPullToRefreshV
 				tvAll.setChecked(false);
 				tvSuccess.setChecked(true);
 				tvFail.setChecked(false);
-				initSearch("", "1", txnTime, beginTime, endTime);
+				initSearch( "1", txnTime, beginTime, endTime);
 				this.intentLayout = POSITION1;
 				if (timeNoselected()) {
 					ContentUtils.showMsg(ComeDetailActivity.this, "请选择查询时间");
@@ -165,7 +165,7 @@ public class ComeDetailActivity extends BaseActivity implements AbPullToRefreshV
 				tvAll.setChecked(false);
 				tvSuccess.setChecked(false);
 				tvFail.setChecked(true);
-				initSearch("", "91", txnTime, beginTime, endTime);
+				initSearch( "91", txnTime, beginTime, endTime);
 				this.intentLayout = POSITION2;
 				if (timeNoselected()) {
 					ContentUtils.showMsg(ComeDetailActivity.this, "请选择查询时间");
@@ -193,7 +193,7 @@ public class ComeDetailActivity extends BaseActivity implements AbPullToRefreshV
 				tvJi.setChecked(false);
 				tvYear.setChecked(false);
 				String txnTime = AbDateUtil.getDateYearMonthDayNowPlus("yyyyMMdd");
-				initSearch("", orderStatus, txnTime, "", "");
+				initSearch( "", txnTime, "", "");
 				getOrder(true, false, "00");
 				break;
 			case R.id.tv_weekday:
@@ -206,7 +206,7 @@ public class ComeDetailActivity extends BaseActivity implements AbPullToRefreshV
 				tvYear.setChecked(false);
 				beginTime = AbDateUtil.getDateG(6, "yyyyMMdd");
 				endTime = AbDateUtil.getDateYearMonthDayNowPlus("yyyyMMdd");
-				initSearch("", orderStatus, "", beginTime, endTime);
+				initSearch( "", "", beginTime, endTime);
 				getOrder(true, false, "01");
 				break;
 			case R.id.tv_onemonth:
@@ -219,7 +219,7 @@ public class ComeDetailActivity extends BaseActivity implements AbPullToRefreshV
 				tvYear.setChecked(false);
 				beginTime = AbDateUtil.getDateG(29, "yyyyMMdd");
 				endTime = AbDateUtil.getDateYearMonthDayNowPlus("yyyyMMdd");
-				initSearch("", orderStatus, "", beginTime, endTime);
+				initSearch( orderStatus, "", beginTime, endTime);
 				getOrder(true, false, "02");
 				break;
 			case R.id.tv_ji:
@@ -232,7 +232,7 @@ public class ComeDetailActivity extends BaseActivity implements AbPullToRefreshV
 				tvYear.setChecked(false);
 				beginTime = AbDateUtil.getDateG(89, "yyyyMMdd");
 				endTime = AbDateUtil.getDateYearMonthDayNowPlus("yyyyMMdd");
-				initSearch("", orderStatus, "", beginTime, endTime);
+				initSearch( "", "", beginTime, endTime);
 
 				getOrder(true, false, "03");
 				break;
@@ -246,7 +246,7 @@ public class ComeDetailActivity extends BaseActivity implements AbPullToRefreshV
 				tvYear.setChecked(true);
 				beginTime = AbDateUtil.getDateG(364, "yyyyMMdd");
 				endTime = AbDateUtil.getDateYearMonthDayNowPlus("yyyyMMdd");
-				initSearch("", orderStatus, "", beginTime, endTime);
+				initSearch( "", "", beginTime, endTime);
 				getOrder(true, false, "04");
 				break;
 		}
@@ -268,7 +268,7 @@ public class ComeDetailActivity extends BaseActivity implements AbPullToRefreshV
 							tvStarttime.setText(time);
 							beginTime = time;
 							if (!TextUtils.isEmpty(tvFinishtime.getText().toString())) {
-								initSearch("", orderStatus, "", beginTime, endTime);
+								initSearch( orderStatus, "", beginTime, endTime);
 								someOperation();
 								getOrder(true, false, "");
 							}
@@ -293,7 +293,7 @@ public class ComeDetailActivity extends BaseActivity implements AbPullToRefreshV
 							tvFinishtime.setText(time);
 							endTime = time;
 							if (!TextUtils.isEmpty(tvStarttime.getText().toString())) {
-								initSearch("", orderStatus, "", beginTime, endTime);
+								initSearch( orderStatus, "", beginTime, endTime);
 								someOperation();
 								getOrder(true, false, "");
 							}
@@ -360,7 +360,19 @@ public class ComeDetailActivity extends BaseActivity implements AbPullToRefreshV
 			mDatas.clear();
 		}
 		try {
-			okHttpsImp.getOrderInfo(uuid, "app", reqTime, "VI082016110712224600004578", "BD2016053018405200000042", "tss", orderStatus, dateStatus, 0 + "", 10 + "", beginTime, endTime, new MyResultCallback<String>() {
+			okHttpsImp.getOrderInfo(uuid, "app", reqTime,
+					"VI082016110712224600004578",
+					"BD2016053018405200000042",
+
+				/*	orderStatus,
+					dateStatus,*/
+					beginTime,
+					endTime,
+					"tss",
+					0 + "",
+					10 + "",
+
+					new MyResultCallback<String>() {
 				@Override
 				public void onResponseResult(Result result) {
 					pageNo++;
@@ -408,16 +420,9 @@ public class ComeDetailActivity extends BaseActivity implements AbPullToRefreshV
 	}
 
 
-	private void initDelete(String orderNo, int listPosition) {
 
-		this.listPosition = listPosition;
-		this.orderNo = orderNo;
-		this.isValid = "N";
-	}
+	private void initSearch( String orderStatus, String txnTime, String beginTime, String endTime) {
 
-	private void initSearch(String orderNo, String orderStatus, String txnTime, String beginTime, String endTime) {
-		this.isValid = "Y";
-		this.orderNo = "";
 		this.orderStatus = orderStatus;
 		this.txnTime = txnTime;
 		this.beginTime = beginTime;

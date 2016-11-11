@@ -74,10 +74,13 @@ public class API {
 	 */
 	public static final String WEBCUR = HOST + "template/product/release.html";
 	/**
+	 *4.23	在线支付
+	 */
+	public static final String ONLINEPAY = TOSTORESERVICE + "/wcm/store/onlinePay.do";
+	/**
 	 *到店明细接口
 	 */
 	public static final String OREDR = TOSTORESERVICE + "/wcm/tssOrder/order.do";
-
 	/**
 	 * 产品管理
 	 */

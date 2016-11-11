@@ -1884,6 +1884,27 @@ public enum OkHttpsImp {
         String url = getAbsoluteUrl(API.GETINCOME);
         getProgressResponse(myResultCallback, params, url);
     }
+    /**
+     * 在线支付
+     */
+    public void getonlinePay(String serNum, String source, String reqTime,
+                             String userId, String businessId,
+                             String tableId,
+                             MyResultCallback<String> myResultCallback) throws Exception {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("userId", userId);
+        params.put("businessId", businessId);
+        params.put("tableId", tableId);
+        params.put("reqTime", reqTime);
+        params.put("serNum", serNum);
+        params.put("source", source);
+        String sign = getSign(md5_key, params);
+        params.put("sign", sign);
+        String url = API.ONLINEPAY;
+        getProgressResponse(myResultCallback, params, url);
+    }
+
+
 
     /**
      * 获取经营总收入
@@ -2338,16 +2359,16 @@ public enum OkHttpsImp {
                              String source, String reqTime,
                              String userId, String businessId,
                              String startTime, String endTime,
-                             String sourceType, String orderStatus,
-                             String dateStatus, String curPage,
+                             String sourceType,/* String orderStatus,
+                             String dateStatus,*/ String curPage,
                              String pageSize,
                              MyResultCallback<String> myResultCallback) throws Exception {
         Map<String, String> params = new HashMap<String, String>();
         params.put("userId", userId);
         params.put("pageSize", pageSize);
         params.put("businessId", businessId);
-        params.put("dateStatus", dateStatus);
-        params.put("orderStatus", orderStatus);
+     /*   params.put("dateStatus", dateStatus);
+        params.put("orderStatus", orderStatus);*/
         params.put("curPage", curPage);
         params.put("startTime", startTime);
         params.put("endTime", endTime);
@@ -2357,7 +2378,7 @@ public enum OkHttpsImp {
         params.put("sourceType", sourceType);
         String sign = getSign(md5_key, params);
         params.put("sign", sign);
-        String url = getAbsoluteUrl(API.OREDR);
+        String url = API.OREDR;
         getProgressResponse(myResultCallback, params, url);
     }
 
