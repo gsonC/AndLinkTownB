@@ -1,5 +1,6 @@
 package com.lianbi.mezone.b.ui;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -7,7 +8,9 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -15,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.lianbi.mezone.b.app.Constants;
 import com.lianbi.mezone.b.bean.TableSetBean;
 import com.lianbi.mezone.b.bean.WebProductManagementBean;
@@ -126,11 +130,19 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
 
     private ArrayList<String> needDelList = new ArrayList<>();
 
-    private boolean isRequestingTablesData;//是否正在进行桌位信息网络请求
+    private boolean isRequestingTablesData;//是否正在进行桌位信息列表网络请求
 
     private boolean isDeletingTablesData;//是否正在进行删除桌位网络请求
 
     private boolean isRequestingOtherData;//是否正在进行消费结算、呼叫服务、到店明细总数网络请求
+
+    private boolean isRequestingBeforFanZhuoCheckData;//是否正在进行翻台前校验网络请求（4.19	查询桌位是否有未支付的订单）
+
+    private boolean isRequestingFanZhuoData;//是否正在进行翻桌网络请求
+
+    private boolean isRequestingTableInfoData;//是否正在进行查询单个桌面信息网络请求（用于点击item后的跳转）
+
+    private boolean isRequestingPrintTicketData;//是否正在进行消费结算、呼叫服务、到店明细总数网络请求
 
     private boolean delSelectButtonIsShowing;//删除选择按钮是否正在显示
 
@@ -150,7 +162,7 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
     private void initAdapter() {
         adapter = new QuickAdapter<TableSetBean>(DiningTableSettingActivity.this, R.layout.one_table_layout, data) {
             @Override
-            protected void convert(BaseAdapterHelper helper, TableSetBean item) {
+            protected void convert(BaseAdapterHelper helper, final TableSetBean item) {
                 TextView table_state = helper.getView(R.id.table_state);
                 TextView table_index = helper.getView(R.id.table_index);
                 TextView have_new = helper.getView(R.id.have_new);
@@ -174,6 +186,7 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
                 int table_may_do_drawableResid = 0;
                 String person_num_Str = "";
                 String unit_Str = "";
+                View.OnClickListener l = null;//item最下方TextView的点击事件
                 switch (item.getTableStatus()) {
                     case 0://空位
                         table_state_Str = "空桌";
@@ -184,6 +197,7 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
                         table_may_do_Str = "查看二维码";
                         person_num_Str = item.getPresetCount();
                         unit_Str = "人桌";
+                        l = null;
                         break;
                     case 1://已点餐
                         table_state_Str = "已点餐";
@@ -195,6 +209,14 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
                         table_may_do_Str = "打印小票";
                         person_num_Str = item.getActualCount();
                         unit_Str = "人用餐";
+                        l = new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (checkCanGoNext()) {
+                                    showPrintTicketDialog(item.getTableId());
+                                }
+                            }
+                        };
                         break;
                     case 2://已支付
                         table_state_Str = "已支付";
@@ -206,6 +228,14 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
                         table_may_do_Str = "翻桌";
                         person_num_Str = item.getActualCount();
                         unit_Str = "人用餐";
+                        l = new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (checkCanGoNext()) {
+                                    checkTableOrder(item.getTableId());
+                                }
+                            }
+                        };
                         break;
                 }
 
@@ -217,55 +247,199 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
                 table_may_do.setBackgroundResource(table_may_do_drawableResid);
                 table_may_do.setText(table_may_do_Str);
                 table_may_do.setTextColor(text_color);
+                table_may_do.setOnClickListener(l);
                 person_num.setText(person_num_Str);
                 unit.setText(unit_Str);
 
                 switch (item.getSelectStatus()) {
                     case 0:
                         table_delete.setVisibility(View.GONE);
-                        table_delete.setOnClickListener(null);
                         break;
                     case 1:
                         table_delete.setImageResource(R.mipmap.message_unchecked);
                         table_delete.setVisibility(View.VISIBLE);
-                        table_delete.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-//                                ArrayList<TableSetBean> tableSetBeanList = oneItemTableSetBean.getTableSetBeanList();
-//                                bean.setSelectStatus(2);
-//                                tableSetBeanList.remove(positionInParents);
-//                                tableSetBeanList.add(positionInParents, bean);
-//                                oneItemTableSetBean.setTableSetBeanList(tableSetBeanList);
-//                                data.remove(position);
-//                                data.add(position, oneItemTableSetBean);
-//                                adapter.replaceAll(data);
-//                                needDelList.add(bean);
-                            }
-                        });
                         break;
                     case 2:
                         table_delete.setImageResource(R.mipmap.icon_check);
                         table_delete.setVisibility(View.VISIBLE);
-                        table_delete.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-//                                OneItemTableSetBean oneItemTableSetBean = data.get(position);
-//                                ArrayList<TableSetBean> tableSetBeanList = oneItemTableSetBean.getTableSetBeanList();
-//                                bean.setSelectStatus(1);
-//                                tableSetBeanList.remove(positionInParents);
-//                                tableSetBeanList.add(positionInParents, bean);
-//                                oneItemTableSetBean.setTableSetBeanList(tableSetBeanList);
-//                                data.remove(position);
-//                                data.add(position, oneItemTableSetBean);
-//                                adapter.replaceAll(data);
-//                                needDelList.remove(bean);
-                            }
-                        });
                         break;
                 }
             }
         };
         tablesGridView.setAdapter(adapter);
+    }
+
+    //查询桌位是否有未支付的订单(是否可以翻台,翻台前校验)
+    private void checkTableOrder(final String tableId) {
+        okHttpsImp.checkTableOrder(new MyResultCallback<String>() {
+            @Override
+            public void onAfter(@Nullable String s, @Nullable Exception e) {
+                super.onAfter(s, e);
+                isRequestingBeforFanZhuoCheckData = false;
+            }
+
+            @Override
+            public void onBefore(BaseRequest request) {
+                super.onBefore(request);
+                isRequestingBeforFanZhuoCheckData = true;
+            }
+
+            @Override
+            public void onResponseResult(Result result) {
+                String data = result.getData();
+                if (TextUtils.isEmpty(data))
+                    return;
+                com.alibaba.fastjson.JSONObject jsonObject = JSON.parseObject(data);
+                JSONArray jsonArray = jsonObject.getJSONArray("tableList");
+                if (jsonArray != null) {
+                    if (jsonArray.isEmpty()) {
+                        showSetTableFreeDialog(tableId);
+                    } else {
+                        showSetTableFreeFailDialog();
+                    }
+                }
+            }
+
+            @Override
+            public void onResponseFailed(String msg) {
+
+            }
+        }, userShopInfoBean.getBusinessId(), tableId);
+    }
+
+    private void showSetTableFreeFailDialog() {
+        Dialog dialog = new Dialog(DiningTableSettingActivity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(true);
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.setContentView(R.layout.fantai_fail_dialog_layout);
+        dialog.show();
+    }
+
+    //是否翻桌
+    private void showSetTableFreeDialog(final String tableId) {
+        final Dialog dialog = new Dialog(DiningTableSettingActivity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        View view = View.inflate(DiningTableSettingActivity.this, R.layout.fantai_dialog_layout, null);
+        view.findViewById(R.id.positive_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                setTableFree(tableId);//翻桌
+            }
+        });
+        view.findViewById(R.id.negative_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.setContentView(view);
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+    }
+
+    //修改桌位订单状态(翻台)
+    private void setTableFree(String tableId) {
+        okHttpsImp.setTableFree(new MyResultCallback<String>() {
+            @Override
+            public void onResponseResult(Result result) {
+                Dialog dialog = new Dialog(DiningTableSettingActivity.this);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                TextView textView = new TextView(DiningTableSettingActivity.this);
+                textView.setWidth(screenWidth / 2);
+                textView.setHeight(screenWidth / 4);
+                textView.setGravity(Gravity.CENTER);
+                textView.setText("翻桌成功");
+                textView.setBackgroundColor(getResources().getColor(android.R.color.white));
+                dialog.setContentView(textView);
+                dialog.setCancelable(true);
+                dialog.setCanceledOnTouchOutside(true);
+                dialog.show();
+                getTableinfo();
+            }
+
+            @Override
+            public void onResponseFailed(String msg) {
+
+            }
+
+            @Override
+            public void onAfter(@Nullable String s, @Nullable Exception e) {
+                super.onAfter(s, e);
+                isRequestingFanZhuoData = false;
+            }
+
+            @Override
+            public void onBefore(BaseRequest request) {
+                super.onBefore(request);
+                isRequestingFanZhuoData = true;
+            }
+        }, userShopInfoBean.getBusinessId(), tableId);
+    }
+
+    //是否打印小票弹窗
+    private void showPrintTicketDialog(final String tableId) {
+        final Dialog dialog = new Dialog(DiningTableSettingActivity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        View view = View.inflate(DiningTableSettingActivity.this, R.layout.print_ticket_dialog_layout, null);
+        view.findViewById(R.id.positive_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                printTicket(tableId);//打印小票
+            }
+        });
+        view.findViewById(R.id.negative_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.setContentView(view);
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+    }
+
+    private boolean checkCanGoNext() {
+        if (isRequestingTablesData) {
+            ContentUtils.showMsg(DiningTableSettingActivity.this, "正在请求桌位列表数据，请稍候...");
+            return false;
+        }
+        if (isDeletingTablesData) {
+            ContentUtils.showMsg(DiningTableSettingActivity.this, "正在删除桌位，请稍候...");
+            return false;
+        }
+        return true;
+    }
+
+    //打印小票
+    private void printTicket(String tableId) {
+        okHttpsImp.tableInfoPrint(new MyResultCallback<String>() {
+            @Override
+            public void onAfter(@Nullable String s, @Nullable Exception e) {
+                super.onAfter(s, e);
+                isRequestingPrintTicketData = false;
+            }
+
+            @Override
+            public void onBefore(BaseRequest request) {
+                super.onBefore(request);
+                isRequestingPrintTicketData = true;
+            }
+
+            @Override
+            public void onResponseResult(Result result) {
+
+            }
+
+            @Override
+            public void onResponseFailed(String msg) {
+
+            }
+        }, userShopInfoBean.getBusinessId(), tableId);
     }
 
     private void initBusinessState() {
@@ -376,8 +550,12 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
                 break;
             case R.id.delete_table:
 //                openBluetooth();
-                if (isRequestingTablesData) {
-                    ContentUtils.showMsg(DiningTableSettingActivity.this, "正在请求数据，请稍后...");
+                if (isRequestingTablesData
+                        || isRequestingPrintTicketData
+                        || isRequestingBeforFanZhuoCheckData
+                        || isRequestingTableInfoData
+                        || isRequestingFanZhuoData) {
+                    ContentUtils.showMsg(DiningTableSettingActivity.this, "正在请求数据，请稍候...");
                     return;
                 }
                 if (data.isEmpty()) {
@@ -663,27 +841,6 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
             public void onResponseResult(Result result) {
                 ContentUtils.showMsg(DiningTableSettingActivity.this, result.getMsg());
                 getTableinfo();
-//                if (result.getCode() == 0) {
-//                    ArrayList<TableSetBean> list = new ArrayList<TableSetBean>();
-//                    for (int i = 0; i < data.size(); i++) {
-//                        list.addAll(i, data.get(i).getTableSetBeanList());
-//                    }
-//                    for (int i = 0; i < list.size(); i++) {
-//                        TableSetBean bean = list.get(i);
-//                        if (compareTo(needDelList, bean)) {//去掉已删除
-//                            list.remove(i);
-//                            i--;
-//                        } else {//没有被删除的隐藏选择按钮
-//                            bean.setSelectStatus(0);
-//                            list.remove(i);
-//                            list.add(i, bean);
-//                        }
-//                    }
-//                    adapter.replaceAll(buildAdapterDataFromOriginalData(list));
-//                    ContentUtils.showMsg(DiningTableSettingActivity.this, "删除成功");
-//                    delSelectButtonIsShowing = false;
-//                    needDelList.clear();
-//                }
             }
 
             @Override
@@ -699,6 +856,10 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
         if (isRequestingTablesData)
             return;
         if (isRequestingOtherData)
+            return;
+        if (isRequestingFanZhuoData)
+            return;
+        if (isRequestingBeforFanZhuoCheckData)
             return;
 
         setSwipeRefreshLoadingState();
@@ -787,9 +948,5 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
             // 防止多次重复刷新
             swipeRefreshLayout.setEnabled(false);
         }
-    }
-
-    private void fantai() {
-
     }
 }
