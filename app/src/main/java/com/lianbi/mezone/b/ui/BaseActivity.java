@@ -36,7 +36,7 @@ public class BaseActivity extends FragmentActivity implements OnClickListener {
 
 	public ImageView ivTitleRight, ivTitleRight1;
 
-	public TextView tvTitleRight,tv_title_left;
+	public TextView tvTitleRight,tvTitleLeft;
 
 	public TextView tvTitleRightSecond;
 
@@ -145,12 +145,13 @@ public class BaseActivity extends FragmentActivity implements OnClickListener {
 		ivTitleRight = (ImageView) findViewById(R.id.iv_title_right);
 		ivTitleRight1 = (ImageView) findViewById(R.id.iv_title_right1);
 		tvTitleRight = (TextView) findViewById(R.id.tv_title_right);
-		tv_title_left = (TextView) findViewById(R.id.tv_title_left);
+		tvTitleLeft = (TextView) findViewById(R.id.tv_title_left);
 		ivBack.setOnClickListener(this);
 		tvTitle.setOnClickListener(this);
 		ivTitleRight.setOnClickListener(this);
 		ivTitleRight1.setOnClickListener(this);
 		tvTitleRight.setOnClickListener(this);
+		tvTitleLeft.setOnClickListener(this);
 		View view = View.inflate(this, layoutResID, null);
 		switch (type) {
 		case NOTYPE:
@@ -312,6 +313,7 @@ public class BaseActivity extends FragmentActivity implements OnClickListener {
 		ivTitleRight1.setImageResource(resid);
 	}
 
+
 	/**
 	 * 設置右邊文字
 	 * 
@@ -384,7 +386,7 @@ public class BaseActivity extends FragmentActivity implements OnClickListener {
 		tvTitleRight.setVisibility(visibility);
 	}
 	public void setPageLeftTextVisibility(int visibility) {
-		tv_title_left.setVisibility(visibility);
+		tvTitleLeft.setVisibility(visibility);
 	}
 	/**
 	 * 得到右边显示文字
@@ -403,11 +405,11 @@ public class BaseActivity extends FragmentActivity implements OnClickListener {
 	}
 	public String   getPageLeftText() {
 		String   temp="";
-		if(tv_title_left.getVisibility()==View.GONE){
+		if(tvTitleLeft.getVisibility()==View.GONE){
 			temp="";
 		}else
-		if(tv_title_left.getVisibility()==View.VISIBLE){
-			temp=tv_title_left.getText().toString();
+		if(tvTitleLeft.getVisibility()==View.VISIBLE){
+			temp=tvTitleLeft.getText().toString();
 		}
 		return  temp;
 	}

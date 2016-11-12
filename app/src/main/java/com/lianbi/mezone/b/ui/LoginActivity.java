@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -26,6 +27,7 @@ import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.REGX;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.view.CircularImageView;
+import cn.com.hgh.view.DialogCommon;
 
 @SuppressLint("ResourceAsColor")
 public class LoginActivity extends BaseActivity {
@@ -37,6 +39,7 @@ public class LoginActivity extends BaseActivity {
 	private String mClientId;
 
 	private CircularImageView civ_login_head;
+	private  int    FROMLOGINPAGE=1;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -149,9 +152,10 @@ public class LoginActivity extends BaseActivity {
 						JSONObject jsonObject = new JSONObject(reString);
 						String businessInfo = (String) jsonObject
 								.getString("businessModel");
+						MyShopInfoBean myShopInfoBean=null;
 						if (!TextUtils.isEmpty(businessInfo)) {
 
-							MyShopInfoBean myShopInfoBean = JSON.parseObject(
+							myShopInfoBean = JSON.parseObject(
 									businessInfo, MyShopInfoBean.class);
 							if (myShopInfoBean != null) {
 								userShopInfoBean.setAddress(myShopInfoBean
@@ -196,12 +200,44 @@ public class LoginActivity extends BaseActivity {
 									Constants.USERTAG, Constants.BUSINESSPHONE,backBean.getMobile());
 
 						}
-						Intent intent = new Intent();
-						intent.putExtra("LoginBackBean", backBean);
-						intent.setClass(LoginActivity.this,MainActivity.class);
-						setResult(RESULT_OK, intent);
-						startActivity(intent);
-						finish();
+						if(!TextUtils.isEmpty(backBean.getDefaultBusiness())&&
+								TextUtils.isEmpty(myShopInfoBean.getCityCode())||
+								TextUtils.isEmpty(myShopInfoBean.getAreaCode())||
+						        TextUtils.isEmpty(myShopInfoBean.getProvinceId())
+								){
+							DialogCommon dialogCommon = new DialogCommon(LoginActivity.this) {
+								@Override
+								public void onOkClick() {
+									Intent intent = new Intent();
+									intent.setClass(LoginActivity.this,AddShopInfoActivity.class);
+									intent.putExtra("fromwhich",FROMLOGINPAGE);
+									startActivity(intent);
+									dismiss();
+									finish();
+
+								}
+								@Override
+								public void onCheckClick() {
+
+									dismiss();
+
+								}
+							};
+							dialogCommon.setTextTitle("店铺信息尚未完善，请补全信息");
+							dialogCommon.setTv_dialog_common_ok("确定");
+							dialogCommon.setCanceledOnTouchOutside(false);
+							dialogCommon.setTv_dialog_common_cancelV(View.GONE);
+							dialogCommon.show();
+
+						}else {
+							Intent intent = new Intent();
+							intent.putExtra("LoginBackBean", backBean);
+							intent.setClass(LoginActivity.this, MainActivity.class);
+							setResult(RESULT_OK, intent);
+							startActivity(intent);
+							finish();
+
+						}
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}

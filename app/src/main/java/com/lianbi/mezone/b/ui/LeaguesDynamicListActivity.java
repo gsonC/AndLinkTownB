@@ -198,7 +198,7 @@ public class LeaguesDynamicListActivity extends BaseActivity {
                     new MyResultCallback<String>() {
                         @Override
                         public void onResponseResult(Result result) {
-                            page++;
+//                          page++;
                             String reString = result.getData();
                             Log.i("tag","resString 132----->"+reString);
                             try {

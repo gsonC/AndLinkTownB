@@ -359,27 +359,7 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
                                             (ArrayList<LeaguesAddCountlist>) JSON
                                             .parseArray(str_addCountList,
                                                     LeaguesAddCountlist.class);
-                                    //排序取出
-                                    for(LeaguesAddCountlist  leaguesaddcountlist:addCountList){
-                                        if(mAllCountList.get(0).getBusinessType().equals
-                                                (leaguesaddcountlist.getBusinessType())
-                                                ){
-                                           mAddCountList.add(leaguesaddcountlist);
-                                        }else
-                                        if(mAllCountList.get(1).getBusinessType().equals
-                                                (leaguesaddcountlist.getBusinessType())
-                                                ){
-                                            mAddCountList.add(leaguesaddcountlist);
-                                        }else
-                                        if(mAllCountList.get(2).getBusinessType().equals
-                                                (leaguesaddcountlist.getBusinessType())
-                                                ){
-                                            mAddCountList.add(leaguesaddcountlist);
-                                        }
-                                        else{
-                                            mAddCountList.add(leaguesaddcountlist);
-                                        }
-                                    }
+                                    mAddCountList.addAll(addCountList);
                                     setAnimationData();
                                 }
                             } catch (Exception e) {
@@ -419,7 +399,7 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
                 if(leaguesaddcountlist.getBusinessType().equals(mAllCountList.get(2).getBusinessType())
                         ){
                     tvShouyeLeaguesStay.setText(leaguesaddcountlist.getBusinessType());
-                    tvShouyeLeaguesStay.setText("+" + leaguesaddcountlist.getAddCount());
+                    tvShouyeLeaguesStaynum.setText("+" + leaguesaddcountlist.getAddCount());
                     three = String.valueOf(leaguesaddcountlist.getAddCount());
                 }
             }
@@ -515,7 +495,7 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
                     "",                           //messageContent
                     "310000",                    //provinces
                     page+"",                     //pageNum
-                    "15",                        //pageSize
+                    "",                        //pageSize
                     mActivity.uuid,             //serNum
                     "app",                       //source
                     mActivity.reqTime,          //reqTime

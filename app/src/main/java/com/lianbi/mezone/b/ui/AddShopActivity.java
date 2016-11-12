@@ -78,7 +78,8 @@ public class AddShopActivity extends BaseActivity {
 	private String province;
 	private String provinceId;
 	private AddressPopView mAddressPopView;
-
+	private String cityCode;
+	private String areaCode;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -190,17 +191,17 @@ public class AddShopActivity extends BaseActivity {
 								break;
 							case R.id.tv_wancheng:
 								String province = mAddressPopView.mCurrentProviceName;//省
-								String provinceCode = mAddressPopView.mCurrentProviceCode;//省Code
+								provinceId = mAddressPopView.mCurrentProviceCode;//省Code
 								String city = mAddressPopView.mCurrentCityName;//市
-								String cityCode = mAddressPopView.mCurrentCityCode;//市Code
+								cityCode = mAddressPopView.mCurrentCityCode;//市Code
 								String county = mAddressPopView.mCurrentDistrictName;//县
-								String zipcode = mAddressPopView.mCurrentZipCode;//县Code
+								areaCode = mAddressPopView.mCurrentZipCode;//县Code
 								System.out.println("province"+province);
-								System.out.println("provinceCode"+provinceCode);
+								System.out.println("provinceCode"+provinceId);
 								System.out.println("city"+city);
 								System.out.println("cityCode"+cityCode);
 								System.out.println("county"+county);
-								System.out.println("zipcode"+zipcode);
+								System.out.println("zipcode"+areaCode);
 								mAddressPopView.dismiss();
 								break;
 						}
@@ -342,7 +343,7 @@ public class AddShopActivity extends BaseActivity {
 		try {
 			okHttpsImp.addBusinessByB(name, address,
 					userShopInfoBean.getUserId(), parant_id, license,
-					connect_name, phone, provinceId,
+					connect_name, phone, provinceId,cityCode,areaCode,
 					new MyResultCallback<String>() {
 
 						@Override

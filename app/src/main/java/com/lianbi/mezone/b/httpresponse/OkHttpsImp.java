@@ -1511,7 +1511,13 @@ public enum OkHttpsImp {
     /**
      * 新增店铺B端
      */
-    public void addBusinessByB(String businessName, String address, String userId, String industryId, String license, String contactName, String phone, String provinceId, MyResultCallback<String> myResultCallback, String serNum, String source, String reqTime) throws Exception {
+    public void addBusinessByB(String businessName, String address,
+                               String userId, String industryId, String license,
+                               String contactName, String phone, String provinceId,
+                               String cityCode,String areaCode,
+                               MyResultCallback<String> myResultCallback,
+                               String serNum, String source,
+                               String reqTime) throws Exception {
         Map<String, String> params = new HashMap<String, String>();
         params.put("address", address);
         params.put("businessName", businessName);
@@ -1520,6 +1526,8 @@ public enum OkHttpsImp {
         params.put("licenseUrl", license);
         params.put("phone", phone);
         params.put("provinceId", provinceId);
+        params.put("cityCode", cityCode);
+        params.put("areaCode", areaCode);
         params.put("reqTime", reqTime);
         params.put("serNum", serNum);
         params.put("source", source);
@@ -1628,7 +1636,32 @@ public enum OkHttpsImp {
         String url = getAbsoluteUrl(API.UPDATEBUSINESSCONTACTS);
         postProgressResponse(myResultCallback, params, url);
     }
-
+    /**
+     * 修改店铺省市区和行业类别
+     */
+    public void updateBusinessComplement(String serNum,
+                                    String source,
+                                    String reqTime,
+                                    String businessId,
+                                    String industryId,
+                                    String provinceId,
+                                    String cityCode,
+                                    String areaCode,
+                                    MyResultCallback<String> myResultCallback) throws Exception {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("businessId", businessId);
+        params.put("industryId", industryId);
+        params.put("provinceId", provinceId);
+        params.put("cityCode", cityCode);
+        params.put("areaCode", areaCode);
+        params.put("reqTime", reqTime);
+        params.put("serNum", serNum);
+        params.put("source", source);
+        String sign = getSign(md5_key, params);
+        params.put("sign", sign);
+        String url = getAbsoluteUrl(API.UPDATEBUSINESSPHONE);
+        postProgressResponse(myResultCallback, params, url);
+    }
     /**
      * 修改店铺联系电话
      */

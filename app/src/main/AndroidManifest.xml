@@ -243,6 +243,7 @@
             </intent-filter>
         </receiver>
 
+        <activity android:name="com.lianbi.mezone.b.ui.AddShopInfoActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.MySupplyGoodsActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.ConnectGoodsActivity"/>
         <activity android:name="com.lianbi.mezone.b.ui.AddConnectGoodsActivity"/>
