@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
@@ -53,7 +54,6 @@ import com.lianbi.mezone.b.ui.LeaguesStorelistActivity;
 import com.lianbi.mezone.b.ui.LeaguesYellListActivity;
 import com.lianbi.mezone.b.ui.MainActivity;
 import com.lianbi.mezone.b.ui.WebMoreServiceActivty;
-import com.readystatesoftware.viewbadger.BadgeView;
 import com.xizhi.mezone.b.R;
 import com.zbar.lib.animationslib.Techniques;
 import com.zbar.lib.animationslib.YoYo;
@@ -142,7 +142,7 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 	/**
 	 * 到店服务
 	 */
-	private TextView mTv_include_title;
+	private TextView mTv_include_title, mTv_shouyemag_order_num, mTv_shouyemag_call_num, mTv_shouyemag_condetail_num;
 	private View mInd_shouyemanagement_inshop;
 	private ImageView mImg_shouyemag_order, mImg_shouyemag_call, mImg_shouyemag_condetail;
 	/**
@@ -211,14 +211,12 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 			.playOn(mLlt_shouyemanagement_comsum);
 			}
 			}, 1000);
-
 			}
 			});
-
 			 */
-			rope = YoYo.with(Techniques.SlideOutUp).duration(1000)
-					.playOn(mLlt_shouyemanagement_comsum);
 			getShopConsumption(true);
+		} else {
+			getShopPushCount();
 		}
 	}
 
@@ -316,7 +314,7 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 										ShopConsumption bean = new ShopConsumption();
 										bean.setSign(true);
 									}
-									setComsumDetailView(mShopConsumptionList,isRefresh);
+									setComsumDetailView(mShopConsumptionList, isRefresh);
 								} catch (JSONException e) {
 									e.printStackTrace();
 								}
@@ -325,7 +323,7 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 
 						@Override
 						public void onResponseFailed(String msg) {
-							setComsumDetailView(mShopConsumptionList,isRefresh);
+							setComsumDetailView(mShopConsumptionList, isRefresh);
 						}
 					});
 		} catch (Exception e) {
@@ -336,12 +334,28 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 	/**
 	 * 设置实时消费几面
 	 */
-	private void setComsumDetailView(ArrayList<ShopConsumption> shopConsumptionList,final boolean isRefresh) {
+	private void setComsumDetailView(ArrayList<ShopConsumption> shopConsumptionList, final boolean isRefresh) {
 		mLlt_shouyemanagement_comsum.removeAllViews();
 		if (null != mShopConsumptionList && shopConsumptionList.size() > 0) {
 			mLlt_shouyemanagement_comsum.setVisibility(View.VISIBLE);
 			mView_fillview.setVisibility(View.VISIBLE);
 			mLlt_shouyemanagement_consum_img.setVisibility(View.GONE);
+
+			rope = YoYo.with(Techniques.FadeOut).duration(1000)
+					.playOn(mLlt_shouyemanagement_comsum);
+			//rope = YoYo.with(Techniques.SlideInUp).duration(1000)
+			//		.playOn(mLlt_shouyemanagement_comsum);
+
+			new Handler().postDelayed(new Runnable() {
+				@Override
+				public void run() {
+					//rope = YoYo.with(Techniques.ZoomInRight).duration(1000)
+					//		.playOn(mLlt_shouyemanagement_comsum);
+					rope = YoYo.with(Techniques.SlideInUp).duration(1000)
+							.playOn(mLlt_shouyemanagement_comsum);
+				}
+			}, 1000);
+
 
 			int number = shopConsumptionList.size();
 			if (number > 8)
@@ -387,8 +401,18 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 				}
 
 			}
-			rope = YoYo.with(Techniques.SlideInUp).duration(1000)
-					.playOn(mLlt_shouyemanagement_comsum);
+
+
+			//new Handler().postDelayed(new Runnable() {
+			//	@Override public void run() {
+			//		//rope = YoYo.with(Techniques.ZoomInRight).duration(1000)
+			//		//		.playOn(mLlt_shouyemanagement_comsum);
+			//		rope = YoYo.with(Techniques.SlideInUp).duration(1000)
+			//				.playOn(mLlt_shouyemanagement_comsum);
+			//	}
+			//}, 1000);
+
+
 		} else {
 			mLlt_shouyemanagement_comsum.setVisibility(View.GONE);
 			mView_fillview.setVisibility(View.GONE);
@@ -426,23 +450,29 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 	/**
 	 * 设置首页消息推送界面
 	 */
+
+
 	private void setShopPushOrderCount(OrderPushCount orderPushCount) {
 		if (null != orderPushCount) {
-			setShopPushOrderCount(mImg_shouyemag_order, orderPushCount.getPaidCount());
-			setShopPushOrderCount(mImg_shouyemag_call, orderPushCount.getPushCount());
-			setShopPushOrderCount(mImg_shouyemag_condetail, orderPushCount.getOrderCount());
+
+			//mTv_shouyemag_order_num,mTv_shouyemag_call_num,mTv_shouyemag_condetail_num
+			setShopPushOrderCount(mTv_shouyemag_order_num, orderPushCount.getPaidCount());
+			setShopPushOrderCount(mTv_shouyemag_call_num, orderPushCount.getPushCount());
+			setShopPushOrderCount(mTv_shouyemag_condetail_num, orderPushCount.getOrderCount());
 		}
 	}
 
 	/**
 	 * 设置首页消息推送界面
 	 */
-	private void setShopPushOrderCount(ImageView imageView, int count) {
+	private void setShopPushOrderCount(TextView textView, int count) {
 		if (0 != count) {
-			BadgeView badgeView = new BadgeView(mActivity, imageView);
-			badgeView.setBadgeMargin(0, 0);
-			badgeView.setText(count + "");
-			badgeView.show();
+			if (count > 99) {
+				textView.setVisibility(View.VISIBLE);
+				textView.setText("99+");
+			}
+			textView.setVisibility(View.VISIBLE);
+			textView.setText(count + "");
 		}
 	}
 
@@ -522,7 +552,45 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 
 			for (int i = 0; i < j; i++) {
 				try {
-					String yuan = AbStrUtil.changeF2Y(Long.parseLong(shopConsumptionCurve.get(i).getConsumption()));
+					String amt = shopConsumptionCurve.get(i).getConsumption();
+					if (AbStrUtil.isEmpty(amt))
+						amt = "0";
+					String yuan = AbStrUtil.changeF2Y(Long.parseLong(amt));
+					float data = Float.valueOf(yuan);
+					LineChartData[i] = data;
+					if (data > baseFloat) {
+						baseFloat = data;
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+
+			//设置最大值
+			if (0 != baseFloat) {
+				mLeftAxis.setAxisMaximum(baseFloat * 1 / 3 + baseFloat);
+			} else {
+				mLeftAxis.setAxisMaximum(200f);
+			}
+			setChartData(LineChartData);
+		} else {
+			mXAxis.setValueFormatter(new IAxisValueFormatter() {
+				@Override
+				public String getFormattedValue(float value, AxisBase axis) {
+					return "0:00";
+				}
+				@Override
+				public int getDecimalDigits() {
+					return 0;
+				}
+			});
+			float[] LineChartData = new float[9];
+			int j = 9;
+			float baseFloat = 0;
+			for (int i = 0; i < j; i++) {
+				try {
+					String amt = "0";
+					String yuan = AbStrUtil.changeF2Y(Long.parseLong(amt));
 					float data = Float.valueOf(yuan);
 					LineChartData[i] = data;
 					if (data > baseFloat) {
@@ -578,14 +646,19 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 		if (null != shopVipMarket) {
 			mTv_shouyemanagement_todayvip.setText(shopVipMarket.getVipWXCountResponseModel().getNewVipCount() + "");//设置今日会员数
 			mTv_shouyemanagement_numvip.setText(shopVipMarket.getVipWXCountResponseModel().getDataSize() + "");//设置总共会员数
-			String todaymuch = "";
-			String weekmuch = "";
+			String todaymuch = shopVipMarket.getWeekAndDayMaxAmtResponseModel().getDayMaxAmt();
+			String weekmuch = shopVipMarket.getWeekAndDayMaxAmtResponseModel().getWeekMaxAmt();
+			if (AbStrUtil.isEmpty(todaymuch))
+				todaymuch = "0";
+			if (AbStrUtil.isEmpty(weekmuch))
+				weekmuch = "0";
 			try {
-				todaymuch = AbStrUtil.changeF2Y(Long.parseLong(shopVipMarket.getWeekAndDayMaxAmtResponseModel().getDayMaxAmt()));
-				weekmuch = AbStrUtil.changeF2Y(Long.parseLong(shopVipMarket.getWeekAndDayMaxAmtResponseModel().getWeekMaxAmt()));
+				todaymuch = AbStrUtil.changeF2Y(Long.parseLong(todaymuch));
+				weekmuch = AbStrUtil.changeF2Y(Long.parseLong(weekmuch));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+
 			AbStrUtil.formatTextSize(mTv_shouyemanagement_muchtoday, todaymuch, 2);//设置日客最高单价
 			AbStrUtil.formatTextSize(mTv_shouyemanagement_muchweek, weekmuch, 2);//设置周客最高单价
 
@@ -617,7 +690,6 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 			mSaleRankBottomList.get(i).setText("待上架");
 		}
 
-		System.out.println("+++++" + arraylist.size());
 		if (whichone) {
 
 			initSaleRank();
@@ -639,7 +711,6 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 				arraylist.add(tt3);
 			}
 		}
-		System.out.println("-----" + arraylist.size());
 		//设置数据
 		int j = arraylist.size();
 		if (j > 7)
@@ -709,8 +780,11 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 		mInd_shouyemanagement_inshop = view.findViewById(R.id.ind_shouyemanagement_inshop);
 
 		mImg_shouyemag_order = (ImageView) view.findViewById(R.id.img_shouyemag_order);//客户买单
+		mTv_shouyemag_order_num = (TextView) view.findViewById(R.id.tv_shouyemag_order_num);
 		mImg_shouyemag_call = (ImageView) view.findViewById(R.id.img_shouyemag_call);//响应呼叫
+		mTv_shouyemag_call_num = (TextView) view.findViewById(R.id.tv_shouyemag_call_num);
 		mImg_shouyemag_condetail = (ImageView) view.findViewById(R.id.img_shouyemag_condetail);//消费流水
+		mTv_shouyemag_condetail_num = (TextView) view.findViewById(R.id.tv_shouyemag_condetail_num);
 
 		/**
 		 * 实时消费

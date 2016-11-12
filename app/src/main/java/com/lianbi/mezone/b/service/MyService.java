@@ -52,7 +52,6 @@ public class MyService extends Service {
 
 				@Override
 				public void fileDownloadProgress(long currentSize, long totalSize, float progress, long networkSpeed) {
-					System.out.println("currentSize--" + currentSize + "  totalSize--" + totalSize + "  progress--" + progress + "  networkSpeed--" + networkSpeed);
 					if (1 == progress) {
 						ContentUtils.putSharePre(MyService.this,
 								Constants.SHARED_PREFERENCE_NAME,

@@ -560,9 +560,6 @@ public class AbStrUtil {
 		}
 	}
 
-
-
-
 	/**
 	 * 元转分
 	 * @param amount

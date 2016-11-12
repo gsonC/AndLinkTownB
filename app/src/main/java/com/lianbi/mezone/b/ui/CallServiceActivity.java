@@ -13,6 +13,7 @@ import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
 import com.xizhi.mezone.b.R;
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -24,6 +25,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.QuickAdapter;
+import cn.com.hgh.eventbus.ShouyeRefreshEvent;
 import cn.com.hgh.utils.AbDateUtil;
 import cn.com.hgh.utils.AbStrUtil;
 import cn.com.hgh.utils.ContentUtils;
@@ -293,6 +295,7 @@ public class CallServiceActivity extends BaseActivity implements AbPullToRefresh
 	protected void onDestroy() {
 		super.onDestroy();
 		ButterKnife.unbind(this);
+		EventBus.getDefault().post(new ShouyeRefreshEvent(false));
 	}
 
 	private void refreshingFinish() {
@@ -332,4 +335,5 @@ public class CallServiceActivity extends BaseActivity implements AbPullToRefresh
 		}
 
 	}
+
 }

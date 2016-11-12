@@ -17,11 +17,16 @@ import com.iflytek.cloud.SpeechSynthesizer;
 import com.iflytek.cloud.SynthesizerListener;
 import com.lianbi.mezone.b.app.Constants;
 import com.lianbi.mezone.b.bean.PushDataBean;
+import com.lianbi.mezone.b.ui.ComeDetailActivity;
 import com.lianbi.mezone.b.ui.InfoDetailsActivity;
 import com.lianbi.mezone.b.ui.OrderLookUpActivity;
 import com.lianbi.mezone.b.ui.WebActivty;
 import com.lianbi.mezone.b.ui.WithdrawRecordActivity;
 import com.xizhi.mezone.b.R;
+
+import org.greenrobot.eventbus.EventBus;
+
+import cn.com.hgh.eventbus.ShouyeRefreshEvent;
 
 public class PushNotifitionManager {
 
@@ -84,7 +89,12 @@ public class PushNotifitionManager {
 			resultIntent = new Intent(mContext, OrderLookUpActivity.class);//跳转订单明细页面
 		} else if (7 == tiaozhuan) {
 			resultIntent = new Intent(mContext, WithdrawRecordActivity.class);//跳转提现记录页面
-		} else {
+		}else if(60000==tiaozhuan){
+			resultIntent = new Intent(mContext, ComeDetailActivity.class);//跳转消费流水页面
+			EventBus.getDefault().post(new ShouyeRefreshEvent(true));
+		}
+
+		else {
 			mNotificationManager.notify(notifyId, mBuilder.build());
 			return;
 		}
