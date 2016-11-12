@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
@@ -59,6 +58,9 @@ import com.xizhi.mezone.b.R;
 import com.zbar.lib.animationslib.Techniques;
 import com.zbar.lib.animationslib.YoYo;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -67,6 +69,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 
+import cn.com.hgh.eventbus.ShouyeRefreshEvent;
 import cn.com.hgh.playview.BaseSliderView;
 import cn.com.hgh.playview.BaseSliderView.OnSliderClickListener;
 import cn.com.hgh.playview.SliderLayout;
@@ -170,48 +173,88 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		super.onCreateView(inflater, container, savedInstanceState);
 		View view = inflater.inflate(R.layout.fm_shouyemanagement, null);
+		EventBus.getDefault().register(this);//注册EventBus
 		mActivity = (MainActivity) getActivity();
 		mOkHttpsImp = OkHttpsImp.SINGLEOKHTTPSIMP.newInstance(mActivity);
 		isLogin = ContentUtils.getLoginStatus(mActivity);
 		intView(view);
 		initLineChartView();
-		//getData();
 		getShopPushCount();
-		getShopConsumption();
+		getShopConsumption(false);
 		getShopSaleRank(true);
 		getShopVipMarket();
 		getShopConsumptionCurve();
-		//getData3(true);
 		setLinten();
 		return view;
+	}
+
+	/**
+	 * EventBus 响应事件
+	 */
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	public void onShouyeRefreshEvent(ShouyeRefreshEvent event) {
+		boolean isRefresh = event.getRefresh();
+		if (isRefresh) {
+
+			/**
+			 *
+			 * 设置动画
+			 */
+			/**
+			 mLlt_shouyemanagement_comsum.setOnClickListener(new View.OnClickListener() {
+			@Override public void onClick(View v) {
+			rope = YoYo.with(Techniques.ZoomOutLeft).duration(1000)
+			.playOn(mLlt_shouyemanagement_comsum);
+			new Handler().postDelayed(new Runnable() {
+			@Override public void run() {
+			rope = YoYo.with(Techniques.ZoomInRight).duration(1000)
+			.playOn(mLlt_shouyemanagement_comsum);
+			}
+			}, 1000);
+
+			}
+			});
+
+			 */
+			rope = YoYo.with(Techniques.SlideOutUp).duration(1000)
+					.playOn(mLlt_shouyemanagement_comsum);
+			getShopConsumption(true);
+		}
+	}
+
+
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		EventBus.getDefault().unregister(mActivity);//反注册EventBus
 	}
 
 	/**
 	 * 首页销量排行
 	 */
 	private void getShopSaleRank(boolean whickone) {
-			try {
-				mOkHttpsImp.getShopSaleRank(whickone, "BD2016053018405200000042", new MyResultCallback<String>() {
-					@Override
-					public void onResponseResult(Result result) {
-						mShopSaleRankList.clear();
-						String reString = result.getData();
-						if (!AbStrUtil.isEmpty(reString)) {
-							mShopSaleRankList = (ArrayList<ShopSaleRank>) JSON.parseArray(reString, ShopSaleRank.class);
-							setShopSaleRank(mShopSaleRankList);
-						}else{
-							setShopSaleRank(mShopSaleRankList);
-						}
-					}
-
-					@Override
-					public void onResponseFailed(String msg) {
+		try {
+			mOkHttpsImp.getShopSaleRank(whickone, "BD2016053018405200000042", new MyResultCallback<String>() {
+				@Override
+				public void onResponseResult(Result result) {
+					mShopSaleRankList.clear();
+					String reString = result.getData();
+					if (!AbStrUtil.isEmpty(reString)) {
+						mShopSaleRankList = (ArrayList<ShopSaleRank>) JSON.parseArray(reString, ShopSaleRank.class);
+						setShopSaleRank(mShopSaleRankList);
+					} else {
 						setShopSaleRank(mShopSaleRankList);
 					}
-				});
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+				}
+
+				@Override
+				public void onResponseFailed(String msg) {
+					setShopSaleRank(mShopSaleRankList);
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 
@@ -222,10 +265,10 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 
 		if (null != shopSaleRankList && shopSaleRankList.size() > 0) {
 
-			for(int i=0;i<7;i++){
+			for (int i = 0; i < 7; i++) {
 				Timer timer = new Timer();
 				mSaleRankTopList.get(i).setText("0");
-				timer.schedule(new DynamicWaveTask(timer, mDynamicWaveList.get(i), 0,0), 0, 10);
+				timer.schedule(new DynamicWaveTask(timer, mDynamicWaveList.get(i), 0, 0), 0, 10);
 				mSaleRankBottomList.get(i).setText("待上架");
 			}
 
@@ -242,11 +285,11 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 						MathExtend.divide((double) (3 * shopSaleRankList.get(i).getSaleNum()), (double) (4 * total))), 0, 10);
 				mSaleRankBottomList.get(i).setText(shopSaleRankList.get(i).getPro_name() + "");
 			}
-		}else{
-			for(int i=0;i<7;i++){
+		} else {
+			for (int i = 0; i < 7; i++) {
 				Timer timer = new Timer();
 				mSaleRankTopList.get(i).setText("0");
-				timer.schedule(new DynamicWaveTask(timer, mDynamicWaveList.get(i), 0,0), 0, 10);
+				timer.schedule(new DynamicWaveTask(timer, mDynamicWaveList.get(i), 0, 0), 0, 10);
 				mSaleRankBottomList.get(i).setText("待上架");
 			}
 		}
@@ -256,7 +299,7 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 	/**
 	 * 实时消费接口
 	 */
-	private void getShopConsumption() {
+	private void getShopConsumption(final boolean isRefresh) {
 		try {
 			mOkHttpsImp.getShopConsumption("BD2016053018405200000042"
 					, "VI082016110712224600004578", new MyResultCallback<String>() {
@@ -273,7 +316,7 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 										ShopConsumption bean = new ShopConsumption();
 										bean.setSign(true);
 									}
-									setComsumDetailView(mShopConsumptionList);
+									setComsumDetailView(mShopConsumptionList,isRefresh);
 								} catch (JSONException e) {
 									e.printStackTrace();
 								}
@@ -282,7 +325,7 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 
 						@Override
 						public void onResponseFailed(String msg) {
-							setComsumDetailView(mShopConsumptionList);
+							setComsumDetailView(mShopConsumptionList,isRefresh);
 						}
 					});
 		} catch (Exception e) {
@@ -293,12 +336,13 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 	/**
 	 * 设置实时消费几面
 	 */
-	private void setComsumDetailView(ArrayList<ShopConsumption> shopConsumptionList) {
+	private void setComsumDetailView(ArrayList<ShopConsumption> shopConsumptionList,final boolean isRefresh) {
 		mLlt_shouyemanagement_comsum.removeAllViews();
 		if (null != mShopConsumptionList && shopConsumptionList.size() > 0) {
 			mLlt_shouyemanagement_comsum.setVisibility(View.VISIBLE);
 			mView_fillview.setVisibility(View.VISIBLE);
 			mLlt_shouyemanagement_consum_img.setVisibility(View.GONE);
+
 			int number = shopConsumptionList.size();
 			if (number > 8)
 				number = 8;
@@ -343,7 +387,8 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 				}
 
 			}
-
+			rope = YoYo.with(Techniques.SlideInUp).duration(1000)
+					.playOn(mLlt_shouyemanagement_comsum);
 		} else {
 			mLlt_shouyemanagement_comsum.setVisibility(View.GONE);
 			mView_fillview.setVisibility(View.GONE);
@@ -562,17 +607,17 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 	private void getData3(boolean whichone) {
 		arraylist.clear();
 
-		for (int i =0;i<7;i++){
+		for (int i = 0; i < 7; i++) {
 			Timer timer = new Timer();
 			mSaleRankTopList.get(i).setText("0");
 			//mDynamicWave.get(i).setHeight(arraylist.get(i).getCenter());
 
-			timer.schedule(new DynamicWaveTask(timer, mDynamicWaveList.get(i), 0,0), 0, 10);
+			timer.schedule(new DynamicWaveTask(timer, mDynamicWaveList.get(i), 0, 0), 0, 10);
 
 			mSaleRankBottomList.get(i).setText("待上架");
 		}
 
-		System.out.println("+++++"+arraylist.size());
+		System.out.println("+++++" + arraylist.size());
 		if (whichone) {
 
 			initSaleRank();
@@ -594,7 +639,7 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 				arraylist.add(tt3);
 			}
 		}
-		System.out.println("-----"+arraylist.size());
+		System.out.println("-----" + arraylist.size());
 		//设置数据
 		int j = arraylist.size();
 		if (j > 7)
@@ -752,29 +797,6 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 		initSaleRank();
 		initShopVip();
 		//initLineChart();
-		/**
-		 * 设置动画
-		 */
-
-		mLlt_shouyemanagement_comsum.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				rope = YoYo.with(Techniques.ZoomOutLeft).duration(1000)
-
-						.playOn(mLlt_shouyemanagement_comsum);
-
-				new Handler().postDelayed(new Runnable() {
-
-					@Override
-					public void run() {
-						rope = YoYo.with(Techniques.ZoomInRight).duration(1000)
-
-								.playOn(mLlt_shouyemanagement_comsum);
-					}
-				}, 1000);
-
-			}
-		});
 
 	}
 
@@ -1127,7 +1149,7 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 		if (isLogin) {
 			mChk_oneday_salenum.setChecked(true);
 			getShopPushCount();
-			getShopConsumption();
+			getShopConsumption(false);
 			getShopSaleRank(true);
 			getShopVipMarket();
 			getShopConsumptionCurve();

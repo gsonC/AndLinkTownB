@@ -1,10 +1,14 @@
 package com.lianbi.mezone.b.ui;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.xizhi.mezone.b.R;
 
+import org.greenrobot.eventbus.EventBus;
+
+import cn.com.hgh.eventbus.ShouyeRefreshEvent;
 import cn.com.hgh.utils.AbViewUtil;
 
 /**

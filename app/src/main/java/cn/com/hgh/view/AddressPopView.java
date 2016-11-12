@@ -27,6 +27,8 @@ import com.zbar.lib.addresspop.adapter.ArrayWheelAdapter;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -46,7 +48,7 @@ import java.util.Map;
  * @更新描述
  */
 @SuppressLint("ViewConstructor")
-public class AddressPopView extends PopupWindow implements OnWheelChangedListener{
+public class AddressPopView extends PopupWindow implements OnWheelChangedListener {
 
 	public View mMenuView;
 	public TextView mTvGuanbi, mTvWancheng;
@@ -200,8 +202,8 @@ public class AddressPopView extends PopupWindow implements OnWheelChangedListene
 		String[] cities = mCitisDatasMap.get(mCurrentProviceName);
 		String[] citiesCode = mCitisCodeDatasMap.get(mCurrentProviceName);
 
-		if (cities == null||citiesCode ==null) {
-			cities = new String[] { "" };
+		if (cities == null || citiesCode == null) {
+			cities = new String[]{""};
 			citiesCode = new String[]{""};
 		}
 		mViewCity
@@ -220,7 +222,7 @@ public class AddressPopView extends PopupWindow implements OnWheelChangedListene
 		String[] areas = mDistrictDatasMap.get(mCurrentCityName);
 		String[] areasCode = mDistrictCodeDatasMap.get(mCurrentCityCode);
 		if (areas == null) {
-			areas = new String[] { "" };
+			areas = new String[]{""};
 		}
 		mViewDistrict.setViewAdapter(new ArrayWheelAdapter<String>(mContext,
 				areas));
@@ -246,16 +248,16 @@ public class AddressPopView extends PopupWindow implements OnWheelChangedListene
 			// 获取解析出来的数据
 			//provinceList = handler.getDataList();
 
-			//File jsonFile = new File("sdcard/download/json.json");
+			File jsonFile = new File("sdcard/download/json.json");
 			BufferedReader br = null;
 
-			//if(jsonFile.exists()&&jsonFile.length()>0){
-			//	InputStream is = new FileInputStream(jsonFile);
-			//	br = new BufferedReader(new InputStreamReader(is,"GB2312"));
-			//}else{
+			if (jsonFile.exists() && jsonFile.length() > 0) {
+				InputStream is = new FileInputStream(jsonFile);
+				br = new BufferedReader(new InputStreamReader(is, "GB2312"));
+			} else {
 				InputStream other = mContext.getResources().getAssets().open("json.json");
 				br = new BufferedReader(new InputStreamReader(other));
-			//}
+			}
 			//InputStream other = mContext.getResources().getAssets().open("json.json");
 			//InputStream is = new FileInputStream(jsonFile);
 			//BufferedReader br = new BufferedReader(new InputStreamReader(is,"GB2312"));
@@ -268,10 +270,10 @@ public class AddressPopView extends PopupWindow implements OnWheelChangedListene
 			String citylist = (String) jsonObject
 					.getString("window.LocalList");
 			provinceList = (ArrayList<ProvincesBean>) JSON.parseArray(citylist, ProvincesBean.class);
-			provinceList.remove(provinceList.size()-1);
-			provinceList.remove(provinceList.size()-1);
-			provinceList.remove(provinceList.size()-1);
-			System.out.println("--------"+provinceList.size());
+			provinceList.remove(provinceList.size() - 1);
+			provinceList.remove(provinceList.size() - 1);
+			provinceList.remove(provinceList.size() - 1);
+			System.out.println("--------" + provinceList.size());
 			// */ 初始化默认选中的省、市、区
 			if (provinceList != null && !provinceList.isEmpty()) {
 				//mCurrentProviceName = provinceList.get(0).getName();
@@ -327,8 +329,8 @@ public class AddressPopView extends PopupWindow implements OnWheelChangedListene
 						//		districtList.get(k).getName(), districtList
 						//		.get(k).getZipcode());
 						DistrictsBean districtModel = new DistrictsBean(
-								districtList.get(k).getDistrict(),districtList
-						.get(k).getDistrictId());
+								districtList.get(k).getDistrict(), districtList
+								.get(k).getDistrictId());
 
 						// 区/县对于的邮编，保存到mZipcodeDatasMap
 						//mZipcodeDatasMap.put(districtList.get(k).getName(),
@@ -345,12 +347,12 @@ public class AddressPopView extends PopupWindow implements OnWheelChangedListene
 					}
 					// 市-区/县的数据，保存到mDistrictDatasMap
 					mDistrictDatasMap.put(cityNames[j], distrinctNameArray);
-					mDistrictCodeDatasMap.put(cityNames[j],distrinctCodeArray);
+					mDistrictCodeDatasMap.put(cityNames[j], distrinctCodeArray);
 				}
 				// 省-市的数据，保存到mCitisDatasMap
 				//mCitisDatasMap.put(provinceList.get(i).getName(), cityNames);
-				mCitisDatasMap.put(provinceList.get(i).getProvinceName(),cityNames);
-				mCitisCodeDatasMap.put(provinceList.get(i).getProvinceName(),cityCodes);
+				mCitisDatasMap.put(provinceList.get(i).getProvinceName(), cityNames);
+				mCitisCodeDatasMap.put(provinceList.get(i).getProvinceName(), cityCodes);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
