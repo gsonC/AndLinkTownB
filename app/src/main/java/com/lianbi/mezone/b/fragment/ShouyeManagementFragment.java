@@ -1059,7 +1059,6 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 	@Override
 	public void onClick(View view) {
 		switch (view.getId()) {
-
 			/**
 			 * 到店服务
 			 */
