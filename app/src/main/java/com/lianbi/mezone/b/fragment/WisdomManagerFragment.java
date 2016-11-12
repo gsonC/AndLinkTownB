@@ -382,7 +382,7 @@ public class WisdomManagerFragment extends Fragment implements OnClickListener {
 
 			List a = new ArrayList();
 			for (ShouyeServiceBean ss : arraylist) {
-				if (ss != null && ss.getAppCode().equals("wcm") || ss.getAppCode().equals("qns") || ss.getAppCode().equals("wifi")) {
+				if (ss != null &&ss.getAppCode()!=null&& ss.getAppCode().equals("wcm") || ss.getAppCode().equals("qns") || ss.getAppCode().equals("wifi")) {
 					mData.add(ss);
 				}
 			}

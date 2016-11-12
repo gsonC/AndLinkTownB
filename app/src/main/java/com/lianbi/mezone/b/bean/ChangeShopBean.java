@@ -44,7 +44,8 @@ public class ChangeShopBean implements Serializable {
 	String logoUrl;
 	String headerUrl;
 	String healthUrl;
-
+	String cityCode;
+	String areaCode;
 	public String getContactPhone() {
 		return contactPhone;
 	}
@@ -251,5 +252,21 @@ public class ChangeShopBean implements Serializable {
 
 	public void setSelect(boolean isSelect) {
 		this.isSelect = isSelect;
+	}
+
+	public String getCityCode() {
+		return cityCode;
+	}
+
+	public void setCityCode(String cityCode) {
+		this.cityCode = cityCode;
+	}
+
+	public String getAreaCode() {
+		return areaCode;
+	}
+
+	public void setAreaCode(String areaCode) {
+		this.areaCode = areaCode;
 	}
 }

@@ -30,6 +30,7 @@ import cn.com.hgh.utils.AbDateUtil;
 import cn.com.hgh.utils.AbStrUtil;
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.Result;
+import cn.com.hgh.view.DialogCommon;
 
 /**
  * 切换商铺
@@ -47,17 +48,23 @@ public class ChangeShopActivity extends BaseActivity {
 	 * 默认选择位置
 	 */
 	private int position = -1;
+	private  int    FROMCHANGESHOP=2;
 
 	private ImageView img_change_shop_add_empty;
 	private String business_id = "", address;
 	private String shopName = "";
 	private String LoGoUrl = "";
 	private String shopRovinceid = "";
-
+	private String defaultbusiness="";
+	private String citycode="";
+	private String areaCode="";
+	private  final int   REQUEST_CODE_RESULT=123;
+	//记录下点击的item店铺ID
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_change_shop, NOTYPE);
+		business_id=BusinessId;
 		initView();
 		initAdapter();
 		setLisenter();
@@ -118,11 +125,14 @@ public class ChangeShopActivity extends BaseActivity {
 													.getLogoUrl();
 											shopRovinceid= datas.get(0)
 													.getProvinceId();
+											citycode= datas.get(0)
+													.getCityCode();
+											areaCode= datas.get(0)
+													.getAreaCode();
 											setBino();
 										} else {
 											for (int i = 0; i < datas.size(); i++) {
-												if (userShopInfoBean
-														.getBusinessId()
+												if (business_id
 														.equals(datas
 																.get(i)
 																.getBusiness_id())) {
@@ -137,6 +147,10 @@ public class ChangeShopActivity extends BaseActivity {
 															.getLogoUrl();
 													shopRovinceid= datas.get(i)
 															.getProvinceId();
+													citycode= datas.get(i)
+															.getCityCode();
+													areaCode= datas.get(i)
+															.getAreaCode();
 												}
 											}
 										}
@@ -233,9 +247,12 @@ public class ChangeShopActivity extends BaseActivity {
 					shopName=item.getBusinessName();
 					LoGoUrl=item.getLogoUrl();
 					shopRovinceid=item.getProvinceId();
+					citycode=item.getCityCode();
+					areaCode=item.getAreaCode();
 				} else {
 					chbx_change_shop.setChecked(isSel);
 				}
+
 				tv_change_shop_title.setText(item.getBusiness_name());
 				tv_change_shop_phone.setText(item.getPhone());
 				tv_change_shop_address.setText(item.getAddress());
@@ -261,7 +278,38 @@ public class ChangeShopActivity extends BaseActivity {
 	@Override
 	protected void onTitleRightClickTv() {
 		super.onTitleRightClickTv();
-		changeBussinessOnApp();
+        if(TextUtils.isEmpty(shopRovinceid)||
+				TextUtils.isEmpty(citycode)||
+				TextUtils.isEmpty(areaCode)
+				){
+			DialogCommon dialogCommon = new DialogCommon(ChangeShopActivity.this) {
+				@Override
+				public void onOkClick() {
+					Intent intent = new Intent();
+					intent.setClass(ChangeShopActivity.this,AddShopInfoActivity.class);
+					intent.putExtra("businessid",business_id);
+					intent.putExtra("fromwhich",FROMCHANGESHOP);
+					startActivityForResult(intent, REQUEST_CODE_RESULT);
+					dismiss();
+					return;
+
+
+				}
+				@Override
+				public void onCheckClick() {
+
+					dismiss();
+
+				}
+			};
+			dialogCommon.setTextTitle("店铺信息尚未完善，请补全信息");
+			dialogCommon.setTv_dialog_common_ok("确定");
+			dialogCommon.setCanceledOnTouchOutside(false);
+			dialogCommon.setTv_dialog_common_cancelV(View.GONE);
+			dialogCommon.show();
+		}else{
+		    changeBussinessOnApp();
+	    }
 	}
 
 	/**
@@ -324,7 +372,7 @@ public class ChangeShopActivity extends BaseActivity {
 		try {
 			okHttpsImp.postPhoneClientId(uuid, "app", reqTime,
 					userShopInfoBean.getUserId(),
-					userShopInfoBean.getBusinessId(), mClientId, "01",
+					business_id, mClientId, "01",
 					new MyResultCallback<String>() {
 
 						@Override
@@ -372,5 +420,16 @@ public class ChangeShopActivity extends BaseActivity {
 		userShopInfoBean.setShopName(datas.get(position).getBusiness_name());
 		ContentUtils.putSharePre(ChangeShopActivity.this,
 				Constants.SHARED_PREFERENCE_NAME, Constants.ADDRESS, address);
+	}
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (resultCode == RESULT_OK) {
+			switch (requestCode) {
+				case REQUEST_CODE_RESULT:
+					getBusinessByUser();
+					break;
+			}
+		}
 	}
 }

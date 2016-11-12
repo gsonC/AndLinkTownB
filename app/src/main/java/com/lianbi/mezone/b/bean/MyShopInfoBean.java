@@ -38,7 +38,8 @@ public class MyShopInfoBean implements Serializable {
 	ArrayList<ShopIntroduceImageBean> introduceImgUrl;
 	private String contactPhone;
 	private String qrcodeUrl;
-
+	String cityCode="";
+	String areaCode="";
 	public String getIndustryName() {
 		return industryName;
 	}
@@ -232,4 +233,19 @@ public class MyShopInfoBean implements Serializable {
 		this.qrcodeUrl = qrcodeUrl;
 	}
 
+	public String getCityCode() {
+		return cityCode;
+	}
+
+	public void setCityCode(String cityCode) {
+		this.cityCode = cityCode;
+	}
+
+	public String getAreaCode() {
+		return areaCode;
+	}
+
+	public void setAreaCode(String areaCode) {
+		this.areaCode = areaCode;
+	}
 }
