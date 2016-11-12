@@ -1,64 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-   android:orientation="vertical">
+    >
 
-  <cn.com.hgh.view.AbPullToRefreshView
-      android:id="@+id/act_cumption_abpulltorefreshview"
-      android:layout_width="match_parent"
-      android:layout_height="0dp"
-      android:layout_marginTop="10dp"
-      android:layout_weight="1"
-      android:background="@color/white"
-      android:orientation="vertical"
-      android:visibility="visible"
-      >
-      <ListView
-          android:id="@+id/act_cumption_listview"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:divider="@null"
-          android:listSelector="@color/transparent"
-          android:scrollbars="none">
+    <cn.com.hgh.view.AbPullToRefreshView
+        android:id="@+id/act_cumption_abpulltorefreshview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:orientation="vertical"
+        >
 
-      </ListView>
+        <ListView
+            android:id="@+id/act_cumption_listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@null"
+            android:listSelector="@color/transparent"
+            android:scrollbars="none">
 
+        </ListView>
 
 
-  </cn.com.hgh.view.AbPullToRefreshView>
+    </cn.com.hgh.view.AbPullToRefreshView>
 
     <ImageView
         android:id="@+id/img_cumption_empty"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="match_parent"
         android:scaleType="fitXY"
         android:src="@mipmap/iv_empty"
         android:visibility="gone"/>
-    <LinearLayout
-        android:layout_width="match_parent"
+
+    <ImageView
+        android:id="@+id/im_comestore_detail"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:gravity="bottom"
-        android:orientation="horizontal"
-        android:padding="10dp">
-        <Button
-            android:alpha="0"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.0" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="40dp"
+        android:layout_marginRight="-32dp"
+        android:visibility="gone"
+        android:src="@mipmap/buttontt"/>
 
-        <ImageView
-            android:id="@+id/im_comestore_detail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/buttontt"
-            android:visibility="visible"
-            />
-    </LinearLayout>
+    <ImageView
+        android:id="@+id/im_comestore_eject"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="80dp"
+        android:visibility="gone"
+        android:layout_marginRight="70dp"
+        android:src="@mipmap/buttontt"/>
 
-
-
-</LinearLayout>
+</RelativeLayout>

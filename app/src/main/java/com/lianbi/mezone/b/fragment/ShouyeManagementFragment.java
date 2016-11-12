@@ -579,6 +579,7 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 				public String getFormattedValue(float value, AxisBase axis) {
 					return "0:00";
 				}
+
 				@Override
 				public int getDecimalDigits() {
 					return 0;
@@ -1066,7 +1067,9 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 				startActivity(new Intent(mActivity, DiningTableSettingActivity.class));
 				break;
 			case R.id.img_shouyemag_order://客户买单
-				startActivity(new Intent(mActivity, ConsumptionSettlementActivity.class));
+				Intent intent = new Intent(mActivity, ConsumptionSettlementActivity.class);
+				intent.putExtra("EJECT", "eject");
+				startActivity(intent);
 				break;
 			case R.id.img_shouyemag_call://响应呼叫
 				startActivity(new Intent(mActivity, CallServiceActivity.class));

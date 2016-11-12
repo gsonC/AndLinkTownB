@@ -14,6 +14,8 @@ import com.lianbi.mezone.b.bean.Consumption;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
 import com.xizhi.mezone.b.R;
+import com.zbar.lib.animationslib.Techniques;
+import com.zbar.lib.animationslib.YoYo;
 
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
@@ -48,27 +50,58 @@ public class ConsumptionSettlementActivity extends BaseActivity {
 	ArrayList<Consumption> mDatas = new ArrayList<Consumption>();
 	@Bind(R.id.im_comestore_detail)
 	ImageView imComestoreDetail;
-	public String  tableId;
+	@Bind(R.id.im_comestore_eject)
+	ImageView imComestoreEject;
+	public String tableId;
+	private YoYo.YoYoString rope;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_consumption_settlement, NOTYPE);
 		ButterKnife.bind(this);
 		initview();
+		getStringFormShouye();
 		initListAdapter();
 		getUnPaidOrder(true);
 		setlisten();
-
 	}
 
-	private void setlisten(){
+	/**
+	 * 动画
+	 */
+	@OnClick({R.id.im_comestore_detail, R.id.im_comestore_eject})
+	public void OnClick(View v) {
+		switch (v.getId()) {
+			case R.id.im_comestore_detail://点击隐藏 到店显示
+				rope = YoYo.with(Techniques.FadeOut).duration(500)
+						.playOn(imComestoreDetail);
+				rope = YoYo.with(Techniques.FadeInRight).duration(1000)
+						.playOn(imComestoreEject);
+				imComestoreEject.setVisibility(View.VISIBLE);
+				break;
+			case R.id.im_comestore_eject://跳转到店
+				startActivity(new Intent(ConsumptionSettlementActivity.this, DiningTableSettingActivity.class));
+				break;
+		}
+	}
+
+	private void getStringFormShouye() {
+		String eject = getIntent().getStringExtra("EJECT");
+		if ("eject".equals(eject)) {
+			imComestoreDetail.setVisibility(View.VISIBLE);
+			imComestoreEject.setVisibility(View.GONE);
+		}
+	}
+
+	private void setlisten() {
 
 		actCumptionListview.setOnTouchListener(new View.OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				switch (event.getAction()) {
 					case MotionEvent.ACTION_MOVE:
-						imComestoreDetail.setVisibility(View.GONE);
+						imComestoreDetail.setVisibility(View.VISIBLE);
 						break;
 				}
 
@@ -78,17 +111,16 @@ public class ConsumptionSettlementActivity extends BaseActivity {
 	}
 
 
-
 	private void initview() {
 
 		setPageTitle("客户买单");
-		imComestoreDetail.setOnClickListener(this);
-		imComestoreDetail.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				startActivity(new Intent(ConsumptionSettlementActivity.this,DiningTableSettingActivity.class));
-			}
-		});
+		//	imComestoreDetail.setOnClickListener(this);
+		//	imComestoreDetail.setOnClickListener(new View.OnClickListener() {
+		//		@Override
+		//		public void onClick(View v) {
+		//			startActivity(new Intent(ConsumptionSettlementActivity.this, DiningTableSettingActivity.class));
+		//		}
+		//	});
 		//刷新设置
 		actCumptionAbpulltorefreshview.setLoadMoreEnable(true);
 		actCumptionAbpulltorefreshview.setPullRefreshEnable(true);
@@ -121,7 +153,7 @@ public class ConsumptionSettlementActivity extends BaseActivity {
 				TextView tv_consum_daytime = helper.getView(R.id.tv_consum_daytime);
 				TextView tv_consum_where = helper.getView(R.id.tv_consum_where);
 				TextView tv_consum_shoukuan = helper.getView(R.id.tv_consum_shoukuan);
-                tableId=item.getTableId();
+				tableId = item.getTableId();
 
 				tv_consum_where.setText(item.getTableName());
 				tv_consum_total.setText(item.getProductCount());
@@ -131,17 +163,17 @@ public class ConsumptionSettlementActivity extends BaseActivity {
 				tv_consum_shoukuan.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						DialogShoukuan dialog=new DialogShoukuan(ConsumptionSettlementActivity.this) {
+						DialogShoukuan dialog = new DialogShoukuan(ConsumptionSettlementActivity.this) {
 							@Override
 							public void onCheckClick() {
 								getOnlinePayController(item.getTableId());
-								Intent intent=new Intent(ConsumptionSettlementActivity.this,QrImgMainActivity.class);
+								Intent intent = new Intent(ConsumptionSettlementActivity.this, QrImgMainActivity.class);
 								startActivity(intent);
 							}
 
 							@Override
 							public void onOkClick() {
-								DialogLine dialogLine=new DialogLine(ConsumptionSettlementActivity.this) {
+								DialogLine dialogLine = new DialogLine(ConsumptionSettlementActivity.this) {
 									@Override
 									public void onCheckClick() {
 
@@ -149,7 +181,7 @@ public class ConsumptionSettlementActivity extends BaseActivity {
 
 									@Override
 									public void onOkClick() {
-                                       dismiss();
+										dismiss();
 									}
 								};
 								dialogLine.setTextTitle("是否选择现金支付");
@@ -203,7 +235,7 @@ public class ConsumptionSettlementActivity extends BaseActivity {
 							} else {
 								actCumptionAbpulltorefreshview.setVisibility(View.GONE);
 								imgCumptionEmpty.setVisibility(View.VISIBLE);
-								imComestoreDetail.setVisibility(View.GONE);
+								//							imComestoreDetail.setVisibility(View.GONE);
 							}
 							AbPullHide.hideRefreshView(isResh, actCumptionAbpulltorefreshview);
 							mAdapter.replaceAll(mDatas);
@@ -235,25 +267,26 @@ public class ConsumptionSettlementActivity extends BaseActivity {
 	 * 4.23	在线支付
 	 */
 
-	private void getOnlinePayController(String tableId){
+	private void getOnlinePayController(String tableId) {
 		String reqTime = AbDateUtil.getDateTimeNow();
 		String uuid = AbStrUtil.getUUID();
 		try {
 			okHttpsImp.getonlinePay(uuid, "app", reqTime, UserId, BusinessId, tableId, new MyResultCallback<String>() {
 						@Override
 						public void onResponseResult(Result result) {
-							String reString=result.getData();
-							if(reString!=null){
+							String reString = result.getData();
+							if (reString != null) {
 								try {
-									JSONObject jsonObject=new JSONObject(reString);
-									String url=jsonObject.getString("payUrl");
-									System.out.println("url246"+url);
+									JSONObject jsonObject = new JSONObject(reString);
+									String url = jsonObject.getString("payUrl");
+									System.out.println("url246" + url);
 								} catch (JSONException e) {
 									e.printStackTrace();
 								}
 
 							}
 						}
+
 						@Override
 						public void onResponseFailed(String msg) {
 
