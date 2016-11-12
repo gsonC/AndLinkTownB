@@ -432,7 +432,35 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
 
             @Override
             public void onResponseResult(Result result) {
+                mService.printCenter();
+                sendMessage("*******老板娘订单(消费单)*******");
+                sendMessage("\n");
+                sendMessage("\n");
+                sendMessage("鹅掌门(地中海店)");
+                sendMessage("\n");
+                sendMessage("\n");
+                sendMessage("消费清单");
+                sendMessage("\n");
+                sendMessage("\n");
 
+                mService.printLeft();
+                sendMessage("桌号：A02           人数：4");
+                sendMessage("\n");
+                sendMessage("\n");
+
+                sendMessage("单号：A022131232322");
+                sendMessage("\n");
+                sendMessage("\n");
+
+                sendMessage("时间：2016-10-13   13:10:52");
+                sendMessage("\n");
+                sendMessage("\n");
+
+                mService.printCenter();
+                sendMessage("-------------------------");
+                sendMessage("\n");
+                sendMessage("\n");
+                sendMessage("\n");
             }
 
             @Override
@@ -518,38 +546,8 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
                 break;
             case R.id.add_table:
                 startActivity(new Intent(this, AddTablesetActivity.class));
-//                mService.printCenter();
-//                sendMessage("*******老板娘订单(消费单)*******");
-//                sendMessage("\n");
-//                sendMessage("\n");
-//                sendMessage("鹅掌门(地中海店)");
-//                sendMessage("\n");
-//                sendMessage("\n");
-//                sendMessage("消费清单");
-//                sendMessage("\n");
-//                sendMessage("\n");
-//
-//                mService.printLeft();
-//                sendMessage("桌号：A02           人数：4");
-//                sendMessage("\n");
-//                sendMessage("\n");
-//
-//                sendMessage("单号：A022131232322");
-//                sendMessage("\n");
-//                sendMessage("\n");
-//
-//                sendMessage("时间：2016-10-13   13:10:52");
-//                sendMessage("\n");
-//                sendMessage("\n");
-//
-//                mService.printCenter();
-//                sendMessage("-------------------------");
-//                sendMessage("\n");
-//                sendMessage("\n");
-//                sendMessage("\n");
                 break;
             case R.id.delete_table:
-//                openBluetooth();
                 if (isRequestingTablesData
                         || isRequestingPrintTicketData
                         || isRequestingBeforFanZhuoCheckData
@@ -643,17 +641,16 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
         return url;
     }
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        switch (requestCode) {
-//            case REQUEST_CODE_ADDTABLE_RESULT:// 添加桌子
-//                if (resultCode == RESULT_OK) {
-//                }
-//                break;
-//
-//        }
-//    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case REQUEST_CODE_ADDTABLE_RESULT:// 添加桌子
+                if (resultCode == RESULT_OK) {
+                }
+                break;
+        }
+    }
 
     @Override
     protected void onResume() {
