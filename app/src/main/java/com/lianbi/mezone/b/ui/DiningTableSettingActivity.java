@@ -1,6 +1,7 @@
 package com.lianbi.mezone.b.ui;
 
 import android.app.Dialog;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -124,7 +125,7 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
 
     private boolean isInBusiness;
 
-    private static final int REQUEST_CODE_ADDTABLE_RESULT = 1010;
+//    private static final int REQUEST_CODE_ADDTABLE_RESULT = 1010;
 
     private static ArrayList<TableSetBean> newOrderdList = new ArrayList<TableSetBean>();//存储新下的订单
 
@@ -141,8 +142,6 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
     private boolean isRequestingFanZhuoData;//是否正在进行翻桌网络请求
 
     private boolean isRequestingTableInfoData;//是否正在进行查询单个桌面信息网络请求（用于点击item后的跳转）
-
-    private boolean isRequestingPrintTicketData;//是否正在进行消费结算、呼叫服务、到店明细总数网络请求
 
     private boolean delSelectButtonIsShowing;//删除选择按钮是否正在显示
 
@@ -379,30 +378,6 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
         }, userShopInfoBean.getBusinessId(), tableId);
     }
 
-    //是否打印小票弹窗
-    private void showPrintTicketDialog(final String tableId) {
-        final Dialog dialog = new Dialog(DiningTableSettingActivity.this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        View view = View.inflate(DiningTableSettingActivity.this, R.layout.print_ticket_dialog_layout, null);
-        view.findViewById(R.id.positive_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                printTicket(tableId);//打印小票
-            }
-        });
-        view.findViewById(R.id.negative_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        dialog.setContentView(view);
-        dialog.setCancelable(false);
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.show();
-    }
-
     private boolean checkCanGoNext() {
         if (isRequestingTablesData) {
             ContentUtils.showMsg(DiningTableSettingActivity.this, "正在请求桌位列表数据，请稍候...");
@@ -413,61 +388,6 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
             return false;
         }
         return true;
-    }
-
-    //打印小票
-    private void printTicket(String tableId) {
-        okHttpsImp.tableInfoPrint(new MyResultCallback<String>() {
-            @Override
-            public void onAfter(@Nullable String s, @Nullable Exception e) {
-                super.onAfter(s, e);
-                isRequestingPrintTicketData = false;
-            }
-
-            @Override
-            public void onBefore(BaseRequest request) {
-                super.onBefore(request);
-                isRequestingPrintTicketData = true;
-            }
-
-            @Override
-            public void onResponseResult(Result result) {
-                mService.printCenter();
-                sendMessage("*******老板娘订单(消费单)*******");
-                sendMessage("\n");
-                sendMessage("\n");
-                sendMessage("鹅掌门(地中海店)");
-                sendMessage("\n");
-                sendMessage("\n");
-                sendMessage("消费清单");
-                sendMessage("\n");
-                sendMessage("\n");
-
-                mService.printLeft();
-                sendMessage("桌号：A02           人数：4");
-                sendMessage("\n");
-                sendMessage("\n");
-
-                sendMessage("单号：A022131232322");
-                sendMessage("\n");
-                sendMessage("\n");
-
-                sendMessage("时间：2016-10-13   13:10:52");
-                sendMessage("\n");
-                sendMessage("\n");
-
-                mService.printCenter();
-                sendMessage("-------------------------");
-                sendMessage("\n");
-                sendMessage("\n");
-                sendMessage("\n");
-            }
-
-            @Override
-            public void onResponseFailed(String msg) {
-
-            }
-        }, userShopInfoBean.getBusinessId(), tableId);
     }
 
     private void initBusinessState() {
@@ -644,12 +564,12 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case REQUEST_CODE_ADDTABLE_RESULT:// 添加桌子
-                if (resultCode == RESULT_OK) {
-                }
-                break;
-        }
+//        switch (requestCode) {
+//            case REQUEST_CODE_ADDTABLE_RESULT:// 添加桌子
+//                if (resultCode == RESULT_OK) {
+//                }
+//                break;
+//        }
     }
 
     @Override
@@ -908,21 +828,23 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
             data.add(position, bean);
             adapter.replaceAll(data);
         } else {
+            Intent intent = new Intent();
+            ComponentName component = null;
             switch (bean.getTableStatus()) {
                 case 0:
-                    Intent i1 = new Intent(DiningTableSettingActivity.this, ScanningQRActivity.class);
-                    i1.putExtra("TABLENAME", bean.getTableName());
-                    i1.putExtra("TABLEID", bean.getTableId());
-                    startActivity(i1);
+                    component = new ComponentName(DiningTableSettingActivity.this, ScanningQRActivity.class);
                     break;
                 case 1:
-                    Intent i2 = new Intent(DiningTableSettingActivity.this, TableHasOrderedActivity.class);
-
+                    component = new ComponentName(DiningTableSettingActivity.this, TableHasOrderedActivity.class);
                     break;
                 case 2:
-                    Intent i3 = new Intent(DiningTableSettingActivity.this, TableHasPaidActivity.class);
+                    component = new ComponentName(DiningTableSettingActivity.this, TableHasPaidActivity.class);
                     break;
             }
+            intent.setComponent(component);
+            intent.putExtra("TABLENAME", bean.getTableName());
+            intent.putExtra("TABLEID", bean.getTableId());
+            startActivity(intent);
         }
     }
 

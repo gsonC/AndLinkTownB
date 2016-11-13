@@ -87,10 +87,8 @@ public class ScanningQRActivity extends BaseActivity {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-
                 }
             }.start();
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -98,15 +96,10 @@ public class ScanningQRActivity extends BaseActivity {
 
     @SuppressLint("HandlerLeak")
     Handler mHandler = new Handler() {
-
         public void handleMessage(Message msg) {
             iv_scanningqr.setImageBitmap((Bitmap) msg.obj);
-
-
         }
-
     };
-
 
     private void listen() {
         tv_keepqr.setOnClickListener(this);
@@ -150,7 +143,6 @@ public class ScanningQRActivity extends BaseActivity {
                         if (saveImageToGallery(this, bitmap)) {
                             DialogCommon dialogCommon = new DialogCommon(
                                     ScanningQRActivity.this) {
-
                                 @Override
                                 public void onCheckClick() {
                                     dismiss();
@@ -164,7 +156,6 @@ public class ScanningQRActivity extends BaseActivity {
                                     startActivity(intent);
                                     dismiss();
                                 }
-
                             };
                             dialogCommon.setTextTitle("保存图片成功");
                             dialogCommon.setTv_dialog_common_ok("立即查看");
@@ -174,20 +165,15 @@ public class ScanningQRActivity extends BaseActivity {
                             ContentUtils.showMsg(this, "保存图片失败");
                         }
                     }
-
                 } catch (Exception e) {
-
                     e.printStackTrace();
-
                 }
                 break;
-
         }
     }
 
     public void getTableDetail(String tableId) {
         okHttpsImp.getTableDetail(new MyResultCallback<String>() {
-
             @Override
             public void onResponseResult(Result result) {
                 String reString = result.getData();
@@ -202,7 +188,6 @@ public class ScanningQRActivity extends BaseActivity {
                         http = jsonObject.getString("httpInfo").toString();
                         imageUrl = http + url;
                         getHttpBitmap(imageUrl, iv_scanningqr);
-
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -216,7 +201,6 @@ public class ScanningQRActivity extends BaseActivity {
                 dialog.dismiss();
             }
         }, userShopInfoBean.getBusinessId(), tableId);
-
     }
 
     public static boolean saveImageToGallery(Context context, Bitmap bmp) {

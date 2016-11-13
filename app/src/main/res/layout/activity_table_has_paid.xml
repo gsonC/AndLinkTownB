@@ -29,7 +29,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="11dp"
-            android:text="未支付"
+            android:text="已支付"
             android:textColor="#3987fd"
             android:textSize="@dimen/h15" />
     </RelativeLayout>

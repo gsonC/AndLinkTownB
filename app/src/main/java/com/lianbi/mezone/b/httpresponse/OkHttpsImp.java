@@ -573,6 +573,7 @@ public enum OkHttpsImp {
 
     /**
      * 取消订单接口
+     * @param isPaidOrder 是否存在已付款订单 0,1
      */
     public void tableInfo(MyResultCallback<String> myResultCallback, String userId, String businessId, String tableId, String isPaidOrder) {
         Map<String, String> params = new HashMap<String, String>();
