@@ -7,8 +7,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.ContentLoadingProgressBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,7 +31,7 @@ import butterknife.OnClick;
 import butterknife.OnItemClick;
 import cn.com.hgh.view.MyListView;
 
-public class BluetoothDeviceListActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
+public class BluetoothDeviceListActivity extends FragmentActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
     @Bind(R.id.back)
     ImageView back;
 
