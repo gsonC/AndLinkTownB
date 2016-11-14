@@ -109,7 +109,10 @@ public class API {
 	 * 预约订单
 	 */
 	public static final String HOST_BOOK_MALL = TOSTORESERVICE+"/wcm/rss/showOrderDetl?";
-
+	/**
+	 * 预约订单
+	 */
+	public static final String FIND_SENCE = TOSTORESERVICE+"/wcm/discoverController/getDiscoverView";
 	/**
 	 * webURL介绍 clerk - 店员管理 finance - 财务管理 financialTransactions - 我要理财 manage
 	 * - 经营收入 material - 我的资料 mySource - 我的货源 news - 我的资料 other - 其他功能 product -

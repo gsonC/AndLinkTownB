@@ -215,6 +215,7 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 			});
 			 */
 			getShopConsumption(true);
+			getShopPushCount();
 		} else {
 			getShopPushCount();
 		}

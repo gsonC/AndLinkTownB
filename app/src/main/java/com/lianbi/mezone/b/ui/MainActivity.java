@@ -463,7 +463,6 @@ public class MainActivity extends BaseActivity implements BDLocation_interface, 
 			 */
 			if (PushManager.getInstance().getClientid(this) != null) {
 				mClientId = PushManager.getInstance().getClientid(this);
-				System.out.println("mClientId---"+mClientId);
 			}
 			String reqTime = AbDateUtil.getDateTimeNow();
 			String uuid = AbStrUtil.getUUID();
@@ -563,11 +562,11 @@ public class MainActivity extends BaseActivity implements BDLocation_interface, 
 			setPageTitleVisibility(View.VISIBLE);
 			//	setPageRightTextVisibility(View.GONE);
 			setPageTitle("发现场景");
-			setPageRightText("明细");
-//			tv_title_left.setText("明细");
+			setPageRightText("发现一个");
+			tvTitleLeft.setText("发现一个");
 			setPageRightTextColor(R.color.commo_text_color);
-//			tv_title_left.setVisibility(View.INVISIBLE);
-			((FinancialOfficeFragment) fm_caiwushi).setUrl("http://www.baidu.com");
+			tvTitleLeft.setVisibility(View.INVISIBLE);
+			((FinancialOfficeFragment) fm_caiwushi).setUrl(API.FIND_SENCE);
 			setPageBackVisibility(View.INVISIBLE);
 			setPageRightImageVisibility();
 			rb_caiwushi.setChecked(true);
@@ -582,8 +581,8 @@ public class MainActivity extends BaseActivity implements BDLocation_interface, 
 			setPageTitle("我的");
 			setPageRightText("退出登录");
 			setPageRightTextColor(R.color.commo_text_color);
-//			tv_title_left.setText("退出登录");
-//			tv_title_left.setVisibility(View.INVISIBLE);
+			tvTitleLeft.setText("退出登录");
+			tvTitleLeft.setVisibility(View.INVISIBLE);
 			setPageBackVisibility(View.INVISIBLE);
 			setPageRightImageVisibility();
 			rb_mine.setChecked(true);

@@ -17,7 +17,9 @@ import com.iflytek.cloud.SpeechSynthesizer;
 import com.iflytek.cloud.SynthesizerListener;
 import com.lianbi.mezone.b.app.Constants;
 import com.lianbi.mezone.b.bean.PushDataBean;
+import com.lianbi.mezone.b.ui.CallServiceActivity;
 import com.lianbi.mezone.b.ui.ComeDetailActivity;
+import com.lianbi.mezone.b.ui.ConsumptionSettlementActivity;
 import com.lianbi.mezone.b.ui.InfoDetailsActivity;
 import com.lianbi.mezone.b.ui.OrderLookUpActivity;
 import com.lianbi.mezone.b.ui.WebActivty;
@@ -79,11 +81,11 @@ public class PushNotifitionManager {
 			resultIntent.putExtra("TIAOZHUANXIAOXI", pushtarget);
 		} else if (3 == tiaozhuan) {
 			pushtarget = "maidan";
-			resultIntent = new Intent(mContext, InfoDetailsActivity.class);
+			resultIntent = new Intent(mContext, ConsumptionSettlementActivity.class);//客户买单
 			resultIntent.putExtra("TIAOZHUANXIAOXI", pushtarget);
 		} else if (4 == tiaozhuan) {
 			pushtarget = "fuwu";
-			resultIntent = new Intent(mContext, InfoDetailsActivity.class);
+			resultIntent = new Intent(mContext, CallServiceActivity.class);//响应呼叫
 			resultIntent.putExtra("TIAOZHUANXIAOXI", pushtarget);
 		} else if (6 == tiaozhuan) {
 			resultIntent = new Intent(mContext, OrderLookUpActivity.class);//跳转订单明细页面

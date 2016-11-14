@@ -1,5 +1,6 @@
 package com.lianbi.mezone.b.ui;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -35,12 +36,13 @@ import cn.com.hgh.view.DiaqlogNow;
 /*
  * @创建者     master
  * @创建时间   2016/11/8 9:16
- * @描述       ${TODO}
+ * @描述       财务室
  *
  * @更新者     $Author$ 
  * @更新时间   $Date$
- * @更新描述   ${TODO}
+ * @更新描述
  */
+@SuppressLint({"ResourceAsColor", "HandlerLeak"})
 public class FinancialActivity extends BaseActivity {
 
 	private ImageView iv_recharge, iv_withdrawalsdetails, iv_withdrawals,
@@ -60,7 +62,7 @@ public class FinancialActivity extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.act_financiaactivity, NOTYPE);
+		setContentView(R.layout.act_financiaactivity, HAVETYPE);
 		initView();
 		getFinancialOfficeClick();
 		setLisenter();
@@ -75,7 +77,8 @@ public class FinancialActivity extends BaseActivity {
 		String reqTime = AbDateUtil.getDateTimeNow();
 		String uuid = AbStrUtil.getUUID();
 		try {
-			okHttpsImp.getFinancialOfficeAmount(OkHttpsImp.md5_key, uuid, "app", reqTime, userShopInfoBean.getUserId(), userShopInfoBean.getBusinessId(), new MyResultCallback<String>() {
+			okHttpsImp.getFinancialOfficeAmount(OkHttpsImp.md5_key, uuid, "app", reqTime, userShopInfoBean.getUserId(),
+					userShopInfoBean.getBusinessId(), new MyResultCallback<String>() {
 				@Override
 				public void onResponseResult(Result result) {
 					String reString = result.getData();
@@ -175,9 +178,17 @@ public class FinancialActivity extends BaseActivity {
 
 	}
 
+	@Override
+	protected void onTitleRightClickTv() {
+		Intent intent = new Intent(this, IncomeActivity.class);
+		startActivity(intent);
+	}
+
 	private void initView() {
 
 		setPageTitle("财务室");
+		setPageRightText("明细");
+		setPageRightTextColor(R.color.commo_text_color);
 		n_safety = (LinearLayout) findViewById(R.id.n_safety);
 		lin_discount = (LinearLayout) findViewById(R.id.lin_discount);
 		iv_recharge = (ImageView) findViewById(R.id.iv_recharge);// 充值
