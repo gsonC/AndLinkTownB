@@ -1089,16 +1089,16 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 				mActivity.changeFuncPage(POSITION);
 				break;
 			case R.id.img_shouyemagapp_opeservice://运营服务
-				ContentUtils.showMsg(mActivity, "运营服务");
+	//			ContentUtils.showMsg(mActivity, "运营服务");
 				break;
 			case R.id.img_shouyemagapp_finservice://金融服务
-				ContentUtils.showMsg(mActivity, "金融服务");
+	//			ContentUtils.showMsg(mActivity, "金融服务");
 				break;
 			case R.id.img_shouyemagapp_richbook://支付宝典
-				ContentUtils.showMsg(mActivity, "支付宝典");
+	//			ContentUtils.showMsg(mActivity, "支付宝典");
 				break;
 			case R.id.img_shouyemagapp_busdata://商圈大数据
-				ContentUtils.showMsg(mActivity, "商圈大数据");
+	//			ContentUtils.showMsg(mActivity, "商圈大数据");
 				break;
 			case R.id.img_shouyemagapp_appstore://跳转铃铛
 

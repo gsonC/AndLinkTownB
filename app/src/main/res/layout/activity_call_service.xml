@@ -3,80 +3,82 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/colores_news_14"
+    android:orientation="vertical"
 
     >
 
-  <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:orientation="horizontal"
-      android:layout_marginTop="10dp"
-      >
-      <FrameLayout
-          android:id="@+id/all_container"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_weight="1"
-          android:background="@color/color_3987fd">
-          
-          <TextView
-              android:id="@+id/tv_all"
-              android:layout_width="match_parent"
-              android:layout_height="45dp"
-              android:layout_marginBottom="1dp"
-              android:background="@color/white"
-              android:gravity="center"
-              android:text="全部"
-              android:textColor="@color/color_3987fd"
-              android:textSize="15sp"/>
-          
-      </FrameLayout>
-      <FrameLayout
-          android:id="@+id/valid_container"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_weight="1">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
 
-          <TextView
-              android:id="@+id/tv_vaild"
-              android:layout_width="match_parent"
-              android:layout_height="45dp"
-              android:layout_marginBottom="1dp"
-              android:background="@color/white"
-              android:gravity="center"
-              android:text="已处理"
-              android:textColor="@color/color_3987fd"
-              android:textSize="15sp"/>
+        <FrameLayout
+            android:id="@+id/all_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/color_3987fd">
 
-      </FrameLayout>
-      <FrameLayout
-          android:id="@+id/invalid_container"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_weight="1">
+            <TextView
+                android:id="@+id/tv_all"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginBottom="1dp"
+                android:background="@color/white"
+                android:gravity="center"
+                android:text="全部"
+                android:textColor="@color/color_3987fd"
+                android:textSize="15sp"/>
 
-          <TextView
-              android:id="@+id/tv_invalid"
-              android:layout_width="match_parent"
-              android:layout_height="45dp"
-              android:layout_marginBottom="1dp"
-              android:background="@color/white"
-              android:gravity="center"
-              android:text="未处理"
-              android:textColor="@color/color_3c78d8"
-              android:textSize="15sp"/>
+        </FrameLayout>
 
-      </FrameLayout>
+        <FrameLayout
+            android:id="@+id/valid_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/tv_vaild"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginBottom="1dp"
+                android:background="@color/white"
+                android:gravity="center"
+                android:text="已处理"
+                android:textColor="@color/color_3987fd"
+                android:textSize="15sp"/>
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/invalid_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/tv_invalid"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginBottom="1dp"
+                android:background="@color/white"
+                android:gravity="center"
+                android:text="未处理"
+                android:textColor="@color/color_3c78d8"
+                android:textSize="15sp"/>
+
+        </FrameLayout>
 
 
-  </LinearLayout>
+    </LinearLayout>
+
     <cn.com.hgh.view.AbPullToRefreshView
         android:id="@+id/pulltorefresh_calllist"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginBottom="20dp"
         android:layout_marginTop="10dp"
         android:layout_weight="1"
         android:orientation="vertical">
@@ -86,7 +88,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerInside"
-            android:src="@mipmap/iv_empty" />
+            android:src="@mipmap/iv_empty"/>
 
         <cn.com.hgh.view.SlideListView2
             android:id="@+id/fm_call_listView"

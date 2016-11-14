@@ -1,6 +1,7 @@
 package com.lianbi.mezone.b.ui;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -94,6 +95,7 @@ public class CallServiceActivity extends BaseActivity implements AbPullToRefresh
 	private void initView() {
 		setPageTitle("呼叫服务");
 		setPageRightText("服务设置");
+		setPageRightTextColor(Color.parseColor("#3987fd"));
 		currShowingIs = ALL_IS_SHOWING;
 		pulltorefreshCalllist.setOnFooterLoadListener(this);
 		pulltorefreshCalllist.setOnHeaderRefreshListener(this);
@@ -214,7 +216,7 @@ public class CallServiceActivity extends BaseActivity implements AbPullToRefresh
 		String reqTime = AbDateUtil.getDateTimeNow();
 		String uuid = AbStrUtil.getUUID();
 		try {
-			okHttpsImp.getPushMessages(uuid, "app", reqTime, OkHttpsImp.md5_key, userShopInfoBean.getBusinessId(), "", new MyResultCallback<String>() {
+			okHttpsImp.getPushMessages(uuid, "app", reqTime, OkHttpsImp.md5_key, "BD2016072816282300000309", "", new MyResultCallback<String>() {
 				@Override
 				public void onResponseResult(Result result) {
 					String reString = result.getData();

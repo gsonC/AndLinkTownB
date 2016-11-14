@@ -1,99 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-    android:paddingRight="-90dp">
+              android:orientation="vertical"
+              android:paddingRight="-90dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="@color/white"
-    >
 
-        <LinearLayout
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="@color/white"
-            android:layout_marginTop="15dp"
-            android:layout_marginLeft="11dp"
-            >
-   <TextView
-       android:id="@+id/tv_callset_table"
-       android:layout_weight="1"
-       android:layout_width="0dp"
-       android:layout_height="wrap_content"
-       android:text="2号桌"
-       android:textSize="14.5dp"
-       android:textColor="@color/color_333333"/>
-
-            <TextView
-                android:id="@+id/tv_callset_content"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="添加餐巾纸"
-                android:textSize="14.5dp"
-                android:textColor="@color/color_333333"/>
-            <TextView
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="90dp"
-               />
-        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:background="@color/white"
-            android:layout_marginTop="15dp"
-            android:layout_marginLeft="11dp"
-            android:layout_weight="1"
+            android:orientation="vertical"
             >
-            <TextView
-                android:id="@+id/tv_callset_time"
-                android:layout_weight="1"
-                android:layout_width="0dp"
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="呼叫时间"
-                android:textSize="14.5dp"
-                android:textColor="@color/color_333333"
-                android:layout_marginBottom="15dp"/>
-
-            <TextView
-                android:id="@+id/tv_callset_yartime"
+                android:layout_marginLeft="11dp"
+                android:layout_marginTop="15dp"
                 android:layout_weight="1"
-                android:layout_width="0dp"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                >
+
+                <TextView
+                    android:id="@+id/tv_callset_table"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="2号桌"
+                    android:textColor="@color/color_333333"
+                    android:textSize="14.5dp"/>
+
+                <TextView
+                    android:id="@+id/tv_callset_content"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="添加餐巾纸"
+                    android:textColor="@color/color_333333"
+                    android:textSize="14.5dp"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="90dp"
+                    android:layout_weight="1"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="2016-08-05 16:30"
-                android:textSize="14.5dp"
-                android:textColor="@color/color_333333"/>
-
-
-
-
-           <TextView
-                android:id="@+id/tv_callset_deal"
+                android:layout_marginLeft="11dp"
+                android:layout_marginTop="15dp"
                 android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="26dp"
-                android:text="处理"
-                android:gravity="center"
-                android:background="@drawable/shape_price"
-                android:padding="4dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="90dp"/>
+                android:background="@color/white"
+                android:orientation="horizontal"
+                >
+
+                <TextView
+                    android:id="@+id/tv_callset_time"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:layout_weight="1"
+                    android:text="呼叫时间"
+                    android:textColor="@color/color_333333"
+                    android:textSize="14.5dp"/>
+
+                <TextView
+                    android:id="@+id/tv_callset_yartime"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="2016-08-05 16:30"
+                    android:textColor="@color/color_333333"
+                    android:textSize="14.5dp"/>
 
 
+                <TextView
+                    android:id="@+id/tv_callset_deal"
+                    android:layout_width="0dp"
+                    android:layout_height="26dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="90dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_price"
+                    android:gravity="center"
+                    android:padding="4dp"
+                    android:text="处理"/>
+
+
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+
         <RelativeLayout
             android:layout_width="80dp"
             android:layout_height="80dp"
