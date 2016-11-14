@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -213,7 +212,7 @@ public class LoginActivity extends BaseActivity {
 									intent.putExtra("fromwhich",FROMLOGINPAGE);
 									startActivity(intent);
 									dismiss();
-									finish();
+//									finish();
 
 								}
 								@Override

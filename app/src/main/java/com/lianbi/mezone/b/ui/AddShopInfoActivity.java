@@ -2,6 +2,7 @@ package com.lianbi.mezone.b.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
@@ -54,12 +55,15 @@ public class AddShopInfoActivity extends BaseActivity {
         setPageRightText("提交");
         fromwhich=getIntent().getIntExtra("fromwhich",0);
         businessid=getIntent().getStringExtra("businessid");
-        BusinessId=businessid;
+        if(!TextUtils.isEmpty(businessid)) {
+            BusinessId = businessid;
+        }
     }
     /**
      * 添加监听
      */
     private void setLisenter() {
+        tvTitleRight.setOnClickListener(this);
         tvAddShopInfoIndustryclass.setOnClickListener(this);
         tvAddShopInfoProvincialcity.setOnClickListener(this);
     }
@@ -117,8 +121,16 @@ public class AddShopInfoActivity extends BaseActivity {
     public void  submitInfo(){
 
         try {
-            okHttpsImp.updateBusinessComplement(uuid,"app",reqTime,BusinessId,
-                    parant_id,provinceId,cityCode,areaCode, new MyResultCallback<String>() {
+            okHttpsImp.updateBusinessComplement(
+                    uuid,
+                    "app",
+                    reqTime,
+                    BusinessId,
+                    parant_id,
+                    provinceId,
+                    cityCode,
+                    areaCode,
+                    new MyResultCallback<String>() {
 
                         @Override
                         public void onResponseResult(Result result) {
@@ -152,7 +164,6 @@ public class AddShopInfoActivity extends BaseActivity {
                         }
                     });
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
