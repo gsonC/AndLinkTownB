@@ -123,14 +123,14 @@ public class BluetoothBaseActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (!mBluetoothAdapter.isEnabled()) {
+       /* if (!mBluetoothAdapter.isEnabled()) {
             //打开蓝牙
             Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
         }
         if (mService == null) {
             mService = new BluetoothService(this, mHandler);
-        }
+        }*/
     }
 
     @Override

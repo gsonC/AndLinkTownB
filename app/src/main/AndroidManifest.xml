@@ -154,6 +154,8 @@
         <activity android:name="com.lianbi.mezone.b.ui.MyMemberManagementActivity" />
         <activity android:name="com.lianbi.mezone.b.ui.AddNewMemberActivity" />
         <activity android:name="com.lianbi.mezone.b.ui.MemberExplainActivity" />
+        <activity android:name="com.lianbi.mezone.b.ui.QrImgMainActivity" />
+
         <activity
             android:name="com.lianbi.mezone.b.ui.AddShopActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"

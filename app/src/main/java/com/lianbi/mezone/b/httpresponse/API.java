@@ -78,9 +78,21 @@ public class API {
 	 */
 	public static final String ONLINEPAY = TOSTORESERVICE + "/wcm/store/onlinePay.do";
 	/**
+	 *桌位详情接口
+	 */
+	public static final String TABLETSSINFO = TOSTORESERVICE + "/wcm/ tssTable/tableInfo";
+	/**
+	 *4.23	现金付款接口
+	 */
+	public static final String EDITORDER = TOSTORESERVICE + "/wcm/tssTable/editOrderStatus";
+	/**
+	 * 4.13	查询推送消息
+	 */
+	public static final String PUSHMESSAGE =TOSTORESERVICE+"/wcm/serviceMall/storeId/getPushMessages.do";
+	/**
 	 *到店明细接口
 	 */
-	public static final String OREDR = TOSTORESERVICE + "/wcm/tssOrder/order.do";
+	public static final String OREDR = TOSTORESERVICE + "/wcm/tssOrder/order";
 	/**
 	 * 产品管理
 	 */
@@ -653,10 +665,7 @@ public class API {
 	 * 获取呼叫列表
 	 */
 	public static final String CALLLIST = "getTssCallTypeList.do";
-	/**
-	 * 4.13	查询推送消息
-	 */
-	public static final String PUSHMESSAGE = "getPushMessages.do";
+
 	/**
 	 * 4.20	查询店铺的待支付信息
 	 */

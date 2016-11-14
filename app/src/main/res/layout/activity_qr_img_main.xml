@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="300dp"
-    android:layout_height="300dp"
-   android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
     >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
     <TextView
         android:id="@+id/tv_customtable"
         android:layout_width="wrap_content"
@@ -14,7 +20,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="168dp"
         />
-    
+
     <ImageView
         android:id="@+id/ima_Qrimg"
         android:layout_width="200dp"
@@ -31,5 +37,5 @@
         android:text="客人扫码支付"
         android:layout_gravity="center"
         />
-    
+    </LinearLayout>
 </LinearLayout>

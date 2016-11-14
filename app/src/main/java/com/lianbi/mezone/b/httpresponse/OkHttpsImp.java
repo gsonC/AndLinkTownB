@@ -1926,20 +1926,58 @@ public enum OkHttpsImp {
                              String tableId,
                              MyResultCallback<String> myResultCallback) throws Exception {
         Map<String, String> params = new HashMap<String, String>();
-        params.put("userId", userId);
-        params.put("businessId", businessId);
-        params.put("tableId", tableId);
         params.put("reqTime", reqTime);
         params.put("serNum", serNum);
         params.put("source", source);
+
+        params.put("userId", userId);
+        params.put("businessId", businessId);
+        params.put("tableId", tableId);
         String sign = getSign(md5_key, params);
         params.put("sign", sign);
         String url = API.ONLINEPAY;
-        getProgressResponse(myResultCallback, params, url);
+        postProgressResponse(myResultCallback, params, url);
     }
 
-
-
+    /**
+     * 现金付款接口
+     */
+    public void geteditOrderStatus(String serNum, String source, String reqTime,
+                             String userId, String businessId,
+                             String tableId,String sourceType,
+                             MyResultCallback<String> myResultCallback) throws Exception {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("reqTime", reqTime);
+        params.put("serNum", serNum);
+        params.put("source", source);
+        params.put("userId", userId);
+        params.put("businessId", businessId);
+        params.put("tableId", tableId);
+        params.put("sourceType",sourceType);
+        String sign = getSign(md5_key, params);
+        params.put("sign", sign);
+        String url = API.EDITORDER;
+        postProgressResponse(myResultCallback, params, url);
+    }
+    /**
+     * 4.25	桌位详情接口
+     */
+    public void gettsstableInfo(String serNum, String source, String reqTime,
+                                    String businessId,
+                                   String tableId,String sourceType,
+                                   MyResultCallback<String> myResultCallback) throws Exception {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("reqTime", reqTime);
+        params.put("serNum", serNum);
+        params.put("source", source);
+        params.put("businessId", businessId);
+        params.put("tableId", tableId);
+        params.put("sourceType",sourceType);
+        String sign = getSign(md5_key, params);
+        params.put("sign", sign);
+        String url = API.TABLETSSINFO;
+        postProgressResponse(myResultCallback, params, url);
+    }
     /**
      * 获取经营总收入
      */
@@ -2390,30 +2428,35 @@ public enum OkHttpsImp {
      * 到店明细接口
      */
     public void getOrderInfo(String serNum,
-                             String source, String reqTime,
-                             String userId, String businessId,
-                             String startTime, String endTime,
-                             String sourceType,/* String orderStatus,
-                             String dateStatus,*/ String curPage,
+                             String source,
+                             String reqTime,
+                             String userId,
+                             String businessId,
+                             String startTime,
+                             String endTime,
+                             String sourceType,
+                             String orderStatus,
+                             String dateStatus,
+                             String curPage,
                              String pageSize,
                              MyResultCallback<String> myResultCallback) throws Exception {
         Map<String, String> params = new HashMap<String, String>();
-        params.put("userId", userId);
-        params.put("pageSize", pageSize);
-        params.put("businessId", businessId);
-     /*   params.put("dateStatus", dateStatus);
-        params.put("orderStatus", orderStatus);*/
-        params.put("curPage", curPage);
-        params.put("startTime", startTime);
-        params.put("endTime", endTime);
-        params.put("reqTime", reqTime);
         params.put("serNum", serNum);
         params.put("source", source);
+        params.put("reqTime", reqTime);
+        params.put("userId", userId);
+        params.put("businessId", businessId);
+        params.put("startTime", startTime);
+        params.put("endTime", endTime);
         params.put("sourceType", sourceType);
+        params.put("orderStatus", orderStatus);
+        params.put("dateStatus", dateStatus);
+        params.put("curPage", curPage);
+        params.put("pageSize", pageSize);
         String sign = getSign(md5_key, params);
         params.put("sign", sign);
         String url = API.OREDR;
-        getProgressResponse(myResultCallback, params, url);
+        postProgressResponse(myResultCallback, params, url);
     }
 
 
@@ -2774,7 +2817,7 @@ public enum OkHttpsImp {
         params.put("isRead", isRead);
         String sign = getSign(md5_key, params);
         params.put("sign", sign);
-        String url = getHttpUrl(storeId, API.PUSHMESSAGE);
+        String url = API.PUSHMESSAGE;
         postProgressResponse(myResultCallback, params, url);
 
     }

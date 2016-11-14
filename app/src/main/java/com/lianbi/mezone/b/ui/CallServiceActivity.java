@@ -214,7 +214,7 @@ public class CallServiceActivity extends BaseActivity implements AbPullToRefresh
 		String reqTime = AbDateUtil.getDateTimeNow();
 		String uuid = AbStrUtil.getUUID();
 		try {
-			okHttpsImp.getPushMessages(uuid, "app", reqTime, OkHttpsImp.md5_key, "BD2016072816282300000309", "", new MyResultCallback<String>() {
+			okHttpsImp.getPushMessages(uuid, "app", reqTime, OkHttpsImp.md5_key,BusinessId, "", new MyResultCallback<String>() {
 				@Override
 				public void onResponseResult(Result result) {
 					String reString = result.getData();

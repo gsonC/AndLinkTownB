@@ -517,7 +517,7 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
             case R.id.switch_state:
                 changeBusinessStatus();
                 break;
-            case R.id.pay://客户买单
+            case R.id.pay://消费结算
                 startActivity(new Intent(DiningTableSettingActivity.this, ConsumptionSettlementActivity.class));
                 break;
             case R.id.call://呼叫服务
