@@ -377,9 +377,10 @@ public class MainActivity extends BaseActivity implements BDLocation_interface, 
 			case POSITION2:
 				re = JumpIntent.jumpLogin_addShop(isLogin, API.SHOPS, this);
 				if (re) {
-					Intent intent = new Intent(this, IncomeActivity.class);
-					startActivity(intent);
-					break;
+					//Intent intent = new Intent(this, IncomeActivity.class);
+					//startActivity(intent);
+					//break;
+					ContentUtils.showMsg(MainActivity.this,"敬请期待");
 				}
 			case POSITION3:
 				if (ContentUtils.getLoginStatus(this)) {

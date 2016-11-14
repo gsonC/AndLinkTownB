@@ -59,7 +59,7 @@ public class FinancialOfficeFragment extends Fragment {
 							 @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		super.onCreateView(inflater, container, savedInstanceState);
 		mActivity = (MainActivity) getActivity();
-		View view = inflater.inflate(R.layout.act_webactivty, null);
+		View view = inflater.inflate(R.layout.fm_findscene, null);
 		initView(view);
 		return view;
 	}
@@ -76,7 +76,7 @@ public class FinancialOfficeFragment extends Fragment {
 	private void initView(View view) {
 
 		dialog = new HttpDialog(mActivity);
-		web_webactivty = (WebView) view.findViewById(R.id.web_webactivty);
+		web_webactivty = (WebView) view.findViewById(R.id.web_fm_findscene);
 		WebViewInit.WebSettingInit(web_webactivty, mActivity);
 		web_webactivty.addJavascriptInterface(new MyJs(), "LinktownB");
 		web_webactivty.setWebViewClient(new WebViewClient() {
@@ -125,6 +125,7 @@ public class FinancialOfficeFragment extends Fragment {
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
+		web_webactivty.setVisibility(View.GONE);
 		web_webactivty.loadUrl("javascript:clearCache();");
 		web_webactivty.removeAllViews();
 		web_webactivty.destroy();
