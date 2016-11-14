@@ -12,11 +12,13 @@ import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.LinearLayout;
 
 import com.lianbi.mezone.b.httpresponse.API;
 import com.lianbi.mezone.b.ui.MainActivity;
 import com.xizhi.mezone.b.R;
 
+import cn.com.hgh.utils.ScreenUtils;
 import cn.com.hgh.utils.WebViewInit;
 import cn.com.hgh.view.HttpDialog;
 
@@ -53,6 +55,8 @@ public class FinancialOfficeFragment extends Fragment {
 	boolean needLogin = false;
 	private final static int REQUEST_LOGIN = 4563;
 	private boolean isNeedTitle = false;
+	private int mHeight;
+
 
 	@Override
 	public View onCreateView(LayoutInflater inflater,
@@ -64,7 +68,7 @@ public class FinancialOfficeFragment extends Fragment {
 		return view;
 	}
 
-	public void setUrl(String url){
+	public void setUrl(String url) {
 		this.url = url;
 		if (TextUtils.isEmpty(url)) {
 			web_webactivty.loadUrl(API.MYCOMPANEY);
@@ -73,12 +77,26 @@ public class FinancialOfficeFragment extends Fragment {
 		}
 	}
 
+	public void setHeight(int height) {
+		this.mHeight = height;
+	}
+
 	private void initView(View view) {
 
 		dialog = new HttpDialog(mActivity);
 		web_webactivty = (WebView) view.findViewById(R.id.web_fm_findscene);
 		WebViewInit.WebSettingInit(web_webactivty, mActivity);
 		web_webactivty.addJavascriptInterface(new MyJs(), "LinktownB");
+
+
+		LinearLayout llt = (LinearLayout) view.findViewById(R.id.llt_asdfe);
+
+		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+				LinearLayout.LayoutParams.MATCH_PARENT,
+				ScreenUtils.getScreenHeight(mActivity) - (int) (250 * ScreenUtils.getBaseSizeOn720(mActivity)));
+		llt.setLayoutParams(params);
+
+
 		web_webactivty.setWebViewClient(new WebViewClient() {
 			@Override
 			public void onPageFinished(WebView view, String url) {
@@ -112,6 +130,7 @@ public class FinancialOfficeFragment extends Fragment {
 				dialog.dismiss();
 			}
 		});
+
 
 	}
 

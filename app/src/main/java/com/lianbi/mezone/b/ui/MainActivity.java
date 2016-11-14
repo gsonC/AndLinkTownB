@@ -381,6 +381,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface, 
 					//startActivity(intent);
 					//break;
 					ContentUtils.showMsg(MainActivity.this,"敬请期待");
+					break;
 				}
 			case POSITION3:
 				if (ContentUtils.getLoginStatus(this)) {
@@ -664,9 +665,9 @@ public class MainActivity extends BaseActivity implements BDLocation_interface, 
 		//mIntent.setAction("com.lianbi.mezone.b.MSG_ACTION");
 		//Intent eintent = new Intent(createExplicitFromImplicitIntent(this,mIntent));
 		//startService(eintent);
-	}
 
-/*
+	}
+	/*
 	*/
 /**
 	 * 下载广播回掉
