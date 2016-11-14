@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
@@ -74,6 +73,7 @@ import cn.com.hgh.playview.BaseSliderView;
 import cn.com.hgh.playview.BaseSliderView.OnSliderClickListener;
 import cn.com.hgh.playview.SliderLayout;
 import cn.com.hgh.playview.imp.TextSliderView;
+import cn.com.hgh.utils.AbDateUtil;
 import cn.com.hgh.utils.AbStrUtil;
 import cn.com.hgh.utils.AbViewUtil;
 import cn.com.hgh.utils.ContentUtils;
@@ -300,7 +300,7 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 	private void getShopConsumption(final boolean isRefresh) {
 		try {
 			mOkHttpsImp.getShopConsumption("BD2016053018405200000042"
-					, "VI082016110712224600004578", new MyResultCallback<String>() {
+					, "VI082016110712224600004578", AbDateUtil.getCurrentDate(AbDateUtil.dateFormatYMD),new MyResultCallback<String>() {
 						@Override
 						public void onResponseResult(Result result) {
 							String reString = result.getData();
@@ -343,20 +343,20 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 
 			if (isRefresh) {
 
-				rope = YoYo.with(Techniques.FadeOut).duration(1000)
-						.playOn(mLlt_shouyemanagement_comsum);
+				//rope = YoYo.with(Techniques.SlideOutLeft).duration(1000)
+				//		.playOn(mLlt_shouyemanagement_comsum);
 				//rope = YoYo.with(Techniques.SlideInUp).duration(1000)
 				//		.playOn(mLlt_shouyemanagement_comsum);
 
-				new Handler().postDelayed(new Runnable() {
-					@Override
-					public void run() {
+				//new Handler().postDelayed(new Runnable() {
+				//	@Override
+				//	public void run() {
 						//rope = YoYo.with(Techniques.ZoomInRight).duration(1000)
 						//		.playOn(mLlt_shouyemanagement_comsum);
 						rope = YoYo.with(Techniques.SlideInUp).duration(1000)
 								.playOn(mLlt_shouyemanagement_comsum);
-					}
-				}, 1000);
+				//	}
+				//}, 1000);
 			}
 
 			int number = shopConsumptionList.size();
@@ -472,9 +472,10 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 			if (count > 99) {
 				textView.setVisibility(View.VISIBLE);
 				textView.setText("99+");
+			}else{
+				textView.setVisibility(View.VISIBLE);
+				textView.setText(count + "");
 			}
-			textView.setVisibility(View.VISIBLE);
-			textView.setText(count + "");
 		}
 	}
 

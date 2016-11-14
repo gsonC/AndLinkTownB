@@ -48,6 +48,8 @@ public class PushDemoReceiver extends BroadcastReceiver {
 			if (payload != null) {
 				String data = new String(payload);
 
+				System.out.println("推送消息----"+data);
+
 				PushDataBean pushdata = JSON.parseObject(data,PushDataBean.class);
 				
 				// json解析

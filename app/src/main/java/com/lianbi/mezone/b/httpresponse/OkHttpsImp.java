@@ -3252,11 +3252,12 @@ public enum OkHttpsImp {
     /**
      * 首页实时消费记录
      */
-    public void getShopConsumption(String businessId, String userId, MyResultCallback<String> myResultCallback) throws Exception {
+    public void getShopConsumption(String businessId, String userId, String endTime,MyResultCallback<String> myResultCallback) throws Exception {
         Map<String, String> params = new HashMap<String, String>();
         params.put("businessId", businessId);
         params.put("userId", userId);
         params.put("sourceType", "tss");
+        params.put("endTime", endTime);
         params.put("curPage", "0");
         params.put("pageSize", "8");
         String url = API.TOSTORESERVICE + "/wcm" + API.SHOUYE_SHOPVIP_CONSUMPTION;
