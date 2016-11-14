@@ -440,6 +440,9 @@
         <activity android:name="com.lianbi.mezone.b.ui.LeaguesYellListActivity" />
         <activity android:name="com.lianbi.mezone.b.ui.LeaguesYellDetailsActivity" />
         <activity android:name="com.lianbi.mezone.b.ui.BluetoothDeviceListActivity"/>
+        <activity android:name="com.lianbi.mezone.b.ui.AddShopInfoActivity"/>
+
+
     </application>
 
 </manifest>
