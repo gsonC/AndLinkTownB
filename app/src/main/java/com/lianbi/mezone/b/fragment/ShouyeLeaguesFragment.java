@@ -5,7 +5,7 @@ package com.lianbi.mezone.b.fragment;
  * @创建时间   2016/10/19 18:18
  * @描述       首页-商圈联盟
  *
- * @更新者     $Author$ 
+ * @更新者     $Author$
  * @更新时间   $Date$
  * @更新描述
  */
@@ -43,8 +43,7 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
-import com.lianbi.mezone.b.bean.LeaguesAddCountlist;
-import com.lianbi.mezone.b.bean.LeaguesAllCountList;
+import com.lianbi.mezone.b.bean.LeaguesCountList;
 import com.lianbi.mezone.b.bean.LeaguesYellBean;
 import com.lianbi.mezone.b.bean.ShouYeBannerBean;
 import com.lianbi.mezone.b.httpresponse.API;
@@ -59,8 +58,6 @@ import com.xizhi.mezone.b.R;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -159,10 +156,8 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
     ListenedScrollView svShouyeLeagues;
     private MainActivity mActivity;
     private OkHttpsImp mOkHttpsImp;
-    private ArrayList<LeaguesAllCountList> mAllCountList =
-            new ArrayList<LeaguesAllCountList>();
-    private ArrayList<LeaguesAddCountlist> mAddCountList =
-            new ArrayList<LeaguesAddCountlist>();
+    private ArrayList<LeaguesCountList> mLeaguesCountList =
+            new ArrayList<LeaguesCountList>();
 
     private ArrayList<LeaguesYellBean> mData = new ArrayList<LeaguesYellBean>();
     private ArrayList<LeaguesYellBean> mDataZxy = new ArrayList<LeaguesYellBean>();
@@ -333,33 +328,17 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
                             Log.i("tag", "查询商圈统计返回 317----->" + reString);
                             try {
                                 JSONObject jsonObject = new JSONObject(reString);
-                                String str_allCountList = jsonObject.getString("allCountList");
-                                String str_addCountList = jsonObject.getString("addCountList");
-//                              String strcutCount = jsonObject.getString("cutCountList");
-                                /**
-                                 * 总数量
-                                 */
-                                if (!TextUtils.isEmpty(str_allCountList)) {
-                                    mAllCountList.clear();
-                                    ArrayList<LeaguesAllCountList> allCountList =
-                                            (ArrayList<LeaguesAllCountList>) JSON
-                                            .parseArray(str_allCountList,
-                                                    LeaguesAllCountList.class);
-                                    startSort(false);
-                                    mAllCountList.addAll(allCountList);
-
+                                String areaName= jsonObject.getString("areaName");
+                                String businessCountList = jsonObject.getString("businessCountList");
+                                tvLeavemessageDyn.setText(areaName);
+                                if (!TextUtils.isEmpty(businessCountList)) {
+                                    mLeaguesCountList.clear();
+                                    ArrayList<LeaguesCountList> allCountList =
+                                            (ArrayList<LeaguesCountList>) JSON
+                                                    .parseArray(businessCountList,
+                                                            LeaguesCountList.class);
+                                    mLeaguesCountList.addAll(allCountList);
                                     setPieNetData();
-                                }
-                                /**
-                                 * 新增数量
-                                 */
-                                if (!TextUtils.isEmpty(str_addCountList)) {
-                                    mAddCountList.clear();
-                                    ArrayList<LeaguesAddCountlist> addCountList =
-                                            (ArrayList<LeaguesAddCountlist>) JSON
-                                            .parseArray(str_addCountList,
-                                                    LeaguesAddCountlist.class);
-                                    mAddCountList.addAll(addCountList);
                                     setAnimationData();
                                 }
                             } catch (Exception e) {
@@ -378,90 +357,55 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
         }
     }
     private void  setAnimationData(){
-        int allcount = 0;
-        String first = "0";
-        String two = "0";
-        String three = "0";
         try {
-            for(LeaguesAddCountlist  leaguesaddcountlist:mAddCountList){
-                if(leaguesaddcountlist.getBusinessType().equals(mAllCountList.get(0).getBusinessType())
-                        ){
-                    tvShouyeLeaguesRestaurant.setText(leaguesaddcountlist.getBusinessType());
-                    tvShouyeLeaguesResnum.setText("+" + leaguesaddcountlist.getAddCount());
-                    first = String.valueOf(leaguesaddcountlist.getAddCount());
-                }else
-                if(leaguesaddcountlist.getBusinessType().equals(mAllCountList.get(1).getBusinessType())
-                        ){
-                    tvShouyeLeaguesShopping.setText(leaguesaddcountlist.getBusinessType());
-                    tvShouyeLeaguesShopnum.setText("+" + leaguesaddcountlist.getAddCount());
-                    two = String.valueOf(leaguesaddcountlist.getAddCount());
-                }else
-                if(leaguesaddcountlist.getBusinessType().equals(mAllCountList.get(2).getBusinessType())
-                        ){
-                    tvShouyeLeaguesStay.setText(leaguesaddcountlist.getBusinessType());
-                    tvShouyeLeaguesStaynum.setText("+" + leaguesaddcountlist.getAddCount());
-                    three = String.valueOf(leaguesaddcountlist.getAddCount());
-                }
+            if (mLeaguesCountList.get(0) != null) {
+                tvShouyeLeaguesRestaurant.setText(mLeaguesCountList.get(0).getBusinessType() + "");
+                tvShouyeLeaguesResnum.setText("+" + mLeaguesCountList.get(0).getAddCount());
             }
-
-            if (!tvShouyeLeaguesRestaurant.getText().equals(mAllCountList.get(0).getBusinessType())) {
-                tvShouyeLeaguesRestaurant.setText(mAllCountList.get(0).getBusinessType());
-                tvShouyeLeaguesResnum.setText("+" + 0);
-                first = String.valueOf(0);
+            if (mLeaguesCountList.get(1) != null) {
+                tvShouyeLeaguesShopping.setText(mLeaguesCountList.get(1).getBusinessType() + "");
+                tvShouyeLeaguesShopnum.setText("+" + mLeaguesCountList.get(1).getAddCount());
             }
-            if (!tvShouyeLeaguesShopping.getText().equals(mAllCountList.get(1).getBusinessType())) {
-                tvShouyeLeaguesShopping.setText(mAllCountList.get(1).getBusinessType());
-                tvShouyeLeaguesShopnum.setText("+" + 0);
-                two = String.valueOf(0);
+            if (mLeaguesCountList.get(2) != null) {
+                tvShouyeLeaguesStay.setText(mLeaguesCountList.get(2).getBusinessType());
+                tvShouyeLeaguesStaynum.setText("+" + mLeaguesCountList.get(2).getAddCount());
             }
-            if (!tvShouyeLeaguesStay.getText().equals(mAllCountList.get(2).getBusinessType())) {
-                tvShouyeLeaguesStay.setText(mAllCountList.get(2).getBusinessType());
-                tvShouyeLeaguesStaynum.setText("+" + 0);
-                three = String.valueOf(0);
+            if (mLeaguesCountList.get(3) != null) {
+                tvShouyeLeaguesOther.setText(mLeaguesCountList.get(3).getBusinessType());
+                tvShouyeLeaguesNum.setText("+" + mLeaguesCountList.get(3).getAddCount());
             }
-            tvShouyeLeaguesOther.setText("其他");
-            for (LeaguesAddCountlist mAdddistrictcountbean : mAddCountList) {
-                allcount = allcount + stringChangeInt(mAdddistrictcountbean.getAddCount());
-            }
-            allcount = allcount - stringChangeInt(first) -
-                    stringChangeInt(two) -
-                    stringChangeInt(three);
-
-            tvShouyeLeaguesNum.setText("+" + String.valueOf(allcount));
         }catch (Exception  e){
             e.printStackTrace();
         }
     }
     private void setPieNetData() {
-        int allcount = 0;
         String first = "0";
         String two = "0";
         String three = "0";
+        String four = "0";
+
         try {
-            if (mAllCountList.get(0) != null) {
-                tvShouyeLeaguesRestip.setText(mAllCountList.get(0).getBusinessType() + "");
-                first = mAllCountList.get(0).getAllCount();
+            if (mLeaguesCountList.get(0) != null) {
+                tvShouyeLeaguesRestip.setText(mLeaguesCountList.get(0).getBusinessType() + "");
+                first = mLeaguesCountList.get(0).getAllCount();
             }
-            if (mAllCountList.get(1) != null) {
-                tvShouyeLeaguesShoppingtip.setText(mAllCountList.get(1).getBusinessType() + "");
-                two = mAllCountList.get(1).getAllCount();
+            if (mLeaguesCountList.get(1) != null) {
+                tvShouyeLeaguesShoppingtip.setText(mLeaguesCountList.get(1).getBusinessType() + "");
+                two = mLeaguesCountList.get(1).getAllCount();
             }
-            if (mAllCountList.get(2) != null) {
-                tvShouyeLeaguesStaytip.setText(mAllCountList.get(2).getBusinessType() + "");
-                three = mAllCountList.get(2).getAllCount();
+            if (mLeaguesCountList.get(2) != null) {
+                tvShouyeLeaguesStaytip.setText(mLeaguesCountList.get(2).getBusinessType() + "");
+                three = mLeaguesCountList.get(2).getAllCount();
             }
-            tvShouyeLeaguesOthertip.setText("其他");
-            for (LeaguesAllCountList  mAlldistrictcountbean : mAllCountList) {
-                allcount = allcount + stringChangeInt(mAlldistrictcountbean.getAllCount());
+            if (mLeaguesCountList.get(3) != null) {
+                tvShouyeLeaguesOthertip.setText(mLeaguesCountList.get(3).getBusinessType() + "");
+                four = mLeaguesCountList.get(3).getAllCount();
             }
-            allcount = allcount - stringChangeInt(first) -
-                    stringChangeInt(two) -
-                    stringChangeInt(three);
             mParties = new String[]{
                     first,
                     two,
                     three,
-                    String.valueOf(allcount)
+                    four
             };
         } catch (Exception e) {
             e.printStackTrace();
@@ -668,26 +612,6 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
-    }
-    /**
-     * 排序
-     *
-     * @param beginsort true 从小到大 false 从大到小
-     */
-    private void startSort(final boolean beginsort) {
-        Collections.sort(mAllCountList, new Comparator<LeaguesAllCountList>() {
-            @Override
-            public int compare(LeaguesAllCountList lhs, LeaguesAllCountList rhs) {
-                Integer id1 = Integer.parseInt(lhs.getAllCount());
-                Integer id2 = Integer.parseInt(rhs.getAllCount());
-                if (beginsort) {
-                    return id1.compareTo(id2);
-                } else {
-                    return id2.compareTo(id1);
-                }
-            }
-        });
-
     }
 
     /**

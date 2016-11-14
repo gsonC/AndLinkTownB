@@ -1664,12 +1664,23 @@ public enum OkHttpsImp {
         postProgressResponse(myResultCallback, params, url);
     }
     /**
-     * 修改店铺联系电话
+     * 修改店铺
      */
-    public void updateBusinessPhone(String serNum, String source, String reqTime, String businessId, String phone, MyResultCallback<String> myResultCallback) throws Exception {
+    public void updateBusiness(String serNum,
+                                String source,
+                                String reqTime,
+                                String businessId,
+                                String phone,
+                                String provinceId,
+                                String cityCode,
+                                String areaCode,
+                                MyResultCallback<String> myResultCallback) throws Exception {
         Map<String, String> params = new HashMap<String, String>();
         params.put("businessId", businessId);
         params.put("phone", phone);
+        params.put("provinceId", provinceId);
+        params.put("cityCode", cityCode);
+        params.put("areaCode", areaCode);
         params.put("reqTime", reqTime);
         params.put("serNum", serNum);
         params.put("source", source);

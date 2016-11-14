@@ -3,12 +3,21 @@ package com.lianbi.mezone.b.bean;
 import java.io.Serializable;
 
 /**
- * Created by chen.sun on 2016/11/8.
+ * 商圈统计实体类
  */
-public class LeaguesAllCountList implements Serializable {
+public class LeaguesCountList implements Serializable {
 
+    String  addCount;
     String  allCount;
     String  businessType;
+
+    public String getAddCount() {
+        return addCount;
+    }
+
+    public void setAddCount(String addCount) {
+        this.addCount = addCount;
+    }
 
     public String getAllCount() {
         return allCount;

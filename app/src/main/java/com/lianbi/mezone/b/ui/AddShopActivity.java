@@ -70,7 +70,7 @@ public class AddShopActivity extends BaseActivity {
 			edt_add_shop_phone, edt_add_shop_detail_address;
 	private MyPhotoUtills photoUtills;
 	private TextView tv_my_shop_type, tv_my_shop_address, tv_add_shop_summbit,
-			tv_my_shop_address2;
+			tv_my_shop_address2,tv_my_shop_provincialcity;
 	private String phone, name, address, parant_id, connect_name, parant_name, shop_detailaddress;
 	private File file = null;
 	private String latitude, longitude;
@@ -144,6 +144,7 @@ public class AddShopActivity extends BaseActivity {
 		edt_add_shop_detail_address = (EditText) findViewById(R.id.edt_add_shop_detail_address);
 		edt_add_shop_phone = (EditText) findViewById(R.id.edt_add_shop_phone);
 		llt_my_shop_address2 = (LinearLayout) findViewById(R.id.llt_my_shop_address2);
+		tv_my_shop_provincialcity= (TextView) findViewById(R.id.tv_my_shop_provincialcity);
 		tv_my_shop_address2 = (TextView) findViewById(R.id.tv_my_shop_address2);
 		photoUtills = new MyPhotoUtills(this);
 		address = ContentUtils.getSharePreString(this,
@@ -196,6 +197,7 @@ public class AddShopActivity extends BaseActivity {
 								cityCode = mAddressPopView.mCurrentCityCode;//市Code
 								String county = mAddressPopView.mCurrentDistrictName;//县
 								areaCode = mAddressPopView.mCurrentZipCode;//县Code
+								tv_my_shop_provincialcity.setText(province+city+county);
 								System.out.println("province"+province);
 								System.out.println("provinceCode"+provinceId);
 								System.out.println("city"+city);
@@ -342,7 +344,7 @@ public class AddShopActivity extends BaseActivity {
 		String uuid = AbStrUtil.getUUID();
 		try {
 			okHttpsImp.addBusinessByB(name, address,
-					userShopInfoBean.getUserId(), parant_id, license,
+					UserId, parant_id, license,
 					connect_name, phone, provinceId,cityCode,areaCode,
 					new MyResultCallback<String>() {
 
@@ -449,9 +451,9 @@ public class AddShopActivity extends BaseActivity {
 			ContentUtils.showMsg(AddShopActivity.this, "请输入联系人名称");
 			return;
 		}
-		String pro = tv_my_shop_address2.getText().toString().trim();
+		String pro = tv_my_shop_provincialcity.getText().toString().trim();
 		if (TextUtils.isEmpty(pro)) {
-			ContentUtils.showMsg(AddShopActivity.this, "请选择商铺所在省");
+			ContentUtils.showMsg(AddShopActivity.this, "请选择商铺所在省市区/县");
 			return;
 		}
 		if (TextUtils.isEmpty(parant_name)) {

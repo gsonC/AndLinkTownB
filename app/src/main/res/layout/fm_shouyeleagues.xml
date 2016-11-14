@@ -11,7 +11,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
     <include layout="@layout/adeslltview"/>
-
+    <View
+        android:layout_width="3dp"
+        android:layout_height="10dp"
+        android:layout_gravity="center_vertical"
+        android:background="@color/color_ff9023"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -101,7 +105,7 @@
             android:paddingBottom="8dp"
             android:gravity="center"
             android:singleLine="true"
-            android:text="交易流水"
+            android:text="暂无"
             android:textColor="@color/showcolor"
             android:textSize="16sp"
             />
@@ -162,7 +166,7 @@
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
                 android:singleLine="true"
-                android:text="松江商圈商圈商圈松江商圈商圈商圈松江商圈商圈商圈圈商圈商圈"
+                android:text="暂无"
                 android:textColor="@color/colores_news_10"/>
         </LinearLayout>
         <TextView
@@ -177,7 +181,7 @@
             android:paddingTop="8dp"
             android:paddingBottom="8dp"
             android:singleLine="true"
-            android:text="松江商圈商圈商圈松江商圈商圈商圈松江商圈商圈商圈圈商圈商圈"
+            android:text="暂无"
             android:textColor="@color/color_999999"/>
         <LinearLayout
             android:id="@+id/lay_shouyeLeagues_second"
@@ -206,7 +210,7 @@
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
                 android:singleLine="true"
-                android:text="松江商圈商圈商圈松江商圈商圈商圈松江商圈商圈商圈圈商圈商圈"
+                android:text="暂无"
                 android:textColor="@color/colores_news_10"/>
         </LinearLayout>
         <TextView
@@ -221,7 +225,7 @@
             android:paddingTop="8dp"
             android:paddingBottom="8dp"
             android:singleLine="true"
-            android:text="松江商圈商圈商圈松江商圈商圈商圈松江商圈商圈商圈圈商圈商圈"
+            android:text="暂无"
             android:textColor="@color/color_999999"/>
         <LinearLayout
             android:id="@+id/lay_shouyeLeagues_third"
@@ -250,7 +254,7 @@
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
                 android:singleLine="true"
-                android:text="松江商圈商圈商圈松江商圈商圈商圈松江商圈商圈商圈圈商圈商圈"
+                android:text="暂无"
                 android:textColor="@color/colores_news_10"/>
         </LinearLayout>
         <TextView
@@ -265,7 +269,7 @@
             android:paddingTop="8dp"
             android:paddingBottom="8dp"
             android:singleLine="true"
-            android:text="松江商圈商圈商圈松江商圈商圈商圈松江商圈商圈商圈圈商圈商圈"
+            android:text="暂无"
             android:textColor="@color/color_999999"/>
     </LinearLayout>
 
@@ -299,7 +303,7 @@
             android:paddingTop="8dp"
             android:paddingBottom="8dp"
             android:singleLine="true"
-            android:text="交易流水"
+            android:text="暂无"
             android:textSize="16sp"
             android:textColor="@color/colores_news_10"/>
     </LinearLayout>
@@ -352,7 +356,7 @@
                 android:id="@+id/tv_shouyeLeagues_restip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="餐饮"
+                android:text="暂无"
                 android:textColor="@color/colores_news_19"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="15dp"
@@ -376,7 +380,7 @@
                     android:id="@+id/tv_shouyeLeagues_shoppingtip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="购物"
+                    android:text="暂无"
                     android:textColor="@color/colores_news_19"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="15dp"
@@ -400,7 +404,7 @@
                 android:id="@+id/tv_shouyeLeagues_staytip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="住宿"
+                android:text="暂无"
                 android:textColor="@color/colores_news_19"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="15dp"
@@ -424,7 +428,7 @@
             android:id="@+id/tv_shouyeLeagues_othertip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="其他"
+            android:text="暂无"
             android:textColor="@color/colores_news_19"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="15dp"
@@ -460,7 +464,7 @@
          android:id="@+id/tv_shouyeLeagues_restaurant"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
-         android:text="餐饮餐饮"
+         android:text="暂无"
          android:textSize="@dimen/h12"
          android:layout_centerHorizontal="true"
          android:singleLine="true"
@@ -498,7 +502,7 @@
              android:id="@+id/tv_shouyeLeagues_shopping"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
-             android:text="餐饮餐饮"
+             android:text="暂无"
              android:textSize="@dimen/h12"
              android:layout_centerHorizontal="true"
              android:singleLine="true"
@@ -536,7 +540,7 @@
              android:id="@+id/tv_shouyeLeagues_stay"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
-             android:text="餐饮餐饮"
+             android:text="暂无"
              android:textSize="@dimen/h12"
              android:layout_centerHorizontal="true"
              android:singleLine="true"
@@ -575,7 +579,7 @@
              android:id="@+id/tv_shouyeLeagues_other"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
-             android:text="餐饮餐饮"
+             android:text="暂无"
             android:textSize="@dimen/h12"
             android:layout_centerHorizontal="true"
              android:singleLine="true"

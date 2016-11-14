@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.FrameLayout.LayoutParams;
@@ -37,6 +38,7 @@ import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.FilePathGet;
 import cn.com.hgh.utils.Picture_Base64;
 import cn.com.hgh.utils.Result;
+import cn.com.hgh.view.AddressPopView;
 
 /**
  * 我的商铺
@@ -55,14 +57,17 @@ public class MyShopActivity extends BaseActivity {
 	private ImageView img_my_shop_mohu, img_my_shop_logo, img_my_shop_qrcode;
 	private TextView tv_my_shop_name, tv_my_shop_address, tv_my_shop_type,
 			tv_my_shop_connect_name, tv_my_shop_connect_phone,
-			tv_my_shop_connect_address;
+			tv_my_shop_connect_address,tv_my_shop_provincialcity;
 	private LinearLayout llt_my_shop_introduce, llt_my_shop_connect,
-			llt_my_shop_phone, llt_my_shop_address, myShop_logo;
+			llt_my_shop_phone, llt_my_shop_address, myShop_logo,llt_my_shop_provincialcity;
 	private String address;
 	private MyPhotoUtills photoUtills;
 	private ArrayList<ShopIntroduceImageBean> images = new ArrayList<ShopIntroduceImageBean>();
 	private MyShopInfoBean myShopInfoBean;
-
+	private AddressPopView mAddressPopView;
+	private String provinceId;
+	private String cityCode;
+	private String areaCode;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -166,6 +171,11 @@ public class MyShopActivity extends BaseActivity {
 		tv_my_shop_connect_name.setText(infoBean.getContactName());
 		tv_my_shop_connect_phone.setText(infoBean.getMobile());
 		tv_my_shop_connect_address.setText(infoBean.getAddress());
+		tv_my_shop_provincialcity.setText(
+				infoBean.getProvinceId()+
+				infoBean.getCityCode()+
+				infoBean.getAreaCode()
+		);
 //		String majorName = infoBean.getMajorName();
 //		if (!TextUtils.isEmpty(majorName)) {
 //			tv_my_shop_type.setVisibility(View.VISIBLE);
@@ -228,6 +238,8 @@ public class MyShopActivity extends BaseActivity {
 		llt_my_shop_phone = (LinearLayout) findViewById(R.id.llt_my_shop_phone);
 		llt_my_shop_address = (LinearLayout) findViewById(R.id.llt_my_shop_address);
 		myShop_logo = (LinearLayout) findViewById(R.id.myShop_logo);
+		llt_my_shop_provincialcity= (LinearLayout) findViewById(R.id.llt_my_shop_provincialcity);
+		tv_my_shop_provincialcity= (TextView) findViewById(R.id.tv_my_shop_provincialcity);
 	}
 
 	private void initLayoutP() {
@@ -253,6 +265,7 @@ public class MyShopActivity extends BaseActivity {
 		llt_my_shop_connect.setOnClickListener(this);
 		llt_my_shop_phone.setOnClickListener(this);
 		llt_my_shop_address.setOnClickListener(this);
+		llt_my_shop_provincialcity.setOnClickListener(this);
 		myShop_logo.setOnClickListener(this);
 	}
 
@@ -262,6 +275,41 @@ public class MyShopActivity extends BaseActivity {
 			myShopInfoBean = new MyShopInfoBean();
 		}
 		switch (view.getId()) {
+		case R.id.llt_my_shop_provincialcity:// 商铺省市区
+
+			mAddressPopView = new AddressPopView(MyShopActivity.this, new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					switch (view.getId()) {
+						case R.id.tv_guanbi:
+							mAddressPopView.dismiss();
+							break;
+						case R.id.tv_wancheng:
+							String province = mAddressPopView.mCurrentProviceName;//省
+							provinceId = mAddressPopView.mCurrentProviceCode;//省Code
+							String city = mAddressPopView.mCurrentCityName;//市
+							cityCode = mAddressPopView.mCurrentCityCode;//市Code
+							String county = mAddressPopView.mCurrentDistrictName;//县
+							areaCode = mAddressPopView.mCurrentZipCode;//县Code
+							tv_my_shop_provincialcity.setText(province+city+county);
+							postProvincialcity();
+							System.out.println("province"+province);
+							System.out.println("provinceCode"+provinceId);
+							System.out.println("city"+city);
+							System.out.println("cityCode"+cityCode);
+							System.out.println("county"+county);
+							System.out.println("zipcode"+areaCode);
+							mAddressPopView.dismiss();
+							break;
+					}
+				}
+			});
+
+			mAddressPopView.showAtLocation(MyShopActivity.this
+					.findViewById(R.id.llt_my_shop_provincialcity), Gravity.BOTTOM
+					| Gravity.CENTER_HORIZONTAL, 0, 0);
+			break;
+
 		case R.id.myShop_logo:// 商铺logo
 			photoUtills.pickImage();
 			break;
@@ -300,6 +348,35 @@ public class MyShopActivity extends BaseActivity {
 		case R.id.img_my_shop_qrcode:// 点击放大二维码
 			// MagnifyImg();
 			break;
+		}
+	}
+    public  void   postProvincialcity(){
+		try {
+			okHttpsImp.updateBusiness(uuid,
+					                   "app",
+					                   reqTime,
+					                   BusinessId,
+					                   "",        //手机号
+					                   provinceId,
+					                   cityCode,
+					                   areaCode ,
+					new MyResultCallback<String>() {
+
+						@Override
+						public void onResponseResult(Result result) {
+							ContentUtils.showMsg(MyShopActivity.this,
+									"修改省市区成功");
+						}
+
+						@Override
+						public void onResponseFailed(String msg) {
+							ContentUtils.showMsg(MyShopActivity.this,
+									"修改省市区失败");
+						}
+					});
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
