@@ -55,7 +55,7 @@ public class FinancialOfficeFragment extends Fragment {
 	boolean needLogin = false;
 	private final static int REQUEST_LOGIN = 4563;
 	private boolean isNeedTitle = false;
-	private int mHeight;
+	private final int mHeight = 250;
 
 
 	@Override
@@ -77,10 +77,6 @@ public class FinancialOfficeFragment extends Fragment {
 		}
 	}
 
-	public void setHeight(int height) {
-		this.mHeight = height;
-	}
-
 	private void initView(View view) {
 
 		dialog = new HttpDialog(mActivity);
@@ -88,12 +84,11 @@ public class FinancialOfficeFragment extends Fragment {
 		WebViewInit.WebSettingInit(web_webactivty, mActivity);
 		web_webactivty.addJavascriptInterface(new MyJs(), "LinktownB");
 
-
 		LinearLayout llt = (LinearLayout) view.findViewById(R.id.llt_asdfe);
 
 		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
 				LinearLayout.LayoutParams.MATCH_PARENT,
-				ScreenUtils.getScreenHeight(mActivity) - (int) (250 * ScreenUtils.getBaseSizeOn720(mActivity)));
+				ScreenUtils.getScreenHeight(mActivity) - (int) (mHeight * ScreenUtils.getBaseSizeOn720(mActivity)));
 		llt.setLayoutParams(params);
 
 

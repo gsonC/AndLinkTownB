@@ -18,7 +18,6 @@ import org.json.JSONObject;
 
 import cn.com.hgh.utils.AbDateUtil;
 import cn.com.hgh.utils.AbStrUtil;
-import cn.com.hgh.utils.AbViewUtil;
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.Result;
 
@@ -35,9 +34,6 @@ public class FirstActivity extends BaseActivity {
 
 		setContentView(R.layout.act_first);
 		ImageView act_first_iv = (ImageView) findViewById(R.id.act_first_iv);
-
-		act_first_iv.setImageBitmap(AbViewUtil.readBitMap(this,
-				R.mipmap.first));
 
 		/**
 		 * 如果登录过自动登录

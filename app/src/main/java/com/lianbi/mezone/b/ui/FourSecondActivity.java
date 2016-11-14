@@ -10,6 +10,8 @@ import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -26,6 +28,7 @@ import java.util.List;
 
 import cn.com.hgh.utils.AbDateUtil;
 import cn.com.hgh.utils.AbStrUtil;
+import cn.com.hgh.utils.AbViewUtil;
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.Result;
 
@@ -45,6 +48,8 @@ public class FourSecondActivity extends BaseActivity {
 	private boolean mIsLogin;
 	private MsgReceiver mMsgReceiver;
 	private Intent mIntent;
+	private ImageView mImg_first_foursecond;
+	private boolean isClick = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -52,11 +57,13 @@ public class FourSecondActivity extends BaseActivity {
 		setContentView(R.layout.act_foursecond);
 
 		mTv_daojishi = (TextView) findViewById(R.id.tv_daojishi);
-
-		mc = new MyCountDownTimer(4000,1000);
+		mImg_first_foursecond = (ImageView) findViewById(R.id.img_first_foursecond);
+		mImg_first_foursecond.setImageBitmap(AbViewUtil.readBitMap(this,
+				R.mipmap.first_foursecond));
+		mTv_daojishi.setOnClickListener(this);
+		mc = new MyCountDownTimer(4000, 1000);
 		mc.start();
 		//mc.cancel();
-
 
 		/**
 		 * 启动下载省市区Code Service
@@ -71,21 +78,25 @@ public class FourSecondActivity extends BaseActivity {
 			autoLogin();
 		}
 
-		/*new Handler().postDelayed(new Runnable() {
-			@Override
-			public void run() {
+	}
 
-				if(isLogin){
+	@Override
+	protected void onChildClick(View view) {
+		super.onChildClick(view);
+		switch (view.getId()) {
+			case R.id.tv_daojishi:
+				isClick = true;
+				if (mIsLogin) {
 					startActivity(new Intent(FourSecondActivity.this,
 							MainActivity.class));
-				}else{
+				} else {
 					startActivity(new Intent(FourSecondActivity.this,
 							LoginAndRegisterActivity.class));
 				}
 
 				finish();
-			}
-		}, 4000);*/
+				break;
+		}
 	}
 
 	/**
@@ -98,10 +109,10 @@ public class FourSecondActivity extends BaseActivity {
 		mMsgReceiver = new MsgReceiver();
 		IntentFilter intentFilter = new IntentFilter();
 		intentFilter.addAction("com.lianbi.mezone.b.service.RECEIVER");
-		registerReceiver(mMsgReceiver,intentFilter);
+		registerReceiver(mMsgReceiver, intentFilter);
 		mIntent = new Intent();
 		mIntent.setAction("com.lianbi.mezone.b.MSG_ACTION");
-		Intent eintent = new Intent(createExplicitFromImplicitIntent(this,mIntent));
+		Intent eintent = new Intent(createExplicitFromImplicitIntent(this, mIntent));
 		startService(eintent);
 	}
 
@@ -112,8 +123,8 @@ public class FourSecondActivity extends BaseActivity {
 
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			float progress = intent.getFloatExtra("progress",0);
-			System.out.println("progress---"+progress);
+			float progress = intent.getFloatExtra("progress", 0);
+			System.out.println("progress---" + progress);
 		}
 	}
 
@@ -216,7 +227,6 @@ public class FourSecondActivity extends BaseActivity {
 				}
 			}, uuid, "app", reqTime, username, password);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -224,23 +234,18 @@ public class FourSecondActivity extends BaseActivity {
 
 	/**
 	 * 继承 CountDownTimer 防范
-	 *
+	 * <p/>
 	 * 重写 父类的方法 onTick() 、 onFinish()
 	 */
 
 	class MyCountDownTimer extends CountDownTimer {
 		/**
-		 *
-		 * @param millisInFuture
-		 *      表示以毫秒为单位 倒计时的总数
-		 *
-		 *      例如 millisInFuture=1000 表示1秒
-		 *
-		 * @param countDownInterval
-		 *      表示 间隔 多少微秒 调用一次 onTick 方法
-		 *
-		 *      例如: countDownInterval =1000 ; 表示每1000毫秒调用一次onTick()
-		 *
+		 * @param millisInFuture    表示以毫秒为单位 倒计时的总数
+		 *                          <p/>
+		 *                          例如 millisInFuture=1000 表示1秒
+		 * @param countDownInterval 表示 间隔 多少微秒 调用一次 onTick 方法
+		 *                          <p/>
+		 *                          例如: countDownInterval =1000 ; 表示每1000毫秒调用一次onTick()
 		 */
 		public MyCountDownTimer(long millisInFuture, long countDownInterval) {
 			super(millisInFuture, countDownInterval);
@@ -248,23 +253,24 @@ public class FourSecondActivity extends BaseActivity {
 
 		@Override
 		public void onFinish() {
-			mTv_daojishi.setText("done");
 
-			if(mIsLogin){
-				startActivity(new Intent(FourSecondActivity.this,
-						MainActivity.class));
-			}else{
-				startActivity(new Intent(FourSecondActivity.this,
-						LoginAndRegisterActivity.class));
+			if(!isClick) {
+
+				if (mIsLogin) {
+					startActivity(new Intent(FourSecondActivity.this,
+							MainActivity.class));
+				} else {
+					startActivity(new Intent(FourSecondActivity.this,
+							LoginAndRegisterActivity.class));
+				}
+
+				finish();
 			}
-
-			finish();
-
 		}
 
 		@Override
 		public void onTick(long millisUntilFinished) {
-			mTv_daojishi.setText("倒计时(" + millisUntilFinished / 1000 + ")...");
+			mTv_daojishi.setText(millisUntilFinished / 1000 + "S跳过");
 		}
 	}
 }
