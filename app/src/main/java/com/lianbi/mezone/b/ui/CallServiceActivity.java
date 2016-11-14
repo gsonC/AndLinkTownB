@@ -95,7 +95,6 @@ public class CallServiceActivity extends BaseActivity implements AbPullToRefresh
 	private void initView() {
 		setPageTitle("呼叫服务");
 		setPageRightText("服务设置");
-		setPageRightTextColor(Color.parseColor("#3987fd"));
 		currShowingIs = ALL_IS_SHOWING;
 		pulltorefreshCalllist.setOnFooterLoadListener(this);
 		pulltorefreshCalllist.setOnHeaderRefreshListener(this);

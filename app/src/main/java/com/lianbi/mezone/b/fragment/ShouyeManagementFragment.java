@@ -341,21 +341,23 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 			mView_fillview.setVisibility(View.VISIBLE);
 			mLlt_shouyemanagement_consum_img.setVisibility(View.GONE);
 
-			rope = YoYo.with(Techniques.FadeOut).duration(1000)
-					.playOn(mLlt_shouyemanagement_comsum);
-			//rope = YoYo.with(Techniques.SlideInUp).duration(1000)
-			//		.playOn(mLlt_shouyemanagement_comsum);
+			if (isRefresh) {
 
-			new Handler().postDelayed(new Runnable() {
-				@Override
-				public void run() {
-					//rope = YoYo.with(Techniques.ZoomInRight).duration(1000)
-					//		.playOn(mLlt_shouyemanagement_comsum);
-					rope = YoYo.with(Techniques.SlideInUp).duration(1000)
-							.playOn(mLlt_shouyemanagement_comsum);
-				}
-			}, 1000);
+				rope = YoYo.with(Techniques.FadeOut).duration(1000)
+						.playOn(mLlt_shouyemanagement_comsum);
+				//rope = YoYo.with(Techniques.SlideInUp).duration(1000)
+				//		.playOn(mLlt_shouyemanagement_comsum);
 
+				new Handler().postDelayed(new Runnable() {
+					@Override
+					public void run() {
+						//rope = YoYo.with(Techniques.ZoomInRight).duration(1000)
+						//		.playOn(mLlt_shouyemanagement_comsum);
+						rope = YoYo.with(Techniques.SlideInUp).duration(1000)
+								.playOn(mLlt_shouyemanagement_comsum);
+					}
+				}, 1000);
+			}
 
 			int number = shopConsumptionList.size();
 			if (number > 8)
@@ -1089,16 +1091,16 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 				mActivity.changeFuncPage(POSITION);
 				break;
 			case R.id.img_shouyemagapp_opeservice://运营服务
-	//			ContentUtils.showMsg(mActivity, "运营服务");
+				//			ContentUtils.showMsg(mActivity, "运营服务");
 				break;
 			case R.id.img_shouyemagapp_finservice://金融服务
-	//			ContentUtils.showMsg(mActivity, "金融服务");
+				//			ContentUtils.showMsg(mActivity, "金融服务");
 				break;
 			case R.id.img_shouyemagapp_richbook://支付宝典
-	//			ContentUtils.showMsg(mActivity, "支付宝典");
+				//			ContentUtils.showMsg(mActivity, "支付宝典");
 				break;
 			case R.id.img_shouyemagapp_busdata://商圈大数据
-	//			ContentUtils.showMsg(mActivity, "商圈大数据");
+				//			ContentUtils.showMsg(mActivity, "商圈大数据");
 				break;
 			case R.id.img_shouyemagapp_appstore://跳转铃铛
 

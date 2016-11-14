@@ -463,6 +463,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface, 
 			 */
 			if (PushManager.getInstance().getClientid(this) != null) {
 				mClientId = PushManager.getInstance().getClientid(this);
+				System.out.println("mClientId---"+mClientId);
 			}
 			String reqTime = AbDateUtil.getDateTimeNow();
 			String uuid = AbStrUtil.getUUID();
