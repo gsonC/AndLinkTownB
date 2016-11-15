@@ -80,7 +80,7 @@ public class API {
 	/**
 	 *桌位详情接口
 	 */
-	public static final String TABLETSSINFO = TOSTORESERVICE + "/wcm/ tssTable/tableInfo";
+	public static final String TABLETSSINFO = TOSTORESERVICE + "/wcm/tssTable/tableInfo";
 	/**
 	 *4.23	现金付款接口
 	 */

@@ -17,6 +17,7 @@ import com.xizhi.mezone.b.R;
 import com.zbar.lib.animationslib.Techniques;
 import com.zbar.lib.animationslib.YoYo;
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -27,12 +28,15 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.QuickAdapter;
+import cn.com.hgh.eventbus.ShouyeRefreshEvent;
 import cn.com.hgh.utils.AbDateUtil;
 import cn.com.hgh.utils.AbPullHide;
 import cn.com.hgh.utils.AbStrUtil;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.view.AbPullToRefreshView;
+import cn.com.hgh.view.DialogFinish;
 import cn.com.hgh.view.DialogLine;
+import cn.com.hgh.view.DialogQrg;
 import cn.com.hgh.view.DialogShoukuan;
 
 /**
@@ -145,7 +149,7 @@ public class ConsumptionSettlementActivity extends BaseActivity {
 	private void initListAdapter() {
 		mAdapter = new QuickAdapter<Consumption>(this, R.layout.activity_consumption_item, mDatas) {
 			@Override
-			@OnClick({R.id.tv_consum_shoukuan})
+			@OnClick({R.id.tv_consum_shoukuan,R.id.tv_consum_detail})
 			protected void convert(BaseAdapterHelper helper, final Consumption item) {
 				TextView tv_consum_total = helper.getView(R.id.tv_consum_total);
 				TextView tv_consum_time = helper.getView(R.id.tv_consum_time);
@@ -165,17 +169,33 @@ public class ConsumptionSettlementActivity extends BaseActivity {
 					@Override
 					public void onClick(View v) {
 						getTssTableInfo(item.getTableId());
+
 					}
 				});
 
 				tv_consum_shoukuan.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View v) {
+
 						DialogShoukuan dialog=new DialogShoukuan(ConsumptionSettlementActivity.this) {
 							@Override
 							public void onCheckClick() {
-								Intent intent=new Intent(ConsumptionSettlementActivity.this,QrImgMainActivity.class);
-								startActivity(intent);
+								/*Intent intent=new Intent(ConsumptionSettlementActivity.this,QrImgMainActivity.class);
+								startActivity(intent);*/
+								DialogQrg dialogQrg=new DialogQrg(ConsumptionSettlementActivity.this) {
+									@Override
+									public void onCheckClick() {
+
+									}
+
+									@Override
+									public void onOkClick() {
+
+									}
+
+								};
+								dialogQrg.show();
+								dismiss();
 							}
 
 							@Override
@@ -184,6 +204,7 @@ public class ConsumptionSettlementActivity extends BaseActivity {
 									@Override
 									public void onCheckClick() {
 										TssOrdersController(tableId);
+										dismiss();
 									}
 
 									@Override
@@ -202,6 +223,7 @@ public class ConsumptionSettlementActivity extends BaseActivity {
 						dialog.setTv_dialog_shoukuan_title("在线收款");
 						dialog.setTv_dialog_shoukuan_titlee("现金收款");
 						dialog.show();
+
 					}
 
 				});
@@ -317,7 +339,26 @@ public class ConsumptionSettlementActivity extends BaseActivity {
 				@Override
 				public void onResponseResult(Result result) {
 
+					DialogFinish dialogFinish=new DialogFinish(ConsumptionSettlementActivity.this) {
+
+
+						@Override
+						public void onFinishOkClick() {
+
+						}
+
+						@Override
+						public void onFinishClick() {
+
+						}
+					};
+					dialogFinish.setTv_dialog_finishing_title("支付完成");
+					dialogFinish.setTv_dialog_finishing_titlee("顾客离店 请翻桌");
+					dialogFinish.show();
+
 				}
+
+
 
 				@Override
 				public void onResponseFailed(String msg) {
@@ -342,7 +383,29 @@ public class ConsumptionSettlementActivity extends BaseActivity {
 			  public void onResponseResult(Result result) {
                 String reString=result.getData();
 				  if(reString!=null){
+					  try {
+						  JSONObject jsonObject=new JSONObject(reString);
+						  int  tableStatus=jsonObject.getInt("tableStatus");
+						  switch (tableStatus){
+							 case 0:
+								 startActivity(new Intent(ConsumptionSettlementActivity.this,ScanningQRActivity.class));
 
+								 break;
+							 case 1:
+								 startActivity(new Intent(ConsumptionSettlementActivity.this,TableHasOrderedActivity.class));
+
+								 break;
+
+							 case 2:
+								 startActivity(new Intent(ConsumptionSettlementActivity.this,TableHasPaidActivity.class));
+
+								 break;
+
+						 }
+
+					  } catch (JSONException e) {
+						  e.printStackTrace();
+					  }
 				  }
 			  }
 
@@ -356,4 +419,10 @@ public class ConsumptionSettlementActivity extends BaseActivity {
 	  }
   }
 
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		ButterKnife.unbind(this);
+		EventBus.getDefault().post(new ShouyeRefreshEvent(false));
+	}
 }

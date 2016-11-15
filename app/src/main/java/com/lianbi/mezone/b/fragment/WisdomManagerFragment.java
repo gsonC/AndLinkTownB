@@ -65,28 +65,57 @@ public class WisdomManagerFragment extends Fragment implements OnClickListener {
 	@Bind(R.id.ll_wisdommanage_marketing)
 	LinearLayout llWisdommanageMarketing;
 	@Bind(R.id.ll_wisdommanage_features)*/ LinearLayout llWisdommanageFeatures;
-	@Bind(R.id.ll_wisdommanage_Shouting)
-	LinearLayout llWisdommanageShouting;
-	@Bind(R.id.ll_wisdommanage_guidance)
-	LinearLayout llWisdommanageGuidance;
-	@Bind(R.id.ll_wisdommanage_smalltwo)
-	LinearLayout llWisdommanageSmalltwo;
-	@Bind(R.id.ll_wisdommanage_Servicemall)
-	LinearLayout llWisdommanageServicemall;
+
 	@Bind(R.id.GLZX_sc)
 	ScrollView GLZXSc;
 	@Bind(R.id.swipe_jiaoyiguanli)
 	SwipeRefreshLayout swipeJiaoyiguanli;
-	@Bind(R.id.ll_wisdommanage_shop)
-	LinearLayout llWisdommanageShop;
 	@Bind(R.id.gv_shouyeservice)
 	MyGridView gv_shouyeservice;
 	@Bind(R.id.ll_wisdommanage_shopservice)
 	LinearLayout llWisdommanageShopservice;
 	@Bind(R.id.ll_wisdommanage_yingxiao)
 	LinearLayout llWisdommanageYingxiao;
+	@Bind(R.id.tv_tese)
+	TextView tvTese;
+	@Bind(R.id.tv_teseima)
+	ImageView tvTeseima;
+	@Bind(R.id.tv_zhuangjiazhidao)
+	TextView tvZhuangjiazhidao;
+	@Bind(R.id.ima_zhuangjiahzidao)
+	ImageView imaZhuangjiahzidao;
+	@Bind(R.id.tv_shuju)
+	TextView tvShuju;
+	@Bind(R.id.ima_shuju)
+	ImageView imaShuju;
+	@Bind(R.id.ll_wisdommanage_shangquan)
+	RelativeLayout llWisdommanageShangquan;
+	@Bind(R.id.tv_oncreate)
+	TextView tvOncreate;
+	@Bind(R.id.ima_oncreate)
+	ImageView imaOncreate;
+	@Bind(R.id.tv_service)
+	TextView tvService;
+	@Bind(R.id.ima_service)
+	ImageView imaService;
+	@Bind(R.id.tv_servicrmall)
+	TextView tvServicrmall;
+	@Bind(R.id.ima_servicrmall)
+	ImageView imaServicrmall;
+	@Bind(R.id.tv_lbn)
+	TextView tvLbn;
 	@Bind(R.id.ll_wisdommanage_tese)
-	LinearLayout llWisdommanageTese;
+	RelativeLayout llWisdommanageTese;
+	@Bind(R.id.ll_wisdommanage_Shouting)
+	LinearLayout llWisdommanageShouting;
+	@Bind(R.id.ll_wisdommanage_guidance)
+	RelativeLayout llWisdommanageGuidance;
+	@Bind(R.id.ll_wisdommanage_smalltwo)
+	RelativeLayout llWisdommanageSmalltwo;
+	@Bind(R.id.ll_wisdommanage_shop)
+	RelativeLayout llWisdommanageShop;
+	@Bind(R.id.ll_wisdommanage_Servicemall)
+	RelativeLayout llWisdommanageServicemall;
 	private OkHttpsImp httpsImp;
 	private MainActivity mMainActivity;
 	public static WisdomManagerFragment jiaoYiGuanLiFragment;
@@ -232,7 +261,7 @@ public class WisdomManagerFragment extends Fragment implements OnClickListener {
 		boolean re = false;
 		switch (view.getId()) {//到店服务
 			case R.id.ll_wisdommanage_shopservice:
-				 startActivity(new Intent(getActivity(),DiningTableSettingActivity.class));
+				startActivity(new Intent(getActivity(), DiningTableSettingActivity.class));
 				break;
 			case R.id.ll_wisdommanage_Servicemall://服务商城
 				re = JumpIntent.jumpLogin_addShop(isLogin, API.SERVICESTORE, mMainActivity);
@@ -382,7 +411,7 @@ public class WisdomManagerFragment extends Fragment implements OnClickListener {
 
 			List a = new ArrayList();
 			for (ShouyeServiceBean ss : arraylist) {
-				if (ss != null &&ss.getAppCode()!=null&& ss.getAppCode().equals("wcm") || ss.getAppCode().equals("qns") || ss.getAppCode().equals("wifi")) {
+				if (ss != null && ss.getAppCode() != null && ss.getAppCode().equals("wcm") || ss.getAppCode().equals("qns") || ss.getAppCode().equals("wifi")) {
 					mData.add(ss);
 				}
 			}

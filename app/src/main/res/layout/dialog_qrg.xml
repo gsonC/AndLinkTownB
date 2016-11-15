@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/shape_dialog_white_round_bg"
+              android:orientation="vertical"
+              android:padding="5dp"
+    android:gravity="center">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+       >
+
+
+        <TextView
+            android:id="@+id/tv_customtable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="三号桌"
+            android:layout_marginBottom="20dp"
+            android:layout_gravity="center"
+
+            />
+
+        <ImageView
+            android:id="@+id/ima_Qrimg"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:src="@mipmap/hitt"
+            />
+
+        <TextView
+            android:layout_marginTop="20dp"
+            android:id="@+id/tv_customPay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="客人扫码支付"
+            android:layout_gravity="center"
+            />
+    </LinearLayout>
+
+</LinearLayout>
