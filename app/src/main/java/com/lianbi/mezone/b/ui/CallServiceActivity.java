@@ -79,6 +79,7 @@ public class CallServiceActivity extends BaseActivity implements AbPullToRefresh
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
 		setContentView(R.layout.activity_call_service, NOTYPE);
 		ButterKnife.bind(this);
 		initView();
@@ -98,7 +99,6 @@ public class CallServiceActivity extends BaseActivity implements AbPullToRefresh
 		pulltorefreshCalllist.setOnFooterLoadListener(this);
 		pulltorefreshCalllist.setOnHeaderRefreshListener(this);
 		fmCallListView.initSlideMode(SlideListView2.MOD_RIGHT);
-
 	}
 
 	@Override

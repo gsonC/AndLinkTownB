@@ -2,8 +2,7 @@
 <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/swipe_jiaoyiguanli"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-              android:background="@color/colores_news_14"
+    android:layout_height="match_parent" android:background="@color/colores_news_14"
     >
 
     <ScrollView
@@ -137,29 +136,45 @@
                     android:layout_width="0.5dp"
                     android:layout_height="match_parent"
                     android:background="@color/colores_news_14"/>
-                <LinearLayout
+                <RelativeLayout
                     android:id="@+id/ll_wisdommanage_tese"
                     android:layout_width="0dp"
                     android:layout_height="85dp"
                     android:orientation="vertical"
                     android:layout_weight="1"
                     android:gravity="center">
+
+
+
                     <ImageView
+                        android:id="@+id/tv_teseima"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
                         android:src="@mipmap/tesett"
+                        android:layout_centerHorizontal="true"
                         />
                     <TextView
+                        android:layout_below="@id/tv_teseima"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/shopmarkfeatuer"
                         android:textSize="14.5dp"
                         android:layout_marginTop="8dp"
                         android:textColor="@color/tag_mask"
+                        android:layout_centerHorizontal="true"
                         />
-
-                </LinearLayout>
+                    <TextView
+                        android:id="@+id/tv_tese"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="建设中"
+                        android:textSize="11dp"
+                        android:layout_marginTop="8dp"
+                        android:textColor="@color/point"
+                        android:layout_toRightOf="@id/tv_teseima"
+                        />
+                </RelativeLayout>
                 <View
                     android:layout_width="0.5dp"
                     android:layout_height="match_parent"
@@ -240,12 +255,15 @@
                     android:layout_height="85dp"
                     android:orientation="vertical"
                     android:layout_weight="1"
-                    android:gravity="center">
+                    android:gravity="center"
+                   >
+
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
                         android:src="@mipmap/hitt"
+
                         />
                     <TextView
                         android:layout_width="wrap_content"
@@ -261,56 +279,90 @@
                     android:layout_width="0.5dp"
                     android:layout_height="match_parent"
                     android:background="@color/colores_news_14"/>
-                <LinearLayout
+                <RelativeLayout
                     android:id="@+id/ll_wisdommanage_guidance"
                     android:layout_width="0dp"
                     android:layout_height="89.5dp"
                     android:orientation="vertical"
                     android:layout_weight="1"
-                    android:gravity="center">
+                    android:gravity="center"
+                    >
                     <ImageView
+                        android:id="@+id/ima_zhuangjiahzidao"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/shanghutt"
-                       android:layout_marginTop="20dp"
+                        android:src="@mipmap/zhuanjiatwo"
+                        android:layout_marginTop="20dp"
+                        android:layout_centerInParent="true"
+
                         />
                     <TextView
+                        android:id="@+id/tv_zhuangjiazhidao"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="建设中"
+                        android:textSize="11sp"
+                        android:textColor="@color/point"
+                        android:layout_marginTop="8dp"
+                        android:layout_toRightOf="@id/ima_zhuangjiahzidao"
+                        />
+
+                    <TextView
+                        android:layout_below="@+id/ima_zhuangjiahzidao"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/shopserviceguidance"
                         android:textSize="14.5dp"
                         android:textColor="@color/tag_mask"
                        android:layout_marginTop="8dp"
-
+                        android:layout_centerHorizontal="true"
                         />
 
-                </LinearLayout>
+                </RelativeLayout>
                 <View
                     android:layout_width="0.5dp"
                     android:layout_height="match_parent"
                     android:background="@color/colores_news_14"/>
-                <LinearLayout
+                <RelativeLayout
+                    android:id="@+id/ll_wisdommanage_shangquan"
                     android:layout_width="0dp"
                     android:layout_height="89.5dp"
                     android:orientation="vertical"
+                    android:layout_weight="1"
                     android:gravity="center"
-                    android:layout_weight="1">
+                    >
                     <ImageView
+                        android:id="@+id/ima_shuju"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="46dp"
+                        android:src="@mipmap/shujutwo"
                         android:layout_marginTop="20dp"
+                        android:layout_centerHorizontal="true"
                         />
                     <TextView
+                        android:id="@+id/tv_shuju"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="14.5dp"
-                        android:textColor="@color/color_0000ff"
-                        android:layout_marginLeft="36dp"
-                        android:layout_marginTop="10dp"
+                        android:text="建设中"
+                        android:textSize="11sp"
+                        android:textColor="@color/point"
+                        android:layout_marginTop="8dp"
+                       android:layout_toRightOf="@id/ima_shuju"
+
                         />
 
-                </LinearLayout>
+                    <TextView
+                        android:layout_below="@id/ima_shuju"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="商圈大数据"
+                        android:textSize="14.5dp"
+                        android:textColor="@color/tag_mask"
+                        android:layout_marginTop="10dp"
+                        android:layout_centerHorizontal="true"
+                        />
+
+                </RelativeLayout>
 
             </LinearLayout>
             <View
@@ -352,56 +404,87 @@
                 android:orientation="horizontal">
 
 
-                <LinearLayout
+                <RelativeLayout
                     android:id="@+id/ll_wisdommanage_smalltwo"
                     android:layout_width="120dp"
                     android:layout_height="85dp"
                     android:orientation="vertical"
                     android:layout_weight="1"
                     android:gravity="center">
+
                     <ImageView
+                        android:id="@+id/ima_oncreate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@mipmap/xiaoertt"
                         android:layout_marginTop="20dp"
+                        android:layout_centerHorizontal="true"
                         />
                     <TextView
+                        android:id="@+id/tv_oncreate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="建设中"
+                        android:textSize="11dp"
+                        android:textColor="@color/point"
+                        android:layout_marginTop="8dp"
+                        android:layout_toRightOf="@+id/ima_oncreate"
+
+                        />
+                    <TextView
+                        android:layout_below="@id/ima_oncreate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/shopservicesmalltwo"
                         android:textSize="14.5dp"
                         android:textColor="@color/tag_mask"
                        android:layout_marginTop="8dp"
+                        android:layout_centerHorizontal="true"
                         />
 
-                </LinearLayout>
+                </RelativeLayout>
                 <View
                     android:layout_width="0.5dp"
                     android:layout_height="match_parent"
                     android:background="@color/colores_news_14"/>
-                <LinearLayout
+                <RelativeLayout
                     android:id="@+id/ll_wisdommanage_shop"
                     android:layout_width="120dp"
                     android:layout_height="89.5dp"
                     android:orientation="vertical"
                     android:layout_weight="1"
                     android:gravity="center">
+
                       <ImageView
-                        android:layout_width="wrap_content"
+                          android:id="@+id/ima_service"
+                          android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/shanghutt"
+                        android:src="@mipmap/yunyingtwo"
                         android:layout_marginTop="20dp"
+                          android:layout_centerHorizontal="true"
                           />
                     <TextView
+                        android:id="@+id/tv_service"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="建设中"
+                        android:textSize="11sp"
+                        android:textColor="@color/point"
+                        android:layout_marginTop="8dp"
+                        android:layout_toRightOf="@id/ima_service"
+                        />
+                    <TextView
+                        android:layout_below="@id/ima_service"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/intellginceshopservice"
                         android:textSize="14.5dp"
                         android:textColor="@color/tag_mask"
                         android:layout_marginTop="8dp"
+                        android:layout_centerHorizontal="true"
                         />
 
-                </LinearLayout>
+                </RelativeLayout>
                 <View
                     android:layout_width="0.5dp"
                     android:layout_height="match_parent"
@@ -463,39 +546,56 @@
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:background="@color/colores_news_14"/>
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/ll_wisdommanage_Servicemall"
                 android:layout_width="120dp"
                 android:layout_height="100dp"
                 android:orientation="vertical"
                 android:gravity="center"
                >
-                <ImageView
 
+                <ImageView
+                    android:id="@+id/ima_servicrmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@mipmap/fuwushangchengtt"
                     android:layout_marginTop="10dp"
+                    android:layout_centerHorizontal="true"
                     />
                 <TextView
+                    android:id="@+id/tv_lbn"
+                    android:layout_below="@id/ima_servicrmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/laobaninag"
                     android:textSize="14.5dp"
                     android:textColor="@color/tag_mask"
                     android:layout_marginTop="4dp"
+                    android:layout_centerHorizontal="true"
                     />
                 <TextView
+                    android:id="@+id/tv_servicrmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/laobaninag"
+                    android:textSize="11sp"
+                    android:textColor="@color/point"
+                    android:layout_marginTop="4dp"
+                    android:layout_toRightOf="@id/ima_servicrmall"
+                    />
+                <TextView
+                    android:layout_below="@id/tv_lbn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/shopservicemall"
                     android:textSize="14.5dp"
                     android:textColor="@color/tag_mask"
+                    android:layout_centerHorizontal="true"
                    />
 
 
 
-            </LinearLayout>
+            </RelativeLayout>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"

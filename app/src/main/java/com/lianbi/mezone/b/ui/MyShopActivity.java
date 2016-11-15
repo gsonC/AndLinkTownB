@@ -19,6 +19,7 @@ import com.alibaba.fastjson.JSON;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.lianbi.mezone.b.app.Constants;
 import com.lianbi.mezone.b.bean.MyShopInfoBean;
 import com.lianbi.mezone.b.bean.ShopIntroduceImageBean;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
@@ -358,6 +359,12 @@ public class MyShopActivity extends BaseActivity {
 
 						@Override
 						public void onResponseResult(Result result) {
+							ContentUtils.putSharePre(MyShopActivity.this,
+									Constants.USERTAG, Constants.USERSHOPPROVINCEID,provinceId);
+							ContentUtils.putSharePre(MyShopActivity.this,
+									Constants.USERTAG, Constants.USERSHOPLEAGUESCITY,cityCode);
+							ContentUtils.putSharePre(MyShopActivity.this,
+									Constants.USERTAG, Constants.USERSHOPLEAGUESAREA,areaCode);
 							ContentUtils.showMsg(MyShopActivity.this,
 									"修改省市区成功");
 						}

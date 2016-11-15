@@ -2,9 +2,11 @@ package com.lianbi.mezone.b.ui;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -36,7 +38,7 @@ import cn.com.hgh.view.AbPullToRefreshView;
 /**
  * 到店明细
  */
-public class ComeDetailActivity extends BaseActivity implements AbPullToRefreshView.OnFooterLoadListener, AbPullToRefreshView.OnHeaderRefreshListener {
+public class ComeDetailActivity extends BaseActivity {
 
 
 	public static final int POSITION0 = 0;
@@ -49,6 +51,12 @@ public class ComeDetailActivity extends BaseActivity implements AbPullToRefreshV
 	ListView actComedeatilListview;
 	@Bind(R.id.act_comedeatil_abpulltorefreshview)
 	AbPullToRefreshView actComedeatilAbpulltorefreshview;
+	@Bind(R.id.tv_addupto)
+	TextView tvAddupto;
+	@Bind(R.id.tv_rmb)
+	TextView tv_rmb;
+	@Bind(R.id.lay_bottom)
+	LinearLayout layBottom;
 
 	private ArrayList<ComeService> mWholeData = new ArrayList<ComeService>();
 	private ArrayList<ComeService> mPaySuccessDatas = new ArrayList<ComeService>();
@@ -101,10 +109,10 @@ public class ComeDetailActivity extends BaseActivity implements AbPullToRefreshV
 	private String orderNo = "";
 	private String orderStatus = "";
 	private String endTime = "";
-	private String  dateStatus="";
+	private String dateStatus = "";
+
 	@Override
-	@OnClick({R.id.tv_all, R.id.tv_success, R.id.tv_fail, R.id.back,R.id.tv_today, R.id.tv_weekday, R.id.tv_onemonth, R.id.tv_ji, R.id.tv_year,
-			R.id.tv_starttime, R.id.tv_finishtime, R.id.iv_close})
+	@OnClick({R.id.tv_all, R.id.tv_success, R.id.tv_fail, R.id.back, R.id.tv_today, R.id.tv_weekday, R.id.tv_onemonth, R.id.tv_ji, R.id.tv_year, R.id.tv_starttime, R.id.tv_finishtime, R.id.iv_close})
 	protected void onChildClick(View v) {
 		super.onChildClick(v);
 		switch (v.getId()) {
@@ -116,13 +124,7 @@ public class ComeDetailActivity extends BaseActivity implements AbPullToRefreshV
 				tvSuccess.setChecked(false);
 				tvFail.setChecked(false);
 				this.intentLayout = POSITION0;
-//				if (timeNoselected()) {
-//					ContentUtils.showMsg(ComeDetailActivity.this, "请选择查询时间");
-//					clearUpdate();
-//					return;
-//				} else {
-//				}
-				initSearch(beginTime,endTime,"",dateStatus,1);
+				initSearch(beginTime, endTime, "", dateStatus, 1);
 				getOrder(true, false);
 
 				break;
@@ -131,7 +133,7 @@ public class ComeDetailActivity extends BaseActivity implements AbPullToRefreshV
 				tvSuccess.setChecked(true);
 				tvFail.setChecked(false);
 				this.intentLayout = POSITION1;
-				initSearch(beginTime,endTime,"1",dateStatus,1);
+				initSearch(beginTime, endTime, "1", dateStatus, 1);
 				getOrder(true, false);
 				break;
 			case R.id.tv_fail:
@@ -140,21 +142,21 @@ public class ComeDetailActivity extends BaseActivity implements AbPullToRefreshV
 				tvSuccess.setChecked(false);
 				tvFail.setChecked(true);
 				this.intentLayout = POSITION2;
-				initSearch(beginTime,endTime,"91",dateStatus,1);
+				initSearch(beginTime, endTime, "91", dateStatus, 1);
 				getOrder(true, false);
 				break;
 			case R.id.tv_today:
-			tvStarttime.setText("");
-			tvFinishtime.setText("");
-			tvToday.setChecked(true);
-			tvWeekday.setChecked(false);
-			tvOnemonth.setChecked(false);
-			tvJi.setChecked(false);
-			tvYear.setChecked(false);
-			endTime =getTime(AbDateUtil.getDateYearMonthDayNowPlus("yyyyMMdd"));
-			initSearch( "",endTime,orderStatus,"00",1);
-			getOrder(true, false);
-			break;
+				tvStarttime.setText("");
+				tvFinishtime.setText("");
+				tvToday.setChecked(true);
+				tvWeekday.setChecked(false);
+				tvOnemonth.setChecked(false);
+				tvJi.setChecked(false);
+				tvYear.setChecked(false);
+				endTime = getTime(AbDateUtil.getDateYearMonthDayNowPlus("yyyyMMdd"));
+				initSearch("", endTime, orderStatus, "00", 1);
+				getOrder(true, false);
+				break;
 			case R.id.tv_weekday:
 				tvStarttime.setText("");
 				tvFinishtime.setText("");
@@ -163,9 +165,9 @@ public class ComeDetailActivity extends BaseActivity implements AbPullToRefreshV
 				tvOnemonth.setChecked(false);
 				tvJi.setChecked(false);
 				tvYear.setChecked(false);
-				beginTime =getTime(AbDateUtil.getDateG(6, "yyyyMMdd"));
-				endTime =getTime(AbDateUtil.getDateYearMonthDayNowPlus("yyyyMMdd"));
-				initSearch( "",endTime,orderStatus,"01",1);
+				beginTime = getTime(AbDateUtil.getDateG(6, "yyyyMMdd"));
+				endTime = getTime(AbDateUtil.getDateYearMonthDayNowPlus("yyyyMMdd"));
+				initSearch("", endTime, orderStatus, "01", 1);
 				getOrder(true, false);
 				break;
 			case R.id.tv_onemonth:
@@ -176,10 +178,10 @@ public class ComeDetailActivity extends BaseActivity implements AbPullToRefreshV
 				tvOnemonth.setChecked(true);
 				tvJi.setChecked(false);
 				tvYear.setChecked(false);
-				beginTime =getTime(AbDateUtil.getDateG(29, "yyyyMMdd"));
-				endTime =getTime(AbDateUtil.getDateYearMonthDayNowPlus("yyyyMMdd"));
+				beginTime = getTime(AbDateUtil.getDateG(29, "yyyyMMdd"));
+				endTime = getTime(AbDateUtil.getDateYearMonthDayNowPlus("yyyyMMdd"));
 
-				initSearch( "",endTime,orderStatus,"02",1);
+				initSearch("", endTime, orderStatus, "02", 1);
 				getOrder(true, false);
 				break;
 			case R.id.tv_ji:
@@ -190,11 +192,11 @@ public class ComeDetailActivity extends BaseActivity implements AbPullToRefreshV
 				tvOnemonth.setChecked(false);
 				tvJi.setChecked(true);
 				tvYear.setChecked(false);
-				beginTime =getTime(AbDateUtil.getDateG(89, "yyyyMMdd"));
-				endTime =getTime(AbDateUtil.getDateYearMonthDayNowPlus("yyyyMMdd"));
+				beginTime = getTime(AbDateUtil.getDateG(89, "yyyyMMdd"));
+				endTime = getTime(AbDateUtil.getDateYearMonthDayNowPlus("yyyyMMdd"));
 
 
-				initSearch( "",endTime,orderStatus,"03",1);
+				initSearch("", endTime, orderStatus, "03", 1);
 				getOrder(true, false);
 				break;
 			case R.id.tv_year:
@@ -205,10 +207,10 @@ public class ComeDetailActivity extends BaseActivity implements AbPullToRefreshV
 				tvOnemonth.setChecked(false);
 				tvJi.setChecked(false);
 				tvYear.setChecked(true);
-				beginTime =getTime(AbDateUtil.getDateG(364, "yyyyMMdd"));
-				endTime =getTime(AbDateUtil.getDateYearMonthDayNowPlus("yyyyMMdd"));
+				beginTime = getTime(AbDateUtil.getDateG(364, "yyyyMMdd"));
+				endTime = getTime(AbDateUtil.getDateYearMonthDayNowPlus("yyyyMMdd"));
 
-				initSearch( "",endTime,orderStatus, "04",1);
+				initSearch("", endTime, orderStatus, "04", 1);
 				getOrder(true, false);
 				break;
 			case R.id.tv_starttime:
@@ -224,7 +226,7 @@ public class ComeDetailActivity extends BaseActivity implements AbPullToRefreshV
 							beginTime = time;
 							if (!TextUtils.isEmpty(tvFinishtime.getText().toString())) {
 								someOperation();
-								initSearch(beginTime, endTime, orderStatus, "",1);
+								initSearch(beginTime, endTime, orderStatus, "", 1);
 								getOrder(true, false);
 							}
 						}
@@ -249,12 +251,7 @@ public class ComeDetailActivity extends BaseActivity implements AbPullToRefreshV
 							endTime = time;
 							if (!TextUtils.isEmpty(tvStarttime.getText().toString())) {
 								someOperation();
-								//				this.beginTime = beginTime;
-//				this.endTime = endTime;
-//				this.orderStatus = orderStatus;
-//				this.dateStatus = dateStatus;
-//				this.curPage=curPage;
-								initSearch(beginTime, endTime, orderStatus,"", 1);
+								initSearch(beginTime, endTime, orderStatus, "", 1);
 								getOrder(true, false);
 							}
 						}
@@ -265,26 +262,14 @@ public class ComeDetailActivity extends BaseActivity implements AbPullToRefreshV
 				timeSelectorTo.setTitle("结束时间");
 				timeSelectorTo.showCurrent();
 				break;
-			/*case R.id.iv_close:
-				String  strStarttime = tvStarttime.getText().toString();
-				String strFinishtime = tvFinishtime.getText().toString();
-				if (!TextUtils.isEmpty(strStarttime)) {
-					beginTime = "";
-					tvStarttime.setText("");
-				}
-				if (!TextUtils.isEmpty(strFinishtime)) {
-					endTime = "";
-					tvFinishtime.setText("");
-				}
-				if (timeNoselected()) {
-					clearUpdate();
-					return;
-				}
-				break;*/
+			case R.id.iv_close:
+				String startTime = tvStarttime.getText().toString();
+				String finishTime = tvFinishtime.getText().toString();
+				initSearch(startTime, finishTime, orderStatus, "", 1);
+				getOrder(true, false);
+				break;
 		}
 	}
-
-
 
 
 	private void someOperation() {
@@ -307,11 +292,31 @@ public class ComeDetailActivity extends BaseActivity implements AbPullToRefreshV
 		setContentView(R.layout.activity_come_detail);
 		ButterKnife.bind(this);
 		initAdapter();
-		endTime =getTime(AbDateUtil.getDateYearMonthDayNowPlus("yyyyMMdd"));
+		endTime = getTime(AbDateUtil.getDateYearMonthDayNowPlus("yyyyMMdd"));
 		//endTime =getTime(AbDateUtil.getDateYearMonthDayNowPlus("yyyyMMdd"));
-		initSearch(beginTime, endTime, orderStatus,"00", 1);
+		setListen();
+		initSearch(beginTime, endTime, orderStatus, "00", 1);
 		getOrder(true, false);
 
+	}
+
+	private void setListen() {
+		actComedeatilAbpulltorefreshview.setLoadMoreEnable(true);
+		actComedeatilAbpulltorefreshview.setPullRefreshEnable(true);
+		actComedeatilAbpulltorefreshview.setOnHeaderRefreshListener(new AbPullToRefreshView.OnHeaderRefreshListener() {
+			@Override
+			public void onHeaderRefresh(AbPullToRefreshView view) {
+				getOrder(true,false);
+			}
+		});
+
+		actComedeatilAbpulltorefreshview.setOnFooterLoadListener(new AbPullToRefreshView.OnFooterLoadListener() {
+
+			@Override
+			public void onFooterLoad(AbPullToRefreshView view) {
+				getOrder(false,true);
+			}
+		});
 	}
 
 	/**
@@ -327,8 +332,7 @@ public class ComeDetailActivity extends BaseActivity implements AbPullToRefreshV
 		}
 
 		try {
-			okHttpsImp.getOrderInfo(
-					uuid,                      //serNum
+			okHttpsImp.getOrderInfo(uuid,                      //serNum
 					"app",                     //source
 					reqTime,                   //reqTime
 					"VI082016110712224600004578",//userId
@@ -342,46 +346,49 @@ public class ComeDetailActivity extends BaseActivity implements AbPullToRefreshV
 					10 + "",                       //pageSize
 
 					new MyResultCallback<String>() {
-				@Override
-				public void onResponseResult(Result result) {
-					curPage++;
-					String reString = result.getData();
-					mWholeData.clear();
-					mPaySuccessDatas.clear();
-					mPayFailDatas.clear();
-					if (reString != null) {
-						JSONObject jsonObject;
-						try {
-							jsonObject = new JSONObject(reString);
-							reString = jsonObject.getString("responsePageList");
-							ArrayList<ComeService> mDatasL = (ArrayList<ComeService>) JSON.parseArray(reString, ComeService.class);
-							if (mDatasL.size() > 0) {
-								mWholeData.addAll(mDatasL);
-							}
-							for (ComeService bean : mDatasL) {
-								if (bean.getOrderStatus().equals("1")) {
-									mPaySuccessDatas.add(bean);
-								}
-								if (bean.getOrderStatus().equals("91")) {
-									mPayFailDatas.add(bean);
-								}
-							}
-							AbPullHide.hideRefreshView(isResh, actComedeatilAbpulltorefreshview);
+						@Override
+						public void onResponseResult(Result result) {
+							curPage++;
+							String reString = result.getData();
+							mWholeData.clear();
+							mPaySuccessDatas.clear();
+							mPayFailDatas.clear();
+							if (reString != null) {
+								JSONObject jsonObject;
+								try {
+									jsonObject = new JSONObject(reString);
+									long amtCount = jsonObject.getLong("amtCount");
 
-						} catch (Exception e) {
-							e.printStackTrace();
+									long amt = amtCount * 100;
+//											BigDecimal.valueOf(Long.valueOf(amtCount))
+//											.divide(new BigDecimal(100)).toString();
+									tv_rmb.setText("¥" + amt);
+									reString = jsonObject.getString("responsePageList");
+									ArrayList<ComeService> mDatasL = (ArrayList<ComeService>) JSON.parseArray(reString, ComeService.class);
+									Log.i("tag", "363--->" + orderStatus);
+									if (orderStatus.equals("")) {
+										mWholeData.addAll(mDatasL);
+									} else if (orderStatus.equals("1")) {
+										mPaySuccessDatas.addAll(mDatasL);
+									} else if (orderStatus.equals("91")) {
+										mPayFailDatas.addAll(mDatasL);
+									}
+									switchAdapter();
+									AbPullHide.hideRefreshView(isResh, actComedeatilAbpulltorefreshview);
+
+								} catch (Exception e) {
+									e.printStackTrace();
+								}
+							}
+							refreshingFinish();
 						}
-						switchAdapter();
-					}
-					refreshingFinish();
-				}
 
-				@Override
-				public void onResponseFailed(String msg) {
-					refreshingFinish();
-
-				}
-			});
+						@Override
+						public void onResponseFailed(String msg) {
+							refreshingFinish();
+							tv_rmb.setText("¥0");
+						}
+					});
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -390,27 +397,27 @@ public class ComeDetailActivity extends BaseActivity implements AbPullToRefreshV
 	}
 
 
-
-	private void initSearch(String beginTime, String endTime, String orderStatus, String dateStatus,int  curPage) {
+	private void initSearch(String beginTime, String endTime, String orderStatus, String dateStatus, int curPage) {
 		this.beginTime = beginTime;
 		this.endTime = endTime;
 		this.orderStatus = orderStatus;
 		this.dateStatus = dateStatus;
-		this.curPage=curPage;
+		this.curPage = curPage;
 	}
 
-	private void initSear(String beginTime, String endTime, int  curPage) {
+	private void initSear(String beginTime, String endTime, int curPage) {
 		this.beginTime = beginTime;
 		this.endTime = endTime;
-
-		this.curPage=curPage;
+		this.curPage = curPage;
 	}
+
 	/**
 	 * 初始化适配器
 	 */
 	private QuickAdapter<ComeService> mAdapter;
+
 	private void initAdapter() {
-		mAdapter = new QuickAdapter<ComeService>(this, R.layout.comeservice_item, mWholeData) {
+		mAdapter = new QuickAdapter<ComeService>(this, R.layout.comeservice_item, mDatas) {
 			@Override
 			protected void convert(BaseAdapterHelper helper, ComeService item) {
 				TextView tv_table = helper.getView(R.id.tv_table);
@@ -442,6 +449,14 @@ public class ComeDetailActivity extends BaseActivity implements AbPullToRefreshV
 	}
 
 	private void switchAdapter() {
+		int mDatasize = mDatas.size();
+		String intTxnAmt = "";
+
+//		for (ComeService comeService : mDatas) {
+//			intTxnAmt=intTxnAmt+comeService.getOrderPrice();
+//		}
+
+
 		switch (intentLayout) {
 			case POSITION0:
 				showingSelect(mWholeData);
@@ -456,15 +471,17 @@ public class ComeDetailActivity extends BaseActivity implements AbPullToRefreshV
 	}
 
 	private void showingSelect(List<ComeService> list) {
+		mDatas.addAll(list);
 		if (list.isEmpty()) {
 			actComedeatilListview.setVisibility(View.GONE);
-			actComedeatilAbpulltorefreshview.setVisibility(View.VISIBLE);
+			imgEmpty.setVisibility(View.VISIBLE);
 		} else {
 			actComedeatilListview.setVisibility(View.VISIBLE);
-			actComedeatilAbpulltorefreshview.setVisibility(View.GONE);
-			mAdapter.replaceAll(list);
+			imgEmpty.setVisibility(View.GONE);
+			mAdapter.replaceAll(mDatas);
 		}
 	}
+/*
 
 	@Override
 	public void onFooterLoad(AbPullToRefreshView view) {
@@ -481,6 +498,7 @@ public class ComeDetailActivity extends BaseActivity implements AbPullToRefreshV
 			getOrder(true, false);
 		}
 	}
+*/
 
 	@Override
 	protected void onDestroy() {
@@ -488,6 +506,7 @@ public class ComeDetailActivity extends BaseActivity implements AbPullToRefreshV
 		ButterKnife.unbind(this);
 		EventBus.getDefault().post(new ShouyeRefreshEvent(false));
 	}
+
 	private void refreshingFinish() {
 		if (mPullRefreshing) {
 			actComedeatilAbpulltorefreshview.onHeaderRefreshFinish();
@@ -498,10 +517,11 @@ public class ComeDetailActivity extends BaseActivity implements AbPullToRefreshV
 			mPullLoading = false;
 		}
 	}
+
 	private String getTime(String time) {
 		String year = time.substring(0, 4);
 		String mouth = time.substring(4, 6);
-		String day=time.substring(6,8);
-		return year + "-" + mouth + "-"+day;
+		String day = time.substring(6, 8);
+		return year + "-" + mouth + "-" + day;
 	}
 }
