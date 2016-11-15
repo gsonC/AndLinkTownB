@@ -142,8 +142,6 @@ public class PicFromPrintUtils {
      * @param bitmapOrg
      */
     public static Bitmap compressBitmap(Bitmap bitmapOrg) {
-        // 加载需要操作的图片，这里是一张图片
-//        Bitmap bitmapOrg = BitmapFactory.decodeResource(getResources(),R.drawable.alipay);
         // 获取这个图片的宽和高
         int width = bitmapOrg.getWidth();
         int height = bitmapOrg.getHeight();

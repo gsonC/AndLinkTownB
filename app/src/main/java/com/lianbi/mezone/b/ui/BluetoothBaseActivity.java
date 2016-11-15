@@ -1,17 +1,27 @@
 package com.lianbi.mezone.b.ui;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.View;
@@ -19,18 +29,26 @@ import android.view.Window;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.google.zxing.WriterException;
 import com.lianbi.mezone.b.bean.OneDishBean;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
+import com.lianbi.mezone.b.photo.AbImageUtil;
 import com.lzy.okgo.request.BaseRequest;
 import com.xizhi.mezone.b.R;
 
+import java.io.FileInputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import cn.com.hgh.service.BluetoothService;
+import cn.com.hgh.utils.AbDateUtil;
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.PicFromPrintUtils;
 import cn.com.hgh.utils.Result;
+
+import static com.lianbi.mezone.b.photo.AbImageUtil.calculateInSampleSize;
 
 /**
  * Created by zemin.zheng on 2016/11/1.
@@ -52,8 +70,9 @@ public class BluetoothBaseActivity extends BaseActivity {
     public static final String TOAST = "toast";
 
     // Intent request codes
-    private static final int REQUEST_CONNECT_DEVICE = 1;
-    private static final int REQUEST_ENABLE_BT = 2;
+    private static final int REQUEST_ENABLE_BT = 1001;
+    private static final int PERMISSION_REQUEST_COARSE_LOCATION = 1002;
+    private static final int REQUEST_CODE_LOCATION_SETTINGS = 1003;
 
     // Name of the connected device
     private String mConnectedDeviceName = null;
@@ -64,29 +83,95 @@ public class BluetoothBaseActivity extends BaseActivity {
     // Member object for the services
     public static BluetoothService mService = null;
 
-    private ProgressDialog dialog;
+    private AlertDialog.Builder b;
+
+    private static ArrayList<BluetoothDevice> mBluetoothDeviceList = new ArrayList<>();
+
+    private BluetoothDevice deviceIsSelected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {//如果 API level 是大于等于 23(Android 6.0) 时
+            if (isLocationEnable(this)) {
+                setLocationService();
+            }
+
+            //判断是否具有权限
+            if (this.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                //判断是否需要向用户解释为什么需要申请该权限
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                        Manifest.permission.ACCESS_COARSE_LOCATION)) {
+                    ContentUtils.showMsg(this, "自Android 6.0开始需要打开位置权限才可以搜索到蓝牙设备");
+                }
+                //请求权限
+                requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_REQUEST_COARSE_LOCATION);
+            }
+        }
         checkBluetoothExist();
-        initWaitingDialog();
+        initAlertDialogBuilder();
+        addIntentFilter();
+
+        if (mBluetoothAdapter.isEnabled()) {
+            // Get a set of currently paired devices
+            Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
+
+            // If there are paired devices, add each one to the ArrayAdapter
+            if (!pairedDevices.isEmpty()) {
+                for (BluetoothDevice device : pairedDevices) {
+                    if (!compareTo(mBluetoothDeviceList, device)) {
+                        mBluetoothDeviceList.add(device);
+                    }
+                }
+            }
+        }
     }
 
-    private void initWaitingDialog() {
-        dialog = new ProgressDialog(getApplicationContext());
-        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.setCancelable(false);
-        dialog.setIndeterminate(false);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setMessage("正在连接...");
+    private void initAlertDialogBuilder() {
+        b = new AlertDialog.Builder(this);
+        b.setTitle("请选择要连接的设备");
+        b.setPositiveButton("连接", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                bluetoothAdapterCancelDiscovery();
+                mService.connect(deviceIsSelected);
+            }
+        });
+        b.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                bluetoothAdapterCancelDiscovery();
+                dialog.dismiss();
+            }
+        });
+        b.setNeutralButton("搜索更多", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                doDiscovery();
+            }
+        });
+        b.setCancelable(false);
+    }
+
+    private void setLocationService() {
+        Intent locationIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+        this.startActivityForResult(locationIntent, REQUEST_CODE_LOCATION_SETTINGS);
+    }
+
+    public boolean isLocationEnable(Context context) {
+        LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        boolean networkProvider = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        boolean gpsProvider = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        if (networkProvider || gpsProvider) return true;
+        return false;
     }
 
     protected void checkBluetoothExist() {
         if (mBluetoothAdapter == null) {
-            ContentUtils.showMsg(BluetoothBaseActivity.this, "您的设备不支持蓝牙");
+            ContentUtils.showMsg(this, "您的设备不支持蓝牙");
         }
     }
 
@@ -98,35 +183,56 @@ public class BluetoothBaseActivity extends BaseActivity {
         }
         if (!mBluetoothAdapter.isEnabled()) {
             //打开蓝牙
-            Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
+            openBluetooth();
         }
+    }
+
+    //打开蓝牙
+    private void openBluetooth() {
+        Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+        startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
-            case REQUEST_CONNECT_DEVICE:
-                // When DeviceListActivity returns with a device to connect
-                if (resultCode == Activity.RESULT_OK) {
-                    // Get the device MAC address
-                    String address = data.getExtras()
-                            .getString(BluetoothDeviceListActivity.EXTRA_DEVICE_ADDRESS);
-                    // Get the BLuetoothDevice object
-                    BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
-                    // Attempt to connect to the device
-                    mService.connect(device);
-                }
-                break;
             case REQUEST_ENABLE_BT:
                 // When the request to enable Bluetooth returns
                 if (resultCode == Activity.RESULT_OK) {
-                    ContentUtils.showMsg(BluetoothBaseActivity.this, "蓝牙已打开");
-                    connectingBluetoothDialog();
+                    ContentUtils.showMsg(this, "蓝牙已打开");
+
+                    // Get a set of currently paired devices
+                    Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
+
+                    // If there are paired devices, add each one to the ArrayAdapter
+                    if (pairedDevices.isEmpty()) {
+                        showSearchBluetoothDeviceDialog();
+                    } else {
+                        for (BluetoothDevice device : pairedDevices) {
+                            if (!compareTo(mBluetoothDeviceList, device)) {
+                                mBluetoothDeviceList.add(device);
+                            }
+                        }
+                        connectingBluetoothDialog();
+                    }
                 } else {
-                    ContentUtils.showMsg(BluetoothBaseActivity.this, "蓝牙没有打开");
+                    ContentUtils.showMsg(this, "蓝牙没有打开");
                 }
+                break;
+            case REQUEST_CODE_LOCATION_SETTINGS:
+                if (resultCode == Activity.RESULT_OK) {
+                    if (isLocationEnable(this)) {
+                        //定位已打开的处理
+                        ContentUtils.showMsg(this, "定位已打开");
+                    } else {
+                        //定位依然没有打开的处理
+                        ContentUtils.showMsg(this, "请打开定位");
+                    }
+                }
+                break;
+            default:
+                super.onActivityResult(requestCode, resultCode, data);
+                break;
         }
     }
 
@@ -170,20 +276,24 @@ public class BluetoothBaseActivity extends BaseActivity {
     protected void showPrintTicketDialog(final String tableId) {
         if (!mBluetoothAdapter.isEnabled()) {
             //打开蓝牙
-            Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
+            openBluetooth();
             return;
         }
 
-//         Check that we're actually connected before trying anything
+        if (mBluetoothDeviceList.isEmpty()) {
+            showSearchBluetoothDeviceDialog();
+            return;
+        }
+
+        // Check that we're actually connected before trying anything
         if (mService.getState() != BluetoothService.STATE_CONNECTED) {
             connectingBluetoothDialog();
             return;
         }
 
-        final Dialog dialog = new Dialog(BluetoothBaseActivity.this);
+        final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        View view = View.inflate(BluetoothBaseActivity.this, R.layout.print_ticket_dialog_layout, null);
+        View view = View.inflate(this, R.layout.print_ticket_dialog_layout, null);
         view.findViewById(R.id.positive_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -203,28 +313,45 @@ public class BluetoothBaseActivity extends BaseActivity {
         dialog.show();
     }
 
-    private void connectingBluetoothDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(BluetoothBaseActivity.this);
-        builder.setTitle("蓝牙没有连接");
-        builder.setMessage("请选择下一步操作");
+    private void showSearchBluetoothDeviceDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("没有匹配的蓝牙设备");
+        builder.setMessage("是否搜索新设备");
         builder.setCancelable(false);
-        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("否", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
             }
         });
-        builder.setPositiveButton("重选设备", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("是", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // Launch the DeviceListActivity to see devices and do scan
-                Intent serverIntent = new Intent(BluetoothBaseActivity.this, BluetoothDeviceListActivity.class);
-                startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
+                dialog.dismiss();
+                doDiscovery();
             }
         });
         AlertDialog d = builder.create();
         d.setCanceledOnTouchOutside(false);
         d.show();
+    }
+
+    private void connectingBluetoothDialog() {
+        deviceIsSelected = mBluetoothDeviceList.get(0);
+        String[] deviceArr = new String[mBluetoothDeviceList.size()];
+        for (int i = 0; i < mBluetoothDeviceList.size(); i++) {
+            BluetoothDevice device = mBluetoothDeviceList.get(i);
+            deviceArr[i] = device.getName() + "\n" + device.getAddress();
+        }
+        b.setSingleChoiceItems(deviceArr, 0, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                deviceIsSelected = mBluetoothDeviceList.get(which);
+            }
+        });
+        AlertDialog dialog = b.create();
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
     }
 
     //打印小票
@@ -251,36 +378,159 @@ public class BluetoothBaseActivity extends BaseActivity {
                     List<OneDishBean> list = JSON.parseArray(bapsOrderDetlList.getString("list"), OneDishBean.class);
                     String allAmount = bapsOrderDetlList.getString("allAmount");//总额
                     String qrUrl = jsonObject.getString("qrUrl");//生成二维码
+                    if (list == null || list.isEmpty()) {
+                        ContentUtils.showMsg(BluetoothBaseActivity.this, "没有订单信息");
+                        return;
+                    }
+                    mService.printCenter();
+                    sendMessage("*******老板娘订单(消费单)*******");
+                    sendMessage("\n");
+                    sendMessage("\n");
+                    sendMessage("鹅掌门(地中海店)");
+                    sendMessage("\n");
+                    sendMessage("\n");
+                    sendMessage("消费清单");
+                    sendMessage("\n");
+                    sendMessage("\n");
+
+                    mService.printLeft();
+                    OneDishBean bean = list.get(0);
+                    sendMessage("桌号：" + bean.getTableId() + "           人数：" + bean.getPersonNum());
+                    sendMessage("\n");
+
+                    String time = AbDateUtil.getSpecialFormatTimeFromTimeMillisString(bean.getCreateTime(),
+                            AbDateUtil.dateFormatYMDHMS);
+                    sendMessage("时间：" + time);
+                    sendMessage("\n");
+                    sendMessage("\n");
+
+                    mService.printCenter();
+                    sendMessage("--------------------------------");
+                    sendMessage("\n");
+                    sendMessage("\n");
+
+                    mService.printLeft();
+                    sendMessage("商品名称      数量   单价   小计");
+                    sendMessage("\n");
+                    for (OneDishBean b : list) {
+                        String proName = b.getProName();
+                        String num = b.getNum();
+                        String price = b.getPrice();
+                        String totalAmount = b.getTotalAmount();
+                        sendMessage(proName);
+                        String s0 = "      ";
+                        if ("商品名称".length() > proName.length()) {
+                            for (int i = 0; i < "商品名称".length() - proName.length(); i++) {
+                                s0 = s0.concat("  ");
+                            }
+                        }
+                        if ("商品名称".length() < proName.length()) {
+                            for (int i = 0; i < proName.length() - "商品名称".length(); i++) {
+                                s0 = s0.substring(2);
+                            }
+                        }
+                        sendMessage(s0);
+                        sendMessage(num);
+                        for (int i = 0; i < "数量".length() * 2 - num.length(); i++) {
+                            sendMessage(" ");
+                        }
+                        sendMessage("   ");
+                        sendMessage(price);
+                        String s1 = "   ";
+                        if ("单价".length() * 2 > price.length()) {
+                            for (int i = 0; i < "单价".length() * 2 - price.length(); i++) {
+                                s1 = s1.concat(" ");
+                            }
+                        }
+                        if ("单价".length() * 2 < price.length()) {
+                            for (int i = 0; i < price.length() - "单价".length() * 2; i++) {
+                                s1 = s1.substring(1);
+                            }
+                        }
+                        sendMessage(s1);
+                        sendMessage(totalAmount);
+                        sendMessage("\n");
+                    }
+                    sendMessage("总计                        " + allAmount);
+                    sendMessage("\n");
+                    sendMessage("\n");
+
+                    mService.printReset();
+                    mService.printCenter();
+                    sendMessage("--------------------------------");
+                    Bitmap bitmap = PicFromPrintUtils.compressBitmap(ContentUtils.createQrBitmap(qrUrl, true, 1000, 1000));
+                    sendMessage(bitmap);
+
+                    mService.printReset();
+                    mService.printCenter();
+                    sendMessage("扫码关注享更多优惠");
+                    sendMessage("\n");
+                    sendMessage("\n");
+                    sendMessage("\n");
+                    sendMessage("--------------------------------");
+                    sendMessage("\n");
+                    sendMessage("\n");
+                    sendMessage("\n");
+
+                    sendMessage("*******老板娘订单(服务单)*******");
+                    sendMessage("\n");
+                    sendMessage("\n");
+                    mService.printLeft();
+                    sendMessage("桌号：" + bean.getTableId() + "         人数：" + bean.getPersonNum());
+                    sendMessage("\n");
+                    sendMessage("时间：" + time);
+                    sendMessage("\n");
+                    sendMessage("\n");
+
+                    mService.printCenter();
+                    sendMessage("--------------------------------");
+                    sendMessage("\n");
+                    sendMessage("\n");
+
+                    mService.printLeft();
+                    mService.printSize(1);
+                    sendMessage("商品名称            数量");
+                    mService.printSize(0);
+                    sendMessage("\n");
+                    sendMessage("\n");
+                    for (OneDishBean b : list) {
+                        String proName = b.getProName();
+                        String num = b.getNum();
+                        mService.printSize(1);
+                        sendMessage(proName);
+                        String s0 = "            ";
+                        if ("商品名称".length() > proName.length()) {
+                            for (int i = 0; i < "商品名称".length() - proName.length(); i++) {
+                                s0 = s0.concat("  ");
+                            }
+                        }
+                        if ("商品名称".length() < proName.length()) {
+                            for (int i = 0; i < proName.length() - "商品名称".length(); i++) {
+                                s0 = s0.substring(2);
+                            }
+                        }
+                        sendMessage(s0);
+                        sendMessage(num);
+                        mService.printSize(0);
+                        sendMessage("\n");
+                    }
+
+                    mService.printReset();
+                    mService.printCenter();
+                    sendMessage("\n");
+                    sendMessage("--------------------------------");
+                    sendMessage("\n");
+                    sendMessage("\n");
+                    sendMessage("\n");
+                    sendMessage("\n");
+                    sendMessage("--------------------------------");
+                    sendMessage("\n");
+                    sendMessage("--------------------------------");
+                    sendMessage("\n");
+                    sendMessage("\n");
+                    sendMessage("\n");
+                    sendMessage("\n");
                 }
-                mService.printCenter();
-                sendMessage("*******老板娘订单(消费单)*******");
-                sendMessage("\n");
-                sendMessage("\n");
-                sendMessage("鹅掌门(地中海店)");
-                sendMessage("\n");
-                sendMessage("\n");
-                sendMessage("消费清单");
-                sendMessage("\n");
-                sendMessage("\n");
-
-                mService.printLeft();
-                sendMessage("桌号：A02           人数：4");
-                sendMessage("\n");
-                sendMessage("\n");
-
-                sendMessage("单号：A022131232322");
-                sendMessage("\n");
-                sendMessage("\n");
-
-                sendMessage("时间：2016-10-13   13:10:52");
-                sendMessage("\n");
-                sendMessage("\n");
-
-                mService.printCenter();
-                sendMessage("-------------------------");
-                sendMessage("\n");
-                sendMessage("\n");
-                sendMessage("\n");
             }
 
             @Override
@@ -297,15 +547,14 @@ public class BluetoothBaseActivity extends BaseActivity {
                 case MESSAGE_STATE_CHANGE:
                     switch (msg.arg1) {
                         case BluetoothService.STATE_CONNECTED:
-                            dialog.dismiss();
+                            ContentUtils.showMsg(BluetoothBaseActivity.this, "蓝牙已连接");
                             break;
                         case BluetoothService.STATE_CONNECTING:
-                            dialog.show();
+                            ContentUtils.showMsg(BluetoothBaseActivity.this, "正在连接蓝牙...");
                             break;
                         case BluetoothService.STATE_LISTEN:
                         case BluetoothService.STATE_NONE:
                             ContentUtils.showMsg(BluetoothBaseActivity.this, "无连接");
-                            dialog.dismiss();
                             break;
                     }
                     break;
@@ -324,7 +573,6 @@ public class BluetoothBaseActivity extends BaseActivity {
                     mConnectedDeviceName = msg.getData().getString(DEVICE_NAME);
                     ContentUtils.showMsg(BluetoothBaseActivity.this, "连接至"
                             + mConnectedDeviceName);
-                    dialog.dismiss();
                     break;
                 case MESSAGE_TOAST:
                     ContentUtils.showMsg(BluetoothBaseActivity.this, msg.getData().getString(TOAST));
@@ -332,4 +580,116 @@ public class BluetoothBaseActivity extends BaseActivity {
             }
         }
     };
+
+    private void doDiscovery() {
+        ContentUtils.showMsg(BluetoothBaseActivity.this, "正在查找新蓝牙设备...");
+
+        // If we're already discovering, stop it
+        bluetoothAdapterCancelDiscovery();
+
+        // Request discover from BluetoothAdapter
+        mBluetoothAdapter.startDiscovery();
+    }
+
+    // If we're already discovering, stop it
+    private void bluetoothAdapterCancelDiscovery() {
+        if (mBluetoothAdapter.isDiscovering()) {
+            mBluetoothAdapter.cancelDiscovery();
+        }
+    }
+
+    // The BroadcastReceiver that listens for discovered devices and
+    // changes the title when discovery is finished
+    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            BluetoothDevice device = null;
+            // When discovery finds a device
+            if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+                // Get the BluetoothDevice object from the Intent
+                device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                // If it's already paired, skip it, because it's been listed already
+                if (device.getBondState() != BluetoothDevice.BOND_BONDED) {
+                    if (!compareTo(mBluetoothDeviceList, device)) {
+                        mBluetoothDeviceList.add(device);
+                    }
+                    connectingBluetoothDialog();
+                }
+                // When discovery is finished, change the Activity title
+            } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
+                if (device == null) {
+                    ContentUtils.showMsg(BluetoothBaseActivity.this, "没有找到新设备");
+                }
+            }
+        }
+    };
+
+    private void addIntentFilter() {
+        IntentFilter filter = new IntentFilter();
+        // Register for broadcasts when a device is discovered
+        filter.addAction(BluetoothDevice.ACTION_FOUND);
+        // Register for broadcasts when discovery has finished
+        filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
+        this.registerReceiver(mReceiver, filter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        // Make sure we're not doing discovery anymore
+        if (mBluetoothAdapter != null) {
+            mBluetoothAdapter.cancelDiscovery();
+        }
+
+        // Unregister broadcast listeners
+        this.unregisterReceiver(mReceiver);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == PERMISSION_REQUEST_COARSE_LOCATION) {
+            //用户允许改权限，0表示允许，-1表示拒绝 PERMISSION_GRANTED = 0， PERMISSION_DENIED = -1
+            //permission was granted, yay! Do the contacts-related task you need to do.
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                //这里进行授权被允许的处理
+
+                if (!mBluetoothAdapter.isEnabled()) {
+                    //打开蓝牙
+                    openBluetooth();
+                    return;
+                }
+
+                if (mBluetoothDeviceList.isEmpty()) {
+                    showSearchBluetoothDeviceDialog();
+                    return;
+                }
+
+                // Check that we're actually connected before trying anything
+                if (mService.getState() != BluetoothService.STATE_CONNECTED) {
+                    connectingBluetoothDialog();
+                    return;
+                }
+            } else {
+                //permission denied, boo! Disable the functionality that depends on this permission.
+                //这里进行权限被拒绝的处理
+                ContentUtils.showMsg(this, "权限申请被拒，无法搜索到蓝牙设备");
+            }
+        } else {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
+    private boolean compareTo(List<BluetoothDevice> data, BluetoothDevice enity) {
+        int s = data.size();
+        if (enity != null) {
+            for (int i = 0; i < s; i++) {
+                if (enity.getAddress().equals(data.get(i).getAddress())) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }
