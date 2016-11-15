@@ -13,14 +13,19 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.lianbi.mezone.b.bean.OneDishBean;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.lzy.okgo.request.BaseRequest;
 import com.xizhi.mezone.b.R;
 
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 import cn.com.hgh.service.BluetoothService;
 import cn.com.hgh.utils.ContentUtils;
@@ -47,8 +52,8 @@ public class BluetoothBaseActivity extends BaseActivity {
     public static final String TOAST = "toast";
 
     // Intent request codes
-    private static final int REQUEST_CONNECT_DEVICE = 1001;
-    private static final int REQUEST_ENABLE_BT = 1002;
+    private static final int REQUEST_CONNECT_DEVICE = 1;
+    private static final int REQUEST_ENABLE_BT = 2;
 
     // Name of the connected device
     private String mConnectedDeviceName = null;
@@ -59,59 +64,24 @@ public class BluetoothBaseActivity extends BaseActivity {
     // Member object for the services
     public static BluetoothService mService = null;
 
-    private final Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case MESSAGE_STATE_CHANGE:
-                    ProgressDialog dialog = new ProgressDialog(BluetoothBaseActivity.this);
-                    switch (msg.arg1) {
-                        case BluetoothService.STATE_CONNECTED:
-                            dialog.dismiss();
-                            break;
-                        case BluetoothService.STATE_CONNECTING:
-                            dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                            dialog.setCanceledOnTouchOutside(false);
-                            dialog.setCancelable(false);
-                            dialog.setIndeterminate(false);
-                            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                            dialog.setMessage("正在连接...");
-                            dialog.show();
-                            break;
-                        case BluetoothService.STATE_LISTEN:
-                        case BluetoothService.STATE_NONE:
-                            ContentUtils.showMsg(BluetoothBaseActivity.this, "无连接");
-                            break;
-                    }
-                    break;
-                case MESSAGE_WRITE:
-                    //byte[] writeBuf = (byte[]) msg.obj;
-                    // construct a string from the buffer
-                    //String writeMessage = new String(writeBuf);
-                    break;
-                case MESSAGE_READ:
-                    //byte[] readBuf = (byte[]) msg.obj;
-                    // construct a string from the valid bytes in the buffer
-                    //String readMessage = new String(readBuf, 0, msg.arg1);
-                    break;
-                case MESSAGE_DEVICE_NAME:
-                    // save the connected device's name
-                    mConnectedDeviceName = msg.getData().getString(DEVICE_NAME);
-                    ContentUtils.showMsg(BluetoothBaseActivity.this, "连接至"
-                            + mConnectedDeviceName);
-                    break;
-                case MESSAGE_TOAST:
-                    ContentUtils.showMsg(BluetoothBaseActivity.this, msg.getData().getString(TOAST));
-                    break;
-            }
-        }
-    };
+    private ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         checkBluetoothExist();
+        initWaitingDialog();
+    }
+
+    private void initWaitingDialog() {
+        dialog = new ProgressDialog(getApplicationContext());
+        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setCancelable(false);
+        dialog.setIndeterminate(false);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setMessage("正在连接...");
     }
 
     protected void checkBluetoothExist() {
@@ -123,14 +93,14 @@ public class BluetoothBaseActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-       /* if (!mBluetoothAdapter.isEnabled()) {
+        if (mService == null) {
+            mService = new BluetoothService(this, mHandler);
+        }
+        if (!mBluetoothAdapter.isEnabled()) {
             //打开蓝牙
             Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
         }
-        if (mService == null) {
-            mService = new BluetoothService(this, mHandler);
-        }*/
     }
 
     @Override
@@ -153,9 +123,7 @@ public class BluetoothBaseActivity extends BaseActivity {
                 // When the request to enable Bluetooth returns
                 if (resultCode == Activity.RESULT_OK) {
                     ContentUtils.showMsg(BluetoothBaseActivity.this, "蓝牙已打开");
-                    // Launch the DeviceListActivity to see devices and do scan
-                    Intent serverIntent = new Intent(this, BluetoothDeviceListActivity.class);
-                    startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
+                    connectingBluetoothDialog();
                 } else {
                     ContentUtils.showMsg(BluetoothBaseActivity.this, "蓝牙没有打开");
                 }
@@ -207,29 +175,9 @@ public class BluetoothBaseActivity extends BaseActivity {
             return;
         }
 
-        // Check that we're actually connected before trying anything
+//         Check that we're actually connected before trying anything
         if (mService.getState() != BluetoothService.STATE_CONNECTED) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(BluetoothBaseActivity.this);
-            builder.setTitle("蓝牙没有连接");
-            builder.setMessage("请选择下一步操作");
-            builder.setCancelable(false);
-            builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            builder.setPositiveButton("重选设备", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    // Launch the DeviceListActivity to see devices and do scan
-                    Intent serverIntent = new Intent(BluetoothBaseActivity.this, BluetoothDeviceListActivity.class);
-                    startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
-                }
-            });
-            AlertDialog d = builder.create();
-            d.setCanceledOnTouchOutside(false);
-            d.show();
+            connectingBluetoothDialog();
             return;
         }
 
@@ -255,6 +203,30 @@ public class BluetoothBaseActivity extends BaseActivity {
         dialog.show();
     }
 
+    private void connectingBluetoothDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(BluetoothBaseActivity.this);
+        builder.setTitle("蓝牙没有连接");
+        builder.setMessage("请选择下一步操作");
+        builder.setCancelable(false);
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.setPositiveButton("重选设备", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Launch the DeviceListActivity to see devices and do scan
+                Intent serverIntent = new Intent(BluetoothBaseActivity.this, BluetoothDeviceListActivity.class);
+                startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
+            }
+        });
+        AlertDialog d = builder.create();
+        d.setCanceledOnTouchOutside(false);
+        d.show();
+    }
+
     //打印小票
     private void printTicket(String tableId) {
         okHttpsImp.tableInfoPrint(new MyResultCallback<String>() {
@@ -272,6 +244,14 @@ public class BluetoothBaseActivity extends BaseActivity {
 
             @Override
             public void onResponseResult(Result result) {
+                String data = result.getData();
+                if (!TextUtils.isEmpty(data)) {
+                    JSONObject jsonObject = JSON.parseObject(data);
+                    JSONObject bapsOrderDetlList = jsonObject.getJSONObject("bapsOrderDetlList");
+                    List<OneDishBean> list = JSON.parseArray(bapsOrderDetlList.getString("list"), OneDishBean.class);
+                    String allAmount = bapsOrderDetlList.getString("allAmount");//总额
+                    String qrUrl = jsonObject.getString("qrUrl");//生成二维码
+                }
                 mService.printCenter();
                 sendMessage("*******老板娘订单(消费单)*******");
                 sendMessage("\n");
@@ -309,4 +289,47 @@ public class BluetoothBaseActivity extends BaseActivity {
             }
         }, userShopInfoBean.getBusinessId(), tableId);
     }
+
+    private final Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case MESSAGE_STATE_CHANGE:
+                    switch (msg.arg1) {
+                        case BluetoothService.STATE_CONNECTED:
+                            dialog.dismiss();
+                            break;
+                        case BluetoothService.STATE_CONNECTING:
+                            dialog.show();
+                            break;
+                        case BluetoothService.STATE_LISTEN:
+                        case BluetoothService.STATE_NONE:
+                            ContentUtils.showMsg(BluetoothBaseActivity.this, "无连接");
+                            dialog.dismiss();
+                            break;
+                    }
+                    break;
+                case MESSAGE_WRITE:
+                    //byte[] writeBuf = (byte[]) msg.obj;
+                    // construct a string from the buffer
+                    //String writeMessage = new String(writeBuf);
+                    break;
+                case MESSAGE_READ:
+                    //byte[] readBuf = (byte[]) msg.obj;
+                    // construct a string from the valid bytes in the buffer
+                    //String readMessage = new String(readBuf, 0, msg.arg1);
+                    break;
+                case MESSAGE_DEVICE_NAME:
+                    // save the connected device's name
+                    mConnectedDeviceName = msg.getData().getString(DEVICE_NAME);
+                    ContentUtils.showMsg(BluetoothBaseActivity.this, "连接至"
+                            + mConnectedDeviceName);
+                    dialog.dismiss();
+                    break;
+                case MESSAGE_TOAST:
+                    ContentUtils.showMsg(BluetoothBaseActivity.this, msg.getData().getString(TOAST));
+                    break;
+            }
+        }
+    };
 }

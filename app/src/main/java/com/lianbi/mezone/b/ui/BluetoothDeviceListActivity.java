@@ -1,5 +1,6 @@
 package com.lianbi.mezone.b.ui;
 
+import android.Manifest;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -7,7 +8,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.support.v4.app.FragmentActivity;
+import android.content.pm.PackageManager;
+import android.location.LocationManager;
+import android.os.Build;
+import android.provider.Settings;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -23,15 +29,17 @@ import android.widget.TextView;
 import com.xizhi.mezone.b.R;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnItemClick;
+import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.view.MyListView;
 
-public class BluetoothDeviceListActivity extends FragmentActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
+public class BluetoothDeviceListActivity extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
     @Bind(R.id.back)
     ImageView back;
 
@@ -66,43 +74,31 @@ public class BluetoothDeviceListActivity extends FragmentActivity implements Vie
     private BluetoothDevicesListViewAdapter pairedAdapter;
     private BluetoothDevicesListViewAdapter newAdapter;
 
-    // The BroadcastReceiver that listens for discovered devices and
-    // changes the title when discovery is finished
-    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-
-            // When discovery finds a device
-            if (BluetoothDevice.ACTION_FOUND.equals(action)) {
-                // Get the BluetoothDevice object from the Intent
-                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                // If it's already paired, skip it, because it's been listed already
-                if (device.getBondState() != BluetoothDevice.BOND_BONDED) {
-                    mNewDevicesArrayList.add(device);
-                }
-                // When discovery is finished, change the Activity title
-            } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
-                progressbar.hide();
-                is_searching.setVisibility(View.GONE);
-                button.setVisibility(View.VISIBLE);
-                if (mNewDevicesArrayList.isEmpty()) {
-                    newListView.setVisibility(View.GONE);
-                    no_new_bluetooth_device.setVisibility(View.VISIBLE);
-                } else {
-                    newListView.setVisibility(View.VISIBLE);
-                    no_new_bluetooth_device.setVisibility(View.GONE);
-                    newAdapter.addDevicesArrayList(mNewDevicesArrayList);
-                }
-            }
-        }
-    };
+    private static final int PERMISSION_REQUEST_COARSE_LOCATION = 1;
+    private static final int REQUEST_CODE_LOCATION_SETTINGS = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bluetooth_device_list);
         ButterKnife.bind(this);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {//如果 API level 是大于等于 23(Android 6.0) 时
+            if (isLocationEnable(BluetoothDeviceListActivity.this)) {
+                setLocationService();
+            }
+
+            //判断是否具有权限
+            if (this.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                //判断是否需要向用户解释为什么需要申请该权限
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                        Manifest.permission.ACCESS_COARSE_LOCATION)) {
+                    ContentUtils.showMsg(BluetoothDeviceListActivity.this, "自Android 6.0开始需要打开位置权限才可以搜索到蓝牙设备");
+                }
+                //请求权限
+                requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_REQUEST_COARSE_LOCATION);
+            }
+        }
 
         // Set result CANCELED incase the user backs out
         setResult(Activity.RESULT_CANCELED);
@@ -111,7 +107,6 @@ public class BluetoothDeviceListActivity extends FragmentActivity implements Vie
 
         addIntentFilter();
 
-        // Get the local Bluetooth adapter
         mBtAdapter = BluetoothAdapter.getDefaultAdapter();
 
         // Get a set of currently paired devices
@@ -264,9 +259,104 @@ public class BluetoothDeviceListActivity extends FragmentActivity implements Vie
 
         public void addDevicesArrayList(ArrayList<BluetoothDevice> devicesArrayList) {
             if (devicesArrayList != null && !devicesArrayList.isEmpty()) {
+                if (this.devicesArrayList != null && !this.devicesArrayList.isEmpty())
+                    for (int i = 0; i < this.devicesArrayList.size(); i++) {
+                        if (compareTo(this.devicesArrayList, devicesArrayList.get(i))) {
+                            devicesArrayList.remove(i);
+                            i--;
+                        }
+                    }
                 this.devicesArrayList.addAll(devicesArrayList);
                 notifyDataSetChanged();
             }
         }
     }
+
+    private boolean compareTo(List<BluetoothDevice> data, BluetoothDevice enity) {
+        int s = data.size();
+        if (enity != null) {
+            for (int i = 0; i < s; i++) {
+                if (enity.getAddress().equals(data.get(i).getAddress())) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == PERMISSION_REQUEST_COARSE_LOCATION) {
+            //用户允许改权限，0表示允许，-1表示拒绝 PERMISSION_GRANTED = 0， PERMISSION_DENIED = -1
+            //permission was granted, yay! Do the contacts-related task you need to do.
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                //这里进行授权被允许的处理
+                doDiscovery();
+            } else {
+                //permission denied, boo! Disable the functionality that depends on this permission.
+                //这里进行权限被拒绝的处理
+                ContentUtils.showMsg(BluetoothDeviceListActivity.this, "权限申请被拒，无法搜索到蓝牙设备");
+            }
+        } else {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
+    private void setLocationService() {
+        Intent locationIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+        this.startActivityForResult(locationIntent, REQUEST_CODE_LOCATION_SETTINGS);
+    }
+
+    public boolean isLocationEnable(Context context) {
+        LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        boolean networkProvider = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        boolean gpsProvider = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        if (networkProvider || gpsProvider) return true;
+        return false;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE_LOCATION_SETTINGS) {
+            if (isLocationEnable(BluetoothDeviceListActivity.this)) {
+                //定位已打开的处理
+                ContentUtils.showMsg(BluetoothDeviceListActivity.this, "定位已打开");
+            } else {
+                //定位依然没有打开的处理
+                ContentUtils.showMsg(BluetoothDeviceListActivity.this, "请打开定位");
+            }
+        } else super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    // The BroadcastReceiver that listens for discovered devices and
+    // changes the title when discovery is finished
+    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+
+            // When discovery finds a device
+            if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+                // Get the BluetoothDevice object from the Intent
+                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                // If it's already paired, skip it, because it's been listed already
+                if (device.getBondState() != BluetoothDevice.BOND_BONDED) {
+                    mNewDevicesArrayList.add(device);
+                    newAdapter.addDevicesArrayList(mNewDevicesArrayList);
+                }
+                if (mNewDevicesArrayList.isEmpty()) {
+                    newListView.setVisibility(View.GONE);
+                    no_new_bluetooth_device.setVisibility(View.VISIBLE);
+                } else {
+                    newListView.setVisibility(View.VISIBLE);
+                    no_new_bluetooth_device.setVisibility(View.GONE);
+                }
+                // When discovery is finished, change the Activity title
+            } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
+                progressbar.hide();
+                is_searching.setVisibility(View.GONE);
+                button.setVisibility(View.VISIBLE);
+            }
+        }
+    };
 }

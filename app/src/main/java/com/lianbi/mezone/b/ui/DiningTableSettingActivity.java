@@ -145,6 +145,8 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
 
     private boolean delSelectButtonIsShowing;//删除选择按钮是否正在显示
 
+    private int verticalOffset;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -197,6 +199,12 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
                         person_num_Str = item.getPresetCount();
                         unit_Str = "人桌";
                         l = null;
+//                                new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//                                showPrintTicketDialog("42");
+//                            }
+//                        };
                         break;
                     case 1://已点餐
                         table_state_Str = "已点餐";
@@ -786,11 +794,8 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
 
     @Override
     public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-        if (verticalOffset < 0 || isDeletingTablesData) {
-            swipeRefreshLayout.setEnabled(false);
-        } else {
-            swipeRefreshLayout.setEnabled(true);
-        }
+        this.verticalOffset = verticalOffset;
+        setSwipeRefreshLoadedState();
     }
 
     private void changeBusinessStatus() {
@@ -853,8 +858,12 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
      */
     private void setSwipeRefreshLoadedState() {
         if (swipeRefreshLayout != null) {
+            if (verticalOffset < 0 || isDeletingTablesData) {
+                swipeRefreshLayout.setEnabled(false);
+            } else {
+                swipeRefreshLayout.setEnabled(true);
+            }
             swipeRefreshLayout.setRefreshing(false);
-            swipeRefreshLayout.setEnabled(true);
         }
     }
 

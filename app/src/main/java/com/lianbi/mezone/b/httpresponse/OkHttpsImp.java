@@ -553,7 +553,7 @@ public enum OkHttpsImp {
         Map<String, String> params = new HashMap<String, String>();
         params.put("businessId", businessId);
         params.put("tableId", tableId);
-        params.put("sourceType", "tss");
+        params.put("sourceType", "1");
         String url = getHttpUrl("tableInfoPrint");
         postProgressResponse(myResultCallback, params, url);
     }
