@@ -20,6 +20,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.bumptech.glide.Glide;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.XAxis;
@@ -78,6 +79,7 @@ import cn.com.hgh.utils.AbStrUtil;
 import cn.com.hgh.utils.AbViewUtil;
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.DynamicWaveTask;
+import cn.com.hgh.utils.GlideRoundTransform;
 import cn.com.hgh.utils.JumpIntent;
 import cn.com.hgh.utils.MathExtend;
 import cn.com.hgh.utils.Result;
@@ -301,7 +303,7 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 	private void getShopConsumption(final boolean isRefresh) {
 		try {
 			mOkHttpsImp.getShopConsumption("BD2016053018405200000042"
-					, "VI082016110712224600004578", AbDateUtil.getCurrentDate(AbDateUtil.dateFormatYMD),new MyResultCallback<String>() {
+					, "VI082016110712224600004578", AbDateUtil.getCurrentDate(AbDateUtil.dateFormatYMD), new MyResultCallback<String>() {
 						@Override
 						public void onResponseResult(Result result) {
 							String reString = result.getData();
@@ -352,10 +354,10 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 				//new Handler().postDelayed(new Runnable() {
 				//	@Override
 				//	public void run() {
-						//rope = YoYo.with(Techniques.ZoomInRight).duration(1000)
-						//		.playOn(mLlt_shouyemanagement_comsum);
-						rope = YoYo.with(Techniques.SlideInUp).duration(1000)
-								.playOn(mLlt_shouyemanagement_comsum);
+				//rope = YoYo.with(Techniques.ZoomInRight).duration(1000)
+				//		.playOn(mLlt_shouyemanagement_comsum);
+				rope = YoYo.with(Techniques.SlideInUp).duration(1000)
+						.playOn(mLlt_shouyemanagement_comsum);
 				//	}
 				//}, 1000);
 			}
@@ -473,7 +475,7 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 			if (count > 99) {
 				textView.setVisibility(View.VISIBLE);
 				textView.setText("99+");
-			}else{
+			} else {
 				textView.setVisibility(View.VISIBLE);
 				textView.setText(count + "");
 			}
@@ -668,6 +670,12 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 			AbStrUtil.formatTextSize(mTv_shouyemanagement_muchweek, weekmuch, 2);//设置周客最高单价
 
 			int j = shopVipMarket.getGetConsumptionVipMaxResponseModel().getVipList().size();
+
+			for (int i = 0; i < 3; i++) {
+				VipFrequency.get(i).setText("暂无数据");
+				Glide.with(mActivity).load(R.mipmap.defaultimg_11).transform(new GlideRoundTransform(mActivity,8)).into(VipHead.get(i));
+				VipName.get(i).setText("暂无数据");
+			}
 			for (int i = 0; i < j; i++) {
 				AbStrUtil.formatTextSize(VipFrequency.get(i), shopVipMarket.getGetConsumptionVipMaxResponseModel().getVipList().get(i).getConsumptionCount() + " 次", 1);
 				AbViewUtil.filletImageView(mActivity, VipHead.get(i), shopVipMarket.getGetConsumptionVipMaxResponseModel().getVipList().get(i).getPhoto(), 8);
