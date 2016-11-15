@@ -53,7 +53,7 @@ public class LeaguesYellListActivity extends BaseActivity {
     LeaguesYellBean  mLeaguesYellBean;
     private QuickAdapter<LeaguesYellBean> mAdapter;
     private static final int REQUEST_CODE_RESULT = 1009;
-    private int page =0;
+    private int page =1;
     private Intent  getIntent;
       int whatchild=0;
     @Override
@@ -197,7 +197,7 @@ public class LeaguesYellListActivity extends BaseActivity {
 //                String serNum, String source,
 //                String reqTime,
         if (isResh) {
-            page = 0;
+            page = 1;
             mDatas.clear();
             mSortData.clear();
         }
@@ -214,7 +214,7 @@ public class LeaguesYellListActivity extends BaseActivity {
                     "",//messageContent
                     shopRovinceid,//provinces"310000"
                     page+"",                     //pageNum
-                    "15",//pageSize
+                    "50",//pageSize
                     uuid,//
                     "app",//
                     reqTime,//

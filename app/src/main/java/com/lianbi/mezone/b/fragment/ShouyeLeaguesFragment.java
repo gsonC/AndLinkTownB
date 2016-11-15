@@ -358,19 +358,20 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
     }
     private void  setAnimationData(){
         try {
-            if (mLeaguesCountList.get(0) != null) {
+            int  LeaguesCountListsize=mLeaguesCountList.size();
+            if(LeaguesCountListsize>0){
                 tvShouyeLeaguesRestaurant.setText(mLeaguesCountList.get(0).getBusinessType() + "");
                 tvShouyeLeaguesResnum.setText("+" + mLeaguesCountList.get(0).getAddCount());
             }
-            if (mLeaguesCountList.get(1) != null) {
+            if(LeaguesCountListsize>1){
                 tvShouyeLeaguesShopping.setText(mLeaguesCountList.get(1).getBusinessType() + "");
                 tvShouyeLeaguesShopnum.setText("+" + mLeaguesCountList.get(1).getAddCount());
             }
-            if (mLeaguesCountList.get(2) != null) {
+            if(LeaguesCountListsize>2){
                 tvShouyeLeaguesStay.setText(mLeaguesCountList.get(2).getBusinessType());
                 tvShouyeLeaguesStaynum.setText("+" + mLeaguesCountList.get(2).getAddCount());
             }
-            if (mLeaguesCountList.get(3) != null) {
+            if(LeaguesCountListsize>3){
                 tvShouyeLeaguesOther.setText(mLeaguesCountList.get(3).getBusinessType());
                 tvShouyeLeaguesNum.setText("+" + mLeaguesCountList.get(3).getAddCount());
             }
@@ -383,25 +384,25 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
         String two = "0";
         String three = "0";
         String four = "0";
-
         try {
-            if (mLeaguesCountList.get(0) != null) {
-                tvShouyeLeaguesRestip.setText(mLeaguesCountList.get(0).getBusinessType() + "");
-                first = mLeaguesCountList.get(0).getAllCount();
-            }
-            if (mLeaguesCountList.get(1) != null) {
-                tvShouyeLeaguesShoppingtip.setText(mLeaguesCountList.get(1).getBusinessType() + "");
-                two = mLeaguesCountList.get(1).getAllCount();
-            }
-            if (mLeaguesCountList.get(2) != null) {
-                tvShouyeLeaguesStaytip.setText(mLeaguesCountList.get(2).getBusinessType() + "");
-                three = mLeaguesCountList.get(2).getAllCount();
-            }
-            if (mLeaguesCountList.get(3) != null) {
-                tvShouyeLeaguesOthertip.setText(mLeaguesCountList.get(3).getBusinessType() + "");
-                four = mLeaguesCountList.get(3).getAllCount();
-            }
-            mParties = new String[]{
+        int  LeaguesCountListsize=mLeaguesCountList.size();
+        if(LeaguesCountListsize>0){
+            tvShouyeLeaguesRestip.setText(mLeaguesCountList.get(0).getBusinessType() + "");
+            first = mLeaguesCountList.get(0).getAllCount();
+        }
+        if(LeaguesCountListsize>1){
+            tvShouyeLeaguesShoppingtip.setText(mLeaguesCountList.get(1).getBusinessType() + "");
+            two = mLeaguesCountList.get(1).getAllCount();
+        }
+        if(LeaguesCountListsize>2){
+            tvShouyeLeaguesStaytip.setText(mLeaguesCountList.get(2).getBusinessType() + "");
+            three = mLeaguesCountList.get(2).getAllCount();
+        }
+        if(LeaguesCountListsize>3){
+            tvShouyeLeaguesOthertip.setText(mLeaguesCountList.get(3).getBusinessType() + "");
+            four = mLeaguesCountList.get(3).getAllCount();
+        }
+        mParties = new String[]{
                     first,
                     two,
                     three,
@@ -497,18 +498,25 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
 
     protected void showdynamic(ArrayList<LeaguesYellBean> arrayList) {
         try {
-            Glide.with(mActivity).load(compareMessageType(arrayList.get(0).getMessageType())).
-                    error(R.mipmap.demo).into(ivShouyeLeaguesRecruit);
-            tvShouyeLeaguesRetitle.setText(arrayList.get(0).getMessageTitle());
-            tvShouyeLeaguesRecontent.setText(arrayList.get(0).getMessageContent());
-            Glide.with(mActivity).load(compareMessageType(arrayList.get(1).getMessageType())).
-                    error(R.mipmap.demo).into(ivShouyeLeaguesNews);
-            tvShouyeLeaguesNewtitle.setText(arrayList.get(1).getMessageTitle());
-            tvShouyeLeaguesNewcontent.setText(arrayList.get(1).getMessageContent());
-            Glide.with(mActivity).load(compareMessageType(arrayList.get(2).getMessageType())).
-                    error(R.mipmap.demo).into(ivShouyeLeaguesDiscount);
-            tvShouyeLeaguesDiscounttitle.setText(arrayList.get(2).getMessageTitle());
-            tvShouyeLeaguesDiscountcontent.setText(arrayList.get(2).getMessageContent());
+            int  arrayListsize=arrayList.size();
+            if(arrayListsize>0){
+                Glide.with(mActivity).load(compareMessageType(arrayList.get(0).getMessageType())).
+                        error(R.mipmap.demo).into(ivShouyeLeaguesRecruit);
+                tvShouyeLeaguesRetitle.setText(arrayList.get(0).getMessageTitle());
+                tvShouyeLeaguesRecontent.setText(arrayList.get(0).getMessageContent());
+            }
+            if(arrayListsize>1){
+                Glide.with(mActivity).load(compareMessageType(arrayList.get(1).getMessageType())).
+                        error(R.mipmap.demo).into(ivShouyeLeaguesNews);
+                tvShouyeLeaguesNewtitle.setText(arrayList.get(1).getMessageTitle());
+                tvShouyeLeaguesNewcontent.setText(arrayList.get(1).getMessageContent());
+            }
+            if(arrayListsize>2){
+                Glide.with(mActivity).load(compareMessageType(arrayList.get(2).getMessageType())).
+                        error(R.mipmap.demo).into(ivShouyeLeaguesDiscount);
+                tvShouyeLeaguesDiscounttitle.setText(arrayList.get(2).getMessageTitle());
+                tvShouyeLeaguesDiscountcontent.setText(arrayList.get(2).getMessageContent());
+            }
         }catch (Exception e){
             e.printStackTrace();
         }

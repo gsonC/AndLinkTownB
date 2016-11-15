@@ -52,7 +52,7 @@ public class LeaguesDynamicListActivity extends BaseActivity {
     private ArrayList<LeaguesYellBean> mDatas = new ArrayList<LeaguesYellBean>();
     private QuickAdapter<LeaguesYellBean> mAdapter;
     boolean isExpanded = false;
-    private int page = 0;
+    private int page = 1;
     HttpDialog dialog;
 
     @Override
@@ -162,7 +162,7 @@ public class LeaguesDynamicListActivity extends BaseActivity {
      */
     private void getLeaguesDynamicData(final boolean isResh) {
         if (isResh) {
-            page = 0;
+            page =1;
             mDatas.clear();
         }
         try {
@@ -178,14 +178,14 @@ public class LeaguesDynamicListActivity extends BaseActivity {
                     "",                        //messageContent
                     shopRovinceid,                 //provinces   "310000"
                     page+"",                  //pageNum
-                    "",                       //pageSize
+                    "50",                       //pageSize
                     uuid,                     //serNum
                     "app",                    //source
                     reqTime,                  //reqTime
                     new MyResultCallback<String>() {
                         @Override
                         public void onResponseResult(Result result) {
-//                          page++;
+                            page++;
                             String reString = result.getData();
                             Log.i("tag","resString 132----->"+reString);
                             try {
@@ -207,6 +207,8 @@ public class LeaguesDynamicListActivity extends BaseActivity {
                                         ivLeaguesDynamicListEmpty.setVisibility(View.VISIBLE);
                                         actLeaguesdynamiclistAbpulltorefreshview.setVerticalGravity(View.GONE);
                                     }else{
+                                        ivLeaguesDynamicListEmpty.setVisibility(View.GONE);
+                                        actLeaguesdynamiclistAbpulltorefreshview.setVerticalGravity(View.VISIBLE);
                                         updateView(mData);
                                     }
                                 }else{
