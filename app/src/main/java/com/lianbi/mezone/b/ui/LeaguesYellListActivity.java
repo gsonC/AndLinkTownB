@@ -203,21 +203,21 @@ public class LeaguesYellListActivity extends BaseActivity {
         }
         try {
             okHttpsImp.queryBusinessDynamic(
-                    "",                         //BD2016052013475900000010
-                    "",
-                    "310117",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "310000",
+                    "",                         //BD2016052013475900000010businessId
+                    "",//area
+                    areaCode,//businessCircle"310117"
+                    "",//messageType
+                    "",//pushScope
+                    "",//businessName
+                    "",//phone
+                    "",//messageTitle
+                    "",//messageContent
+                    shopRovinceid,//provinces"310000"
                     page+"",                     //pageNum
-                    "15",
-                    uuid,
-                    "app",
-                    reqTime,
+                    "15",//pageSize
+                    uuid,//
+                    "app",//
+                    reqTime,//
                     new MyResultCallback<String>() {
                         @Override
                         public void onResponseResult(Result result) {

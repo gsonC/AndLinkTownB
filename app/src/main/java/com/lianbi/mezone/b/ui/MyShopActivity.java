@@ -172,9 +172,9 @@ public class MyShopActivity extends BaseActivity {
 		tv_my_shop_connect_phone.setText(infoBean.getMobile());
 		tv_my_shop_connect_address.setText(infoBean.getAddress());
 		tv_my_shop_provincialcity.setText(
-				infoBean.getProvinceId()+
-				infoBean.getCityCode()+
-				infoBean.getAreaCode()
+				infoBean.getProvinceName()+
+				infoBean.getCityName()+
+				infoBean.getAreaName()
 		);
 //		String majorName = infoBean.getMajorName();
 //		if (!TextUtils.isEmpty(majorName)) {

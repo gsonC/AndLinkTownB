@@ -47,6 +47,15 @@ public class UserShopInfoBean implements Serializable {
 	 * 店铺所在省份编号
 	 */
 	String shopRovinceid = "";
+
+	/**
+	 * 店铺所在城市
+	 */
+	String cityCode="";
+	/**
+	 * 店铺所在商圈区域
+	 */
+	String areaCode="";
 	/**
 	 * 当前店铺负责人名称
 	 */
@@ -68,6 +77,10 @@ public class UserShopInfoBean implements Serializable {
 		LoGoUrl=ContentUtils.getSharePreString(context, Constants.USERTAG, Constants.USERSHOPLOGOURL);
 		shopRovinceid=ContentUtils.getSharePreString(context, Constants.USERTAG, Constants.USERSHOPPROVINCEID);
 		phone=ContentUtils.getSharePreString(context, Constants.USERTAG, Constants.BUSINESSPHONE);
+		cityCode=ContentUtils.getSharePreString(context, Constants.USERTAG, Constants.USERSHOPLEAGUESCITY);
+		areaCode=ContentUtils.getSharePreString(context, Constants.USERTAG, Constants.USERSHOPLEAGUESAREA);
+		address=ContentUtils.getSharePreString(context, Constants.USERTAG, Constants.USERSHOPADDRESS);
+
 	}
 	public String getIndustry_id() {
 		return industry_id;
@@ -155,5 +168,21 @@ public class UserShopInfoBean implements Serializable {
 
 	public void setShopRovinceid(String shopRovinceid) {
 		this.shopRovinceid = shopRovinceid;
+	}
+
+	public String getAreaCode() {
+		return areaCode;
+	}
+
+	public void setAreaCode(String areaCode) {
+		this.areaCode = areaCode;
+	}
+
+	public String getCityCode() {
+		return cityCode;
+	}
+
+	public void setCityCode(String cityCode) {
+		this.cityCode = cityCode;
 	}
 }

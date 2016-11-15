@@ -161,19 +161,6 @@ public class LeaguesDynamicListActivity extends BaseActivity {
      * 查询吆喝和商圈动态
      */
     private void getLeaguesDynamicData(final boolean isResh) {
-//        ic(String businessId,
-//                String area,
-//                String businessCircle,
-//                String messageType,
-//                String pushScope,
-//                String author,
-//                String phone,
-//                String messageTitle,
-//                String messageContent,
-//                String pageNum,
-//                String pageSize,
-//                String serNum, String source,
-//                String reqTime,
         if (isResh) {
             page = 0;
             mDatas.clear();
@@ -181,20 +168,20 @@ public class LeaguesDynamicListActivity extends BaseActivity {
         try {
             okHttpsImp.queryBusinessDynamic(
                     "",                        //BD2016052013475900000010
-                    "",
-                    "310117",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "310000",
-                    page+"",
-                    "",
-                    uuid,
-                    "app",
-                    reqTime,
+                    "",                        //area
+                    areaCode ,                  //businessCircle"310117"
+                    "",                        //messageType
+                    "",                        //pushScope
+                    "",                        //businessName
+                    "",                        //phone
+                    "",                        //messageTitle
+                    "",                        //messageContent
+                    shopRovinceid,                 //provinces   "310000"
+                    page+"",                  //pageNum
+                    "",                       //pageSize
+                    uuid,                     //serNum
+                    "app",                    //source
+                    reqTime,                  //reqTime
                     new MyResultCallback<String>() {
                         @Override
                         public void onResponseResult(Result result) {

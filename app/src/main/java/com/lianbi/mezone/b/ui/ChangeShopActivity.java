@@ -51,13 +51,14 @@ public class ChangeShopActivity extends BaseActivity {
 	private  int    FROMCHANGESHOP=2;
 
 	private ImageView img_change_shop_add_empty;
-	private String business_id = "", address;
+	private String business_id = "";
 	private String shopName = "";
 	private String LoGoUrl = "";
 	private String shopRovinceid = "";
 	private String defaultbusiness="";
 	private String citycode="";
 	private String areaCode="";
+	private String address="";
 	private  final int   REQUEST_CODE_RESULT=123;
 	//记录下点击的item店铺ID
 	@Override
@@ -249,6 +250,7 @@ public class ChangeShopActivity extends BaseActivity {
 					shopRovinceid=item.getProvinceId();
 					citycode=item.getCityCode();
 					areaCode=item.getAreaCode();
+					address=item.getAddress();
 				} else {
 					chbx_change_shop.setChecked(isSel);
 				}
@@ -411,6 +413,12 @@ public class ChangeShopActivity extends BaseActivity {
 				Constants.USERTAG, Constants.USERSHOPLOGOURL, LoGoUrl);
 		ContentUtils.putSharePre(ChangeShopActivity.this,
 				Constants.USERTAG, Constants.USERSHOPPROVINCEID,shopRovinceid);
+		ContentUtils.putSharePre(ChangeShopActivity.this,
+				Constants.USERTAG, Constants.USERSHOPLEAGUESCITY,citycode);
+		ContentUtils.putSharePre(ChangeShopActivity.this,
+				Constants.USERTAG, Constants.USERSHOPLEAGUESAREA,areaCode);
+		ContentUtils.putSharePre(ChangeShopActivity.this,
+				Constants.USERTAG, Constants.USERSHOPADDRESS,address);
 		userShopInfoBean.setBusinessId(business_id);
 		userShopInfoBean.setShopName(shopName);
 		userShopInfoBean.setIndustry_id(datas.get(position).getIndustry_id());

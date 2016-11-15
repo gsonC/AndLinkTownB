@@ -7,8 +7,6 @@ import android.widget.TextView;
 
 import com.xizhi.mezone.b.R;
 
-import cn.com.hgh.utils.ContentUtils;
-
 /*
  * @创建者     master
  * @创建时间   2016/11/9 19:10
@@ -41,7 +39,7 @@ public class LoginAndRegisterActivity extends BaseActivity {
 		super.onClick(view);
 		switch (view.getId()) {
 			case R.id.tv_logreg_exp://快速体验
-				ContentUtils.showMsg(LoginAndRegisterActivity.this, "快速登陆");
+//				ContentUtils.showMsg(LoginAndRegisterActivity.this, getString(R.string.quicklogon));
 				break;
 			case R.id.tv_logreg_login://登陆
 				startActivity(new Intent(LoginAndRegisterActivity.this,

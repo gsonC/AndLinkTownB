@@ -40,6 +40,9 @@ public class MyShopInfoBean implements Serializable {
 	private String qrcodeUrl;
 	String cityCode="";
 	String areaCode="";
+	String provinceName="";
+	String cityName="";
+	String areaName="";
 	public String getIndustryName() {
 		return industryName;
 	}
@@ -247,5 +250,29 @@ public class MyShopInfoBean implements Serializable {
 
 	public void setAreaCode(String areaCode) {
 		this.areaCode = areaCode;
+	}
+
+	public String getProvinceName() {
+		return provinceName;
+	}
+
+	public void setProvinceName(String provinceName) {
+		this.provinceName = provinceName;
+	}
+
+	public String getCityName() {
+		return cityName;
+	}
+
+	public void setCityName(String cityName) {
+		this.cityName = cityName;
+	}
+
+	public String getAreaName() {
+		return areaName;
+	}
+
+	public void setAreaName(String areaName) {
+		this.areaName = areaName;
 	}
 }

@@ -193,4 +193,5 @@
     <string name="businesscircle">商圈联营</string>
     <string name="underconstruction">正在建设中</string>
     <string name="currentnetworkisnotavailable">当前网络不可用，请检查网络</string>
+    <string name="quicklogon">快速登陆</string>
 </resources>

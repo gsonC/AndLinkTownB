@@ -293,7 +293,7 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
      */
     private void initViewSize() {
         tvIncludeTitle.setText("商圈动态");
-        tvLeavemessageDyn.setText("松江商圈");
+        tvLeavemessageDyn.setText("暂无商圈");
     }
 
     /**
@@ -318,7 +318,7 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
     private void getDistrictCount() {
         try {
             mOkHttpsImp.districtCount(
-                    "120101",
+                    mActivity.areaCode,         //"120101"
                     mActivity.uuid,
                     mActivity.reqTime,
                     new MyResultCallback<String>() {
@@ -430,14 +430,14 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
             mOkHttpsImp.queryBusinessDynamic(
                     "",                           //businessId   BD2016052013475900000010
                     "",                           //area
-                    "310117",                    //businessCircle
+                    mActivity.areaCode,                    //businessCircle "310117",
                     "",                           //messageType
                     "",                           //pushScope
                     "",                           //businessName mActivity.ShopName
                     "",                           //phone
                     "",                           //messageTitle
                     "",                           //messageContent
-                    "310000",                    //provinces
+                    mActivity.shopRovinceid,    //provinces "310000",
                     page+"",                     //pageNum
                     "",                        //pageSize
                     mActivity.uuid,             //serNum

@@ -103,23 +103,23 @@ public class LeaguesPublishYellActivity extends BaseActivity {
         String  pushTime= AbDateUtil.getDateTimeNow();
         try {
             okHttpsImp.getAddBusinessDynamic(
-                    "BD2016052013475900000010",
-                    "",
-                    "310117",
-                    "",
-                    "",
-                    pushTime,
-                    ShopName,
-                    strContactnum,
-                    strTitle,
-                    strSaysomething,
-                    "310000",
-                    "310117",
-                    "上海市",
-                    LoGoUrl,
-                    uuid,
-                    "app",
-                    reqTime,
+                    BusinessId,//businessId"BD2016052013475900000010"
+                    "",//area
+                    areaCode,//businessCircle"310117"
+                    "",//messageType
+                    "",//pushScope
+                    pushTime,//pushTime
+                    ShopName,//businessName
+                    strContactnum,//phone
+                    strTitle,//messageTitle
+                    strSaysomething,//messageContent
+                    shopRovinceid,//provinces"310000"
+                    cityCode,//city"310117"
+                    address,//address"上海市"
+                    LoGoUrl,//logoUrl
+                    uuid,//serNum
+                    "app",//source
+                    reqTime,//reqTime
                     new MyResultCallback<String>() {
                         @Override
                         public void onResponseResult(Result result) {

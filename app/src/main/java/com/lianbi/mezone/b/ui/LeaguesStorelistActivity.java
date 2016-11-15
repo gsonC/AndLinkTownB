@@ -126,7 +126,7 @@ public class LeaguesStorelistActivity extends BaseActivity {
         }
         try {
             okHttpsImp.getBusinessList(
-                    "120101",
+                    areaCode,           // "120101",
                     uuid,
                     reqTime,
                     new MyResultCallback<String>() {

@@ -89,6 +89,18 @@ public class Constants {
 	 */
 	public static final String USERSHOPPROVINCEID = "usershopprovinceid";
 	/**
+	 * 用户商铺所在城市
+	 */
+	public static final String USERSHOPLEAGUESCITY = "usershopleaguescity";
+	/**
+	 * 用户商铺所在商圈区域/县
+	 */
+	public static final String USERSHOPLEAGUESAREA = "usershopleaguesarea";
+	/**
+	 * 用户商铺所在详细地址
+	 */
+	public static final String USERSHOPADDRESS = "usershopaddress";
+	/**
 	 * 用户商铺手机号
 	 */
 	public static final String BUSINESSPHONE = "businessphone";

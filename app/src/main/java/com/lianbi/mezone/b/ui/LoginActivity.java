@@ -172,8 +172,17 @@ public class LoginActivity extends BaseActivity {
 								ContentUtils.putSharePre(LoginActivity.this,
 										Constants.USERTAG, Constants.USERSHOPLOGOURL, myShopInfoBean.getLogoUrl());
 								ContentUtils.putSharePre(LoginActivity.this,
+										Constants.USERTAG, Constants.USERSHOPADDRESS,myShopInfoBean.getAddress());
+								ContentUtils.putSharePre(LoginActivity.this,
 										Constants.USERTAG, Constants.USERSHOPPROVINCEID,myShopInfoBean.getProvinceId());
-							}
+								ContentUtils.putSharePre(LoginActivity.this,
+										Constants.USERTAG, Constants.USERSHOPLEAGUESCITY,myShopInfoBean.getCityCode());
+								ContentUtils.putSharePre(LoginActivity.this,
+										Constants.USERTAG, Constants.USERSHOPLEAGUESAREA,myShopInfoBean.getAreaCode());
+
+
+
+									}
 						}
 						String user = (String) jsonObject
 								.getString("userModel");
