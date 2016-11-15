@@ -3,9 +3,12 @@ package com.lianbi.mezone.b.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.xizhi.mezone.b.R;
+
+import cn.com.hgh.utils.AbViewUtil;
 
 /*
  * @创建者     master
@@ -24,6 +27,11 @@ public class LoginAndRegisterActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.act_loginandregister);
+
+		ImageView img_loginbg = (ImageView) findViewById(R.id.img_loginbg);
+
+		img_loginbg.setImageBitmap(AbViewUtil.readBitMap(this,
+				R.mipmap.loginbg));
 
 		mTv_logreg_exp = (TextView) findViewById(R.id.tv_logreg_exp);
 		mTv_logreg_login = (TextView) findViewById(R.id.tv_logreg_login);

@@ -199,25 +199,6 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 	public void onShouyeRefreshEvent(ShouyeRefreshEvent event) {
 		boolean isRefresh = event.getRefresh();
 		if (isRefresh) {
-
-			/**
-			 *
-			 * 设置动画
-			 */
-			/**
-			 mLlt_shouyemanagement_comsum.setOnClickListener(new View.OnClickListener() {
-			@Override public void onClick(View v) {
-			rope = YoYo.with(Techniques.ZoomOutLeft).duration(1000)
-			.playOn(mLlt_shouyemanagement_comsum);
-			new Handler().postDelayed(new Runnable() {
-			@Override public void run() {
-			rope = YoYo.with(Techniques.ZoomInRight).duration(1000)
-			.playOn(mLlt_shouyemanagement_comsum);
-			}
-			}, 1000);
-			}
-			});
-			 */
 			getShopConsumption(true);
 			getShopPushCount();
 		} else {
@@ -237,7 +218,7 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 	 */
 	private void getShopSaleRank(boolean whickone) {
 		try {
-			mOkHttpsImp.getShopSaleRank(whickone, "BD2016053018405200000042", new MyResultCallback<String>() {
+			mOkHttpsImp.getShopSaleRank(whickone, BaseActivity.userShopInfoBean.getBusinessId(), new MyResultCallback<String>() {
 				@Override
 				public void onResponseResult(Result result) {
 					mShopSaleRankList.clear();
@@ -304,8 +285,8 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 	 */
 	private void getShopConsumption(final boolean isRefresh) {
 		try {
-			mOkHttpsImp.getShopConsumption("BD2016053018405200000042"
-					, "VI082016110712224600004578", AbDateUtil.getCurrentDate(AbDateUtil.dateFormatYMD), new MyResultCallback<String>() {
+			mOkHttpsImp.getShopConsumption(BaseActivity.userShopInfoBean.getBusinessId()
+					, BaseActivity.userShopInfoBean.getUserId(), AbDateUtil.getCurrentDate(AbDateUtil.dateFormatYMD), new MyResultCallback<String>() {
 						@Override
 						public void onResponseResult(Result result) {
 							String reString = result.getData();
@@ -409,17 +390,6 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 
 			}
 
-
-			//new Handler().postDelayed(new Runnable() {
-			//	@Override public void run() {
-			//		//rope = YoYo.with(Techniques.ZoomInRight).duration(1000)
-			//		//		.playOn(mLlt_shouyemanagement_comsum);
-			//		rope = YoYo.with(Techniques.SlideInUp).duration(1000)
-			//				.playOn(mLlt_shouyemanagement_comsum);
-			//	}
-			//}, 1000);
-
-
 		} else {
 			mLlt_shouyemanagement_comsum.setVisibility(View.GONE);
 			mView_fillview.setVisibility(View.GONE);
@@ -461,8 +431,6 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 
 	private void setShopPushOrderCount(OrderPushCount orderPushCount) {
 		if (null != orderPushCount) {
-
-			//mTv_shouyemag_order_num,mTv_shouyemag_call_num,mTv_shouyemag_condetail_num
 			setShopPushOrderCount(mTv_shouyemag_order_num, orderPushCount.getPaidCount());
 			setShopPushOrderCount(mTv_shouyemag_call_num, orderPushCount.getPushCount());
 			setShopPushOrderCount(mTv_shouyemag_condetail_num, orderPushCount.getOrderCount());
@@ -690,6 +658,7 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 	 * 销量排行
 	 */
 
+	/*
 	private List<TextData3> arraylist = new ArrayList<>();
 
 	private void getData3(boolean whichone) {
@@ -783,7 +752,7 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 			this.bottom = bottom;
 		}
 	}
-
+*/
 	private void intView(View view) {
 
 		initBanner(view);

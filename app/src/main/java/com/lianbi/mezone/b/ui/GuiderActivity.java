@@ -22,8 +22,8 @@ public class GuiderActivity extends BaseActivity implements
 		OnSliderClickListener {
 
 	SliderLayout pager_act_guider;
-	final int[] imges = {R.mipmap.guider1,
-			R.mipmap.guider3, R.mipmap.guider2};
+	final int[] imges = {R.mipmap.first,
+			R.mipmap.second, R.mipmap.third, R.mipmap.forth};
 	TextView act_guideractivity_tv;
 
 	@Override
@@ -33,7 +33,8 @@ public class GuiderActivity extends BaseActivity implements
 		pager_act_guider = (SliderLayout) findViewById(R.id.pager_act_guider);
 		act_guideractivity_tv = (TextView) findViewById(R.id.act_guideractivity_tv);
 		act_guideractivity_tv.setOnClickListener(this);
-		for (int i = 0; i < 3; i++) {
+		int j = imges.length;
+		for (int i = 0; i < j; i++) {
 			GuiderSliderView guiderSliderView = new GuiderSliderView(this, i);
 			guiderSliderView.setOnSliderClickListener(this);
 			guiderSliderView.setmRes(imges[i]);
@@ -60,7 +61,7 @@ public class GuiderActivity extends BaseActivity implements
 
 	@Override
 	public void onSliderClick(BaseSliderView slider) {
-		if (slider.getmRes() == imges[2]) {
+		if (slider.getmRes() == imges[3]) {
 			startMain();
 		}
 	}
