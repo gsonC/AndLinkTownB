@@ -56,7 +56,6 @@ public class MyService extends Service {
 						ContentUtils.putSharePre(MyService.this,
 								Constants.SHARED_PREFERENCE_NAME,
 								Constants.AREA_CODE, true);
-						System.out.println("下载完成");
 					} else {
 						ContentUtils.putSharePre(MyService.this,
 								Constants.SHARED_PREFERENCE_NAME,

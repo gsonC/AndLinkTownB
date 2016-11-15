@@ -112,12 +112,10 @@ public class AddShopActivity extends BaseActivity {
 			while ((str = br.readLine()) != null) {
 				stringBuffer.append(str);
 			}
-			System.out.println(stringBuffer.toString());
 			JSONObject jsonObject = new JSONObject(stringBuffer.toString());
 			String citylist = (String) jsonObject
 					.getString("window.LocalList");
 			List<ProvincesBean> mDatas = (ArrayList<ProvincesBean>) JSON.parseArray(citylist, ProvincesBean.class);
-			System.out.println(mDatas.size());
 			//JSONReader reader = new JSONReader(new BufferedReader(br));
 			//reader.readObject(new TypeReference<Object>(){}.getType());
 		} catch (Exception e) {
@@ -198,12 +196,6 @@ public class AddShopActivity extends BaseActivity {
 								String county = mAddressPopView.mCurrentDistrictName;//县
 								areaCode = mAddressPopView.mCurrentZipCode;//县Code
 								tv_my_shop_provincialcity.setText(province+city+county);
-								System.out.println("province"+province);
-								System.out.println("provinceCode"+provinceId);
-								System.out.println("city"+city);
-								System.out.println("cityCode"+cityCode);
-								System.out.println("county"+county);
-								System.out.println("zipcode"+areaCode);
 								mAddressPopView.dismiss();
 								break;
 						}

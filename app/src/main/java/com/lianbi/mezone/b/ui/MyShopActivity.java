@@ -293,12 +293,6 @@ public class MyShopActivity extends BaseActivity {
 							areaCode = mAddressPopView.mCurrentZipCode;//县Code
 							tv_my_shop_provincialcity.setText(province+city+county);
 							postProvincialcity();
-							System.out.println("province"+province);
-							System.out.println("provinceCode"+provinceId);
-							System.out.println("city"+city);
-							System.out.println("cityCode"+cityCode);
-							System.out.println("county"+county);
-							System.out.println("zipcode"+areaCode);
 							mAddressPopView.dismiss();
 							break;
 					}

@@ -23,6 +23,17 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:gravity="center_horizontal"
+                    android:singleLine="true"
+                    android:textColor="@color/color_4b4b4b"
+                    android:background="#FDABA1"
+                    android:textSize="11sp"
+                    android:text="消息通知:高峰期收入显示可能略有延迟,稍等刷新即可"/>
+
+                <TextView
                     android:id="@+id/tv_totalaccountwords"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

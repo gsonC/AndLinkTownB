@@ -28,6 +28,9 @@ import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.lzy.okgo.request.BaseRequest;
 import com.xizhi.mezone.b.R;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -40,6 +43,7 @@ import butterknife.OnClick;
 import butterknife.OnItemClick;
 import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.QuickAdapter;
+import cn.com.hgh.eventbus.ShouyeRefreshEvent;
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.JumpIntent;
 import cn.com.hgh.utils.Result;
@@ -151,6 +155,7 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dining_table_setting);
+        EventBus.getDefault().register(this);//注册EventBus
         ButterKnife.bind(this);
 
         swipeRefreshLayout.setColorSchemeResources(R.color.colores_news_01, R.color.black);
@@ -160,6 +165,22 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
         initAdapter();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);//反注册EventBus
+        ButterKnife.unbind(this);
+
+    }
+
+    /**
+     * EventBus 响应事件
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onShouyeRefreshEvent(ShouyeRefreshEvent event) {
+        boolean isRefresh = event.getRefresh();
+        // isRefresh = false 的时候进行刷新界面操作
+    }
     private void initAdapter() {
         adapter = new QuickAdapter<TableSetBean>(DiningTableSettingActivity.this, R.layout.one_table_layout, data) {
             @Override
@@ -431,11 +452,7 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
         app_bar.addOnOffsetChangedListener(this);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        ButterKnife.unbind(this);
-    }
+
 
     @Override
     @OnClick({R.id.back, R.id.menu_setting, R.id.add_table, R.id.delete_table,

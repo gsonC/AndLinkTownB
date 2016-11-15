@@ -14,6 +14,8 @@ import com.lianbi.mezone.b.bean.Consumption;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
 import com.xizhi.mezone.b.R;
+import com.zbar.lib.animationslib.Techniques;
+import com.zbar.lib.animationslib.YoYo;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -46,17 +48,51 @@ public class ConsumptionSettlementActivity extends BaseActivity {
 	ArrayList<Consumption> mDatas = new ArrayList<Consumption>();
 	@Bind(R.id.im_comestore_detail)
 	ImageView imComestoreDetail;
-	public String  tableId;
+	@Bind(R.id.im_comestore_eject)
+	ImageView imComestoreEject;
+	public String tableId;
+	private YoYo.YoYoString rope;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_consumption_settlement, NOTYPE);
 		ButterKnife.bind(this);
 		initview();
+		getStringFormShouye();
 		initListAdapter();
 		getUnPaidOrder(true);
 		setlisten();
 
+	}
+
+	/**
+	 * 从首页跳转过来
+	 */
+	private void getStringFormShouye() {
+		String eject = getIntent().getStringExtra("EJECT");
+		if ("eject".equals(eject)) {
+			imComestoreDetail.setVisibility(View.VISIBLE);
+			imComestoreEject.setVisibility(View.GONE);
+		}
+	}
+
+	/**
+	 * 动画
+	 */
+	@OnClick({R.id.im_comestore_detail, R.id.im_comestore_eject})
+	public void OnClick(View v) {
+		switch (v.getId()) {
+			case R.id.im_comestore_detail://点击隐藏 到店显示
+				rope = YoYo.with(Techniques.FadeOut).duration(500)
+						.playOn(imComestoreDetail);
+				rope = YoYo.with(Techniques.FadeInRight).duration(1000)
+						.playOn(imComestoreEject);
+				imComestoreEject.setVisibility(View.VISIBLE);
+				break;
+			case R.id.im_comestore_eject://跳转到店
+				startActivity(new Intent(ConsumptionSettlementActivity.this, DiningTableSettingActivity.class));
+				break;
+		}
 	}
 
 	private void setlisten(){
@@ -66,7 +102,7 @@ public class ConsumptionSettlementActivity extends BaseActivity {
 			public boolean onTouch(View v, MotionEvent event) {
 				switch (event.getAction()) {
 					case MotionEvent.ACTION_MOVE:
-						imComestoreDetail.setVisibility(View.GONE);
+						imComestoreDetail.setVisibility(View.VISIBLE);
 						break;
 				}
 
@@ -75,18 +111,16 @@ public class ConsumptionSettlementActivity extends BaseActivity {
 		});
 	}
 
-
-
 	private void initview() {
 
 		setPageTitle("客户买单");
-		imComestoreDetail.setOnClickListener(this);
-		imComestoreDetail.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				startActivity(new Intent(ConsumptionSettlementActivity.this,DiningTableSettingActivity.class));
-			}
-		});
+		//imComestoreDetail.setOnClickListener(this);
+		//imComestoreDetail.setOnClickListener(new View.OnClickListener() {
+		//	@Override
+		//	public void onClick(View v) {
+		//		startActivity(new Intent(ConsumptionSettlementActivity.this,DiningTableSettingActivity.class));
+		//	}
+		//});
 		//刷新设置
 		actCumptionAbpulltorefreshview.setLoadMoreEnable(true);
 		actCumptionAbpulltorefreshview.setPullRefreshEnable(true);
@@ -208,7 +242,7 @@ public class ConsumptionSettlementActivity extends BaseActivity {
 							} else {
 								actCumptionAbpulltorefreshview.setVisibility(View.GONE);
 								imgCumptionEmpty.setVisibility(View.VISIBLE);
-								imComestoreDetail.setVisibility(View.GONE);
+								//imComestoreDetail.setVisibility(View.GONE);
 							}
 							AbPullHide.hideRefreshView(isResh, actCumptionAbpulltorefreshview);
 							mAdapter.replaceAll(mDatas);

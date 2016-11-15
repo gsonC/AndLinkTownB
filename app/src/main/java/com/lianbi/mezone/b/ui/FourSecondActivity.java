@@ -124,7 +124,6 @@ public class FourSecondActivity extends BaseActivity {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			float progress = intent.getFloatExtra("progress", 0);
-			System.out.println("progress---" + progress);
 		}
 	}
 

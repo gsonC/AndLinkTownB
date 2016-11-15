@@ -53,6 +53,7 @@ import com.lianbi.mezone.b.ui.DiningTableSettingActivity;
 import com.lianbi.mezone.b.ui.LeaguesStorelistActivity;
 import com.lianbi.mezone.b.ui.LeaguesYellListActivity;
 import com.lianbi.mezone.b.ui.MainActivity;
+import com.lianbi.mezone.b.ui.MembersListActivity;
 import com.lianbi.mezone.b.ui.WebMoreServiceActivty;
 import com.xizhi.mezone.b.R;
 import com.zbar.lib.animationslib.Techniques;
@@ -134,6 +135,7 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 	private List<TextView> VipFrequency;
 	private List<ImageView> VipHead;
 	private List<TextView> VipName;
+	private LinearLayout mLlt_shouyemanagement_todayvip,mLlt_shouyemanagement_numvip;
 	/**
 	 * 实时消费
 	 */
@@ -227,7 +229,7 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		EventBus.getDefault().unregister(mActivity);//反注册EventBus
+		EventBus.getDefault().unregister(this);//反注册EventBus
 	}
 
 	/**
@@ -855,6 +857,8 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 		 */
 		mTv_include_title_membernum = (TextView) view.findViewById(R.id.ind_shouyemanagement_membernum).findViewById(R.id.tv_include_title);//会员统计title
 		view.findViewById(R.id.ind_shouyemanagement_membernum).findViewById(R.id.tv_include_more).setVisibility(View.INVISIBLE);//inculde实时消费 更多隐藏
+		mLlt_shouyemanagement_todayvip = (LinearLayout) view.findViewById(R.id.ind_shouyemanagement_shopvip).findViewById(R.id.llt_shouyemanagement_todayvip);
+		mLlt_shouyemanagement_numvip = (LinearLayout) view.findViewById(R.id.ind_shouyemanagement_shopvip).findViewById(R.id.llt_shouyemanagement_numvip);
 		mTv_shouyemanagement_todayvip = (TextView) view.findViewById(R.id.ind_shouyemanagement_shopvip).findViewById(R.id.tv_shouyemanagement_todayvip);//今日总数
 		mTv_shouyemanagement_numvip = (TextView) view.findViewById(R.id.ind_shouyemanagement_shopvip).findViewById(R.id.tv_shouyemanagement_numvip);//会员总数
 		mTv_shouyemanagement_muchtoday = (TextView) view.findViewById(R.id.ind_shouyemanagement_shopvip).findViewById(R.id.tv_shouyemanagement_muchtoday);//日最高客单价
@@ -1058,6 +1062,12 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 		mImg_shouyemagapp_richbook.setOnClickListener(this);
 		mImg_shouyemagapp_busdata.setOnClickListener(this);
 		mImg_shouyemagapp_appstore.setOnClickListener(this);
+
+		/**
+		 * 会员营销
+		 */
+		mLlt_shouyemanagement_todayvip.setOnClickListener(this);
+		mLlt_shouyemanagement_numvip.setOnClickListener(this);
 	}
 
 
@@ -1087,6 +1097,16 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 				break;
 			case R.id.img_shouyemag_condetail://消费流水
 				startActivity(new Intent(mActivity, ComeDetailActivity.class));
+				break;
+			/**
+			 * 会员营销
+			 */
+			case R.id.llt_shouyemanagement_todayvip:
+				startActivity(new Intent(mActivity, MembersListActivity.class));
+				break;
+
+			case R.id.llt_shouyemanagement_numvip:
+				startActivity(new Intent(mActivity, MembersListActivity.class));
 				break;
 			/**
 			 * 首页--SaaS应用服务推荐ID(7张图片ID)

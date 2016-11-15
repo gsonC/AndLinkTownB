@@ -79,16 +79,20 @@ public class PushNotifitionManager {
 			pushtarget = "xindingdan";
 			resultIntent = new Intent(mContext, InfoDetailsActivity.class);//跳转订单明细页面
 			resultIntent.putExtra("TIAOZHUANXIAOXI", pushtarget);
+			EventBus.getDefault().post(new ShouyeRefreshEvent(false));
 		} else if (3 == tiaozhuan) {
 			pushtarget = "maidan";
 			resultIntent = new Intent(mContext, ConsumptionSettlementActivity.class);//客户买单
 			resultIntent.putExtra("TIAOZHUANXIAOXI", pushtarget);
+			EventBus.getDefault().post(new ShouyeRefreshEvent(false));
 		} else if (4 == tiaozhuan) {
 			pushtarget = "fuwu";
 			resultIntent = new Intent(mContext, CallServiceActivity.class);//响应呼叫
 			resultIntent.putExtra("TIAOZHUANXIAOXI", pushtarget);
+			EventBus.getDefault().post(new ShouyeRefreshEvent(false));
 		} else if (6 == tiaozhuan) {
 			resultIntent = new Intent(mContext, OrderLookUpActivity.class);//跳转订单明细页面
+			EventBus.getDefault().post(new ShouyeRefreshEvent(false));
 		} else if (7 == tiaozhuan) {
 			resultIntent = new Intent(mContext, WithdrawRecordActivity.class);//跳转提现记录页面
 		}else if(60000==tiaozhuan){
