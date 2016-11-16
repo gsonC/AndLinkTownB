@@ -40,6 +40,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnFocusChange;
 import butterknife.OnItemClick;
 import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.QuickAdapter;
@@ -49,7 +50,6 @@ import cn.com.hgh.utils.JumpIntent;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.view.ClearEditText;
 import cn.com.hgh.view.DialogCommon;
-import cn.com.hgh.view.HttpDialog;
 import cn.com.hgh.view.MyGridView;
 
 import static cn.com.hgh.utils.CryptTool.encryptionUrl;
@@ -58,7 +58,7 @@ import static cn.com.hgh.utils.CryptTool.encryptionUrl;
 * 桌面设置
 * */
 public class DiningTableSettingActivity extends BluetoothBaseActivity implements SwipeRefreshLayout.OnRefreshListener,
-        AppBarLayout.OnOffsetChangedListener, AdapterView.OnItemClickListener {
+        AppBarLayout.OnOffsetChangedListener, AdapterView.OnItemClickListener, View.OnFocusChangeListener {
     @Bind(R.id.back)
     ImageView back;
 
@@ -893,5 +893,11 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
             // 防止多次重复刷新
             swipeRefreshLayout.setEnabled(false);
         }
+    }
+
+    @Override
+    @OnFocusChange({R.id.search})
+    public void onFocusChange(View v, boolean hasFocus) {
+
     }
 }
