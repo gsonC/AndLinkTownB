@@ -49,6 +49,7 @@ import cn.com.hgh.utils.JumpIntent;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.view.ClearEditText;
 import cn.com.hgh.view.DialogCommon;
+import cn.com.hgh.view.HttpDialog;
 import cn.com.hgh.view.MyGridView;
 
 import static cn.com.hgh.utils.CryptTool.encryptionUrl;
@@ -178,9 +179,12 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onShouyeRefreshEvent(ShouyeRefreshEvent event) {
-        boolean isRefresh = event.getRefresh();
-        // isRefresh = false 的时候进行刷新界面操作
+        //false 的时候进行刷新界面操作
+        if (!event.getRefresh()) {
+            getTableinfo();
+        }
     }
+
     private void initAdapter() {
         adapter = new QuickAdapter<TableSetBean>(DiningTableSettingActivity.this, R.layout.one_table_layout, data) {
             @Override
@@ -219,13 +223,6 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
                         table_may_do_Str = "查看二维码";
                         person_num_Str = item.getPresetCount();
                         unit_Str = "人桌";
-                        l = null;
-//                                new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View v) {
-//                                showPrintTicketDialog("42");
-//                            }
-//                        };
                         break;
                     case 1://已点餐
                         table_state_Str = "已点餐";
@@ -237,14 +234,16 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
                         table_may_do_Str = "打印小票";
                         person_num_Str = item.getActualCount();
                         unit_Str = "人用餐";
-                        l = new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                if (checkCanGoNext()) {
-                                    showPrintTicketDialog(item.getTableId());
+                        if (!delSelectButtonIsShowing) {
+                            l = new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    if (checkCanGoNext()) {
+                                        showPrintTicketDialog(item.getTableId());
+                                    }
                                 }
-                            }
-                        };
+                            };
+                        }
                         break;
                     case 2://已支付
                         table_state_Str = "已支付";
@@ -256,14 +255,16 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
                         table_may_do_Str = "翻桌";
                         person_num_Str = item.getActualCount();
                         unit_Str = "人用餐";
-                        l = new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                if (checkCanGoNext()) {
-                                    checkTableOrder(item.getTableId());
+                        if (!delSelectButtonIsShowing) {
+                            l = new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    if (checkCanGoNext()) {
+                                        checkTableOrder(item.getTableId());
+                                    }
                                 }
-                            }
-                        };
+                            };
+                        }
                         break;
                 }
 
@@ -451,7 +452,6 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
         swipeRefreshLayout.setOnRefreshListener(this);
         app_bar.addOnOffsetChangedListener(this);
     }
-
 
 
     @Override

@@ -48,7 +48,8 @@ public class API {
 //    	public static final String PAYQR = ENVIRONMENTAL+"/lincombFront/toOrderPay.do?state=";//支付二维码
 //    	public static final String INTELLIGENT_WIFI ="http://www.xylbn.cn/wcmv2/routerApplication/wifiIndex?businessId=";//智能wifi
 	    public static final String WEB_MORESERVICE = "http://developer.lincomb.com/bsm/mall/index?plantId=";//更多服务
-
+        //店铺标志logoUrl前缀
+	    public static final String LOGOURL_PREFIX="http://114.141.173.25:9200/";
 	/**
 	 *  uat环境url
 	 */

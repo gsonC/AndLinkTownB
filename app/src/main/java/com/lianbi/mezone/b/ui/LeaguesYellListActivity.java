@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.bumptech.glide.Glide;
 import com.lianbi.mezone.b.bean.LeaguesYellBean;
+import com.lianbi.mezone.b.httpresponse.API;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.xizhi.mezone.b.R;
 
@@ -114,7 +115,8 @@ public class LeaguesYellListActivity extends BaseActivity {
                 TextView iv_leaguesyelllist_address = helper.getView(R.id.iv_leaguesyelllist_address);//
 
                 if(!TextUtils.isEmpty(item.getLogoUrl())) {
-                    Glide.with(LeaguesYellListActivity.this).load(item.getLogoUrl()).error(R.mipmap.demo).into(iv_leaguesyelllist_icon);
+                    Glide.with(LeaguesYellListActivity.this).load(
+                            API.LOGOURL_PREFIX+item.getLogoUrl()).error(R.mipmap.demo).into(iv_leaguesyelllist_icon);
                 }
                 if(!TextUtils.isEmpty(item.getBusinessName())) {
                     iv_leaguesyelllist_name.setText(item.getBusinessName());

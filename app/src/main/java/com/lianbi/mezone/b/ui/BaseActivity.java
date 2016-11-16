@@ -102,6 +102,7 @@ public class BaseActivity extends FragmentActivity implements OnClickListener {
 		userShopInfoBean.getSharePreString();
 		initCommonParameter();
 	}
+
     public  void initCommonParameter(){
 		reqTime= AbDateUtil.getDateTimeNow();
 		uuid= AbStrUtil.getUUID();
@@ -118,6 +119,11 @@ public class BaseActivity extends FragmentActivity implements OnClickListener {
 	protected void onRestart() {
 		super.onRestart();
 		okHttpsImp = OkHttpsImp.SINGLEOKHTTPSIMP.newInstance(this);
+		if (userShopInfoBean == null) {
+			userShopInfoBean = new UserShopInfoBean(this);
+		}
+		userShopInfoBean.getSharePreString();
+		initCommonParameter();
 	}
 
 	/**
