@@ -48,7 +48,10 @@
             android:padding="5dp"
             android:singleLine="true"
             android:textColorHint="#cccccc"
-            android:textSize="@dimen/h12" />
+            android:textSize="@dimen/h12">
+
+            <requestFocus />
+        </cn.com.hgh.view.ClearEditText>
     </RelativeLayout>
 
     <View
@@ -341,4 +344,19 @@
             </android.support.v4.widget.NestedScrollView>
         </android.support.design.widget.CoordinatorLayout>
     </android.support.v4.widget.SwipeRefreshLayout>
+
+    <GridView
+        android:id="@+id/search_result_grid_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/line"
+        android:background="@android:color/white"
+        android:drawSelectorOnTop="false"
+        android:horizontalSpacing="6dip"
+        android:numColumns="3"
+        android:padding="6dip"
+        android:scrollbars="none"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="18dip"
+        android:visibility="gone" />
 </RelativeLayout>

@@ -3,9 +3,7 @@ package com.lianbi.mezone.b.ui;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
-import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
@@ -14,9 +12,10 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.lianbi.mezone.b.bean.DiningOrderBean;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.lianbi.mezone.b.bean.UnPaidOrderBean;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
-import com.lzy.okgo.request.BaseRequest;
 import com.xizhi.mezone.b.R;
 
 import java.util.ArrayList;
@@ -29,13 +28,11 @@ import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.QuickAdapter;
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.Result;
-import cn.com.hgh.view.AbPullToRefreshView;
 
 /*
 * 桌位详情-已支付
 * */
-public class TableHasPaidActivity extends BaseActivity implements AbPullToRefreshView.OnFooterLoadListener,
-        AbPullToRefreshView.OnHeaderRefreshListener {
+public class TableHasPaidActivity extends BaseActivity {
     @Bind(R.id.table_name)
     TextView table_name;
 
@@ -48,9 +45,6 @@ public class TableHasPaidActivity extends BaseActivity implements AbPullToRefres
     @Bind(R.id.actually_paid_amount)
     TextView actually_paid_amount;//实际付款
 
-    @Bind(R.id.has_paid_orders_detail)
-    AbPullToRefreshView mPullToRefreshView;
-
     @Bind(R.id.has_paid_orders_list_view)
     ListView mListView;
 
@@ -58,17 +52,9 @@ public class TableHasPaidActivity extends BaseActivity implements AbPullToRefres
     RelativeLayout fantai;
 
     private String tableId;
-    /**
-     * 正在下拉刷新.
-     */
-    private boolean mPullRefreshing = false;
-    /**
-     * 正在加载更多.
-     */
-    private boolean mPullLoading = false;
 
-    private QuickAdapter<DiningOrderBean> mAdapter;
-    private List<DiningOrderBean> mData = new ArrayList<>();
+    private QuickAdapter<UnPaidOrderBean> mAdapter;
+    private List<UnPaidOrderBean> mData = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,24 +63,23 @@ public class TableHasPaidActivity extends BaseActivity implements AbPullToRefres
         ButterKnife.bind(this);
         setPageTitle("已支付");
         tableId = getIntent().getStringExtra("TABLEID");
-//            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.android_robot);
-//            RoundedBitmapDrawable mRoundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
-//            mRoundedBitmapDrawable.setCircular(isChecked);
-//            ImageView image = (ImageView) findViewById(R.id.image);
-//            image.setImageDrawable(mRoundedBitmapDrawable);
         table_name.setText(getIntent().getStringExtra("TABLENAME"));
-
-        setListener();
 
         initAdapter();
 
-        getTableInfo();
+        addDataToView(getIntent().getStringExtra("DATA"));
+    }
+
+    private void addDataToView(String data) {
+        JSONObject jsonObject = JSON.parseObject(data);
+        fen_num.setText(jsonObject.getString("proNum"));
+        num_should_pay.setText(jsonObject.getString("totalOrderMoney"));
     }
 
     private void initAdapter() {
-        mAdapter = new QuickAdapter<DiningOrderBean>(TableHasPaidActivity.this, R.layout.table_order_list_view_layout, mData) {
+        mAdapter = new QuickAdapter<UnPaidOrderBean>(TableHasPaidActivity.this, R.layout.table_order_list_view_layout, mData) {
             @Override
-            protected void convert(BaseAdapterHelper helper, DiningOrderBean item) {
+            protected void convert(BaseAdapterHelper helper, UnPaidOrderBean item) {
                 ((TextView) helper.getView(R.id.time_cn)).setText("支付时间：");
                 ImageView avatar = helper.getView(R.id.iv_avatar);//头像
                 TextView name = helper.getView(R.id.tv_client_name);
@@ -103,31 +88,7 @@ public class TableHasPaidActivity extends BaseActivity implements AbPullToRefres
                 LinearLayout container = helper.getView(R.id.dishes_list_container);
             }
         };
-    }
-
-    private void setListener() {
-        mPullToRefreshView.setOnHeaderRefreshListener(this);
-        mPullToRefreshView.setOnFooterLoadListener(this);
-    }
-
-    private void getTableInfo() {
-        okHttpsImp.tableInfo(new MyResultCallback<String>() {
-            @Override
-            public void onAfter(@Nullable String s, @Nullable Exception e) {
-                super.onAfter(s, e);
-                refreshingFinish();
-            }
-
-            @Override
-            public void onResponseResult(Result result) {
-
-            }
-
-            @Override
-            public void onResponseFailed(String msg) {
-
-            }
-        }, userShopInfoBean.getUserId(), userShopInfoBean.getBusinessId(), tableId);
+        mListView.setAdapter(mAdapter);
     }
 
     @Override
@@ -194,28 +155,5 @@ public class TableHasPaidActivity extends BaseActivity implements AbPullToRefres
                 ContentUtils.showMsg(TableHasPaidActivity.this, "翻桌成功");
             }
         }, userShopInfoBean.getBusinessId(), tableId);
-    }
-
-    @Override
-    public void onFooterLoad(AbPullToRefreshView view) {
-        mPullLoading = true;
-        getTableInfo();
-    }
-
-    @Override
-    public void onHeaderRefresh(AbPullToRefreshView view) {
-        mPullRefreshing = true;
-        getTableInfo();
-    }
-
-    private void refreshingFinish() {
-        if (mPullRefreshing) {
-            mPullToRefreshView.onHeaderRefreshFinish();
-            mPullRefreshing = false;
-        }
-        if (mPullLoading) {
-            mPullToRefreshView.onFooterLoadFinish();
-            mPullLoading = false;
-        }
     }
 }

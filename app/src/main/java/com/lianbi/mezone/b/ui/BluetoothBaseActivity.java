@@ -23,8 +23,11 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -304,6 +307,11 @@ public class BluetoothBaseActivity extends BaseActivity {
         dialog.setContentView(view);
         dialog.setCancelable(false);
         dialog.setCanceledOnTouchOutside(false);
+        Window win = dialog.getWindow();
+        WindowManager.LayoutParams lp = win.getAttributes();
+        lp.gravity = Gravity.CENTER;
+        lp.width = (int) (screenWidth * 0.8);
+        lp.height = ViewGroup.LayoutParams.WRAP_CONTENT;
         dialog.show();
     }
 

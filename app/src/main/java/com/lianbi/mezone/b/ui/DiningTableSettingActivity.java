@@ -1,7 +1,9 @@
 package com.lianbi.mezone.b.ui;
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
 import android.app.Dialog;
-import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -14,8 +16,12 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -48,6 +54,7 @@ import butterknife.OnTextChanged;
 import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.QuickAdapter;
 import cn.com.hgh.eventbus.ShouyeRefreshEvent;
+import cn.com.hgh.utils.AbAppUtil;
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.JumpIntent;
 import cn.com.hgh.utils.Result;
@@ -128,14 +135,18 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
     @Bind(R.id.tables_grid_view)
     MyGridView tablesGridView;
 
+    @Bind(R.id.search_result_grid_view)
+    GridView searchResultGridView;
+
     private QuickAdapter<TableSetBean> adapter;
     private ArrayList<TableSetBean> data = new ArrayList<>();
 
+    private QuickAdapter<TableSetBean> searchResultAdapter;
+    private ArrayList<TableSetBean> searchResultData = new ArrayList<>();
+
     private boolean isInBusiness;
 
-//    private static final int REQUEST_CODE_ADDTABLE_RESULT = 1010;
-
-    private static ArrayList<TableSetBean> newOrderdList = new ArrayList<TableSetBean>();//存储新下的订单
+    private static ArrayList<TableSetBean> oldOrderdList = new ArrayList<TableSetBean>();//存储上一次请求数据时的已点单桌面数据
 
     private ArrayList<String> needDelList = new ArrayList<>();
 
@@ -157,6 +168,11 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
 
     private String searchText = "";
 
+    private static final int GOTO_NEW_ORDER_TABLE_ACTIVITY = 1004;
+
+    private ObjectAnimator objectInAnim;
+    private ObjectAnimator objectOutAnim;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -166,9 +182,60 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
 
         swipeRefreshLayout.setColorSchemeResources(R.color.colores_news_01, R.color.black);
 
+        initObjectAnimator();
+
         setListener();
 
         initAdapter();
+    }
+
+    private void initObjectAnimator() {
+        objectInAnim = ObjectAnimator.ofFloat(searchResultGridView, "translationY", searchResultGridView.getHeight(), 0.0f);
+        objectInAnim.setDuration(200);
+        objectInAnim.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                searchResultGridView.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+                searchResultGridView.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+
+        objectOutAnim = ObjectAnimator.ofFloat(searchResultGridView, "translationY", 0.0f, searchResultGridView.getHeight());
+        objectOutAnim.setDuration(200);
+        objectOutAnim.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                searchResultGridView.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+                searchResultGridView.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
     }
 
     @Override
@@ -193,114 +260,135 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
     private void initAdapter() {
         adapter = new QuickAdapter<TableSetBean>(DiningTableSettingActivity.this, R.layout.one_table_layout, data) {
             @Override
-            protected void convert(BaseAdapterHelper helper, final TableSetBean item) {
-                TextView table_state = helper.getView(R.id.table_state);
-                TextView table_index = helper.getView(R.id.table_index);
-                TextView have_new = helper.getView(R.id.have_new);
-                TextView table_may_do = helper.getView(R.id.curr_table_may_do);
-                View pay_number_container = helper.getView(R.id.pay_number_container);
-                TextView pay_number = helper.getView(R.id.pay_number);
-                TextView person_num = helper.getView(R.id.person_num);
-                TextView unit = helper.getView(R.id.unit);
-                ImageView table_delete = helper.getView(R.id.tableset_delete);
-
-                if (item.isNew())
-                    have_new.setVisibility(View.VISIBLE);
-                else
-                    have_new.setVisibility(View.GONE);
-
-                String table_state_Str = "";
-                int table_state_drawableResid = 0;
-                int text_color = 0;
-                int visibility = View.GONE;
-                String table_may_do_Str = "";
-                int table_may_do_drawableResid = 0;
-                String person_num_Str = "";
-                String unit_Str = "";
-                View.OnClickListener l = null;//item最下方TextView的点击事件
-                switch (item.getTableStatus()) {
-                    case 0://空位
-                        table_state_Str = "空桌";
-                        table_state_drawableResid = R.drawable.table_empty_background_shape;
-                        text_color = Color.parseColor("#3d9684");
-                        visibility = View.GONE;
-                        table_may_do_drawableResid = R.drawable.show_qc_code_background_shape;
-                        table_may_do_Str = "查看二维码";
-                        person_num_Str = item.getPresetCount();
-                        unit_Str = "人桌";
-                        break;
-                    case 1://已点餐
-                        table_state_Str = "已点餐";
-                        table_state_drawableResid = R.drawable.have_ordered_background_shape;
-                        text_color = Color.parseColor("#e77c8c");
-                        visibility = View.VISIBLE;
-                        pay_number.setText(item.getOrderAmt());
-                        table_may_do_drawableResid = R.drawable.print_ticket_background_shape;
-                        table_may_do_Str = "打印小票";
-                        person_num_Str = item.getActualCount();
-                        unit_Str = "人用餐";
-                        l = new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                if (checkCanGoNext()) {
-                                    showPrintTicketDialog(item.getTableId());
-                                }
-                            }
-                        };
-                        break;
-                    case 2://已支付
-                        table_state_Str = "已支付";
-                        table_state_drawableResid = R.drawable.have_paid_background_shape;
-                        text_color = Color.parseColor("#4592ca");
-                        visibility = View.VISIBLE;
-                        pay_number.setText(item.getOrderAmt());
-                        table_may_do_drawableResid = R.drawable.reset_table_background_shape;
-                        table_may_do_Str = "翻桌";
-                        person_num_Str = item.getActualCount();
-                        unit_Str = "人用餐";
-                        l = new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                if (checkCanGoNext()) {
-                                    checkTableOrder(item.getTableId());
-                                }
-                            }
-                        };
-                        break;
-                }
-
-                table_state.setText(table_state_Str);
-                table_state.setBackgroundResource(table_state_drawableResid);
-                table_index.setTextColor(text_color);
-                table_index.setText(item.getTableName());
-                pay_number_container.setVisibility(visibility);
-                table_may_do.setBackgroundResource(table_may_do_drawableResid);
-                table_may_do.setText(table_may_do_Str);
-                table_may_do.setTextColor(text_color);
-                if (item.getTableStatus() != 0) {
-                    if (!delSelectButtonIsShowing) {
-                        table_may_do.setOnClickListener(l);
-                    }
-                }
-                person_num.setText(person_num_Str);
-                unit.setText(unit_Str);
-
-                switch (item.getSelectStatus()) {
-                    case 0:
-                        table_delete.setVisibility(View.GONE);
-                        break;
-                    case 1:
-                        table_delete.setImageResource(R.mipmap.message_unchecked);
-                        table_delete.setVisibility(View.VISIBLE);
-                        break;
-                    case 2:
-                        table_delete.setImageResource(R.mipmap.icon_check);
-                        table_delete.setVisibility(View.VISIBLE);
-                        break;
-                }
+            protected void convert(BaseAdapterHelper helper, TableSetBean item) {
+                adapterConvert(helper, item, 1);
             }
         };
         tablesGridView.setAdapter(adapter);
+
+        searchResultAdapter = new QuickAdapter<TableSetBean>(DiningTableSettingActivity.this, R.layout.one_table_layout, searchResultData) {
+            @Override
+            protected void convert(BaseAdapterHelper helper, TableSetBean item) {
+                adapterConvert(helper, item, 0);
+            }
+        };
+        searchResultGridView.setAdapter(searchResultAdapter);
+    }
+
+    private void adapterConvert(BaseAdapterHelper helper, final TableSetBean item, int flag) {
+        TextView table_state = helper.getView(R.id.table_state);
+        TextView table_index = helper.getView(R.id.table_index);
+        TextView have_new = helper.getView(R.id.have_new);
+        TextView table_may_do = helper.getView(R.id.curr_table_may_do);
+        View pay_number_container = helper.getView(R.id.pay_number_container);
+        TextView pay_number = helper.getView(R.id.pay_number);
+        TextView person_num = helper.getView(R.id.person_num);
+        TextView unit = helper.getView(R.id.unit);
+        ImageView table_delete = helper.getView(R.id.tableset_delete);
+
+        if (item.isNew())
+            have_new.setVisibility(View.VISIBLE);
+        else
+            have_new.setVisibility(View.GONE);
+
+        String table_state_Str = "";
+        int table_state_drawableResid = 0;
+        int text_color = 0;
+        int visibility = View.GONE;
+        String table_may_do_Str = "";
+        int table_may_do_drawableResid = 0;
+        String person_num_Str = "";
+        String unit_Str = "";
+        View.OnClickListener l = null;//item最下方TextView的点击事件
+        switch (item.getTableStatus()) {
+            case 0://空位
+                table_state_Str = "空桌";
+                table_state_drawableResid = R.drawable.table_empty_background_shape;
+                text_color = Color.parseColor("#3d9684");
+                visibility = View.GONE;
+                table_may_do_drawableResid = R.drawable.show_qc_code_background_shape;
+                table_may_do_Str = "查看二维码";
+                person_num_Str = item.getPresetCount();
+                unit_Str = "人桌";
+                break;
+            case 1://已点餐
+                table_state_Str = "已点餐";
+                table_state_drawableResid = R.drawable.have_ordered_background_shape;
+                text_color = Color.parseColor("#e77c8c");
+                visibility = View.VISIBLE;
+                pay_number.setText(item.getOrderAmt());
+                table_may_do_drawableResid = R.drawable.print_ticket_background_shape;
+                table_may_do_Str = "打印小票";
+                person_num_Str = item.getActualCount();
+                unit_Str = "人用餐";
+                l = new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (checkCanGoNext()) {
+                            showPrintTicketDialog(item.getTableId());
+                        }
+                    }
+                };
+                break;
+            case 2://已支付
+                table_state_Str = "已支付";
+                table_state_drawableResid = R.drawable.have_paid_background_shape;
+                text_color = Color.parseColor("#4592ca");
+                visibility = View.VISIBLE;
+                pay_number.setText(item.getOrderAmt());
+                table_may_do_drawableResid = R.drawable.reset_table_background_shape;
+                table_may_do_Str = "翻桌";
+                person_num_Str = item.getActualCount();
+                unit_Str = "人用餐";
+                l = new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (checkCanGoNext()) {
+                            checkTableOrder(item.getTableId());
+                        }
+                    }
+                };
+                break;
+        }
+
+        table_state.setText(table_state_Str);
+        table_state.setBackgroundResource(table_state_drawableResid);
+        table_index.setTextColor(text_color);
+        table_index.setText(item.getTableName());
+        pay_number_container.setVisibility(visibility);
+        table_may_do.setBackgroundResource(table_may_do_drawableResid);
+        table_may_do.setText(table_may_do_Str);
+        table_may_do.setTextColor(text_color);
+        if (item.getTableStatus() != 0) {
+            switch (flag) {
+                case 0:
+                    table_may_do.setOnClickListener(l);
+                    break;
+                case 1:
+                    if (!delSelectButtonIsShowing) {
+                        table_may_do.setOnClickListener(l);
+                    }
+                    break;
+            }
+        }
+        person_num.setText(person_num_Str);
+        unit.setText(unit_Str);
+
+        if (flag == 1) {
+            switch (item.getSelectStatus()) {
+                case 0:
+                    table_delete.setVisibility(View.GONE);
+                    break;
+                case 1:
+                    table_delete.setImageResource(R.mipmap.message_unchecked);
+                    table_delete.setVisibility(View.VISIBLE);
+                    break;
+                case 2:
+                    table_delete.setImageResource(R.mipmap.icon_check);
+                    table_delete.setVisibility(View.VISIBLE);
+                    break;
+            }
+        }
     }
 
     //查询桌位是否有未支付的订单(是否可以翻台,翻台前校验)
@@ -347,6 +435,11 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
         dialog.setCancelable(true);
         dialog.setCanceledOnTouchOutside(true);
         dialog.setContentView(R.layout.fantai_fail_dialog_layout);
+        Window win = dialog.getWindow();
+        WindowManager.LayoutParams lp = win.getAttributes();
+        lp.gravity = Gravity.CENTER;
+        lp.width = (int) (screenWidth * 0.8);
+        lp.height = ViewGroup.LayoutParams.WRAP_CONTENT;
         dialog.show();
     }
 
@@ -371,6 +464,11 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
         dialog.setContentView(view);
         dialog.setCancelable(false);
         dialog.setCanceledOnTouchOutside(false);
+        Window win = dialog.getWindow();
+        WindowManager.LayoutParams lp = win.getAttributes();
+        lp.gravity = Gravity.CENTER;
+        lp.width = (int) (screenWidth * 0.8);
+        lp.height = ViewGroup.LayoutParams.WRAP_CONTENT;
         dialog.show();
     }
 
@@ -382,14 +480,17 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
                 Dialog dialog = new Dialog(DiningTableSettingActivity.this);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 TextView textView = new TextView(DiningTableSettingActivity.this);
-                textView.setWidth(screenWidth / 2);
-                textView.setHeight(screenWidth / 4);
                 textView.setGravity(Gravity.CENTER);
                 textView.setText("翻桌成功");
                 textView.setBackgroundColor(getResources().getColor(android.R.color.white));
                 dialog.setContentView(textView);
                 dialog.setCancelable(true);
                 dialog.setCanceledOnTouchOutside(true);
+                Window win = dialog.getWindow();
+                WindowManager.LayoutParams lp = win.getAttributes();
+                lp.gravity = Gravity.CENTER;
+                lp.width = (int) (screenWidth * 0.8);
+                lp.height = ViewGroup.LayoutParams.WRAP_CONTENT;
                 dialog.show();
                 getTableinfo();
             }
@@ -420,6 +521,14 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
         }
         if (isDeletingTablesData) {
             ContentUtils.showMsg(DiningTableSettingActivity.this, "正在删除桌位，请稍候...");
+            return false;
+        }
+        if (isRequestingTableInfoData) {
+            ContentUtils.showMsg(DiningTableSettingActivity.this, "正在请求单个桌位详情，请稍候...");
+            return false;
+        }
+        if (isRequestingPrintTicketData) {
+            ContentUtils.showMsg(DiningTableSettingActivity.this, "正在请求小票数据，请稍候...");
             return false;
         }
         return true;
@@ -463,7 +572,6 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
     @OnClick({R.id.back, R.id.menu_setting, R.id.add_table, R.id.delete_table,
             R.id.switch_state, R.id.call, R.id.pay, R.id.particulars, R.id.search})
     public void onClick(View view) {
-        super.onClick(view);
         switch (view.getId()) {
             case R.id.back:
                 onTitleLeftClick();
@@ -557,13 +665,70 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
                 startActivity(new Intent(DiningTableSettingActivity.this, ComeDetailActivity.class));
                 break;
             case R.id.search:
-                if (TextUtils.isEmpty(searchText)) {
-                    adapter.replaceAll(data);
-                } else {
-                    new SearchTableAsyncTask().execute(searchText);
-                }
+                search.setFocusable(true);
+                search.setFocusableInTouchMode(true);
+                search.requestFocus();
+                InputMethodManager inputManager = (InputMethodManager) search.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputManager.showSoftInput(search, 0);
+                break;
+            default:
+                super.onClick(view);
                 break;
         }
+    }
+
+    //单个桌面详情
+    private void getTableInfo(final TableSetBean bean) {
+        okHttpsImp.tableInfo(new MyResultCallback<String>() {
+            @Override
+            public void onBefore(BaseRequest request) {
+                super.onBefore(request);
+                isRequestingTableInfoData = true;
+            }
+
+            @Override
+            public void onAfter(@Nullable String s, @Nullable Exception e) {
+                super.onAfter(s, e);
+                isRequestingTableInfoData = false;
+            }
+
+            @Override
+            public void onResponseResult(Result result) {
+                String data = result.getData();
+                if (!TextUtils.isEmpty(data)) {
+                    com.alibaba.fastjson.JSONObject jsonObject = JSON.parseObject(data);
+                    switch (jsonObject.getIntValue("tableStatus")) {
+                        case 0:
+                            startActivity(new Intent(DiningTableSettingActivity.this, ScanningQRActivity.class)
+                                    .putExtra("TABLENAME", bean.getTableName())
+                                    .putExtra("TABLEID", bean.getTableId()));
+                            break;
+                        case 1:
+                            Intent i = new Intent(DiningTableSettingActivity.this, TableHasOrderedActivity.class);
+                            i.putExtra("TABLENAME", bean.getTableName());
+                            i.putExtra("TABLEID", bean.getTableId());
+                            i.putExtra("DATA", data);
+                            if (bean.isNew()) {
+                                startActivityForResult(i, GOTO_NEW_ORDER_TABLE_ACTIVITY);
+                            } else {
+                                startActivity(i);
+                            }
+                            break;
+                        case 2:
+                            startActivity(new Intent(DiningTableSettingActivity.this, TableHasPaidActivity.class)
+                                    .putExtra("TABLENAME", bean.getTableName())
+                                    .putExtra("TABLEID", bean.getTableId())
+                                    .putExtra("DATA", data));
+                            break;
+                    }
+                }
+            }
+
+            @Override
+            public void onResponseFailed(String msg) {
+
+            }
+        }, userShopInfoBean.getUserId(), userShopInfoBean.getBusinessId(), bean.getTableId());
     }
 
     private void switchDelSelectButton(int selectStatus) {
@@ -600,13 +765,31 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-//        switch (requestCode) {
-//            case REQUEST_CODE_ADDTABLE_RESULT:// 添加桌子
-//                if (resultCode == RESULT_OK) {
-//                }
-//                break;
-//        }
+        switch (requestCode) {
+            case GOTO_NEW_ORDER_TABLE_ACTIVITY:
+                if (resultCode == RESULT_OK) {
+                    String tableId = data.getStringExtra("TABLEID");
+                    if (!TextUtils.isEmpty(tableId) && !oldOrderdList.isEmpty()) {
+                        int index = 0;
+                        TableSetBean b = null;
+                        for (int i = 0; i < oldOrderdList.size(); i++) {
+                            TableSetBean bean = oldOrderdList.get(i);
+                            if (bean.getTableId().equals(tableId)) {
+                                index = i;
+                                bean.setNew(false);
+                                b = bean;
+                                break;
+                            }
+                        }
+                        oldOrderdList.remove(index);
+                        oldOrderdList.add(index, b);
+                    }
+                }
+                break;
+            default:
+                super.onActivityResult(requestCode, resultCode, data);
+                break;
+        }
     }
 
     @Override
@@ -748,20 +931,26 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
             }
         }
 
-        if (!newOrderdList.isEmpty()) {
+        ArrayList<TableSetBean> newOrderdList = new ArrayList<>();
+
+        if (!oldOrderdList.isEmpty()) {
             for (int i = 0; i < orderdList.size(); i++) {
-                if (compareTo(newOrderdList, orderdList.get(i))) {
-                    orderdList.remove(i);
-                    i--;
+                TableSetBean bean = orderdList.get(i);
+                if (!compareTo(oldOrderdList, bean)) {
+                    bean.setNew(true);
+                    newOrderdList.add(bean);
                 }
             }
         }
 
         data.addAll(paidList);
         data.addAll(newOrderdList);
-        data.addAll(orderdList);
+        data.addAll(oldOrderdList);
         data.addAll(emptyList);
 
+        if (newOrderdList.addAll(oldOrderdList)) {
+            oldOrderdList = newOrderdList;//新数据重新付给
+        }
         return data;
     }
 
@@ -805,15 +994,12 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
 
     @Override
     public void onRefresh() {
-        if (isDeletingTablesData)
-            return;
-        if (isRequestingTablesData)
-            return;
-        if (isRequestingOtherData)
-            return;
-        if (isRequestingFanZhuoData)
-            return;
-        if (isRequestingBeforFanZhuoCheckData)
+        if (isDeletingTablesData
+                || isRequestingTablesData
+                || isRequestingOtherData
+                || isRequestingFanZhuoData
+                || isRequestingBeforFanZhuoCheckData
+                || isRequestingTableInfoData)
             return;
 
         setSwipeRefreshLoadingState();
@@ -844,41 +1030,32 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
     }
 
     @Override
-    @OnItemClick({R.id.tables_grid_view})
+    @OnItemClick({R.id.tables_grid_view, R.id.search_result_grid_view})
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        TableSetBean bean = data.get(position);
-        if (delSelectButtonIsShowing) {
-            switch (bean.getSelectStatus()) {
-                case 1:
-                    bean.setSelectStatus(2);
-                    needDelList.add(bean.getTableId());
-                    break;
-                case 2:
-                    bean.setSelectStatus(1);
-                    needDelList.remove(bean.getTableId());
-                    break;
-            }
-            data.remove(position);
-            data.add(position, bean);
-            adapter.replaceAll(data);
-        } else {
-            Intent intent = new Intent();
-            ComponentName component = null;
-            switch (bean.getTableStatus()) {
-                case 0:
-                    component = new ComponentName(DiningTableSettingActivity.this, ScanningQRActivity.class);
-                    break;
-                case 1:
-                    component = new ComponentName(DiningTableSettingActivity.this, TableHasOrderedActivity.class);
-                    break;
-                case 2:
-                    component = new ComponentName(DiningTableSettingActivity.this, TableHasPaidActivity.class);
-                    break;
-            }
-            intent.setComponent(component);
-            intent.putExtra("TABLENAME", bean.getTableName());
-            intent.putExtra("TABLEID", bean.getTableId());
-            startActivity(intent);
+        switch (parent.getId()) {
+            case R.id.tables_grid_view:
+                TableSetBean bean = data.get(position);
+                if (delSelectButtonIsShowing) {
+                    switch (bean.getSelectStatus()) {
+                        case 1:
+                            bean.setSelectStatus(2);
+                            needDelList.add(bean.getTableId());
+                            break;
+                        case 2:
+                            bean.setSelectStatus(1);
+                            needDelList.remove(bean.getTableId());
+                            break;
+                    }
+                    data.remove(position);
+                    data.add(position, bean);
+                    adapter.replaceAll(data);
+                } else {
+                    getTableInfo(bean);
+                }
+                break;
+            case R.id.search_result_grid_view:
+                getTableInfo(searchResultAdapter.getItem(position));
+                break;
         }
     }
 
@@ -910,20 +1087,26 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
     @Override
     @OnTextChanged({R.id.search})
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+        search.beforeTextChanged(s, start, count, after);
     }
 
     @Override
     @OnTextChanged({R.id.search})
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+        search.onTextChanged(s, start, before, count);
     }
 
     @Override
     @OnTextChanged({R.id.search})
     public void afterTextChanged(Editable s) {
+        search.afterTextChanged(s);
         searchText = s.toString();
-        new SearchTableAsyncTask().execute(searchText);
+        if (TextUtils.isEmpty(searchText)) {
+            objectOutAnim.start();
+        } else {
+            objectInAnim.start();
+            new SearchTableAsyncTask().execute(searchText);
+        }
     }
 
     private class SearchTableAsyncTask extends AsyncTask<String, Void, ArrayList<TableSetBean>> {
@@ -946,7 +1129,7 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
         @Override
         protected void onPostExecute(ArrayList<TableSetBean> tableSetBeen) {
             super.onPostExecute(tableSetBeen);
-            adapter.replaceAll(tableSetBeen);
+            searchResultAdapter.replaceAll(tableSetBeen);
         }
 
         public SearchTableAsyncTask() {

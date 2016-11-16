@@ -136,24 +136,24 @@ public enum OkHttpsImp {
         OkGo.get(url).params(params).execute(fileDialogCallback);
     }
 
-	/**
-	 * 文件下载无progress
-	 */
-	private void getFileDownloadNOProgressResponse(FileDialogCallback fileDialogCallback, Map<String, String> params, String url) {
-		fileDialogCallback.setContext(context);
-		OkGo.get(url).params(params).execute(fileDialogCallback);
-	}
+    /**
+     * 文件下载无progress
+     */
+    private void getFileDownloadNOProgressResponse(FileDialogCallback fileDialogCallback, Map<String, String> params, String url) {
+        fileDialogCallback.setContext(context);
+        OkGo.get(url).params(params).execute(fileDialogCallback);
+    }
 
 
-	/**
-	 * 文件上传(同一个key上传多个文件)
-	 */
-	private void formUploadProgressResponse(UploadFileCallback uploadFileCallback, Map<String, String> params,
-											String url, String fileParam, List<File> fileList) {
-		uploadFileCallback.setContext(context);
-		uploadFileCallback.setDialog("上传中...");
-		OkGo.post(url).params(params).addFileParams(fileParam, fileList).execute(uploadFileCallback);
-	}
+    /**
+     * 文件上传(同一个key上传多个文件)
+     */
+    private void formUploadProgressResponse(UploadFileCallback uploadFileCallback, Map<String, String> params,
+                                            String url, String fileParam, List<File> fileList) {
+        uploadFileCallback.setContext(context);
+        uploadFileCallback.setDialog("上传中...");
+        OkGo.post(url).params(params).addFileParams(fileParam, fileList).execute(uploadFileCallback);
+    }
 
     /**
      * 文件上传(一个key对应多个文件)
@@ -253,6 +253,7 @@ public enum OkHttpsImp {
                                       String provinces,
                                       String city,
                                       String address,
+                                      String logoUrl,
                                       String serNum, String source,
                                       String reqTime,
                                       MyResultCallback<String> myResultCallback
@@ -271,6 +272,7 @@ public enum OkHttpsImp {
         params.put("provinces", provinces);
         params.put("city", city);
         params.put("address", address);
+        params.put("logoUrl", logoUrl);
         params.put("reqTime", reqTime);
         params.put("serNum", serNum);
         params.put("source", source);
@@ -320,7 +322,7 @@ public enum OkHttpsImp {
         String sign = getSign(md5_key, params);
         params.put("sign", sign);
         String url = getAbsoluteUrl(API.QUERY_LEAGUES_DYNAMIC);
-        getProgressResponse(myResultCallback, params, url);
+        postProgressResponse(myResultCallback, params, url);
     }
 
     /**
@@ -571,6 +573,7 @@ public enum OkHttpsImp {
 
     /**
      * 取消订单接口
+     *
      * @param isPaidOrder 是否存在已付款订单 0,1
      */
     public void tableInfo(MyResultCallback<String> myResultCallback, String userId, String businessId, String tableId, String isPaidOrder) {
@@ -601,10 +604,12 @@ public enum OkHttpsImp {
     /**
      * 取消产品接口
      */
-    public void cancelProduct(MyResultCallback<String> myResultCallback, String orderNo, String productId) {
+    public void cancelProduct(MyResultCallback<String> myResultCallback, String orderNo, String productId, String tableId, String price) {
         Map<String, String> params = new HashMap<String, String>();
         params.put("orderNo", orderNo);
         params.put("productId", productId);
+        params.put("tableId", tableId);
+        params.put("price", price);
         String url = getHttpUrl("cancelProduct");
         postProgressResponse(myResultCallback, params, url);
     }
@@ -1513,7 +1518,7 @@ public enum OkHttpsImp {
     public void addBusinessByB(String businessName, String address,
                                String userId, String industryId, String license,
                                String contactName, String phone, String provinceId,
-                               String cityCode,String areaCode,
+                               String cityCode, String areaCode,
                                MyResultCallback<String> myResultCallback,
                                String serNum, String source,
                                String reqTime) throws Exception {
@@ -1635,18 +1640,19 @@ public enum OkHttpsImp {
         String url = getAbsoluteUrl(API.UPDATEBUSINESSCONTACTS);
         postProgressResponse(myResultCallback, params, url);
     }
+
     /**
      * 修改店铺省市区和行业类别
      */
     public void updateBusinessComplement(String serNum,
-                                    String source,
-                                    String reqTime,
-                                    String businessId,
-                                    String industryId,
-                                    String provinceId,
-                                    String cityCode,
-                                    String areaCode,
-                                    MyResultCallback<String> myResultCallback) throws Exception {
+                                         String source,
+                                         String reqTime,
+                                         String businessId,
+                                         String industryId,
+                                         String provinceId,
+                                         String cityCode,
+                                         String areaCode,
+                                         MyResultCallback<String> myResultCallback) throws Exception {
         Map<String, String> params = new HashMap<String, String>();
         params.put("businessId", businessId);
         params.put("industryId", industryId);
@@ -1661,39 +1667,22 @@ public enum OkHttpsImp {
         String url = getAbsoluteUrl(API.UPDATEBUSINESSPHONE);
         postProgressResponse(myResultCallback, params, url);
     }
+
     /**
-     * 修改店铺手机号
+     * 修改店铺
      */
-    public void updateBusinessPhone(String serNum,
-                                String source,
-                                String reqTime,
-                                String businessId,
-                                String phone,
-                                MyResultCallback<String> myResultCallback) throws Exception {
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("businessId", businessId);
-        params.put("phone", phone);
-        params.put("reqTime", reqTime);
-        params.put("serNum", serNum);
-        params.put("source", source);
-        String sign = getSign(md5_key, params);
-        params.put("sign", sign);
-        String url = getAbsoluteUrl(API.UPDATEBUSINESSPHONE);
-        postProgressResponse(myResultCallback, params, url);
-    }
-    /**
-     * 修改店铺省市区
-     */
-    public void updateBusinessProvincialcity(String serNum,
+    public void updateBusiness(String serNum,
                                String source,
                                String reqTime,
                                String businessId,
+                               String phone,
                                String provinceId,
                                String cityCode,
                                String areaCode,
                                MyResultCallback<String> myResultCallback) throws Exception {
         Map<String, String> params = new HashMap<String, String>();
         params.put("businessId", businessId);
+        params.put("phone", phone);
         params.put("provinceId", provinceId);
         params.put("cityCode", cityCode);
         params.put("areaCode", areaCode);
@@ -1705,6 +1694,7 @@ public enum OkHttpsImp {
         String url = getAbsoluteUrl(API.UPDATEBUSINESSPHONE);
         postProgressResponse(myResultCallback, params, url);
     }
+
     /**
      * 修改店铺地址
      */
@@ -1944,6 +1934,7 @@ public enum OkHttpsImp {
         String url = getAbsoluteUrl(API.GETINCOME);
         getProgressResponse(myResultCallback, params, url);
     }
+
     /**
      * 在线支付
      */
@@ -1969,9 +1960,9 @@ public enum OkHttpsImp {
      * 现金付款接口
      */
     public void geteditOrderStatus(String serNum, String source, String reqTime,
-                             String userId, String businessId,
-                             String tableId,String sourceType,
-                             MyResultCallback<String> myResultCallback) throws Exception {
+                                   String userId, String businessId,
+                                   String tableId, String sourceType,
+                                   MyResultCallback<String> myResultCallback) throws Exception {
         Map<String, String> params = new HashMap<String, String>();
         params.put("reqTime", reqTime);
         params.put("serNum", serNum);
@@ -1979,31 +1970,33 @@ public enum OkHttpsImp {
         params.put("userId", userId);
         params.put("businessId", businessId);
         params.put("tableId", tableId);
-        params.put("sourceType",sourceType);
+        params.put("sourceType", sourceType);
         String sign = getSign(md5_key, params);
         params.put("sign", sign);
         String url = API.EDITORDER;
         postProgressResponse(myResultCallback, params, url);
     }
+
     /**
      * 4.25	桌位详情接口
      */
     public void gettsstableInfo(String serNum, String source, String reqTime,
-                                    String businessId,
-                                   String tableId,String sourceType,
-                                   MyResultCallback<String> myResultCallback) throws Exception {
+                                String businessId,
+                                String tableId, String sourceType,
+                                MyResultCallback<String> myResultCallback) throws Exception {
         Map<String, String> params = new HashMap<String, String>();
         params.put("reqTime", reqTime);
         params.put("serNum", serNum);
         params.put("source", source);
         params.put("businessId", businessId);
         params.put("tableId", tableId);
-        params.put("sourceType",sourceType);
+        params.put("sourceType", sourceType);
         String sign = getSign(md5_key, params);
         params.put("sign", sign);
         String url = API.TABLETSSINFO;
         postProgressResponse(myResultCallback, params, url);
     }
+
     /**
      * 获取经营总收入
      */
@@ -2843,7 +2836,7 @@ public enum OkHttpsImp {
         params.put("isRead", isRead);
         String sign = getSign(md5_key, params);
         params.put("sign", sign);
-        String url = getHttpUrl(storeId,API.PUSHMESSAGE);
+        String url = API.PUSHMESSAGE;
         postProgressResponse(myResultCallback, params, url);
 
     }
@@ -3034,7 +3027,7 @@ public enum OkHttpsImp {
         params.put("businessId", businessId);
         params.put("labelName", labelName);
         /*params.put("createTime", createTime);
-		params.put("updateTime", updateTime);*/
+        params.put("updateTime", updateTime);*/
         String sign = getSign(md5_key, params);
         params.put("sign", sign);
         String url = getAbsoluteUrl(API.ADDVIPLABEL);
@@ -3321,7 +3314,7 @@ public enum OkHttpsImp {
     /**
      * 首页实时消费记录
      */
-    public void getShopConsumption(String businessId, String userId, String endTime,MyResultCallback<String> myResultCallback) throws Exception {
+    public void getShopConsumption(String businessId, String userId, String endTime, MyResultCallback<String> myResultCallback) throws Exception {
         Map<String, String> params = new HashMap<String, String>();
         params.put("businessId", businessId);
         params.put("userId", userId);
@@ -3336,11 +3329,11 @@ public enum OkHttpsImp {
     /**
      * 首页销量排行榜
      */
-    public void getShopSaleRank(boolean condition,String storeId, MyResultCallback<String> myResultCallback) throws Exception {
+    public void getShopSaleRank(boolean condition, String storeId, MyResultCallback<String> myResultCallback) throws Exception {
         Map<String, String> params = new HashMap<>();
-        if(condition){
+        if (condition) {
             params.put("flag", "day");
-        }else{
+        } else {
             params.put("flag", "week");
         }
         params.put("storeId", storeId);
@@ -3348,51 +3341,51 @@ public enum OkHttpsImp {
         getNoProgressResponse(myResultCallback, params, url);
     }
 
-	/**
-	 * 获取省市区接口
-	 */
-	public void getProvinceCode(String serNum, String reqTime, FileDialogCallback fileDialogCallback)
-							throws Exception{
-		Map<String, String> params = new HashMap<String, String>();
-		params.put("serNum", serNum);
-		params.put("source", appsource);
-		params.put("reqTime", reqTime);
-		String sign = getSign(md5_key, params);
-		params.put("sign", sign);
-		String url = getAbsoluteUrl(API.SHOUYE_SHOPVIP_PROVINCE);
-		//String url = "http://server.jeasonlzy.com/OkHttpUtils/download";
-		getFileDownloadNOProgressResponse(fileDialogCallback, params, url);
-	}
+    /**
+     * 获取省市区接口
+     */
+    public void getProvinceCode(String serNum, String reqTime, FileDialogCallback fileDialogCallback)
+            throws Exception {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("serNum", serNum);
+        params.put("source", appsource);
+        params.put("reqTime", reqTime);
+        String sign = getSign(md5_key, params);
+        params.put("sign", sign);
+        String url = getAbsoluteUrl(API.SHOUYE_SHOPVIP_PROVINCE);
+        //String url = "http://server.jeasonlzy.com/OkHttpUtils/download";
+        getFileDownloadNOProgressResponse(fileDialogCallback, params, url);
+    }
 
-	/**
-	 * 签名方法
-	 */
-	private static String getSign(String md5_key, Map<String, String> dataMap) throws Exception {
-		List<String> keyList = new ArrayList<String>(dataMap.keySet());
-		Collections.sort(keyList);
-		StringBuilder builder = new StringBuilder();
-		for (String mapKey : keyList) {
-			// builder.append(mapKey).append("=").append(dataMap.get(mapKey))
-			// .append("&");
-			if (!isChinese(dataMap.get(mapKey))) {
-				builder.append(dataMap.get(mapKey));
-			}
-		}
-		// builder.append("key=").append(md5_key);
-		builder.append(md5_key);
-		MessageDigest md5 = MessageDigest.getInstance(SignType);
-		md5.update(builder.toString().getBytes(inputCharset));
-		byte[] md5Bytes = md5.digest();
-		StringBuffer hexValue = new StringBuffer();
-		for (int i = 0; i < md5Bytes.length; i++) {
-			int val = ((int) md5Bytes[i]) & 0xff;
-			if (val < 16) {
-				hexValue.append("0");
-			}
-			hexValue.append(Integer.toHexString(val));
-		}
-		return hexValue.toString();
-	}
+    /**
+     * 签名方法
+     */
+    private static String getSign(String md5_key, Map<String, String> dataMap) throws Exception {
+        List<String> keyList = new ArrayList<String>(dataMap.keySet());
+        Collections.sort(keyList);
+        StringBuilder builder = new StringBuilder();
+        for (String mapKey : keyList) {
+            // builder.append(mapKey).append("=").append(dataMap.get(mapKey))
+            // .append("&");
+            if (!isChinese(dataMap.get(mapKey))) {
+                builder.append(dataMap.get(mapKey));
+            }
+        }
+        // builder.append("key=").append(md5_key);
+        builder.append(md5_key);
+        MessageDigest md5 = MessageDigest.getInstance(SignType);
+        md5.update(builder.toString().getBytes(inputCharset));
+        byte[] md5Bytes = md5.digest();
+        StringBuffer hexValue = new StringBuffer();
+        for (int i = 0; i < md5Bytes.length; i++) {
+            int val = ((int) md5Bytes[i]) & 0xff;
+            if (val < 16) {
+                hexValue.append("0");
+            }
+            hexValue.append(Integer.toHexString(val));
+        }
+        return hexValue.toString();
+    }
 
     /**
      * 判断是否有中文

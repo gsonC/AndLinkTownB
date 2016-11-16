@@ -1,19 +1,31 @@
 package com.lianbi.mezone.b.ui;
 
 import android.app.Dialog;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.lianbi.mezone.b.bean.DiningOrderBean;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
+import com.lianbi.mezone.b.bean.OneDishInOrder;
+import com.lianbi.mezone.b.bean.UnPaidOrderBean;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.xizhi.mezone.b.R;
 
@@ -25,17 +37,15 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.QuickAdapter;
+import cn.com.hgh.utils.AbDateUtil;
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.Result;
-import cn.com.hgh.view.AbPullToRefreshView;
 import cn.com.hgh.view.DialogCommon;
-import cn.com.hgh.view.HttpDialog;
 
 /*
 * 桌位详情-已点单
 * */
-public class TableHasOrderedActivity extends BluetoothBaseActivity implements AbPullToRefreshView.OnFooterLoadListener,
-        AbPullToRefreshView.OnHeaderRefreshListener {
+public class TableHasOrderedActivity extends BluetoothBaseActivity {
     @Bind(R.id.table_name)
     TextView table_name;
 
@@ -54,9 +64,6 @@ public class TableHasOrderedActivity extends BluetoothBaseActivity implements Ab
     @Bind(R.id.print_ticket)
     TextView printTicket;
 
-    @Bind(R.id.orders_detail)
-    AbPullToRefreshView mPullToRefreshView;
-
     @Bind(R.id.orders_list_view)
     ListView mListView;
 
@@ -67,102 +74,97 @@ public class TableHasOrderedActivity extends BluetoothBaseActivity implements Ab
     TextView cashPay;
 
     private String tableId;
-    /**
-     * 正在下拉刷新.
-     */
-    private boolean mPullRefreshing = false;
-    /**
-     * 正在加载更多.
-     */
-    private boolean mPullLoading = false;
 
-    private QuickAdapter<DiningOrderBean> mAdapter;
-    private List<DiningOrderBean> mData = new ArrayList<>();
+    private QuickAdapter<UnPaidOrderBean> mAdapter;
+    private List<UnPaidOrderBean> mData = new ArrayList<>();
 
     private String newPrice = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setResult(RESULT_OK, getIntent());
         setContentView(R.layout.activity_table_has_ordered, NOTYPE);
         ButterKnife.bind(this);
         setPageTitle("已点单");
         tableId = getIntent().getStringExtra("TABLEID");
         table_name.setText(getIntent().getStringExtra("TABLENAME"));
 
-        setListener();
-
         initAdapter();
 
-        getTableInfo();
+        addDataToView(getIntent().getStringExtra("DATA"));
     }
 
-    private void setListener() {
-        mPullToRefreshView.setOnHeaderRefreshListener(this);
-        mPullToRefreshView.setOnFooterLoadListener(this);
+    private void addDataToView(String data) {
+        JSONObject jsonObject = JSON.parseObject(data);
+        fen_num.setText(jsonObject.getString("proNum"));
+        num_should_pay.setText(jsonObject.getString("totalOrderMoney"));
+        List<UnPaidOrderBean> list = JSON.parseArray(jsonObject.getString("unPaidOrders"), UnPaidOrderBean.class);
+        mAdapter.replaceAll(list);
     }
 
     private void initAdapter() {
-        mAdapter = new QuickAdapter<DiningOrderBean>(TableHasOrderedActivity.this, R.layout.table_order_list_view_layout, mData) {
+        mAdapter = new QuickAdapter<UnPaidOrderBean>(TableHasOrderedActivity.this, R.layout.table_order_list_view_layout, mData) {
             @Override
-            protected void convert(BaseAdapterHelper helper, DiningOrderBean item) {
+            protected void convert(BaseAdapterHelper helper, UnPaidOrderBean item) {
                 ((TextView) helper.getView(R.id.time_cn)).setText("下单时间：");
-                ImageView avatar = helper.getView(R.id.iv_avatar);//头像
+                final ImageView avatar = helper.getView(R.id.iv_avatar);//头像
                 TextView name = helper.getView(R.id.tv_client_name);
                 TextView remark = helper.getView(R.id.remarks);//备注
                 TextView order_time = helper.getView(R.id.tv_order_time);//支付时间
                 LinearLayout container = helper.getView(R.id.dishes_list_container);
+                Glide.with(TableHasOrderedActivity.this)
+                        .load(item.getPhoto())
+                        .asBitmap()
+                        .centerCrop()
+                        .error(R.mipmap.defaultpeson)
+                        .into(new BitmapImageViewTarget(avatar) {
+                            @Override
+                            protected void setResource(Bitmap resource) {
+                                RoundedBitmapDrawable circularBitmapDrawable =
+                                        RoundedBitmapDrawableFactory.create(TableHasOrderedActivity.this.getResources(), resource);
+                                circularBitmapDrawable.setCircular(true);
+                                avatar.setImageDrawable(circularBitmapDrawable);
+                            }
+                        });
+                name.setText(item.getUserName());
+                remark.setText(item.getDesc());
+                order_time.setText(AbDateUtil.exchangeFormat(item.getCreateTime(), "yyyyMMddHHmmss", AbDateUtil.dateFormatYMDHMS));
+
+                ArrayList<OneDishInOrder> detailInfo = item.getDetailInfo();
+                for (int i = 0; i < detailInfo.size(); i++) {
+                    View oneDishLayout = LayoutInflater.from(TableHasOrderedActivity.this).inflate(R.layout.one_dish_layout, null);
+                    TextView dish_name = (TextView) oneDishLayout.findViewById(R.id.dish_name);
+                    TextView dish_price = (TextView) oneDishLayout.findViewById(R.id.dish_price);
+                    TextView tv_dish_num = (TextView) oneDishLayout.findViewById(R.id.tv_dish_num);
+                    TextView cancel_dish = (TextView) oneDishLayout.findViewById(R.id.cancel_dish);
+
+                    OneDishInOrder oneDishInOrder = detailInfo.get(i);
+                    dish_name.setText(oneDishInOrder.getProName());
+                    dish_price.setText(oneDishInOrder.getPrice());
+                    tv_dish_num.setText(oneDishInOrder.getNum());
+                    cancel_dish.setVisibility(View.VISIBLE);
+                    cancel_dish.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+//cancelProduct
+                        }
+                    });
+                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT);
+                    oneDishLayout.setLayoutParams(layoutParams);
+                    container.addView(oneDishLayout);
+                }
             }
         };
-    }
-
-    private void getTableInfo() {
-        okHttpsImp.tableInfo(new MyResultCallback<String>() {
-            @Override
-            public void onAfter(@Nullable String s, @Nullable Exception e) {
-                super.onAfter(s, e);
-                refreshingFinish();
-            }
-
-            @Override
-            public void onResponseResult(Result result) {
-
-            }
-
-            @Override
-            public void onResponseFailed(String msg) {
-
-            }
-        }, userShopInfoBean.getUserId(), userShopInfoBean.getBusinessId(), tableId);
+        mListView.setAdapter(mAdapter);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
-    }
-
-    @Override
-    public void onFooterLoad(AbPullToRefreshView view) {
-        mPullLoading = true;
-        getTableInfo();
-    }
-
-    @Override
-    public void onHeaderRefresh(AbPullToRefreshView view) {
-        mPullRefreshing = true;
-        getTableInfo();
-    }
-
-    private void refreshingFinish() {
-        if (mPullRefreshing) {
-            mPullToRefreshView.onHeaderRefreshFinish();
-            mPullRefreshing = false;
-        }
-        if (mPullLoading) {
-            mPullToRefreshView.onFooterLoadFinish();
-            mPullLoading = false;
-        }
     }
 
     @Override
@@ -225,6 +227,11 @@ public class TableHasOrderedActivity extends BluetoothBaseActivity implements Ab
         dialog.setContentView(view);
         dialog.setCancelable(false);
         dialog.setCanceledOnTouchOutside(false);
+        Window win = dialog.getWindow();
+        WindowManager.LayoutParams lp = win.getAttributes();
+        lp.gravity = Gravity.CENTER;
+        lp.width = (int) (screenWidth * 0.8);
+        lp.height = ViewGroup.LayoutParams.WRAP_CONTENT;
         dialog.show();
     }
 

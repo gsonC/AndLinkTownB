@@ -140,27 +140,19 @@
             android:text="打印小票" />
     </LinearLayout>
 
-    <cn.com.hgh.view.AbPullToRefreshView
-        android:id="@+id/orders_detail"
+    <ListView
+        android:id="@+id/orders_list_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="11dp"
         android:layout_weight="1"
-        android:background="@color/color_ededed"
-        android:orientation="vertical">
-
-        <ListView
-            android:id="@+id/orders_list_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@android:color/transparent"
-            android:divider="@android:color/transparent"
-            android:dividerHeight="11dip"
-            android:drawSelectorOnTop="false"
-            android:listSelector="@android:color/transparent"
-            android:scrollbars="none"
-            android:scrollingCache="true" />
-    </cn.com.hgh.view.AbPullToRefreshView>
+        android:background="@android:color/white"
+        android:divider="@color/color_ededed"
+        android:dividerHeight="11dip"
+        android:drawSelectorOnTop="false"
+        android:listSelector="@android:color/transparent"
+        android:scrollbars="none"
+        android:scrollingCache="true" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -175,8 +167,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:background="@android:color/white"
+            android:orientation="horizontal"
             android:padding="11dp">
 
             <TextView

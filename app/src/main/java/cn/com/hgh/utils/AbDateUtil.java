@@ -744,4 +744,18 @@ public class AbDateUtil {
         Date date = new Date(Long.parseLong(timeMillisString));
         return formatter.format(date);
     }
+
+    public static String exchangeFormat(String timeString, String inFormatString, String outFormatString) {
+        String str = null;
+        try {
+            SimpleDateFormat inFormat = new SimpleDateFormat(inFormatString);
+            Calendar c = new GregorianCalendar();
+            c.setTime(inFormat.parse(timeString));
+            SimpleDateFormat outFormat = new SimpleDateFormat(outFormatString);
+            str = outFormat.format(c.getTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return str;
+    }
 }
