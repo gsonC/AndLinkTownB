@@ -127,7 +127,7 @@ public class LeaguesPublishYellActivity extends BaseActivity {
                             DialogCommon dialog = new DialogCommon(LeaguesPublishYellActivity.this) {
                                 @Override
                                 public void onCheckClick() {
-
+                                    dismiss();
                                     Intent intent = new Intent(LeaguesPublishYellActivity.this, LeaguesYellListActivity.class);
                                     setResult(RESULT_OK, intent);
                                     finish();

@@ -15,6 +15,51 @@
         android:layout_marginTop="20dp"
         >
         <TextView
+            android:id="@+id/tv_addShopInfo_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="店铺名称"
+            android:textColor="@color/colores_news_10"
+            android:padding="5dp"
+            android:layout_marginLeft="15dp"
+            android:textSize="@dimen/h15"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="(当前店铺，不可修改)"
+            android:layout_marginLeft="10dp"
+            android:padding="5dp"
+            android:textColor="@color/color_f70000"
+            />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_addShopInfo_shopname"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="默认店铺"
+        android:clickable="false"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/color_999999"
+        android:textColorHint="@color/color_999999"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:paddingLeft="10dp"
+        android:gravity="center_vertical"
+        android:background="@drawable/search_bar_edit_selector"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colores_news_14"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="20dp"
+        >
+        <TextView
           android:id="@+id/tv_addShopInfo_title"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"

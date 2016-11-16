@@ -25,11 +25,13 @@ public class AddShopInfoActivity extends BaseActivity {
 
     TextView tvAddShopInfoIndustryclass;
     TextView tvAddShopInfoProvincialcity;
+    TextView tvAddShopInfoShopname;
     private static final int REQUEST_TYPE = 1699;
     private String  parant_id, parant_name;
     private AddressPopView mAddressPopView;
     //要切换店铺的ID
     private String  businessid="";
+    private String  shopname="";
     String provinceId;
     String cityCode;
     String areaCode;
@@ -51,12 +53,20 @@ public class AddShopInfoActivity extends BaseActivity {
     private void initView() {
         tvAddShopInfoIndustryclass=(TextView)findViewById(R.id.tv_addShopInfo_industryclass);
         tvAddShopInfoProvincialcity=(TextView)findViewById(R.id.tv_addShopInfo_provincialcity);
+        tvAddShopInfoShopname=(TextView)findViewById(R.id.tv_addShopInfo_shopname);
         setPageTitle("完善店铺信息");
         setPageRightText("提交");
+        shopname=getIntent().getStringExtra("shopname");
         fromwhich=getIntent().getIntExtra("fromwhich",0);
         businessid=getIntent().getStringExtra("businessid");
         if(!TextUtils.isEmpty(businessid)) {
             BusinessId = businessid;
+        }
+        if(!TextUtils.isEmpty(shopname)) {
+            tvAddShopInfoShopname.setText(shopname);
+        }else{
+            tvAddShopInfoShopname.setText(ShopName);
+
         }
     }
     /**
