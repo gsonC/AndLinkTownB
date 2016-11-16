@@ -282,7 +282,7 @@
                 <RelativeLayout
                     android:id="@+id/ll_wisdommanage_guidance"
                     android:layout_width="0dp"
-                    android:layout_height="89.5dp"
+                    android:layout_height="85dp"
                     android:orientation="vertical"
                     android:layout_weight="1"
                     android:gravity="center"
@@ -326,7 +326,7 @@
                 <RelativeLayout
                     android:id="@+id/ll_wisdommanage_shangquan"
                     android:layout_width="0dp"
-                    android:layout_height="89.5dp"
+                    android:layout_height="85dp"
                     android:orientation="vertical"
                     android:layout_weight="1"
                     android:gravity="center"

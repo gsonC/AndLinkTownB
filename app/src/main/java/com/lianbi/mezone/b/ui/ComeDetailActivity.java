@@ -194,8 +194,6 @@ public class ComeDetailActivity extends BaseActivity {
 				tvYear.setChecked(false);
 				beginTime = getTime(AbDateUtil.getDateG(89, "yyyyMMdd"));
 				endTime = getTime(AbDateUtil.getDateYearMonthDayNowPlus("yyyyMMdd"));
-
-
 				initSearch("", endTime, orderStatus, "03", 1);
 				getOrder(true, false);
 				break;
@@ -415,7 +413,6 @@ public class ComeDetailActivity extends BaseActivity {
 	 * 初始化适配器
 	 */
 	private QuickAdapter<ComeService> mAdapter;
-
 	private void initAdapter() {
 		mAdapter = new QuickAdapter<ComeService>(this, R.layout.comeservice_item, mDatas) {
 			@Override
@@ -450,13 +447,6 @@ public class ComeDetailActivity extends BaseActivity {
 
 	private void switchAdapter() {
 		int mDatasize = mDatas.size();
-		String intTxnAmt = "";
-
-//		for (ComeService comeService : mDatas) {
-//			intTxnAmt=intTxnAmt+comeService.getOrderPrice();
-//		}
-
-
 		switch (intentLayout) {
 			case POSITION0:
 				showingSelect(mWholeData);
@@ -481,24 +471,7 @@ public class ComeDetailActivity extends BaseActivity {
 			mAdapter.replaceAll(mDatas);
 		}
 	}
-/*
 
-	@Override
-	public void onFooterLoad(AbPullToRefreshView view) {
-		if (!mPullRefreshing && !mPullLoading) {
-			mPullLoading = true;
-			getOrder(true, false);
-		}
-	}
-
-	@Override
-	public void onHeaderRefresh(AbPullToRefreshView view) {
-		if (!mPullRefreshing && !mPullLoading) {
-			mPullRefreshing = true;
-			getOrder(true, false);
-		}
-	}
-*/
 
 	@Override
 	protected void onDestroy() {

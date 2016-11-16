@@ -355,7 +355,7 @@ public class ConsumptionSettlementActivity extends BaseActivity {
 					dialogFinish.setTv_dialog_finishing_title("支付完成");
 					dialogFinish.setTv_dialog_finishing_titlee("顾客离店 请翻桌");
 					dialogFinish.show();
-
+					getUnPaidOrder(true);
 				}
 
 
