@@ -116,7 +116,6 @@ public class LeaguesPublishYellActivity extends BaseActivity {
                     shopRovinceid,//provinces"310000"
                     cityCode,//city"310117"
                     address,//address"上海市"
-                    LoGoUrl,//logoUrl
                     uuid,//serNum
                     "app",//source
                     reqTime,//reqTime

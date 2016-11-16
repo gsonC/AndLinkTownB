@@ -226,47 +226,51 @@ public class LeaguesYellListActivity extends BaseActivity {
                             String reString = result.getData();
                             Log.i("tag","resString 132----->"+reString);
                             try {
-                                JSONObject jsonObject= new JSONObject(reString);
-                                reString = jsonObject.getString("list");
-                                if (!TextUtils.isEmpty(reString)) {
-                                    mData.clear();
-                                    ArrayList<LeaguesYellBean> leaguesyellbeanlist = (ArrayList<LeaguesYellBean>) JSON
-                                            .parseArray(reString,
-                                                    LeaguesYellBean.class);
-                                    for(LeaguesYellBean  LeaguesZxy:leaguesyellbeanlist){
-                                        if(LeaguesZxy.getMessageType().equals("MT0000")){
-                                            mData.add(LeaguesZxy);
-                                        }
-                                    }
-                                    if(page==1&&mData.size()!=0) {
-                                        int datasize = mData.size();
-                                        for (int i = 0; i < datasize; i++) {
-                                            if (i == whatchild) {
-                                                mLeaguesYellBean = mData.get(i);
-                                                mData.remove(i);
+                                if(!TextUtils.isEmpty(reString)) {
+                                    JSONObject jsonObject = new JSONObject(reString);
+                                    reString = jsonObject.getString("list");
+                                    if (!TextUtils.isEmpty(reString)) {
+                                        mData.clear();
+                                        ArrayList<LeaguesYellBean> leaguesyellbeanlist = (ArrayList<LeaguesYellBean>) JSON
+                                                .parseArray(reString,
+                                                        LeaguesYellBean.class);
+                                        for (LeaguesYellBean LeaguesZxy : leaguesyellbeanlist) {
+                                            if (LeaguesZxy.getMessageType().equals("MT0000")) {
+                                                mData.add(LeaguesZxy);
                                             }
-
                                         }
-                                        mSortData.add(mLeaguesYellBean);
-                                        mSortData.addAll(mData);
-                                        updateView(mSortData);
-                                    }else if(mData.size()!=0){
-                                        mSortData.addAll(mData);
-                                        updateView(mSortData);
-                                    }
-                                    page++;
-                                    if(mSortData.size()!=0){
-                                    actLeaguesyellAbpulltorefreshview.setVisibility(View.VISIBLE);
-                                    ivLeaguesyellEmpty.setVisibility(View.GONE);
-                                    }else{
-                                    actLeaguesyellAbpulltorefreshview.setVisibility(View.GONE);
-                                    ivLeaguesyellEmpty.setVisibility(View.VISIBLE);
+                                        if (page == 1 && mData.size() != 0) {
+                                            int datasize = mData.size();
+                                            for (int i = 0; i < datasize; i++) {
+                                                if (i == whatchild) {
+                                                    mLeaguesYellBean = mData.get(i);
+                                                    mData.remove(i);
+                                                }
+
+                                            }
+                                            mSortData.add(mLeaguesYellBean);
+                                            mSortData.addAll(mData);
+                                            updateView(mSortData);
+                                        } else if (mData.size() != 0) {
+                                            mSortData.addAll(mData);
+                                            updateView(mSortData);
+                                        }
+                                        page++;
+                                        if (mSortData.size() != 0) {
+                                            actLeaguesyellAbpulltorefreshview.setVisibility(View.VISIBLE);
+                                            ivLeaguesyellEmpty.setVisibility(View.GONE);
+                                        } else {
+                                            actLeaguesyellAbpulltorefreshview.setVisibility(View.GONE);
+                                            ivLeaguesyellEmpty.setVisibility(View.VISIBLE);
+                                        }
+                                    } else {
+                                        ivLeaguesyellEmpty.setVisibility(View.VISIBLE);
+                                        actLeaguesyellAbpulltorefreshview.setVerticalGravity(View.GONE);
                                     }
                                 }else{
                                     ivLeaguesyellEmpty.setVisibility(View.VISIBLE);
                                     actLeaguesyellAbpulltorefreshview.setVerticalGravity(View.GONE);
                                 }
-
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }

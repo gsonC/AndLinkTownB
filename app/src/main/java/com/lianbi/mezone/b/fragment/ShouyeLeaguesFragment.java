@@ -448,31 +448,30 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
                         @Override
                         public void onResponseResult(Result result) {
                             String reString = result.getData();
-                            Log.i("tag", "resString 274----->" + reString);
                             try {
-                                JSONObject jsonObject = new JSONObject(reString);
-                                reString = jsonObject.getString("list");
-                                if (!TextUtils.isEmpty(reString)) {
-                                    mData.clear();
-                                    ArrayList<LeaguesYellBean> leaguesyellbeanlist = (ArrayList<LeaguesYellBean>) JSON
-                                            .parseArray(reString,
-                                                    LeaguesYellBean.class);
-                                    for (LeaguesYellBean LeaguesZxy : leaguesyellbeanlist) {
-                                        if (LeaguesZxy.getMessageType().equals("MT0000")) {
-                                            mData.add(LeaguesZxy);
+                                if(!TextUtils.isEmpty(reString)) {
+                                    JSONObject jsonObject = new JSONObject(reString);
+                                    reString = jsonObject.optString("list");
+                                    if (!TextUtils.isEmpty(reString)) {
+                                        mData.clear();
+                                        ArrayList<LeaguesYellBean> leaguesyellbeanlist = (ArrayList<LeaguesYellBean>) JSON
+                                                .parseArray(reString,
+                                                        LeaguesYellBean.class);
+                                        for (LeaguesYellBean LeaguesZxy : leaguesyellbeanlist) {
+                                            if (LeaguesZxy.getMessageType().equals("MT0000")) {
+                                                mData.add(LeaguesZxy);
+                                            }
                                         }
-                                    }
-                                    updateview(mData);
-
-                                    mDataZxy.clear();
-                                    for (LeaguesYellBean LeaguesZxy : leaguesyellbeanlist) {
-                                        if (!LeaguesZxy.getMessageType().equals("MT0000")) {
-                                            mDataZxy.add(LeaguesZxy);
+                                        mDataZxy.clear();
+                                        for (LeaguesYellBean LeaguesZxy : leaguesyellbeanlist) {
+                                            if (!LeaguesZxy.getMessageType().equals("MT0000")) {
+                                                mDataZxy.add(LeaguesZxy);
+                                            }
                                         }
+                                        showdynamic(mDataZxy);
                                     }
-                                    showdynamic(mDataZxy);
                                 }
-
+                                updateview(mData);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
