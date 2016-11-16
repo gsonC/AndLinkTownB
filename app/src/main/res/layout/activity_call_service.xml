@@ -88,7 +88,7 @@
             android:scaleType="centerInside"
             android:src="@mipmap/iv_empty"/>
 
-        <cn.com.hgh.view.SlideListView2
+        <cn.com.hgh.view.SwipeListView
             android:id="@+id/fm_call_listView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

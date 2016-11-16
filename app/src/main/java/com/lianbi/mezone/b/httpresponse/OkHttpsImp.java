@@ -320,7 +320,7 @@ public enum OkHttpsImp {
         String sign = getSign(md5_key, params);
         params.put("sign", sign);
         String url = getAbsoluteUrl(API.QUERY_LEAGUES_DYNAMIC);
-        postProgressResponse(myResultCallback, params, url);
+        getProgressResponse(myResultCallback, params, url);
     }
 
     /**

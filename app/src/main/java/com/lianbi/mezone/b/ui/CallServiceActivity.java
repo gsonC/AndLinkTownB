@@ -32,7 +32,7 @@ import cn.com.hgh.utils.AbStrUtil;
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.view.AbPullToRefreshView;
-import cn.com.hgh.view.SlideListView2;
+import cn.com.hgh.view.SwipeListView;
 
 /**
  * 呼叫服务
@@ -57,7 +57,7 @@ public class CallServiceActivity extends BaseActivity {
 	@Bind(R.id.pulltorefresh_calllist)
 	AbPullToRefreshView pulltorefreshCalllist;
 	@Bind(R.id.fm_call_listView)
-	SlideListView2 fmCallListView;
+	SwipeListView fmCallListView;
 	private String labelId;
 	private QuickAdapter<CallService> mAdapter;
 	private TextView tv_callset_deal,tv_callset_hasdeal;
@@ -98,7 +98,7 @@ public class CallServiceActivity extends BaseActivity {
 		setPageTitle("呼叫服务");
 		setPageRightText("服务设置");
 		currShowingIs = ALL_IS_SHOWING;
-		fmCallListView.initSlideMode(SlideListView2.MOD_RIGHT);
+		//fmCallListView.initSlideMode(SlideListView2.MOD_RIGHT);
 	}
 
 	@Override

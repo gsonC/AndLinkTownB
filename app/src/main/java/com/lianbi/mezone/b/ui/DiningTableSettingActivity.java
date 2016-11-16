@@ -43,7 +43,6 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.OnFocusChange;
 import butterknife.OnItemClick;
 import butterknife.OnTextChanged;
 import cn.com.hgh.baseadapter.BaseAdapterHelper;
@@ -474,10 +473,10 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
                 boolean re = JumpIntent
                         .jumpLogin_addShop(isLogin, API.TRADE, DiningTableSettingActivity.this);
                 if (re) {
-                    boolean hasProduct = ContentUtils.getSharePreBoolean(DiningTableSettingActivity.this,
-                            Constants.SHARED_PREFERENCE_NAME,
-                            Constants.HAS_PRODUCT);
-                    if (hasProduct) {
+                    //boolean hasProduct = ContentUtils.getSharePreBoolean(DiningTableSettingActivity.this,
+                    //        Constants.SHARED_PREFERENCE_NAME,
+                    //        Constants.HAS_PRODUCT);
+                    //if (hasProduct) {
                         Intent intent_web = new Intent(DiningTableSettingActivity.this,
                                 H5WebActivty.class);
                         intent_web.putExtra(Constants.NEDDLOGIN, false);
@@ -486,13 +485,13 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
                         intent_web.putExtra(WebActivty.T, "产品管理");
                         intent_web.putExtra(WebActivty.U, getUrl());
                         DiningTableSettingActivity.this.startActivity(intent_web);
-                    } else {
+                    //} else {
 //                        Intent intent_more = new Intent(DiningTableSettingActivity.this,
 //                                ServiceMallActivity.class);
 //                        DiningTableSettingActivity.this.startActivityForResult(intent_more,
 //                                MainActivity.this.SERVICEMALLSHOP_CODE);
 //                        ContentUtils.showMsg(mMainActivity, "请下载对应模块进行产品编辑");
-                    }
+                   // }
                 }
                 break;
             case R.id.add_table:
