@@ -188,7 +188,6 @@ public class LeaguesDynamicListActivity extends BaseActivity {
                             String reString = result.getData();
                             Log.i("tag","resString 132----->"+reString);
                             try {
-                                if(!TextUtils.isEmpty(reString)) {
                                     JSONObject jsonObject = new JSONObject(reString);
                                     reString = jsonObject.optString("list");
                                     if (!TextUtils.isEmpty(reString)) {
@@ -203,26 +202,19 @@ public class LeaguesDynamicListActivity extends BaseActivity {
                                                 mData.add(LeaguesZxy);
                                             }
                                         }
-                                        if (mData.size() == 0) {
-                                            ivLeaguesDynamicListEmpty.setVisibility(View.VISIBLE);
-                                            actLeaguesdynamiclistAbpulltorefreshview.setVerticalGravity(View.GONE);
-                                        } else {
-                                            ivLeaguesDynamicListEmpty.setVisibility(View.GONE);
-                                            actLeaguesdynamiclistAbpulltorefreshview.setVerticalGravity(View.VISIBLE);
-                                            updateView(mData);
-                                        }
-                                    } else {
-                                        ivLeaguesDynamicListEmpty.setVisibility(View.VISIBLE);
-                                        actLeaguesdynamiclistAbpulltorefreshview.setVerticalGravity(View.GONE);
-                                    }
-                                }else{
-                                    ivLeaguesDynamicListEmpty.setVisibility(View.VISIBLE);
-                                    actLeaguesdynamiclistAbpulltorefreshview.setVerticalGravity(View.GONE);
-                                }
-                                AbPullHide.hideRefreshView(isResh, actLeaguesdynamiclistAbpulltorefreshview);
+                                                                          }
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
+                            if (mData.isEmpty()) {
+                                ivLeaguesDynamicListEmpty.setVisibility(View.VISIBLE);
+                                actLeaguesdynamiclistAbpulltorefreshview.setVerticalGravity(View.GONE);
+                            } else {
+                                ivLeaguesDynamicListEmpty.setVisibility(View.GONE);
+                                actLeaguesdynamiclistAbpulltorefreshview.setVerticalGravity(View.VISIBLE);
+                                updateView(mData);
+                            }
+                            AbPullHide.hideRefreshView(isResh, actLeaguesdynamiclistAbpulltorefreshview);
 
                         }
 

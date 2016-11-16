@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/swipe_jiaoyiguanli"
     android:layout_width="match_parent"
     android:layout_height="match_parent" android:background="@color/colores_news_14"
@@ -92,7 +93,6 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
                         android:src="@mipmap/daodiantt"
                         />
                     <TextView
@@ -119,7 +119,6 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
                         android:src="@mipmap/shanghutt"
                         />
                     <TextView
@@ -140,7 +139,6 @@
                     android:id="@+id/ll_wisdommanage_tese"
                     android:layout_width="0dp"
                     android:layout_height="85dp"
-                    android:orientation="vertical"
                     android:layout_weight="1"
                     android:gravity="center">
 
@@ -150,7 +148,6 @@
                         android:id="@+id/tv_teseima"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
                         android:src="@mipmap/tesett"
                         android:layout_centerHorizontal="true"
                         />
@@ -170,7 +167,7 @@
                         android:layout_height="wrap_content"
                         android:text="建设中"
                         android:textSize="11dp"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="2dp"
                         android:textColor="@color/point"
                         android:layout_toRightOf="@id/tv_teseima"
                         />
@@ -252,7 +249,7 @@
                 <LinearLayout
                     android:id="@+id/ll_wisdommanage_Shouting"
                     android:layout_width="0dp"
-                    android:layout_height="85dp"
+                    android:layout_height="89.5dp"
                     android:orientation="vertical"
                     android:layout_weight="1"
                     android:gravity="center"
@@ -261,7 +258,6 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
                         android:src="@mipmap/hitt"
 
                         />
@@ -283,7 +279,6 @@
                     android:id="@+id/ll_wisdommanage_guidance"
                     android:layout_width="0dp"
                     android:layout_height="89.5dp"
-                    android:orientation="vertical"
                     android:layout_weight="1"
                     android:gravity="center"
                     >
@@ -292,9 +287,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@mipmap/zhuanjiatwo"
-                        android:layout_marginTop="20dp"
-                        android:layout_centerInParent="true"
-
+                        android:layout_centerHorizontal="true"
                         />
                     <TextView
                         android:id="@+id/tv_zhuangjiazhidao"
@@ -303,7 +296,7 @@
                         android:text="建设中"
                         android:textSize="11sp"
                         android:textColor="@color/point"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="2dp"
                         android:layout_toRightOf="@id/ima_zhuangjiahzidao"
                         />
 
@@ -327,7 +320,6 @@
                     android:id="@+id/ll_wisdommanage_shangquan"
                     android:layout_width="0dp"
                     android:layout_height="89.5dp"
-                    android:orientation="vertical"
                     android:layout_weight="1"
                     android:gravity="center"
                     >
@@ -336,7 +328,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@mipmap/shujutwo"
-                        android:layout_marginTop="20dp"
                         android:layout_centerHorizontal="true"
                         />
                     <TextView
@@ -346,7 +337,7 @@
                         android:text="建设中"
                         android:textSize="11sp"
                         android:textColor="@color/point"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="2dp"
                        android:layout_toRightOf="@id/ima_shuju"
 
                         />
@@ -358,7 +349,7 @@
                         android:text="商圈大数据"
                         android:textSize="14.5dp"
                         android:textColor="@color/tag_mask"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="8dp"
                         android:layout_centerHorizontal="true"
                         />
 
@@ -407,8 +398,7 @@
                 <RelativeLayout
                     android:id="@+id/ll_wisdommanage_smalltwo"
                     android:layout_width="120dp"
-                    android:layout_height="85dp"
-                    android:orientation="vertical"
+                    android:layout_height="89.5dp"
                     android:layout_weight="1"
                     android:gravity="center">
 
@@ -417,7 +407,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@mipmap/xiaoertt"
-                        android:layout_marginTop="20dp"
                         android:layout_centerHorizontal="true"
                         />
                     <TextView
@@ -427,7 +416,7 @@
                         android:text="建设中"
                         android:textSize="11dp"
                         android:textColor="@color/point"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="2dp"
                         android:layout_toRightOf="@+id/ima_oncreate"
 
                         />
@@ -460,7 +449,6 @@
                           android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@mipmap/yunyingtwo"
-                        android:layout_marginTop="20dp"
                           android:layout_centerHorizontal="true"
                           />
                     <TextView
@@ -470,7 +458,7 @@
                         android:text="建设中"
                         android:textSize="11sp"
                         android:textColor="@color/point"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="2dp"
                         android:layout_toRightOf="@id/ima_service"
                         />
                     <TextView
@@ -527,7 +515,7 @@
                     android:layout_height="15dp"
                     android:gravity="center_vertical"
                     android:layout_marginLeft="14.5dp"
-                  android:background="@color/color_3c78d8"
+                    android:background="@color/color_3c78d8"
                     />
 
 
