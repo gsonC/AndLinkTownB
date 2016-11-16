@@ -9,11 +9,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.ZoomControls;
-import cn.com.hgh.utils.AbDateUtil;
-import cn.com.hgh.utils.AbStrUtil;
-import cn.com.hgh.utils.ContentUtils;
-import cn.com.hgh.utils.Result;
 
 import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.BaiduMap;
@@ -33,9 +28,14 @@ import com.baidu.mapapi.search.geocode.GeoCoder;
 import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeOption;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
-import com.xizhi.mezone.b.R;
 import com.lianbi.mezone.b.app.Constants;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
+import com.xizhi.mezone.b.R;
+
+import cn.com.hgh.utils.AbDateUtil;
+import cn.com.hgh.utils.AbStrUtil;
+import cn.com.hgh.utils.ContentUtils;
+import cn.com.hgh.utils.Result;
 
 public class MapActivity extends BaseActivity {
 
@@ -267,6 +267,8 @@ public class MapActivity extends BaseActivity {
 
 									@Override
 									public void onResponseResult(Result result) {
+										ContentUtils.putSharePre(MapActivity.this,
+												Constants.USERTAG, Constants.USERSHOPADDRESS,address1);
 										ContentUtils.showMsg(MapActivity.this,
 												"店铺地址修改成功");
 										intent.putExtra("address", address1);

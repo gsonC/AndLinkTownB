@@ -136,24 +136,27 @@ public class LeaguesStorelistActivity extends BaseActivity {
                             String reString = result.getData();
                             Log.i("tag", "resString 274----->" + reString);
                             try {
-                                JSONObject jsonObject = new JSONObject(reString);
-                                reString = jsonObject.getString("modelList");
-                                if (!TextUtils.isEmpty(reString)) {
-                                    mData.clear();
-                                    ArrayList<BusinessListBean> businessbeanlist = (ArrayList<BusinessListBean>) JSON
-                                            .parseArray(reString,
-                                                    BusinessListBean.class);
-                                    mData.addAll(businessbeanlist);
-                                    AbPullHide.hideRefreshView(isResh,actLeaguesstorelistAbpulltorefreshview);
-                                    updateView(mData);
-                                    ivLeaguesstorelistEmpty.setVisibility(View.GONE);
-                                    actLeaguesstorelistAbpulltorefreshview.setVisibility(View.VISIBLE);
-                                }else{
-                                    AbPullHide.hideRefreshView(isResh,actLeaguesstorelistAbpulltorefreshview);
-                                    ivLeaguesstorelistEmpty.setVisibility(View.VISIBLE);
-                                    actLeaguesstorelistAbpulltorefreshview.setVisibility(View.GONE);
-                                }
-
+                              if (!TextUtils.isEmpty(reString)) {
+                                  JSONObject jsonObject = new JSONObject(reString);
+                                  reString = jsonObject.getString("modelList");
+                                  if (!TextUtils.isEmpty(reString)) {
+                                      mData.clear();
+                                      ArrayList<BusinessListBean> businessbeanlist = (ArrayList<BusinessListBean>) JSON
+                                              .parseArray(reString,
+                                                      BusinessListBean.class);
+                                      mData.addAll(businessbeanlist);
+                                      updateView(mData);
+                                      ivLeaguesstorelistEmpty.setVisibility(View.GONE);
+                                      actLeaguesstorelistAbpulltorefreshview.setVisibility(View.VISIBLE);
+                                  } else {
+                                      ivLeaguesstorelistEmpty.setVisibility(View.VISIBLE);
+                                      actLeaguesstorelistAbpulltorefreshview.setVisibility(View.GONE);
+                                  }
+                              }else{
+                                  ivLeaguesstorelistEmpty.setVisibility(View.VISIBLE);
+                                  actLeaguesstorelistAbpulltorefreshview.setVisibility(View.GONE);
+                              }
+                                AbPullHide.hideRefreshView(isResh, actLeaguesstorelistAbpulltorefreshview);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }

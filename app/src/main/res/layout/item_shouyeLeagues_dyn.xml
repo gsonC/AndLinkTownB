@@ -19,7 +19,7 @@
             android:id="@+id/tv_shouyeLeagues_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+            android:text="暂无吆喝"
             android:layout_marginRight="10dp"
             android:gravity="center_vertical"
             android:layout_gravity="center_vertical"

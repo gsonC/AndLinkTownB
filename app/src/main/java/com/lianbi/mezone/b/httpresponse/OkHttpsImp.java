@@ -253,7 +253,6 @@ public enum OkHttpsImp {
                                       String provinces,
                                       String city,
                                       String address,
-                                      String logoUrl,
                                       String serNum, String source,
                                       String reqTime,
                                       MyResultCallback<String> myResultCallback
@@ -272,7 +271,6 @@ public enum OkHttpsImp {
         params.put("provinces", provinces);
         params.put("city", city);
         params.put("address", address);
-        params.put("logoUrl", logoUrl);
         params.put("reqTime", reqTime);
         params.put("serNum", serNum);
         params.put("source", source);
@@ -1664,20 +1662,38 @@ public enum OkHttpsImp {
         postProgressResponse(myResultCallback, params, url);
     }
     /**
-     * 修改店铺
+     * 修改店铺手机号
      */
-    public void updateBusiness(String serNum,
+    public void updateBusinessPhone(String serNum,
                                 String source,
                                 String reqTime,
                                 String businessId,
                                 String phone,
-                                String provinceId,
-                                String cityCode,
-                                String areaCode,
                                 MyResultCallback<String> myResultCallback) throws Exception {
         Map<String, String> params = new HashMap<String, String>();
         params.put("businessId", businessId);
         params.put("phone", phone);
+        params.put("reqTime", reqTime);
+        params.put("serNum", serNum);
+        params.put("source", source);
+        String sign = getSign(md5_key, params);
+        params.put("sign", sign);
+        String url = getAbsoluteUrl(API.UPDATEBUSINESSPHONE);
+        postProgressResponse(myResultCallback, params, url);
+    }
+    /**
+     * 修改店铺省市区
+     */
+    public void updateBusinessProvincialcity(String serNum,
+                               String source,
+                               String reqTime,
+                               String businessId,
+                               String provinceId,
+                               String cityCode,
+                               String areaCode,
+                               MyResultCallback<String> myResultCallback) throws Exception {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("businessId", businessId);
         params.put("provinceId", provinceId);
         params.put("cityCode", cityCode);
         params.put("areaCode", areaCode);
@@ -1689,7 +1705,6 @@ public enum OkHttpsImp {
         String url = getAbsoluteUrl(API.UPDATEBUSINESSPHONE);
         postProgressResponse(myResultCallback, params, url);
     }
-
     /**
      * 修改店铺地址
      */

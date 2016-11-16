@@ -12,7 +12,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -29,14 +28,11 @@ import android.view.Window;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.google.zxing.WriterException;
 import com.lianbi.mezone.b.bean.OneDishBean;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
-import com.lianbi.mezone.b.photo.AbImageUtil;
 import com.lzy.okgo.request.BaseRequest;
 import com.xizhi.mezone.b.R;
 
-import java.io.FileInputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,8 +43,6 @@ import cn.com.hgh.utils.AbDateUtil;
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.PicFromPrintUtils;
 import cn.com.hgh.utils.Result;
-
-import static com.lianbi.mezone.b.photo.AbImageUtil.calculateInSampleSize;
 
 /**
  * Created by zemin.zheng on 2016/11/1.

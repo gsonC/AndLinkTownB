@@ -116,7 +116,6 @@ public class LeaguesPublishYellActivity extends BaseActivity {
                     shopRovinceid,//provinces"310000"
                     cityCode,//city"310117"
                     address,//address"上海市"
-                    LoGoUrl,//logoUrl
                     uuid,//serNum
                     "app",//source
                     reqTime,//reqTime
@@ -127,7 +126,7 @@ public class LeaguesPublishYellActivity extends BaseActivity {
                             DialogCommon dialog = new DialogCommon(LeaguesPublishYellActivity.this) {
                                 @Override
                                 public void onCheckClick() {
-
+                                    dismiss();
                                     Intent intent = new Intent(LeaguesPublishYellActivity.this, LeaguesYellListActivity.class);
                                     setResult(RESULT_OK, intent);
                                     finish();

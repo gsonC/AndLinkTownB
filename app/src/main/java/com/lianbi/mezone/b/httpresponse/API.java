@@ -49,7 +49,7 @@ public class API {
 //    	public static final String INTELLIGENT_WIFI ="http://www.xylbn.cn/wcmv2/routerApplication/wifiIndex?businessId=";//智能wifi
 	    public static final String WEB_MORESERVICE = "http://developer.lincomb.com/bsm/mall/index?plantId=";//更多服务
         //店铺标志logoUrl前缀
-	    public static final String LOGOURL_PREFIX="http://114.141.173.25:9200/";
+//	    public static final String LOGOURL_PREFIX="http://114.141.173.25:9200/";
 	/**
 	 *  uat环境url
 	 */
@@ -64,6 +64,8 @@ public class API {
 	public static final String TOSTORESERVICE = "http://172.16.103.153:9005";//到店服务
 	public static final String PAYQR = ENVIRONMENTAL + "/lincombFront/toOrderPay.do?state=";//支付二维码
 	public static final String INTELLIGENT_WIFI = "http://172.16.103.152:8090/wcmv2/routerApplication/wifiIndex?businessId=";//智能WIFI_TEST
+	//店铺标志logoUrl前缀
+	public static final String LOGOURL_PREFIX="http://172.16.103.154/";
 //	public static final String WEB_MORESERVICE = "http://172.16.103.14:8002/bsm/mall/toList?plantId=";//更多服务
 
 	/**

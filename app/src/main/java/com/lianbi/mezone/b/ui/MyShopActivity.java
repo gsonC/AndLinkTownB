@@ -347,11 +347,10 @@ public class MyShopActivity extends BaseActivity {
 	}
     public  void   postProvincialcity(){
 		try {
-			okHttpsImp.updateBusiness(uuid,
+			okHttpsImp.updateBusinessProvincialcity(uuid,
 					                   "app",
 					                   reqTime,
 					                   BusinessId,
-					                   "",        //手机号
 					                   provinceId,
 					                   cityCode,
 					                   areaCode ,

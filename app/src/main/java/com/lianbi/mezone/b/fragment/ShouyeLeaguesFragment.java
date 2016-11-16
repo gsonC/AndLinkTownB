@@ -448,31 +448,30 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
                         @Override
                         public void onResponseResult(Result result) {
                             String reString = result.getData();
-                            Log.i("tag", "resString 274----->" + reString);
                             try {
-                                JSONObject jsonObject = new JSONObject(reString);
-                                reString = jsonObject.getString("list");
-                                if (!TextUtils.isEmpty(reString)) {
-                                    mData.clear();
-                                    ArrayList<LeaguesYellBean> leaguesyellbeanlist = (ArrayList<LeaguesYellBean>) JSON
-                                            .parseArray(reString,
-                                                    LeaguesYellBean.class);
-                                    for (LeaguesYellBean LeaguesZxy : leaguesyellbeanlist) {
-                                        if (LeaguesZxy.getMessageType().equals("MT0000")) {
-                                            mData.add(LeaguesZxy);
+                                if(!TextUtils.isEmpty(reString)) {
+                                    JSONObject jsonObject = new JSONObject(reString);
+                                    reString = jsonObject.optString("list");
+                                    if (!TextUtils.isEmpty(reString)) {
+                                        mData.clear();
+                                        ArrayList<LeaguesYellBean> leaguesyellbeanlist = (ArrayList<LeaguesYellBean>) JSON
+                                                .parseArray(reString,
+                                                        LeaguesYellBean.class);
+                                        for (LeaguesYellBean LeaguesZxy : leaguesyellbeanlist) {
+                                            if (LeaguesZxy.getMessageType().equals("MT0000")) {
+                                                mData.add(LeaguesZxy);
+                                            }
                                         }
-                                    }
-                                    updateview(mData);
-
-                                    mDataZxy.clear();
-                                    for (LeaguesYellBean LeaguesZxy : leaguesyellbeanlist) {
-                                        if (!LeaguesZxy.getMessageType().equals("MT0000")) {
-                                            mDataZxy.add(LeaguesZxy);
+                                        mDataZxy.clear();
+                                        for (LeaguesYellBean LeaguesZxy : leaguesyellbeanlist) {
+                                            if (!LeaguesZxy.getMessageType().equals("MT0000")) {
+                                                mDataZxy.add(LeaguesZxy);
+                                            }
                                         }
+                                        showdynamic(mDataZxy);
                                     }
-                                    showdynamic(mDataZxy);
                                 }
-
+                                updateview(mData);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -491,8 +490,14 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
 
     protected void updateview(ArrayList<LeaguesYellBean> arrayList) {
         vfShouyeleaguesDyn.removeAllViews();
-        for (LeaguesYellBean leaguesyellbean : arrayList) {
-            vfShouyeleaguesDyn.addView(getLinearLayout(leaguesyellbean));
+        if(arrayList.isEmpty()){
+            vfShouyeleaguesDyn.stopFlipping();
+            vfShouyeleaguesDyn.addView(getLinearLayout(null));
+        }else{
+            vfShouyeleaguesDyn.startFlipping();
+            for (LeaguesYellBean leaguesyellbean : arrayList) {
+                vfShouyeleaguesDyn.addView(getLinearLayout(leaguesyellbean));
+            }
         }
     }
 
@@ -536,7 +541,9 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
         lay_shouyeLeagues_child = (LinearLayout) LayoutInflater.from(mActivity).inflate(
                 R.layout.item_shouyeleagues_dyn, null);
         TextView tv_shouyeLeagues_title = (TextView) lay_shouyeLeagues_child.findViewById(R.id.tv_shouyeLeagues_title);
-        tv_shouyeLeagues_title.setText(leaguesyellbean.getMessageTitle());
+        if(leaguesyellbean!=null) {
+            tv_shouyeLeagues_title.setText(leaguesyellbean.getMessageTitle());
+        }
         lay_shouyeLeagues_child.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

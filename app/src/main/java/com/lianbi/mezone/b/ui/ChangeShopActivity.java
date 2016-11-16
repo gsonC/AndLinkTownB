@@ -290,6 +290,7 @@ public class ChangeShopActivity extends BaseActivity {
 					Intent intent = new Intent();
 					intent.setClass(ChangeShopActivity.this,AddShopInfoActivity.class);
 					intent.putExtra("businessid",business_id);
+					intent.putExtra("shopname",shopName);
 					intent.putExtra("fromwhich",FROMCHANGESHOP);
 					startActivityForResult(intent, REQUEST_CODE_RESULT);
 					dismiss();

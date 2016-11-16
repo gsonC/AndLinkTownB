@@ -16,7 +16,6 @@ import com.lianbi.mezone.b.bean.LeaguesYellBean;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.xizhi.mezone.b.R;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -189,35 +188,39 @@ public class LeaguesDynamicListActivity extends BaseActivity {
                             String reString = result.getData();
                             Log.i("tag","resString 132----->"+reString);
                             try {
-                                JSONObject jsonObject= new JSONObject(reString);
-                                reString = jsonObject.getString("list");
-                                if (!TextUtils.isEmpty(reString)) {
-                                    ivLeaguesDynamicListEmpty.setVisibility(View.GONE);
-                                    actLeaguesdynamiclistAbpulltorefreshview.setVerticalGravity(View.VISIBLE);
-                                    mData.clear();
-                                    ArrayList<LeaguesYellBean> leaguesyellbeanlist = (ArrayList<LeaguesYellBean>) JSON
-                                            .parseArray(reString,
-                                                    LeaguesYellBean.class);
-                                    for(LeaguesYellBean  LeaguesZxy:leaguesyellbeanlist){
-                                        if(!LeaguesZxy.getMessageType().equals("MT0000")){
-                                            mData.add(LeaguesZxy);
-                                        }
-                                    }
-                                    if(mData.size()==0){
-                                        ivLeaguesDynamicListEmpty.setVisibility(View.VISIBLE);
-                                        actLeaguesdynamiclistAbpulltorefreshview.setVerticalGravity(View.GONE);
-                                    }else{
+                                if(!TextUtils.isEmpty(reString)) {
+                                    JSONObject jsonObject = new JSONObject(reString);
+                                    reString = jsonObject.optString("list");
+                                    if (!TextUtils.isEmpty(reString)) {
                                         ivLeaguesDynamicListEmpty.setVisibility(View.GONE);
                                         actLeaguesdynamiclistAbpulltorefreshview.setVerticalGravity(View.VISIBLE);
-                                        updateView(mData);
+                                        mData.clear();
+                                        ArrayList<LeaguesYellBean> leaguesyellbeanlist = (ArrayList<LeaguesYellBean>) JSON
+                                                .parseArray(reString,
+                                                        LeaguesYellBean.class);
+                                        for (LeaguesYellBean LeaguesZxy : leaguesyellbeanlist) {
+                                            if (!LeaguesZxy.getMessageType().equals("MT0000")) {
+                                                mData.add(LeaguesZxy);
+                                            }
+                                        }
+                                        if (mData.size() == 0) {
+                                            ivLeaguesDynamicListEmpty.setVisibility(View.VISIBLE);
+                                            actLeaguesdynamiclistAbpulltorefreshview.setVerticalGravity(View.GONE);
+                                        } else {
+                                            ivLeaguesDynamicListEmpty.setVisibility(View.GONE);
+                                            actLeaguesdynamiclistAbpulltorefreshview.setVerticalGravity(View.VISIBLE);
+                                            updateView(mData);
+                                        }
+                                    } else {
+                                        ivLeaguesDynamicListEmpty.setVisibility(View.VISIBLE);
+                                        actLeaguesdynamiclistAbpulltorefreshview.setVerticalGravity(View.GONE);
                                     }
                                 }else{
                                     ivLeaguesDynamicListEmpty.setVisibility(View.VISIBLE);
                                     actLeaguesdynamiclistAbpulltorefreshview.setVerticalGravity(View.GONE);
                                 }
-                                AbPullHide.hideRefreshView(isResh,actLeaguesdynamiclistAbpulltorefreshview);
-
-                            } catch (JSONException e) {
+                                AbPullHide.hideRefreshView(isResh, actLeaguesdynamiclistAbpulltorefreshview);
+                            } catch (Exception e) {
                                 e.printStackTrace();
                             }
 

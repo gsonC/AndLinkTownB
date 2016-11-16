@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.lianbi.mezone.b.app.Constants;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.xizhi.mezone.b.R;
 
@@ -118,18 +119,17 @@ public class ShopConnectPhoneActivity extends BaseActivity {
 		String reqTime = AbDateUtil.getDateTimeNow();
 		String uuid = AbStrUtil.getUUID();
 		try {
-			okHttpsImp.updateBusiness(uuid,
+			okHttpsImp.updateBusinessPhone(uuid,
 					                   "app",
 					                   reqTime,
 					                   BusinessId,
 					                   content,
-					                   "",//省
-				 	                   "",//市
-					                   "",//区
 					                   new MyResultCallback() {
 
 						@Override
 						public void onResponseResult(Result result) {
+							ContentUtils.putSharePre(ShopConnectPhoneActivity.this,
+									Constants.USERTAG, Constants.BUSINESSPHONE,content);
 							ContentUtils.showMsg(ShopConnectPhoneActivity.this,
 									"修改联系电话成功");
 							Intent intent = new Intent();

@@ -10,13 +10,14 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.lianbi.mezone.b.app.Constants;
+import com.lianbi.mezone.b.httpresponse.MyResultCallback;
+import com.xizhi.mezone.b.R;
+
 import cn.com.hgh.utils.AbDateUtil;
 import cn.com.hgh.utils.AbStrUtil;
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.Result;
-
-import com.xizhi.mezone.b.R;
-import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 
 /**
  * 商铺 -- 联系人
@@ -109,6 +110,8 @@ public class ShopConnectActivity extends BaseActivity {
 
 						@Override
 						public void onResponseResult(Result result) {
+							ContentUtils.putSharePre(ShopConnectActivity.this,
+									Constants.USERTAG, Constants.USERNAME, contactName);
 							ContentUtils.showMsg(ShopConnectActivity.this,
 									"修改成功");
 							Intent intent = new Intent();
