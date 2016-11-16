@@ -4,11 +4,14 @@ import android.app.Dialog;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -42,6 +45,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnFocusChange;
 import butterknife.OnItemClick;
+import butterknife.OnTextChanged;
 import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.QuickAdapter;
 import cn.com.hgh.eventbus.ShouyeRefreshEvent;
@@ -58,7 +62,7 @@ import static cn.com.hgh.utils.CryptTool.encryptionUrl;
 * 桌面设置
 * */
 public class DiningTableSettingActivity extends BluetoothBaseActivity implements SwipeRefreshLayout.OnRefreshListener,
-        AppBarLayout.OnOffsetChangedListener, AdapterView.OnItemClickListener, View.OnFocusChangeListener {
+        AppBarLayout.OnOffsetChangedListener, AdapterView.OnItemClickListener, TextWatcher {
     @Bind(R.id.back)
     ImageView back;
 
@@ -152,6 +156,8 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
 
     private int verticalOffset;
 
+    private String searchText = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -234,16 +240,14 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
                         table_may_do_Str = "打印小票";
                         person_num_Str = item.getActualCount();
                         unit_Str = "人用餐";
-                        if (!delSelectButtonIsShowing) {
-                            l = new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    if (checkCanGoNext()) {
-                                        showPrintTicketDialog(item.getTableId());
-                                    }
+                        l = new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (checkCanGoNext()) {
+                                    showPrintTicketDialog(item.getTableId());
                                 }
-                            };
-                        }
+                            }
+                        };
                         break;
                     case 2://已支付
                         table_state_Str = "已支付";
@@ -255,16 +259,14 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
                         table_may_do_Str = "翻桌";
                         person_num_Str = item.getActualCount();
                         unit_Str = "人用餐";
-                        if (!delSelectButtonIsShowing) {
-                            l = new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    if (checkCanGoNext()) {
-                                        checkTableOrder(item.getTableId());
-                                    }
+                        l = new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (checkCanGoNext()) {
+                                    checkTableOrder(item.getTableId());
                                 }
-                            };
-                        }
+                            }
+                        };
                         break;
                 }
 
@@ -276,7 +278,11 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
                 table_may_do.setBackgroundResource(table_may_do_drawableResid);
                 table_may_do.setText(table_may_do_Str);
                 table_may_do.setTextColor(text_color);
-                table_may_do.setOnClickListener(l);
+                if (item.getTableStatus() != 0) {
+                    if (!delSelectButtonIsShowing) {
+                        table_may_do.setOnClickListener(l);
+                    }
+                }
                 person_num.setText(person_num_Str);
                 unit.setText(unit_Str);
 
@@ -456,7 +462,7 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
 
     @Override
     @OnClick({R.id.back, R.id.menu_setting, R.id.add_table, R.id.delete_table,
-            R.id.switch_state, R.id.call, R.id.pay, R.id.particulars})
+            R.id.switch_state, R.id.call, R.id.pay, R.id.particulars, R.id.search})
     public void onClick(View view) {
         super.onClick(view);
         switch (view.getId()) {
@@ -550,6 +556,13 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
                 break;
             case R.id.particulars://到店明细
                 startActivity(new Intent(DiningTableSettingActivity.this, ComeDetailActivity.class));
+                break;
+            case R.id.search:
+                if (TextUtils.isEmpty(searchText)) {
+                    adapter.replaceAll(data);
+                } else {
+                    new SearchTableAsyncTask().execute(searchText);
+                }
                 break;
         }
     }
@@ -896,8 +909,60 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
     }
 
     @Override
-    @OnFocusChange({R.id.search})
-    public void onFocusChange(View v, boolean hasFocus) {
+    @OnTextChanged({R.id.search})
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+    }
+
+    @Override
+    @OnTextChanged({R.id.search})
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+    }
+
+    @Override
+    @OnTextChanged({R.id.search})
+    public void afterTextChanged(Editable s) {
+        searchText = s.toString();
+        new SearchTableAsyncTask().execute(searchText);
+    }
+
+    private class SearchTableAsyncTask extends AsyncTask<String, Void, ArrayList<TableSetBean>> {
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+        }
+
+        @Override
+        protected void onCancelled(ArrayList<TableSetBean> tableSetBeen) {
+            super.onCancelled(tableSetBeen);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<TableSetBean> tableSetBeen) {
+            super.onPostExecute(tableSetBeen);
+            adapter.replaceAll(tableSetBeen);
+        }
+
+        public SearchTableAsyncTask() {
+            super();
+        }
+
+        @Override
+        protected ArrayList<TableSetBean> doInBackground(String... params) {
+            ArrayList<TableSetBean> list = new ArrayList<>();
+            for (TableSetBean bean : data) {
+                if (bean.getTableName().contains(params[0])) {
+                    list.add(bean);
+                }
+            }
+            return list;
+        }
     }
 }
