@@ -91,7 +91,11 @@ public class API {
 	/**
 	 * 4.13	查询推送消息
 	 */
-	public static final String PUSHMESSAGE =TOSTORESERVICE+"/wcm/serviceMall/storeId/getPushMessages.do";
+	//public static final String PUSHMESSAGE =TOSTORESERVICE+"/wcm/serviceMall/BusinessId/getPushMessages";
+	/**
+	 * 4.13 查询推送消息
+	 */
+	public static final String PUSHMESSAGE ="getPushMessages";
 	/**
 	 *到店明细接口
 	 */

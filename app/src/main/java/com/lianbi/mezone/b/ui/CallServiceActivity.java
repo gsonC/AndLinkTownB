@@ -27,6 +27,7 @@ import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.QuickAdapter;
 import cn.com.hgh.eventbus.ShouyeRefreshEvent;
 import cn.com.hgh.utils.AbDateUtil;
+import cn.com.hgh.utils.AbPullHide;
 import cn.com.hgh.utils.AbStrUtil;
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.Result;
@@ -36,7 +37,7 @@ import cn.com.hgh.view.SlideListView2;
 /**
  * 呼叫服务
  */
-public class CallServiceActivity extends BaseActivity implements AbPullToRefreshView.OnFooterLoadListener, AbPullToRefreshView.OnHeaderRefreshListener {
+public class CallServiceActivity extends BaseActivity {
 
 	@Bind(R.id.tv_all)
 	TextView tvAll;
@@ -52,14 +53,14 @@ public class CallServiceActivity extends BaseActivity implements AbPullToRefresh
 	FrameLayout invalidContainer;
 	@Bind(R.id.iv_emptyact_calldetail)
 	ImageView ivEmptyactCalldetail;
-
+	String isRead="";
 	@Bind(R.id.pulltorefresh_calllist)
 	AbPullToRefreshView pulltorefreshCalllist;
 	@Bind(R.id.fm_call_listView)
 	SlideListView2 fmCallListView;
 	private String labelId;
 	private QuickAdapter<CallService> mAdapter;
-	private TextView tv_callset_deal;
+	private TextView tv_callset_deal,tv_callset_hasdeal;
 	private int currShowingIs;
 	private static final int ALL_IS_SHOWING = 0;
 	private static final int VALID_IS_SHOWING = 1;
@@ -84,20 +85,19 @@ public class CallServiceActivity extends BaseActivity implements AbPullToRefresh
 		ButterKnife.bind(this);
 		initView();
 		initAdapter();
+		setListen();
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		getPushMessages();
+		getPushMessages(true);
 	}
 
 	private void initView() {
 		setPageTitle("呼叫服务");
 		setPageRightText("服务设置");
 		currShowingIs = ALL_IS_SHOWING;
-		pulltorefreshCalllist.setOnFooterLoadListener(this);
-		pulltorefreshCalllist.setOnHeaderRefreshListener(this);
 		fmCallListView.initSlideMode(SlideListView2.MOD_RIGHT);
 	}
 
@@ -181,17 +181,31 @@ public class CallServiceActivity extends BaseActivity implements AbPullToRefresh
 				TextView tv_callset_content = helper.getView(R.id.tv_callset_content);
 				TextView tv_callset_time = helper.getView(R.id.tv_callset_time);
 				TextView tv_callset_yartime = helper.getView(R.id.tv_callset_yartime);
-				tv_callset_deal = helper.getView(R.id.tv_callset_deal);
+				TextView tv_callset_hasdeal = helper.getView(R.id.tv_callset_hasdeal);
+				TextView tv_callset_deal = helper.getView(R.id.tv_callset_deal);
 
 				tv_callset_yartime.setText(item.getModifyTime());
 				tv_callset_table.setText(item.getTableName());
 				tv_callset_content.setText(item.getMsgContent());
+
+                switch (item.getIsRead()){
+					case 0:
+						tv_callset_deal.setVisibility(View.VISIBLE);
+						tv_callset_hasdeal.setVisibility(View.GONE);
+
+					break;
+					case 1:
+						tv_callset_deal.setVisibility(View.GONE);
+						tv_callset_hasdeal.setVisibility(View.VISIBLE);
+
+					break;
+				}
 				helper.getView(R.id.tv_chdelete).setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View v) {
 						fmCallListView.slideBack();
-						labelId=item.getPushId();
-						DeletevipLabel();
+
+						DeletevipLabel(item.getPushId());
 					}
 				});
 				tv_callset_deal.setOnClickListener(new View.OnClickListener() {
@@ -209,12 +223,16 @@ public class CallServiceActivity extends BaseActivity implements AbPullToRefresh
 	/**
 	 * 4.13	查询推送消息
 	 */
-	private void getPushMessages() {
+
+	private void getPushMessages(final boolean isResh) {
 
 		String reqTime = AbDateUtil.getDateTimeNow();
 		String uuid = AbStrUtil.getUUID();
+		if(isResh){
+			mData.clear();
+		}
 		try {
-			okHttpsImp.getPushMessages(uuid, "app", reqTime, OkHttpsImp.md5_key,BusinessId, "", new MyResultCallback<String>() {
+			okHttpsImp.getPushMessages(uuid, "app", reqTime, OkHttpsImp.md5_key,BusinessId,"", new MyResultCallback<String>() {
 				@Override
 				public void onResponseResult(Result result) {
 					String reString = result.getData();
@@ -230,10 +248,10 @@ public class CallServiceActivity extends BaseActivity implements AbPullToRefresh
 								mData.addAll(mDatasL);
 							}
 							for (CallService bean : mDatasL) {
-								if (bean.getIsRead().equals("0")) {
+								if (bean.getIsRead()==0) {
 									mInvalideData.add(bean);
-								}
-								if (bean.getIsRead().equals("1")) {
+								}else
+								if (bean.getIsRead()==1) {
 									mValideData.add(bean);
 								}
 							}
@@ -241,6 +259,7 @@ public class CallServiceActivity extends BaseActivity implements AbPullToRefresh
 							e.printStackTrace();
 						}
 						switchAdapter();
+						AbPullHide.hideRefreshView(isResh, pulltorefreshCalllist);
 					}
 					refreshingFinish();
 				}
@@ -259,12 +278,13 @@ public class CallServiceActivity extends BaseActivity implements AbPullToRefresh
 	 * 修改推送消息已读状态
 	 */
 	private void getMessage(String id) {
+
 		okHttpsImp.modifyPushMessage(new MyResultCallback<String>() {
 
 			@Override
 			public void onResponseResult(Result result) {
-				getPushMessages();
-				tv_callset_deal.setText("已处理");
+				getPushMessages(true);
+
 			}
 
 			@Override
@@ -275,21 +295,9 @@ public class CallServiceActivity extends BaseActivity implements AbPullToRefresh
 
 	}
 
-	@Override
-	public void onFooterLoad(AbPullToRefreshView view) {
-		if (!mPullRefreshing && !mPullLoading) {
-			mPullLoading = true;
-			getPushMessages();
-		}
-	}
 
-	@Override
-	public void onHeaderRefresh(AbPullToRefreshView view) {
-		if (!mPullRefreshing && !mPullLoading) {
-			mPullRefreshing = true;
-			getPushMessages();
-		}
-	}
+
+
 
 	@Override
 	protected void onDestroy() {
@@ -311,22 +319,21 @@ public class CallServiceActivity extends BaseActivity implements AbPullToRefresh
 	/**
 	 * 删除标签
 	 */
-	private void DeletevipLabel() {
-		String reqTime = AbDateUtil.getDateTimeNow();
-		String uuid = AbStrUtil.getUUID();
+	private void DeletevipLabel(String pushId) {
+
 		try {
-			okHttpsImp.DeleteMemberTag(uuid, "app", reqTime, OkHttpsImp.md5_key, userShopInfoBean.getBusinessId(), labelId, new MyResultCallback<String>() {
+			okHttpsImp.modifyPushDelSts(new MyResultCallback<String>() {
 				@Override
 				public void onResponseResult(Result result) {
-					getPushMessages();
-					ContentUtils.showMsg(CallServiceActivity.this, "删除标签成功");
+					getPushMessages(true);
+					ContentUtils.showMsg(CallServiceActivity.this, "删除成功");
 				}
 
 				@Override
 				public void onResponseFailed(String msg) {
-					ContentUtils.showMsg(CallServiceActivity.this, "删除标签失败");
+					ContentUtils.showMsg(CallServiceActivity.this, "删除失败");
 				}
-			});
+			},userShopInfoBean.getBusinessId(),pushId);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -335,5 +342,22 @@ public class CallServiceActivity extends BaseActivity implements AbPullToRefresh
 		}
 
 	}
+	private void setListen() {
+		pulltorefreshCalllist.setLoadMoreEnable(true);
+		pulltorefreshCalllist.setPullRefreshEnable(true);
+		pulltorefreshCalllist.setOnHeaderRefreshListener(new AbPullToRefreshView.OnHeaderRefreshListener() {
+			@Override
+			public void onHeaderRefresh(AbPullToRefreshView view) {
+				getPushMessages(true);
+			}
+		});
 
+		pulltorefreshCalllist.setOnFooterLoadListener(new AbPullToRefreshView.OnFooterLoadListener() {
+
+			@Override
+			public void onFooterLoad(AbPullToRefreshView view) {
+				getPushMessages(true);
+			}
+		});
+	}
 }

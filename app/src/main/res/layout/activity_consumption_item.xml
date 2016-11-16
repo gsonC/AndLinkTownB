@@ -19,8 +19,8 @@
 
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_width="120dp"
+            android:layout_height="117dp"
             android:orientation="vertical"
             android:layout_weight="1"
             android:gravity="right">
@@ -32,26 +32,42 @@
            android:text="消费"
            android:textSize="14sp"
            android:layout_marginTop="11dp"
-           android:layout_gravity="center"/>
+           android:layout_gravity="center"
+           android:textColor="@color/color_333333"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="15.5dp"
+               android:layout_gravity="center"
+                android:layout_weight="1"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="共"
+                    android:textSize="14sp"
+                    android:textColor="@color/color_333333"
+                    />
             <TextView
                 android:id="@+id/tv_consum_total"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="共两份"
+                android:text="两"
                 android:textSize="14sp"
-                android:layout_marginTop="11dp"
-                android:layout_gravity="center"
-
+                android:textColor="@color/color_333333"
                 />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:gravity="center"
-               >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="份"
+                    android:textSize="14sp"
+                    android:textColor="@color/color_333333"
+                    />
+            </LinearLayout>
 
 
             <TextView
@@ -60,18 +76,35 @@
                 android:layout_height="wrap_content"
                 android:text="2016-9-23"
                 android:textSize="12.5sp"
-                android:layout_marginTop="11dp"
+                android:layout_marginTop="15.5dp"
                 android:layout_gravity="center"
+                android:layout_marginBottom="11dp"
+                android:textColor="@color/colores_news_19"
                 />
-            </LinearLayout>
+
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="113dp"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:layout_weight="1">
-
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+              >
+                <TextView
+                    android:id="@+id/tv_consum_rmb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="¥"
+                    android:textSize="14sp"
+                    android:layout_marginTop="11dp"
+                    android:textColor="@color/colores_news_04"
+                    />
             <TextView
                 android:id="@+id/tv_consum_price"
                 android:layout_width="wrap_content"
@@ -80,15 +113,16 @@
                 android:text="300"
                 android:textSize="14sp"
                 android:layout_marginTop="11dp"
-
+              android:textColor="@color/colores_news_04"
                 />
+            </LinearLayout>
             <TextView
                 android:id="@+id/tv_consum_detail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="详情"
-                android:textColor="@color/color_3c78d8"
+                android:textColor="@color/color_619ffd"
                 android:textSize="14sp"
                 android:layout_marginTop="11dp"
                 />
@@ -98,14 +132,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_marginTop="11dp"
+                android:layout_marginTop="15.5dp"
                 />
 
         </LinearLayout>
 
-        
+         <View
+             android:layout_width="0.5dp"
+             android:layout_height="105dp"
+             android:background="@color/color_e3e3e3"
+             android:layout_marginTop="6dp"
+             android:layout_marginBottom="6dp"/>
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="113dp"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:layout_weight="1"
@@ -115,29 +154,46 @@
                 android:id="@+id/tv_consum_where"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="一号桌"
+                android:text="花色满楼"
                 android:layout_gravity="center"
                 android:layout_marginTop="24.5dp"
+                android:textColor="@color/color_333333"
+                android:maxLines="2"
+                android:maxEms="4"
                 />
             <TextView
+                android:id="@+id/tv_consum_tableName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:layout_marginTop="7.5dp"
+                android:textColor="@color/color_333333"
+                android:textSize="14sp"
+                />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                      android:gravity="center"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="19dp"
+                    >
+
+
             <TextView
                 android:id="@+id/tv_consum_shoukuan"
                 android:layout_width="67dp"
                 android:layout_height="27dp"
-                android:layout_weight="1"
                 android:text="收款"
                 android:background="@drawable/shape_shoukuan"
-                android:layout_gravity="center"
                 android:gravity="center"
                 android:layout_marginBottom="20dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="11.5dp"
+                android:textColor="@color/white"
+                android:layout_marginTop="7.5dp"
                />
-
+                </LinearLayout>
         </LinearLayout>
     </LinearLayout>
     <View

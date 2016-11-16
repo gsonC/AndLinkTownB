@@ -56,6 +56,7 @@ public class ConsumptionSettlementActivity extends BaseActivity {
 	ImageView imComestoreEject;
 	public String tableId;
 	private YoYo.YoYoString rope;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -157,6 +158,7 @@ public class ConsumptionSettlementActivity extends BaseActivity {
 				TextView tv_consum_daytime = helper.getView(R.id.tv_consum_daytime);
 				TextView tv_consum_where = helper.getView(R.id.tv_consum_where);
 				TextView tv_consum_shoukuan = helper.getView(R.id.tv_consum_shoukuan);
+				TextView tv_consum_rmb = helper.getView(R.id.tv_consum_rmb);
 				tableId=item.getTableId();
 				tv_consum_where.setText(item.getTableName());
 				tv_consum_total.setText(item.getProductCount());

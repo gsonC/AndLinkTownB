@@ -2843,7 +2843,7 @@ public enum OkHttpsImp {
         params.put("isRead", isRead);
         String sign = getSign(md5_key, params);
         params.put("sign", sign);
-        String url = API.PUSHMESSAGE;
+        String url = getHttpUrl(storeId,API.PUSHMESSAGE);
         postProgressResponse(myResultCallback, params, url);
 
     }

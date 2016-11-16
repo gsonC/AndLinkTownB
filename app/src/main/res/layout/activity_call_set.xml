@@ -63,7 +63,7 @@
             android:padding="7dp"
             android:background="@drawable/shape_addnewmember"
             android:hint="请输入呼叫内容"
-            android:maxLength="10"
+            android:maxLength="4"
             android:singleLine="true"
             android:textColor="@color/colores_news_10"
             android:textColorHint="@color/colores_news_11"

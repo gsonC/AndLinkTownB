@@ -333,8 +333,8 @@ public class ComeDetailActivity extends BaseActivity {
 			okHttpsImp.getOrderInfo(uuid,                      //serNum
 					"app",                     //source
 					reqTime,                   //reqTime
-					"VI082016110712224600004578",//userId
-					"BD2016053018405200000042",//businessId
+					UserId,//userId
+					BusinessId,//businessId
 					beginTime,                  //startTime
 					endTime,                     //endTime
 					"",                         //sourceType

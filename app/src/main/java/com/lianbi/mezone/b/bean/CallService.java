@@ -20,13 +20,13 @@ public class CallService implements Serializable {
 	private String msgContent;
 	private String modifyTime;
 	private String storeId;
-	private String isRead;
+	private int isRead;
 
-	public String getIsRead() {
+	public int getIsRead() {
 		return isRead;
 	}
 
-	public void setIsRead(String isRead) {
+	public void setIsRead(int isRead) {
 		this.isRead = isRead;
 	}
 
