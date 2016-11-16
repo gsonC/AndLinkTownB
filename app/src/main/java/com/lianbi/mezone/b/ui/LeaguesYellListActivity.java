@@ -185,19 +185,6 @@ public class LeaguesYellListActivity extends BaseActivity {
      * 查询吆喝和商圈动态
      */
     private void getYellData(final boolean isResh) {
-//        ic(String businessId,
-//                String area,
-//                String businessCircle,
-//                String messageType,
-//                String pushScope,
-//                String author,
-//                String phone,
-//                String messageTitle,
-//                String messageContent,
-//                String pageNum,
-//                String pageSize,
-//                String serNum, String source,
-//                String reqTime,
         if (isResh) {
             page = 1;
             mDatas.clear();
@@ -226,7 +213,6 @@ public class LeaguesYellListActivity extends BaseActivity {
                             String reString = result.getData();
                             Log.i("tag","resString 132----->"+reString);
                             try {
-                                if(!TextUtils.isEmpty(reString)) {
                                     JSONObject jsonObject = new JSONObject(reString);
                                     reString = jsonObject.getString("list");
                                     if (!TextUtils.isEmpty(reString)) {
@@ -256,28 +242,19 @@ public class LeaguesYellListActivity extends BaseActivity {
                                             updateView(mSortData);
                                         }
                                         page++;
-                                        if (mSortData.size() != 0) {
-                                            actLeaguesyellAbpulltorefreshview.setVisibility(View.VISIBLE);
-                                            ivLeaguesyellEmpty.setVisibility(View.GONE);
-                                        } else {
-                                            actLeaguesyellAbpulltorefreshview.setVisibility(View.GONE);
-                                            ivLeaguesyellEmpty.setVisibility(View.VISIBLE);
-                                        }
-                                    } else {
-                                        ivLeaguesyellEmpty.setVisibility(View.VISIBLE);
-                                        actLeaguesyellAbpulltorefreshview.setVerticalGravity(View.GONE);
                                     }
-                                }else{
-                                    ivLeaguesyellEmpty.setVisibility(View.VISIBLE);
-                                    actLeaguesyellAbpulltorefreshview.setVerticalGravity(View.GONE);
-                                }
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
+                            if (!mSortData.isEmpty()) {
+                                actLeaguesyellAbpulltorefreshview.setVisibility(View.VISIBLE);
+                                ivLeaguesyellEmpty.setVisibility(View.GONE);
+                            } else {
+                                actLeaguesyellAbpulltorefreshview.setVisibility(View.GONE);
+                                ivLeaguesyellEmpty.setVisibility(View.VISIBLE);
+                            }
                             AbPullHide.hideRefreshView(isResh,actLeaguesyellAbpulltorefreshview);
-
                         }
-
                         @Override
                         public void onResponseFailed(String msg) {
                             AbPullHide.hideRefreshView(isResh,actLeaguesyellAbpulltorefreshview);

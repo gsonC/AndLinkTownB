@@ -414,6 +414,7 @@
                 android:textSize="@dimen/regularfont"
                 />
             <TextView
+                android:visibility="gone"
                 android:id="@+id/tv_membership"
                 android:layout_width="wrap_content"
                 android:singleLine="true"

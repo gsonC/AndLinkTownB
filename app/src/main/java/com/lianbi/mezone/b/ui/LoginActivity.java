@@ -231,13 +231,16 @@ public class LoginActivity extends BaseActivity {
 
 								}
 							};
-							dialogCommon.setTextTitle("店铺信息尚未完善，请补全信息");
-							dialogCommon.setTv_dialog_common_ok("确定");
+							dialogCommon.setTextTitle(getString(R.string.completetheloginnformation));
+							dialogCommon.setTv_dialog_common_ok(getString(R.string.makesure));
 							dialogCommon.setCanceledOnTouchOutside(false);
 							dialogCommon.setTv_dialog_common_cancelV(View.GONE);
 							dialogCommon.show();
 
 						}else {
+                            if(TextUtils.isEmpty(backBean.getDefaultBusiness())) {
+								ContentUtils.showMsg(LoginActivity.this, getString(R.string.pleaseaddashop));
+							}
 							Intent intent = new Intent();
 							intent.putExtra("LoginBackBean", backBean);
 							intent.setClass(LoginActivity.this, MainActivity.class);

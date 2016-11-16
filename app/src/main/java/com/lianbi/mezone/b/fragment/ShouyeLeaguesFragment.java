@@ -162,7 +162,7 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
     private ArrayList<LeaguesYellBean> mData = new ArrayList<LeaguesYellBean>();
     private ArrayList<LeaguesYellBean> mDataZxy = new ArrayList<LeaguesYellBean>();
     private final static int COLUMN_COUNT = 6;
-    private int page = 0;
+    private int page = 1;
     boolean  ScrollChanged=false;
 
     LinearLayout lay_shouyeLeagues_child;
@@ -330,6 +330,9 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
                                 JSONObject jsonObject = new JSONObject(reString);
                                 String areaName= jsonObject.getString("areaName");
                                 String businessCountList = jsonObject.getString("businessCountList");
+                                if(!tvLeavemessageDyn.getText().equals(areaName)){
+                                   initData();
+                                }
                                 tvLeavemessageDyn.setText(areaName);
                                 if (!TextUtils.isEmpty(businessCountList)) {
                                     mLeaguesCountList.clear();
@@ -414,6 +417,30 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
         setData(4, 100);
     }
 
+    /**
+     *切换商圈
+     *初始化显示
+     */
+    private void  initData(){
+        tvShouyeLeaguesRetitle.setText("暂无");
+        tvShouyeLeaguesRecontent.setText("暂无");
+        tvShouyeLeaguesNewtitle.setText("暂无");
+        tvShouyeLeaguesNewcontent.setText("暂无");
+        tvShouyeLeaguesDiscounttitle.setText("暂无");
+        tvShouyeLeaguesDiscountcontent.setText("暂无");
+        tvShouyeLeaguesRestip.setText("暂无");
+        tvShouyeLeaguesShoppingtip.setText("暂无");
+        tvShouyeLeaguesStaytip.setText("暂无");
+        tvShouyeLeaguesOthertip.setText("暂无");
+        tvShouyeLeaguesRestaurant.setText("暂无");
+        tvShouyeLeaguesResnum.setText("+"+0);
+        tvShouyeLeaguesShopping.setText("暂无");
+        tvShouyeLeaguesShopnum.setText("+"+0);
+        tvShouyeLeaguesStay.setText("暂无");
+        tvShouyeLeaguesStaynum.setText("+"+0);
+        tvShouyeLeaguesOther.setText("暂无");
+        tvShouyeLeaguesNum.setText("+"+0);
+    }
     private int stringChangeInt(String count) {
         int temp = 0;
         if (!TextUtils.isEmpty(count)) {
@@ -427,10 +454,9 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
      */
     private void getYellAndDynamicData() {
         try {
-            Log.i("tag", "省份代码code--->" + mActivity.shopRovinceid);
             mOkHttpsImp.queryBusinessDynamic(
                     "",                           //businessId   BD2016052013475900000010
-                    "",                           //area
+                    mActivity.areaCode,                           //area
                     mActivity.areaCode,                    //businessCircle "310117",
                     "",                           //messageType
                     "",                           //pushScope
@@ -440,7 +466,7 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
                     "",                           //messageContent
                     mActivity.shopRovinceid,    //provinces "310000",
                     page+"",                     //pageNum
-                    "",                        //pageSize
+                    "50",                        //pageSize
                     mActivity.uuid,             //serNum
                     "app",                       //source
                     mActivity.reqTime,          //reqTime
