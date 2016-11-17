@@ -285,7 +285,7 @@ public class TableHasOrderedActivity extends BluetoothBaseActivity {
             public void onResponseFailed(String msg) {
 
             }
-        }, userShopInfoBean.getUserId(), userShopInfoBean.getBusinessId(), tableId, "1");
+        }, tableId);
     }
 
     private void gotoOnlinePay() {

@@ -571,15 +571,10 @@ public enum OkHttpsImp {
 
     /**
      * 取消订单接口
-     *
-     * @param isPaidOrder 是否存在已付款订单 0,1
      */
-    public void tableInfo(MyResultCallback<String> myResultCallback, String userId, String businessId, String tableId, String isPaidOrder) {
+    public void tableInfo(MyResultCallback<String> myResultCallback, String tableId) {
         Map<String, String> params = new HashMap<String, String>();
-        params.put("userId", userId);
-        params.put("businessId", businessId);
         params.put("tableId", tableId);
-        params.put("isPaidOrder", isPaidOrder);
         params.put("sourceType", "tss");
         String url = getHttpUrl("tableInfo");
         postProgressResponse(myResultCallback, params, url);
