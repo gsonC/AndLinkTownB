@@ -31,7 +31,6 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.lianbi.mezone.b.app.Constants;
 import com.lianbi.mezone.b.bean.TableSetBean;
-import com.lianbi.mezone.b.bean.WebProductManagementBean;
 import com.lianbi.mezone.b.httpresponse.API;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.lzy.okgo.request.BaseRequest;
@@ -60,8 +59,6 @@ import cn.com.hgh.utils.Result;
 import cn.com.hgh.view.ClearEditText;
 import cn.com.hgh.view.DialogCommon;
 import cn.com.hgh.view.MyGridView;
-
-import static cn.com.hgh.utils.CryptTool.encryptionUrl;
 
 /*
 * 桌面设置
@@ -750,15 +747,16 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
     public String getUrl() {
         String url = API.TOSTORE_PRODUCT_MANAGEMENT;
         String bussniessId = BaseActivity.userShopInfoBean.getBusinessId();
-        WebProductManagementBean data = new WebProductManagementBean();
-        data.setBusinessId(bussniessId);
+        url = url+bussniessId;
+        //WebProductManagementBean data = new WebProductManagementBean();
+        //data.setBusinessId(bussniessId);
         // String dataJson = JSONObject.fromObject(data).toString();
-        String dataJson = com.alibaba.fastjson.JSONObject.toJSON(data)
-                .toString();
+        //String dataJson = com.alibaba.fastjson.JSONObject.toJSON(data)
+        //        .toString();
         // JSONObject jsonObject = new JSONObject();
         // jsonObject.
 
-        url = encryptionUrl(url, dataJson);
+        //url = encryptionUrl(url, dataJson);
         return url;
     }
 

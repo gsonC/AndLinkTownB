@@ -564,8 +564,8 @@ public class MainActivity extends BaseActivity implements BDLocation_interface, 
 			setPageTitleVisibility(View.VISIBLE);
 			//	setPageRightTextVisibility(View.GONE);
 			setPageTitle("发现场景");
-			setPageRightText("发现一个");
-			tvTitleLeft.setText("发现一个");
+			setPageRightText("发起场景");
+			tvTitleLeft.setText("发起场景");
 			setPageRightTextColor(R.color.commo_text_color);
 			tvTitleLeft.setVisibility(View.INVISIBLE);
 			((FinancialOfficeFragment) fm_caiwushi).setUrl(API.FIND_SENCE);

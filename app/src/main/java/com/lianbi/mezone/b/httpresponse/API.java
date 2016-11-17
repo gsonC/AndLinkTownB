@@ -103,7 +103,7 @@ public class API {
 	/**
 	 * 产品管理
 	 */
-	public static final String TOSTORE_PRODUCT_MANAGEMENT = TOSTORESERVICE + "/wcm/product/enterIntoProductManager?";
+	public static final String TOSTORE_PRODUCT_MANAGEMENT = TOSTORESERVICE + "/wcm/tss/getAppAllProduct?storeId=";
 	/**
 	 * 微信商城
 	 */
