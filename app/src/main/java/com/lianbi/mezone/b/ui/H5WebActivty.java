@@ -524,7 +524,7 @@ public class H5WebActivty extends BaseActivity{
 		} else if (gobackurl.contains("viewMyAuthenticationMsg")) {
 			web_webactivty.loadUrl(MyMsg);
 		}
-		else if (gobackurl.contains("product/IntoBEndMenu?") || gobackurl.contains("product/enterIntoProductManager?") || gobackurl.contains("showMenu")) {
+		else if (gobackurl.contains("tss/getAppAllProduct?") ||gobackurl.contains("product/IntoBEndMenu?") || gobackurl.contains("product/enterIntoProductManager?") || gobackurl.contains("showMenu")) {
 			finish();//退出
 		} else {
 			web_webactivty.goBack();//返回
