@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.xizhi.mezone.b.R;
 
+import cn.com.hgh.utils.AbStrUtil;
 import cn.com.hgh.utils.ContentUtils;
 
 /**
@@ -24,14 +25,16 @@ import cn.com.hgh.utils.ContentUtils;
  * @更新时间 ＄Date＄
  * @更新描述 ＄{TOOD}＄
  */
-public abstract class DialogQrg extends Dialog{
+public class DialogQrg extends Dialog{
 
 	private Context context;
+	private String mUrl;
 
 	ImageView ima;
-	public DialogQrg(Context context) {
+	public DialogQrg(String url,Context context) {
 		super(context, R.style.DialogStyle_4);
 		this.context = context;
+		this.mUrl = url;
 		initView();
 
 	}
@@ -43,10 +46,6 @@ public abstract class DialogQrg extends Dialog{
 	public void setTv_dialog_line_cancel(String tv_dialog_line_cancel) {
 		this.tv_dialog_line_cancel.setText(tv_dialog_line_cancel);
 	}
-
-
-
-
 
 	private void initView() {
 		DisplayMetrics dm = new DisplayMetrics();
@@ -63,15 +62,14 @@ public abstract class DialogQrg extends Dialog{
 		lp.height = ViewGroup.LayoutParams.WRAP_CONTENT;
 
 		String imgUrl = "http://test.xylbn.cn/wcm/authorize/BD2016080113183000000327/151/getWechatCode?redirect_url=http%3A%2F%2Ftest.xylbn.cn%2Fwcm%2F%2Ftss%2FBD2016080113183000000327%2F151%2FshowOrder%3Ftype%3D1";
-		Bitmap bitmap = ContentUtils.createQrBitmap(imgUrl,true,1000,1000);
-		qrImg= (ImageView) findViewById(R.id.ima_Qrimg);
-		qrImg.setImageBitmap(bitmap);
+
+		if(!AbStrUtil.isEmpty(mUrl)) {
+
+			Bitmap bitmap = ContentUtils.createQrBitmap(mUrl, true, 1000, 1000);
+			qrImg = (ImageView) findViewById(R.id.ima_Qrimg);
+			qrImg.setImageBitmap(bitmap);
+		}
 	}
-
-
-	public abstract void onCheckClick();
-
-	public abstract void onOkClick();
 
 
 }

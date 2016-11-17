@@ -42,6 +42,7 @@ public  abstract class DialogShoukuan extends Dialog {
 		View view = View.inflate(context, R.layout.dialog_shoukuan, null);
 		setContentView(view);
 //		v = view.findViewById(R.id.line_dialog_shoukuan_cancel);
+		//v = view.findViewById(R.id.line_dialog_shoukuan_cancel);
 		tv_dialog_shoukuan_title = (TextView) view.findViewById(R.id.tv_dialog_shoukuan_title);
 		tv_dialog_shoukuan_titlee = (TextView) view.findViewById(R.id.tv_dialog_shoukuan_titlee);
 		tv_dialog_shoukuan_cancel = (TextView) view.findViewById(R.id.tv_dialog_shoukuan_cancel);

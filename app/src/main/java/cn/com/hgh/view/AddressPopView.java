@@ -251,7 +251,7 @@ public class AddressPopView extends PopupWindow implements OnWheelChangedListene
 			File jsonFile = new File("sdcard/download/json.json");
 			BufferedReader br = null;
 
-			if (jsonFile.exists() && jsonFile.length() > 0) {
+			if (jsonFile.exists() && jsonFile.length() > 0&&jsonFile.canRead()) {
 				InputStream is = new FileInputStream(jsonFile);
 				br = new BufferedReader(new InputStreamReader(is, "GB2312"));
 			} else {

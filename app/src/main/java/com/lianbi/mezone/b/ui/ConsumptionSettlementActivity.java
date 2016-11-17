@@ -177,6 +177,7 @@ public class ConsumptionSettlementActivity extends BaseActivity {
 				tv_consum_price.setText(item.getUnPaidorderAmt());
 				tv_consum_time.setText(item.getCreateTime());
 //				getOnlinePayController(item.getTableId());
+				//getOnlinePayController(item.getTableId());
 
 				TextView tv_consum_detail = helper.getView(R.id.tv_consum_detail);
 				tv_consum_detail.setOnClickListener(new View.OnClickListener() {
@@ -196,19 +197,9 @@ public class ConsumptionSettlementActivity extends BaseActivity {
 							public void onCheckClick() {
 								/*Intent intent=new Intent(ConsumptionSettlementActivity.this,QrImgMainActivity.class);
 								startActivity(intent);*/
-								DialogQrg dialogQrg=new DialogQrg(ConsumptionSettlementActivity.this) {
-									@Override
-									public void onCheckClick() {
+								getOnlinePayController(item.getTableId());
 
-									}
 
-									@Override
-									public void onOkClick() {
-
-									}
-
-								};
-								dialogQrg.show();
 								dismiss();
 							}
 
@@ -217,7 +208,7 @@ public class ConsumptionSettlementActivity extends BaseActivity {
 								DialogLine dialogLine=new DialogLine(ConsumptionSettlementActivity.this) {
 									@Override
 									public void onCheckClick() {
-										TssOrdersController(tableId);
+										TssOrdersController(item.getTableId());
 										dismiss();
 									}
 
@@ -312,10 +303,8 @@ public class ConsumptionSettlementActivity extends BaseActivity {
 	 */
 
 	private void getOnlinePayController(String tableId){
-		String reqTime = AbDateUtil.getDateTimeNow();
-		String uuid = AbStrUtil.getUUID();
 		try {
-			okHttpsImp.getonlinePay(uuid, "app", reqTime, UserId, BusinessId, tableId, new MyResultCallback<String>() {
+			okHttpsImp.getonlinePay(UserId, BusinessId, tableId, new MyResultCallback<String>() {
 						@Override
 						public void onResponseResult(Result result) {
 							String reString=result.getData();
@@ -323,7 +312,8 @@ public class ConsumptionSettlementActivity extends BaseActivity {
 								try {
 									JSONObject jsonObject=new JSONObject(reString);
 									String url=jsonObject.getString("payUrl");
-									System.out.println("url246"+url);
+									DialogQrg dialogQrg=new DialogQrg(url,ConsumptionSettlementActivity.this);
+									dialogQrg.show();
 								} catch (JSONException e) {
 									e.printStackTrace();
 								}

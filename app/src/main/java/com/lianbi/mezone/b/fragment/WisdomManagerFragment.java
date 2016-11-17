@@ -167,7 +167,7 @@ public class WisdomManagerFragment extends Fragment implements OnClickListener {
 
 			@Override
 			protected void convert(final BaseAdapterHelper helper, final ShouyeServiceBean item) {
-				/*RelativeLayout sss = helper.getView(R.id.dsa);*/
+				RelativeLayout sss = helper.getView(R.id.dsa);
 				TextView tv_store_service_introduce = helper.getView(R.id.tv_store_service_introduce);
 				ImageView iv_store_service = helper.getView(R.id.iv_store_service);
 				int serviceid = item.getDefaultservice();

@@ -79,7 +79,7 @@ public class API {
 	/**
 	 *4.23	在线支付
 	 */
-	public static final String ONLINEPAY = TOSTORESERVICE + "/wcm/store/onlinePay.do";
+	public static final String ONLINEPAY = "/wcm/store/onlinePay";
 	/**
 	 *桌位详情接口
 	 */

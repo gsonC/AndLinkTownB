@@ -1977,22 +1977,16 @@ public enum OkHttpsImp {
     /**
      * 在线支付
      */
-    public void getonlinePay(String serNum, String source, String reqTime,
-                             String userId, String businessId,
+    public void getonlinePay(String userId, String businessId,
                              String tableId,
                              MyResultCallback<String> myResultCallback) throws Exception {
         Map<String, String> params = new HashMap<String, String>();
-        params.put("reqTime", reqTime);
-        params.put("serNum", serNum);
-        params.put("source", source);
 
         params.put("userId", userId);
         params.put("businessId", businessId);
         params.put("tableId", tableId);
-        String sign = getSign(md5_key, params);
-        params.put("sign", sign);
-        String url = API.ONLINEPAY;
-        postProgressResponse(myResultCallback, params, url);
+        String url = API.TOSTORESERVICE+API.ONLINEPAY;
+        getProgressResponse(myResultCallback, params, url);
     }
 
     /**
