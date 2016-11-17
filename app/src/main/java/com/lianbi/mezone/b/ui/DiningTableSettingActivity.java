@@ -33,7 +33,6 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.lianbi.mezone.b.app.Constants;
 import com.lianbi.mezone.b.bean.TableSetBean;
-import com.lianbi.mezone.b.bean.WebProductManagementBean;
 import com.lianbi.mezone.b.httpresponse.API;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.lzy.okgo.request.BaseRequest;
@@ -62,8 +61,6 @@ import cn.com.hgh.utils.Result;
 import cn.com.hgh.view.ClearEditText;
 import cn.com.hgh.view.DialogCommon;
 import cn.com.hgh.view.MyGridView;
-
-import static cn.com.hgh.utils.CryptTool.encryptionUrl;
 
 /*
 * 桌面设置

@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AlertDialog;
@@ -28,7 +27,6 @@ import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.lianbi.mezone.b.bean.OneDishInOrder;
 import com.lianbi.mezone.b.bean.TableOrderBean;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
-import com.lzy.okgo.request.BaseRequest;
 import com.xizhi.mezone.b.R;
 
 import java.util.ArrayList;
