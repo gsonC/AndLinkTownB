@@ -340,7 +340,7 @@ public class ConsumptionSettlementActivity extends BaseActivity {
 		String reqTime = AbDateUtil.getDateTimeNow();
 		String uuid = AbStrUtil.getUUID();
 		try {
-			okHttpsImp.geteditOrderStatus(uuid, "app", reqTime, UserId, BusinessId, tableId, "app", new MyResultCallback<String>() {
+			okHttpsImp.geteditOrderStatus(uuid, "app", reqTime, UserId, BusinessId, tableId, new MyResultCallback<String>() {
 				@Override
 				public void onResponseResult(Result result) {
 

@@ -1994,7 +1994,7 @@ public enum OkHttpsImp {
      */
     public void geteditOrderStatus(String serNum, String source, String reqTime,
                                    String userId, String businessId,
-                                   String tableId, String sourceType,
+                                   String tableId,
                                    MyResultCallback<String> myResultCallback) throws Exception {
         Map<String, String> params = new HashMap<String, String>();
         params.put("reqTime", reqTime);
@@ -2003,7 +2003,6 @@ public enum OkHttpsImp {
         params.put("userId", userId);
         params.put("businessId", businessId);
         params.put("tableId", tableId);
-        params.put("sourceType", sourceType);
         String sign = getSign(md5_key, params);
         params.put("sign", sign);
         String url = API.EDITORDER;

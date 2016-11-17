@@ -32,6 +32,15 @@ public class ComeService implements Serializable {
 	String thirdOrderNo;
 	String userId;
     int isRead;
+	String payType;
+
+	public String getPayType() {
+		return payType;
+	}
+
+	public void setPayType(String payType) {
+		this.payType = payType;
+	}
 
 	public int getIsRead() {
 		return isRead;

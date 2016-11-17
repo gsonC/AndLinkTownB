@@ -18,7 +18,7 @@
 
     <TextView
         android:id="@+id/tv_number"
-        android:layout_width="100dp"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:text="23231232"
         android:layout_weight="1"
@@ -27,7 +27,6 @@
         android:layout_marginTop="15dp"
         android:maxLines="1"
         android:maxLength="16"
-
         />
 
         <TextView
@@ -38,7 +37,6 @@
             android:textSize="14sp"
             android:textColor="@color/color_fd1a00"
             android:layout_marginTop="10.5dp"
-            android:layout_marginLeft="11dp"
             android:layout_marginRight="11dp"
             />
 
@@ -78,7 +76,7 @@
 
         <TextView
             android:id="@+id/tv_timee"
-            android:layout_width="100dp"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:text="23231232"
             android:layout_weight="1"
@@ -87,6 +85,23 @@
             android:layout_marginTop="15dp"
             android:maxLines="1"
             android:maxLength="16"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="新"
+            android:textSize="14sp"
+            android:textColor="@color/white"
+            android:layout_marginTop="10.5dp"
+            android:layout_marginRight="11dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@color/color_fd1a00"
+            android:layout_marginTop="10.5dp"
+            android:layout_marginRight="11dp"
             />
 
 

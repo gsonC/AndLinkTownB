@@ -428,16 +428,17 @@ public class ComeDetailActivity extends BaseActivity {
 				TextView tv_timee = helper.getView(R.id.tv_timee);
 				TextView tv_moneyprice = helper.getView(R.id.tv_moneyprice);
 				TextView tv_number = helper.getView(R.id.tv_number);
-
-
+				TextView tv_cash = helper.getView(R.id.tv_cash);
+				tv_cash.setText(item.getPayType());
 
 				tv_number.setText(getOrderTime(item.getOrderNo()));
 				TextView tv_new = helper.getView(R.id.tv_new);
-				    if(item.getIsRead()==0){
+
+				       if(item.getIsRead()==0){
 						tv_new.setText("");
 					}else if(item.getIsRead()==1){
 						tv_new.setText("新");
-						tv_new.setTextColor(getResources().getColor((R.color.color_fd1a00)));
+						//tv_new.setTextColor(getResources().getColor((R.color.color_fd1a00)));
 					}
 
 				tv_table.setText(item.getTableNum());
