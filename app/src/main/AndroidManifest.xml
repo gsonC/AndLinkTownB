@@ -440,8 +440,13 @@
         <activity
             android:name="com.lianbi.mezone.b.ui.CallSetActivity"
             android:windowSoftInputMode="stateHidden|adjustPan" />
-        <activity android:name="com.lianbi.mezone.b.ui.TableHasPaidActivity" />
-        <activity android:name="com.lianbi.mezone.b.ui.TableHasOrderedActivity" />
+        <activity
+            android:name="com.lianbi.mezone.b.ui.TableHasPaidActivity"
+            android:hardwareAccelerated="false" />
+        <activity
+            android:name="com.lianbi.mezone.b.ui.TableHasOrderedActivity"
+            android:hardwareAccelerated="false"
+            android:theme="@style/DiningTableSettingActivityTheme.NoActionBar" />
         <activity android:name="com.lianbi.mezone.b.ui.LeaguesDynamicListActivity" />
         <activity android:name="com.lianbi.mezone.b.ui.LeaguesPublishYellActivity" />
         <activity android:name="com.lianbi.mezone.b.ui.LeaguesStorelistActivity" />

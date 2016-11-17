@@ -3,7 +3,9 @@ package com.lianbi.mezone.b.ui;
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.app.Dialog;
+import android.bluetooth.BluetoothDevice;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -11,6 +13,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -28,9 +31,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.lianbi.mezone.b.app.Constants;
 import com.lianbi.mezone.b.bean.TableSetBean;
+import com.lianbi.mezone.b.bean.WebProductManagementBean;
 import com.lianbi.mezone.b.httpresponse.API;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.lzy.okgo.request.BaseRequest;
@@ -59,6 +62,8 @@ import cn.com.hgh.utils.Result;
 import cn.com.hgh.view.ClearEditText;
 import cn.com.hgh.view.DialogCommon;
 import cn.com.hgh.view.MyGridView;
+
+import static cn.com.hgh.utils.CryptTool.encryptionUrl;
 
 /*
 * 桌面设置
@@ -142,8 +147,6 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
 
     private boolean isInBusiness;
 
-    private static ArrayList<TableSetBean> oldOrderdList = new ArrayList<TableSetBean>();//存储上一次请求数据时的已点单桌面数据
-
     private ArrayList<String> needDelList = new ArrayList<>();
 
     private boolean isRequestingTablesData;//是否正在进行桌位信息列表网络请求
@@ -169,6 +172,11 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
     private ObjectAnimator objectInAnim;
     private ObjectAnimator objectOutAnim;
 
+    private AlertDialog dialog;
+    private AlertDialog.Builder b;
+
+    private String tableId;//被点击空桌id
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -183,6 +191,35 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
         setListener();
 
         initAdapter();
+
+        initDialog();
+    }
+
+    private void initDialog() {
+        b = new AlertDialog.Builder(this);
+        b.setTitle("请选择要连接的设备");
+        b.setPositiveButton("连接", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                bluetoothAdapterCancelDiscovery();
+                mService.connect(deviceIsSelected);
+            }
+        });
+        b.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                bluetoothAdapterCancelDiscovery();
+                dialog.dismiss();
+            }
+        });
+        b.setNeutralButton("搜索更多", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                doDiscovery();
+            }
+        });
+        b.setCancelable(false);
     }
 
     private void initObjectAnimator() {
@@ -239,7 +276,6 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
         super.onDestroy();
         EventBus.getDefault().unregister(this);//反注册EventBus
         ButterKnife.unbind(this);
-
     }
 
     /**
@@ -437,6 +473,7 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
         lp.gravity = Gravity.CENTER;
         lp.width = (int) (screenWidth * 0.8);
         lp.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+        dialog.onWindowAttributesChanged(lp);
         dialog.show();
     }
 
@@ -466,6 +503,7 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
         lp.gravity = Gravity.CENTER;
         lp.width = (int) (screenWidth * 0.8);
         lp.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+        dialog.onWindowAttributesChanged(lp);
         dialog.show();
     }
 
@@ -488,6 +526,7 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
                 lp.gravity = Gravity.CENTER;
                 lp.width = (int) (screenWidth * 0.8);
                 lp.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+                dialog.onWindowAttributesChanged(lp);
                 dialog.show();
                 getTableinfo();
             }
@@ -578,25 +617,25 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
                 boolean re = JumpIntent
                         .jumpLogin_addShop(isLogin, API.TRADE, DiningTableSettingActivity.this);
                 if (re) {
-                    //boolean hasProduct = ContentUtils.getSharePreBoolean(DiningTableSettingActivity.this,
-                    //        Constants.SHARED_PREFERENCE_NAME,
-                    //        Constants.HAS_PRODUCT);
-                    //if (hasProduct) {
-                    Intent intent_web = new Intent(DiningTableSettingActivity.this,
-                            H5WebActivty.class);
-                    intent_web.putExtra(Constants.NEDDLOGIN, false);
-                    intent_web.putExtra("NEEDNOTTITLE", false);
-                    intent_web.putExtra("Re", true);
-                    intent_web.putExtra(WebActivty.T, "产品管理");
-                    intent_web.putExtra(WebActivty.U, getUrl());
-                    DiningTableSettingActivity.this.startActivity(intent_web);
-                    //} else {
-//                        Intent intent_more = new Intent(DiningTableSettingActivity.this,
-//                                ServiceMallActivity.class);
-//                        DiningTableSettingActivity.this.startActivityForResult(intent_more,
-//                                MainActivity.this.SERVICEMALLSHOP_CODE);
-//                        ContentUtils.showMsg(mMainActivity, "请下载对应模块进行产品编辑");
-                    // }
+                    boolean hasProduct = ContentUtils.getSharePreBoolean(DiningTableSettingActivity.this,
+                            Constants.SHARED_PREFERENCE_NAME,
+                            Constants.HAS_PRODUCT);
+                    if (hasProduct) {
+                        Intent intent_web = new Intent(DiningTableSettingActivity.this,
+                                H5WebActivty.class);
+                        intent_web.putExtra(Constants.NEDDLOGIN, false);
+                        intent_web.putExtra("NEEDNOTTITLE", false);
+                        intent_web.putExtra("Re", true);
+                        intent_web.putExtra(WebActivty.T, "产品管理");
+                        intent_web.putExtra(WebActivty.U, getUrl());
+                        DiningTableSettingActivity.this.startActivity(intent_web);
+                    } else {
+                        Intent intent_more = new Intent(DiningTableSettingActivity.this,
+                                ServiceMallActivity.class);
+                        DiningTableSettingActivity.this.startActivityForResult(intent_more,
+                                MainActivity.SERVICEMALLSHOP_CODE);
+                        ContentUtils.showMsg(DiningTableSettingActivity.this, "请下载对应模块进行产品编辑");
+                    }
                 }
                 break;
             case R.id.add_table:
@@ -696,9 +735,10 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
                     com.alibaba.fastjson.JSONObject jsonObject = JSON.parseObject(data);
                     switch (jsonObject.getIntValue("tableStatus")) {
                         case 0:
+                            tableId = bean.getTableId();
                             startActivity(new Intent(DiningTableSettingActivity.this, ScanningQRActivity.class)
                                     .putExtra("TABLENAME", bean.getTableName())
-                                    .putExtra("TABLEID", bean.getTableId()));
+                                    .putExtra("TABLEID", tableId));
                             break;
                         case 1:
                             Intent i = new Intent(DiningTableSettingActivity.this, TableHasOrderedActivity.class);
@@ -749,45 +789,56 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
         String url = API.TOSTORE_PRODUCT_MANAGEMENT;
         String bussniessId = BaseActivity.userShopInfoBean.getBusinessId();
         url = url + bussniessId;
-        //WebProductManagementBean data = new WebProductManagementBean();
-        //data.setBusinessId(bussniessId);
-        // String dataJson = JSONObject.fromObject(data).toString();
-        //String dataJson = com.alibaba.fastjson.JSONObject.toJSON(data)
-        //        .toString();
-        // JSONObject jsonObject = new JSONObject();
-        // jsonObject.
-
-        //url = encryptionUrl(url, dataJson);
         return url;
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         switch (requestCode) {
             case GOTO_NEW_ORDER_TABLE_ACTIVITY:
                 if (resultCode == RESULT_OK) {
-                    String tableId = data.getStringExtra("TABLEID");
-                    if (!TextUtils.isEmpty(tableId) && !oldOrderdList.isEmpty()) {
-                        int index = 0;
-                        TableSetBean b = null;
-                        for (int i = 0; i < oldOrderdList.size(); i++) {
-                            TableSetBean bean = oldOrderdList.get(i);
-                            if (bean.getTableId().equals(tableId)) {
-                                index = i;
-                                bean.setNew(false);
-                                b = bean;
-                                break;
-                            }
+                    String tableId = intent.getStringExtra("TABLEID");
+                    int index = 0;
+                    TableSetBean bean = null;
+                    for (int i = 0; i < data.size(); i++) {
+                        bean = data.get(i);
+                        if (bean.getTableId().equals(tableId)) {
+                            index = i;
+                            break;
                         }
-                        oldOrderdList.remove(index);
-                        oldOrderdList.add(index, b);
                     }
+                    data.remove(index);
+                    bean.setNew(false);
+                    data.add(index, bean);
+                    adapter.replaceAll(data);
                 }
                 break;
             default:
-                super.onActivityResult(requestCode, resultCode, data);
+                super.onActivityResult(requestCode, resultCode, intent);
                 break;
         }
+    }
+
+    @Override
+    protected void connectingBluetoothDialog() {
+        deviceIsSelected = mBluetoothDeviceList.get(0);
+        String[] deviceArr = new String[mBluetoothDeviceList.size()];
+        for (int i = 0; i < mBluetoothDeviceList.size(); i++) {
+            BluetoothDevice device = mBluetoothDeviceList.get(i);
+            deviceArr[i] = device.getName() + "\n" + device.getAddress();
+        }
+        b.setSingleChoiceItems(deviceArr, 0, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                deviceIsSelected = mBluetoothDeviceList.get(which);
+            }
+        });
+        if (dialog != null && dialog.isShowing()) {
+            dialog.dismiss();
+        }
+        dialog = b.create();
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
     }
 
     @Override
@@ -823,27 +874,9 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
                         String paidCount = jsonObject.getString("paidCount");//消费结算总数
                         String pushCount = jsonObject.getString("pushCount");//呼叫服务总数
                         String orderCount = jsonObject.getString("orderCount");//到店明细总数
-                        if (paidCount.equals("0")) {
-                            pay_num.setVisibility(View.GONE);
-                            pay_num.setText("");
-                        } else {
-                            pay_num.setVisibility(View.VISIBLE);
-                            pay_num.setText(paidCount);
-                        }
-                        if (pushCount.equals("0")) {
-                            call_num.setVisibility(View.GONE);
-                            call_num.setText("");
-                        } else {
-                            call_num.setVisibility(View.VISIBLE);
-                            call_num.setText(pushCount);
-                        }
-                        if (orderCount.equals("0")) {
-                            particulars_num.setVisibility(View.GONE);
-                            particulars_num.setText("");
-                        } else {
-                            particulars_num.setVisibility(View.VISIBLE);
-                            particulars_num.setText(orderCount);
-                        }
+                        initValueToText(pay_num, paidCount);
+                        initValueToText(call_num, pushCount);
+                        initValueToText(particulars_num, orderCount);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -854,6 +887,19 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
             public void onResponseFailed(String msg) {
             }
         }, userShopInfoBean.getBusinessId(), userShopInfoBean.getUserId(), "111");
+    }
+
+    private void initValueToText(TextView view, String string) {
+        if (string.equals("0")) {
+            view.setVisibility(View.GONE);
+            view.setText("");
+        } else {
+            view.setVisibility(View.VISIBLE);
+            if (Integer.parseInt(string) > 99)
+                view.setText("99+");
+            else
+                view.setText(string);
+        }
     }
 
     public void getTableinfo() {
@@ -922,6 +968,8 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
                 emptyList.add(bean);
             }
             if (bean.getTableStatus() == 1) {//已点餐
+                if (!TextUtils.isEmpty(tableId) && tableId.equals(bean.getTableId()))
+                    bean.setNew(true);
                 orderdList.add(bean);
             }
             if (bean.getTableStatus() == 2) {//已支付
@@ -929,28 +977,11 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
             }
         }
 
-        ArrayList<TableSetBean> newOrderdList = new ArrayList<>();
-
-        if (oldOrderdList.isEmpty()) {
-            oldOrderdList = orderdList;
-        } else {
-            for (int i = 0; i < orderdList.size(); i++) {
-                TableSetBean bean = orderdList.get(i);
-                if (!compareTo(oldOrderdList, bean)) {
-                    bean.setNew(true);
-                    newOrderdList.add(bean);
-                }
-            }
-        }
-
         data.addAll(paidList);
-        data.addAll(newOrderdList);
-        data.addAll(oldOrderdList);
+        data.addAll(orderdList);
         data.addAll(emptyList);
 
-        if (newOrderdList.addAll(oldOrderdList)) {
-            oldOrderdList = newOrderdList;//新数据重新付给
-        }
+        tableId = "";
         return data;
     }
 

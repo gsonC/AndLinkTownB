@@ -51,8 +51,7 @@ import cn.com.hgh.utils.Result;
  * Created by zemin.zheng on 2016/11/1.
  */
 
-public class BluetoothBaseActivity extends BaseActivity {
-
+public abstract class BluetoothBaseActivity extends BaseActivity {
     protected boolean isRequestingPrintTicketData;//是否正在进行请求小票数据网络请求
 
     // Message types sent from the BluetoothService Handler
@@ -80,11 +79,9 @@ public class BluetoothBaseActivity extends BaseActivity {
     // Member object for the services
     public static BluetoothService mService = null;
 
-    private AlertDialog.Builder b;
+    protected static ArrayList<BluetoothDevice> mBluetoothDeviceList = new ArrayList<>();
 
-    private static ArrayList<BluetoothDevice> mBluetoothDeviceList = new ArrayList<>();
-
-    private BluetoothDevice deviceIsSelected;
+    protected BluetoothDevice deviceIsSelected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,7 +105,6 @@ public class BluetoothBaseActivity extends BaseActivity {
             }
         }
         checkBluetoothExist();
-        initAlertDialogBuilder();
         addIntentFilter();
 
         if (mBluetoothAdapter.isEnabled()) {
@@ -124,33 +120,6 @@ public class BluetoothBaseActivity extends BaseActivity {
                 }
             }
         }
-    }
-
-    private void initAlertDialogBuilder() {
-        b = new AlertDialog.Builder(this);
-        b.setTitle("请选择要连接的设备");
-        b.setPositiveButton("连接", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                bluetoothAdapterCancelDiscovery();
-                mService.connect(deviceIsSelected);
-            }
-        });
-        b.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                bluetoothAdapterCancelDiscovery();
-                dialog.dismiss();
-            }
-        });
-        b.setNeutralButton("搜索更多", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                doDiscovery();
-            }
-        });
-        b.setCancelable(false);
     }
 
     private void setLocationService() {
@@ -312,6 +281,7 @@ public class BluetoothBaseActivity extends BaseActivity {
         lp.gravity = Gravity.CENTER;
         lp.width = (int) (screenWidth * 0.8);
         lp.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+        dialog.onWindowAttributesChanged(lp);
         dialog.show();
     }
 
@@ -338,23 +308,7 @@ public class BluetoothBaseActivity extends BaseActivity {
         d.show();
     }
 
-    private void connectingBluetoothDialog() {
-        deviceIsSelected = mBluetoothDeviceList.get(0);
-        String[] deviceArr = new String[mBluetoothDeviceList.size()];
-        for (int i = 0; i < mBluetoothDeviceList.size(); i++) {
-            BluetoothDevice device = mBluetoothDeviceList.get(i);
-            deviceArr[i] = device.getName() + "\n" + device.getAddress();
-        }
-        b.setSingleChoiceItems(deviceArr, 0, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                deviceIsSelected = mBluetoothDeviceList.get(which);
-            }
-        });
-        AlertDialog dialog = b.create();
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.show();
-    }
+    protected abstract void connectingBluetoothDialog();
 
     //打印小票
     private void printTicket(String tableId) {
@@ -583,7 +537,7 @@ public class BluetoothBaseActivity extends BaseActivity {
         }
     };
 
-    private void doDiscovery() {
+    protected void doDiscovery() {
         ContentUtils.showMsg(BluetoothBaseActivity.this, "正在查找新蓝牙设备...");
 
         // If we're already discovering, stop it
@@ -594,7 +548,7 @@ public class BluetoothBaseActivity extends BaseActivity {
     }
 
     // If we're already discovering, stop it
-    private void bluetoothAdapterCancelDiscovery() {
+    protected void bluetoothAdapterCancelDiscovery() {
         if (mBluetoothAdapter.isDiscovering()) {
             mBluetoothAdapter.cancelDiscovery();
         }

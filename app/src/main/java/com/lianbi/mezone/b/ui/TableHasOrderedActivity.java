@@ -1,10 +1,13 @@
 package com.lianbi.mezone.b.ui;
 
 import android.app.Dialog;
+import android.bluetooth.BluetoothDevice;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Gravity;
@@ -24,7 +27,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.lianbi.mezone.b.bean.OneDishInOrder;
-import com.lianbi.mezone.b.bean.UnPaidOrderBean;
+import com.lianbi.mezone.b.bean.TableOrderBean;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.xizhi.mezone.b.R;
 
@@ -76,10 +79,13 @@ public class TableHasOrderedActivity extends BluetoothBaseActivity {
 
     private String tableId;
 
-    private QuickAdapter<UnPaidOrderBean> mAdapter;
-    private List<UnPaidOrderBean> mData = new ArrayList<>();
+    private QuickAdapter<TableOrderBean> mAdapter;
+    private List<TableOrderBean> mData = new ArrayList<>();
 
     private String newPrice = "";
+
+    private AlertDialog dialog;
+    private AlertDialog.Builder b;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,20 +100,72 @@ public class TableHasOrderedActivity extends BluetoothBaseActivity {
         initAdapter();
 
         addDataToView(getIntent().getStringExtra("DATA"));
+
+        initDialog();
+    }
+
+    private void initDialog() {
+        b = new AlertDialog.Builder(this);
+        b.setTitle("请选择要连接的设备");
+        b.setPositiveButton("连接", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                bluetoothAdapterCancelDiscovery();
+                mService.connect(deviceIsSelected);
+            }
+        });
+        b.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                bluetoothAdapterCancelDiscovery();
+                dialog.dismiss();
+            }
+        });
+        b.setNeutralButton("搜索更多", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                doDiscovery();
+            }
+        });
+        b.setCancelable(false);
+    }
+
+    @Override
+    protected void connectingBluetoothDialog() {
+        deviceIsSelected = mBluetoothDeviceList.get(0);
+        String[] deviceArr = new String[mBluetoothDeviceList.size()];
+        for (int i = 0; i < mBluetoothDeviceList.size(); i++) {
+            BluetoothDevice device = mBluetoothDeviceList.get(i);
+            deviceArr[i] = device.getName() + "\n" + device.getAddress();
+        }
+        b.setSingleChoiceItems(deviceArr, 0, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                deviceIsSelected = mBluetoothDeviceList.get(which);
+            }
+        });
+        if (dialog != null && dialog.isShowing()) {
+            dialog.dismiss();
+        }
+        dialog = b.create();
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
     }
 
     private void addDataToView(String data) {
         JSONObject jsonObject = JSON.parseObject(data);
         fen_num.setText(jsonObject.getString("proNum"));
         num_should_pay.setText(jsonObject.getString("totalOrderMoney"));
-        mData = JSON.parseArray(jsonObject.getString("unPaidOrders"), UnPaidOrderBean.class);
+        mData = JSON.parseArray(jsonObject.getString("unPaidOrders"), TableOrderBean.class);
         mAdapter.replaceAll(mData);
     }
 
     private void initAdapter() {
-        mAdapter = new QuickAdapter<UnPaidOrderBean>(TableHasOrderedActivity.this, R.layout.table_order_list_view_layout, mData) {
+        mAdapter = new QuickAdapter<TableOrderBean>(TableHasOrderedActivity.this, R.layout.table_order_list_view_layout, mData) {
             @Override
-            protected void convert(BaseAdapterHelper helper, UnPaidOrderBean item) {
+            protected void convert(BaseAdapterHelper helper, TableOrderBean item) {
+                helper.getView(R.id.dotted_line).setLayerType(View.LAYER_TYPE_SOFTWARE, null);
                 ((TextView) helper.getView(R.id.time_cn)).setText("下单时间：");
                 final ImageView avatar = helper.getView(R.id.iv_avatar);//头像
                 TextView name = helper.getView(R.id.tv_client_name);
@@ -158,12 +216,12 @@ public class TableHasOrderedActivity extends BluetoothBaseActivity {
 
     private class cancelProductOnClickListener implements View.OnClickListener {
         private OneDishInOrder oneDishInOrder;
-        private UnPaidOrderBean unPaidOrderBean;
+        private TableOrderBean unPaidOrderBean;
 
         public cancelProductOnClickListener() {
         }
 
-        public cancelProductOnClickListener(OneDishInOrder oneDishInOrder, UnPaidOrderBean unPaidOrderBean) {
+        public cancelProductOnClickListener(OneDishInOrder oneDishInOrder, TableOrderBean unPaidOrderBean) {
             this.oneDishInOrder = oneDishInOrder;
             this.unPaidOrderBean = unPaidOrderBean;
         }
@@ -176,11 +234,11 @@ public class TableHasOrderedActivity extends BluetoothBaseActivity {
             this.oneDishInOrder = oneDishInOrder;
         }
 
-        public UnPaidOrderBean getUnPaidOrderBean() {
+        public TableOrderBean getUnPaidOrderBean() {
             return unPaidOrderBean;
         }
 
-        public void setUnPaidOrderBean(UnPaidOrderBean unPaidOrderBean) {
+        public void setUnPaidOrderBean(TableOrderBean unPaidOrderBean) {
             this.unPaidOrderBean = unPaidOrderBean;
         }
 
@@ -207,33 +265,63 @@ public class TableHasOrderedActivity extends BluetoothBaseActivity {
         }
     }
 
-    private void gotoCancelProduct(final UnPaidOrderBean bean, final OneDishInOrder oneDishInOrder) {
-        final String price = oneDishInOrder.getPrice();
-        okHttpsImp.cancelProduct(new MyResultCallback<String>() {
-            @Override
-            public void onResponseResult(Result result) {
-                int index = mData.indexOf(bean);
-                ArrayList<OneDishInOrder> detailInfo = bean.getDetailInfo();
-                detailInfo.remove(oneDishInOrder);
-                double newPay = Double.parseDouble(num_should_pay.getText().toString()) - Double.parseDouble(price);
-                num_should_pay.setText(MathExtend.roundNew(newPay, 2));// 更改应付
-                if (detailInfo.isEmpty()) {
-                    mData.remove(index);
-                    String newFen = Integer.toString(Integer.parseInt(fen_num.getText().toString(), 10) - 1);
-                    fen_num.setText(newFen);// 更改份数
-                } else {
-                    bean.setDetailInfo(detailInfo);
-                    mData.remove(index);
-                    mData.add(index, bean);
-                }
-                mAdapter.replaceAll(mData);
-            }
+    private class MyMyResultCallback extends MyResultCallback {
+        private OneDishInOrder oneDishInOrder;
+        private TableOrderBean unPaidOrderBean;
 
-            @Override
-            public void onResponseFailed(String msg) {
+        public MyMyResultCallback(OneDishInOrder oneDishInOrder, TableOrderBean unPaidOrderBean) {
+            this.oneDishInOrder = oneDishInOrder;
+            this.unPaidOrderBean = unPaidOrderBean;
+        }
 
+        public OneDishInOrder getOneDishInOrder() {
+            return oneDishInOrder;
+        }
+
+        public void setOneDishInOrder(OneDishInOrder oneDishInOrder) {
+            this.oneDishInOrder = oneDishInOrder;
+        }
+
+        public TableOrderBean getUnPaidOrderBean() {
+            return unPaidOrderBean;
+        }
+
+        public void setUnPaidOrderBean(TableOrderBean unPaidOrderBean) {
+            this.unPaidOrderBean = unPaidOrderBean;
+        }
+
+        public MyMyResultCallback() {
+
+        }
+
+        @Override
+        public void onResponseResult(Result result) {
+            int index = mData.indexOf(unPaidOrderBean);
+            ArrayList<OneDishInOrder> detailInfo = unPaidOrderBean.getDetailInfo();
+            detailInfo.remove(oneDishInOrder);
+            double newPay = Double.parseDouble(num_should_pay.getText().toString()) - Double.parseDouble(oneDishInOrder.getPrice());
+            num_should_pay.setText(MathExtend.roundNew(newPay, 2));// 更改应付
+            if (detailInfo.isEmpty()) {
+                mData.remove(index);
+                String newFen = Integer.toString(Integer.parseInt(fen_num.getText().toString(), 10) - 1);
+                fen_num.setText(newFen);// 更改份数
+            } else {
+                unPaidOrderBean.setDetailInfo(detailInfo);
+                mData.remove(index);
+                mData.add(index, unPaidOrderBean);
             }
-        }, bean.getOrderNo(), oneDishInOrder.getProductId(), tableId, MathExtend.multiply(price, "100"));
+            mAdapter.replaceAll(mData);
+        }
+
+        @Override
+        public void onResponseFailed(String msg) {
+            ContentUtils.showMsg(TableHasOrderedActivity.this, msg);
+        }
+    }
+
+    private void gotoCancelProduct(TableOrderBean bean, OneDishInOrder oneDishInOrder) {
+        String price = oneDishInOrder.getPrice();
+        okHttpsImp.cancelProduct(new MyMyResultCallback(oneDishInOrder, bean), bean.getOrderNo(), oneDishInOrder.getProductId(), tableId, Integer.toString((int) (Double.parseDouble(price) * 100.0d)));
     }
 
     @Override
@@ -351,6 +439,7 @@ public class TableHasOrderedActivity extends BluetoothBaseActivity {
         lp.gravity = Gravity.CENTER;
         lp.width = (int) (screenWidth * 0.8);
         lp.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+        dialog.onWindowAttributesChanged(lp);
         dialog.show();
     }
 
@@ -428,12 +517,13 @@ public class TableHasOrderedActivity extends BluetoothBaseActivity {
         okHttpsImp.editOrderStatus(new MyResultCallback<String>() {
             @Override
             public void onResponseResult(Result result) {
-
+                ContentUtils.showMsg(TableHasOrderedActivity.this, result.getMsg());
+                finish();
             }
 
             @Override
             public void onResponseFailed(String msg) {
-
+                ContentUtils.showMsg(TableHasOrderedActivity.this, msg);
             }
         }, userShopInfoBean.getUserId(), userShopInfoBean.getBusinessId(), tableId);
     }

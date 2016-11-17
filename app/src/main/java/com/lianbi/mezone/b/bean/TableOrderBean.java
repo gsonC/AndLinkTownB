@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * Created by zemin.zheng on 2016/11/16.
  */
 
-public class UnPaidOrderBean implements Serializable {
+public class TableOrderBean implements Serializable {
     private static final long serialVersionUID = 6129235598609222382L;
     private String createTime;
     private String desc;
@@ -91,7 +91,7 @@ public class UnPaidOrderBean implements Serializable {
         this.userName = userName;
     }
 
-    public UnPaidOrderBean() {
+    public TableOrderBean() {
 
     }
 }

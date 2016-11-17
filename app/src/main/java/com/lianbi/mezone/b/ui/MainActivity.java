@@ -423,7 +423,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface, 
 	private final int OTHERACTIVITY_CODE = 3002;
 	public final int SERVICESHOPACTIVITY_CODE = 30089;
 	public static final int MYSHOPACTIVITY_CODE = 2004;
-	public final int SERVICEMALLSHOP_CODE = 30726;
+	public static final int SERVICEMALLSHOP_CODE = 30726;
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
