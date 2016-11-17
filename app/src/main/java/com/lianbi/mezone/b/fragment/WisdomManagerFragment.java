@@ -27,6 +27,7 @@ import com.lianbi.mezone.b.ui.BaseActivity;
 import com.lianbi.mezone.b.ui.BusinessMarketingActivity;
 import com.lianbi.mezone.b.ui.DiningTableSettingActivity;
 import com.lianbi.mezone.b.ui.H5WebActivty;
+import com.lianbi.mezone.b.ui.LeaguesYellListActivity;
 import com.lianbi.mezone.b.ui.MainActivity;
 import com.lianbi.mezone.b.ui.ServiceMallActivity;
 import com.lianbi.mezone.b.ui.WIFIWebActivity;
@@ -240,6 +241,7 @@ public class WisdomManagerFragment extends Fragment implements OnClickListener {
 	 * 初始化试图
 	 */
 	private void initView(View view) {
+		llWisdommanageShouting.setOnClickListener(this);
 		llWisdommanageServicemall.setOnClickListener(this);
 		llWisdommanageShopservice.setOnClickListener(this);
 		llWisdommanageYingxiao.setOnClickListener(this);
@@ -274,6 +276,10 @@ public class WisdomManagerFragment extends Fragment implements OnClickListener {
 			case R.id.ll_wisdommanage_yingxiao://商户营销
 				Intent intent_yingxiao = new Intent(mMainActivity, BusinessMarketingActivity.class);
 				startActivity(intent_yingxiao);
+				break;
+
+			case R.id.ll_wisdommanage_Shouting://商圈吆喝
+				startActivity(new Intent(mMainActivity, LeaguesYellListActivity.class));
 				break;
 		}
 	}
