@@ -576,7 +576,7 @@ public enum OkHttpsImp {
         Map<String, String> params = new HashMap<String, String>();
         params.put("tableId", tableId);
         params.put("sourceType", "tss");
-        String url = getHttpUrl("tableInfo");
+        String url = getHttpUrl("cancelOrder");
         postProgressResponse(myResultCallback, params, url);
     }
 
