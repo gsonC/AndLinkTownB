@@ -32,7 +32,6 @@ import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 import com.alibaba.fastjson.JSON;
-import com.bumptech.glide.Glide;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
@@ -154,6 +153,8 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
     LinearLayout ad_llt;
     @Bind(R.id.sv_shouyeLeagues)
     ListenedScrollView svShouyeLeagues;
+    @Bind(R.id.tv_shouyeLeagues_nodata)
+    TextView tv_shouyeLeagues_nodata;
     private MainActivity mActivity;
     private OkHttpsImp mOkHttpsImp;
     private ArrayList<LeaguesCountList> mLeaguesCountList =
@@ -308,8 +309,8 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
     @Override
     public void onStart() {
         super.onStart();
-        getYellAndDynamicData();
         getDistrictCount();
+        getYellAndDynamicData();
     }
 
     /**
@@ -414,7 +415,19 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
         } catch (Exception e) {
             e.printStackTrace();
         }
-        setData(4, 100);
+
+        if(first.equals("0")&&
+           two.equals("0")&&
+           three.equals("0")&&
+           four.equals("0")
+           ){
+            tv_shouyeLeagues_nodata.setVisibility(View.VISIBLE);
+            piec_shouyeLeagues_dyn.setVisibility(View.GONE);
+        }else{
+            tv_shouyeLeagues_nodata.setVisibility(View.GONE);
+            piec_shouyeLeagues_dyn.setVisibility(View.VISIBLE);
+            setData(4, 100);
+        }
     }
 
     /**
@@ -531,20 +544,17 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
         try {
             int  arrayListsize=arrayList.size();
             if(arrayListsize>0){
-                Glide.with(mActivity).load(compareMessageType(arrayList.get(0).getMessageType())).
-                        error(R.mipmap.demo).into(ivShouyeLeaguesRecruit);
+                ivShouyeLeaguesRecruit.setImageResource(compareMessageType(arrayList.get(0).getMessageType()));
                 tvShouyeLeaguesRetitle.setText(arrayList.get(0).getMessageTitle());
                 tvShouyeLeaguesRecontent.setText(arrayList.get(0).getMessageContent());
             }
             if(arrayListsize>1){
-                Glide.with(mActivity).load(compareMessageType(arrayList.get(1).getMessageType())).
-                        error(R.mipmap.demo).into(ivShouyeLeaguesNews);
+                ivShouyeLeaguesNews.setImageResource(compareMessageType(arrayList.get(1).getMessageType()));
                 tvShouyeLeaguesNewtitle.setText(arrayList.get(1).getMessageTitle());
                 tvShouyeLeaguesNewcontent.setText(arrayList.get(1).getMessageContent());
             }
             if(arrayListsize>2){
-                Glide.with(mActivity).load(compareMessageType(arrayList.get(2).getMessageType())).
-                        error(R.mipmap.demo).into(ivShouyeLeaguesDiscount);
+                ivShouyeLeaguesDiscount.setImageResource(compareMessageType(arrayList.get(2).getMessageType()));
                 tvShouyeLeaguesDiscounttitle.setText(arrayList.get(2).getMessageTitle());
                 tvShouyeLeaguesDiscountcontent.setText(arrayList.get(2).getMessageContent());
             }

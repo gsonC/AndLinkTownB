@@ -11,7 +11,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
-import com.bumptech.glide.Glide;
 import com.lianbi.mezone.b.bean.LeaguesYellBean;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.xizhi.mezone.b.R;
@@ -106,9 +105,7 @@ public class LeaguesDynamicListActivity extends BaseActivity {
                 TextView tv_leaguesdynamiclist_firsttitle = helper.getView(R.id.tv_leaguesdynamiclist_firsttitle);//
                 ImageView iv_leaguesdynamiclist_expand = helper.getView(R.id.iv_leaguesdynamiclist_expand);//
                 TextView tv_leaguesdynamiclist_content = helper.getView(R.id.tv_leaguesdynamiclist_content);
-
-                Glide.with(LeaguesDynamicListActivity.this).load
-                        (compareMessageType(item.getMessageType())).error(R.mipmap.icon).into(iv_leaguesdynamiclist_icon);
+                iv_leaguesdynamiclist_icon.setImageResource(compareMessageType(item.getMessageType()));
                 tv_leaguesdynamiclist_firsttitle.setText(item.getMessageTitle());
                 tv_leaguesdynamiclist_content.setText(item.getMessageContent());
                 if (!item.isExpanded()) {
@@ -186,7 +183,6 @@ public class LeaguesDynamicListActivity extends BaseActivity {
                         public void onResponseResult(Result result) {
                             page++;
                             String reString = result.getData();
-                            Log.i("tag","resString 132----->"+reString);
                             try {
                                     JSONObject jsonObject = new JSONObject(reString);
                                     reString = jsonObject.optString("list");

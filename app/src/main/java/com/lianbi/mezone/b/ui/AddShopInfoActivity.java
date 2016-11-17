@@ -42,6 +42,7 @@ public class AddShopInfoActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_add_shopinfo, HAVETYPE);
+        businessid=BusinessId;
         initView();
         setLisenter();
     }
@@ -58,9 +59,9 @@ public class AddShopInfoActivity extends BaseActivity {
         setPageRightText("提交");
         shopname=getIntent().getStringExtra("shopname");
         fromwhich=getIntent().getIntExtra("fromwhich",0);
-        businessid=getIntent().getStringExtra("businessid");
+        String businessid=getIntent().getStringExtra("businessid");
         if(!TextUtils.isEmpty(businessid)) {
-            BusinessId = businessid;
+            this.businessid = businessid;
         }
         if(!TextUtils.isEmpty(shopname)) {
             tvAddShopInfoShopname.setText(shopname);
@@ -135,7 +136,7 @@ public class AddShopInfoActivity extends BaseActivity {
                     uuid,
                     "app",
                     reqTime,
-                    BusinessId,
+                    businessid,
                     parant_id,
                     provinceId,
                     cityCode,

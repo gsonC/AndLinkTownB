@@ -57,6 +57,7 @@ public class LeaguesYellListActivity extends BaseActivity {
     private int page =1;
     private Intent  getIntent;
       int whatchild=0;
+    private String BusinessId="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +74,11 @@ public class LeaguesYellListActivity extends BaseActivity {
         setPageRightText("发起吆喝");
         getIntent=getIntent();
         whatchild=getIntent.getIntExtra("whatchild",0);
+        if(!TextUtils.isEmpty(getIntent.getStringExtra("businessId"))){
+            BusinessId=getIntent.getStringExtra("businessId");
+        }else{
+            BusinessId="";
+        }
         setLisenter();
         initAdapter();
         getYellData(true);
@@ -192,7 +198,7 @@ public class LeaguesYellListActivity extends BaseActivity {
         }
         try {
             okHttpsImp.queryBusinessDynamic(
-                    "",                         //BD2016052013475900000010businessId
+                    BusinessId,                         //BD2016052013475900000010businessId
                     "",//area
                     areaCode,//businessCircle"310117"
                     "",//messageType

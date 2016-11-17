@@ -276,7 +276,9 @@ public class MineFragment extends Fragment implements OnClickListener,
 				maActivity.changeFuncPage(POSITION);
 				break;
 			case R.id.llt_mine_meyaohe://我的吆喝
-				startActivity(new Intent(maActivity, LeaguesYellListActivity.class));
+				startActivity(new Intent(maActivity, LeaguesYellListActivity.class)
+				.putExtra("businessId",maActivity.BusinessId)
+				);
 
 				break;
 			case R.id.llt_fm_mine_info:// 切换店铺

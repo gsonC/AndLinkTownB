@@ -280,7 +280,7 @@ public class ChangeShopActivity extends BaseActivity {
 	@Override
 	protected void onTitleRightClickTv() {
 		super.onTitleRightClickTv();
-        if(TextUtils.isEmpty(shopRovinceid)||
+		if(TextUtils.isEmpty(shopRovinceid)||
 				TextUtils.isEmpty(citycode)||
 				TextUtils.isEmpty(areaCode)
 				){
