@@ -3358,6 +3358,7 @@ public enum OkHttpsImp {
         params.put("endTime", endTime);
         params.put("curPage", "0");
         params.put("pageSize", "8");
+        params.put("orderStatus", "1");
         String url = API.TOSTORESERVICE + "/wcm" + API.SHOUYE_SHOPVIP_CONSUMPTION;
         getNoProgressResponse(myResultCallback, params, url);
     }
