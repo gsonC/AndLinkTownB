@@ -18,7 +18,9 @@ import com.xizhi.mezone.b.R;
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
@@ -427,7 +429,9 @@ public class ComeDetailActivity extends BaseActivity {
 				TextView tv_moneyprice = helper.getView(R.id.tv_moneyprice);
 				TextView tv_number = helper.getView(R.id.tv_number);
 
-					tv_number.setText(getOrderTime(item.getOrderNo()));
+
+
+				tv_number.setText(getOrderTime(item.getOrderNo()));
 				TextView tv_new = helper.getView(R.id.tv_new);
 				    if(item.getIsRead()==0){
 						tv_new.setText("");
@@ -443,12 +447,13 @@ public class ComeDetailActivity extends BaseActivity {
 					e.printStackTrace();
 				}
 
-				tv_timee.setText(getOrderTi(item.getCreatTime()));
+				tv_timee.setText(AbDateUtil.getSpecialFormatTimeFromTimeMillisString(item.getCreatTime(),AbDateUtil.dateFormatYMDHMS));
 
 			}
 		};
 		actComedeatilListview.setAdapter(mAdapter);
 	}
+
 
 
 	//用于判断是没有查到数据还是没有选时间
@@ -530,5 +535,15 @@ public class ComeDetailActivity extends BaseActivity {
 		String miao = time.substring(6, 8);
 		return year + "-" + mouth + "-" + day+"   "+house+":"+minute+":"+miao+"";
 	}
+	public static String timedate(String time) {
+		SimpleDateFormat sdr = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		@SuppressWarnings("unused")
+		long lcc = Long.valueOf(time);
+/*
+		int i = Integer.parseInt(time);
+*/
+		String times = sdr.format(new Date(lcc* 1000L));
+		return times;
 
+	}
 }
