@@ -1,5 +1,16 @@
 package com.lianbi.mezone.b.app;
 
+import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.os.Build;
+import android.os.Environment;
+import android.os.Looper;
+import android.telephony.TelephonyManager;
+import android.text.TextUtils;
+import android.widget.Toast;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
@@ -12,23 +23,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.lianbi.mezone.b.httpresponse.MyResultCallback;
-import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
-
 import cn.com.hgh.utils.DataCleanManager;
 import cn.com.hgh.utils.FilePathGet;
-import cn.com.hgh.utils.Result;
-
-import android.content.Context;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
-import android.os.Build;
-import android.os.Environment;
-import android.os.Looper;
-import android.telephony.TelephonyManager;
-import android.text.TextUtils;
-import android.widget.Toast;
 
 public class CrashHandler implements UncaughtExceptionHandler {
 
@@ -120,7 +116,9 @@ public class CrashHandler implements UncaughtExceptionHandler {
 
 		// 保存日志文件
 		String str = saveCrashInfo2File(ex);
-		
+
+		ActivityManager.getInstance().exit();
+
 //		OkHttpsImp okHttpsImp = OkHttpsImp.SINGLEOKHTTPSIMP.newInstance(mContext);
 //		okHttpsImp.multiFileUpload(new MyResultCallback<String>() {
 //			
