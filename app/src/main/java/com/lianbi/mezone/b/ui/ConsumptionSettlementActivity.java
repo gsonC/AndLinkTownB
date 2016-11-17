@@ -217,6 +217,7 @@ public class ConsumptionSettlementActivity extends BaseActivity {
 								dialogLine.setTv_dialog_line_cancel("否");
 								dialogLine.setTv_dialog_line_ok("是");
 								dialogLine.show();
+								dismiss();
 							}
 						};
 

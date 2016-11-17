@@ -423,12 +423,19 @@ public class ComeDetailActivity extends BaseActivity {
 			@Override
 			protected void convert(BaseAdapterHelper helper, ComeService item) {
 				TextView tv_table = helper.getView(R.id.tv_table);
-
 				TextView tv_timee = helper.getView(R.id.tv_timee);
 				TextView tv_moneyprice = helper.getView(R.id.tv_moneyprice);
+				TextView tv_number = helper.getView(R.id.tv_number);
 
+					tv_number.setText(getOrderTime(item.getOrderNo()));
 				TextView tv_new = helper.getView(R.id.tv_new);
-				tv_new.setText(item.getIsRead());
+				    if(item.getIsRead()==0){
+						tv_new.setText("");
+					}else if(item.getIsRead()==1){
+						tv_new.setText("新");
+						tv_new.setTextColor(getResources().getColor((R.color.color_fd1a00)));
+					}
+
 				tv_table.setText(item.getTableNum());
 				try {
 					tv_moneyprice.setText("¥"+AbStrUtil.changeF2Y(Long.parseLong(item.getOrderPrice())));
@@ -436,9 +443,7 @@ public class ComeDetailActivity extends BaseActivity {
 					e.printStackTrace();
 				}
 
-
-				tv_timee.setText(item.getOrderNo());
-
+				tv_timee.setText(getOrderTi(item.getCreatTime()));
 
 			}
 		};
@@ -509,4 +514,21 @@ public class ComeDetailActivity extends BaseActivity {
 		String day = time.substring(6, 8);
 		return year + "-" + mouth + "-" + day;
 	}
+	private String getOrderTime(String ordertime) {
+		String year = ordertime.substring(0, 8);
+		String mouth= ordertime.substring(8,26);
+		String day = ordertime.substring(26,30);
+		return year  +"****" +day;
+	}
+	private String getOrderTi(String time) {
+		String year = time.substring(0, 4);
+		String mouth = time.substring(4, 6);
+		String day = time.substring(6, 8);
+
+		String house = time.substring(6, 8);
+		String minute = time.substring(6, 8);
+		String miao = time.substring(6, 8);
+		return year + "-" + mouth + "-" + day+"   "+house+":"+minute+":"+miao+"";
+	}
+
 }
