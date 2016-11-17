@@ -302,6 +302,9 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 									}
 									setComsumDetailView(mShopConsumptionList, isRefresh);
 								} catch (JSONException e) {
+									mLlt_shouyemanagement_comsum.setVisibility(View.GONE);
+									mView_fillview.setVisibility(View.GONE);
+									mLlt_shouyemanagement_consum_img.setVisibility(View.VISIBLE);
 									e.printStackTrace();
 								}
 							}
@@ -323,6 +326,7 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 	private void setComsumDetailView(ArrayList<ShopConsumption> shopConsumptionList, final boolean isRefresh) {
 		mLlt_shouyemanagement_comsum.removeAllViews();
 		if (null != mShopConsumptionList && shopConsumptionList.size() > 0) {
+			mLlt_shouyemanagement_comsum.removeAllViews();
 			mLlt_shouyemanagement_comsum.setVisibility(View.VISIBLE);
 			mView_fillview.setVisibility(View.VISIBLE);
 			mLlt_shouyemanagement_consum_img.setVisibility(View.GONE);
