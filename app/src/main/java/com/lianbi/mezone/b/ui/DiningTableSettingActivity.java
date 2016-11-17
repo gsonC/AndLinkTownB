@@ -54,7 +54,6 @@ import butterknife.OnTextChanged;
 import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.QuickAdapter;
 import cn.com.hgh.eventbus.ShouyeRefreshEvent;
-import cn.com.hgh.utils.AbAppUtil;
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.JumpIntent;
 import cn.com.hgh.utils.Result;
@@ -191,7 +190,7 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
 
     private void initObjectAnimator() {
         objectInAnim = ObjectAnimator.ofFloat(searchResultGridView, "translationY", searchResultGridView.getHeight(), 0.0f);
-        objectInAnim.setDuration(200);
+        objectInAnim.setDuration(500);
         objectInAnim.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
@@ -214,7 +213,7 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
         });
 
         objectOutAnim = ObjectAnimator.ofFloat(searchResultGridView, "translationY", 0.0f, searchResultGridView.getHeight());
-        objectOutAnim.setDuration(200);
+        objectOutAnim.setDuration(500);
         objectOutAnim.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
