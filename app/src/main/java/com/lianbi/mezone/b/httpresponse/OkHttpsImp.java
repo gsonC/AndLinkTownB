@@ -1687,6 +1687,7 @@ public enum OkHttpsImp {
         String url = getAbsoluteUrl(API.UPDATEBUSINESSPHONE);
         postProgressResponse(myResultCallback, params, url);
     }
+
     /**
      * 修改店铺省市区
      */
@@ -1711,6 +1712,7 @@ public enum OkHttpsImp {
         String url = getAbsoluteUrl(API.UPDATEBUSINESSPHONE);
         postProgressResponse(myResultCallback, params, url);
     }
+
     /**
      * 修改店铺手机号
      */
@@ -1731,6 +1733,7 @@ public enum OkHttpsImp {
         String url = getAbsoluteUrl(API.UPDATEBUSINESSPHONE);
         postProgressResponse(myResultCallback, params, url);
     }
+
     /**
      * 修改店铺地址
      */
@@ -2872,7 +2875,7 @@ public enum OkHttpsImp {
         params.put("isRead", isRead);
         String sign = getSign(md5_key, params);
         params.put("sign", sign);
-        String url = getHttpUrl(storeId,API.PUSHMESSAGE);
+        String url = getHttpUrl(storeId, API.PUSHMESSAGE);
         postProgressResponse(myResultCallback, params, url);
 
     }

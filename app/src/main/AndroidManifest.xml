@@ -314,7 +314,7 @@
         <activity
             android:name="com.lianbi.mezone.b.ui.DiningTableSettingActivity"
             android:theme="@style/DiningTableSettingActivityTheme.NoActionBar"
-            android:windowSoftInputMode="stateAlwaysVisible|adjustPan" />
+            android:windowSoftInputMode="stateHidden|adjustPan" />
 
         <!-- 个推SDK配置开始 -->
         <!-- 配置的第三方参数属性 -->

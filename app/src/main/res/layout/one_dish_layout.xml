@@ -1,65 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="80dp"
-    android:layout_marginTop="1dp"
-    android:paddingBottom="15dp"
-    android:paddingLeft="11dp"
-    android:paddingRight="11dp"
-    android:paddingTop="15dp">
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/dish_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/commo_text_color"
-        android:textSize="@dimen/h15" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_ededed" />
 
-    <TextView
-        android:id="@+id/renminbi_sign"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:text="¥"
-        android:textColor="@color/pointcolor"
-        android:textSize="@dimen/h15" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="15dp"
+        android:paddingLeft="11dp"
+        android:paddingRight="11dp"
+        android:paddingTop="15dp">
 
-    <TextView
-        android:id="@+id/dish_price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@id/renminbi_sign"
-        android:textColor="@color/pointcolor"
-        android:textSize="@dimen/h15" />
+        <TextView
+            android:id="@+id/dish_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/commo_text_color"
+            android:textSize="@dimen/h15" />
 
-    <TextView
-        android:id="@+id/tv_dish_num"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:textColor="@color/colores_news_19"
-        android:textSize="@dimen/h13" />
+        <TextView
+            android:id="@+id/renminbi_sign"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:text="¥"
+            android:textColor="@color/pointcolor"
+            android:textSize="@dimen/h15" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/tv_dish_num"
-        android:layout_toLeftOf="@id/tv_dish_num"
-        android:text="数量："
-        android:textColor="@color/colores_news_19"
-        android:textSize="@dimen/h13" />
+        <TextView
+            android:id="@+id/dish_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@id/renminbi_sign"
+            android:textColor="@color/pointcolor"
+            android:textSize="@dimen/h15" />
 
-    <TextView
-        android:id="@+id/cancel_dish"
-        android:layout_width="72dp"
-        android:layout_height="26dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:background="@drawable/activity_table_has_paid_shape"
-        android:gravity="center"
-        android:text="取消"
-        android:textColor="@color/commo_text_color"
-        android:textSize="@dimen/h13"
-        android:visibility="gone" />
-</RelativeLayout>
+        <TextView
+            android:id="@+id/tv_dish_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/colores_news_19"
+            android:textSize="@dimen/h13" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/tv_dish_num"
+            android:layout_toLeftOf="@id/tv_dish_num"
+            android:text="数量："
+            android:textColor="@color/colores_news_19"
+            android:textSize="@dimen/h13" />
+
+        <TextView
+            android:id="@+id/cancel_dish"
+            android:layout_width="72dp"
+            android:layout_height="26dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/activity_table_has_paid_shape"
+            android:gravity="center"
+            android:text="取消"
+            android:textColor="@color/commo_text_color"
+            android:textSize="@dimen/h13"
+            android:visibility="gone" />
+    </RelativeLayout>
+</LinearLayout>
+

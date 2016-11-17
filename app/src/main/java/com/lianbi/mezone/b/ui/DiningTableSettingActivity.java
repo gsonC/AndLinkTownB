@@ -408,13 +408,14 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
                 if (TextUtils.isEmpty(data))
                     return;
                 com.alibaba.fastjson.JSONObject jsonObject = JSON.parseObject(data);
-                JSONArray jsonArray = jsonObject.getJSONArray("tableList");
-                if (jsonArray != null) {
-                    if (jsonArray.isEmpty()) {
+
+                switch (jsonObject.getIntValue("reslutCode")) {
+                    case 0:
                         showSetTableFreeDialog(tableId);
-                    } else {
+                        break;
+                    case 1:
                         showSetTableFreeFailDialog();
-                    }
+                        break;
                 }
             }
 
@@ -747,7 +748,7 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
     public String getUrl() {
         String url = API.TOSTORE_PRODUCT_MANAGEMENT;
         String bussniessId = BaseActivity.userShopInfoBean.getBusinessId();
-        url = url+bussniessId;
+        url = url + bussniessId;
         //WebProductManagementBean data = new WebProductManagementBean();
         //data.setBusinessId(bussniessId);
         // String dataJson = JSONObject.fromObject(data).toString();

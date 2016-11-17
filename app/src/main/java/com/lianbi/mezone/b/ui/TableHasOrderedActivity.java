@@ -2,7 +2,6 @@ package com.lianbi.mezone.b.ui;
 
 import android.app.Dialog;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
@@ -38,7 +37,9 @@ import butterknife.OnClick;
 import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.QuickAdapter;
 import cn.com.hgh.utils.AbDateUtil;
+import cn.com.hgh.utils.AbViewUtil;
 import cn.com.hgh.utils.ContentUtils;
+import cn.com.hgh.utils.MathExtend;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.view.DialogCommon;
 
@@ -99,8 +100,8 @@ public class TableHasOrderedActivity extends BluetoothBaseActivity {
         JSONObject jsonObject = JSON.parseObject(data);
         fen_num.setText(jsonObject.getString("proNum"));
         num_should_pay.setText(jsonObject.getString("totalOrderMoney"));
-        List<UnPaidOrderBean> list = JSON.parseArray(jsonObject.getString("unPaidOrders"), UnPaidOrderBean.class);
-        mAdapter.replaceAll(list);
+        mData = JSON.parseArray(jsonObject.getString("unPaidOrders"), UnPaidOrderBean.class);
+        mAdapter.replaceAll(mData);
     }
 
     private void initAdapter() {
@@ -129,7 +130,7 @@ public class TableHasOrderedActivity extends BluetoothBaseActivity {
                         });
                 name.setText(item.getUserName());
                 remark.setText(item.getDesc());
-                order_time.setText(AbDateUtil.exchangeFormat(item.getCreateTime(), "yyyyMMddHHmmss", AbDateUtil.dateFormatYMDHMS));
+                order_time.setText(AbDateUtil.exchangeFormat(item.getCreateTime(), "yyyyMMddHHmmss", AbDateUtil.dateFormatHM));
 
                 ArrayList<OneDishInOrder> detailInfo = item.getDetailInfo();
                 for (int i = 0; i < detailInfo.size(); i++) {
@@ -139,26 +140,100 @@ public class TableHasOrderedActivity extends BluetoothBaseActivity {
                     TextView tv_dish_num = (TextView) oneDishLayout.findViewById(R.id.tv_dish_num);
                     TextView cancel_dish = (TextView) oneDishLayout.findViewById(R.id.cancel_dish);
 
-                    OneDishInOrder oneDishInOrder = detailInfo.get(i);
+                    final OneDishInOrder oneDishInOrder = detailInfo.get(i);
                     dish_name.setText(oneDishInOrder.getProName());
                     dish_price.setText(oneDishInOrder.getPrice());
                     tv_dish_num.setText(oneDishInOrder.getNum());
                     cancel_dish.setVisibility(View.VISIBLE);
-                    cancel_dish.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-//cancelProduct
-                        }
-                    });
-                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                            LinearLayout.LayoutParams.MATCH_PARENT,
-                            LinearLayout.LayoutParams.WRAP_CONTENT);
+                    cancel_dish.setOnClickListener(new cancelProductOnClickListener(oneDishInOrder, item));
+                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(screenWidth,
+                            (int) AbViewUtil.dip2px(TableHasOrderedActivity.this, 80.0f));
                     oneDishLayout.setLayoutParams(layoutParams);
                     container.addView(oneDishLayout);
                 }
             }
         };
         mListView.setAdapter(mAdapter);
+    }
+
+    private class cancelProductOnClickListener implements View.OnClickListener {
+        private OneDishInOrder oneDishInOrder;
+        private UnPaidOrderBean unPaidOrderBean;
+
+        public cancelProductOnClickListener() {
+        }
+
+        public cancelProductOnClickListener(OneDishInOrder oneDishInOrder, UnPaidOrderBean unPaidOrderBean) {
+            this.oneDishInOrder = oneDishInOrder;
+            this.unPaidOrderBean = unPaidOrderBean;
+        }
+
+        public OneDishInOrder getOneDishInOrder() {
+            return oneDishInOrder;
+        }
+
+        public void setOneDishInOrder(OneDishInOrder oneDishInOrder) {
+            this.oneDishInOrder = oneDishInOrder;
+        }
+
+        public UnPaidOrderBean getUnPaidOrderBean() {
+            return unPaidOrderBean;
+        }
+
+        public void setUnPaidOrderBean(UnPaidOrderBean unPaidOrderBean) {
+            this.unPaidOrderBean = unPaidOrderBean;
+        }
+
+        @Override
+        public void onClick(View v) {
+            DialogCommon dialog = new DialogCommon(TableHasOrderedActivity.this) {
+                @Override
+                public void onCheckClick() {
+                    this.dismiss();
+                }
+
+                @Override
+                public void onOkClick() {
+                    gotoCancelProduct(unPaidOrderBean, oneDishInOrder);
+                    this.dismiss();
+                }
+            };
+            dialog.setTextTitle("是否取消");
+            dialog.setTv_dialog_common_ok("是");
+            dialog.setTv_dialog_common_cancel("否");
+            dialog.setCancelable(false);
+            dialog.setCanceledOnTouchOutside(false);
+            dialog.show();
+        }
+    }
+
+    private void gotoCancelProduct(final UnPaidOrderBean bean, final OneDishInOrder oneDishInOrder) {
+        final String price = oneDishInOrder.getPrice();
+        okHttpsImp.cancelProduct(new MyResultCallback<String>() {
+            @Override
+            public void onResponseResult(Result result) {
+                int index = mData.indexOf(bean);
+                ArrayList<OneDishInOrder> detailInfo = bean.getDetailInfo();
+                detailInfo.remove(oneDishInOrder);
+                double newPay = Double.parseDouble(num_should_pay.getText().toString()) - Double.parseDouble(price);
+                num_should_pay.setText(MathExtend.roundNew(newPay, 2));// 更改应付
+                if (detailInfo.isEmpty()) {
+                    mData.remove(index);
+                    String newFen = Integer.toString(Integer.parseInt(fen_num.getText().toString(), 10) - 1);
+                    fen_num.setText(newFen);// 更改份数
+                } else {
+                    bean.setDetailInfo(detailInfo);
+                    mData.remove(index);
+                    mData.add(index, bean);
+                }
+                mAdapter.replaceAll(mData);
+            }
+
+            @Override
+            public void onResponseFailed(String msg) {
+
+            }
+        }, bean.getOrderNo(), oneDishInOrder.getProductId(), tableId, MathExtend.multiply(price, "100"));
     }
 
     @Override
@@ -183,10 +258,54 @@ public class TableHasOrderedActivity extends BluetoothBaseActivity {
                 showPrintTicketDialog(tableId);
                 break;
             case R.id.online_pay:
+                showOnlinePayDialog();
                 break;
             case R.id.cash_pay:
+                showCashPayDialog();
                 break;
         }
+    }
+
+    private void showCashPayDialog() {
+        DialogCommon dialog = new DialogCommon(TableHasOrderedActivity.this) {
+            @Override
+            public void onCheckClick() {
+                this.dismiss();
+            }
+
+            @Override
+            public void onOkClick() {
+                gotoCashPay();
+                this.dismiss();
+            }
+        };
+        dialog.setTextTitle("是否现金收款");
+        dialog.setTv_dialog_common_ok("是");
+        dialog.setTv_dialog_common_cancel("否");
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+    }
+
+    private void showOnlinePayDialog() {
+        DialogCommon dialog = new DialogCommon(TableHasOrderedActivity.this) {
+            @Override
+            public void onCheckClick() {
+                this.dismiss();
+            }
+
+            @Override
+            public void onOkClick() {
+                gotoOnlinePay();
+                this.dismiss();
+            }
+        };
+        dialog.setTextTitle("是否在线收款");
+        dialog.setTv_dialog_common_ok("是");
+        dialog.setTv_dialog_common_cancel("否");
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
     }
 
     private void showChangeOrderMoneyDialog() {
@@ -243,7 +362,8 @@ public class TableHasOrderedActivity extends BluetoothBaseActivity {
         okHttpsImp.editPrice(new MyResultCallback<String>() {
             @Override
             public void onResponseResult(Result result) {
-
+                ContentUtils.showMsg(TableHasOrderedActivity.this, "订单改价成功");
+                num_should_pay.setText(MathExtend.roundNew(Double.parseDouble(newPrice), 2));
             }
 
             @Override
@@ -278,12 +398,13 @@ public class TableHasOrderedActivity extends BluetoothBaseActivity {
         okHttpsImp.tableInfo(new MyResultCallback<String>() {
             @Override
             public void onResponseResult(Result result) {
-
+                ContentUtils.showMsg(TableHasOrderedActivity.this, "取消订单成功");
+                TableHasOrderedActivity.this.finish();
             }
 
             @Override
             public void onResponseFailed(String msg) {
-
+                ContentUtils.showMsg(TableHasOrderedActivity.this, msg);
             }
         }, tableId);
     }
