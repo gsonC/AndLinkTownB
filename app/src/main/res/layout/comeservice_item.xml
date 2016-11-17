@@ -18,25 +18,28 @@
 
     <TextView
         android:id="@+id/tv_number"
-        android:layout_width="0dp"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:text="23231232"
         android:layout_weight="1"
         android:textSize="14sp"
         android:textColor="@color/color_333333"
         android:layout_marginTop="15dp"
+        android:maxLines="1"
+        android:maxLength="16"
+
         />
 
         <TextView
             android:id="@+id/tv_new"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="新"
-            android:layout_weight="1"
             android:textSize="14sp"
             android:textColor="@color/color_fd1a00"
             android:layout_marginTop="10.5dp"
             android:layout_marginLeft="11dp"
+            android:layout_marginRight="11dp"
             />
 
         <TextView
@@ -48,6 +51,7 @@
             android:textSize="14sp"
             android:textColor="@color/color_333333"
             android:layout_marginTop="15dp"
+            android:layout_marginLeft="40dp"
             />
 
         <TextView
@@ -74,21 +78,28 @@
 
         <TextView
             android:id="@+id/tv_timee"
-            android:layout_width="0dp"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:text="2016-2-2"
-            android:layout_weight="1"
-            android:textSize="13sp"
-            android:textColor="@color/color_333333"
-            />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:text="23231232"
             android:layout_weight="1"
             android:textSize="14sp"
-            android:textColor="@color/color_fd1a00"
+            android:textColor="@color/color_333333"
+            android:layout_marginTop="15dp"
+            android:maxLines="1"
+            android:maxLength="16"
             />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@color/color_fd1a00"
+            android:layout_marginTop="10.5dp"
+            android:layout_marginLeft="11dp"
+            android:layout_marginRight="11dp"
+            />
+
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -98,13 +109,14 @@
             />
         <TextView
             android:id="@+id/tv_moneyprice"
-            android:gravity="center"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:text="¥0.01"
             android:layout_weight="1"
             android:textSize="14sp"
             android:textColor="@color/pointcolor"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             />
 
 
