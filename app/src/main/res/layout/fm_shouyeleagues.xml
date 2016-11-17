@@ -11,15 +11,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
     <include layout="@layout/adeslltview"/>
-    <View
-        android:layout_width="3dp"
-        android:layout_height="10dp"
-        android:layout_gravity="center_vertical"
-        android:background="@color/color_ff9023"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_marginTop="10dp"
         android:background="@color/white"
         android:paddingBottom="8dp"
         android:paddingTop="8dp"
@@ -28,7 +24,7 @@
             android:id="@+id/iv_shouyeLeagues_yell"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:layout_alignParentLeft="true"
+
             android:scaleType="fitXY"
             android:layout_gravity="center_vertical"
             android:src="@mipmap/icon_yell"
@@ -152,7 +148,6 @@
             android:id="@+id/iv_shouyeLeagues_recruit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/icon_cooperate"
             android:layout_gravity="center_vertical"
         />
         <TextView
@@ -195,7 +190,6 @@
                 android:id="@+id/iv_shouyeLeagues_news"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/icon_news"
                 android:layout_gravity="center_vertical"
                 />
             <TextView
@@ -239,7 +233,6 @@
                 android:id="@+id/iv_shouyeLeagues_discount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/icon_discount"
                 android:layout_gravity="center_vertical"
                 />
             <TextView
