@@ -357,10 +357,15 @@ public class ComeDetailActivity extends BaseActivity {
 									jsonObject = new JSONObject(reString);
 									long amtCount = jsonObject.getLong("amtCount");
 
-									long amt = amtCount * 100;
+									/*long amt = amtCount * 100;
 //											BigDecimal.valueOf(Long.valueOf(amtCount))
-//											.divide(new BigDecimal(100)).toString();
-									tv_rmb.setText("¥" + amt);
+//											.divide(new BigDecimal(100)).toString();*/
+									try {
+										tv_rmb.setText("¥"+AbStrUtil.changeF2Y(amtCount));
+									} catch (Exception e) {
+										e.printStackTrace();
+									}
+								/*	tv_rmb.setText("¥" + amt);*/
 									reString = jsonObject.getString("responsePageList");
 									ArrayList<ComeService> mDatasL = (ArrayList<ComeService>) JSON.parseArray(reString, ComeService.class);
 									Log.i("tag", "363--->" + orderStatus);
@@ -422,9 +427,16 @@ public class ComeDetailActivity extends BaseActivity {
 				TextView tv_timee = helper.getView(R.id.tv_timee);
 				TextView tv_moneyprice = helper.getView(R.id.tv_moneyprice);
 
-
+				TextView tv_new = helper.getView(R.id.tv_new);
+				tv_new.setText(item.getIsRead());
 				tv_table.setText(item.getTableNum());
-				tv_moneyprice.setText(item.getOrderPrice());
+				try {
+					tv_moneyprice.setText("¥"+AbStrUtil.changeF2Y(Long.parseLong(item.getOrderPrice())));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
+
 				tv_timee.setText(item.getOrderNo());
 
 

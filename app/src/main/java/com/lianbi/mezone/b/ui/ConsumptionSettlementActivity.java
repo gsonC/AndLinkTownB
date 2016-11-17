@@ -66,8 +66,7 @@ public class ConsumptionSettlementActivity extends BaseActivity {
 		getStringFormShouye();
 		initListAdapter();
 		getUnPaidOrder(true);
-		setlisten();
-
+		setListview();
 	}
 
 	/**
@@ -107,7 +106,7 @@ public class ConsumptionSettlementActivity extends BaseActivity {
 			public boolean onTouch(View v, MotionEvent event) {
 				switch (event.getAction()) {
 					case MotionEvent.ACTION_MOVE:
-						imComestoreDetail.setVisibility(View.VISIBLE);
+						imComestoreDetail.setVisibility(View.GONE);
 						break;
 				}
 
@@ -155,10 +154,10 @@ public class ConsumptionSettlementActivity extends BaseActivity {
 				TextView tv_consum_total = helper.getView(R.id.tv_consum_total);
 				TextView tv_consum_time = helper.getView(R.id.tv_consum_time);
 				TextView tv_consum_price = helper.getView(R.id.tv_consum_price);
-				TextView tv_consum_daytime = helper.getView(R.id.tv_consum_daytime);
+				/*TextView tv_consum_daytime = helper.getView(R.id.tv_consum_daytime);*/
 				TextView tv_consum_where = helper.getView(R.id.tv_consum_where);
 				TextView tv_consum_shoukuan = helper.getView(R.id.tv_consum_shoukuan);
-				TextView tv_consum_rmb = helper.getView(R.id.tv_consum_rmb);
+				/*TextView tv_consum_rmb = helper.getView(R.id.tv_consum_rmb);*/
 				tableId=item.getTableId();
 				tv_consum_where.setText(item.getTableName());
 				tv_consum_total.setText(item.getProductCount());
@@ -427,4 +426,29 @@ public class ConsumptionSettlementActivity extends BaseActivity {
 		ButterKnife.unbind(this);
 		EventBus.getDefault().post(new ShouyeRefreshEvent(false));
 	}
+	private void setListview(){
+		actCumptionListview.setOnTouchListener(new View.OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				switch (event.getAction()) {
+					case MotionEvent.ACTION_DOWN:
+						// 触摸按下时的操作
+
+						break;
+					case MotionEvent.ACTION_MOVE:
+						// 触摸移动时的操作
+						imComestoreDetail.setVisibility(View.VISIBLE);
+						imComestoreEject.setVisibility(View.GONE);
+
+						break;
+					case MotionEvent.ACTION_UP:
+						// 触摸抬起时的操作
+
+						break;
+				}
+				return false;
+			}
+		});
+	}
+
 }
