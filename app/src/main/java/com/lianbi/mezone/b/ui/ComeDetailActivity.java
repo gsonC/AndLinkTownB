@@ -430,6 +430,26 @@ public class ComeDetailActivity extends BaseActivity {
 				TextView tv_number = helper.getView(R.id.tv_number);
 				TextView tv_cash = helper.getView(R.id.tv_cash);
 				tv_cash.setText(item.getPayType());
+				switch (item.getPayType()){
+					case  "ALL":
+						tv_cash.setText("支付宝支付");
+						break;
+					case  "WCP":
+						tv_cash.setText("微信支付");
+						break;
+					case  "UNP":
+						tv_cash.setText("银联支付");
+						break;
+					case  "POS":
+						tv_cash.setText("POS机支付");
+						break;
+					case  "CAS":
+						tv_cash.setText("现金支付");
+						break;
+					case  "OTH":
+						tv_cash.setText("");
+						break;
+				}
 
 				tv_number.setText(getOrderTime(item.getOrderNo()));
 				TextView tv_new = helper.getView(R.id.tv_new);

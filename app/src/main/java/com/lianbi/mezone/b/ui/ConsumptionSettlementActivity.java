@@ -56,6 +56,7 @@ public class ConsumptionSettlementActivity extends BaseActivity {
 	@Bind(R.id.im_comestore_eject)
 	ImageView imComestoreEject;
 	public String tableId;
+	public String tableName;
 	private YoYo.YoYoString rope;
 
 	@Override
@@ -172,6 +173,7 @@ public class ConsumptionSettlementActivity extends BaseActivity {
 				TextView tv_consum_shoukuan = helper.getView(R.id.tv_consum_shoukuan);
 				/*TextView tv_consum_rmb = helper.getView(R.id.tv_consum_rmb);*/
 				tableId=item.getTableId();
+				tableName = item.getTableName();
 				tv_consum_where.setText(item.getTableName());
 				tv_consum_total.setText(item.getProductCount());
 				tv_consum_price.setText(item.getUnPaidorderAmt());
@@ -183,7 +185,7 @@ public class ConsumptionSettlementActivity extends BaseActivity {
 				tv_consum_detail.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						getTssTableInfo(item.getTableId());
+						getTssTableInfo(item.getTableId(),tableName);
 
 					}
 				});
@@ -379,7 +381,7 @@ public class ConsumptionSettlementActivity extends BaseActivity {
 	/**
 	 * 4.25	桌位详情接口
 	 */
-  private void getTssTableInfo(String tableId){
+  private void getTssTableInfo(final String tableId,final String tableName){
 	  String reqTime = AbDateUtil.getDateTimeNow();
 	  String uuid = AbStrUtil.getUUID();
 	  try {
@@ -393,17 +395,29 @@ public class ConsumptionSettlementActivity extends BaseActivity {
 						  int  tableStatus=jsonObject.getInt("tableStatus");
 						  switch (tableStatus){
 							 case 0:
-								 startActivity(new Intent(ConsumptionSettlementActivity.this,ScanningQRActivity.class));
-
+								// startActivity(new Intent(ConsumptionSettlementActivity.this,ScanningQRActivity.class).putExtra("TABLENAME",jsonObject.getString("").putExtra("TABLENAME",jsonObject.getString("")));
+                              Intent intent=new Intent(ConsumptionSettlementActivity.this,ScanningQRActivity.class);
+								 intent.putExtra("TABLEID",tableId);
+								 intent.putExtra("TABLENAME",tableName);
+								 startActivity(intent);
 								 break;
 							 case 1:
-								 startActivity(new Intent(ConsumptionSettlementActivity.this,TableHasOrderedActivity.class));
+								 //startActivity(new Intent(ConsumptionSettlementActivity.this,TableHasOrderedActivity.class));
+								 Intent intent1 = new Intent(ConsumptionSettlementActivity.this,TableHasOrderedActivity.class);
+								 intent1.putExtra("TABLEID",tableId);
+								 intent1.putExtra("TABLENAME",tableName);
+								 intent1.putExtra("DATA",reString);
+								 startActivity(intent1);
 
 								 break;
 
 							 case 2:
-								 startActivity(new Intent(ConsumptionSettlementActivity.this,TableHasPaidActivity.class));
-
+								 //startActivity(new Intent(ConsumptionSettlementActivity.this,TableHasPaidActivity.class));
+								 Intent intent2 = new Intent(ConsumptionSettlementActivity.this,TableHasPaidActivity.class);
+								 intent2.putExtra("TABLEID",tableId);
+								 intent2.putExtra("TABLENAME",tableName);
+								 intent2.putExtra("DATA",reString);
+								 startActivity(intent2);
 								 break;
 
 						 }
