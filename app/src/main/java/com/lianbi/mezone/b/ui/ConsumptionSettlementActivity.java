@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -75,8 +76,8 @@ public class ConsumptionSettlementActivity extends BaseActivity {
 	private void getStringFormShouye() {
 		String eject = getIntent().getStringExtra("EJECT");
 		if ("eject".equals(eject)) {
-			imComestoreDetail.setVisibility(View.VISIBLE);
-			imComestoreEject.setVisibility(View.GONE);
+			imComestoreDetail.setVisibility(View.GONE);
+			imComestoreEject.setVisibility(View.VISIBLE);
 		}
 	}
 
@@ -131,6 +132,12 @@ public class ConsumptionSettlementActivity extends BaseActivity {
 		actCumptionAbpulltorefreshview.setOnHeaderRefreshListener(new AbPullToRefreshView.OnHeaderRefreshListener() {
 			@Override
 			public void onHeaderRefresh(AbPullToRefreshView view) {
+				rope = YoYo.with(Techniques.FadeOut).duration(500)
+						.playOn(imComestoreEject);
+				rope = YoYo.with(Techniques.FadeInRight).duration(1000)
+						.playOn(imComestoreDetail);
+				imComestoreEject.setVisibility(View.GONE);
+				imComestoreDetail.setVisibility(View.VISIBLE);
 				getUnPaidOrder(true);
 			}
 		});
@@ -138,6 +145,12 @@ public class ConsumptionSettlementActivity extends BaseActivity {
 		actCumptionAbpulltorefreshview.setOnFooterLoadListener(new AbPullToRefreshView.OnFooterLoadListener() {
 			@Override
 			public void onFooterLoad(AbPullToRefreshView view) {
+				rope = YoYo.with(Techniques.FadeOut).duration(500)
+						.playOn(imComestoreEject);
+				rope = YoYo.with(Techniques.FadeInRight).duration(1000)
+						.playOn(imComestoreDetail);
+				imComestoreEject.setVisibility(View.GONE);
+				imComestoreDetail.setVisibility(View.VISIBLE);
 				getUnPaidOrder(false);
 			}
 		});
@@ -163,7 +176,7 @@ public class ConsumptionSettlementActivity extends BaseActivity {
 				tv_consum_total.setText(item.getProductCount());
 				tv_consum_price.setText(item.getUnPaidorderAmt());
 				tv_consum_time.setText(item.getCreateTime());
-				getOnlinePayController(item.getTableId());
+//				getOnlinePayController(item.getTableId());
 
 				TextView tv_consum_detail = helper.getView(R.id.tv_consum_detail);
 				tv_consum_detail.setOnClickListener(new View.OnClickListener() {
@@ -428,28 +441,40 @@ public class ConsumptionSettlementActivity extends BaseActivity {
 		EventBus.getDefault().post(new ShouyeRefreshEvent(false));
 	}
 	private void setListview(){
-		actCumptionListview.setOnTouchListener(new View.OnTouchListener() {
+
+			actCumptionListview.setOnScrollListener(new AbsListView.OnScrollListener() {
+			private int firstVisibleItem;
+			private int totalItemCount;
 			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				switch (event.getAction()) {
-					case MotionEvent.ACTION_DOWN:
-						// 触摸按下时的操作
-
-						break;
-					case MotionEvent.ACTION_MOVE:
-						// 触摸移动时的操作
-						imComestoreDetail.setVisibility(View.VISIBLE);
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+					if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL
+							||
+						scrollState == AbsListView.OnScrollListener.SCROLL_STATE_FLING
+							) {
+						rope = YoYo.with(Techniques.FadeOut).duration(500)
+								.playOn(imComestoreEject);
+						rope = YoYo.with(Techniques.FadeInRight).duration(1000)
+								.playOn(imComestoreDetail);
 						imComestoreEject.setVisibility(View.GONE);
+						imComestoreDetail.setVisibility(View.VISIBLE);
+					}else{
+						rope = YoYo.with(Techniques.FadeOut).duration(500)
+								.playOn(imComestoreDetail);
+						rope = YoYo.with(Techniques.FadeInRight).duration(1000)
+								.playOn(imComestoreEject);
+						imComestoreEject.setVisibility(View.VISIBLE);
+						imComestoreDetail.setVisibility(View.GONE);
 
-						break;
-					case MotionEvent.ACTION_UP:
-						// 触摸抬起时的操作
+					}
+			}
+			@Override
+			public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+				this.firstVisibleItem = firstVisibleItem;
+				this.totalItemCount = totalItemCount;
 
-						break;
-				}
-				return false;
 			}
 		});
+
 	}
 
 }
