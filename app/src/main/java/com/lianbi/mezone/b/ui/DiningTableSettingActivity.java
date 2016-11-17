@@ -584,21 +584,21 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
                     //        Constants.SHARED_PREFERENCE_NAME,
                     //        Constants.HAS_PRODUCT);
                     //if (hasProduct) {
-                        Intent intent_web = new Intent(DiningTableSettingActivity.this,
-                                H5WebActivty.class);
-                        intent_web.putExtra(Constants.NEDDLOGIN, false);
-                        intent_web.putExtra("NEEDNOTTITLE", false);
-                        intent_web.putExtra("Re", true);
-                        intent_web.putExtra(WebActivty.T, "产品管理");
-                        intent_web.putExtra(WebActivty.U, getUrl());
-                        DiningTableSettingActivity.this.startActivity(intent_web);
+                    Intent intent_web = new Intent(DiningTableSettingActivity.this,
+                            H5WebActivty.class);
+                    intent_web.putExtra(Constants.NEDDLOGIN, false);
+                    intent_web.putExtra("NEEDNOTTITLE", false);
+                    intent_web.putExtra("Re", true);
+                    intent_web.putExtra(WebActivty.T, "产品管理");
+                    intent_web.putExtra(WebActivty.U, getUrl());
+                    DiningTableSettingActivity.this.startActivity(intent_web);
                     //} else {
 //                        Intent intent_more = new Intent(DiningTableSettingActivity.this,
 //                                ServiceMallActivity.class);
 //                        DiningTableSettingActivity.this.startActivityForResult(intent_more,
 //                                MainActivity.this.SERVICEMALLSHOP_CODE);
 //                        ContentUtils.showMsg(mMainActivity, "请下载对应模块进行产品编辑");
-                   // }
+                    // }
                 }
                 break;
             case R.id.add_table:
@@ -932,7 +932,9 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
 
         ArrayList<TableSetBean> newOrderdList = new ArrayList<>();
 
-        if (!oldOrderdList.isEmpty()) {
+        if (oldOrderdList.isEmpty()) {
+            oldOrderdList = orderdList;
+        } else {
             for (int i = 0; i < orderdList.size(); i++) {
                 TableSetBean bean = orderdList.get(i);
                 if (!compareTo(oldOrderdList, bean)) {
