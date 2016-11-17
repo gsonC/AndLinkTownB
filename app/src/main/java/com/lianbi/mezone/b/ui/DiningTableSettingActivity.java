@@ -328,7 +328,6 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
         int table_may_do_drawableResid = 0;
         String person_num_Str = "";
         String unit_Str = "";
-        View.OnClickListener l = null;//item最下方TextView的点击事件
         switch (item.getTableStatus()) {
             case 0://空位
                 table_state_Str = "空桌";
@@ -350,14 +349,32 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
                 table_may_do_Str = "打印小票";
                 person_num_Str = item.getActualCount();
                 unit_Str = "人用餐";
-                l = new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (checkCanGoNext()) {
-                            showPrintTicketDialog(item.getTableId());
+                switch (flag) {
+                    case 0:
+                        table_may_do.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (checkCanGoNext()) {
+                                    showPrintTicketDialog(item.getTableId());
+                                }
+                            }
+                        });
+                        break;
+                    case 1:
+                        if (delSelectButtonIsShowing) {
+                            table_may_do.setOnClickListener(null);
+                        } else {
+                            table_may_do.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    if (checkCanGoNext()) {
+                                        showPrintTicketDialog(item.getTableId());
+                                    }
+                                }
+                            });
                         }
-                    }
-                };
+                        break;
+                }
                 break;
             case 2://已支付
                 table_state_Str = "已支付";
@@ -369,14 +386,32 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
                 table_may_do_Str = "翻桌";
                 person_num_Str = item.getActualCount();
                 unit_Str = "人用餐";
-                l = new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (checkCanGoNext()) {
-                            checkTableOrder(item.getTableId());
+                switch (flag) {
+                    case 0:
+                        table_may_do.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (checkCanGoNext()) {
+                                    checkTableOrder(item.getTableId());
+                                }
+                            }
+                        });
+                        break;
+                    case 1:
+                        if (delSelectButtonIsShowing) {
+                            table_may_do.setOnClickListener(null);
+                        } else {
+                            table_may_do.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    if (checkCanGoNext()) {
+                                        checkTableOrder(item.getTableId());
+                                    }
+                                }
+                            });
                         }
-                    }
-                };
+                        break;
+                }
                 break;
         }
 
@@ -388,18 +423,6 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
         table_may_do.setBackgroundResource(table_may_do_drawableResid);
         table_may_do.setText(table_may_do_Str);
         table_may_do.setTextColor(text_color);
-        if (item.getTableStatus() != 0) {
-            switch (flag) {
-                case 0:
-                    table_may_do.setOnClickListener(l);
-                    break;
-                case 1:
-                    if (!delSelectButtonIsShowing) {
-                        table_may_do.setOnClickListener(l);
-                    }
-                    break;
-            }
-        }
         person_num.setText(person_num_Str);
         unit.setText(unit_Str);
 
@@ -614,14 +637,14 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
                 boolean re = JumpIntent
                         .jumpLogin_addShop(isLogin, API.TRADE, DiningTableSettingActivity.this);
                 if (re) {
-                        Intent intent_web = new Intent(DiningTableSettingActivity.this,
-                                H5WebActivty.class);
-                        intent_web.putExtra(Constants.NEDDLOGIN, false);
-                        intent_web.putExtra("NEEDNOTTITLE", false);
-                        intent_web.putExtra("Re", true);
-                        intent_web.putExtra(WebActivty.T, "产品管理");
-                        intent_web.putExtra(WebActivty.U, getUrl());
-                        DiningTableSettingActivity.this.startActivity(intent_web);
+                    Intent intent_web = new Intent(DiningTableSettingActivity.this,
+                            H5WebActivty.class);
+                    intent_web.putExtra(Constants.NEDDLOGIN, false);
+                    intent_web.putExtra("NEEDNOTTITLE", false);
+                    intent_web.putExtra("Re", true);
+                    intent_web.putExtra(WebActivty.T, "产品管理");
+                    intent_web.putExtra(WebActivty.U, getUrl());
+                    DiningTableSettingActivity.this.startActivity(intent_web);
                 }
                 break;
             case R.id.add_table:

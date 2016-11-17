@@ -43,6 +43,7 @@ import java.util.Set;
 
 import cn.com.hgh.service.BluetoothService;
 import cn.com.hgh.utils.AbDateUtil;
+import cn.com.hgh.utils.AbStrUtil;
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.PicFromPrintUtils;
 import cn.com.hgh.utils.Result;
@@ -391,6 +392,11 @@ public abstract class BluetoothBaseActivity extends BaseActivity {
                             sendMessage(" ");
                         }
                         sendMessage("   ");
+                        try {
+                            price = AbStrUtil.changeF2Y(Long.parseLong(price));
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                         sendMessage(price);
                         String s1 = "   ";
                         if ("单价".length() * 2 > price.length()) {
@@ -404,8 +410,18 @@ public abstract class BluetoothBaseActivity extends BaseActivity {
                             }
                         }
                         sendMessage(s1);
+                        try {
+                            totalAmount = AbStrUtil.changeF2Y(Long.parseLong(totalAmount));
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                         sendMessage(totalAmount);
                         sendMessage("\n");
+                    }
+                    try {
+                        allAmount = AbStrUtil.changeF2Y(Long.parseLong(allAmount));
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                     sendMessage("总计                        " + allAmount);
                     sendMessage("\n");
