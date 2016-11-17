@@ -17,7 +17,7 @@
         android:orientation="vertical"
         android:visibility="visible">
 
-        <cn.com.hgh.view.SlideListView2
+        <cn.com.hgh.view.SwipeListView
             android:id="@+id/fm_Call_listView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -28,7 +28,7 @@
             android:drawSelectorOnTop="false"
             android:listSelector="#00000000"
             android:scrollbars="none">
-        </cn.com.hgh.view.SlideListView2>
+        </cn.com.hgh.view.SwipeListView>
     </cn.com.hgh.view.AbPullToRefreshView>
     <ImageView
         android:id="@+id/img_callset_empty"

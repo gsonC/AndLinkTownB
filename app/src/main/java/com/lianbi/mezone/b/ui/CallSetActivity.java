@@ -27,12 +27,12 @@ import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.utils.ScreenUtils;
 import cn.com.hgh.view.AbPullToRefreshView;
-import cn.com.hgh.view.SlideListView2;
+import cn.com.hgh.view.SwipeListView;
 
 public class CallSetActivity extends BaseActivity {
 	private AbPullToRefreshView act_Call_abpulltorefreshview;
 	ArrayList<SelectCallBean> mData = new ArrayList<SelectCallBean>();
-	private SlideListView2 fm_Call_listView;
+	private SwipeListView fm_Call_listView;
 	ArrayList<SelectCallBean> mDatas = new ArrayList<SelectCallBean>();
 	private TextView tv_call_setM, bt_call_sure;
 	private EditText tv_call;
@@ -56,8 +56,8 @@ public class CallSetActivity extends BaseActivity {
 		bt_call_sure = (TextView) findViewById(R.id.bt_call_sure);
 		tv_call = (EditText) findViewById(R.id.tv_call);
 		img_callset_empty = (ImageView) findViewById(R.id.img_callset_empty);
-		fm_Call_listView = (SlideListView2) findViewById(R.id.fm_Call_listView);
-		fm_Call_listView.initSlideMode(SlideListView2.MOD_RIGHT);
+		fm_Call_listView = (SwipeListView) findViewById(R.id.fm_Call_listView);
+		//fm_Call_listView.initSlideMode(SlideListView2.MOD_RIGHT);
 		act_Call_abpulltorefreshview = (AbPullToRefreshView) findViewById(R.id.act_Call_abpulltorefreshview);//AbPullToRefreshView
 
 	}
