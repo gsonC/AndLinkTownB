@@ -453,10 +453,10 @@ public class ComeDetailActivity extends BaseActivity {
 				TextView tv_new = helper.getView(R.id.tv_new);
 
 				       if(item.getIsRead()==0){
-						tv_new.setText("");
+						   tv_new.setText("新");
+
 					}else if(item.getIsRead()==1){
-						tv_new.setText("新");
-						//tv_new.setTextColor(getResources().getColor((R.color.color_fd1a00)));
+						   tv_new.setText("");
 					}
 
 				tv_table.setText(item.getTableNum());
