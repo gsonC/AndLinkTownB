@@ -352,7 +352,7 @@ public abstract class BluetoothBaseActivity extends BaseActivity {
 
                     mService.printLeft();
                     OneDishBean bean = list.get(0);
-                    sendMessage("桌号：" + bean.getTableId() + "           人数：" + bean.getPersonNum());
+                    sendMessage("桌号：" + bean.getTableName() + "           人数：" + bean.getPersonNum());
                     sendMessage("\n");
 
                     String time = AbDateUtil.getSpecialFormatTimeFromTimeMillisString(bean.getCreateTime(),
