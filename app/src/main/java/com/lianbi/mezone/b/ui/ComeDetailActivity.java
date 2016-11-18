@@ -18,9 +18,7 @@ import com.xizhi.mezone.b.R;
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
@@ -556,15 +554,6 @@ public class ComeDetailActivity extends BaseActivity {
 		String miao = time.substring(6, 8);
 		return year + "-" + mouth + "-" + day+"   "+house+":"+minute+":"+miao+"";
 	}
-	public static String timedate(String time) {
-		SimpleDateFormat sdr = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		@SuppressWarnings("unused")
-		long lcc = Long.valueOf(time);
-/*
-		int i = Integer.parseInt(time);
-*/
-		String times = sdr.format(new Date(lcc* 1000L));
-		return times;
 
-	}
+
 }

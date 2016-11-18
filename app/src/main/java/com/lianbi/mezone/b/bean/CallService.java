@@ -20,9 +20,8 @@ public class CallService implements Serializable {
 	private String msgContent;
 	private String modifyTime;
 	private String storeId;
-	private int isRead;
-
-	public int getIsRead() {
+private int isRead;
+ 	public int getIsRead() {
 		return isRead;
 	}
 

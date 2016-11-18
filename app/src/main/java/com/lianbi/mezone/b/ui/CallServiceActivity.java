@@ -183,7 +183,7 @@ public class CallServiceActivity extends BaseActivity {
 				TextView tv_callset_yartime = helper.getView(R.id.tv_callset_yartime);
 				TextView tv_callset_hasdeal = helper.getView(R.id.tv_callset_hasdeal);
 				TextView tv_callset_deal = helper.getView(R.id.tv_callset_deal);
-
+				tv_callset_time.setText(item.getCreateTime());
 				tv_callset_yartime.setText(item.getModifyTime());
 				tv_callset_table.setText(item.getTableName());
 				tv_callset_content.setText(item.getMsgContent());
@@ -360,4 +360,5 @@ public class CallServiceActivity extends BaseActivity {
 			}
 		});
 	}
+
 }
