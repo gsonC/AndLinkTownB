@@ -34,18 +34,49 @@
         android:textSize="10sp"
         android:visibility="gone" />
 
-    <TextView
-        android:id="@+id/curr_table_may_do"
+    <LinearLayout
+        android:id="@+id/curr_table_may_do_container"
         android:layout_width="match_parent"
         android:layout_height="33dp"
         android:layout_alignParentBottom="true"
-        android:gravity="center" />
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/curr_table_may_do_0"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/show_qc_code_background_shape"
+            android:gravity="center"
+            android:text="查看二维码"
+            android:textColor="#3d9684"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/curr_table_may_do_1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/print_ticket_background_shape"
+            android:gravity="center"
+            android:text="打印小票"
+            android:textColor="#e77c8c"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/curr_table_may_do_2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/reset_table_background_shape"
+            android:gravity="center"
+            android:text="翻桌"
+            android:textColor="#4592ca"
+            android:visibility="gone" />
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/pay_number_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@id/curr_table_may_do"
+        android:layout_above="@id/curr_table_may_do_container"
         android:layout_alignParentLeft="true"
         android:layout_marginBottom="7dp"
         android:layout_marginLeft="6dp"
@@ -70,7 +101,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@id/curr_table_may_do"
+        android:layout_above="@id/curr_table_may_do_container"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="7dp"
         android:layout_marginRight="6dp"

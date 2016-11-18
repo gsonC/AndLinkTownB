@@ -9,6 +9,7 @@ import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -165,9 +166,9 @@ public class TableHasOrderedActivity extends BluetoothBaseActivity {
     }
 
     private void initAdapter() {
-        mAdapter = new QuickAdapter<TableOrderBean>(TableHasOrderedActivity.this, R.layout.table_order_list_view_layout, mData) {
+        mAdapter = new QuickAdapter<TableOrderBean>(TableHasOrderedActivity.this, R.layout.table_has_paid_order_list_view_layout, mData) {
             @Override
-            protected void convert(BaseAdapterHelper helper, TableOrderBean item) {
+            protected void convert(BaseAdapterHelper helper, final TableOrderBean item) {
                 helper.getView(R.id.dotted_line).setLayerType(View.LAYER_TYPE_SOFTWARE, null);
                 ((TextView) helper.getView(R.id.time_cn)).setText("下单时间：");
                 final ImageView avatar = helper.getView(R.id.iv_avatar);//头像
@@ -193,6 +194,7 @@ public class TableHasOrderedActivity extends BluetoothBaseActivity {
                 remark.setText(item.getDesc());
                 order_time.setText(AbDateUtil.exchangeFormat(item.getCreateTime(), "yyyyMMddHHmmss", AbDateUtil.dateFormatHM));
 
+                container.removeAllViews();
                 ArrayList<OneDishInOrder> detailInfo = item.getDetailInfo();
                 for (int i = 0; i < detailInfo.size(); i++) {
                     View oneDishLayout = LayoutInflater.from(TableHasOrderedActivity.this).inflate(R.layout.one_dish_layout, null);
@@ -206,7 +208,29 @@ public class TableHasOrderedActivity extends BluetoothBaseActivity {
                     dish_price.setText(oneDishInOrder.getPrice());
                     tv_dish_num.setText(oneDishInOrder.getNum());
                     cancel_dish.setVisibility(View.VISIBLE);
-                    cancel_dish.setOnClickListener(new cancelProductOnClickListener(oneDishInOrder, item));
+                    cancel_dish.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            DialogCommon dialog = new DialogCommon(TableHasOrderedActivity.this) {
+                                @Override
+                                public void onCheckClick() {
+                                    this.dismiss();
+                                }
+
+                                @Override
+                                public void onOkClick() {
+                                    gotoCancelProduct(item, oneDishInOrder);
+                                    this.dismiss();
+                                }
+                            };
+                            dialog.setTextTitle("是否取消");
+                            dialog.setTv_dialog_common_ok("是");
+                            dialog.setTv_dialog_common_cancel("否");
+                            dialog.setCancelable(false);
+                            dialog.setCanceledOnTouchOutside(false);
+                            dialog.show();
+                        }
+                    });
                     LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(screenWidth,
                             (int) AbViewUtil.dip2px(TableHasOrderedActivity.this, 80.0f));
                     oneDishLayout.setLayoutParams(layoutParams);
@@ -217,114 +241,39 @@ public class TableHasOrderedActivity extends BluetoothBaseActivity {
         mListView.setAdapter(mAdapter);
     }
 
-    private class cancelProductOnClickListener implements View.OnClickListener {
-        private OneDishInOrder oneDishInOrder;
-        private TableOrderBean unPaidOrderBean;
-
-        public cancelProductOnClickListener() {
-        }
-
-        public cancelProductOnClickListener(OneDishInOrder oneDishInOrder, TableOrderBean unPaidOrderBean) {
-            this.oneDishInOrder = oneDishInOrder;
-            this.unPaidOrderBean = unPaidOrderBean;
-        }
-
-        public OneDishInOrder getOneDishInOrder() {
-            return oneDishInOrder;
-        }
-
-        public void setOneDishInOrder(OneDishInOrder oneDishInOrder) {
-            this.oneDishInOrder = oneDishInOrder;
-        }
-
-        public TableOrderBean getUnPaidOrderBean() {
-            return unPaidOrderBean;
-        }
-
-        public void setUnPaidOrderBean(TableOrderBean unPaidOrderBean) {
-            this.unPaidOrderBean = unPaidOrderBean;
-        }
-
-        @Override
-        public void onClick(View v) {
-            DialogCommon dialog = new DialogCommon(TableHasOrderedActivity.this) {
-                @Override
-                public void onCheckClick() {
-                    this.dismiss();
-                }
-
-                @Override
-                public void onOkClick() {
-                    gotoCancelProduct(unPaidOrderBean, oneDishInOrder);
-                    this.dismiss();
-                }
-            };
-            dialog.setTextTitle("是否取消");
-            dialog.setTv_dialog_common_ok("是");
-            dialog.setTv_dialog_common_cancel("否");
-            dialog.setCancelable(false);
-            dialog.setCanceledOnTouchOutside(false);
-            dialog.show();
-        }
-    }
-
-    private class MyMyResultCallback extends MyResultCallback {
-        private OneDishInOrder oneDishInOrder;
-        private TableOrderBean unPaidOrderBean;
-
-        public MyMyResultCallback(OneDishInOrder oneDishInOrder, TableOrderBean unPaidOrderBean) {
-            this.oneDishInOrder = oneDishInOrder;
-            this.unPaidOrderBean = unPaidOrderBean;
-        }
-
-        public OneDishInOrder getOneDishInOrder() {
-            return oneDishInOrder;
-        }
-
-        public void setOneDishInOrder(OneDishInOrder oneDishInOrder) {
-            this.oneDishInOrder = oneDishInOrder;
-        }
-
-        public TableOrderBean getUnPaidOrderBean() {
-            return unPaidOrderBean;
-        }
-
-        public void setUnPaidOrderBean(TableOrderBean unPaidOrderBean) {
-            this.unPaidOrderBean = unPaidOrderBean;
-        }
-
-        public MyMyResultCallback() {
-
-        }
-
-        @Override
-        public void onResponseResult(Result result) {
-            int index = mData.indexOf(unPaidOrderBean);
-            ArrayList<OneDishInOrder> detailInfo = unPaidOrderBean.getDetailInfo();
-            detailInfo.remove(oneDishInOrder);
-            double newPay = Double.parseDouble(num_should_pay.getText().toString()) - Double.parseDouble(oneDishInOrder.getPrice());
-            num_should_pay.setText(MathExtend.roundNew(newPay, 2));// 更改应付
-            if (detailInfo.isEmpty()) {
-                mData.remove(index);
-                String newFen = Integer.toString(Integer.parseInt(fen_num.getText().toString(), 10) - 1);
-                fen_num.setText(newFen);// 更改份数
-            } else {
-                unPaidOrderBean.setDetailInfo(detailInfo);
-                mData.remove(index);
-                mData.add(index, unPaidOrderBean);
-            }
-            mAdapter.replaceAll(mData);
-        }
-
-        @Override
-        public void onResponseFailed(String msg) {
-            ContentUtils.showMsg(TableHasOrderedActivity.this, msg);
-        }
-    }
-
     private void gotoCancelProduct(TableOrderBean bean, OneDishInOrder oneDishInOrder) {
-        String price = oneDishInOrder.getPrice();
-        okHttpsImp.cancelProduct(new MyMyResultCallback(oneDishInOrder, bean), bean.getOrderNo(), oneDishInOrder.getProductId(), tableId, Integer.toString((int) (Double.parseDouble(price) * 100.0d)));
+        okHttpsImp.cancelProduct(new MyResultCallback<String>() {
+            @Override
+            public void onResponseResult(Result result) {
+                getTableInfo();
+            }
+
+            @Override
+            public void onResponseFailed(String msg) {
+            }
+        }, bean.getOrderNo(), oneDishInOrder.getProductId(), tableId, Integer.toString((int) (Double.parseDouble(oneDishInOrder.getPrice()) * 100.0d)));
+    }
+
+    //单个桌面详情
+    private void getTableInfo() {
+        okHttpsImp.tableInfo(new MyResultCallback<String>() {
+            @Override
+            public void onResponseResult(Result result) {
+                String data = result.getData();
+                if (!TextUtils.isEmpty(data)) {
+                    com.alibaba.fastjson.JSONObject jsonObject = JSON.parseObject(data);
+                    if (jsonObject.getIntValue("tableStatus") == 1) {
+                        addDataToView(data);
+                    } else {
+                        finish();
+                    }
+                }
+            }
+
+            @Override
+            public void onResponseFailed(String msg) {
+            }
+        }, userShopInfoBean.getUserId(), userShopInfoBean.getBusinessId(), tableId);
     }
 
     @Override
@@ -449,6 +398,10 @@ public class TableHasOrderedActivity extends BluetoothBaseActivity {
     private void gotoEditPrice() {
         if (newPrice.isEmpty()) {
             ContentUtils.showMsg(TableHasOrderedActivity.this, "请输入新价格");
+            return;
+        }
+        if (Double.parseDouble(newPrice) > Double.parseDouble(num_should_pay.getText().toString())) {
+            ContentUtils.showMsg(TableHasOrderedActivity.this, "修改价格不能大于订单总价");
             return;
         }
         okHttpsImp.editPrice(new MyResultCallback<String>() {

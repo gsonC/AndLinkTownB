@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -36,6 +37,8 @@ import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.lzy.okgo.request.BaseRequest;
 import com.xizhi.mezone.b.R;
 
+import java.io.BufferedInputStream;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
@@ -356,9 +359,19 @@ public abstract class BluetoothBaseActivity extends BaseActivity {
                         return;
                     }
 
-                    Bitmap bitmap = ContentUtils.createQrBitmap(qrUrl, true, 360, 360);
-                    mService.printCenter();
+                    Bitmap bitmap = null;
+                    if (TextUtils.isEmpty(qrUrl)) {
+                        try {
+                            BufferedInputStream bis = new BufferedInputStream(getAssets().open("qr.jpg"));
+                            bitmap = BitmapFactory.decodeStream(bis);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        bitmap = ContentUtils.createQrBitmap(qrUrl, true, 360, 360);
+                    }
 
+                    mService.printCenter();
                     sendMessage("*******老板娘订单(消费单)*******");
                     sendMessage("\n");
                     sendMessage("\n");
@@ -371,7 +384,7 @@ public abstract class BluetoothBaseActivity extends BaseActivity {
 
                     mService.printLeft();
                     OneDishBean bean = list.get(0);
-                    sendMessage("桌号：" + bean.getTableName() + "           人数：" + bean.getPersonNum());
+                    sendMessage("桌号：" + bean.getTableName() + "         人数：" + bean.getPersonNum());
                     sendMessage("\n");
 
                     String time = AbDateUtil.getSpecialFormatTimeFromTimeMillisString(bean.getCreateTime(),
@@ -386,7 +399,7 @@ public abstract class BluetoothBaseActivity extends BaseActivity {
                     sendMessage("\n");
 
                     mService.printLeft();
-                    sendMessage("商品名称      数量   单价   小计");
+                    sendMessage("商品名称    数量   单价   小计");
                     sendMessage("\n");
                     for (OneDishBean b : list) {
                         String proName = b.getProName();
@@ -394,7 +407,7 @@ public abstract class BluetoothBaseActivity extends BaseActivity {
                         String price = b.getPrice();
                         String totalAmount = b.getTotalAmount();
                         sendMessage(proName);
-                        String s0 = "      ";
+                        String s0 = "    ";
                         if ("商品名称".length() > proName.length()) {
                             for (int i = 0; i < "商品名称".length() - proName.length(); i++) {
                                 s0 = s0.concat("  ");
@@ -442,16 +455,18 @@ public abstract class BluetoothBaseActivity extends BaseActivity {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    sendMessage("总计                        " + allAmount);
+                    sendMessage("总计                      " + allAmount);
                     sendMessage("\n");
                     sendMessage("\n");
 
                     mService.printCenter();
-
+                    sendMessage("--------------------------------");
+                    sendMessage("\n");
                     sendMessage(bitmap);
-
                     mService.printReset();
                     mService.printCenter();
+                    mService.printSize(0);
+                    sendMessage("\n");
                     sendMessage("扫码关注享更多优惠");
                     sendMessage("\n");
                     sendMessage("\n");
@@ -464,8 +479,9 @@ public abstract class BluetoothBaseActivity extends BaseActivity {
                     sendMessage("*******老板娘订单(服务单)*******");
                     sendMessage("\n");
                     sendMessage("\n");
+
                     mService.printLeft();
-                    sendMessage("桌号：" + bean.getTableId() + "         人数：" + bean.getPersonNum());
+                    sendMessage("桌号：" + bean.getTableName() + "         人数：" + bean.getPersonNum());
                     sendMessage("\n");
                     sendMessage("时间：" + time);
                     sendMessage("\n");
@@ -504,7 +520,6 @@ public abstract class BluetoothBaseActivity extends BaseActivity {
                         sendMessage("\n");
                     }
 
-                    mService.printReset();
                     mService.printCenter();
                     sendMessage("\n");
                     sendMessage("--------------------------------");
@@ -519,7 +534,6 @@ public abstract class BluetoothBaseActivity extends BaseActivity {
                     sendMessage("\n");
                     sendMessage("\n");
                     sendMessage("\n");
-
                 }
             }
 

@@ -308,7 +308,9 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
         TextView table_state = helper.getView(R.id.table_state);
         TextView table_index = helper.getView(R.id.table_index);
         TextView have_new = helper.getView(R.id.have_new);
-        TextView table_may_do = helper.getView(R.id.curr_table_may_do);
+        TextView table_may_do_0 = helper.getView(R.id.curr_table_may_do_0);
+        TextView table_may_do_1 = helper.getView(R.id.curr_table_may_do_1);
+        TextView table_may_do_2 = helper.getView(R.id.curr_table_may_do_2);
         View pay_number_container = helper.getView(R.id.pay_number_container);
         TextView pay_number = helper.getView(R.id.pay_number);
         TextView person_num = helper.getView(R.id.person_num);
@@ -324,8 +326,6 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
         int table_state_drawableResid = 0;
         int text_color = 0;
         int visibility = View.GONE;
-        String table_may_do_Str = "";
-        int table_may_do_drawableResid = 0;
         String person_num_Str = "";
         String unit_Str = "";
         switch (item.getTableStatus()) {
@@ -334,8 +334,9 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
                 table_state_drawableResid = R.drawable.table_empty_background_shape;
                 text_color = Color.parseColor("#3d9684");
                 visibility = View.GONE;
-                table_may_do_drawableResid = R.drawable.show_qc_code_background_shape;
-                table_may_do_Str = "查看二维码";
+                table_may_do_0.setVisibility(View.VISIBLE);
+                table_may_do_1.setVisibility(View.GONE);
+                table_may_do_2.setVisibility(View.GONE);
                 person_num_Str = item.getPresetCount();
                 unit_Str = "人桌";
                 break;
@@ -345,13 +346,14 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
                 text_color = Color.parseColor("#e77c8c");
                 visibility = View.VISIBLE;
                 pay_number.setText(item.getOrderAmt());
-                table_may_do_drawableResid = R.drawable.print_ticket_background_shape;
-                table_may_do_Str = getString(R.string.activity_dintablesetting_printasmallticket);
                 person_num_Str = item.getActualCount();
                 unit_Str = "人用餐";
+                table_may_do_0.setVisibility(View.GONE);
+                table_may_do_1.setVisibility(View.VISIBLE);
+                table_may_do_2.setVisibility(View.GONE);
                 switch (flag) {
                     case 0:
-                        table_may_do.setOnClickListener(new View.OnClickListener() {
+                        table_may_do_1.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 if (checkCanGoNext()) {
@@ -362,9 +364,9 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
                         break;
                     case 1:
                         if (delSelectButtonIsShowing) {
-                            table_may_do.setOnClickListener(null);
+                            table_may_do_1.setOnClickListener(null);
                         } else {
-                            table_may_do.setOnClickListener(new View.OnClickListener() {
+                            table_may_do_1.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     if (checkCanGoNext()) {
@@ -382,13 +384,14 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
                 text_color = Color.parseColor("#4592ca");
                 visibility = View.VISIBLE;
                 pay_number.setText(item.getOrderAmt());
-                table_may_do_drawableResid = R.drawable.reset_table_background_shape;
-                table_may_do_Str = "翻桌";
                 person_num_Str = item.getActualCount();
                 unit_Str = "人用餐";
+                table_may_do_0.setVisibility(View.GONE);
+                table_may_do_1.setVisibility(View.GONE);
+                table_may_do_2.setVisibility(View.VISIBLE);
                 switch (flag) {
                     case 0:
-                        table_may_do.setOnClickListener(new View.OnClickListener() {
+                        table_may_do_2.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 if (checkCanGoNext()) {
@@ -399,9 +402,9 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
                         break;
                     case 1:
                         if (delSelectButtonIsShowing) {
-                            table_may_do.setOnClickListener(null);
+                            table_may_do_2.setOnClickListener(null);
                         } else {
-                            table_may_do.setOnClickListener(new View.OnClickListener() {
+                            table_may_do_2.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     if (checkCanGoNext()) {
@@ -420,9 +423,6 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
         table_index.setTextColor(text_color);
         table_index.setText(item.getTableName());
         pay_number_container.setVisibility(visibility);
-        table_may_do.setBackgroundResource(table_may_do_drawableResid);
-        table_may_do.setText(table_may_do_Str);
-        table_may_do.setTextColor(text_color);
         person_num.setText(person_num_Str);
         unit.setText(unit_Str);
 
@@ -545,7 +545,7 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
                 WindowManager.LayoutParams lp = win.getAttributes();
                 lp.gravity = Gravity.CENTER;
                 lp.width = (int) (screenWidth * 0.8);
-                lp.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+                lp.height = (int) (screenWidth * 0.4);
                 dialog.onWindowAttributesChanged(lp);
                 dialog.show();
                 getTableinfo();
@@ -989,20 +989,7 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
         data.addAll(paidList);
         data.addAll(orderdList);
         data.addAll(emptyList);
-
         return data;
-    }
-
-    private boolean compareTo(List<TableSetBean> data, TableSetBean enity) {
-        int s = data.size();
-        if (enity != null) {
-            for (int i = 0; i < s; i++) {
-                if (enity.getTableId().equals(data.get(i).getTableId())) {
-                    return true;
-                }
-            }
-        }
-        return false;
     }
 
     private void deleteTableByIds(String tableIds) {

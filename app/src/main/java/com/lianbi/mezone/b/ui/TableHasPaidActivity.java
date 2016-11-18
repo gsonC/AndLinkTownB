@@ -97,7 +97,7 @@ public class TableHasPaidActivity extends BaseActivity {
     }
 
     private void initAdapter() {
-        mAdapter = new QuickAdapter<TableOrderBean>(TableHasPaidActivity.this, R.layout.table_order_list_view_layout, mData) {
+        mAdapter = new QuickAdapter<TableOrderBean>(TableHasPaidActivity.this, R.layout.table_has_paid_order_list_view_layout, mData) {
             @Override
             protected void convert(BaseAdapterHelper helper, TableOrderBean item) {
                 helper.getView(R.id.dotted_line).setLayerType(View.LAYER_TYPE_SOFTWARE, null);
@@ -125,6 +125,7 @@ public class TableHasPaidActivity extends BaseActivity {
                 remark.setText(item.getDesc());
                 order_time.setText(AbDateUtil.exchangeFormat(item.getCreateTime(), "yyyyMMddHHmmss", AbDateUtil.dateFormatHM));
 
+                container.removeAllViews();
                 ArrayList<OneDishInOrder> detailInfo = item.getDetailInfo();
                 for (int i = 0; i < detailInfo.size(); i++) {
                     View oneDishLayout = LayoutInflater.from(TableHasPaidActivity.this).inflate(R.layout.one_dish_layout, null);
