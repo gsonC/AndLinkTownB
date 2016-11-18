@@ -549,8 +549,6 @@ public class MainActivity extends BaseActivity implements  MyShopChange {
 			setPageRightTextVisibility(View.GONE);
 			((WisdomManagerFragment) fm_wisdommanage).refreshFMData();
 			setPageTitle("智慧应用");
-			tvTitleLeft.setText("发起场景");
-			tvTitleLeft.setVisibility(View.INVISIBLE);
 			setPageBackVisibility(View.INVISIBLE);
 			setPageRightImageVisibility();
 			rb_jiaoyiguanli.setChecked(true);
