@@ -12,7 +12,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -37,9 +36,6 @@ import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.lzy.okgo.request.BaseRequest;
 import com.xizhi.mezone.b.R;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
@@ -360,15 +356,7 @@ public abstract class BluetoothBaseActivity extends BaseActivity {
                         return;
                     }
 
-                    mService.printCenter();
-                    sendMessage("*******老板娘订单(消费单)*******");
-                    sendMessage("\n");
-                    sendMessage("\n");
-
                     Bitmap bitmap = ContentUtils.createQrBitmap(qrUrl, true, 360, 360);
-                    //bitmap = PicFromPrintUtils.compressPic(bitmap);
-                    sendMessage(bitmap);
-
                     mService.printCenter();
 
                     sendMessage("*******老板娘订单(消费单)*******");
@@ -458,30 +446,9 @@ public abstract class BluetoothBaseActivity extends BaseActivity {
                     sendMessage("\n");
                     sendMessage("\n");
 
-                    mService.printReset();
                     mService.printCenter();
-                    sendMessage("--------------------------------");
 
-
-
-                    BufferedInputStream bis1 = null;
-                    BufferedReader br1 = null;
-
-                    try {
-                        bis1 = new BufferedInputStream(getAssets().open("qr.jpg"),500);
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                   // Bitmap bitmap = ContentUtils.createQrBitmap(qrUrl, true, 360, 360);
-                   // bitmap = PicFromPrintUtils.compressPic(bitmap);
-
-                    Bitmap bitmap1 = BitmapFactory.decodeStream(bis1);
-                    bitmap1 = PicFromPrintUtils.compressPic(bitmap1);
-                    sendMessage2(bitmap1);
-
-
+                    sendMessage(bitmap);
 
                     mService.printReset();
                     mService.printCenter();
