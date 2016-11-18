@@ -521,7 +521,7 @@ public class TableHasOrderedActivity extends BluetoothBaseActivity {
 
                 @Override
                 public void onResponseFailed(String msg) {
-
+                    ContentUtils.showMsg(TableHasOrderedActivity.this, msg);
                 }
             });
         } catch (Exception e) {
