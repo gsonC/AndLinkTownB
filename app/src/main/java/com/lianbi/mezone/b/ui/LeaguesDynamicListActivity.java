@@ -3,7 +3,6 @@ package com.lianbi.mezone.b.ui;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -166,7 +165,7 @@ public class LeaguesDynamicListActivity extends BaseActivity {
                     "",                        //BD2016052013475900000010
                     "",                        //area
                     areaCode ,                  //businessCircle"310117"
-                    "",                        //messageType
+                    "MT0001,MT0002,MT0003",   //messageType
                     "",                        //pushScope
                     "",                        //businessName
                     "",                        //phone
