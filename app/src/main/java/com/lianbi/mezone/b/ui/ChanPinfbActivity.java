@@ -1,7 +1,5 @@
 package com.lianbi.mezone.b.ui;
 
-import java.io.File;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -15,21 +13,23 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import cn.com.hgh.utils.ContentUtils;
-import cn.com.hgh.utils.FilePathGet;
-import cn.com.hgh.utils.Picture_Base64;
-import cn.com.hgh.utils.Result;
-import cn.com.hgh.utils.WebViewInit;
-import cn.com.hgh.view.HttpDialog;
 
 import com.alibaba.fastjson.JSONObject;
-import com.xizhi.mezone.b.R;
 import com.lianbi.mezone.b.bean.ChanPinWebBean;
 import com.lianbi.mezone.b.httpresponse.API;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.lianbi.mezone.b.photo.FileUtils;
 import com.lianbi.mezone.b.photo.PhotoUtills;
 import com.lianbi.mezone.b.photo.PickImageDescribe;
+import com.xizhi.mezone.b.R;
+
+import java.io.File;
+
+import cn.com.hgh.utils.ContentUtils;
+import cn.com.hgh.utils.Picture_Base64;
+import cn.com.hgh.utils.Result;
+import cn.com.hgh.utils.WebViewInit;
+import cn.com.hgh.view.HttpDialog;
 
 /**
  * 产品发布
@@ -109,7 +109,7 @@ public class ChanPinfbActivity extends BaseActivity {
 	}
 
 	private void initView() {
-		setPageTitle("产品发布");
+		setPageTitle(getString(R.string.activity_chanpinfb_title));
 		dialog = new HttpDialog(this);
 		relt_activity_chanpinfb = (RelativeLayout) findViewById(R.id.relt_activity_chanpinfb);
 		imageView_activity_chanpinfb = (ImageView) findViewById(R.id.imageView_activity_chanpinfb);

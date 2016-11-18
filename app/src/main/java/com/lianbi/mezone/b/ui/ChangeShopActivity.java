@@ -189,7 +189,7 @@ public class ChangeShopActivity extends BaseActivity {
 	 */
 	@SuppressLint("ResourceAsColor")
 	private void initView() {
-		setPageTitle("切换商铺");
+		setPageTitle(getString(R.string.activity_changeshop_title));
 		setPageRightText("保存");
 		setPageRightTextColor(R.color.colores_news_01);
 		lv_change_shop = (ListView) findViewById(R.id.lv_change_shop);

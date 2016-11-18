@@ -129,7 +129,7 @@ public class AddShopActivity extends BaseActivity {
 	 * 初始化View
 	 */
 	private void initView() {
-		setPageTitle("新增商铺");
+		setPageTitle(getString(R.string.activity_addshop_add));
 		tv_add_shop_summbit = (TextView) findViewById(R.id.tv_add_shop_summbit);
 		llt_add_shop_img = (LinearLayout) findViewById(R.id.llt_add_shop_img);
 		tv_my_shop_type = (TextView) findViewById(R.id.tv_my_shop_type);

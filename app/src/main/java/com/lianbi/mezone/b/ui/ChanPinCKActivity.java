@@ -1,11 +1,5 @@
 package com.lianbi.mezone.b.ui;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -13,6 +7,19 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.alibaba.fastjson.JSON;
+import com.bumptech.glide.Glide;
+import com.lianbi.mezone.b.bean.MyProductBean;
+import com.lianbi.mezone.b.httpresponse.MyResultCallback;
+import com.xizhi.mezone.b.R;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.QuickAdapter;
 import cn.com.hgh.utils.AbPullHide;
@@ -22,12 +29,6 @@ import cn.com.hgh.utils.SpannableuUtills;
 import cn.com.hgh.view.AbPullToRefreshView;
 import cn.com.hgh.view.AbPullToRefreshView.OnFooterLoadListener;
 import cn.com.hgh.view.AbPullToRefreshView.OnHeaderRefreshListener;
-
-import com.alibaba.fastjson.JSON;
-import com.bumptech.glide.Glide;
-import com.xizhi.mezone.b.R;
-import com.lianbi.mezone.b.bean.MyProductBean;
-import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 
 /**
  * 产品仓库
@@ -185,7 +186,7 @@ public class ChanPinCKActivity extends BaseActivity {
 	}
 
 	private void initView() {
-		setPageTitle("产品仓库");
+		setPageTitle(getString(R.string.activity_chanpinck_title));
 		abpulltorefreshview_act_myshopchanpinfbactivity = (AbPullToRefreshView) findViewById(R.id.abpulltorefreshview_act_myshopchanpinfbactivity);
 		listView_act_myshopchanpinfbactivity = (ListView) findViewById(R.id.listView_act_myshopchanpinfbactivity);
 		iv_act_myshopchanpinfbactivity = (ImageView) findViewById(R.id.iv_act_myshopchanpinfbactivity);

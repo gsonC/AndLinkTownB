@@ -32,7 +32,7 @@ public class FeedBackActivity extends BaseActivity {
 	}
 
 	private void initView() {
-		setPageTitle("意见反馈");
+		setPageTitle(getString(R.string.activity_feedback_title));
 		opinion_title = (EditText) findViewById(R.id.opinion_title);
 		opinion_content = (EditText) findViewById(R.id.opinion_content);
 		submit = (Button) findViewById(R.id.submit);

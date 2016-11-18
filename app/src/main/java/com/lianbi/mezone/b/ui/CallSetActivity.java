@@ -52,7 +52,7 @@ public class CallSetActivity extends BaseActivity {
 		getCallMessage(true);
 	}
 	private void initview() {
-		setPageTitle("呼叫设置");
+		setPageTitle(getString(R.string.activity_callset_title));
 		bt_call_sure = (TextView) findViewById(R.id.bt_call_sure);
 		tv_call = (EditText) findViewById(R.id.tv_call);
 		img_callset_empty = (ImageView) findViewById(R.id.img_callset_empty);

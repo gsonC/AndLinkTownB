@@ -95,7 +95,7 @@ public class CallServiceActivity extends BaseActivity {
 	}
 
 	private void initView() {
-		setPageTitle("呼叫服务");
+		setPageTitle(getString(R.string.activity_callservice_title));
 		setPageRightText("服务设置");
 		currShowingIs = ALL_IS_SHOWING;
 		//fmCallListView.initSlideMode(SlideListView2.MOD_RIGHT);

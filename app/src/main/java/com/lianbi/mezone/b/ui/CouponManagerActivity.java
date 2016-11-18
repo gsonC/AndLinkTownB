@@ -79,7 +79,7 @@ public class CouponManagerActivity extends BaseActivity implements AdapterView.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coupon_manager, NOTYPE);
         ButterKnife.bind(this);
-        setPageTitle("优惠券管理");
+        setPageTitle(getString(R.string.activity_couponmanager_title));
         currShowingIs = ALL_IS_SHOWING;
         setListener();
         initAdapter();

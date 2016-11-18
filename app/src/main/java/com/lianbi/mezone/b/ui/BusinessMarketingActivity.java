@@ -34,7 +34,7 @@ public class BusinessMarketingActivity extends BaseActivity {
 	}
 
 	private void initView() {
-		setPageTitle("商户营销");
+		setPageTitle(getString(R.string.activity_businessmarketing_title));
 		llBussinessMakingManage.setOnClickListener(this);
 		llBussinessMakingYouhuijuan.setOnClickListener(this);
 		llBussinessMakingWenzhang.setOnClickListener(this);

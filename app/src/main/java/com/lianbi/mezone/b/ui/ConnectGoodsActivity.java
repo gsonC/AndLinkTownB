@@ -1,32 +1,31 @@
 package com.lianbi.mezone.b.ui;
 
-import java.util.ArrayList;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.alibaba.fastjson.JSON;
+import com.bumptech.glide.Glide;
+import com.lianbi.mezone.b.bean.ConnectGoodsBean;
+import com.lianbi.mezone.b.httpresponse.MyResultCallback;
+import com.xizhi.mezone.b.R;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
 import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.QuickAdapter;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.utils.TelPhoneUtills;
-
-import com.alibaba.fastjson.JSON;
-import com.bumptech.glide.Glide;
-import com.xizhi.mezone.b.R;
-import com.lianbi.mezone.b.bean.ConnectGoodsBean;
-import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 
 /**
  * 联系货源
@@ -57,7 +56,7 @@ public class ConnectGoodsActivity extends BaseActivity {
 	 * 初始化View
 	 */
 	private void initView() {
-		setPageTitle("联系货源");
+		setPageTitle(getString(R.string.activity_connectgoods_title));
 		setPageRightText("新增");
 		setPageRightTextColor(R.color.colores_news_01);
 		lv_connect_goods = (ListView) findViewById(R.id.lv_connect_goods);

@@ -82,7 +82,7 @@ public class EmployeeManageActivity extends BaseActivity {
 	}
 
 	private void initView() {
-		setPageTitle("店员管理");
+		setPageTitle(getString(R.string.activity_employeemanage_title));
 		setPageRightText("新增");
 		img_employee_empty = (ImageView) findViewById(R.id.img_employee_empty);
 		setPageRightTextColor(R.color.colores_news_01);

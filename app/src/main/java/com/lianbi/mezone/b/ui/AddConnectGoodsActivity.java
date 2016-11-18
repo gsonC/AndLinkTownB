@@ -56,7 +56,7 @@ public class AddConnectGoodsActivity extends BaseActivity {
 	 * 初始化View
 	 */
 	private void initView() {
-		setPageTitle("新增联系人");
+		setPageTitle(getString(R.string.activity_addcontacts));
 		tv_add_connect_goods = (TextView) findViewById(R.id.tv_add_connect_goods);
 		llt_add_connectgoods_img = (LinearLayout) findViewById(R.id.llt_add_connectgoods_img);
 		img_add_connect_goods = (ImageView) findViewById(R.id.img_add_connect_goods);

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.xizhi.mezone.b.R;
 
@@ -23,7 +22,7 @@ public class ChanPinGuanLiActivity extends BaseActivity {
 	}
 
 	private void initView() {
-		setPageTitle("产品管理");
+		setPageTitle(getString(R.string.activity_chanpinguanli_title));
 		mRlChanpinfb = (RelativeLayout) findViewById(R.id.rl_chanpinfb);
 		mRlChanpinchigl = (RelativeLayout) findViewById(R.id.rl_chanpinchigl);
 	}

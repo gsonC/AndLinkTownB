@@ -346,7 +346,7 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
                 visibility = View.VISIBLE;
                 pay_number.setText(item.getOrderAmt());
                 table_may_do_drawableResid = R.drawable.print_ticket_background_shape;
-                table_may_do_Str = "打印小票";
+                table_may_do_Str = getString(R.string.activity_dintablesetting_printasmallticket);
                 person_num_Str = item.getActualCount();
                 unit_Str = "人用餐";
                 switch (flag) {

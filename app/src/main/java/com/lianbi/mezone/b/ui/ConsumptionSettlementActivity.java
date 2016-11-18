@@ -119,7 +119,7 @@ public class ConsumptionSettlementActivity extends BaseActivity {
 
 	private void initview() {
 
-		setPageTitle("客户买单");
+		setPageTitle(getString(R.string.activity_consumptionsettlement_title));
 		//imComestoreDetail.setOnClickListener(this);
 		//imComestoreDetail.setOnClickListener(new View.OnClickListener() {
 		//	@Override

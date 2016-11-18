@@ -13,7 +13,6 @@ import com.alibaba.fastjson.JSON;
 import com.lianbi.mezone.b.bean.DingdanInfoBean;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
-import com.lzy.okgo.OkGo;
 import com.xizhi.mezone.b.R;
 
 import org.json.JSONException;
@@ -106,7 +105,7 @@ public class DingdanInfoActivity extends BaseActivity {
 	}
 
 	private void initView() {
-		setPageTitle("订单明细");
+		setPageTitle(getString(R.string.activity_dingdaninfo_title));
 
 		act_dingdaninfo_abpulltorefreshview = (AbPullToRefreshView) findViewById(R.id.act_dingdaninfo_abpulltorefreshview);
 		act_dingdaninfo_listview = (ListView) findViewById(R.id.act_dingdaninfo_listview);

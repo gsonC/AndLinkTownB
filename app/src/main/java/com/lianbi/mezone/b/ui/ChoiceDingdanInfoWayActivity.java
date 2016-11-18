@@ -36,7 +36,7 @@ public class ChoiceDingdanInfoWayActivity extends BaseActivity {
 	}
 
 	private void initView() {
-		setPageTitle("订单管理");
+		setPageTitle(getString(R.string.activity_choicedingdaninfoway_title));
 		llt_app_dingdanway = (LinearLayout) findViewById(R.id.llt_app_dingdanway);
 		llt_weixin_dingdanway = (LinearLayout) findViewById(R.id.llt_weixin_dingdanway);
 		llt_huoyuan_dingdanway = (LinearLayout) findViewById(R.id.llt_huoyuan_dingdanway);

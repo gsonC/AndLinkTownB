@@ -1,9 +1,5 @@
 package com.lianbi.mezone.b.ui;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Locale;
-
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +8,16 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.lianbi.mezone.b.bean.Ades_ImageEs;
+import com.lianbi.mezone.b.bean.DateAndColor;
+import com.lianbi.mezone.b.bean.MyLiCaiBean;
+import com.xizhi.mezone.b.R;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
+
 import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.DateRecylerviewAdapter;
 import cn.com.hgh.baseadapter.DateRecylerviewAdapter.OnItemMonthClickListener;
@@ -19,11 +25,6 @@ import cn.com.hgh.baseadapter.QuickAdapter;
 import cn.com.hgh.utils.AbViewUtil;
 import cn.com.hgh.utils.MathExtend;
 import cn.com.hgh.utils.SpannableuUtills;
-
-import com.xizhi.mezone.b.R;
-import com.lianbi.mezone.b.bean.Ades_ImageEs;
-import com.lianbi.mezone.b.bean.DateAndColor;
-import com.lianbi.mezone.b.bean.MyLiCaiBean;
 
 /**
  * 
@@ -67,7 +68,7 @@ public class EveryDayMoneyActivity extends BaseActivity {
 	 * 初始化View
 	 */
 	protected void initView() {
-		setPageTitle("每月收益");
+		setPageTitle(getString(R.string.activity_everydaymoney_title));
 		tv_year_month_choice = (TextView) findViewById(R.id.tv_year_month_choice);
 		tv_list_money_detail = (TextView) findViewById(R.id.tv_list_money_detail);
 		year_month_choice_recycler = (RecyclerView) findViewById(R.id.year_month_choice_recycler);

@@ -99,7 +99,7 @@ public abstract class BluetoothBaseActivity extends BaseActivity {
                 //判断是否需要向用户解释为什么需要申请该权限
                 if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                         Manifest.permission.ACCESS_COARSE_LOCATION)) {
-                    ContentUtils.showMsg(this, "自Android 6.0开始需要打开位置权限才可以搜索到蓝牙设备");
+                    ContentUtils.showMsg(this, getString(R.string.activity_bluetoothbase_sincesixstart));
                 }
                 //请求权限
                 requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_REQUEST_COARSE_LOCATION);

@@ -12,7 +12,6 @@ import android.widget.ToggleButton;
 import com.lianbi.mezone.b.app.Constants;
 import com.lianbi.mezone.b.bean.MemberDevelopmentBean;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
-import com.lzy.okgo.OkGo;
 import com.xizhi.mezone.b.R;
 
 import cn.com.hgh.utils.ContentUtils;
@@ -100,7 +99,7 @@ public class EditeFormulateActivity extends BaseActivity {
 	 * 初始化View
 	 */
 	private void initView() {
-		setPageTitle("编辑制定");
+		setPageTitle(getString(R.string.activity_editefromulate_title));
 		edt_formulate_name = (EditText) findViewById(R.id.edt_formulate_name);
 		edt_formulate_grade = (EditText) findViewById(R.id.edt_formulate_grade);
 		edt_formulate_price = (EditText) findViewById(R.id.edt_formulate_price);

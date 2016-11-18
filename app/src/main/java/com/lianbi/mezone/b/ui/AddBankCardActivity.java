@@ -14,7 +14,6 @@ import com.bumptech.glide.Glide;
 import com.lianbi.mezone.b.bean.BankBoundInfo;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
-import com.lzy.okgo.OkGo;
 import com.xizhi.mezone.b.R;
 
 import cn.com.hgh.utils.AbDateUtil;
@@ -152,7 +151,7 @@ public class AddBankCardActivity extends BaseActivity {
 			layout_no_my_bank_card.setVisibility(View.VISIBLE);
 			layout_my_bank_card.setVisibility(View.GONE);
 			activity_add_bank_card_password_re.setVisibility(View.GONE);
-			setPageTitle("添加银行卡");
+			setPageTitle(getString(R.string.activity_addbankcard));
 		}
 	}
    

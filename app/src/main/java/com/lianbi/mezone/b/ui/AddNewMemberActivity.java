@@ -86,7 +86,7 @@ public class AddNewMemberActivity extends BaseActivity {
 	}
 
 	private void initView() {
-		setPageTitle("会员新增");
+		setPageTitle(getString(R.string.activity_memberadd));
 		add_member_abpulltorefreshview = (AbPullToRefreshView) findViewById(R.id.add_member_abpulltorefreshview);
 		addmember_list = (ListView) findViewById(R.id.addmember_list);
 		iv_add_member_empty = (ImageView) findViewById(R.id.iv_add_member_empty);

@@ -9,7 +9,6 @@ import com.alibaba.fastjson.JSON;
 import com.lianbi.mezone.b.bean.Dayincome;
 import com.lianbi.mezone.b.httpresponse.API;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
-import com.lzy.okgo.OkGo;
 import com.xizhi.mezone.b.R;
 
 import org.json.JSONArray;
@@ -68,7 +67,7 @@ public class DailyShouRuActivity extends BaseActivity {
 	 * 初始化View
 	 */
 	protected void initView() {
-		setPageTitle("上周每日收入");
+		setPageTitle(getString(R.string.activity_dailysgouru_title));
 		dailyshouruactivity_llt_web_new = (LinearLayout) findViewById(R.id.dailyshouruactivity_llt_web_new);
 		dailyshouruactivity_llt_web2_new = (LinearLayout) findViewById(R.id.dailyshouruactivity_llt_web2_new);
 		dailyshouruactivity_webView_hgh_new = (WebView) findViewById(R.id.dailyshouruactivity_webView_hgh_new);

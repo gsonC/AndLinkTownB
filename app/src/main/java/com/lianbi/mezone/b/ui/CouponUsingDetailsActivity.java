@@ -92,7 +92,7 @@ public class CouponUsingDetailsActivity extends BaseActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coupon_using_details, NOTYPE);
         ButterKnife.bind(this);
-        setPageTitle("优惠券使用详情");
+        setPageTitle(getString(R.string.activity_couponusingdetails_title));
         currShowingIs = ALL_IS_SHOWING;
 
         couponId = getIntent().getStringExtra(COUPON_ID);

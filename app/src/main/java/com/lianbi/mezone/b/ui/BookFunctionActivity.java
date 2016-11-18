@@ -41,7 +41,7 @@ public class BookFunctionActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.act_bookfunction, HAVETYPE);
 		ButterKnife.bind(this);
-		setPageTitle("预约");
+		setPageTitle(getString(R.string.activity_bookfunction_bespoke));
 		setListen();
 	}
 

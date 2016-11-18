@@ -23,7 +23,7 @@ public class AboutUsActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_about_us, NOTYPE);
-		setPageTitle("关于我们");
+		setPageTitle(getString(R.string.activity_aboutus));
 		ImageView iv = (ImageView) findViewById(R.id.about_us_iv);
 		iv.setImageBitmap(AbViewUtil.readBitMap(this, R.mipmap.about_us));
 	}

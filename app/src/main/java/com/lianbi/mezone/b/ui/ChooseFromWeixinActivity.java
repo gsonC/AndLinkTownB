@@ -19,7 +19,6 @@ import com.bumptech.glide.Glide;
 import com.lianbi.mezone.b.bean.WeiXinBean;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
-import com.lzy.okgo.OkGo;
 import com.xizhi.mezone.b.R;
 
 import org.json.JSONException;
@@ -71,7 +70,7 @@ public class ChooseFromWeixinActivity extends BaseActivity {
 	 * 添加监听
 	 */
 	private void setLisenter() {
-		setPageTitle("从微信商城产品库选择");
+		setPageTitle(getString(R.string.activity_choosefromweixin_title));
 		// 根据输入框输入值的改变来过滤搜索
 		actWeixinListEdit.addTextChangedListener(new TextWatcher() {
 

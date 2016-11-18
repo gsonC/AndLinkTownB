@@ -1,14 +1,15 @@
 package com.lianbi.mezone.b.ui;
 
-import java.util.ArrayList;
-
 import android.os.Bundle;
 import android.widget.ListView;
+
+import com.lianbi.mezone.b.bean.ActionPBean;
+import com.xizhi.mezone.b.R;
+
+import java.util.ArrayList;
+
 import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.QuickAdapter;
-
-import com.xizhi.mezone.b.R;
-import com.lianbi.mezone.b.bean.ActionPBean;
 
 /**
  * 功能介绍
@@ -34,7 +35,7 @@ public class ActionProduceActivity extends BaseActivity {
 	 * 初始化View
 	 */
 	protected void initView() {
-		setPageTitle("功能介绍");
+		setPageTitle(getString(R.string.activity_functionintroduction));
 		list_bank = (ListView) findViewById(R.id.activity_actionproduceactivity_list_list);
 		getBankBanklist();
 

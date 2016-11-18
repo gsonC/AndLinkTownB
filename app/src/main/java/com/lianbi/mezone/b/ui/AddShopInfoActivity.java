@@ -55,7 +55,7 @@ public class AddShopInfoActivity extends BaseActivity {
         tvAddShopInfoIndustryclass=(TextView)findViewById(R.id.tv_addShopInfo_industryclass);
         tvAddShopInfoProvincialcity=(TextView)findViewById(R.id.tv_addShopInfo_provincialcity);
         tvAddShopInfoShopname=(TextView)findViewById(R.id.tv_addShopInfo_shopname);
-        setPageTitle("完善店铺信息");
+        setPageTitle(getString(R.string.activity_addshopinfo_add));
         setPageRightText("提交");
         shopname=getIntent().getStringExtra("shopname");
         fromwhich=getIntent().getIntExtra("fromwhich",0);

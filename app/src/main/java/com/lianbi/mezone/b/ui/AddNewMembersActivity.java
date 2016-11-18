@@ -26,7 +26,6 @@ import com.lianbi.mezone.b.bean.MemberInfoBean;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
 import com.lianbi.mezone.b.photo.PopupWindowHelper;
-import com.lzy.okgo.OkGo;
 import com.xizhi.mezone.b.R;
 
 import java.math.BigDecimal;
@@ -135,7 +134,7 @@ public class AddNewMembersActivity extends BaseActivity {
 		mTvMunberadressVisable = (TextView) findViewById(R.id.tv_munberadress_visable);
 		mTvMunberremarksVisable = (TextView) findViewById(R.id.tv_munberremarks_visable);
 		if (mIsShow) {
-			setPageTitle("会员详情");
+			setPageTitle(getString(R.string.activity_addnewmembers_details));
 			llt_memberdetails.setVisibility(View.VISIBLE);
 			llt_line.setVisibility(View.VISIBLE);
 			mViewVisibale.setVisibility(View.VISIBLE);
@@ -145,7 +144,7 @@ public class AddNewMembersActivity extends BaseActivity {
 			getMemberInfo();
 
 		} else {
-			setPageTitle("添加新会员");
+			setPageTitle(getString(R.string.activity_addnewmembers_add));
 			llt_memberdetails.setVisibility(View.GONE);
 			mViewVisibale.setVisibility(View.GONE);
 			llt_line.setVisibility(View.GONE);

@@ -215,7 +215,7 @@ public class ComeDetailActivity extends BaseActivity {
 					@Override
 					public void handle(String time) {
 						if (!AbStrUtil.isEmpty(tvFinishtime.getText().toString()) && !AbDateUtil.compareTime(getTime(time), tvFinishtime.getText().toString(), "yyyy-MM-dd")) {
-							ContentUtils.showMsg(ComeDetailActivity.this, "开始日期须在结束日期之前！");
+							ContentUtils.showMsg(ComeDetailActivity.this, getString(R.string.timeselector_hestarttimemustbebeforetheendtime));
 							tvStarttime.setText("");
 							beginTime = "";
 						} else {
@@ -240,7 +240,7 @@ public class ComeDetailActivity extends BaseActivity {
 					@Override
 					public void handle(String time) {
 						if (!AbStrUtil.isEmpty(tvStarttime.getText().toString()) && !AbDateUtil.compareTime(tvStarttime.getText().toString(), getTime(time), "yyyy-MM-dd")) {
-							ContentUtils.showMsg(ComeDetailActivity.this, "结束日期须在开始日期之后！");
+							ContentUtils.showMsg(ComeDetailActivity.this, getString(R.string.timeselector_theendtimemustbeafterthestarttime));
 							tvFinishtime.setText("");
 							endTime = "";
 						} else {

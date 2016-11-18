@@ -9,7 +9,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lianbi.mezone.b.app.Constants;
-import com.lzy.okgo.OkGo;
 import com.xizhi.mezone.b.R;
 
 import cn.com.hgh.utils.ContentUtils;
@@ -57,7 +56,7 @@ public class AddNewBankCardActivity extends BaseActivity {
 	 * 初始化View
 	 */
 	protected void initView() {
-		setPageTitle("添加银行卡");
+		setPageTitle(getString(R.string.activity_addbankcard));
 		key = getIntent().getIntExtra("key", -1);
 		edit_add_new_bcard_cardholder = (EditText) findViewById(R.id.edit_add_new_bcard_cardholder);
 		edit_add_new_bcard_cardnumber = (EditText) findViewById(R.id.edit_add_new_bcard_cardnumber);

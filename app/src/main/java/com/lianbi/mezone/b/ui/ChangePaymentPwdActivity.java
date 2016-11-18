@@ -7,7 +7,6 @@ import android.widget.TextView;
 
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
-import com.lzy.okgo.OkGo;
 import com.xizhi.mezone.b.R;
 
 import cn.com.hgh.gridpasswordview.GridPasswordView;
@@ -42,7 +41,7 @@ public class ChangePaymentPwdActivity extends BaseActivity {
 	 * 初始化View
 	 */
 	private void initView() {
-		setPageTitle("修改密码");
+		setPageTitle(getString(R.string.activity_ahangepaymentpwd_title));
 		gpv_customUi_chang_old = (GridPasswordView) findViewById(R.id.gpv_customUi_chang_old);
 		gpv_customUi_chang_new = (GridPasswordView) findViewById(R.id.gpv_customUi_chang_new);
 		gpv_customUi_chang_new_sure = (GridPasswordView) findViewById(R.id.gpv_customUi_chang_new_sure);

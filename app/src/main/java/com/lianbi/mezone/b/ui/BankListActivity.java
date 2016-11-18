@@ -17,7 +17,6 @@ import com.bumptech.glide.Glide;
 import com.lianbi.mezone.b.bean.BankCardList;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
-import com.lzy.okgo.OkGo;
 import com.xizhi.mezone.b.R;
 
 import org.json.JSONException;
@@ -61,7 +60,7 @@ public class BankListActivity extends BaseActivity {
 	 * 初始化View
 	 */
 	protected void initView() {
-		setPageTitle("开户行");
+		setPageTitle(getString(R.string.activity_banklist_bankaccount));
 		list_bank = (ListView) findViewById(R.id.list_bank);
 		edit_bank_list = (EditText) findViewById(R.id.edit_bank_list);
 		iv_banklist_delete = (ImageView) findViewById(R.id.iv_banklist_delete);

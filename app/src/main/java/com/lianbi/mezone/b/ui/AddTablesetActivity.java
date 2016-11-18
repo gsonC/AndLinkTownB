@@ -11,8 +11,6 @@ import android.widget.TextView;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.xizhi.mezone.b.R;
 
-import org.json.JSONObject;
-
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.Result;
 
@@ -34,7 +32,7 @@ public class AddTablesetActivity extends BaseActivity implements TextView.OnEdit
     }
 
     private void initView() {
-        setPageTitle("添加桌位");
+        setPageTitle(getString(R.string.activity_addtableset_add));
         tv_addtableset = (TextView) findViewById(R.id.tv_addtableset);
         et_tablename = (EditText) findViewById(R.id.et_tablename);
         et_table_persion_num = (EditText) findViewById(R.id.et_table_persion_num);

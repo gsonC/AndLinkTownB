@@ -16,7 +16,6 @@ import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.lianbi.mezone.b.photo.FileUtils;
 import com.lianbi.mezone.b.photo.PhotoUtills;
 import com.lianbi.mezone.b.photo.PickImageDescribe;
-import com.lzy.okgo.OkGo;
 import com.xizhi.mezone.b.R;
 
 import java.io.File;
@@ -59,7 +58,7 @@ public class AddEmployeeActivity extends BaseActivity {
 	}
 
 	private void initView() {
-		setPageTitle("新增店员");
+		setPageTitle(getString(R.string.activity_addclerk));
 		layout_add_salse_employee_head = (LinearLayout) findViewById(R.id.layout_add_salse_employee_head);
 		img_add_sales_employee_modify = (CircularImageView) findViewById(R.id.img_add_sales_employee_modify);
 		edit_add_sales_employee_modify_name = (EditText) findViewById(R.id.edit_add_sales_employee_modify_name);
