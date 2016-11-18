@@ -453,6 +453,8 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 				textView.setVisibility(View.VISIBLE);
 				textView.setText(count + "");
 			}
+		}else{
+			textView.setVisibility(View.GONE);
 		}
 	}
 

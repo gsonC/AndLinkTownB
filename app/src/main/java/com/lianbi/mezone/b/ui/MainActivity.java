@@ -34,7 +34,6 @@ import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.lianbi.mezone.b.impl.MyShopChange;
 import com.lianbi.mezone.b.photo.PopupWindowHelper;
 import com.lianbi.mezone.b.push.PushDemoReceiver;
-import com.lianbi.mezone.b.receiver.BDLocation_interface;
 import com.lianbi.mezone.b.receiver.Downloader;
 import com.lianbi.mezone.b.service.MyService;
 import com.xizhi.mezone.b.R;
@@ -50,13 +49,13 @@ import cn.com.hgh.utils.AbStrUtil;
 import cn.com.hgh.utils.AbViewUtil;
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.JumpIntent;
-import cn.com.hgh.utils.LocationUtills;
+import cn.com.hgh.utils.LogUtils;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.view.DialogCommon;
 import cn.com.hgh.view.HttpDialog;
 
 @SuppressLint({"ResourceAsColor", "HandlerLeak"})
-public class MainActivity extends BaseActivity implements BDLocation_interface, MyShopChange {
+public class MainActivity extends BaseActivity implements  MyShopChange {
 	FrameLayout fm_funcpage0, fm_funcpage1, fm_funcpage2, fm_funcpage3;
 	RadioButton rb_shouye, rb_jiaoyiguanli, rb_caiwushi, rb_mine;
 	private ImageView img_main_red;
@@ -102,7 +101,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface, 
 
 		changeFuncPage(POSITION0);
 
-		LocationUtills.initLocationClient(this, this);
+		//LocationUtills.initLocationClient(this, this);
 
 		postCID();
 
@@ -255,9 +254,6 @@ public class MainActivity extends BaseActivity implements BDLocation_interface, 
 		long id = downloader.download(url);
 		ContentUtils.putSharePre(MainActivity.this, Constants.SHARED_PREFERENCE_NAME, Constants.APPDOWNLOAD_ID, id);
 	}
-
-	public double mTotalAccount = 0, mShopAccount = 0, mAvailableBalance = 0, mTakeinMoney = 0, mShopinComeToday = 0, mFreezingAmount = 0;
-
 
 	HttpDialog httpDialog;
 
@@ -465,6 +461,8 @@ public class MainActivity extends BaseActivity implements BDLocation_interface, 
 			 */
 			if (PushManager.getInstance().getClientid(this) != null) {
 				mClientId = PushManager.getInstance().getClientid(this);
+				LogUtils.e("mClientId---------------------",mClientId);
+				System.out.println("mClientId---------------------"+mClientId);
 			}
 			String reqTime = AbDateUtil.getDateTimeNow();
 			String uuid = AbStrUtil.getUUID();
@@ -601,9 +599,6 @@ public class MainActivity extends BaseActivity implements BDLocation_interface, 
 		}
 	}
 
-	private void getFinancialOfficeClick() {
-	}
-
 	/**
 	 * 底部监听
 	 */
@@ -645,7 +640,6 @@ public class MainActivity extends BaseActivity implements BDLocation_interface, 
 	 * 初始化视图
 	 */
 	private void initView() {
-		//	titleShouYe();
 		fm_funcpage0 = (FrameLayout) findViewById(R.id.fm_funcpage0);
 		fm_funcpage1 = (FrameLayout) findViewById(R.id.fm_funcpage1);
 		fm_funcpage2 = (FrameLayout) findViewById(R.id.fm_funcpage2);
@@ -655,70 +649,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface, 
 		rb_caiwushi = (RadioButton) findViewById(R.id.rb_caiwushi);
 		rb_mine = (RadioButton) findViewById(R.id.rb_mine);
 		img_main_red = (ImageView) findViewById(R.id.img_main_red);
-		/**
-		 * 动态注册广播
-		 */
-		//mMsgReceiver = new MsgReceiver();
-		//IntentFilter intentFilter = new IntentFilter();
-		//intentFilter.addAction("com.lianbi.mezone.b.service.RECEIVER");
-		//registerReceiver(mMsgReceiver,intentFilter);
-		//mIntent = new Intent();
-		//mIntent.setAction("com.lianbi.mezone.b.MSG_ACTION");
-		//Intent eintent = new Intent(createExplicitFromImplicitIntent(this,mIntent));
-		//startService(eintent);
 
-	}
-	/*
-	*/
-/**
-	 * 下载广播回掉
-	 *//*
-
-	public class MsgReceiver extends BroadcastReceiver{
-
-		@Override
-		public void onReceive(Context context, Intent intent) {
-			float progress = intent.getFloatExtra("progress",0);
-			//System.out.println("progress---"+progress);
-		}
-	}
-
-	public static Intent createExplicitFromImplicitIntent(Context context, Intent implicitIntent) {
-		// Retrieve all services that can match the given intent
-		PackageManager pm = context.getPackageManager();
-		List<ResolveInfo> resolveInfo = pm.queryIntentServices(implicitIntent, 0);
-
-		// Make sure only one match was found
-		if (resolveInfo == null || resolveInfo.size() != 1) {
-			return null;
-		}
-
-		// Get component info and create ComponentName
-		ResolveInfo serviceInfo = resolveInfo.get(0);
-		String packageName = serviceInfo.serviceInfo.packageName;
-		String className = serviceInfo.serviceInfo.name;
-		ComponentName component = new ComponentName(packageName, className);
-
-		// Create a new intent. Use the old one for extras and such reuse
-		Intent explicitIntent = new Intent(implicitIntent);
-
-		// Set the component to be explicit
-		explicitIntent.setComponent(component);
-
-		return explicitIntent;
-	}
-*/
-
-
-	/**
-	 * 首页title
-	 */
-	private void titleShouYe() {
-		setShoyYeTitle();
-		setPageRightText("切换店铺");
-		setPageRightTextColor(R.color.color_6bb4ff);
-//		tv_title_left.setText("切换店铺");
-//		tv_title_left.setVisibility(View.INVISIBLE);
 	}
 
 	private void setShoyYeTitle() {
@@ -734,16 +665,6 @@ public class MainActivity extends BaseActivity implements BDLocation_interface, 
 
 			setPageTitle("首页");
 		}
-	}
-
-	/**
-	 * 首页title
-	 */
-	private void titleFinancialOffice() {
-		setPageRightText("明细");
-		setPageRightTextColor(R.color.color_6bb4ff);
-//		tv_title_left.setText("财务室");
-//		tv_title_left.setVisibility(View.INVISIBLE);
 	}
 
 	/**
@@ -789,6 +710,8 @@ public class MainActivity extends BaseActivity implements BDLocation_interface, 
 	 * 定位回调
 	 */
 
+	/**
+
 	@Override
 	public void location(double lng, double lat, String address) {
 		if (httpDialog != null) {
@@ -799,6 +722,7 @@ public class MainActivity extends BaseActivity implements BDLocation_interface, 
 		ContentUtils.putSharePre(this, Constants.SHARED_PREFERENCE_NAME, Constants.ADDRESS, address);
 	}
 
+	 */
 	@Override
 	public void reFresh() {
 		userShopInfoBean.getSharePreString();
