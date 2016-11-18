@@ -990,7 +990,6 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
         data.addAll(orderdList);
         data.addAll(emptyList);
 
-        tableId = "";
         return data;
     }
 

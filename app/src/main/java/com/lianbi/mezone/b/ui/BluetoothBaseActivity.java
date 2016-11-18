@@ -347,7 +347,7 @@ public abstract class BluetoothBaseActivity extends BaseActivity {
                     sendMessage("*******老板娘订单(消费单)*******");
                     sendMessage("\n");
                     sendMessage("\n");
-                    sendMessage("鹅掌门(地中海店)");
+                    sendMessage(userShopInfoBean.getShopName());
                     sendMessage("\n");
                     sendMessage("\n");
                     sendMessage("消费清单");
