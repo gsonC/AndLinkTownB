@@ -2,7 +2,6 @@ package com.lianbi.mezone.b.ui;
 
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -215,13 +214,13 @@ public class ComeDetailActivity extends BaseActivity {
 				TimeSelectorA timeSelectorFrom = new TimeSelectorA(ComeDetailActivity.this, new TimeSelectorA.ResultHandler() {
 					@Override
 					public void handle(String time) {
-						if (!AbStrUtil.isEmpty(tvFinishtime.getText().toString()) && !AbDateUtil.compareTime(time, tvFinishtime.getText().toString(), "yyyyMMdd")) {
+						if (!AbStrUtil.isEmpty(tvFinishtime.getText().toString()) && !AbDateUtil.compareTime(getTime(time), tvFinishtime.getText().toString(), "yyyy-MM-dd")) {
 							ContentUtils.showMsg(ComeDetailActivity.this, "开始日期须在结束日期之前！");
 							tvStarttime.setText("");
 							beginTime = "";
 						} else {
 							tvStarttime.setText(getTime(time));
-							beginTime = time;
+							beginTime = getTime(time);
 							if (!TextUtils.isEmpty(tvFinishtime.getText().toString())) {
 								someOperation();
 								initSearch(beginTime, endTime, orderStatus, "", 1);
@@ -240,13 +239,13 @@ public class ComeDetailActivity extends BaseActivity {
 				TimeSelectorA timeSelectorTo = new TimeSelectorA(this, new TimeSelectorA.ResultHandler() {
 					@Override
 					public void handle(String time) {
-						if (!AbStrUtil.isEmpty(tvStarttime.getText().toString()) && !AbDateUtil.compareTime(tvStarttime.getText().toString(), time, "yyyyMMdd")) {
+						if (!AbStrUtil.isEmpty(tvStarttime.getText().toString()) && !AbDateUtil.compareTime(tvStarttime.getText().toString(), getTime(time), "yyyy-MM-dd")) {
 							ContentUtils.showMsg(ComeDetailActivity.this, "结束日期须在开始日期之后！");
 							tvFinishtime.setText("");
 							endTime = "";
 						} else {
 							tvFinishtime.setText(getTime(time));
-							endTime = time;
+							endTime =  getTime(time);
 							if (!TextUtils.isEmpty(tvStarttime.getText().toString())) {
 								someOperation();
 								initSearch(beginTime, endTime, orderStatus, "", 1);
@@ -261,9 +260,7 @@ public class ComeDetailActivity extends BaseActivity {
 				timeSelectorTo.showCurrent();
 				break;
 			case R.id.iv_close:
-				String startTime = tvStarttime.getText().toString();
-				String finishTime = tvFinishtime.getText().toString();
-				initSearch(startTime, finishTime, orderStatus, "", 1);
+				initSearch(beginTime, endTime, orderStatus, dateStatus, 1);
 				getOrder(true, false);
 				break;
 		}
@@ -295,7 +292,7 @@ public class ComeDetailActivity extends BaseActivity {
 		setListen();
 		initSearch(beginTime, endTime, orderStatus, "00", 1);
 		getOrder(true, false);
-
+		tvToday.setChecked(true);
 	}
 
 	private void setListen() {
@@ -340,13 +337,12 @@ public class ComeDetailActivity extends BaseActivity {
 					"",                         //sourceType
 					orderStatus,                        //orderStatus
 					dateStatus,                //dateStatus
-					1 + "",                    //curPage
+					curPage + "",                    //curPage
 					10 + "",                       //pageSize
 
 					new MyResultCallback<String>() {
 						@Override
 						public void onResponseResult(Result result) {
-							curPage++;
 							String reString = result.getData();
 							mWholeData.clear();
 							mPaySuccessDatas.clear();
@@ -356,19 +352,12 @@ public class ComeDetailActivity extends BaseActivity {
 								try {
 									jsonObject = new JSONObject(reString);
 									long amtCount = jsonObject.getLong("amtCount");
-
 									/*long amt = amtCount * 100;
 //											BigDecimal.valueOf(Long.valueOf(amtCount))
 //											.divide(new BigDecimal(100)).toString();*/
-									try {
-										tv_rmb.setText("¥"+AbStrUtil.changeF2Y(amtCount));
-									} catch (Exception e) {
-										e.printStackTrace();
-									}
-								/*	tv_rmb.setText("¥" + amt);*/
+									tv_rmb.setText("¥"+AbStrUtil.changeF2Y(amtCount));
 									reString = jsonObject.getString("responsePageList");
 									ArrayList<ComeService> mDatasL = (ArrayList<ComeService>) JSON.parseArray(reString, ComeService.class);
-									Log.i("tag", "363--->" + orderStatus);
 									if (orderStatus.equals("")) {
 										mWholeData.addAll(mDatasL);
 									} else if (orderStatus.equals("1")) {
@@ -376,19 +365,31 @@ public class ComeDetailActivity extends BaseActivity {
 									} else if (orderStatus.equals("91")) {
 										mPayFailDatas.addAll(mDatasL);
 									}
+									curPage++;
 									switchAdapter();
-									AbPullHide.hideRefreshView(isResh, actComedeatilAbpulltorefreshview);
 
 								} catch (Exception e) {
 									e.printStackTrace();
 								}
+								if(mDatas.size()==0){
+									actComedeatilListview.setVisibility(View.GONE);
+									imgEmpty.setVisibility(View.VISIBLE);
+
+								}else{
+									actComedeatilListview.setVisibility(View.VISIBLE);
+									imgEmpty.setVisibility(View.GONE);
+								}
+								AbPullHide.hideRefreshView(isResh, actComedeatilAbpulltorefreshview);
 							}
-							refreshingFinish();
+//							refreshingFinish();
 						}
 
 						@Override
 						public void onResponseFailed(String msg) {
-							refreshingFinish();
+							AbPullHide.hideRefreshView(isResh, actComedeatilAbpulltorefreshview);
+							actComedeatilListview.setVisibility(View.GONE);
+							imgEmpty.setVisibility(View.VISIBLE);
+//							refreshingFinish();
 							tv_rmb.setText("¥0");
 						}
 					});
