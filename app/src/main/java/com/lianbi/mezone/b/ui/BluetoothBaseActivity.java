@@ -38,6 +38,7 @@ import com.lzy.okgo.request.BaseRequest;
 import com.xizhi.mezone.b.R;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -234,13 +235,29 @@ public abstract class BluetoothBaseActivity extends BaseActivity {
         mService.write(start);
 
         mService.printCenter();
-        byte[] draw2PxPoint = PicFromPrintUtils.draw2PxPoint(bitmap);
+        byte[] draw2PxPoint = PicFromPrintUtils.pic2PxPoint(bitmap);
 
         mService.write(draw2PxPoint);
         // 发送结束指令
         byte[] end = {0x1d, 0x4c, 0x1f, 0x00};
         mService.write(end);
     }
+
+    protected void sendMessage2(Bitmap bitmap) {
+        // 发送打印图片前导指令
+        byte[] start = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1B,
+                0x40, 0x1B, 0x33, 0x00};
+        mService.write(start);
+
+        mService.printCenter();
+        byte[] draw2PxPoint = PicFromPrintUtils.pic2PxPoint(bitmap);
+
+        mService.write(draw2PxPoint);
+        // 发送结束指令
+        byte[] end = {0x1d, 0x4c, 0x1f, 0x00};
+        mService.write(end);
+    }
+
 
     //是否打印小票弹窗
     protected void showPrintTicketDialog(final String tableId) {
@@ -347,6 +364,16 @@ public abstract class BluetoothBaseActivity extends BaseActivity {
                     sendMessage("*******老板娘订单(消费单)*******");
                     sendMessage("\n");
                     sendMessage("\n");
+
+                    Bitmap bitmap = ContentUtils.createQrBitmap(qrUrl, true, 360, 360);
+                    //bitmap = PicFromPrintUtils.compressPic(bitmap);
+                    sendMessage(bitmap);
+
+                    mService.printCenter();
+
+                    sendMessage("*******老板娘订单(消费单)*******");
+                    sendMessage("\n");
+                    sendMessage("\n");
                     sendMessage(userShopInfoBean.getShopName());
                     sendMessage("\n");
                     sendMessage("\n");
@@ -435,14 +462,26 @@ public abstract class BluetoothBaseActivity extends BaseActivity {
                     mService.printCenter();
                     sendMessage("--------------------------------");
 
-                    BufferedInputStream bis = null;
+
+
+                    BufferedInputStream bis1 = null;
+                    BufferedReader br1 = null;
+
                     try {
-                        bis = new BufferedInputStream(getAssets().open("qr.jpg"));
+                        bis1 = new BufferedInputStream(getAssets().open("qr.jpg"),500);
+
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    Bitmap bitmap = BitmapFactory.decodeStream(bis);
-                    sendMessage(bitmap);
+
+                   // Bitmap bitmap = ContentUtils.createQrBitmap(qrUrl, true, 360, 360);
+                   // bitmap = PicFromPrintUtils.compressPic(bitmap);
+
+                    Bitmap bitmap1 = BitmapFactory.decodeStream(bis1);
+                    bitmap1 = PicFromPrintUtils.compressPic(bitmap1);
+                    sendMessage2(bitmap1);
+
+
 
                     mService.printReset();
                     mService.printCenter();
@@ -513,6 +552,7 @@ public abstract class BluetoothBaseActivity extends BaseActivity {
                     sendMessage("\n");
                     sendMessage("\n");
                     sendMessage("\n");
+
                 }
             }
 
@@ -521,6 +561,7 @@ public abstract class BluetoothBaseActivity extends BaseActivity {
 
             }
         }, userShopInfoBean.getBusinessId(), tableId);
+
     }
 
     private final Handler mHandler = new Handler() {
