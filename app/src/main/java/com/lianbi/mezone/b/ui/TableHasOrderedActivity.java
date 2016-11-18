@@ -43,12 +43,13 @@ import butterknife.OnClick;
 import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.QuickAdapter;
 import cn.com.hgh.utils.AbDateUtil;
-import cn.com.hgh.utils.AbViewUtil;
 import cn.com.hgh.utils.ContentUtils;
+import cn.com.hgh.utils.EditTextUtills;
 import cn.com.hgh.utils.MathExtend;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.view.DialogCommon;
 import cn.com.hgh.view.DialogQrg;
+import cn.com.hgh.view.MyListView;
 
 /*
 * 桌位详情-已点单
@@ -85,8 +86,6 @@ public class TableHasOrderedActivity extends BluetoothBaseActivity {
 
     private QuickAdapter<TableOrderBean> mAdapter;
     private List<TableOrderBean> mData = new ArrayList<>();
-
-    private String newPrice = "";
 
     private AlertDialog dialog;
     private AlertDialog.Builder b;
@@ -162,11 +161,30 @@ public class TableHasOrderedActivity extends BluetoothBaseActivity {
         fen_num.setText(jsonObject.getString("proNum"));
         num_should_pay.setText(jsonObject.getString("totalOrderMoney"));
         mData = JSON.parseArray(jsonObject.getString("unPaidOrders"), TableOrderBean.class);
+        for (int i = 0; i < mData.size(); i++) {
+            TableOrderBean bean = mData.get(i);
+            ArrayList<OneDishInOrder> detailInfo = bean.getDetailInfo();
+            for (int j = 0; j < detailInfo.size(); j++) {
+                OneDishInOrder oneDishInOrder = detailInfo.get(j);
+                if (oneDishInOrder.getIsDel().equals("1")) {
+                    detailInfo.remove(j);
+                    j--;
+                }
+            }
+            if (detailInfo.isEmpty()) {
+                mData.remove(i);
+                i--;
+            } else {
+                bean.setDetailInfo(detailInfo);
+                mData.remove(i);
+                mData.add(i, bean);
+            }
+        }
         mAdapter.replaceAll(mData);
     }
 
     private void initAdapter() {
-        mAdapter = new QuickAdapter<TableOrderBean>(TableHasOrderedActivity.this, R.layout.table_has_paid_order_list_view_layout, mData) {
+        mAdapter = new QuickAdapter<TableOrderBean>(TableHasOrderedActivity.this, R.layout.table_has_ordered_order_list_view_layout, mData) {
             @Override
             protected void convert(BaseAdapterHelper helper, final TableOrderBean item) {
                 helper.getView(R.id.dotted_line).setLayerType(View.LAYER_TYPE_SOFTWARE, null);
@@ -175,7 +193,7 @@ public class TableHasOrderedActivity extends BluetoothBaseActivity {
                 TextView name = helper.getView(R.id.tv_client_name);
                 TextView remark = helper.getView(R.id.remarks);//备注
                 TextView order_time = helper.getView(R.id.tv_order_time);//支付时间
-                LinearLayout container = helper.getView(R.id.dishes_list_container);
+                MyListView container = helper.getView(R.id.dishes_list_container);
                 Glide.with(TableHasOrderedActivity.this)
                         .load(item.getPhoto())
                         .asBitmap()
@@ -194,48 +212,44 @@ public class TableHasOrderedActivity extends BluetoothBaseActivity {
                 remark.setText(item.getDesc());
                 order_time.setText(AbDateUtil.exchangeFormat(item.getCreateTime(), "yyyyMMddHHmmss", AbDateUtil.dateFormatHM));
 
-                container.removeAllViews();
-                ArrayList<OneDishInOrder> detailInfo = item.getDetailInfo();
-                for (int i = 0; i < detailInfo.size(); i++) {
-                    View oneDishLayout = LayoutInflater.from(TableHasOrderedActivity.this).inflate(R.layout.one_dish_layout, null);
-                    TextView dish_name = (TextView) oneDishLayout.findViewById(R.id.dish_name);
-                    TextView dish_price = (TextView) oneDishLayout.findViewById(R.id.dish_price);
-                    TextView tv_dish_num = (TextView) oneDishLayout.findViewById(R.id.tv_dish_num);
-                    TextView cancel_dish = (TextView) oneDishLayout.findViewById(R.id.cancel_dish);
+                QuickAdapter<OneDishInOrder> adapter = new QuickAdapter<OneDishInOrder>(TableHasOrderedActivity.this, R.layout.one_dish_layout) {
+                    @Override
+                    protected void convert(BaseAdapterHelper helper, final OneDishInOrder oneDishInOrder) {
+                        TextView dish_name = helper.getView(R.id.dish_name);
+                        TextView dish_price = helper.getView(R.id.dish_price);
+                        TextView tv_dish_num = helper.getView(R.id.tv_dish_num);
+                        TextView cancel_dish = helper.getView(R.id.cancel_dish);
+                        dish_name.setText(oneDishInOrder.getProName());
+                        dish_price.setText(oneDishInOrder.getPrice());
+                        tv_dish_num.setText(oneDishInOrder.getNum());
+                        cancel_dish.setVisibility(View.VISIBLE);
+                        cancel_dish.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                DialogCommon dialog = new DialogCommon(TableHasOrderedActivity.this) {
+                                    @Override
+                                    public void onCheckClick() {
+                                        this.dismiss();
+                                    }
 
-                    final OneDishInOrder oneDishInOrder = detailInfo.get(i);
-                    dish_name.setText(oneDishInOrder.getProName());
-                    dish_price.setText(oneDishInOrder.getPrice());
-                    tv_dish_num.setText(oneDishInOrder.getNum());
-                    cancel_dish.setVisibility(View.VISIBLE);
-                    cancel_dish.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            DialogCommon dialog = new DialogCommon(TableHasOrderedActivity.this) {
-                                @Override
-                                public void onCheckClick() {
-                                    this.dismiss();
-                                }
-
-                                @Override
-                                public void onOkClick() {
-                                    gotoCancelProduct(item, oneDishInOrder);
-                                    this.dismiss();
-                                }
-                            };
-                            dialog.setTextTitle("是否取消");
-                            dialog.setTv_dialog_common_ok("是");
-                            dialog.setTv_dialog_common_cancel("否");
-                            dialog.setCancelable(false);
-                            dialog.setCanceledOnTouchOutside(false);
-                            dialog.show();
-                        }
-                    });
-                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(screenWidth,
-                            (int) AbViewUtil.dip2px(TableHasOrderedActivity.this, 80.0f));
-                    oneDishLayout.setLayoutParams(layoutParams);
-                    container.addView(oneDishLayout);
-                }
+                                    @Override
+                                    public void onOkClick() {
+                                        gotoCancelProduct(item, oneDishInOrder);
+                                        this.dismiss();
+                                    }
+                                };
+                                dialog.setTextTitle("是否取消");
+                                dialog.setTv_dialog_common_ok("是");
+                                dialog.setTv_dialog_common_cancel("否");
+                                dialog.setCancelable(false);
+                                dialog.setCanceledOnTouchOutside(false);
+                                dialog.show();
+                            }
+                        });
+                    }
+                };
+                container.setAdapter(adapter);
+                adapter.replaceAll(item.getDetailInfo());
             }
         };
         mListView.setAdapter(mAdapter);
@@ -349,32 +363,16 @@ public class TableHasOrderedActivity extends BluetoothBaseActivity {
     }
 
     private void showChangeOrderMoneyDialog() {
-        newPrice = "";
         final Dialog dialog = new Dialog(TableHasOrderedActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         View view = View.inflate(TableHasOrderedActivity.this, R.layout.change_order_money_dialog_layout, null);
-        EditText change = (EditText) view.findViewById(R.id.change_order_money);
-        change.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                newPrice = s.toString();
-            }
-        });
+        final EditText change = (EditText) view.findViewById(R.id.change_order_money);
+        EditTextUtills.setPricePoint(change);
         view.findViewById(R.id.positive_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                gotoEditPrice();
+                gotoEditPrice(change.getText().toString());
             }
         });
         view.findViewById(R.id.negative_button).setOnClickListener(new View.OnClickListener() {
@@ -395,8 +393,8 @@ public class TableHasOrderedActivity extends BluetoothBaseActivity {
         dialog.show();
     }
 
-    private void gotoEditPrice() {
-        if (newPrice.isEmpty()) {
+    private void gotoEditPrice(final String newPrice) {
+        if (TextUtils.isEmpty(newPrice)) {
             ContentUtils.showMsg(TableHasOrderedActivity.this, "请输入新价格");
             return;
         }

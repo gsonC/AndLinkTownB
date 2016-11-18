@@ -164,8 +164,6 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
 
     private String searchText = "";
 
-    private static final int GOTO_NEW_ORDER_TABLE_ACTIVITY = 1004;
-
     private ObjectAnimator objectInAnim;
     private ObjectAnimator objectOutAnim;
 
@@ -723,7 +721,7 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
     }
 
     //单个桌面详情
-    private void getTableInfo(final TableSetBean bean) {
+    private void getTableInfo(final TableSetBean bean, final int position) {
         okHttpsImp.tableInfo(new MyResultCallback<String>() {
             @Override
             public void onBefore(BaseRequest request) {
@@ -739,9 +737,9 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
 
             @Override
             public void onResponseResult(Result result) {
-                String data = result.getData();
-                if (!TextUtils.isEmpty(data)) {
-                    com.alibaba.fastjson.JSONObject jsonObject = JSON.parseObject(data);
+                String dataString = result.getData();
+                if (!TextUtils.isEmpty(dataString)) {
+                    com.alibaba.fastjson.JSONObject jsonObject = JSON.parseObject(dataString);
                     switch (jsonObject.getIntValue("tableStatus")) {
                         case 0:
                             tableId = bean.getTableId();
@@ -750,21 +748,22 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
                                     .putExtra("TABLEID", tableId));
                             break;
                         case 1:
-                            Intent i = new Intent(DiningTableSettingActivity.this, TableHasOrderedActivity.class);
-                            i.putExtra("TABLENAME", bean.getTableName());
-                            i.putExtra("TABLEID", bean.getTableId());
-                            i.putExtra("DATA", data);
                             if (bean.isNew()) {
-                                startActivityForResult(i, GOTO_NEW_ORDER_TABLE_ACTIVITY);
-                            } else {
-                                startActivity(i);
+                                data.remove(position);
+                                bean.setNew(false);
+                                data.add(position, bean);
+                                adapter.replaceAll(data);
                             }
+                            startActivity(new Intent(DiningTableSettingActivity.this, TableHasOrderedActivity.class)
+                                    .putExtra("TABLENAME", bean.getTableName())
+                                    .putExtra("TABLEID", bean.getTableId())
+                                    .putExtra("DATA", dataString));
                             break;
                         case 2:
                             startActivity(new Intent(DiningTableSettingActivity.this, TableHasPaidActivity.class)
                                     .putExtra("TABLENAME", bean.getTableName())
                                     .putExtra("TABLEID", bean.getTableId())
-                                    .putExtra("DATA", data));
+                                    .putExtra("DATA", dataString));
                             break;
                     }
                 }
@@ -799,33 +798,6 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
         String bussniessId = BaseActivity.userShopInfoBean.getBusinessId();
         url = url + bussniessId;
         return url;
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        switch (requestCode) {
-            case GOTO_NEW_ORDER_TABLE_ACTIVITY:
-                if (resultCode == RESULT_OK) {
-                    String tableId = intent.getStringExtra("TABLEID");
-                    int index = 0;
-                    TableSetBean bean = null;
-                    for (int i = 0; i < data.size(); i++) {
-                        bean = data.get(i);
-                        if (bean.getTableId().equals(tableId)) {
-                            index = i;
-                            break;
-                        }
-                    }
-                    data.remove(index);
-                    bean.setNew(false);
-                    data.add(index, bean);
-                    adapter.replaceAll(data);
-                }
-                break;
-            default:
-                super.onActivityResult(requestCode, resultCode, intent);
-                break;
-        }
     }
 
     @Override
@@ -977,8 +949,10 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
                 emptyList.add(bean);
             }
             if (bean.getTableStatus() == 1) {//已点餐
-                if (!TextUtils.isEmpty(tableId) && tableId.equals(bean.getTableId()))
+                if (!TextUtils.isEmpty(tableId) && tableId.equals(bean.getTableId())) {
                     bean.setNew(true);
+                    tableId = "";
+                }
                 orderdList.add(bean);
             }
             if (bean.getTableStatus() == 2) {//已支付
@@ -1076,11 +1050,11 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
                     data.add(position, bean);
                     adapter.replaceAll(data);
                 } else {
-                    getTableInfo(bean);
+                    getTableInfo(bean, position);
                 }
                 break;
             case R.id.search_result_grid_view:
-                getTableInfo(searchResultAdapter.getItem(position));
+                getTableInfo(searchResultAdapter.getItem(position), position);
                 break;
         }
     }

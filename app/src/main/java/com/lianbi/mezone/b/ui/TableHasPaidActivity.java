@@ -93,6 +93,25 @@ public class TableHasPaidActivity extends BaseActivity {
         double actually_paid = MathExtend.round(Double.parseDouble(totalOrderMoney) - Double.parseDouble(benefitMoney), 2);
         actually_paid_amount.setText(Double.toString(actually_paid));
         mData = JSON.parseArray(jsonObject.getString("alreadyPaidOrders"), TableOrderBean.class);
+        for (int i = 0; i < mData.size(); i++) {
+            TableOrderBean bean = mData.get(i);
+            ArrayList<OneDishInOrder> detailInfo = bean.getDetailInfo();
+            for (int j = 0; j < detailInfo.size(); j++) {
+                OneDishInOrder oneDishInOrder = detailInfo.get(j);
+                if (oneDishInOrder.getIsDel().equals("1")) {
+                    detailInfo.remove(j);
+                    j--;
+                }
+            }
+            if (detailInfo.isEmpty()) {
+                mData.remove(i);
+                i--;
+            } else {
+                bean.setDetailInfo(detailInfo);
+                mData.remove(i);
+                mData.add(i, bean);
+            }
+        }
         mAdapter.replaceAll(mData);
     }
 
@@ -224,6 +243,12 @@ public class TableHasPaidActivity extends BaseActivity {
         dialog.setContentView(view);
         dialog.setCancelable(false);
         dialog.setCanceledOnTouchOutside(false);
+        Window win = dialog.getWindow();
+        WindowManager.LayoutParams lp = win.getAttributes();
+        lp.gravity = Gravity.CENTER;
+        lp.width = (int) (screenWidth * 0.8);
+        lp.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+        dialog.onWindowAttributesChanged(lp);
         dialog.show();
     }
 
@@ -232,19 +257,8 @@ public class TableHasPaidActivity extends BaseActivity {
         okHttpsImp.setTableFree(new MyResultCallback<String>() {
             @Override
             public void onResponseResult(Result result) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(TableHasPaidActivity.this);
-                builder.setCancelable(false);
-                builder.setMessage("翻桌成功");
-                builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                        finish();
-                    }
-                });
-                AlertDialog dialog = builder.create();
-                dialog.setCanceledOnTouchOutside(false);
-                dialog.show();
+                ContentUtils.showMsg(TableHasPaidActivity.this, "翻桌成功");
+                finish();
             }
 
             @Override
