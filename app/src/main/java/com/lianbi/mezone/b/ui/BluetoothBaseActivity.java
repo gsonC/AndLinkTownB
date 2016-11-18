@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -36,6 +37,8 @@ import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.lzy.okgo.request.BaseRequest;
 import com.xizhi.mezone.b.R;
 
+import java.io.BufferedInputStream;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
@@ -339,6 +342,7 @@ public abstract class BluetoothBaseActivity extends BaseActivity {
                         ContentUtils.showMsg(BluetoothBaseActivity.this, "没有订单信息");
                         return;
                     }
+
                     mService.printCenter();
                     sendMessage("*******老板娘订单(消费单)*******");
                     sendMessage("\n");
@@ -430,7 +434,14 @@ public abstract class BluetoothBaseActivity extends BaseActivity {
                     mService.printReset();
                     mService.printCenter();
                     sendMessage("--------------------------------");
-                    Bitmap bitmap = PicFromPrintUtils.compressBitmap(ContentUtils.createQrBitmap(qrUrl, true, 1000, 1000));
+
+                    BufferedInputStream bis = null;
+                    try {
+                        bis = new BufferedInputStream(getAssets().open("qr.jpg"));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    Bitmap bitmap = BitmapFactory.decodeStream(bis);
                     sendMessage(bitmap);
 
                     mService.printReset();

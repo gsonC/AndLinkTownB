@@ -31,6 +31,8 @@ import com.lianbi.mezone.b.bean.TableOrderBean;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.xizhi.mezone.b.R;
 
+import org.json.JSONException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,6 +47,7 @@ import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.MathExtend;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.view.DialogCommon;
+import cn.com.hgh.view.DialogQrg;
 
 /*
 * 桌位详情-已点单
@@ -499,17 +502,31 @@ public class TableHasOrderedActivity extends BluetoothBaseActivity {
     }
 
     private void gotoOnlinePay() {
-//        okHttpsImp.onlinePay(new MyResultCallback<String>() {
-//            @Override
-//            public void onResponseResult(Result result) {
-//
-//            }
-//
-//            @Override
-//            public void onResponseFailed(String msg) {
-//
-//            }
-//        }, userShopInfoBean.getUserId(), userShopInfoBean.getBusinessId(), tableId, );
+        try {
+            okHttpsImp.getonlinePay(userShopInfoBean.getUserId(), userShopInfoBean.getBusinessId(), tableId, new MyResultCallback<String>() {
+                @Override
+                public void onResponseResult(Result result) {
+                    String reString = result.getData();
+                    if (reString != null) {
+                        try {
+                            org.json.JSONObject jsonObject = new org.json.JSONObject(reString);
+                            String url = jsonObject.getString("payUrl");
+                            DialogQrg dialogQrg = new DialogQrg(url, TableHasOrderedActivity.this);
+                            dialogQrg.show();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+                @Override
+                public void onResponseFailed(String msg) {
+
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     //现金支付

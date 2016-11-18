@@ -621,24 +621,6 @@ public enum OkHttpsImp {
     }
 
     /**
-     * 在线支付
-     */
-    public void onlinePay(MyResultCallback<String> myResultCallback, String userId, String businessId, String tableId, String orderId) {
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("userId", userId);
-        params.put("businessId", businessId);
-        params.put("tableId", tableId);
-        params.put("orderId", orderId);
-        String url = API.TOSTORESERVICE + "/wcm/store/"
-                .concat(userId).concat("/")
-                .concat(businessId).concat("/")
-                .concat(tableId).concat("/")
-                .concat(orderId).concat("/")
-                .concat("onlinePay");
-        postProgressResponse(myResultCallback, params, url);
-    }
-
-    /**
      * 删除桌位号
      */
     public void getDeleteTableId(MyResultCallback<String> myResultCallback, String storeId, String tableIds) {
