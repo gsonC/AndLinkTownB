@@ -445,6 +445,7 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 	 * 设置首页消息推送界面
 	 */
 	private void setShopPushOrderCount(TextView textView, int count) {
+		textView.setVisibility(View.GONE);
 		if (0 != count) {
 			if (count > 99) {
 				textView.setVisibility(View.VISIBLE);
@@ -454,7 +455,7 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 				textView.setText(count + "");
 			}
 		}else{
-			textView.setVisibility(View.GONE);
+			textView.setText("");
 		}
 	}
 

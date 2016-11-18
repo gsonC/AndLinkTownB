@@ -17,7 +17,7 @@ public class OrderPushCount implements Serializable {
 	/**
 	 * pushCount : 0
 	 * orderCount : 0
-	 * paidount : 0
+	 * paidCount : 0
 	 */
 
 	private int pushCount;
