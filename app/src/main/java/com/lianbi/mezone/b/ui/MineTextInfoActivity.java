@@ -159,7 +159,7 @@ public class MineTextInfoActivity extends BaseActivity {
 			imageStr = Picture_Base64.GetImageStr(file.toString());
 		}
 		final String name = mineinfo_name_et.getText().toString().trim();
-		String phone = mineinfo_phone_et.getText().toString().trim();
+		 String phone = mineinfo_phone_et.getText().toString().trim();
 		if (TextUtils.isEmpty(phone)) {
 			phone = ContentUtils.getSharePreString(this,
 					Constants.SHARED_PREFERENCE_NAME, Constants.USER_NAME);
@@ -203,6 +203,9 @@ public class MineTextInfoActivity extends BaseActivity {
 				@Override
 				public void onResponseResult(Result result) {
 					ContentUtils.showMsg(MineTextInfoActivity.this, "修改成功！");
+					ContentUtils.putSharePre(MineTextInfoActivity.this,
+							Constants.USERTAG, Constants.USERNAME,name);
+
 					userShopInfoBean.setName(name);
 					userShopInfoBean.setPersonHeadUrl(file.toString());
 					setResult(RESULT_OK);
