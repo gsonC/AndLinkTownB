@@ -95,7 +95,7 @@ public class RevisionsActivity extends BaseActivity {
 
 	private void initView() {
 		file = new ArrayList<File>();
-		setPageTitle("修改积分商品");
+		setPageTitle(getString(R.string.activity_revisions_title));
 		photoUtills = new MyPhotoUtills(this);
 		ima_Smallima.setOnClickListener(this);
 		smallImaOne.setOnClickListener(this);

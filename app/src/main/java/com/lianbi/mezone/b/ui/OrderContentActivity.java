@@ -403,7 +403,7 @@ public class OrderContentActivity extends BaseActivity implements
      * 初始化View
      */
     private void initView() {
-        setPageTitle("订单搜索");
+        setPageTitle(getString(R.string.activity_ordercontent_title));
         viewAdapter();
     }
 

@@ -186,7 +186,7 @@ public class FinancialActivity extends BaseActivity {
 
 	private void initView() {
 
-		setPageTitle("财务室");
+		setPageTitle(getString(R.string.activity_financial_title));
 		setPageRightText("明细");
 		setPageRightTextColor(R.color.commo_text_color);
 		n_safety = (LinearLayout) findViewById(R.id.n_safety);

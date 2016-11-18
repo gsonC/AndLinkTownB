@@ -220,7 +220,7 @@ public class MyShopActivity extends BaseActivity {
 	 * 初始化View
 	 */
 	private void initView() {
-		setPageTitle("我的商铺");
+		setPageTitle(getString(R.string.activity_myshop_title));
 		setPageRightText("切换");
 		setPageRightTextColor(R.color.colores_news_01);
 		img_my_shop_mohu = (ImageView) findViewById(R.id.img_my_shop_mohu);

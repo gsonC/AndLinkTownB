@@ -1,10 +1,5 @@
 package com.lianbi.mezone.b.ui;
 
-import java.util.ArrayList;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,6 +20,18 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
+
+import com.alibaba.fastjson.JSON;
+import com.lianbi.mezone.b.bean.AssociatorListBean;
+import com.lianbi.mezone.b.fragment.AllMemberFragment;
+import com.lianbi.mezone.b.httpresponse.MyResultCallback;
+import com.xizhi.mezone.b.R;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
 import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.QuickAdapter;
 import cn.com.hgh.utils.AbAppUtil;
@@ -35,12 +42,6 @@ import cn.com.hgh.view.AbPullToRefreshView;
 import cn.com.hgh.view.AbPullToRefreshView.OnFooterLoadListener;
 import cn.com.hgh.view.AbPullToRefreshView.OnHeaderRefreshListener;
 import cn.com.hgh.view.PagerSlidingTabStrip;
-
-import com.alibaba.fastjson.JSON;
-import com.xizhi.mezone.b.R;
-import com.lianbi.mezone.b.bean.AssociatorListBean;
-import com.lianbi.mezone.b.fragment.AllMemberFragment;
-import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 
 @SuppressLint("ResourceAsColor")
 public class MyMemberManagementActivity extends BaseActivity {
@@ -254,7 +255,7 @@ public class MyMemberManagementActivity extends BaseActivity {
 	}
 
 	private void initView() {
-		setPageTitle("会员管理");
+		setPageTitle(getString(R.string.activity_mymembermanagement_title));
 		setPageRightText("搜索");
 		setPageTitleVETYPE(InputType.TYPE_CLASS_NUMBER);
 		setPageTitleEtLenth(11);

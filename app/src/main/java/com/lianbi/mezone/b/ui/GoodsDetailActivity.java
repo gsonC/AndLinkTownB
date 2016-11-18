@@ -171,7 +171,7 @@ public class GoodsDetailActivity extends BaseActivity {
 	 * 初始化View
 	 */
 	private void initView() {
-		setPageTitle("货源详情");
+		setPageTitle(getString(R.string.activity_goodsdetail_title));
 		listView_goods_detail_jibie = (ListView) findViewById(R.id.listView_goods_detail_jibie);
 		img_goods_detail = (ImageView) findViewById(R.id.img_goods_detail);
 		img_goods_detail_minus = (ImageView) findViewById(R.id.img_goods_detail_minus);

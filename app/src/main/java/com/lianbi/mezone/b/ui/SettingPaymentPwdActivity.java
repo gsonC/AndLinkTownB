@@ -4,15 +4,16 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
+
+import com.lianbi.mezone.b.httpresponse.MyResultCallback;
+import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
+import com.xizhi.mezone.b.R;
+
 import cn.com.hgh.gridpasswordview.GridPasswordView;
 import cn.com.hgh.utils.AbDateUtil;
 import cn.com.hgh.utils.AbStrUtil;
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.Result;
-
-import com.xizhi.mezone.b.R;
-import com.lianbi.mezone.b.httpresponse.MyResultCallback;
-import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
 
 /**
  * 我的银行卡 -- 设置密码
@@ -40,7 +41,7 @@ public class SettingPaymentPwdActivity extends BaseActivity {
 	 * 初始化View
 	 */
 	private void initView() {
-		setPageTitle("设置新密码");
+		setPageTitle(getString(R.string.activity_settingpaymentpwd_title));
 		gridPasswordView = (GridPasswordView) findViewById(R.id.gridPasswordView);
 		gpv_customUi_sure = (GridPasswordView) findViewById(R.id.gpv_customUi_sure);
 		txt_setting_payment_pwd = (TextView) findViewById(R.id.txt_setting_payment_pwd);

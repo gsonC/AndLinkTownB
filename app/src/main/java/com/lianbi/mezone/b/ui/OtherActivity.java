@@ -1,8 +1,5 @@
 package com.lianbi.mezone.b.ui;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
@@ -10,18 +7,19 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+
+import com.lianbi.mezone.b.app.Constants;
+import com.lianbi.mezone.b.bean.AppUpDataBean;
+import com.lianbi.mezone.b.httpresponse.MyResultCallback;
+import com.lianbi.mezone.b.receiver.Downloader;
+import com.xizhi.mezone.b.R;
+
 import cn.com.hgh.utils.AbAppUtil;
 import cn.com.hgh.utils.AbDateUtil;
 import cn.com.hgh.utils.AbStrUtil;
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.view.DialogCommon;
-
-import com.xizhi.mezone.b.R;
-import com.lianbi.mezone.b.app.Constants;
-import com.lianbi.mezone.b.bean.AppUpDataBean;
-import com.lianbi.mezone.b.httpresponse.MyResultCallback;
-import com.lianbi.mezone.b.receiver.Downloader;
 
 /**
  * 其他页面
@@ -46,7 +44,7 @@ public class OtherActivity extends BaseActivity {
 	}
 
 	private void initView() {
-		setPageTitle("其他");
+		setPageTitle(getString(R.string.activity_other_title));
 		other_exit_btn = (Button) findViewById(R.id.other_exit_btn);
 		other_feedback_ll = (LinearLayout) findViewById(R.id.other_feedback_ll);
 		other_update_ll = (LinearLayout) findViewById(R.id.other_update_ll);

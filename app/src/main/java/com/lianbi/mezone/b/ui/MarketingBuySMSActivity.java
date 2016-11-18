@@ -86,7 +86,7 @@ public class MarketingBuySMSActivity extends BaseActivity {
      * 初始化View
      */
     private void initViewAndData() {
-        setPageTitle("短信购买");
+        setPageTitle(getString(R.string.activity_markingbuysms_title));
         dialog = new HttpDialog(this);
         listviewData();
         getCanbuysms();

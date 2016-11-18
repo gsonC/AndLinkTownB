@@ -6,12 +6,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import cn.com.hgh.utils.AbViewUtil;
-import cn.com.hgh.view.PagerSlidingTabStrip;
 
-import com.xizhi.mezone.b.R;
 import com.lianbi.mezone.b.fragment.MineServiceFragment;
 import com.lianbi.mezone.b.fragment.OnLineServiceFragment;
+import com.xizhi.mezone.b.R;
+
+import cn.com.hgh.utils.AbViewUtil;
+import cn.com.hgh.view.PagerSlidingTabStrip;
 
 /**
  * 服务商城
@@ -37,7 +38,7 @@ public class ServiceShopActivity extends BaseActivity {
 	}
 
 	private void initView() {
-		setPageTitle("服务商城");
+		setPageTitle(getString(R.string.activity_serviceshop_title));
 		pager = (ViewPager) findViewById(R.id.pager_act_serviceshopactivity);
 		tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs_act_serviceshopactivity);
 		tabs.setTextSize((int) AbViewUtil.sp2px(this, 15));

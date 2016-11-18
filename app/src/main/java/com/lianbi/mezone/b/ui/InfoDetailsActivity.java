@@ -170,7 +170,7 @@ public class InfoDetailsActivity extends BaseActivity {
 	}
 
 	private void initView() {
-		setPageTitle("信息详情");
+		setPageTitle(getString(R.string.activity_infodetails_title));
 		iv_selectall= (ImageView) findViewById(R.id.iv_selectall);
 		tv_seleteall= (TextView) findViewById(R.id.tv_seleteall);
 		ray_choice= (RelativeLayout) findViewById(R.id.ray_choice);

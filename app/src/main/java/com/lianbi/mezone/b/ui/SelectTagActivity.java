@@ -80,7 +80,7 @@ public class SelectTagActivity extends BaseActivity {
 	}
 
 	private void initView() {
-		setPageTitle("选择标签");
+		setPageTitle(getString(R.string.activity_selecttag_title));
 		setPageRightText("确定");
 		mActSelecttagAbpulltorefreshview = (AbPullToRefreshView) findViewById(R.id.act_selecttag_abpulltorefreshview);
 		mActSelecttagListview = (ListView) findViewById(R.id.act_selecttag_listview);

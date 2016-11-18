@@ -105,7 +105,7 @@ public class MarketingSMSexampleActivity extends BaseActivity {
      */
     private void initViewAndData() {
         templateType = getIntent().getStringExtra(TEMPLATE_TYPE);
-        setPageTitle("选择短信模板");
+        setPageTitle(getString(R.string.activity_marketingsmsexample_title));
         dialog = new HttpDialog(this);
         initRecyclerView();
         queryAllSMSTemplate(true);

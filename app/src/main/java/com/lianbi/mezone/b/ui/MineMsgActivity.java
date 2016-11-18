@@ -1,31 +1,28 @@
 package com.lianbi.mezone.b.ui;
 
-import java.util.ArrayList;
-
-import org.json.JSONException;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.text.TextUtils;
-import cn.com.hgh.utils.AbViewUtil;
-import cn.com.hgh.utils.ContentUtils;
-import cn.com.hgh.utils.Result;
-import cn.com.hgh.view.PagerSlidingTabStrip;
 
 import com.alibaba.fastjson.JSONObject;
-import com.xizhi.mezone.b.R;
-import com.lianbi.mezone.b.app.Constants;
 import com.lianbi.mezone.b.bean.MessageBean;
-import com.lianbi.mezone.b.bean.TableSetBean;
 import com.lianbi.mezone.b.fragment.AllMessageFragment;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
+import com.xizhi.mezone.b.R;
+
+import org.json.JSONException;
+
+import java.util.ArrayList;
+
+import cn.com.hgh.utils.AbViewUtil;
+import cn.com.hgh.utils.Result;
+import cn.com.hgh.view.PagerSlidingTabStrip;
 
 @SuppressLint("ResourceAsColor")
 public class MineMsgActivity extends BaseActivity {
@@ -246,7 +243,7 @@ public class MineMsgActivity extends BaseActivity {
 	}
 
 	private void initView() {
-		setPageTitle("我的消息");
+		setPageTitle(getString(R.string.activity_minemag_title));
 		setPageRightText("编辑");
 		setPageRightTextColor(R.color.colores_news_11);
 

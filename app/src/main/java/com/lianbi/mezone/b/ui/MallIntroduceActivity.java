@@ -1,18 +1,17 @@
 package com.lianbi.mezone.b.ui;
 
 
-import org.json.JSONObject;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.TextView;
 
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.xizhi.mezone.b.R;
+
+import org.json.JSONObject;
 
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.Result;
@@ -36,7 +35,7 @@ public class MallIntroduceActivity extends BaseActivity {
 		initListen();
 	}
 	private void initViewAndData() {
-		setPageTitle("介绍");
+		setPageTitle(getString(R.string.activity_introduce_title));
 		tv_download = (TextView) findViewById(R.id.tv_download);//点击下载
 		web_WebView = (WebView) findViewById(R.id.web_mallintroduce);
 		getIntent=getIntent();

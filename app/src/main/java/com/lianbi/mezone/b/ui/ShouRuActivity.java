@@ -131,7 +131,7 @@ public class ShouRuActivity extends BaseActivity {
 	 * 初始化View
 	 */
 	protected void initView() {
-		setPageTitle("今日收入明细");
+		setPageTitle(getString(R.string.activity_shouru_title));
 
 		iv_server_other = (ImageView) findViewById(R.id.iv_server_other);
 		scrollview_desition = (ScrollView) findViewById(R.id.scrollview_desition);

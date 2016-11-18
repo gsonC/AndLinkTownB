@@ -68,7 +68,7 @@ public class LeaguesDynamicListActivity extends BaseActivity {
      * 初始化View
      */
     private void initData() {
-        setPageTitle("商圈动态列表");
+        setPageTitle(getString(R.string.activity_leaguesdynamiclist_title));
     }
     private void setLisenter() {
         actLeaguesdynamiclistAbpulltorefreshview.setLoadMoreEnable(true);

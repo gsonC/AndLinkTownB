@@ -131,7 +131,7 @@ public class MemberClassifyActivity extends BaseActivity {
         mDatas.clear();
     }
     private void initViewAndData() {
-        setPageTitle("会员分类");
+        setPageTitle(getString(R.string.activity_memberclassify_title));
         dialog = new HttpDialog(this);
         initRecyclerView();
         getMemberCategoryList(false);

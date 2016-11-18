@@ -63,7 +63,7 @@ public class LeaguesStorelistActivity extends BaseActivity {
      * 初始化View
      */
     private void initData() {
-        setPageTitle("店铺列表");
+        setPageTitle(getString(R.string.activity_leaguesstorelist_title));
         initAdapter();
         setLisenter();
         getLeaguesStorelist(true);

@@ -49,7 +49,7 @@ public class ReceivablesActivity extends BaseActivity implements
 	 * 初始化View
 	 */
 	private void initView() {
-		setPageTitle("收款");
+		setPageTitle(getString(R.string.activity_receivables_title));
 		mCbReceivanles = (CheckBox) findViewById(R.id.cb_receivanles);
 		mTvReceivablesAgree = (TextView) findViewById(R.id.tv_receivables_agree);
 		mTvAgree = (TextView) findViewById(R.id.tv_agree);

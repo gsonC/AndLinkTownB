@@ -1,11 +1,9 @@
 package com.lianbi.mezone.b.ui;
 
-import android.content.ComponentName;
 import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -23,7 +21,6 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.OnItemClick;
 import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.QuickAdapter;
 import cn.com.hgh.utils.MathExtend;
@@ -58,7 +55,7 @@ public class WithdrawRecordActivity extends BaseActivity implements AbPullToRefr
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_withdraw_record, NOTYPE);
         ButterKnife.bind(WithdrawRecordActivity.this);
-        setPageTitle("提现记录");
+        setPageTitle(getString(R.string.activity_withdrawrecord_title));
         setListener();
         initAdapter();
         getDatas();

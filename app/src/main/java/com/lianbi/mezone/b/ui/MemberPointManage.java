@@ -67,7 +67,7 @@ public class MemberPointManage extends BaseActivity implements OnClickListener {
 	}
 
 	private void initView() {
-		setPageTitle("积分商品");
+		setPageTitle(getString(R.string.activity_memberpoint_title));
 		fm_member_listView = (SlideListView2) findViewById(R.id.fm_member_listView);
 		fm_member_listView.initSlideMode(SlideListView2.MOD_RIGHT);
 

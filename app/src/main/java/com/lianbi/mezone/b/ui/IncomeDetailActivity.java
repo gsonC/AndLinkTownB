@@ -1,8 +1,5 @@
 package com.lianbi.mezone.b.ui;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -11,6 +8,16 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.alibaba.fastjson.JSON;
+import com.lianbi.mezone.b.bean.IncomeDetailBean;
+import com.lianbi.mezone.b.httpresponse.MyResultCallback;
+import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
+import com.xizhi.mezone.b.R;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+
 import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.QuickAdapter;
 import cn.com.hgh.utils.AbDateUtil;
@@ -20,12 +27,6 @@ import cn.com.hgh.utils.Result;
 import cn.com.hgh.view.AbPullToRefreshView;
 import cn.com.hgh.view.AbPullToRefreshView.OnFooterLoadListener;
 import cn.com.hgh.view.AbPullToRefreshView.OnHeaderRefreshListener;
-
-import com.alibaba.fastjson.JSON;
-import com.xizhi.mezone.b.R;
-import com.lianbi.mezone.b.bean.IncomeDetailBean;
-import com.lianbi.mezone.b.httpresponse.MyResultCallback;
-import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
 
 /**
  * 订单info
@@ -83,7 +84,7 @@ public class IncomeDetailActivity extends BaseActivity {
 	}
 
 	private void initView() {
-		setPageTitle("收入明细");
+		setPageTitle(getString(R.string.activity_incomedetail_title));
 
 		act_dingdaninfo_abpulltorefreshview = (AbPullToRefreshView) findViewById(R.id.act_dingdaninfo_abpulltorefreshview);
 		act_dingdaninfo_listview = (ListView) findViewById(R.id.act_dingdaninfo_listview);

@@ -50,7 +50,7 @@ public class ReceivablesQRActivity extends BaseActivity implements View.OnLongCl
 	 * 初始化View
 	 */
 	private void initView() {
-		setPageTitle("收款");
+		setPageTitle(getString(R.string.activity_receivablesqr_title));
 		mImgRqcode = (ImageView) findViewById(R.id.img_rqcode);
 		mTvQrAppend = (TextView) findViewById(R.id.tv_qr_append);
 		qrCode();

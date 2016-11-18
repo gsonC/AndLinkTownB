@@ -1,13 +1,5 @@
 package com.lianbi.mezone.b.ui;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-
-import org.json.JSONObject;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -27,15 +19,23 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+import com.lianbi.mezone.b.bean.QrcodeDetails;
+import com.lianbi.mezone.b.httpresponse.MyResultCallback;
+import com.xizhi.mezone.b.R;
+
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.view.DialogCommon;
 import cn.com.hgh.view.HttpDialog;
-
-import com.alibaba.fastjson.JSON;
-import com.xizhi.mezone.b.R;
-import com.lianbi.mezone.b.bean.QrcodeDetails;
-import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 
 /*
 * 桌面详情--空桌
@@ -119,7 +119,7 @@ public class ScanningQRActivity extends BaseActivity {
     }
 
     private void initView() {
-        setPageTitle("空桌");
+        setPageTitle(getString(R.string.activity_scanningqr_title));
         String tablename = getIntent().getStringExtra("TABLENAME");
         tableid = getIntent().getStringExtra("TABLEID");
         tv_tablename = (TextView) findViewById(R.id.tv_tablename);

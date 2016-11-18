@@ -6,13 +6,14 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.lianbi.mezone.b.bean.AssociatorListBean;
+import com.lianbi.mezone.b.httpresponse.MyResultCallback;
+import com.xizhi.mezone.b.R;
+
 import cn.com.hgh.indexscortlist.ClearEditText;
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.Result;
-
-import com.xizhi.mezone.b.R;
-import com.lianbi.mezone.b.bean.AssociatorListBean;
-import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 
 /**
  * 会员编辑
@@ -76,7 +77,7 @@ public class MemberEditActivity extends BaseActivity {
 	}
 
 	private void initView() {
-		setPageTitle("会员编辑");
+		setPageTitle(getString(R.string.activity_memberedit_title));
 		setPageRightText("删除");
 		setPageRightTextColor(R.color.colores_news_01);
 		submit = (Button) findViewById(R.id.submit_member);

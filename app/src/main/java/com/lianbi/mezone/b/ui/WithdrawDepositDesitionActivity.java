@@ -1,15 +1,16 @@
 package com.lianbi.mezone.b.ui;
 
-import java.math.BigDecimal;
-
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.widget.TextView;
+
+import com.lianbi.mezone.b.bean.WithDrawDeposite;
+import com.xizhi.mezone.b.R;
+
+import java.math.BigDecimal;
+
 import cn.com.hgh.utils.MathExtend;
 import cn.com.hgh.utils.SpannableuUtills;
-
-import com.xizhi.mezone.b.R;
-import com.lianbi.mezone.b.bean.WithDrawDeposite;
 
 public class WithdrawDepositDesitionActivity extends BaseActivity {
 
@@ -28,7 +29,7 @@ public class WithdrawDepositDesitionActivity extends BaseActivity {
 	}
 
 	protected void initView() {
-		setPageTitle("交易详情");
+		setPageTitle(getString(R.string.activity_withdrawdepositdesition_title));
 		withdrawdepositdesitionactivity_tv_sn = (TextView) findViewById(R.id.withdrawdepositdesitionactivity_tv_sn);
 		withdrawdepositdesitionactivity_tv_status = (TextView) findViewById(R.id.withdrawdepositdesitionactivity_tv_status);
 		withdrawdepositdesitionactivity_tv_withdraw_content = (TextView) findViewById(R.id.withdrawdepositdesitionactivity_tv_withdraw_content);

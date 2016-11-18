@@ -94,7 +94,7 @@ public class RecordsOfConsumptionActivity extends BaseActivity {
 	 * 初始化View
 	 */
 	private void initView() {
-		setPageTitle("会员详情");
+		setPageTitle(getString(R.string.activity_recordsofconsumption_title));
 		mTvRecordMemberfile = (TextView) findViewById(R.id.tv_record_memberfile);//会员档案
 		mTvRecordRecordsofconsumption = (TextView) findViewById(R.id.tv_record_recordsofconsumption);//消费记录
 		mTvRecordRecordsofconsumption.setTextColor(RecordsOfConsumptionActivity.this.getResources().getColor(R.color.color_ff8208));

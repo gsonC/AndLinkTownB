@@ -1,17 +1,5 @@
 package com.lianbi.mezone.b.ui;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,19 +8,32 @@ import android.view.View;
 import android.webkit.WebView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.alibaba.fastjson.JSON;
+import com.lianbi.mezone.b.bean.DateAndColor;
+import com.lianbi.mezone.b.bean.Dayincome;
+import com.lianbi.mezone.b.httpresponse.API;
+import com.lianbi.mezone.b.httpresponse.MyResultCallback;
+import com.xizhi.mezone.b.R;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 import cn.com.hgh.baseadapter.DateRecylerviewAdapter;
 import cn.com.hgh.baseadapter.DateRecylerviewAdapter.OnItemMonthClickListener;
 import cn.com.hgh.utils.MathExtend;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.utils.ScreenUtils;
 import cn.com.hgh.utils.WebViewInit;
-
-import com.alibaba.fastjson.JSON;
-import com.xizhi.mezone.b.R;
-import com.lianbi.mezone.b.bean.DateAndColor;
-import com.lianbi.mezone.b.bean.Dayincome;
-import com.lianbi.mezone.b.httpresponse.API;
-import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 
 public class MonthShouRuActivity extends BaseActivity {
 	LinearLayout monthshouruactivity_llt_web_new;
@@ -65,7 +66,7 @@ public class MonthShouRuActivity extends BaseActivity {
 	 * 初始化View
 	 */
 	protected void initView() {
-		setPageTitle("本年月度收入");
+		setPageTitle(getString(R.string.activity_monthshouru_title));
 		horizontal_listview_shouru = (RecyclerView) findViewById(R.id.recyle_listview_shouru);
 		monthshouruactivity_llt_web_new = (LinearLayout) findViewById(R.id.monthshouruactivity_llt_web_new);
 		monthshouruactivity_webView_hgh_new = (WebView) findViewById(R.id.monthshouruactivity_webView_hgh_new);

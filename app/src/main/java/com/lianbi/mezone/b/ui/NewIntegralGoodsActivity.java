@@ -83,7 +83,7 @@ public class NewIntegralGoodsActivity extends BaseActivity {
 
 	private void initView() {
 		file = new ArrayList<File>();
-		setPageTitle("新增积分商品");
+		setPageTitle(getString(R.string.activity_newintegralgoods_title));
 		photoUtills = new MyPhotoUtills(this);
 		ima_Smallima.setOnClickListener(this);
 		smallImaOne.setOnClickListener(this);

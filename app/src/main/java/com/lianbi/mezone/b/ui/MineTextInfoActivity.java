@@ -61,7 +61,7 @@ public class MineTextInfoActivity extends BaseActivity {
 	}
 
 	private void initView() {
-		setPageTitle("我的资料");
+		setPageTitle(getString(R.string.activity_minetextinfo_title));
 		setPageRightText("保存");
 		setPageRightTextColor(R.color.colores_news_01);
 		touxiang = (CircularImageView) findViewById(R.id.touxiangimageview);

@@ -1,21 +1,22 @@
 package com.lianbi.mezone.b.ui;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.lianbi.mezone.b.httpresponse.MyResultCallback;
+import com.xizhi.mezone.b.R;
+import com.zbar.lib.CaptureActivity;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.EditTextUtills;
 import cn.com.hgh.utils.Result;
-
-import com.xizhi.mezone.b.R;
-import com.lianbi.mezone.b.httpresponse.MyResultCallback;
-import com.zbar.lib.CaptureActivity;
 
 /**
  * 订单生成
@@ -39,7 +40,7 @@ public class OrderProductActivity extends BaseActivity {
 	}
 
 	private void initView() {
-		setPageTitle("订单生成");
+		setPageTitle(getString(R.string.activity_orderproduct_title));
 		text_orderproductactivity = (TextView) findViewById(R.id.text_orderproductactivity);
 		textright_orderproductactivity = (TextView) findViewById(R.id.text_right_orderproductactivity);
 		orderproductactivity_et_num = (EditText) findViewById(R.id.orderproductactivity_et_num);

@@ -37,7 +37,7 @@ public class MemberAdressActivity extends BaseActivity {
 	 * 初始化View
 	 */
 	private void initView() {
-		setPageTitle("添加地址");
+		setPageTitle(getString(R.string.activity_memberadress_title));
 		setPageRightText("保存");
 		mEditMemberaddress = (EditText) findViewById(R.id.edit_memberaddress);
 		if(!AbStrUtil.isEmpty(address)){

@@ -1,7 +1,5 @@
 package com.lianbi.mezone.b.ui;
 
-import java.util.ArrayList;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,14 +9,17 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.lianbi.mezone.b.bean.MyLiCaiBean;
+import com.xizhi.mezone.b.R;
+
+import java.util.ArrayList;
+
 import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.QuickAdapter;
 import cn.com.hgh.utils.AbViewUtil;
 import cn.com.hgh.utils.MathExtend;
 import cn.com.hgh.utils.SpannableuUtills;
-
-import com.xizhi.mezone.b.R;
-import com.lianbi.mezone.b.bean.MyLiCaiBean;
 
 /**
  * 我的理财页面
@@ -57,7 +58,7 @@ public class MineLiCaiActivity extends BaseActivity {
 	}
 
 	protected void initView() {
-		setPageTitle("我的理财");
+		setPageTitle(getString(R.string.activity_minelicai_title));
 		title_one_tv = (TextView) findViewById(R.id.title_one_tv);
 		title_two_tv = (TextView) findViewById(R.id.title_two_tv);
 		shourudesitionactivity_money_today = (TextView) findViewById(R.id.shourudesitionactivity_money_today);

@@ -83,7 +83,7 @@ public class MyShopIntroduceActivity extends BaseActivity {
 	 * 初始化View
 	 */
 	private void initView() {
-		setPageTitle("商铺介绍");
+		setPageTitle(getString(R.string.activity_myshopintroduce_title));
 		tv_add_shop_introduce_summbit = (TextView) findViewById(R.id.tv_add_shop_introduce_summbit);
 		img_shop_introduce1 = (ImageView) findViewById(R.id.img_shop_introduce1);
 		img_shop_introduce2 = (ImageView) findViewById(R.id.img_shop_introduce2);

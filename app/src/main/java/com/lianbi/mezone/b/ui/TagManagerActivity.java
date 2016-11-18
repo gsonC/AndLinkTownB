@@ -56,7 +56,7 @@ public class TagManagerActivity extends BaseActivity {
 	}
 
 	private void initview() {
-		setPageTitle("标签管理");
+		setPageTitle(getString(R.string.activity_tagmanager_title));
 		bt_sure = (TextView) findViewById(R.id.bt_sure);
 		tv_searchtag = (EditText) findViewById(R.id.tv_searchtag);
 		imgTagmanagerEmpty = (ImageView) findViewById(R.id.img_tagmanager_empty);

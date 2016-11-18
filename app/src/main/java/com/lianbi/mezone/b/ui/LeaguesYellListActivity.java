@@ -69,7 +69,7 @@ public class LeaguesYellListActivity extends BaseActivity {
      * 初始化View
      */
     private void initData() {
-        setPageTitle("吆喝列表");
+        setPageTitle(getString(R.string.activity_leaguesyelllist_title));
         setPageRightText("发起吆喝");
         getIntent=getIntent();
         whatchild=getIntent.getIntExtra("whatchild",0);

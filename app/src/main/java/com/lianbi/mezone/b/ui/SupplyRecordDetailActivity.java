@@ -1,17 +1,18 @@
 package com.lianbi.mezone.b.ui;
 
-import java.text.DecimalFormat;
-
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import cn.com.hgh.utils.TelPhoneUtills;
 
 import com.bumptech.glide.Glide;
-import com.xizhi.mezone.b.R;
 import com.lianbi.mezone.b.bean.ProductSourceList;
+import com.xizhi.mezone.b.R;
+
+import java.text.DecimalFormat;
+
+import cn.com.hgh.utils.TelPhoneUtills;
 
 /**
  * 下单记录详情
@@ -69,7 +70,7 @@ public class SupplyRecordDetailActivity extends BaseActivity {
 	 * 初始化View
 	 */
 	private void initView() {
-		setPageTitle("订单详细信息");
+		setPageTitle(getString(R.string.activity_supplyrecorddetail_title));
 		tv_supply_record_detail_shopping_name = (TextView) findViewById(R.id.tv_supply_record_detail_shopping_name);
 		tv_supply_record_detail_sn = (TextView) findViewById(R.id.tv_supply_record_detail_sn);
 		tv_supply_record_detail_name = (TextView) findViewById(R.id.tv_supply_record_detail_name);

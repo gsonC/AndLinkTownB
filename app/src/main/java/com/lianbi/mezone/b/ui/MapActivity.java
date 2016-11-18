@@ -112,7 +112,7 @@ public class MapActivity extends BaseActivity {
 	 * 初始化View
 	 */
 	private void initView() {
-		setPageTitle("商铺地址");
+		setPageTitle(getString(R.string.activity_map_title));
 		mapView = (MapView) this.findViewById(R.id.mapview);
 		edt_map_location = (EditText) findViewById(R.id.edt_map_location);
 		tv_map_lng = (TextView) findViewById(R.id.tv_map_lng);

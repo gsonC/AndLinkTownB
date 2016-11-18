@@ -139,7 +139,7 @@ public class MarketingMsgGlActivity extends BaseActivity {
      * 初始化View
      */
     private void initData() {
-        setPageTitle("营销短信管理");
+        setPageTitle(getString(R.string.activity_marketingmaggl_title));
         dialog = new HttpDialog(this);
         initRecyclerView();
         getMarketingMsgList(false);

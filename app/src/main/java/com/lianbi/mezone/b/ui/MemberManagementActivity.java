@@ -31,7 +31,7 @@ public class MemberManagementActivity extends BaseActivity {
 	 * 初始化View
 	 */
 	private void initView() {
-		setPageTitle("会员管理");
+		setPageTitle(getString(R.string.activity_membermanagement_title));
 		llt_member_management_formulate = (LinearLayout) findViewById(R.id.llt_member_management_formulate);
 		llt_member_management_newly_increase = (LinearLayout) findViewById(R.id.llt_member_management_newly_increase);
 		llt_member_management = (LinearLayout) findViewById(R.id.llt_member_management);

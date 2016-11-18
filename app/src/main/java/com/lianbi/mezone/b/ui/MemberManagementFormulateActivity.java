@@ -1,9 +1,5 @@
 package com.lianbi.mezone.b.ui;
 
-import java.util.ArrayList;
-
-import org.json.JSONException;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,12 +8,16 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import cn.com.hgh.utils.Result;
-
 import com.alibaba.fastjson.JSON;
-import com.xizhi.mezone.b.R;
 import com.lianbi.mezone.b.bean.MemberDevelopmentBean;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
+import com.xizhi.mezone.b.R;
+
+import org.json.JSONException;
+
+import java.util.ArrayList;
+
+import cn.com.hgh.utils.Result;
 
 /**
  * 会员制定
@@ -135,7 +135,7 @@ public class MemberManagementFormulateActivity extends BaseActivity {
 	 * 初始化View
 	 */
 	private void initView() {
-		setPageTitle("会员制定");
+		setPageTitle(getString(R.string.activity_membermanagementformulate_title));
 		setPageRightText("说明");
 		setPageRightTextColor(R.color.colores_news_01);
 		lltMemberFormulate1 = (LinearLayout) findViewById(R.id.llt_member_formulate_1);

@@ -43,7 +43,7 @@ public class MembersManagementTwoActivity extends BaseActivity {
 	}
 
 	private void initView() {
-		setPageTitle("会员管理");
+		setPageTitle(getString(R.string.activity_membermanagement_title));
 		expandListView = (ExpandableListView) findViewById(R.id.main_expandablelistview);
 		//设置 属性 GroupIndicator 去掉默认向下的箭头
 		expandListView.setGroupIndicator(null);

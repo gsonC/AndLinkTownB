@@ -7,12 +7,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
-import cn.com.hgh.utils.AbViewUtil;
-import cn.com.hgh.utils.ContentUtils;
-import cn.com.hgh.utils.MoneyFlag;
 
 import com.xizhi.mezone.b.R;
 import com.zbar.lib.CaptureActivity;
+
+import cn.com.hgh.utils.AbViewUtil;
+import cn.com.hgh.utils.ContentUtils;
+import cn.com.hgh.utils.MoneyFlag;
 
 /**
  * 订单详情
@@ -55,7 +56,7 @@ public class OrderProductDetailActivity extends BaseActivity {
 	}
 
 	private void initView() {
-		setPageTitle("订单详情");
+		setPageTitle(getString(R.string.activity_orderproductdetail_title));
 		orderproductdetailactivity_iv_up = (ImageView) findViewById(R.id.orderproductdetailactivity_iv_up);
 		LinearLayout.LayoutParams llp = (LayoutParams) orderproductdetailactivity_iv_up
 				.getLayoutParams();

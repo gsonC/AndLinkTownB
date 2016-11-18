@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.lianbi.mezone.b.bean.WithDrawDeposite;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
-import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
 import com.xizhi.mezone.b.R;
 
 import java.math.BigDecimal;
@@ -20,8 +19,6 @@ import java.util.ArrayList;
 
 import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.QuickAdapter;
-import cn.com.hgh.utils.AbDateUtil;
-import cn.com.hgh.utils.AbStrUtil;
 import cn.com.hgh.utils.MathExtend;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.utils.SpannableuUtills;
@@ -63,7 +60,7 @@ public class WithdrawDepositActivity extends BaseActivity {
 	 * 初始化View
 	 */
 	private void initView() {
-		setPageTitle("交易明细");
+		setPageTitle(getString(R.string.activity_withdrawdeposit_title));
 		tv_withdraw_deposit_money = (TextView) findViewById(R.id.tv_withdraw_deposit_money);
 		activity_withdraw_deposit_tv_one = (TextView) findViewById(R.id.activity_withdraw_deposit_tv_one);
 		activity_withdraw_deposit_tv_two = (TextView) findViewById(R.id.activity_withdraw_deposit_tv_two);

@@ -214,7 +214,7 @@ public class MarketingSelectMemberActivity extends BaseActivity {
      * 初始化View
      */
     private void initViewAndData() {
-        setPageTitle("请选择要发送的会员");
+        setPageTitle(getString(R.string.activity_marketingselectmember_title));
         dialog = new HttpDialog(this);
         String selectsource=getIntent().getStringExtra("selectsource");
         if(!TextUtils.isEmpty(selectsource)){

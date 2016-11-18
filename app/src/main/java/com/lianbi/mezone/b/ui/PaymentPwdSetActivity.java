@@ -6,15 +6,16 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.lianbi.mezone.b.app.Constants;
+import com.lianbi.mezone.b.httpresponse.MyResultCallback;
+import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
+import com.xizhi.mezone.b.R;
+
 import cn.com.hgh.utils.AbDateUtil;
 import cn.com.hgh.utils.AbStrUtil;
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.Result;
-
-import com.xizhi.mezone.b.R;
-import com.lianbi.mezone.b.app.Constants;
-import com.lianbi.mezone.b.httpresponse.MyResultCallback;
-import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
 
 /**
  * 支付密码设置
@@ -62,7 +63,7 @@ public class PaymentPwdSetActivity extends BaseActivity {
 		banknum = getIntent().getStringExtra("banknum");
  */
 	protected void initView() {
-		setPageTitle("提现密码设置");
+		setPageTitle(getString(R.string.activity_paymentpwdset_title));
 		username = getIntent().getStringExtra("username");
 		ownername = getIntent().getStringExtra("ownername");
 		bankid = getIntent().getStringExtra("bankid");

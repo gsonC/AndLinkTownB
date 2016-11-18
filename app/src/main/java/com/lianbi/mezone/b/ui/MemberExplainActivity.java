@@ -1,7 +1,7 @@
 package com.lianbi.mezone.b.ui;
 
 import android.os.Bundle;
-import android.widget.TextView;
+
 import com.xizhi.mezone.b.R;
 
 /**
@@ -25,7 +25,7 @@ public class MemberExplainActivity extends BaseActivity {
 	 * 初始化View
 	 */
 	private void initView() {
-		setPageTitle("说明");
+		setPageTitle(getString(R.string.activity_memberexplain_title));
 	}
 
 }

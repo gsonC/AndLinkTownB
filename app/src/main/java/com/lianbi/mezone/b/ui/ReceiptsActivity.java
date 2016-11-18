@@ -31,7 +31,7 @@ public class ReceiptsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_receipts, NOTYPE);
         ButterKnife.bind(ReceiptsActivity.this);
-        setPageTitle("收款额度");
+        setPageTitle(getString(R.string.activity_receipts_title));
         try {
             okHttpsImp.queryAmtConfig(uuid, reqTime, userShopInfoBean.getUserId(), BusinessId, new MyResultCallback<String>() {
                 @Override

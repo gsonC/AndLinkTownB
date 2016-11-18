@@ -4,15 +4,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.lianbi.mezone.b.bean.Goods_SumbitBean;
+import com.lianbi.mezone.b.httpresponse.MyResultCallback;
+import com.xizhi.mezone.b.R;
+
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.MathExtend;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.utils.SpannableuUtills;
-
-import com.bumptech.glide.Glide;
-import com.xizhi.mezone.b.R;
-import com.lianbi.mezone.b.bean.Goods_SumbitBean;
-import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 
 /**
  * 商品确认下单
@@ -61,7 +62,7 @@ public class GoodsMallDetailActivity extends BaseActivity {
 	 * 初始化View
 	 */
 	private void initView() {
-		setPageTitle("确认下单");
+		setPageTitle(getString(R.string.activity_goodsmalldetail_title));
 		tv_goodsmall_detail_shopping_name = (TextView) findViewById(R.id.tv_goodsmall_detail_shopping_name);
 		tv_goodsmall_detail_name = (TextView) findViewById(R.id.tv_goodsmall_detail_name);
 		tv_goodsmall_detail_phone = (TextView) findViewById(R.id.tv_goodsmall_detail_phone);

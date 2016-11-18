@@ -97,7 +97,7 @@ public class TableHasOrderedActivity extends BluetoothBaseActivity {
         setResult(RESULT_OK, getIntent());
         setContentView(R.layout.activity_table_has_ordered, NOTYPE);
         ButterKnife.bind(this);
-        setPageTitle("已点单");
+        setPageTitle(getString(R.string.activity_tablehasordered_title));
         tableId = getIntent().getStringExtra("TABLEID");
         table_name.setText(getIntent().getStringExtra("TABLENAME"));
 

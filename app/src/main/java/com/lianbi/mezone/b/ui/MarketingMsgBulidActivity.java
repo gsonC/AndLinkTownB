@@ -231,7 +231,7 @@ public class MarketingMsgBulidActivity extends BaseActivity {
      * 初始化View
      */
     private void initViewAndData() {
-        setPageTitle("新建营销短信");
+        setPageTitle(getString(R.string.activity_marketingmsgbulid_title));
         dialog = new HttpDialog(this);
         String smstotalSendNum=getIntent().getStringExtra("smstotalSendNum");
         String remainSendNum=getIntent().getStringExtra("remainSendNum");

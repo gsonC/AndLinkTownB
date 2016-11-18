@@ -194,7 +194,7 @@ public class MarketingMsgDetailActivity extends BaseActivity {
      * 初始化View
      */
     private void initViewAndData() {
-        setPageTitle("已发送短信详情");
+        setPageTitle(getString(R.string.activity_marketingmsgdetail_title));
         dialog = new HttpDialog(this);
 //        listviewData();
         mMarketingMsgGl=(MarketingMsgGl)getIntent().getSerializableExtra("info");

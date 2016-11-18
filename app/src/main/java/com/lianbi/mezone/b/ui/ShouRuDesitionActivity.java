@@ -78,7 +78,7 @@ public class ShouRuDesitionActivity extends BaseActivity {
 	 * 初始化View
 	 */
 	protected void initView() {
-		setPageTitle("收入详情");
+		setPageTitle(getString(R.string.activity_shourudesition_title));
 		llt_total_earnings = (LinearLayout) findViewById(R.id.llt_total_earnings);
 		llt_total_earnings.setVisibility(View.GONE);
 		shourudesitionactivity_money_today = (TextView) findViewById(R.id.shourudesitionactivity_money_today);

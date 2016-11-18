@@ -1063,7 +1063,7 @@ public class PublishSupplyGoodsActivity extends BaseActivity {
 	}
 
 	private void initView() {
-		setPageTitle("货源发布");
+		setPageTitle(getString(R.string.activity_publishsupplygoods_title));
 		pubgoods_scroll = (ScrollView) findViewById(R.id.pubgoods_scroll);
 		img_goodes_publish_introduce = (ImageView) findViewById(R.id.img_goodes_publish_introduce);
 		llt_publish_goods_img = (LinearLayout) findViewById(R.id.llt_publish_goods_img);

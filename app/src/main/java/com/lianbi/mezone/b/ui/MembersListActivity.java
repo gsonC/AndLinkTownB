@@ -153,7 +153,7 @@ public class MembersListActivity extends BaseActivity {
 	 * 初始化View
 	 */
 	private void initView() {
-		setPageTitle("会员列表");
+		setPageTitle(getString(R.string.activity_memberlist_title));
 		mAct_member_list_edit = (EditText) findViewById(R.id.act_member_list_edit);//搜索框
 		mTv_newaddmember = (TextView) findViewById(R.id.tv_newaddmember);//本周新增会员
 		mTv_cumulativemember = (TextView) findViewById(R.id.tv_cumulativemember);//累计会员总数

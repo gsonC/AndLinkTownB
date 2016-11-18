@@ -82,7 +82,7 @@ public class SendNewCouponActivity extends BaseActivity implements CompoundButto
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send_new_coupon, HAVETYPE);
         ButterKnife.bind(this);
-        setPageTitle("发送新优惠券");
+        setPageTitle(getString(R.string.activity_sendnewcoupon_title));
         limitAmt = minimum.getText().toString();
         initTextWatcher();
         changeText(minimum.length());

@@ -43,7 +43,7 @@ public class ForgetPaymentPwdActivity extends BaseActivity {
 	 * 初始化View
 	 */
 	private void initView() {
-		setPageTitle("忘记密码");
+		setPageTitle(getString(R.string.activity_forgepaymentpwd_title));
 		edit_forget_payment_number = (EditText) findViewById(R.id.edit_forget_payment_number);
 		edit_forget_payment_code = (EditText) findViewById(R.id.edit_forget_payment_code);
 		tv_forget_payment_next = (TextView) findViewById(R.id.tv_forget_payment_next);

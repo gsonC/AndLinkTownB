@@ -1,26 +1,19 @@
 package com.lianbi.mezone.b.ui;
 
-import java.util.ArrayList;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+
+import com.lianbi.mezone.b.bean.Ades_ImageEs;
+import com.xizhi.mezone.b.R;
+
+import java.util.ArrayList;
+
 import cn.com.hgh.playview.BaseSliderView;
 import cn.com.hgh.playview.BaseSliderView.OnSliderClickListener;
-import cn.com.hgh.playview.PagerIndicator;
 import cn.com.hgh.playview.SliderLayout;
-import cn.com.hgh.playview.imp.TextSliderView;
-import cn.com.hgh.utils.Result;
-
-import com.alibaba.fastjson.JSON;
-import com.xizhi.mezone.b.R;
-import com.lianbi.mezone.b.bean.Ades_ImageEs;
-import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 
 /**
  * 我的货源
@@ -138,7 +131,7 @@ public class MySupplyGoodsActivity extends BaseActivity implements
 	 * 初始化View
 	 */
 	private void initView() {
-		setPageTitle("我的货源");
+		setPageTitle(getString(R.string.activity_mysupplygoods_title));
 		llt_my_supplygoods_connect = (LinearLayout) findViewById(R.id.llt_my_supplygoods_connect);
 		llt_my_supplygoods_publish = (LinearLayout) findViewById(R.id.llt_my_supplygoods_publish);
 		llt_my_supplygoods_record = (LinearLayout) findViewById(R.id.llt_my_supplygoods_record);

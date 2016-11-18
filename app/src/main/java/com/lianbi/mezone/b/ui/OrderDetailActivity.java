@@ -1,23 +1,24 @@
 package com.lianbi.mezone.b.ui;
 
-import java.util.ArrayList;
-
-import org.json.JSONException;
-
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import cn.com.hgh.utils.MoneyFlag;
-import cn.com.hgh.utils.Result;
 
 import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
-import com.xizhi.mezone.b.R;
 import com.lianbi.mezone.b.bean.OrderBeanDetail;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
+import com.xizhi.mezone.b.R;
+
+import org.json.JSONException;
+
+import java.util.ArrayList;
+
+import cn.com.hgh.utils.MoneyFlag;
+import cn.com.hgh.utils.Result;
 
 /**
  * 订单详情
@@ -142,7 +143,7 @@ public class OrderDetailActivity extends BaseActivity {
 	}
 
 	private void initView() {
-		setPageTitle("订单详情");
+		setPageTitle(getString(R.string.activity_orderdetail_title));
 		totle_money_tv = (TextView) findViewById(R.id.totle_money_tv);
 		order_number_tv = (TextView) findViewById(R.id.order_number_tv);
 		order_status_iv = (TextView) findViewById(R.id.order_status_iv);

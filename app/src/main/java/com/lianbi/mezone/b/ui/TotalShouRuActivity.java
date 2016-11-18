@@ -1,30 +1,25 @@
 package com.lianbi.mezone.b.ui;
 
-import java.io.UnsupportedEncodingException;
-import java.math.BigDecimal;
-import java.net.URLEncoder;
-import java.security.NoSuchAlgorithmException;
+import android.os.Bundle;
+import android.webkit.WebView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.lianbi.mezone.b.httpresponse.API;
+import com.lianbi.mezone.b.httpresponse.MyResultCallback;
+import com.xizhi.mezone.b.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.os.Bundle;
-import android.text.TextUtils;
-import android.webkit.WebView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import cn.com.hgh.utils.AbDateUtil;
-import cn.com.hgh.utils.AbStrUtil;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import cn.com.hgh.utils.MathExtend;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.utils.ScreenUtils;
 import cn.com.hgh.utils.WebViewInit;
-
-import com.xizhi.mezone.b.R;
-import com.lianbi.mezone.b.httpresponse.API;
-import com.lianbi.mezone.b.httpresponse.MyResultCallback;
-import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
 
 /**
  * 总收入
@@ -55,7 +50,7 @@ public class TotalShouRuActivity extends BaseActivity {
 	 * 初始化View
 	 */
 	protected void initView() {
-		setPageTitle("总收入");
+		setPageTitle(getString(R.string.activity_totalshouru_title));
 		totalshouruactivity_llt_web_new = (LinearLayout) findViewById(R.id.totalshouruactivity_llt_web_new);
 		totalshouruactivity_money_today = (TextView) findViewById(R.id.totalshouruactivity_money_today);
 		online_shop_num = (TextView) findViewById(R.id.online_shop_num);

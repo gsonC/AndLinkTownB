@@ -9,6 +9,12 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.lianbi.mezone.b.app.Constants;
+import com.lianbi.mezone.b.httpresponse.MyResultCallback;
+import com.xizhi.mezone.b.R;
+
 import cn.com.hgh.utils.AbDateUtil;
 import cn.com.hgh.utils.AbStrUtil;
 import cn.com.hgh.utils.ContentUtils;
@@ -16,11 +22,6 @@ import cn.com.hgh.utils.REGX;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.utils.SmsContentObserver;
 import cn.com.hgh.view.CircularImageView;
-
-import com.bumptech.glide.Glide;
-import com.xizhi.mezone.b.R;
-import com.lianbi.mezone.b.app.Constants;
-import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 
 /**
  * 忘记密码（重置密码）
@@ -58,7 +59,7 @@ public class ForgetPassWordActivty extends BaseActivity {
 	 * 初始化视图控件
 	 */
 	void initView() {
-		setPageTitle("找回密码");
+		setPageTitle(getString(R.string.activity_forgetpassword_title));
 		register_phone_edt = (EditText) findViewById(R.id.phone);
 		register_validtecode = (EditText) findViewById(R.id.validtecode);
 		register_password = (EditText) findViewById(R.id.password);

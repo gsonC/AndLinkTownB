@@ -163,7 +163,7 @@ public class OrderLookUpActivity extends BaseActivity implements
      * 初始化View
      */
     private void initView() {
-        setPageTitle("订单明细");
+        setPageTitle(getString(R.string.activity_orderlookup_title));
         tvAll.setChecked(true);
         setPageRightResource(R.mipmap.search_bar_icon_normal);
         viewAdapter();

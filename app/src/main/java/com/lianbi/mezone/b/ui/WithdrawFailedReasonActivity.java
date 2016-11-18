@@ -22,7 +22,7 @@ public class WithdrawFailedReasonActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_withdraw_failed_reason, NOTYPE);
         ButterKnife.bind(WithdrawFailedReasonActivity.this);
-        setPageTitle("提现失败原因");
+        setPageTitle(getString(R.string.activity_withdrawfailedreason_title));
         String status = getIntent().getStringExtra(checkStatus);
         CharSequence s = null;
         if ("03".equals(status)) {

@@ -385,7 +385,7 @@ public class TransactionManagementActivity extends BaseActivity {
 	 * 初始化View
 	 */
 	private void initView() {
-		setPageTitle("交易管理");
+		setPageTitle(getString(R.string.activity_transactionmanagement_title));
 		initPopView();
 		initFilterPopupWindow();
 		tv_tma_open_time = (TextView) findViewById(R.id.tv_tma_open_time);

@@ -48,7 +48,7 @@ public class ShopConnectPhoneActivity extends BaseActivity {
 	 * 初始化View
 	 */
 	private void initView() {
-		setPageTitle("联系电话");
+		setPageTitle(getString(R.string.activity_shopconnectphone_title));
 		setPageRightText("保存");
 		setPageRightTextColor(R.color.colores_news_01);
 		edt_shop_connect_phone = (EditText) findViewById(R.id.edt_shop_connect_phone);

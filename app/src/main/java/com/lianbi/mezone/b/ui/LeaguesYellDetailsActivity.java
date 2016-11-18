@@ -70,7 +70,7 @@ public class LeaguesYellDetailsActivity extends BaseActivity {
      * 初始化View
      */
     private void initData() {
-        setPageTitle("吆喝详情");
+        setPageTitle(getString(R.string.activity_leaguesyelldetails_title));
         getIntent=getIntent();
         mLeaguesYellBean=(LeaguesYellBean)getIntent.getSerializableExtra("leaguesyellbean");
         Glide.with(LeaguesYellDetailsActivity.this).load

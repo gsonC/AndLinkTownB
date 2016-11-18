@@ -1,27 +1,28 @@
 package com.lianbi.mezone.b.ui;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
+
+import com.lianbi.mezone.b.bean.MyProductBean;
+import com.lianbi.mezone.b.httpresponse.MyResultCallback;
+import com.xizhi.mezone.b.R;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import cn.com.hgh.baseadapter.CeHuaDeleteAdapter;
 import cn.com.hgh.utils.AbPullHide;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.view.AbPullToRefreshView;
 import cn.com.hgh.view.AbPullToRefreshView.OnFooterLoadListener;
 import cn.com.hgh.view.AbPullToRefreshView.OnHeaderRefreshListener;
-
-import com.xizhi.mezone.b.R;
-import com.lianbi.mezone.b.bean.MyProductBean;
-import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 
 /**
  * 本店产品
@@ -137,7 +138,7 @@ public class MyShopChanPinfbActivity extends BaseActivity {
 	}
 
 	private void initView() {
-		setPageTitle("本店产品");
+		setPageTitle(getString(R.string.activity_myshopchanpinfb_title));
 		setPageRightText("新增");
 		setPageRightTextColor(R.color.colores_news_01);
 		abpulltorefreshview_act_myshopchanpinfbactivity = (AbPullToRefreshView) findViewById(R.id.abpulltorefreshview_act_myshopchanpinfbactivity);

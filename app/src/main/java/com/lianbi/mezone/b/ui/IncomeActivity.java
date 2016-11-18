@@ -131,7 +131,7 @@ public class IncomeActivity extends BaseActivity implements OnClickListener {
 	}
 
 	private void initView() {
-		setPageTitle("收入明细");
+		setPageTitle(getString(R.string.activity_income_title));
 		setPageRightText("全部");
 		act_income_abpulltorefreshview = (AbPullToRefreshView) findViewById(R.id.act_income_abpulltorefreshview);//AbPullToRefreshView
 		act_income_listview = (ListView) findViewById(R.id.act_income_listview);//列表

@@ -4,11 +4,11 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import cn.com.hgh.utils.Result;
-
-import com.xizhi.mezone.b.R;
 import com.lianbi.mezone.b.bean.MessageBean;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
+import com.xizhi.mezone.b.R;
+
+import cn.com.hgh.utils.Result;
 
 /**
  * 消息详情
@@ -62,7 +62,7 @@ public class MessageDetailActivty extends BaseActivity {
 	 * 初始化视图控件
 	 */
 	void initView() {
-		setPageTitle("我的消息");
+		setPageTitle(getString(R.string.activity_messagedetail_title));
 		setPageRightText("删除");
 		setPageRightTextColor(R.color.colores_news_01);
 		act_messagedetailactivty_tv_lx = (TextView) findViewById(R.id.act_messagedetailactivty_tv_lx);

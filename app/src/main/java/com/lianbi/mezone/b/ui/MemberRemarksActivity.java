@@ -40,7 +40,7 @@ public class MemberRemarksActivity extends BaseActivity {
 	 * 初始化View
 	 */
 	private void initView() {
-		setPageTitle("添加备注");
+		setPageTitle(getString(R.string.activity_memberremarks_title));
 		setPageRightText("保存");
 		mEditMemberremarks = (EditText) findViewById(R.id.edit_memberremarks);//会员备注
 		if(!AbStrUtil.isEmpty(remarks)){

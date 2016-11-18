@@ -69,7 +69,7 @@ public class LeaguesPublishYellActivity extends BaseActivity {
      * 初始化View
      */
     private void initData() {
-        setPageTitle("发布吆喝");
+        setPageTitle(getString(R.string.activity_leaguespublishyell_title));
 
     }
     private boolean verify() {

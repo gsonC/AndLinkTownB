@@ -1,10 +1,5 @@
 package com.lianbi.mezone.b.ui;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -16,22 +11,26 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.lianbi.mezone.b.bean.SalesMan;
+import com.lianbi.mezone.b.httpresponse.MyResultCallback;
+import com.lianbi.mezone.b.photo.FileUtils;
+import com.lianbi.mezone.b.photo.PhotoUtills;
+import com.lianbi.mezone.b.photo.PickImageDescribe;
+import com.xizhi.mezone.b.R;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+
 import cn.com.hgh.utils.AbStrUtil;
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.FilePathGet;
 import cn.com.hgh.utils.Picture_Base64;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.view.CircularImageView;
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.xizhi.mezone.b.R;
-import com.lianbi.mezone.b.bean.SalesMan;
-import com.lianbi.mezone.b.httpresponse.MyResultCallback;
-import com.lianbi.mezone.b.photo.FileUtils;
-import com.lianbi.mezone.b.photo.PhotoUtills;
-import com.lianbi.mezone.b.photo.PickImageDescribe;
 
 public class SalseEmplyeeModifyActivity extends BaseActivity {
 	static final String[] TITLE = { "修改店员信息" };
@@ -134,7 +133,7 @@ public class SalseEmplyeeModifyActivity extends BaseActivity {
 	}
 
 	private void initView() {
-		setPageTitle("修改店员信息");
+		setPageTitle(getString(R.string.activity_salseemplyeemodify_title));
 		tv_sales_employee_modify1_sure = (TextView) findViewById(R.id.tv_sales_employee_modify1_sure);
 		tv_sales_employee_modify_number = (TextView) findViewById(R.id.tv_sales_employee_modify_number);
 		img_sales_employee_modify = (CircularImageView) findViewById(R.id.img_sales_employee_modify);

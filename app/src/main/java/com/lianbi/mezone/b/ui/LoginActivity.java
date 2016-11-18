@@ -58,7 +58,7 @@ public class LoginActivity extends BaseActivity {
 	 * 初始化View
 	 */
 	private void initView() {
-		setPageTitle("登录");
+		setPageTitle(getString(R.string.activity_login_title));
 		setPageRightTextColor(R.color.colores_news_01);
 		edit_login_new_phone = (EditText) findViewById(R.id.edit_login_phone);
 		edit_login_new_pwd = (EditText) findViewById(R.id.edit_login_pwd);

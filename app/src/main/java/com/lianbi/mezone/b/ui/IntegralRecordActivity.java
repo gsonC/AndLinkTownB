@@ -171,7 +171,7 @@ public class IntegralRecordActivity extends BaseActivity {
 	 * 初始化View
 	 */
 	private void initView() {
-		setPageTitle("会员详情");
+		setPageTitle(getString(R.string.activity_integralrecord_title));
 		mTvIntegralMemberfile = (TextView) findViewById(R.id.tv_integral_memberfile);
 		mTvIntegralRecordsofconsumption = (TextView) findViewById(R.id.tv_integral_recordsofconsumption);
 		mTvIntegralIntegralrecord = (TextView) findViewById(R.id.tv_integral_integralrecord);

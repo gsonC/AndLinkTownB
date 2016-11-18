@@ -1,26 +1,17 @@
 package com.lianbi.mezone.b.ui;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.HashMap;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-import cn.com.hgh.utils.FilePathGet;
-import cn.com.hgh.utils.TelPhoneUtills;
-import cn.com.hgh.view.CircularImageView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.xizhi.mezone.b.R;
 import com.lianbi.mezone.b.bean.SalesMan;
+import com.xizhi.mezone.b.R;
+
+import cn.com.hgh.utils.TelPhoneUtills;
+import cn.com.hgh.view.CircularImageView;
 
 @SuppressLint("ResourceAsColor")
 public class SalesDetailActivity extends BaseActivity {
@@ -47,7 +38,7 @@ public class SalesDetailActivity extends BaseActivity {
 	}
 
 	private void initView() {
-		setPageTitle("店员详情");
+		setPageTitle(getString(R.string.activity_salesdetail_title));
 		setPageRightText("修改");
 		setPageRightTextColor(R.color.colores_news_01);
 		img_sales_detail = (CircularImageView) findViewById(R.id.img_sales_detail);

@@ -58,7 +58,7 @@ public class WithdrawingProgressActivity extends BaseActivity {
         Status status = (Status) getIntent().getSerializableExtra(STATUS);
         switch (getIntent().getStringExtra(FROM)) {//从哪里跳转过来的
             case PROGRESS://progress代表从FinancialOfficeFragment或ShouRuHActivity跳转过来，说明提现尚未完成或者提现请求刚刚提交
-                setPageTitle("提现进度");
+                setPageTitle(getString(R.string.activity_withdrawingprogress_presentprogress));
                 setPageRightTextColor(R.color.commo_text_color);
                 setPageRightTextSize(15);
                 setPageRightText("提现记录");
@@ -83,7 +83,7 @@ public class WithdrawingProgressActivity extends BaseActivity {
                 }
                 break;
             case SUCESS://sucess代表从WithdrawRecordActivity中点击item跳转过来，说明提现已经成功
-                setPageTitle("提现成功");
+                setPageTitle(getString(R.string.activity_withdrawing_success));
                 review_icon.setImageResource(R.mipmap.icon_tick);
                 review.setText("审核通过");
                 transferred_to_account_icon.setImageResource(R.mipmap.icon_tick);

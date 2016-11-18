@@ -1,27 +1,18 @@
 package com.lianbi.mezone.b.ui;
 
-import org.json.JSONException;
+import android.annotation.SuppressLint;
+import android.os.Bundle;
+import android.text.TextUtils;
+import android.widget.EditText;
+
+import com.lianbi.mezone.b.app.Constants;
+import com.lianbi.mezone.b.httpresponse.MyResultCallback;
+import com.xizhi.mezone.b.R;
 
 import cn.com.hgh.utils.AbDateUtil;
 import cn.com.hgh.utils.AbStrUtil;
 import cn.com.hgh.utils.ContentUtils;
-import cn.com.hgh.utils.REGX;
 import cn.com.hgh.utils.Result;
-
-import com.alibaba.fastjson.JSONObject;
-import com.xizhi.mezone.b.R;
-import com.lianbi.mezone.b.app.Constants;
-import com.lianbi.mezone.b.httpresponse.MyResultCallback;
-
-import android.annotation.SuppressLint;
-import android.graphics.Color;
-import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextUtils;
-import android.text.TextWatcher;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.Toast;
 
 /**
  * 登录密码页面
@@ -42,7 +33,7 @@ public class LoginPasswordActivity extends BaseActivity {
 	}
 
 	private void initView() {
-		setPageTitle("修改登录密码");
+		setPageTitle(getString(R.string.activity_loginpassword_title));
 		setPageRightText("保存");
 		setPageRightTextColor(R.color.colores_news_01);
 		oldpwd_et = (EditText) findViewById(R.id.oldpwd_et);

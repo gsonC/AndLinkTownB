@@ -1,29 +1,27 @@
 package com.lianbi.mezone.b.ui;
 
-import java.util.ArrayList;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.EditText;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
+
+import com.lianbi.mezone.b.bean.OrderBean;
+import com.xizhi.mezone.b.R;
+
+import java.util.ArrayList;
 
 import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.QuickAdapter;
 import cn.com.hgh.utils.AbPullHide;
-import cn.com.hgh.utils.EditTextUtills;
 import cn.com.hgh.utils.MathExtend;
 import cn.com.hgh.utils.SpannableuUtills;
 import cn.com.hgh.view.AbPullToRefreshView;
 import cn.com.hgh.view.AbPullToRefreshView.OnFooterLoadListener;
 import cn.com.hgh.view.AbPullToRefreshView.OnHeaderRefreshListener;
-
-import com.xizhi.mezone.b.R;
-import com.lianbi.mezone.b.bean.OrderBean;
 
 /**
  * 订单列表
@@ -127,7 +125,7 @@ public class OrderProductListActivity extends BaseActivity {
 	}
 
 	private void initView() {
-		setPageTitle("订单列表");
+		setPageTitle(getString(R.string.activity_orderproductlist_title));
 		abpulltorefreshview_act_transactionmanagementactivity = (AbPullToRefreshView) findViewById(R.id.abpulltorefreshview_act_orderproductlistactivity);
 		iv_empty_act_transactionmanagementactivity = (ImageView) findViewById(R.id.iv_empty_act_orderproductlistactivity);
 		listView_act_transactionmanagementactivity = (ListView) findViewById(R.id.listView_act_orderproductlistactivity);

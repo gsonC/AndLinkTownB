@@ -75,7 +75,7 @@ public class TableHasPaidActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_table_has_paid, NOTYPE);
         ButterKnife.bind(this);
-        setPageTitle("已支付");
+        setPageTitle(getString(R.string.activity_tablehaspaid_title));
         tableId = getIntent().getStringExtra("TABLEID");
         table_name.setText(getIntent().getStringExtra("TABLENAME"));
 

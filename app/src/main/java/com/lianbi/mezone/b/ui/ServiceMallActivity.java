@@ -217,7 +217,7 @@ public class ServiceMallActivity extends BaseActivity {
 	}
 
 	private void initView() {
-		setPageTitle("服务商城");
+		setPageTitle(getString(R.string.activity_servicemall_title));
 		listview_service = (ListView) findViewById(R.id.activity_servicemall_list);
 		iv_servicemall_empty = (ImageView) findViewById(R.id.iv_servicemall_empty);
 

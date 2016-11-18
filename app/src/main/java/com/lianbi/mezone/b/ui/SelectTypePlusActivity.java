@@ -116,7 +116,7 @@ public class SelectTypePlusActivity extends BaseActivity {
 	 * 初始化View
 	 */
 	private void initView() {
-		setPageTitle("行业分类");
+		setPageTitle(getString(R.string.activity_selecttypeplus_title));
 		setPageRightText("提交");
 		setPageRightTextColor(R.color.colores_news_01);
 		img_add_shop_type_empty = (ImageView) findViewById(R.id.img_add_shop_type_empty);

@@ -1,34 +1,26 @@
 package com.lianbi.mezone.b.ui;
 
-import java.util.ArrayList;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.lianbi.mezone.b.bean.Ades_ImageEs;
+import com.lianbi.mezone.b.bean.MyLiCaiBean;
+import com.xizhi.mezone.b.R;
+
+import java.util.ArrayList;
+
 import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.QuickAdapter;
 import cn.com.hgh.playview.BaseSliderView;
-import cn.com.hgh.playview.PagerIndicator;
 import cn.com.hgh.playview.BaseSliderView.OnSliderClickListener;
 import cn.com.hgh.playview.SliderLayout;
-import cn.com.hgh.playview.imp.TextSliderView;
 import cn.com.hgh.utils.AbViewUtil;
 import cn.com.hgh.utils.MathExtend;
-import cn.com.hgh.utils.Result;
 import cn.com.hgh.utils.SpannableuUtills;
-
-import com.alibaba.fastjson.JSON;
-import com.xizhi.mezone.b.R;
-import com.lianbi.mezone.b.bean.Ades_ImageEs;
-import com.lianbi.mezone.b.bean.MyLiCaiBean;
-import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 
 /**
  * 
@@ -69,7 +61,7 @@ public class RegularDemandManagementActivity extends BaseActivity implements
 	 * 初始化View
 	 */
 	protected void initView() {
-		setPageTitle("定期理财页面");
+		setPageTitle(getString(R.string.activity_regulardemandmanagement_title));
 		regulardemandmanagementactivity_list = (ListView) findViewById(R.id.regulardemandmanagementactivity_list);
 		titleInit();
 		initAdesView();
