@@ -274,21 +274,43 @@ public class ConsumptionSettlementActivity extends BaseActivity {
 								imgCumptionEmpty.setVisibility(View.VISIBLE);
 								//imComestoreDetail.setVisibility(View.GONE);
 							}
-							AbPullHide.hideRefreshView(isResh, actCumptionAbpulltorefreshview);
 							mAdapter.replaceAll(mDatas);
 						} catch (JSONException e) {
 							e.printStackTrace();
+						}
+						AbPullHide.hideRefreshView(isResh, actCumptionAbpulltorefreshview);
+						if(mDatas.size()==0){
+							imComestoreDetail.setVisibility(View.GONE);
+							imComestoreEject.setVisibility(View.GONE);
+							rope = YoYo.with(Techniques.FadeOut).duration(500)
+									.playOn(imComestoreEject);
+							rope = YoYo.with(Techniques.FadeInRight).duration(1000)
+									.playOn(imComestoreDetail);
+							actCumptionAbpulltorefreshview.setVisibility(View.GONE);
+							imgCumptionEmpty.setVisibility(View.VISIBLE);
+						}else{
+							rope = YoYo.with(Techniques.FadeOut).duration(500)
+									.playOn(imComestoreDetail);
+							rope = YoYo.with(Techniques.FadeInRight).duration(1000)
+									.playOn(imComestoreEject);
+							imComestoreDetail.setVisibility(View.GONE);
+							imComestoreEject.setVisibility(View.VISIBLE);
+							actCumptionAbpulltorefreshview.setVisibility(View.VISIBLE);
+							imgCumptionEmpty.setVisibility(View.GONE);
 						}
 					}
 				}
 
 				@Override
 				public void onResponseFailed(String msg) {
-					if (isResh) {
-						actCumptionAbpulltorefreshview.setVisibility(View.GONE);
-						imgCumptionEmpty.setVisibility(View.VISIBLE);
-						imgCumptionEmpty.setVisibility(View.GONE);
-					}
+					rope = YoYo.with(Techniques.FadeOut).duration(500)
+							.playOn(imComestoreEject);
+					rope = YoYo.with(Techniques.FadeInRight).duration(1000)
+							.playOn(imComestoreDetail);
+					imComestoreDetail.setVisibility(View.GONE);
+					imComestoreEject.setVisibility(View.GONE);
+					actCumptionAbpulltorefreshview.setVisibility(View.GONE);
+					imgCumptionEmpty.setVisibility(View.VISIBLE);
 					AbPullHide.hideRefreshView(isResh, actCumptionAbpulltorefreshview);
 				}
 			});
