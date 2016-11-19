@@ -30,6 +30,7 @@
             android:layout_height="wrap_content"
             android:gravity="left|center_vertical"
             android:hint="@string/entercontactnum"
+            android:inputType="number"
             android:layout_marginTop="10dp"
             android:maxLength="11"
             android:background="@color/white"

@@ -107,6 +107,8 @@ public class MineTextInfoActivity extends BaseActivity {
 						String url = backBean.getUserImage();
 						if (!TextUtils.isEmpty(url)) {
 							userShopInfoBean.setPersonHeadUrl(url);
+							ContentUtils.putSharePre(MineTextInfoActivity.this,
+									Constants.USERTAG, Constants.USERHEADURL,url);
 							Glide.with(MineTextInfoActivity.this).load(url)
 									.asBitmap().error(R.mipmap.defaultpeson)
 									.into(new SimpleTarget<Bitmap>(150, 150) {
@@ -202,6 +204,7 @@ public class MineTextInfoActivity extends BaseActivity {
 
 				@Override
 				public void onResponseResult(Result result) {
+					getUseByiId();
 					ContentUtils.showMsg(MineTextInfoActivity.this, "修改成功！");
 					ContentUtils.putSharePre(MineTextInfoActivity.this,
 							Constants.USERTAG, Constants.USERNAME,name);
