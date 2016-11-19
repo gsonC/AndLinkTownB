@@ -25,7 +25,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_weight="1"
-                android:layout_marginLeft="30dp">
+                android:layout_marginLeft="25dp">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -64,7 +64,7 @@
                     android:layout_height="wrap_content"
                     android:text="优惠券管理"
                     android:layout_marginTop="18.5dp"
-                    android:layout_marginLeft="11.5dp"
+                    android:layout_marginLeft="10dp"
                     android:textSize="14sp"
                     android:textColor="@color/colores_news_10"/>
 
@@ -85,7 +85,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginLeft="30dp">
+            android:layout_marginLeft="25dp">
 
             <LinearLayout
                 android:id="@+id/ll_bussinessMaking_wenzhang"
@@ -138,7 +138,7 @@
                     android:layout_height="wrap_content"
                     android:text="营销消息管理"
                     android:layout_marginTop="18.5dp"
-                    android:layout_marginLeft="11.5dp"/>
+                    android:layout_marginLeft="10dp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -146,7 +146,7 @@
                     android:layout_marginTop="7dp"
                     android:textSize="10.5sp"
                     android:textColor="@color/color_ff555555"
-                    android:layout_marginRight="11.5dp"
+                    android:layout_marginRight="8dp"
                   />
             </LinearLayout>
 
