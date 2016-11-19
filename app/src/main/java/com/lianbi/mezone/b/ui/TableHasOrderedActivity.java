@@ -277,7 +277,22 @@ public class TableHasOrderedActivity extends BluetoothBaseActivity {
                 bean.setDetailInfo(detailInfo);
                 mData.remove(beanIndex);
                 mData.add(beanIndex, bean);
-                mAdapter.replaceAll(mData);
+
+                boolean isEmpty = true;
+                for (TableOrderBean tableOrderBean : mData) {
+                    ArrayList<OneDishInOrder> arrayList = tableOrderBean.getDetailInfo();
+                    for (OneDishInOrder oneDishOrder : arrayList) {
+                        if (oneDishOrder.getIsDel().equals("0")) {
+                            isEmpty = false;
+                            break;
+                        }
+                    }
+                }
+
+                if (isEmpty)
+                    TableHasOrderedActivity.this.finish();
+                else
+                    mAdapter.replaceAll(mData);
             }
 
             @Override
