@@ -368,7 +368,12 @@ public class TableHasOrderedActivity extends BluetoothBaseActivity {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                gotoEditPrice(change.getText().toString());
+                String newPrice = change.getText().toString();
+                if (newPrice.contains(".") && (newPrice.indexOf(".") == (newPrice.length() - 3))) {
+                    newPrice = newPrice.substring(0, newPrice.length() - 1);
+                }
+                change.setText(newPrice);
+                gotoEditPrice(newPrice);
             }
         });
         view.findViewById(R.id.negative_button).setOnClickListener(new View.OnClickListener() {
