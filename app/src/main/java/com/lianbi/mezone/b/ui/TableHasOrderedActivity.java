@@ -283,7 +283,7 @@ public class TableHasOrderedActivity extends BluetoothBaseActivity {
             @Override
             public void onResponseFailed(String msg) {
             }
-        }, bean.getOrderNo(), oneDishInOrder.getProductId(), tableId, Integer.toString((int) (Double.parseDouble(oneDishInOrder.getPrice()) * 100.0d)));
+        }, bean.getOrderNo(), oneDishInOrder.getProductId(), tableId, Integer.toString((int) (Double.parseDouble(oneDishInOrder.getPrice()) * Double.parseDouble(oneDishInOrder.getNum()) * 100.0d)));
     }
 
     @Override
@@ -368,12 +368,7 @@ public class TableHasOrderedActivity extends BluetoothBaseActivity {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                String newPrice = change.getText().toString();
-                if (newPrice.contains(".") && (newPrice.indexOf(".") == (newPrice.length() - 3))) {
-                    newPrice = newPrice.substring(0, newPrice.length() - 1);
-                }
-                change.setText(newPrice);
-                gotoEditPrice(newPrice);
+                gotoEditPrice(change.getText().toString());
             }
         });
         view.findViewById(R.id.negative_button).setOnClickListener(new View.OnClickListener() {
@@ -401,6 +396,10 @@ public class TableHasOrderedActivity extends BluetoothBaseActivity {
         }
         if (Double.parseDouble(newPrice) > Double.parseDouble(num_should_pay.getText().toString())) {
             ContentUtils.showMsg(TableHasOrderedActivity.this, "修改价格不能大于订单总价");
+            return;
+        }
+        if (newPrice.contains(".") && (newPrice.indexOf(".") == (newPrice.length() - 3))) {
+            ContentUtils.showMsg(TableHasOrderedActivity.this, "修改价格只能包含元和角");
             return;
         }
         okHttpsImp.editPrice(new MyResultCallback<String>() {
