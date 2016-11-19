@@ -15,8 +15,6 @@
  */
 package cn.com.hgh.view;
 
-import java.util.Timer;
-
 import android.content.Context;
 import android.os.Handler;
 import android.util.AttributeSet;
@@ -26,6 +24,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+
+import java.util.Timer;
 
 import cn.com.hgh.utils.AbAppUtil;
 import cn.com.hgh.utils.ContentUtils;
@@ -230,7 +230,7 @@ public class AbPullToRefreshView extends LinearLayout {
 		case MotionEvent.ACTION_MOVE:
 			// deltaY > 0 是向下运动,< 0是向上运动
 			int deltaY = y - mLastMotionY;
-			if (isRefreshViewScroll(deltaY)&& Math.abs(deltaY) > 10) {
+			if (isRefreshViewScroll(deltaY)&& Math.abs(deltaY) > 50) {
 				return true;
 			}
 			break;
@@ -722,7 +722,6 @@ public class AbPullToRefreshView extends LinearLayout {
 	 * Interface definition for a callback to be invoked when list/grid footer
 	 * view should be refreshed.
 	 *
-	 * @see OnFooterLoadEvent
 	 */
 	public interface OnFooterLoadListener {
 
@@ -739,7 +738,6 @@ public class AbPullToRefreshView extends LinearLayout {
 	 * Interface definition for a callback to be invoked when list/grid header
 	 * view should be refreshed.
 	 *
-	 * @see OnHeaderRefreshEvent
 	 */
 	public interface OnHeaderRefreshListener {
 
