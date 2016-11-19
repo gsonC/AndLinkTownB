@@ -49,7 +49,6 @@ import cn.com.hgh.utils.AbStrUtil;
 import cn.com.hgh.utils.AbViewUtil;
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.JumpIntent;
-import cn.com.hgh.utils.LogUtils;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.view.DialogCommon;
 import cn.com.hgh.view.HttpDialog;
@@ -461,8 +460,6 @@ public class MainActivity extends BaseActivity implements  MyShopChange {
 			 */
 			if (PushManager.getInstance().getClientid(this) != null) {
 				mClientId = PushManager.getInstance().getClientid(this);
-				LogUtils.e("mClientId---------------------",mClientId);
-				System.out.println("mClientId---------------------"+mClientId);
 			}
 			String reqTime = AbDateUtil.getDateTimeNow();
 			String uuid = AbStrUtil.getUUID();
@@ -546,9 +543,13 @@ public class MainActivity extends BaseActivity implements  MyShopChange {
 		} else if (position == POSITION1) {
 			curPosition = POSITION1;
 			setPageTitleVisibility(View.VISIBLE);
-			setPageRightTextVisibility(View.GONE);
+			//setPageRightTextVisibility(View.GONE);
 			((WisdomManagerFragment) fm_wisdommanage).refreshFMData();
 			setPageTitle("智慧应用");
+			setPageRightText("发起场景");
+			tvTitleLeft.setText("智慧应用");
+			tvTitleRight.setVisibility(View.INVISIBLE);
+			tvTitleLeft.setVisibility(View.INVISIBLE);
 			setPageBackVisibility(View.INVISIBLE);
 			setPageRightImageVisibility();
 			rb_jiaoyiguanli.setChecked(true);
@@ -563,8 +564,8 @@ public class MainActivity extends BaseActivity implements  MyShopChange {
 			setPageTitle("发现场景");
 			setPageRightText("发起场景");
 			tvTitleLeft.setText("发起场景");
-			setPageRightTextColor(R.color.commo_text_color);
 			tvTitleLeft.setVisibility(View.INVISIBLE);
+			setPageRightTextColor(R.color.commo_text_color);
 			((FinancialOfficeFragment) fm_caiwushi).setUrl(API.FIND_SENCE);
 			setPageBackVisibility(View.INVISIBLE);
 			setPageRightImageVisibility();

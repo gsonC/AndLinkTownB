@@ -318,8 +318,6 @@ public class ComeDetailActivity extends BaseActivity {
 	 * 4.24	到店明细接口
 	 */
 	private void getOrder(final boolean isResh, final boolean isLoad) {
-		String reqTime = AbDateUtil.getDateTimeNow();
-		String uuid = AbStrUtil.getUUID();
 
 		if (isResh) {
 			curPage = 1;
@@ -327,14 +325,12 @@ public class ComeDetailActivity extends BaseActivity {
 		}
 
 		try {
-			okHttpsImp.getOrderInfo(uuid,                      //serNum
-					"app",                     //source
-					reqTime,                   //reqTime
+			okHttpsImp.getOrderInfo(
 					UserId,//userId
 					BusinessId,//businessId
 					beginTime,                  //startTime
 					endTime,                     //endTime
-					"",                         //sourceType
+					"tss",                         //sourceType
 					orderStatus,                        //orderStatus
 					dateStatus,                //dateStatus
 					curPage + "",                    //curPage

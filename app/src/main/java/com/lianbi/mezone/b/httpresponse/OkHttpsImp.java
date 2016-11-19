@@ -2460,10 +2460,7 @@ public enum OkHttpsImp {
     /**
      * 到店明细接口
      */
-    public void getOrderInfo(String serNum,
-                             String source,
-                             String reqTime,
-                             String userId,
+    public void getOrderInfo(String userId,
                              String businessId,
                              String startTime,
                              String endTime,
@@ -2474,9 +2471,6 @@ public enum OkHttpsImp {
                              String pageSize,
                              MyResultCallback<String> myResultCallback) throws Exception {
         Map<String, String> params = new HashMap<String, String>();
-        params.put("serNum", serNum);
-        params.put("source", source);
-        params.put("reqTime", reqTime);
         params.put("userId", userId);
         params.put("businessId", businessId);
         params.put("startTime", startTime);
@@ -2486,10 +2480,8 @@ public enum OkHttpsImp {
         params.put("dateStatus", dateStatus);
         params.put("curPage", curPage);
         params.put("pageSize", pageSize);
-        String sign = getSign(md5_key, params);
-        params.put("sign", sign);
         String url = API.OREDR;
-        postProgressResponse(myResultCallback, params, url);
+        getProgressResponse(myResultCallback, params, url);
     }
 
 
