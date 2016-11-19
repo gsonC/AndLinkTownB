@@ -28,6 +28,7 @@ import com.lianbi.mezone.b.ui.BusinessMarketingActivity;
 import com.lianbi.mezone.b.ui.DiningTableSettingActivity;
 import com.lianbi.mezone.b.ui.H5WebActivty;
 import com.lianbi.mezone.b.ui.LeaguesYellListActivity;
+import com.lianbi.mezone.b.ui.LineTakeNoWebActivity;
 import com.lianbi.mezone.b.ui.MainActivity;
 import com.lianbi.mezone.b.ui.ServiceMallActivity;
 import com.lianbi.mezone.b.ui.WIFIWebActivity;
@@ -160,7 +161,55 @@ public class WisdomManagerFragment extends Fragment implements OnClickListener {
 		initListAdapter();
 		return view;
 	}
+	private void listen() {
+		gv_shouyeservice.setOnItemClickListener(new  AdapterView.OnItemClickListener() {
 
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+									int position, long id) {
+				String appCode = "";
+				try {
+					appCode = mData.get(position).getAppCode();
+				} catch (Exception e) {
+				}
+				boolean isLogin = ContentUtils.getLoginStatus(mMainActivity);
+				boolean re = false;
+
+				 if ("wcm".equals(appCode)) {// 微信商城
+					if (isLogin) {
+						Intent intent_web = new Intent(mMainActivity,
+								H5WebActivty.class);
+						intent_web.putExtra(Constants.NEDDLOGIN, false);
+						intent_web.putExtra("NEEDNOTTITLE", false);
+						intent_web.putExtra("Re", true);
+						intent_web.putExtra(WebActivty.T, "微信商城");
+						intent_web.putExtra(WebActivty.U, getSAUrl(API.TOSTORE_MODULE_WCM, 1));
+						mMainActivity.startActivity(intent_web);
+					}
+				}  else if ("wifi".equals(appCode)) {//智能WIFI
+					if (isLogin) {
+						Intent intent_web = new Intent(mMainActivity,
+								WIFIWebActivity.class);
+						intent_web.putExtra(Constants.NEDDLOGIN, false);
+						intent_web.putExtra("NEEDNOTTITLE", false);
+						intent_web.putExtra("Re", true);
+						intent_web.putExtra(WIFIWebActivity.U, getSAUrl(API.INTELLIGENT_WIFI, 3));
+						mMainActivity.startActivity(intent_web);
+					}
+				} else if ("qns".equals(appCode)) {//排队取号
+					if (isLogin) {
+						Intent intent_line = new Intent(mMainActivity, LineTakeNoWebActivity.class);
+						intent_line.putExtra(Constants.NEDDLOGIN, false);
+						intent_line.putExtra("NEEDNOTTITLE", false);
+						intent_line.putExtra("Re", true);
+						intent_line.putExtra(LineTakeNoWebActivity.U, getSAUrl(API.TOSTORE_Line_TakeNo, 4));
+						mMainActivity.startActivity(intent_line);
+					}
+				}
+
+			}
+		});
+	}
 	private QuickAdapter<ShouyeServiceBean> mAdapter;
 
 	public void initListAdapter() {
@@ -285,7 +334,7 @@ public class WisdomManagerFragment extends Fragment implements OnClickListener {
 	}
 
 
-	private void listen() {
+	/*private void listen() {
 		gv_shouyeservice.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
 			@Override
@@ -316,24 +365,7 @@ public class WisdomManagerFragment extends Fragment implements OnClickListener {
 							mMainActivity.startActivity(intent_web);
 						}
 						break;
-					/*case 3:
-						if (isLogin) {//货源批发
-							Intent intent_web = new Intent(mMainActivity,
-									H5WebActivty.class);
-							intent_web.putExtra(Constants.NEDDLOGIN, false);
-							intent_web.putExtra("NEEDNOTTITLE", false);
-							intent_web.putExtra("Re", true);
-							intent_web.putExtra(WebActivty.T, "货源批发");
-							intent_web.putExtra(WebActivty.U, getSAUrl(API.TOSTORE_Supply_Wholesale,2));
-							mMainActivity.startActivity(intent_web);
-						}
-						break;*/
-					/*case 4:
-						if(isLogin){//预约界面
-							Intent intent = new Intent(mMainActivity, BookFunctionActivity.class);
-							startActivity(intent);
-						}
-						break;*/
+
 					case 5:
 						if (isLogin) {//智能WIFI
 							Intent intent_web = new Intent(mMainActivity, WIFIWebActivity.class);
@@ -344,7 +376,7 @@ public class WisdomManagerFragment extends Fragment implements OnClickListener {
 							mMainActivity.startActivity(intent_web);
 						}
 						break;
-					/*case 99:
+					*//*case 99:
 						re = JumpIntent.jumpLogin_addShop(isLogin, API.SWEEP,
 								mMainActivity);
 						if (re) {
@@ -352,8 +384,8 @@ public class WisdomManagerFragment extends Fragment implements OnClickListener {
 							//						MagnifyImg();// 收款二维码放大
 							isAgreeAgreement();
 						}
-						break;*/
-					/*case 100:
+						break;*//*
+					*//*case 100:
 						re = JumpIntent.jumpLogin_addShop(isLogin, API.SERVICESTORE, mMainActivity);
 						if (re) {// 服务商城
 
@@ -361,12 +393,12 @@ public class WisdomManagerFragment extends Fragment implements OnClickListener {
 							mMainActivity.startActivityForResult(intent_more, mMainActivity.SERVICEMALLSHOP_CODE);
 
 						}
-						break;*/
+						break;*//*
 				}
 			}
 		});
 	}
-
+*/
 	public String getUrl() {
 		String url = API.TOSTORE_PRODUCT_MANAGEMENT;
 		String bussniessId = BaseActivity.userShopInfoBean.getBusinessId();
@@ -440,6 +472,9 @@ public class WisdomManagerFragment extends Fragment implements OnClickListener {
 				return address + "storeId=" + bussniessId;*/
 			case 3://智能WIFI
 				return address + bussniessId;
+			case 4://排队取号
+				//BDP200eWiZ16cbs041217820
+				return address + bussniessId + "/showUserQueueList";
 		}
 		return "";
 	}

@@ -91,7 +91,7 @@
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:textColor="@color/color_3987fd"
-            android:text="已安装"
+            android:text="建设中"
             android:textSize="16sp"
             android:gravity="center"/>
         </LinearLayout>
@@ -150,7 +150,7 @@
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:textColor="@color/color_3987fd"
-            android:text="已安装"
+            android:text="建设中"
             android:textSize="16sp"
             android:gravity="center"/>
         </LinearLayout>
@@ -203,7 +203,7 @@
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:textColor="@color/color_3987fd"
-            android:text="已安装"
+            android:text="建设中"
             android:textSize="16sp"
             android:gravity="center"/>
 
@@ -268,7 +268,7 @@
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:textColor="@color/color_3987fd"
-            android:text="已安装"
+            android:text="建设中"
             android:textSize="16sp"
             android:gravity="center"/>
 
@@ -313,7 +313,7 @@
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:textColor="@color/color_3987fd"
-            android:text="已安装"
+            android:text="建设中"
             android:textSize="16sp"
             android:gravity="center"/>
 
@@ -377,7 +377,7 @@
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:textColor="@color/color_3987fd"
-            android:text="已安装"
+            android:text="建设中"
             android:textSize="16sp"
             android:gravity="center"/>
         </LinearLayout>
@@ -421,7 +421,7 @@
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:textColor="@color/color_3987fd"
-            android:text="已安装"
+            android:text="建设中"
             android:textSize="16sp"
             android:gravity="center"/>
 
@@ -485,7 +485,7 @@
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:textColor="@color/color_3987fd"
-            android:text="已安装"
+            android:text="建设中"
             android:textSize="16sp"
             android:gravity="center"/>
         </LinearLayout>
