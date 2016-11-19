@@ -176,7 +176,10 @@ public class TableHasOrderedActivity extends BluetoothBaseActivity {
                 mData.add(i, bean);
             }
         }
-        mAdapter.replaceAll(mData);
+        if (mData.isEmpty())
+            this.finish();
+        else
+            mAdapter.replaceAll(mData);
     }
 
     private void initAdapter() {

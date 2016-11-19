@@ -903,9 +903,16 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
                 String reString = result.getData();
                 delSelectButtonIsShowing = false;
                 needDelList.clear();
+
+                ArrayList<String> newData = new ArrayList<String>();
+                for (TableSetBean bean : data) {
+                    if (bean.isNew())
+                        newData.add(bean.getTableId());
+                }
+
                 data.clear();
                 int isfbusiness;
-                if (reString != null) {
+                if (!TextUtils.isEmpty(reString)) {
                     JSONObject jsonObject;
                     try {
                         jsonObject = new JSONObject(reString);
@@ -923,7 +930,7 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
                         if (!TextUtils.isEmpty(reString)) {
                             list = (ArrayList<TableSetBean>) JSON.parseArray(reString, TableSetBean.class);
                         }
-                        adapter.replaceAll(buildAdapterDataFromOriginalData(list));
+                        adapter.replaceAll(buildAdapterDataFromOriginalData(list, newData));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -939,7 +946,7 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
         }, userShopInfoBean.getBusinessId(), "");
     }
 
-    private List<TableSetBean> buildAdapterDataFromOriginalData(ArrayList<TableSetBean> list) {
+    private List<TableSetBean> buildAdapterDataFromOriginalData(ArrayList<TableSetBean> list, ArrayList<String> newData) {
         ArrayList<TableSetBean> paidList = new ArrayList<TableSetBean>();//已付款
         ArrayList<TableSetBean> orderdList = new ArrayList<TableSetBean>(); //已下单
         ArrayList<TableSetBean> emptyList = new ArrayList<TableSetBean>();//空桌
@@ -949,6 +956,9 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
                 emptyList.add(bean);
             }
             if (bean.getTableStatus() == 1) {//已点餐
+                if (newData.contains(bean.getTableId())) {
+                    bean.setNew(true);
+                }
                 if (!TextUtils.isEmpty(tableId) && tableId.equals(bean.getTableId())) {
                     bean.setNew(true);
                     tableId = "";
