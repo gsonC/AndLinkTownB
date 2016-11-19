@@ -170,8 +170,6 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
     private AlertDialog dialog;
     private AlertDialog.Builder b;
 
-    private String tableId;//被点击空桌id
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -742,10 +740,9 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
                     com.alibaba.fastjson.JSONObject jsonObject = JSON.parseObject(dataString);
                     switch (jsonObject.getIntValue("tableStatus")) {
                         case 0:
-                            tableId = bean.getTableId();
                             startActivity(new Intent(DiningTableSettingActivity.this, ScanningQRActivity.class)
                                     .putExtra("TABLENAME", bean.getTableName())
-                                    .putExtra("TABLEID", tableId));
+                                    .putExtra("TABLEID", bean.getTableId()));
                             break;
                         case 1:
                             if (bean.isNew()) {
@@ -904,13 +901,6 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
                 delSelectButtonIsShowing = false;
                 needDelList.clear();
 
-                ArrayList<String> newData = new ArrayList<String>();
-                for (TableSetBean bean : data) {
-                    if (bean.isNew())
-                        newData.add(bean.getTableId());
-                }
-
-                data.clear();
                 int isfbusiness;
                 if (!TextUtils.isEmpty(reString)) {
                     JSONObject jsonObject;
@@ -930,7 +920,7 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
                         if (!TextUtils.isEmpty(reString)) {
                             list = (ArrayList<TableSetBean>) JSON.parseArray(reString, TableSetBean.class);
                         }
-                        adapter.replaceAll(buildAdapterDataFromOriginalData(list, newData));
+                        adapter.replaceAll(buildAdapterDataFromOriginalData(list));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -946,7 +936,7 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
         }, userShopInfoBean.getBusinessId(), "");
     }
 
-    private List<TableSetBean> buildAdapterDataFromOriginalData(ArrayList<TableSetBean> list, ArrayList<String> newData) {
+    private List<TableSetBean> buildAdapterDataFromOriginalData(ArrayList<TableSetBean> list) {
         ArrayList<TableSetBean> paidList = new ArrayList<TableSetBean>();//已付款
         ArrayList<TableSetBean> orderdList = new ArrayList<TableSetBean>(); //已下单
         ArrayList<TableSetBean> emptyList = new ArrayList<TableSetBean>();//空桌
@@ -956,12 +946,20 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
                 emptyList.add(bean);
             }
             if (bean.getTableStatus() == 1) {//已点餐
-                if (newData.contains(bean.getTableId())) {
-                    bean.setNew(true);
+                boolean isExist = false;
+                for (int i = 0; i < data.size(); i++) {
+                    TableSetBean b = data.get(i);
+                    if (b.getTableId().equals(bean.getTableId())) {
+                        isExist = true;
+                        if ((b.getTableStatus() == 1 && b.isNew())
+                                || (b.getTableStatus() != 1)) {
+                            bean.setNew(true);
+                        }
+                        break;
+                    }
                 }
-                if (!TextUtils.isEmpty(tableId) && tableId.equals(bean.getTableId())) {
+                if (!isExist) {
                     bean.setNew(true);
-                    tableId = "";
                 }
                 orderdList.add(bean);
             }
@@ -969,7 +967,7 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
                 paidList.add(bean);
             }
         }
-
+        data.clear();
         data.addAll(paidList);
         data.addAll(orderdList);
         data.addAll(emptyList);

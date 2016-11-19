@@ -91,29 +91,7 @@ public class TableHasPaidActivity extends BaseActivity {
         double actually_paid = MathExtend.round(Double.parseDouble(totalOrderMoney) - Double.parseDouble(benefitMoney), 2);
         actually_paid_amount.setText(Double.toString(actually_paid));
         mData = JSON.parseArray(jsonObject.getString("alreadyPaidOrders"), TableOrderBean.class);
-        for (int i = 0; i < mData.size(); i++) {
-            TableOrderBean bean = mData.get(i);
-            ArrayList<OneDishInOrder> detailInfo = bean.getDetailInfo();
-            for (int j = 0; j < detailInfo.size(); j++) {
-                OneDishInOrder oneDishInOrder = detailInfo.get(j);
-                if (oneDishInOrder.getIsDel().equals("1")) {
-                    detailInfo.remove(j);
-                    j--;
-                }
-            }
-            if (detailInfo.isEmpty()) {
-                mData.remove(i);
-                i--;
-            } else {
-                bean.setDetailInfo(detailInfo);
-                mData.remove(i);
-                mData.add(i, bean);
-            }
-        }
-        if (mData.isEmpty())
-            this.finish();
-        else
-            mAdapter.replaceAll(mData);
+        mAdapter.replaceAll(mData);
     }
 
     private void initAdapter() {

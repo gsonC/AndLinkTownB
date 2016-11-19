@@ -157,42 +157,40 @@ public class TableHasOrderedActivity extends BluetoothBaseActivity {
         fen_num.setText(jsonObject.getString("proNum"));
         num_should_pay.setText(jsonObject.getString("totalOrderMoney"));
         mData = JSON.parseArray(jsonObject.getString("unPaidOrders"), TableOrderBean.class);
-        for (int i = 0; i < mData.size(); i++) {
-            TableOrderBean bean = mData.get(i);
-            ArrayList<OneDishInOrder> detailInfo = bean.getDetailInfo();
-            for (int j = 0; j < detailInfo.size(); j++) {
-                OneDishInOrder oneDishInOrder = detailInfo.get(j);
-                if (oneDishInOrder.getIsDel().equals("1")) {
-                    detailInfo.remove(j);
-                    j--;
-                }
-            }
-            if (detailInfo.isEmpty()) {
-                mData.remove(i);
-                i--;
-            } else {
-                bean.setDetailInfo(detailInfo);
-                mData.remove(i);
-                mData.add(i, bean);
-            }
-        }
-        if (mData.isEmpty())
-            this.finish();
-        else
-            mAdapter.replaceAll(mData);
+//        过滤掉已取消
+//        for (int i = 0; i < mData.size(); i++) {
+//            TableOrderBean bean = mData.get(i);
+//            ArrayList<OneDishInOrder> detailInfo = bean.getDetailInfo();
+//            for (int j = 0; j < detailInfo.size(); j++) {
+//                OneDishInOrder oneDishInOrder = detailInfo.get(j);
+//                if (oneDishInOrder.getIsDel().equals("1")) {
+//                    detailInfo.remove(j);
+//                    j--;
+//                }
+//            }
+//            if (detailInfo.isEmpty()) {
+//                mData.remove(i);
+//                i--;
+//            } else {
+//                bean.setDetailInfo(detailInfo);
+//                mData.remove(i);
+//                mData.add(i, bean);
+//            }
+//        }
+        mAdapter.replaceAll(mData);
     }
 
     private void initAdapter() {
         mAdapter = new QuickAdapter<TableOrderBean>(TableHasOrderedActivity.this, R.layout.table_has_ordered_order_list_view_layout, mData) {
             @Override
-            protected void convert(BaseAdapterHelper helper, final TableOrderBean item) {
-                helper.getView(R.id.dotted_line).setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-                ((TextView) helper.getView(R.id.time_cn)).setText("下单时间：");
-                final ImageView avatar = helper.getView(R.id.iv_avatar);//头像
-                TextView name = helper.getView(R.id.tv_client_name);
-                TextView remark = helper.getView(R.id.remarks);//备注
-                TextView order_time = helper.getView(R.id.tv_order_time);//支付时间
-                MyListView container = helper.getView(R.id.dishes_list_container);
+            protected void convert(final BaseAdapterHelper helper_1, final TableOrderBean item) {
+                helper_1.getView(R.id.dotted_line).setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+                ((TextView) helper_1.getView(R.id.time_cn)).setText("下单时间：");
+                final ImageView avatar = helper_1.getView(R.id.iv_avatar);//头像
+                TextView name = helper_1.getView(R.id.tv_client_name);
+                TextView remark = helper_1.getView(R.id.remarks);//备注
+                TextView order_time = helper_1.getView(R.id.tv_order_time);//支付时间
+                MyListView container = helper_1.getView(R.id.dishes_list_container);
                 Glide.with(TableHasOrderedActivity.this)
                         .load(item.getPhoto())
                         .asBitmap()
@@ -211,82 +209,81 @@ public class TableHasOrderedActivity extends BluetoothBaseActivity {
                 remark.setText(item.getDesc());
                 order_time.setText(AbDateUtil.exchangeFormat(item.getCreateTime(), "yyyyMMddHHmmss", AbDateUtil.dateFormatHM));
 
-                QuickAdapter<OneDishInOrder> adapter = new QuickAdapter<OneDishInOrder>(TableHasOrderedActivity.this, R.layout.one_dish_layout) {
+                final ArrayList<OneDishInOrder> detailInfo = item.getDetailInfo();
+                QuickAdapter<OneDishInOrder> adapter = new QuickAdapter<OneDishInOrder>(TableHasOrderedActivity.this, R.layout.one_dish_layout, detailInfo) {
                     @Override
-                    protected void convert(BaseAdapterHelper helper, final OneDishInOrder oneDishInOrder) {
-                        TextView dish_name = helper.getView(R.id.dish_name);
-                        TextView dish_price = helper.getView(R.id.dish_price);
-                        TextView tv_dish_num = helper.getView(R.id.tv_dish_num);
-                        TextView cancel_dish = helper.getView(R.id.cancel_dish);
+                    protected void convert(final BaseAdapterHelper helper_2, final OneDishInOrder oneDishInOrder) {
+                        TextView dish_name = helper_2.getView(R.id.dish_name);
+                        TextView dish_price = helper_2.getView(R.id.dish_price);
+                        TextView tv_dish_num = helper_2.getView(R.id.tv_dish_num);
+                        TextView cancel_dish = helper_2.getView(R.id.cancel_dish);
                         dish_name.setText(oneDishInOrder.getProName());
                         dish_price.setText(oneDishInOrder.getPrice());
                         tv_dish_num.setText(oneDishInOrder.getNum());
                         cancel_dish.setVisibility(View.VISIBLE);
-                        cancel_dish.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                DialogCommon dialog = new DialogCommon(TableHasOrderedActivity.this) {
-                                    @Override
-                                    public void onCheckClick() {
-                                        this.dismiss();
-                                    }
+                        String isDel = oneDishInOrder.getIsDel();
+                        if (isDel.equals("0")) {
+                            cancel_dish.setBackgroundResource(R.drawable.activity_table_has_paid_shape);
+                            cancel_dish.setText("取消");
+                            cancel_dish.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    DialogCommon dialog = new DialogCommon(TableHasOrderedActivity.this) {
+                                        @Override
+                                        public void onCheckClick() {
+                                            this.dismiss();
+                                        }
 
-                                    @Override
-                                    public void onOkClick() {
-                                        gotoCancelProduct(item, oneDishInOrder);
-                                        this.dismiss();
-                                    }
-                                };
-                                dialog.setTextTitle("是否取消");
-                                dialog.setTv_dialog_common_ok("是");
-                                dialog.setTv_dialog_common_cancel("否");
-                                dialog.setCancelable(false);
-                                dialog.setCanceledOnTouchOutside(false);
-                                dialog.show();
-                            }
-                        });
+                                        @Override
+                                        public void onOkClick() {
+                                            gotoCancelProduct(item, helper_1.getPosition(), oneDishInOrder, helper_2.getPosition());
+                                            this.dismiss();
+                                        }
+                                    };
+                                    dialog.setTextTitle("是否取消");
+                                    dialog.setTv_dialog_common_ok("是");
+                                    dialog.setTv_dialog_common_cancel("否");
+                                    dialog.setCancelable(false);
+                                    dialog.setCanceledOnTouchOutside(false);
+                                    dialog.show();
+                                }
+                            });
+                        } else {
+                            cancel_dish.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+                            cancel_dish.setText("已取消");
+                            cancel_dish.setOnClickListener(null);
+                        }
                     }
                 };
                 container.setAdapter(adapter);
-                adapter.replaceAll(item.getDetailInfo());
             }
         };
         mListView.setAdapter(mAdapter);
     }
 
-    private void gotoCancelProduct(TableOrderBean bean, OneDishInOrder oneDishInOrder) {
+    private void gotoCancelProduct(final TableOrderBean bean, final int beanIndex, final OneDishInOrder oneDishInOrder, final int dishIndex) {
         okHttpsImp.cancelProduct(new MyResultCallback<String>() {
             @Override
             public void onResponseResult(Result result) {
-                getTableInfo();
+                String fen = fen_num.getText().toString();
+                fen_num.setText(Integer.toString(Integer.parseInt(fen, 10) - 1));
+                String multiply = MathExtend.multiply(oneDishInOrder.getPrice(), oneDishInOrder.getNum());
+                String num = MathExtend.subtract(num_should_pay.getText().toString(), multiply);
+                num_should_pay.setText(num);
+                oneDishInOrder.setIsDel("1");
+                ArrayList<OneDishInOrder> detailInfo = bean.getDetailInfo();
+                detailInfo.remove(dishIndex);
+                detailInfo.add(dishIndex, oneDishInOrder);
+                bean.setDetailInfo(detailInfo);
+                mData.remove(beanIndex);
+                mData.add(beanIndex, bean);
+                mAdapter.replaceAll(mData);
             }
 
             @Override
             public void onResponseFailed(String msg) {
             }
         }, bean.getOrderNo(), oneDishInOrder.getProductId(), tableId, Integer.toString((int) (Double.parseDouble(oneDishInOrder.getPrice()) * 100.0d)));
-    }
-
-    //单个桌面详情
-    private void getTableInfo() {
-        okHttpsImp.tableInfo(new MyResultCallback<String>() {
-            @Override
-            public void onResponseResult(Result result) {
-                String data = result.getData();
-                if (!TextUtils.isEmpty(data)) {
-                    com.alibaba.fastjson.JSONObject jsonObject = JSON.parseObject(data);
-                    if (jsonObject.getIntValue("tableStatus") == 1) {
-                        addDataToView(data);
-                    } else {
-                        finish();
-                    }
-                }
-            }
-
-            @Override
-            public void onResponseFailed(String msg) {
-            }
-        }, userShopInfoBean.getUserId(), userShopInfoBean.getBusinessId(), tableId);
     }
 
     @Override
