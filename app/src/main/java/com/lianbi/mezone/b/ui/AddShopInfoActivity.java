@@ -126,12 +126,21 @@ public class AddShopInfoActivity extends BaseActivity {
     }
     @Override
     public void onTitleRightClickTv() {
-
+        if (TextUtils.isEmpty(parant_id)) {
+            ContentUtils.showMsg(AddShopInfoActivity.this, "请输入行业分类");
+            return;
+        }
+        if (TextUtils.isEmpty(provinceId)||TextUtils.isEmpty(cityCode)
+                ||
+                TextUtils.isEmpty(areaCode)
+                ) {
+            ContentUtils.showMsg(AddShopInfoActivity.this, "请输入商铺所属省市区");
+            return;
+        }
         submitInfo();
     }
 
     public void  submitInfo(){
-
         try {
             okHttpsImp.updateBusinessComplement(
                     uuid,
