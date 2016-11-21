@@ -204,6 +204,7 @@ public class LoginActivity extends BaseActivity {
 						if(AbStrUtil.isEmpty(myShopInfoBean.getBusinessId())){
 							Intent intent = new Intent();
 							intent.setClass(LoginActivity.this, AddShopActivity.class);
+							intent.putExtra("FROMLOGIN",true);
 							startActivity(intent);
 							finish();
 						}else {

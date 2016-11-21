@@ -80,6 +80,8 @@ public class AddShopActivity extends BaseActivity {
 	private AddressPopView mAddressPopView;
 	private String cityCode;
 	private String areaCode;
+	private boolean mFROMLOGIN = false;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -93,6 +95,9 @@ public class AddShopActivity extends BaseActivity {
 		//System.out.println(f.exists() + "");
 		//System.out.println("name"+name);
 		//getProvinceCode();
+
+		mFROMLOGIN = getIntent().getBooleanExtra("FROMLOGIN",false);
+
 		setLisenter();
 	}
 
@@ -352,13 +357,25 @@ public class AddShopActivity extends BaseActivity {
 										.getBusinessId())) {
 									changeBussinessOnApp(businessId);
 								} else {
-									Intent intent = new Intent(
-											AddShopActivity.this,
-											ChangeShopActivity.class);
-									AddShopActivity.this.startActivity(intent);
-									ContentUtils.showMsg(AddShopActivity.this,
-											"新增商铺成功");
-									finish();
+
+									if(!mFROMLOGIN) {
+
+										Intent intent = new Intent(
+												AddShopActivity.this,
+												ChangeShopActivity.class);
+										AddShopActivity.this.startActivity(intent);
+										ContentUtils.showMsg(AddShopActivity.this,
+												"新增商铺成功");
+										finish();
+									}else{
+										Intent intent = new Intent(
+												AddShopActivity.this,
+												MainActivity.class);
+										AddShopActivity.this.startActivity(intent);
+										ContentUtils.showMsg(AddShopActivity.this,
+												"新增商铺成功");
+										finish();
+									}
 								}
 
 							} catch (JSONException e) {
