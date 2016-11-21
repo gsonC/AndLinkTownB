@@ -608,7 +608,7 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
         float mult = range;
         ArrayList<PieEntry> entries = new ArrayList<PieEntry>();
         for (int i = 0; i < count; i++) {
-            entries.add(new PieEntry((float) (stringChangeInt(mParties[i % mParties.length]) + 1), mParties[i % mParties.length]));
+            entries.add(new PieEntry((float) (stringChangeInt(mParties[i % mParties.length]) + 2), mParties[i % mParties.length]));
         }
         PieDataSet dataSet = new PieDataSet(entries, "Election Results");
         dataSet.setDrawValues(false);
