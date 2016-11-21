@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.bumptech.glide.Glide;
-import com.igexin.sdk.PushManager;
 import com.lianbi.mezone.b.app.Constants;
 import com.lianbi.mezone.b.bean.LoginBackBean;
 import com.lianbi.mezone.b.bean.MyShopInfoBean;
@@ -35,7 +34,6 @@ public class LoginActivity extends BaseActivity {
 	TextView text_login_forget_pwd, text_login, text_login_retrieve_password;
 	private static final int REQUEST_CODE_FORGET_PWD = 1007;
 	private static final int REQUEST_CODE_REGIST_USER = 1008;
-	private String mClientId;
 
 	private CircularImageView civ_login_head;
 	private  int    FROMLOGINPAGE=1;
@@ -126,12 +124,6 @@ public class LoginActivity extends BaseActivity {
 		String reqTime = AbDateUtil.getDateTimeNow();
 		String uuid = AbStrUtil.getUUID();
 
-		/**
-		 * 获取手机唯一识别码CID
-		 */
-		if (PushManager.getInstance().getClientid(this) != null) {
-			mClientId = PushManager.getInstance().getClientid(this);
-		}
 		try {
 			okHttpsImp.postUserLogin(true, new MyResultCallback<String>() {
 

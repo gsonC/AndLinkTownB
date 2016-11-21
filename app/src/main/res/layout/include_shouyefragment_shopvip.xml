@@ -58,7 +58,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="今日总数"
+                    android:text="今日新增"
                     android:textColor="@color/color_999999"
                     android:textSize="14sp"/>
             </LinearLayout>

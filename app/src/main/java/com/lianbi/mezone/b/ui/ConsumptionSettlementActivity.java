@@ -418,7 +418,7 @@ public class ConsumptionSettlementActivity extends BaseActivity {
 						  switch (tableStatus){
 							 case 0:
 								// startActivity(new Intent(ConsumptionSettlementActivity.this,ScanningQRActivity.class).putExtra("TABLENAME",jsonObject.getString("").putExtra("TABLENAME",jsonObject.getString("")));
-                              Intent intent=new Intent(ConsumptionSettlementActivity.this,ScanningQRActivity.class);
+								 Intent intent=new Intent(ConsumptionSettlementActivity.this,ScanningQRActivity.class);
 								 intent.putExtra("TABLEID",tableId);
 								 intent.putExtra("TABLENAME",tableName);
 								 startActivity(intent);
