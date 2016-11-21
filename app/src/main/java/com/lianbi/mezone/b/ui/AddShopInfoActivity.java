@@ -7,6 +7,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 
+import com.lianbi.mezone.b.app.Constants;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.xizhi.mezone.b.R;
 
@@ -147,6 +148,12 @@ public class AddShopInfoActivity extends BaseActivity {
                         public void onResponseResult(Result result) {
                             ContentUtils.showMsg(AddShopInfoActivity.this,
                                     "完善店铺信息成功");
+                            ContentUtils.putSharePre(AddShopInfoActivity.this,
+                                    Constants.USERTAG, Constants.USERSHOPPROVINCEID,shopRovinceid);
+                            ContentUtils.putSharePre(AddShopInfoActivity.this,
+                                    Constants.USERTAG, Constants.USERSHOPLEAGUESCITY,cityCode);
+                            ContentUtils.putSharePre(AddShopInfoActivity.this,
+                                    Constants.USERTAG, Constants.USERSHOPLEAGUESAREA,areaCode);
                             switch (fromwhich){
                                 case  FROMLOGINPAGE:
                                     Intent intentmain = new Intent();

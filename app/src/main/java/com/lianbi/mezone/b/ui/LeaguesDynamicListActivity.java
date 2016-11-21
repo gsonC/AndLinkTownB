@@ -197,17 +197,17 @@ public class LeaguesDynamicListActivity extends BaseActivity {
                                                 mData.add(LeaguesZxy);
                                             }
                                         }
-                                                                          }
+                                        updateView(mData);
+                                    }
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
-                            if (mData.isEmpty()) {
+                            if (mDatas.isEmpty()) {
                                 ivLeaguesDynamicListEmpty.setVisibility(View.VISIBLE);
                                 actLeaguesdynamiclistAbpulltorefreshview.setVerticalGravity(View.GONE);
                             } else {
                                 ivLeaguesDynamicListEmpty.setVisibility(View.GONE);
                                 actLeaguesdynamiclistAbpulltorefreshview.setVerticalGravity(View.VISIBLE);
-                                updateView(mData);
                             }
                             AbPullHide.hideRefreshView(isResh, actLeaguesdynamiclistAbpulltorefreshview);
 
@@ -225,7 +225,6 @@ public class LeaguesDynamicListActivity extends BaseActivity {
         }
     }
     protected void updateView(ArrayList<LeaguesYellBean> arrayList) {
-//        mDatas.clear();
         mDatas.addAll(arrayList);
         mAdapter.replaceAll(mDatas);
     }

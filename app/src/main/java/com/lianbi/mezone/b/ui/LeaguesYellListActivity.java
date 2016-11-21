@@ -250,7 +250,7 @@ public class LeaguesYellListActivity extends BaseActivity {
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
-                            if (!mSortData.isEmpty()) {
+                            if (!mDatas.isEmpty()) {
                                 actLeaguesyellAbpulltorefreshview.setVisibility(View.VISIBLE);
                                 ivLeaguesyellEmpty.setVisibility(View.GONE);
                             } else {
@@ -271,7 +271,6 @@ public class LeaguesYellListActivity extends BaseActivity {
         }
     }
     protected void updateView(ArrayList<LeaguesYellBean> arrayList) {
-//        mDatas.clear();
         mDatas.addAll(arrayList);
         mAdapter.replaceAll(mDatas);
     }
