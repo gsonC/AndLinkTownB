@@ -200,46 +200,51 @@ public class LoginActivity extends BaseActivity {
 									Constants.USERTAG, Constants.BUSINESSPHONE,backBean.getMobile());
 
 						}
-						if(!TextUtils.isEmpty(backBean.getDefaultBusiness())&&
-								TextUtils.isEmpty(myShopInfoBean.getCityCode())||
-								TextUtils.isEmpty(myShopInfoBean.getAreaCode())||
-						        TextUtils.isEmpty(myShopInfoBean.getProvinceId())
-								){
-							DialogCommon dialogCommon = new DialogCommon(LoginActivity.this) {
-								@Override
-								public void onOkClick() {
-									Intent intent = new Intent();
-									intent.setClass(LoginActivity.this,AddShopInfoActivity.class);
-									intent.putExtra("fromwhich",FROMLOGINPAGE);
-									startActivity(intent);
-									dismiss();
-//									finish();
 
-								}
-								@Override
-								public void onCheckClick() {
-
-									dismiss();
-
-								}
-							};
-							dialogCommon.setTextTitle(getString(R.string.completetheloginnformation));
-							dialogCommon.setTv_dialog_common_ok(getString(R.string.makesure));
-							dialogCommon.setCanceledOnTouchOutside(false);
-							dialogCommon.setTv_dialog_common_cancelV(View.GONE);
-							dialogCommon.show();
-
-						}else {
-                            if(TextUtils.isEmpty(backBean.getDefaultBusiness())) {
-								ContentUtils.showMsg(LoginActivity.this, getString(R.string.pleaseaddashop));
-							}
+						if(AbStrUtil.isEmpty(myShopInfoBean.getBusinessId())){
 							Intent intent = new Intent();
-							intent.putExtra("LoginBackBean", backBean);
-							intent.setClass(LoginActivity.this, MainActivity.class);
-							setResult(RESULT_OK, intent);
+							intent.setClass(LoginActivity.this, AddShopActivity.class);
 							startActivity(intent);
 							finish();
+						}else {
+							if (TextUtils.isEmpty(myShopInfoBean.getCityCode()) ||
+									TextUtils.isEmpty(myShopInfoBean.getAreaCode()) ||
+									TextUtils.isEmpty(myShopInfoBean.getProvinceId())
+									) {
+								DialogCommon dialogCommon = new DialogCommon(LoginActivity.this) {
+									@Override
+									public void onOkClick() {
+										Intent intent = new Intent();
+										intent.setClass(LoginActivity.this, AddShopInfoActivity.class);
+										intent.putExtra("fromwhich", FROMLOGINPAGE);
+										startActivity(intent);
+										dismiss();
+										//									finish();
 
+									}
+
+									@Override
+									public void onCheckClick() {
+
+										dismiss();
+
+									}
+								};
+								dialogCommon.setTextTitle(getString(R.string.completetheloginnformation));
+								dialogCommon.setTv_dialog_common_ok(getString(R.string.makesure));
+								dialogCommon.setCanceledOnTouchOutside(false);
+								dialogCommon.setTv_dialog_common_cancelV(View.GONE);
+								dialogCommon.show();
+
+							} else {
+								Intent intent = new Intent();
+								intent.putExtra("LoginBackBean", backBean);
+								intent.setClass(LoginActivity.this, MainActivity.class);
+								setResult(RESULT_OK, intent);
+								startActivity(intent);
+								finish();
+
+							}
 						}
 					} catch (JSONException e) {
 						e.printStackTrace();

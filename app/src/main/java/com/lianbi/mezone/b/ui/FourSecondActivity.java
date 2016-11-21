@@ -31,6 +31,7 @@ import cn.com.hgh.utils.AbStrUtil;
 import cn.com.hgh.utils.AbViewUtil;
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.Result;
+import cn.com.hgh.view.DialogCommon;
 
 /*
  * @创建者     master
@@ -50,6 +51,8 @@ public class FourSecondActivity extends BaseActivity {
 	private Intent mIntent;
 	private ImageView mImg_first_foursecond;
 	private boolean isClick = false;
+	private LoginBackBean mBackBean;
+	private MyShopInfoBean mMyShopInfoBean;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -87,14 +90,17 @@ public class FourSecondActivity extends BaseActivity {
 			case R.id.tv_daojishi:
 				isClick = true;
 				if (mIsLogin) {
-					startActivity(new Intent(FourSecondActivity.this,
-							MainActivity.class));
+					checkID();
+					//startActivity(new Intent(FourSecondActivity.this,
+					//		MainActivity.class));
+
 				} else {
 					startActivity(new Intent(FourSecondActivity.this,
 							LoginAndRegisterActivity.class));
+					finish();
 				}
 
-				finish();
+
 				break;
 		}
 	}
@@ -186,28 +192,28 @@ public class FourSecondActivity extends BaseActivity {
 					try {
 						JSONObject jsonObject = new JSONObject(reString);
 						String user = (String) jsonObject.getString("userModel");
-						LoginBackBean backBean = JSON.parseObject(user,
+						mBackBean = JSON.parseObject(user,
 								LoginBackBean.class);
 						String businessInfo = (String) jsonObject
 								.getString("businessModel");
-						MyShopInfoBean myShopInfoBean = JSON.parseObject(
+						mMyShopInfoBean = JSON.parseObject(
 								businessInfo, MyShopInfoBean.class);
-						if (myShopInfoBean != null) {
-							userShopInfoBean.setAddress(myShopInfoBean.getAddress());
-							userShopInfoBean.setShopName(myShopInfoBean
+						if (mMyShopInfoBean != null) {
+							userShopInfoBean.setAddress(mMyShopInfoBean.getAddress());
+							userShopInfoBean.setShopName(mMyShopInfoBean
 									.getBusinessName());
-							userShopInfoBean.setIndustry_id(myShopInfoBean
+							userShopInfoBean.setIndustry_id(mMyShopInfoBean
 									.getIndustryId());
-							userShopInfoBean.setNikeName(myShopInfoBean
+							userShopInfoBean.setNikeName(mMyShopInfoBean
 									.getContactName());
-							userShopInfoBean.setPhone(myShopInfoBean.getMobile());
+							userShopInfoBean.setPhone(mMyShopInfoBean.getMobile());
 						}
-						if (backBean != null) {
-							userShopInfoBean.setUserId(backBean.getUserId());
-							userShopInfoBean.setBusinessId(backBean
+						if (mBackBean != null) {
+							userShopInfoBean.setUserId(mBackBean.getUserId());
+							userShopInfoBean.setBusinessId(mBackBean
 									.getDefaultBusiness());
-							userShopInfoBean.setName(backBean.getUsername());
-							userShopInfoBean.setPersonHeadUrl(backBean
+							userShopInfoBean.setName(mBackBean.getUsername());
+							userShopInfoBean.setPersonHeadUrl(mBackBean
 									.getUserImage());
 						}
 						//Intent intent = new Intent();
@@ -252,18 +258,21 @@ public class FourSecondActivity extends BaseActivity {
 
 		@Override
 		public void onFinish() {
-
-			if(!isClick) {
+			if (!isClick) {
 
 				if (mIsLogin) {
-					startActivity(new Intent(FourSecondActivity.this,
-							MainActivity.class));
+
+					checkID();
+
+					//startActivity(new Intent(FourSecondActivity.this, MainActivity.class));
+
 				} else {
 					startActivity(new Intent(FourSecondActivity.this,
 							LoginAndRegisterActivity.class));
+					finish();
 				}
 
-				finish();
+
 			}
 		}
 
@@ -272,4 +281,52 @@ public class FourSecondActivity extends BaseActivity {
 			mTv_daojishi.setText(millisUntilFinished / 1000 + "S跳过");
 		}
 	}
+
+	private int FROMLOGINPAGE = 1;
+
+	private void checkID() {
+
+		if (!checkAreaID()) {
+			startActivity(new Intent(FourSecondActivity.this,
+					MainActivity.class));
+			finish();
+		} else {
+			DialogCommon dialogCommon = new DialogCommon(FourSecondActivity.this) {
+				@Override
+				public void onOkClick() {
+					Intent intent = new Intent();
+					intent.setClass(FourSecondActivity.this, AddShopInfoActivity.class);
+					intent.putExtra("fromwhich", FROMLOGINPAGE);
+					startActivity(intent);
+					dismiss();
+					finish();
+
+				}
+
+				@Override
+				public void onCheckClick() {
+
+					dismiss();
+					finish();
+
+				}
+			};
+			dialogCommon.setTextTitle("店铺信息尚未完善，请补全信息");
+			dialogCommon.setTv_dialog_common_ok("确定");
+			dialogCommon.setCanceledOnTouchOutside(false);
+			dialogCommon.setTv_dialog_common_cancelV(View.GONE);
+			dialogCommon.show();
+		}
+
+	}
+
+
+	private boolean checkAreaID() {
+		return (!TextUtils.isEmpty(mBackBean.getDefaultBusiness()) &&
+				TextUtils.isEmpty(mMyShopInfoBean.getCityCode()) ||
+				TextUtils.isEmpty(mMyShopInfoBean.getAreaCode()) ||
+				TextUtils.isEmpty(mMyShopInfoBean.getProvinceId())
+		);
+	}
+
 }

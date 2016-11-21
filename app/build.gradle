@@ -8,8 +8,8 @@ android {
         applicationId "com.xizhi.mezone.b"
         minSdkVersion 11
         targetSdkVersion 21
-        versionCode 90
-        versionName "1.1.3"
+        versionCode 91
+        versionName "2.0.0"
     }
 
     buildTypes {
