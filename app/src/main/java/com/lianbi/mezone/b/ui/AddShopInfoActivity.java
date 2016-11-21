@@ -149,7 +149,7 @@ public class AddShopInfoActivity extends BaseActivity {
                             ContentUtils.showMsg(AddShopInfoActivity.this,
                                     "完善店铺信息成功");
                             ContentUtils.putSharePre(AddShopInfoActivity.this,
-                                    Constants.USERTAG, Constants.USERSHOPPROVINCEID,shopRovinceid);
+                                    Constants.USERTAG, Constants.USERSHOPPROVINCEID,provinceId);
                             ContentUtils.putSharePre(AddShopInfoActivity.this,
                                     Constants.USERTAG, Constants.USERSHOPLEAGUESCITY,cityCode);
                             ContentUtils.putSharePre(AddShopInfoActivity.this,
