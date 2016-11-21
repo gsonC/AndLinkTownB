@@ -271,7 +271,7 @@ public class LeaguesYellListActivity extends BaseActivity {
         }
     }
     protected void updateView(ArrayList<LeaguesYellBean> arrayList) {
-        mDatas.clear();
+//        mDatas.clear();
         mDatas.addAll(arrayList);
         mAdapter.replaceAll(mDatas);
     }
