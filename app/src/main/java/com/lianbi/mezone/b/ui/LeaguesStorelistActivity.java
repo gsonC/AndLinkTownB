@@ -127,12 +127,13 @@ public class LeaguesStorelistActivity extends BaseActivity {
         try {
             okHttpsImp.getBusinessList(
                     areaCode,           // "120101",
+                    page+"",
+                    "15",
                     uuid,
                     reqTime,
                     new MyResultCallback<String>() {
                         @Override
                         public void onResponseResult(Result result) {
-                            page++;
                             String reString = result.getData();
                             Log.i("tag", "resString 274----->" + reString);
                             try {
@@ -144,27 +145,29 @@ public class LeaguesStorelistActivity extends BaseActivity {
                                       ArrayList<BusinessListBean> businessbeanlist = (ArrayList<BusinessListBean>) JSON
                                               .parseArray(reString,
                                                       BusinessListBean.class);
-                                      mData.addAll(businessbeanlist);
-                                      updateView(mData);
-                                      ivLeaguesstorelistEmpty.setVisibility(View.GONE);
-                                      actLeaguesstorelistAbpulltorefreshview.setVisibility(View.VISIBLE);
-                                  } else {
-                                      ivLeaguesstorelistEmpty.setVisibility(View.VISIBLE);
-                                      actLeaguesstorelistAbpulltorefreshview.setVisibility(View.GONE);
+                                      if(businessbeanlist.size()!=0) {
+                                          mData.addAll(businessbeanlist);
+                                          updateView(mData);
+                                          page++;
+                                      }
                                   }
-                              }else{
-                                  ivLeaguesstorelistEmpty.setVisibility(View.VISIBLE);
-                                  actLeaguesstorelistAbpulltorefreshview.setVisibility(View.GONE);
                               }
-                                AbPullHide.hideRefreshView(isResh, actLeaguesstorelistAbpulltorefreshview);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
-
+                            if(mDatas.size()!=0){
+                                ivLeaguesstorelistEmpty.setVisibility(View.GONE);
+                                actLeaguesstorelistAbpulltorefreshview.setVisibility(View.VISIBLE);
+                            }else{
+                                ivLeaguesstorelistEmpty.setVisibility(View.VISIBLE);
+                                actLeaguesstorelistAbpulltorefreshview.setVisibility(View.GONE);
+                            }
+                            AbPullHide.hideRefreshView(isResh, actLeaguesstorelistAbpulltorefreshview);
                         }
 
                         @Override
                         public void onResponseFailed(String msg) {
+                            AbPullHide.hideRefreshView(isResh, actLeaguesstorelistAbpulltorefreshview);
                             ivLeaguesstorelistEmpty.setVisibility(View.VISIBLE);
                             actLeaguesstorelistAbpulltorefreshview.setVisibility(View.GONE);
                         }
@@ -177,7 +180,6 @@ public class LeaguesStorelistActivity extends BaseActivity {
     }
 
     protected void updateView(ArrayList<BusinessListBean> arrayList) {
-        mDatas.clear();
         mDatas.addAll(arrayList);
         mAdapter.replaceAll(arrayList);
     }

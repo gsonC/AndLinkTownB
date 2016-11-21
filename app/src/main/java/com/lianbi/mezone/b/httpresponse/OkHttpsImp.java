@@ -350,19 +350,23 @@ public enum OkHttpsImp {
      * @throws
      */
     public void getBusinessList(String areaCode,
+                                String pageNo,
+                                String pageSize,
                                 String serNum,
                                 String reqTime,
                                 MyResultCallback<String> myResultCallback
     ) throws Exception {
         Map<String, String> params = new HashMap<String, String>();
         params.put("areaCode", areaCode);
+        params.put("pageNo", pageNo);
+        params.put("pageSize", pageSize);
         params.put("serNum", serNum);
         params.put("reqTime", reqTime);
         params.put("source", appsource);
         String sign = getSign(md5_key, params);
         params.put("sign", sign);
         String url = getAbsoluteUrl(API.QUERY_LEAGUES_BUSINESSLIST);
-        postNoProgressResponse(myResultCallback, params, url);
+        postProgressResponse(myResultCallback, params, url);
     }
 
     /**
