@@ -686,8 +686,12 @@ public class MainActivity extends BaseActivity implements  MyShopChange {
 
 			} else {
 
-				activityManager.exit();
-
+//				activityManager.exit();
+				//设置返回键跳转到桌面，当进程被kill则跳转3秒倒计时
+				Intent intent = new Intent();
+				intent.setAction("android.intent.action.MAIN");
+				intent.addCategory("android.intent.category.HOME");
+				startActivity(intent);
 			}
 
 			return true;
