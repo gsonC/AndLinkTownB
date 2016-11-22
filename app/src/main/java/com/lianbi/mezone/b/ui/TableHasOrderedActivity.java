@@ -417,6 +417,10 @@ public class TableHasOrderedActivity extends BluetoothBaseActivity {
             ContentUtils.showMsg(TableHasOrderedActivity.this, "修改价格只能包含元和角");
             return;
         }
+        if (newPrice.equals("0")||newPrice.equals("0.0")) {
+            ContentUtils.showMsg(TableHasOrderedActivity.this, "修改价格必须大于0");
+            return;
+        }
         okHttpsImp.editPrice(new MyResultCallback<String>() {
             @Override
             public void onResponseResult(Result result) {

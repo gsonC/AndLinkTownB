@@ -5,9 +5,11 @@ import cn.com.hgh.view.AbPullToRefreshView;
 public class AbPullHide {
 	public static void hideRefreshView(boolean isRefreshing,
 			AbPullToRefreshView abpulltorefreshview) {
-		if (isRefreshing) {
+		if (isRefreshing&&abpulltorefreshview!=null) {
 			abpulltorefreshview.onHeaderRefreshFinish();
-		} else {
+		} else
+		if(abpulltorefreshview!=null)
+		{
 			abpulltorefreshview.onFooterLoadFinish();
 		}
 	}
