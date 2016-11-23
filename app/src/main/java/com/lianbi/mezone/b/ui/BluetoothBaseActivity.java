@@ -151,10 +151,6 @@ public abstract class BluetoothBaseActivity extends BaseActivity {
         if (mService == null) {
             mService = new BluetoothService(this, mHandler);
         }
-        if (!mBluetoothAdapter.isEnabled()) {
-            //打开蓝牙
-            openBluetooth();
-        }
     }
 
     //打开蓝牙
