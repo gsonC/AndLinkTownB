@@ -25,7 +25,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.QuickAdapter;
-import cn.com.hgh.eventbus.ShouyeRefreshEvent;
+import cn.com.hgh.eventbus.RefreshEvent;
 import cn.com.hgh.timeselector.TimeSelectorA;
 import cn.com.hgh.utils.AbDateUtil;
 import cn.com.hgh.utils.AbPullHide;
@@ -515,7 +515,7 @@ public class ComeDetailActivity extends BaseActivity {
 	protected void onDestroy() {
 		super.onDestroy();
 		ButterKnife.unbind(this);
-		EventBus.getDefault().post(new ShouyeRefreshEvent(false));
+		EventBus.getDefault().post(new RefreshEvent(0));
 	}
 
 	private void refreshingFinish() {

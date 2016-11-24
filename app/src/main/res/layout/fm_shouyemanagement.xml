@@ -1,265 +1,273 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/sll_shouyemanagement"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colores_news_14"
-            android:fillViewport="true"
-            android:scrollbars="none">
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                              android:id="@+id/swipe_shouyemanagement"
+                                              android:layout_width="match_parent"
+                                              android:layout_height="match_parent"
+    >
 
-    <LinearLayout
+    <ScrollView
+        android:id="@+id/sll_shouyemanagement"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
+        android:background="@color/colores_news_14"
+        android:fillViewport="true"
+        android:scrollbars="none">
 
-        <include layout="@layout/adeslltview"/>
-
-        <include
-            android:id="@+id/ind_shouyemanagement_inshop"
-            layout="@layout/include_shouyestrip"
-            />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/line"
-            android:background="@color/color_e3e3e3"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:orientation="horizontal"
-            android:paddingBottom="13dp"
-            android:paddingTop="18dp"
-            >
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <RelativeLayout
-                    android:layout_width="53dp"
-                    android:layout_height="53dp">
-
-                    <ImageView
-                        android:id="@+id/img_shouyemag_order"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:layout_centerInParent="true"
-                        android:adjustViewBounds="true"
-                        android:scaleType="fitCenter"
-                        android:src="@mipmap/icon_shouyemag_order"
-                        />
-
-                    <TextView
-                        android:id="@+id/tv_shouyemag_order_num"
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
-                        android:layout_alignParentRight="true"
-                        android:background="@mipmap/icon_redpoint"
-                        android:gravity="center"
-                        android:textColor="@android:color/white"
-                        android:textSize="8sp"
-                        android:visibility="invisible"
-                        />
-
-
-                </RelativeLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="9dp"
-                    android:text="客户买单"
-                    android:textColor="@color/showcolor"
-                    android:textSize="16sp"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <RelativeLayout
-                    android:layout_width="53dp"
-                    android:layout_height="53dp">
-
-                    <ImageView
-                        android:id="@+id/img_shouyemag_call"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:layout_centerInParent="true"
-                        android:scaleType="fitCenter"
-                        android:src="@mipmap/icon_shouyemag_call"
-                        />
-
-                    <TextView
-                        android:id="@+id/tv_shouyemag_call_num"
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
-                        android:layout_alignParentRight="true"
-                        android:background="@mipmap/icon_redpoint"
-                        android:gravity="center"
-                        android:visibility="invisible"
-                        android:textColor="@android:color/white"
-                        android:textSize="8sp"
-                        />
-
-
-                </RelativeLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="9dp"
-                    android:text="响应呼叫"
-                    android:textColor="@color/showcolor"
-                    android:textSize="16sp"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <RelativeLayout
-                    android:layout_width="53dp"
-                    android:layout_height="53dp">
-
-                    <ImageView
-                        android:id="@+id/img_shouyemag_condetail"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:layout_centerInParent="true"
-                        android:scaleType="fitCenter"
-                        android:src="@mipmap/icon_shouyemag_condetail"
-                        />
-
-                    <TextView
-                        android:id="@+id/tv_shouyemag_condetail_num"
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
-                        android:layout_alignParentRight="true"
-                        android:background="@mipmap/icon_redpoint"
-                        android:gravity="center"
-                        android:visibility="invisible"
-                        android:textColor="@android:color/white"
-                        android:textSize="8sp"
-                        />
-                </RelativeLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="9dp"
-                    android:text="消费流水"
-                    android:textColor="@color/showcolor"
-                    android:textSize="16sp"/>
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <include
-            android:id="@+id/ind_shouyemanagement_flow"
-            layout="@layout/include_shouyestrip"
-            />
-
-        <LinearLayout
-            android:id="@+id/llt_shouyemanagement_consum_img"
-            android:layout_width="match_parent"
-            android:layout_height="210dp"
-            android:background="@color/white"
-            android:gravity="center"
-            >
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:scaleType="centerInside"
-                android:src="@mipmap/shouye_consum_img"/>
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/line"
-            android:background="@color/color_e3e3e3"/>
-
-        <LinearLayout
-            android:id="@+id/llt_shouyemanagement_comsum"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
             android:orientation="vertical"
-            android:visibility="gone"
             >
+
+            <include layout="@layout/adeslltview"/>
+
+            <include
+                android:id="@+id/ind_shouyemanagement_inshop"
+                layout="@layout/include_shouyestrip"
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/line"
+                android:background="@color/color_e3e3e3"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:paddingBottom="13dp"
+                android:paddingTop="18dp"
+                >
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="53dp"
+                        android:layout_height="53dp">
+
+                        <ImageView
+                            android:id="@+id/img_shouyemag_order"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:layout_centerInParent="true"
+                            android:adjustViewBounds="true"
+                            android:scaleType="fitCenter"
+                            android:src="@mipmap/icon_shouyemag_order"
+                            />
+
+                        <TextView
+                            android:id="@+id/tv_shouyemag_order_num"
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:layout_alignParentRight="true"
+                            android:background="@mipmap/icon_redpoint"
+                            android:gravity="center"
+                            android:textColor="@android:color/white"
+                            android:textSize="8sp"
+                            android:visibility="invisible"
+                            />
+
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="9dp"
+                        android:text="客户买单"
+                        android:textColor="@color/showcolor"
+                        android:textSize="16sp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="53dp"
+                        android:layout_height="53dp">
+
+                        <ImageView
+                            android:id="@+id/img_shouyemag_call"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:layout_centerInParent="true"
+                            android:scaleType="fitCenter"
+                            android:src="@mipmap/icon_shouyemag_call"
+                            />
+
+                        <TextView
+                            android:id="@+id/tv_shouyemag_call_num"
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:layout_alignParentRight="true"
+                            android:background="@mipmap/icon_redpoint"
+                            android:gravity="center"
+                            android:textColor="@android:color/white"
+                            android:textSize="8sp"
+                            android:visibility="invisible"
+                            />
+
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="9dp"
+                        android:text="响应呼叫"
+                        android:textColor="@color/showcolor"
+                        android:textSize="16sp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="53dp"
+                        android:layout_height="53dp">
+
+                        <ImageView
+                            android:id="@+id/img_shouyemag_condetail"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:layout_centerInParent="true"
+                            android:scaleType="fitCenter"
+                            android:src="@mipmap/icon_shouyemag_condetail"
+                            />
+
+                        <TextView
+                            android:id="@+id/tv_shouyemag_condetail_num"
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:layout_alignParentRight="true"
+                            android:background="@mipmap/icon_redpoint"
+                            android:gravity="center"
+                            android:textColor="@android:color/white"
+                            android:textSize="8sp"
+                            android:visibility="invisible"
+                            />
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="9dp"
+                        android:text="消费流水"
+                        android:textColor="@color/showcolor"
+                        android:textSize="16sp"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <include
+                android:id="@+id/ind_shouyemanagement_flow"
+                layout="@layout/include_shouyestrip"
+                />
+
+            <LinearLayout
+                android:id="@+id/llt_shouyemanagement_consum_img"
+                android:layout_width="match_parent"
+                android:layout_height="210dp"
+                android:background="@color/white"
+                android:gravity="center"
+                >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/shouye_consum_img"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/line"
+                android:background="@color/color_e3e3e3"/>
+
+            <LinearLayout
+                android:id="@+id/llt_shouyemanagement_comsum"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:visibility="gone"
+                >
+            </LinearLayout>
+
+            <View
+                android:id="@+id/view_fillview"
+                android:layout_width="match_parent"
+                android:layout_height="13dp"
+                android:background="@color/white"
+                android:visibility="gone"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/colores_news_14"/>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/colores_news_14"/>
+
+            <include
+                android:id="@+id/ind_shouyemanagement_cashier"
+                layout="@layout/include_shouyestrip"/>
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/chart_shouyemanagement"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:background="@color/white"
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@color/white"/>
+
+            <include
+                android:id="@+id/ind_shouyemanagement_salenum"
+                layout="@layout/include_shouyedatestrip"/>
+
+            <include
+                android:id="@+id/ind_shouyemanagement_salerank"
+                layout="@layout/include_shouyesalerank"
+                />
+
+            <include
+                android:id="@+id/ind_shouyemanagement_membernum"
+                layout="@layout/include_shouyestrip"
+                />
+
+            <include
+                android:id="@+id/ind_shouyemanagement_shopvip"
+                layout="@layout/include_shouyefragment_shopvip"/>
+
+            <include
+                android:id="@+id/ind_shouyeLeagues_apprec"
+                layout="@layout/include_shouyemanagement_apprec"
+                />
+
         </LinearLayout>
-
-        <View
-            android:id="@+id/view_fillview"
-            android:layout_width="match_parent"
-            android:layout_height="13dp"
-            android:background="@color/white"
-            android:visibility="gone"/>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/colores_news_14"/>
-
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/colores_news_14"/>
-
-        <include
-            android:id="@+id/ind_shouyemanagement_cashier"
-            layout="@layout/include_shouyestrip"/>
-
-        <com.github.mikephil.charting.charts.LineChart
-            android:id="@+id/chart_shouyemanagement"
-            android:layout_width="match_parent"
-            android:layout_height="220dp"
-            android:background="@color/white"
-            />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="10dp"
-            android:background="@color/white"/>
-
-        <include
-            android:id="@+id/ind_shouyemanagement_salenum"
-            layout="@layout/include_shouyedatestrip"/>
-
-        <include
-            android:id="@+id/ind_shouyemanagement_salerank"
-            layout="@layout/include_shouyesalerank"
-            />
-
-        <include
-            android:id="@+id/ind_shouyemanagement_membernum"
-            layout="@layout/include_shouyestrip"
-            />
-
-        <include
-            android:id="@+id/ind_shouyemanagement_shopvip"
-            layout="@layout/include_shouyefragment_shopvip"/>
-
-        <include
-            android:id="@+id/ind_shouyeLeagues_apprec"
-            layout="@layout/include_shouyemanagement_apprec"
-            />
-
-    </LinearLayout>
-</ScrollView>
+    </ScrollView>
+</android.support.v4.widget.SwipeRefreshLayout>

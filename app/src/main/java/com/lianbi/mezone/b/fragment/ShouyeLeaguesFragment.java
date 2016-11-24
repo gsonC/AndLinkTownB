@@ -16,6 +16,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -155,6 +156,8 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
     ListenedScrollView svShouyeLeagues;
     @Bind(R.id.tv_shouyeLeagues_nodata)
     TextView tv_shouyeLeagues_nodata;
+    @Bind(R.id.swipe_shouyeleagues)
+    SwipeRefreshLayout swipe_shouyeleagues;
     private MainActivity mActivity;
     private OkHttpsImp mOkHttpsImp;
     private ArrayList<LeaguesCountList> mLeaguesCountList =
@@ -226,6 +229,12 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
             public void onScrollChanged(int l, int t, int oldl, int oldt) {
                 //滑动位置改变
                 ScrollChanged=false;
+            }
+        });
+        swipe_shouyeleagues.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipe_shouyeleagues.setRefreshing(false);
             }
         });
     }

@@ -54,7 +54,7 @@ import butterknife.OnItemClick;
 import butterknife.OnTextChanged;
 import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.QuickAdapter;
-import cn.com.hgh.eventbus.ShouyeRefreshEvent;
+import cn.com.hgh.eventbus.RefreshEvent;
 import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.JumpIntent;
 import cn.com.hgh.utils.Result;
@@ -275,9 +275,9 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
      * EventBus 响应事件
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onShouyeRefreshEvent(ShouyeRefreshEvent event) {
+    public void onShouyeRefreshEvent(RefreshEvent event) {
         //false 的时候进行刷新界面操作
-        if (!event.getRefresh()) {
+        if (0==event.getRefreshNumber()) {
             getTableinfo();
         }
     }

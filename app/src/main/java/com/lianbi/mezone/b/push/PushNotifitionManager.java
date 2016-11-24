@@ -28,7 +28,7 @@ import com.xizhi.mezone.b.R;
 
 import org.greenrobot.eventbus.EventBus;
 
-import cn.com.hgh.eventbus.ShouyeRefreshEvent;
+import cn.com.hgh.eventbus.RefreshEvent;
 
 public class PushNotifitionManager {
 
@@ -79,25 +79,25 @@ public class PushNotifitionManager {
 			pushtarget = "xindingdan";
 			resultIntent = new Intent(mContext, InfoDetailsActivity.class);//跳转订单明细页面
 			resultIntent.putExtra("TIAOZHUANXIAOXI", pushtarget);
-			EventBus.getDefault().post(new ShouyeRefreshEvent(false));
+			EventBus.getDefault().post(new RefreshEvent(0));
 		} else if (3 == tiaozhuan) {
 			pushtarget = "maidan";
 			resultIntent = new Intent(mContext, ConsumptionSettlementActivity.class);//客户买单
 			resultIntent.putExtra("TIAOZHUANXIAOXI", pushtarget);
-			EventBus.getDefault().post(new ShouyeRefreshEvent(false));
+			EventBus.getDefault().post(new RefreshEvent(0));
 		} else if (4 == tiaozhuan) {
 			pushtarget = "fuwu";
 			resultIntent = new Intent(mContext, CallServiceActivity.class);//响应呼叫
 			resultIntent.putExtra("TIAOZHUANXIAOXI", pushtarget);
-			EventBus.getDefault().post(new ShouyeRefreshEvent(false));
+			EventBus.getDefault().post(new RefreshEvent(0));
 		} else if (6 == tiaozhuan) {
 			resultIntent = new Intent(mContext, OrderLookUpActivity.class);//跳转订单明细页面
-			EventBus.getDefault().post(new ShouyeRefreshEvent(false));
+			EventBus.getDefault().post(new RefreshEvent(0));
 		} else if (7 == tiaozhuan) {
 			resultIntent = new Intent(mContext, WithdrawRecordActivity.class);//跳转提现记录页面
 		}else if(60000==tiaozhuan){
 			resultIntent = new Intent(mContext, ComeDetailActivity.class);//跳转消费流水页面
-			EventBus.getDefault().post(new ShouyeRefreshEvent(true));
+			EventBus.getDefault().post(new RefreshEvent(1));
 		}
 
 		else {

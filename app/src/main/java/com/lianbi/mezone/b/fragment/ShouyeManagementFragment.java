@@ -6,6 +6,7 @@ import android.graphics.DashPathEffect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -70,7 +71,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 
-import cn.com.hgh.eventbus.ShouyeRefreshEvent;
+import cn.com.hgh.eventbus.RefreshEvent;
 import cn.com.hgh.playview.BaseSliderView;
 import cn.com.hgh.playview.BaseSliderView.OnSliderClickListener;
 import cn.com.hgh.playview.SliderLayout;
@@ -98,7 +99,7 @@ import cn.com.hgh.view.DynamicWave;
  */
 public class ShouyeManagementFragment extends Fragment implements OnClickListener, RadioGroup.OnCheckedChangeListener, OnChartGestureListener,
 		OnSliderClickListener,
-		OnChartValueSelectedListener {
+		OnChartValueSelectedListener, SwipeRefreshLayout.OnRefreshListener {
 
 	private MainActivity mActivity;
 	private OkHttpsImp mOkHttpsImp;
@@ -135,7 +136,7 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 	private List<TextView> VipFrequency;
 	private List<ImageView> VipHead;
 	private List<TextView> VipName;
-	private LinearLayout mLlt_shouyemanagement_todayvip,mLlt_shouyemanagement_numvip;
+	private LinearLayout mLlt_shouyemanagement_todayvip, mLlt_shouyemanagement_numvip;
 	/**
 	 * 实时消费
 	 */
@@ -171,6 +172,7 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 	private List<TextView> mSaleRankTopList;
 	private List<TextView> mSaleRankBottomList;
 	private ArrayList<ShopSaleRank> mShopSaleRankList = new ArrayList<>();
+	private SwipeRefreshLayout mSwipe_shouyemanagement;
 
 	@Nullable
 	@Override
@@ -196,16 +198,14 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 	 * EventBus 响应事件
 	 */
 	@Subscribe(threadMode = ThreadMode.MAIN)
-	public void onShouyeRefreshEvent(ShouyeRefreshEvent event) {
-		boolean isRefresh = event.getRefresh();
-		if (isRefresh) {
+	public void onShouyeRefreshEvent(RefreshEvent event) {
+		if (1 == event.getRefreshNumber()) {
 			getShopConsumption(true);
 			getShopPushCount();
 		} else {
 			getShopPushCount();
 		}
 	}
-
 
 	@Override
 	public void onDestroy() {
@@ -332,21 +332,8 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 			mLlt_shouyemanagement_consum_img.setVisibility(View.GONE);
 
 			if (isRefresh) {
-
-				//rope = YoYo.with(Techniques.SlideOutLeft).duration(1000)
-				//		.playOn(mLlt_shouyemanagement_comsum);
-				//rope = YoYo.with(Techniques.SlideInUp).duration(1000)
-				//		.playOn(mLlt_shouyemanagement_comsum);
-
-				//new Handler().postDelayed(new Runnable() {
-				//	@Override
-				//	public void run() {
-				//rope = YoYo.with(Techniques.ZoomInRight).duration(1000)
-				//		.playOn(mLlt_shouyemanagement_comsum);
 				rope = YoYo.with(Techniques.SlideInUp).duration(1000)
 						.playOn(mLlt_shouyemanagement_comsum);
-				//	}
-				//}, 1000);
 			}
 
 			int number = shopConsumptionList.size();
@@ -454,7 +441,7 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 				textView.setVisibility(View.VISIBLE);
 				textView.setText(count + "");
 			}
-		}else{
+		} else {
 			textView.setText("");
 		}
 	}
@@ -650,7 +637,7 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 
 			for (int i = 0; i < 3; i++) {
 				VipFrequency.get(i).setText("暂无数据");
-				Glide.with(mActivity).load(R.mipmap.defaultimg_11).transform(new GlideRoundTransform(mActivity,8)).into(VipHead.get(i));
+				Glide.with(mActivity).load(R.mipmap.defaultimg_11).transform(new GlideRoundTransform(mActivity, 8)).into(VipHead.get(i));
 				VipName.get(i).setText("暂无数据");
 			}
 			for (int i = 0; i < j; i++) {
@@ -661,108 +648,13 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 		}
 	}
 
-	/**
-	 * 销量排行
-	 */
-
-	/*
-	private List<TextData3> arraylist = new ArrayList<>();
-
-	private void getData3(boolean whichone) {
-		arraylist.clear();
-
-		for (int i = 0; i < 7; i++) {
-			Timer timer = new Timer();
-			mSaleRankTopList.get(i).setText("0");
-			//mDynamicWave.get(i).setHeight(arraylist.get(i).getCenter());
-
-			timer.schedule(new DynamicWaveTask(timer, mDynamicWaveList.get(i), 0, 0), 0, 10);
-
-			mSaleRankBottomList.get(i).setText("待上架");
-		}
-
-		if (whichone) {
-
-			initSaleRank();
-
-			for (int i = 0; i < 7; i++) {
-				TextData3 tt3 = new TextData3();
-				tt3.setTop(i * 10);
-				tt3.setCenter(150 - i * 10);
-				tt3.setBottom("黄鹤楼" + i);
-				tt3.setXxx(0.2 + MathExtend.multiply((double) i, (double) 0.1));
-				arraylist.add(tt3);
-			}
-		} else {
-			for (int i = 0; i < 5; i++) {
-				TextData3 tt3 = new TextData3();
-				tt3.setTop(i * 10);
-				tt3.setCenter(100 - i * 10);
-				tt3.setBottom("黄鹤楼" + i);
-				arraylist.add(tt3);
-			}
-		}
-		//设置数据
-		int j = arraylist.size();
-		if (j > 7)
-			j = 7;
-		int total = arraylist.get(0).getCenter();
-		for (int i = 0; i < j; i++) {
-			Timer timer = new Timer();
-
-			mSaleRankTopList.get(i).setText(arraylist.get(i).getCenter() + "");
-			//mDynamicWave.get(i).setHeight(arraylist.get(i).getCenter());
-
-			timer.schedule(new DynamicWaveTask(timer, mDynamicWaveList.get(i), arraylist.get(i).getCenter(),
-					MathExtend.divide((double) (3 * arraylist.get(i).getCenter()), (double) (4 * total))), 0, 10);
-
-			mSaleRankBottomList.get(i).setText(arraylist.get(i).getBottom());
-		}
-
-	}
-
-	public class TextData3 {
-		private int top;
-		private int center;
-		private String bottom;
-		private double xxx;
-
-		public double getXxx() {
-			return xxx;
-		}
-
-		public void setXxx(double xxx) {
-			this.xxx = xxx;
-		}
-
-		public int getTop() {
-			return top;
-		}
-
-		public void setTop(int top) {
-			this.top = top;
-		}
-
-		public int getCenter() {
-			return center;
-		}
-
-		public void setCenter(int center) {
-			this.center = center;
-		}
-
-		public String getBottom() {
-			return bottom;
-		}
-
-		public void setBottom(String bottom) {
-			this.bottom = bottom;
-		}
-	}
-*/
 	private void intView(View view) {
 
 		initBanner(view);
+
+		//SwipeRefreshLayout
+		mSwipe_shouyemanagement = (SwipeRefreshLayout) view.findViewById(R.id.swipe_shouyemanagement);
+		mSwipe_shouyemanagement.setColorSchemeResources(R.color.colores_news_01, R.color.black);
 
 		//到店服务
 		mTv_include_title = (TextView) view.findViewById(R.id.ind_shouyemanagement_inshop).findViewById(R.id.tv_include_title);//include到店服务title
@@ -961,6 +853,7 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 			set1.setColor(Color.parseColor("#4ccdb9"));
 
 			set1.setCircleColor(Color.parseColor("#ff9421"));//设置折现圆点颜色
+			//set1.setMode(LineDataSet.Mode.CUBIC_BEZIER);//设置平滑的曲线图
 			set1.setLineWidth(2f);//设置线宽
 			set1.setCircleRadius(3f);//设置折线处圆点大小
 			set1.setDrawCircleHole(true);//设置折线出圆点时候是否有孔
@@ -1018,7 +911,7 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 	 */
 	public void setLinten() {
 		mRdoGroup_time_salenum.setOnCheckedChangeListener(this);
-
+		mSwipe_shouyemanagement.setOnRefreshListener(this);
 		/**
 		 * 到店服务
 		 */
@@ -1044,14 +937,6 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 		 */
 		mLlt_shouyemanagement_todayvip.setOnClickListener(this);
 		mLlt_shouyemanagement_numvip.setOnClickListener(this);
-	}
-
-
-	/**
-	 * 下拉刷新数据
-	 */
-	public void SwipeRefreshData() {
-		System.out.println("刷新");
 	}
 
 	@Override
@@ -1125,13 +1010,9 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 	@Override
 	public void onCheckedChanged(RadioGroup group, int checkedId) {
 		if (checkedId == mChk_oneday_salenum.getId()) {
-			//mShopSaleRankList.clear();
 			getShopSaleRank(true);
-			//getData3(true);
 		} else if (checkedId == mChk_oneweek_salenum.getId()) {
-			//mShopSaleRankList.clear();
 			getShopSaleRank(false);
-			//getData3(false);
 		}
 	}
 
@@ -1242,6 +1123,16 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 		}
 	}
 
+	@Override
+	public void onRefresh() {
+		mChk_oneday_salenum.setChecked(true);
+		getShopPushCount();
+		getShopConsumption(false);
+		getShopSaleRank(true);
+		getShopVipMarket();
+		getShopConsumptionCurve();
+		mSwipe_shouyemanagement.setRefreshing(false);
+	}
 
 	// 折线图手势监听---------------------------------------------------------------
 
