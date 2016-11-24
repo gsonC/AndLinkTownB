@@ -310,6 +310,7 @@ public class BaseActivity extends FragmentActivity implements OnClickListener {
 	 * @param resid
 	 */
 	public void setPageRightResource(int resid) {
+		tvTitleRight.setVisibility(View.GONE);
 		ivTitleRight.setVisibility(View.VISIBLE);
 		ivTitleRight1.setVisibility(View.GONE);
 		ivTitleRight.setImageResource(resid);
