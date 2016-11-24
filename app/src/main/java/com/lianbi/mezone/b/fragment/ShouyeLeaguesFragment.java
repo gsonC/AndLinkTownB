@@ -234,6 +234,7 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
         swipe_shouyeleagues.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                //不用刷新数据(只是做样子)
                 swipe_shouyeleagues.setRefreshing(false);
             }
         });
