@@ -52,12 +52,15 @@ import cn.com.hgh.utils.JumpIntent;
 import cn.com.hgh.utils.Result;
 import cn.com.hgh.view.DialogCommon;
 import cn.com.hgh.view.HttpDialog;
+import lt.lemonlabs.android.expandablebuttonmenu.ExpandableButtonMenu;
+import lt.lemonlabs.android.expandablebuttonmenu.ExpandableMenuOverlay;
 
 @SuppressLint({"ResourceAsColor", "HandlerLeak"})
 public class MainActivity extends BaseActivity implements  MyShopChange {
 	FrameLayout fm_funcpage0, fm_funcpage1, fm_funcpage2, fm_funcpage3;
 	RadioButton rb_shouye, rb_jiaoyiguanli, rb_caiwushi, rb_mine;
 	private ImageView img_main_red;
+	private ExpandableMenuOverlay em_releasesceneyell;
 	private OnCheckedChangeListener checkListener;
 	public static final int POSITION0 = 0;
 	public static final int POSITION1 = 1;
@@ -65,6 +68,7 @@ public class MainActivity extends BaseActivity implements  MyShopChange {
 	public static final int POSITION3 = 3;
 	public static boolean isChangSHpe = false;
 	MainActivity mActivity;
+	private final int POSITION = 2;
 
 	/**
 	 * 以下载数据
@@ -516,7 +520,21 @@ public class MainActivity extends BaseActivity implements  MyShopChange {
 		rb_jiaoyiguanli.setOnCheckedChangeListener(checkListener);
 		rb_caiwushi.setOnCheckedChangeListener(checkListener);
 		rb_mine.setOnCheckedChangeListener(checkListener);
+		em_releasesceneyell.setOnMenuButtonClickListener(new ExpandableButtonMenu.OnMenuButtonClick() {
+			@Override
+			public void onClick(ExpandableButtonMenu.MenuButton action) {
+				switch (action) {
+					case LEFT:
+						Intent intent = new Intent(MainActivity.this, LeaguesPublishYellActivity.class);
+                        startActivity(intent);
+						break;
+					case RIGHT:
+						changeFuncPage(POSITION);
 
+						break;
+				}
+			}
+		});
 	}
 
 	private int clickPosition = 5;
@@ -648,6 +666,7 @@ public class MainActivity extends BaseActivity implements  MyShopChange {
 		rb_caiwushi = (RadioButton) findViewById(R.id.rb_caiwushi);
 		rb_mine = (RadioButton) findViewById(R.id.rb_mine);
 		img_main_red = (ImageView) findViewById(R.id.img_main_red);
+		em_releasesceneyell = (ExpandableMenuOverlay) findViewById(R.id.em_releasesceneyell);
 
 	}
 

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_focused="true"
+        android:state_enabled="false"
+        android:state_pressed="true"
+        android:layout_marginBottom="5dp"
+        android:drawable="@mipmap/icon_mainadd" />
+    <item android:state_focused="true"
+        android:state_enabled="false"
+        android:layout_marginBottom="5dp"
+        android:drawable="@mipmap/icon_mainadd" />
+    <item android:state_focused="true"
+        android:state_pressed="true"
+        android:layout_marginBottom="5dp"
+        android:drawable="@mipmap/icon_mainadd" />
+    <item android:state_focused="false"
+        android:state_pressed="true"
+        android:layout_marginBottom="5dp"
+        android:drawable="@mipmap/icon_mainadd" />
+    <item android:state_focused="true"
+        android:layout_marginBottom="5dp"
+        android:drawable="@mipmap/icon_mainadd" />
+    <item
+        android:layout_marginBottom="5dp"
+        android:drawable="@mipmap/icon_mainadd" />
+</selector>

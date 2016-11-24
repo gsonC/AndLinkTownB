@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ebm="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
@@ -85,7 +90,16 @@
                 android:button="@color/transparent"
                 android:duplicateParentState="true" />
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:gravity="center"
+            android:orientation="vertical" >
 
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -132,3 +146,25 @@
     </LinearLayout>
 
 </LinearLayout>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        >
+     <lt.lemonlabs.android.expandablebuttonmenu.ExpandableMenuOverlay
+        android:id="@+id/em_releasesceneyell"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/circle_home"
+        ebm:distanceX ="0.08"
+        ebm:distanceY ="0.1"
+        ebm:mainButtonSize="0.13"
+        ebm:otherButtonSize="0.13"
+        ebm:bottomPad="0.01"
+        ebm:closeButtonSrc="@drawable/circle_close"
+        ebm:leftButtonSrc="@drawable/circle_yell"
+        ebm:rightButtonSrc="@drawable/circle_scence"
+      />
+        </RelativeLayout>
+</RelativeLayout>
