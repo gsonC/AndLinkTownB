@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/color_8000"
+              android:gravity="bottom"
+              android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/color_9fff"
+        android:gravity="center"
+        android:text="@string/share"
+        android:textColor="@color/colores_news_10"
+        android:textSize="15sp"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@color/color_9fff">
+
+        <ImageView
+            android:id="@+id/img_wxshare_friend"
+            android:layout_width="50dp"
+            android:layout_height="60dp"
+            android:layout_centerVertical="true"
+            android:adjustViewBounds="true"
+            android:layout_marginLeft="85dp"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/icon_wxshare_friend"/>
+
+        <ImageView
+            android:id="@+id/img_wxshare_friendcircle"
+            android:layout_width="50dp"
+            android:layout_height="60dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:adjustViewBounds="true"
+            android:layout_marginRight="85dp"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/icon_wxshare_friendcircle"/>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line"
+        android:background="@color/foodcolor"
+        />
+
+    <Button
+        android:id="@+id/btn_wxshare_close"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/color_9fff"
+        android:gravity="center"
+        android:text="@string/close"
+        android:textColor="@color/colores_news_10"
+        android:textSize="16sp"/>
+
+</LinearLayout>

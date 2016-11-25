@@ -322,4 +322,6 @@
     <string name="activity_withdrawingprogress_presentprogress">提现进度</string>
     <string name="activity_withdrawing_success">提现成功</string>
     <string name="activity_withdrawrecord_title">提现记录</string>
+    <string name="close">关闭</string>
+    <string name="share">分享到</string>
 </resources>

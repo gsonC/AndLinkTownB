@@ -49,6 +49,7 @@ import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
 import com.lianbi.mezone.b.ui.BaseActivity;
 import com.lianbi.mezone.b.ui.CallServiceActivity;
 import com.lianbi.mezone.b.ui.ComeDetailActivity;
+import com.lianbi.mezone.b.ui.CompanyEventActivity;
 import com.lianbi.mezone.b.ui.ConsumptionSettlementActivity;
 import com.lianbi.mezone.b.ui.DiningTableSettingActivity;
 import com.lianbi.mezone.b.ui.LeaguesStorelistActivity;
@@ -173,6 +174,10 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 	private List<TextView> mSaleRankBottomList;
 	private ArrayList<ShopSaleRank> mShopSaleRankList = new ArrayList<>();
 	private SwipeRefreshLayout mSwipe_shouyemanagement;
+	/**
+	 * 圣诞轰趴
+	 */
+	private LinearLayout mLlt_shouyemanagement_companyevent;
 
 	@Nullable
 	@Override
@@ -507,7 +512,7 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 					} else if (value == 8) {
 						return shopConsumptionCurve.get(8).getTime();
 					}
-					return "数据异常";
+					return "0:00";
 				}
 
 				@Override
@@ -668,6 +673,11 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 		mTv_shouyemag_call_num = (TextView) view.findViewById(R.id.tv_shouyemag_call_num);
 		mImg_shouyemag_condetail = (ImageView) view.findViewById(R.id.img_shouyemag_condetail);//消费流水
 		mTv_shouyemag_condetail_num = (TextView) view.findViewById(R.id.tv_shouyemag_condetail_num);
+
+		/**
+		 * 圣诞轰趴
+		 */
+		mLlt_shouyemanagement_companyevent = (LinearLayout) view.findViewById(R.id.llt_shouyemanagement_companyevent);
 
 		/**
 		 * 实时消费
@@ -912,6 +922,7 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 	public void setLinten() {
 		mRdoGroup_time_salenum.setOnCheckedChangeListener(this);
 		mSwipe_shouyemanagement.setOnRefreshListener(this);
+		mLlt_shouyemanagement_companyevent.setOnClickListener(this);
 		/**
 		 * 到店服务
 		 */
@@ -958,6 +969,9 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 				break;
 			case R.id.img_shouyemag_condetail://消费流水
 				startActivity(new Intent(mActivity, ComeDetailActivity.class));
+				break;
+			case R.id.llt_shouyemanagement_companyevent://圣诞轰趴
+				startActivity(new Intent(mActivity, CompanyEventActivity.class));
 				break;
 			/**
 			 * 会员营销

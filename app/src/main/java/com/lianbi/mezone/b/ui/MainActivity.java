@@ -36,6 +36,8 @@ import com.lianbi.mezone.b.photo.PopupWindowHelper;
 import com.lianbi.mezone.b.push.PushDemoReceiver;
 import com.lianbi.mezone.b.receiver.Downloader;
 import com.lianbi.mezone.b.service.MyService;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.xizhi.mezone.b.R;
 
 import org.json.JSONException;
@@ -56,7 +58,7 @@ import lt.lemonlabs.android.expandablebuttonmenu.ExpandableButtonMenu;
 import lt.lemonlabs.android.expandablebuttonmenu.ExpandableMenuOverlay;
 
 @SuppressLint({"ResourceAsColor", "HandlerLeak"})
-public class MainActivity extends BaseActivity implements  MyShopChange {
+public class MainActivity extends BaseActivity implements MyShopChange {
 	FrameLayout fm_funcpage0, fm_funcpage1, fm_funcpage2, fm_funcpage3;
 	RadioButton rb_shouye, rb_jiaoyiguanli, rb_caiwushi, rb_mine;
 	private ImageView img_main_red;
@@ -67,6 +69,7 @@ public class MainActivity extends BaseActivity implements  MyShopChange {
 	public static final int POSITION2 = 2;
 	public static final int POSITION3 = 3;
 	public static boolean isChangSHpe = false;
+	private IWXAPI api;
 	MainActivity mActivity;
 	private final int POSITION = 2;
 
@@ -106,12 +109,30 @@ public class MainActivity extends BaseActivity implements  MyShopChange {
 
 		//LocationUtills.initLocationClient(this, this);
 
+		//regToWx();
+
 		postCID();
 
 		getUpData();
 
 	}
 
+	/**
+	 * 微信注册
+	 */
+	private void regToWx() {
+		//通过WXAPIFactory工厂,获取IWXAPI的实例
+		api = WXAPIFactory.createWXAPI(this, API.APP_ID, true);
+		//将应用的appid注册到微信
+		api.registerApp(API.APP_ID);
+		if (!api.isWXAppInstalled()) {
+			ContentUtils.putSharePre(this, Constants.SHARED_PREFERENCE_NAME,
+					Constants.WEIXIN_ISEX, true);
+		}else{
+			ContentUtils.putSharePre(this, Constants.SHARED_PREFERENCE_NAME,
+					Constants.WEIXIN_ISEX, false);
+		}
+	}
 
 	public void postCID() {
 		if (ContentUtils.getLoginStatus(this)) {
@@ -379,7 +400,7 @@ public class MainActivity extends BaseActivity implements  MyShopChange {
 					//Intent intent = new Intent(this, IncomeActivity.class);
 					//startActivity(intent);
 					//break;
-					ContentUtils.showMsg(MainActivity.this,"敬请期待");
+					ContentUtils.showMsg(MainActivity.this, "敬请期待");
 					break;
 				}
 			case POSITION3:
@@ -399,7 +420,7 @@ public class MainActivity extends BaseActivity implements  MyShopChange {
 							refreshFMData();
 							setPageRightTextVisibility(View.INVISIBLE);
 							Intent intent = new Intent();
-							intent.setClass(MainActivity.this,LoginActivity.class);
+							intent.setClass(MainActivity.this, LoginActivity.class);
 							startActivity(intent);
 							finish();
 							dismiss();
@@ -546,7 +567,8 @@ public class MainActivity extends BaseActivity implements  MyShopChange {
 	 */
 	public void changeFuncPage(int position) {
 		this.clickPosition = position;
-		if (position < POSITION0) return;
+		if (position < POSITION0)
+			return;
 		if (position == POSITION0) {
 			curPosition = POSITION0;
 			//	titleShouYe();
@@ -705,7 +727,7 @@ public class MainActivity extends BaseActivity implements  MyShopChange {
 
 			} else {
 
-//				activityManager.exit();
+				//				activityManager.exit();
 				//设置返回键跳转到桌面，当进程被kill则跳转3秒倒计时
 				Intent intent = new Intent();
 				intent.setAction("android.intent.action.MAIN");
@@ -733,17 +755,14 @@ public class MainActivity extends BaseActivity implements  MyShopChange {
 	 */
 
 	/**
-
-	@Override
-	public void location(double lng, double lat, String address) {
-		if (httpDialog != null) {
-			httpDialog.dismiss();
-		}
-		ContentUtils.putSharePre(this, Constants.SHARED_PREFERENCE_NAME, Constants.LATITUDE, lat + "");
-		ContentUtils.putSharePre(this, Constants.SHARED_PREFERENCE_NAME, Constants.LONGITUDE, lng + "");
-		ContentUtils.putSharePre(this, Constants.SHARED_PREFERENCE_NAME, Constants.ADDRESS, address);
-	}
-
+	 * @Override public void location(double lng, double lat, String address) {
+	 * if (httpDialog != null) {
+	 * httpDialog.dismiss();
+	 * }
+	 * ContentUtils.putSharePre(this, Constants.SHARED_PREFERENCE_NAME, Constants.LATITUDE, lat + "");
+	 * ContentUtils.putSharePre(this, Constants.SHARED_PREFERENCE_NAME, Constants.LONGITUDE, lng + "");
+	 * ContentUtils.putSharePre(this, Constants.SHARED_PREFERENCE_NAME, Constants.ADDRESS, address);
+	 * }
 	 */
 	@Override
 	public void reFresh() {

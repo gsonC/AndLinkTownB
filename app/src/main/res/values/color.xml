@@ -26,6 +26,7 @@
     <color name="result_view">#b0000000</color>
     <color name="possible_result_points">#c0ffff00</color>
     <color name="color_8000">#8000</color>
+    <color name="color_9fff">#9fff</color>
     <color name="color_c6c6c6">#c6c6c6</color>
     <color name="color_6bb4ff">#6bb4ff</color>
     <color name="color_008dda">#008dda</color>

@@ -26,6 +26,7 @@ import com.lianbi.mezone.b.impl.MyShopChange;
 import com.lianbi.mezone.b.ui.AboutUsActivity;
 import com.lianbi.mezone.b.ui.ActionProduceActivity;
 import com.lianbi.mezone.b.ui.BaseActivity;
+import com.lianbi.mezone.b.ui.CompanyEventActivity;
 import com.lianbi.mezone.b.ui.FeedBackActivity;
 import com.lianbi.mezone.b.ui.FinancialActivity;
 import com.lianbi.mezone.b.ui.LeaguesYellListActivity;

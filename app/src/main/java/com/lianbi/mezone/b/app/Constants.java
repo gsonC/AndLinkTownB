@@ -139,4 +139,9 @@ public class Constants {
 	public static final String NEEDNOTTITLE= "NEEDNOTTITLE";
 	public static final String RE= "Re";
 	public static final String TITLE= "title";
+	/**
+	 * SharedPreference 中的字段 判断微信是否安装
+	 */
+	public static final String WEIXIN_ISEX = "weixin_isex";
+
 }

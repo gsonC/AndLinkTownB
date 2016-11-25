@@ -1,5 +1,9 @@
 package cn.com.hgh.utils;
 
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
+
+import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -51,5 +55,23 @@ public class Picture_Base64 {
 		} catch (Exception e) {
 			return false;
 		}
+	}
+
+	//将bitmap转成byte[]
+	public static byte[] bmp2byte(final Bitmap bmp,final boolean needRecycle) {
+		ByteArrayOutputStream output = new ByteArrayOutputStream();
+		bmp.compress(CompressFormat.PNG, 100, output);
+		if (needRecycle) {
+			bmp.recycle();
+		}
+
+		byte[] result = output.toByteArray();
+		try {
+			output.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return result;
 	}
 }

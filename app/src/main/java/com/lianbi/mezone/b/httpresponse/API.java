@@ -7,6 +7,10 @@ public class API {
 	 */
 	public static final int SUCCESS_EXIST = 0;
 	/**
+	 * 微信分享APP_ID
+	 */
+	public static final String APP_ID = "wx5ce2ffa100e3f587";
+	/**
 	 * 服务器异常
 	 */
 	public static final int FAILED_EXIST = 500;
