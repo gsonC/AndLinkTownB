@@ -152,12 +152,12 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         >
-     <lt.lemonlabs.android.expandablebuttonmenu.ExpandableMenuOverlay
+     <cn.com.hgh.view.expandablebuttonmenu.ExpandableMenuOverlay
         android:id="@+id/em_releasesceneyell"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:src="@drawable/circle_home"
-        ebm:distanceX ="0.08"
+        ebm:distanceX ="0.12"
         ebm:distanceY ="0.1"
         ebm:mainButtonSize="0.13"
         ebm:otherButtonSize="0.13"
