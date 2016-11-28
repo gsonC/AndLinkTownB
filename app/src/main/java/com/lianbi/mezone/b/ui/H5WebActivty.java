@@ -84,6 +84,8 @@ public class H5WebActivty extends BaseActivity{
 	private String  base64="";
 	private final  int  OPENIMAGEFILE=20000;
 	private String  mImgId;
+	private  int  AspectX=4;
+	private  int  AspectY=4;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -462,7 +464,13 @@ public class H5WebActivty extends BaseActivity{
 		@JavascriptInterface
 		public void  photoAlbumcut(boolean  flag,String  imgId)
 		{
-
+            if(imgId.equals("get-img")){
+				AspectX=4;
+				AspectY=3;
+			}else{
+				AspectX=4;
+				AspectY=4;
+			}
 			if(flag==true) {
 				mImgId=imgId;
 				photoUtills.startPickPhotoFromAlbumWithCrop();
@@ -556,8 +564,8 @@ public class H5WebActivty extends BaseActivity{
 //			defaultImageDescribe.setOutputY(360);
 			defaultImageDescribe.setOutputX(640);
 			defaultImageDescribe.setOutputY(435);
-			defaultImageDescribe.setAspectX(4);
-			defaultImageDescribe.setAspectY(4);
+			defaultImageDescribe.setAspectX(AspectX);
+			defaultImageDescribe.setAspectY(AspectY);
 			defaultImageDescribe.setOutputFormat(DEFAULT_IMG_FORMAT);
 			return defaultImageDescribe;
 		}
