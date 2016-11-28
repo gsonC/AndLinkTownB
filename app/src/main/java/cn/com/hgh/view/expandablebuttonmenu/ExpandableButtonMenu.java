@@ -403,10 +403,10 @@ public class ExpandableButtonMenu extends RelativeLayout implements View.OnClick
 
         params = (LinearLayout.LayoutParams) mRightBtn.getLayoutParams();
         params.width = (int) (sWidth * 0.2 );
-        params.height = (int) (sHeight * 0.15);
+        params.height = (int) (sWidth * ((0.2*198/155)));
         params = (LinearLayout.LayoutParams) mLeftBtn.getLayoutParams();
         params.width = (int) (sWidth * 0.2 );
-        params.height = (int) (sHeight * 0.15);
+        params.height = (int) (sWidth * ((0.2*198/155)));
     }
 
 
