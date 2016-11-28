@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_share_marketing"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_ededed"
+    android:orientation="vertical"
+    tools:context="com.lianbi.mezone.b.ui.ShareMarketingActivity">
+
+    <include
+        android:id="@+id/share_group_buying"
+        layout="@layout/share_marketing_includer" />
+
+    <include
+        android:id="@+id/investigation"
+        layout="@layout/share_marketing_includer" />
+
+    <include
+        android:id="@+id/click_praise_receive_hongbao"
+        layout="@layout/share_marketing_includer" />
+
+    <include
+        android:id="@+id/store_showing"
+        layout="@layout/share_marketing_includer" />
+</LinearLayout>

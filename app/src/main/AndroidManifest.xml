@@ -93,9 +93,10 @@
             </intent-filter>
         </service>
         <!-- <activity android:name="com.lianbi.mezone.b.ui.JumpActivity"/> -->
-        <activity android:name="com.lianbi.mezone.b.wxapi.WXEntryActivity"
-            android:label="@string/app_name"
-            android:exported="true"/>
+        <activity
+            android:name="com.lianbi.mezone.b.wxapi.WXEntryActivity"
+            android:exported="true"
+            android:label="@string/app_name" />
         <activity android:name="com.lianbi.mezone.b.ui.FourSecondActivity" />
         <activity android:name="com.lianbi.mezone.b.ui.LoginAndRegisterActivity" />
         <activity
@@ -159,7 +160,6 @@
         <activity android:name="com.lianbi.mezone.b.ui.AddNewMemberActivity" />
         <activity android:name="com.lianbi.mezone.b.ui.MemberExplainActivity" />
         <activity android:name="com.lianbi.mezone.b.ui.QrImgMainActivity" />
-
         <activity
             android:name="com.lianbi.mezone.b.ui.AddShopActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -452,6 +452,8 @@
         <activity android:name="com.lianbi.mezone.b.ui.LeaguesYellListActivity" />
         <activity android:name="com.lianbi.mezone.b.ui.LeaguesYellDetailsActivity" />
         <activity android:name="com.lianbi.mezone.b.ui.AddShopInfoActivity" />
+        <activity android:name="com.lianbi.mezone.b.ui.ShareMarketingActivity" />
+        <activity android:name="com.lianbi.mezone.b.ui.ShareGroupBuyingActivity"></activity>
     </application>
 
 </manifest>
