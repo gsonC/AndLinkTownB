@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.bluetooth.BluetoothDevice;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
@@ -59,6 +60,12 @@ public class TableHasOrderedActivity extends BluetoothBaseActivity {
 
     @Bind(R.id.num_should_pay)
     TextView num_should_pay;//合计
+
+    @Bind(R.id.yuan)
+    TextView yuan;
+
+    @Bind(R.id.num_actually_pay)
+    TextView num_actually_pay;
 
     @Bind(R.id.cancel_order)
     TextView cancelOrder;
@@ -155,6 +162,8 @@ public class TableHasOrderedActivity extends BluetoothBaseActivity {
     private void addDataToView(String data) {
         JSONObject jsonObject = JSON.parseObject(data);
         fen_num.setText(jsonObject.getString("proNum"));
+        yuan.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);//中划线
+        num_should_pay.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);//中划线
         num_should_pay.setText(jsonObject.getString("totalOrderMoney"));
         mData = JSON.parseArray(jsonObject.getString("unPaidOrders"), TableOrderBean.class);
 //        过滤掉已取消
@@ -417,7 +426,7 @@ public class TableHasOrderedActivity extends BluetoothBaseActivity {
             ContentUtils.showMsg(TableHasOrderedActivity.this, "修改价格只能包含元和角");
             return;
         }
-        if (newPrice.equals("0")||newPrice.equals("0.0")) {
+        if (newPrice.equals("0") || newPrice.equals("0.0")) {
             ContentUtils.showMsg(TableHasOrderedActivity.this, "修改价格必须大于0");
             return;
         }

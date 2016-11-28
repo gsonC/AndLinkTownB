@@ -34,6 +34,37 @@
             android:textColor="@color/commo_text_color"
             android:textSize="@dimen/h15" />
 
+        <ImageView
+            android:id="@+id/vip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/tv_client_name"
+            android:layout_alignTop="@id/tv_client_name"
+            android:layout_marginLeft="11dp"
+            android:layout_toRightOf="@id/tv_client_name"
+            android:src="@mipmap/vip" />
+
+        <TextView
+            android:id="@+id/vip_class"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/tv_client_name"
+            android:layout_marginLeft="2.5dp"
+            android:layout_toRightOf="@id/vip"
+            android:textColor="#f47400"
+            android:textSize="@dimen/h13" />
+
+        <TextView
+            android:id="@+id/ordinary_member"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/tv_client_name"
+            android:layout_marginLeft="11dp"
+            android:layout_toRightOf="@id/tv_client_name"
+            android:text="普通会员"
+            android:textColor="#f47400"
+            android:textSize="@dimen/h13" />
+
         <TextView
             android:id="@+id/remarks_cn"
             android:layout_width="wrap_content"
@@ -73,22 +104,42 @@
             android:text="下单时间："
             android:textColor="@color/colores_news_19"
             android:textSize="@dimen/h13" />
+
+        <TextView
+            android:id="@+id/minute_cn_unit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="15dp"
+            android:layout_marginRight="11dp"
+            android:text="分钟"
+            android:textColor="@color/colores_news_19"
+            android:textSize="@dimen/h13" />
+
+        <TextView
+            android:id="@+id/waiting_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/minute_cn_unit"
+            android:layout_toLeftOf="@id/minute_cn_unit"
+            android:textColor="@color/colores_news_19"
+            android:textSize="@dimen/h13" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/waiting_time"
+            android:layout_toLeftOf="@id/waiting_time"
+            android:text="预计等待时间："
+            android:textColor="@color/colores_news_19"
+            android:textSize="@dimen/h13" />
     </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="11dp"
         android:background="@color/color_ededed" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="44dp"
-        android:background="@android:color/white"
-        android:gravity="center_vertical"
-        android:paddingLeft="11dp"
-        android:text="订单列表"
-        android:textColor="@color/commo_text_color"
-        android:textSize="@dimen/h15" />
 
     <cn.com.hgh.view.MyListView
         android:id="@+id/dishes_list_container"
@@ -101,4 +152,15 @@
         android:listSelector="@color/transparent"
         android:scrollbars="none"
         android:scrollingCache="true" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:paddingLeft="11dp"
+        android:text="订单列表"
+        android:textColor="@color/commo_text_color"
+        android:textSize="@dimen/h15" />
 </LinearLayout>

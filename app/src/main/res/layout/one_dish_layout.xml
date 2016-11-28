@@ -21,7 +21,17 @@
             android:id="@+id/dish_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="油焖大虾"
             android:textColor="@color/commo_text_color"
+            android:textSize="@dimen/h15" />
+
+        <TextView
+            android:id="@+id/huiyuanjia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:text="会员价："
+            android:textColor="@color/pointcolor"
             android:textSize="@dimen/h15" />
 
         <TextView
@@ -29,6 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@id/huiyuanjia"
             android:text="¥"
             android:textColor="@color/pointcolor"
             android:textSize="@dimen/h15" />
@@ -43,10 +54,31 @@
             android:textSize="@dimen/h15" />
 
         <TextView
+            android:id="@+id/renminbi_sign_"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@id/dish_price"
+            android:text="¥"
+            android:textColor="@color/commo_text_color"
+            android:textSize="@dimen/h15" />
+
+        <TextView
+            android:id="@+id/actually_dish_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@id/renminbi_sign_"
+            android:textColor="@color/commo_text_color"
+            android:textSize="@dimen/h15" />
+
+        <TextView
             android:id="@+id/tv_dish_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:text="2"
             android:textColor="@color/colores_news_19"
             android:textSize="@dimen/h13" />
 

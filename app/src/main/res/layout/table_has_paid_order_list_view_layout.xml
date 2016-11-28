@@ -73,6 +73,37 @@
             android:text="下单时间："
             android:textColor="@color/colores_news_19"
             android:textSize="@dimen/h13" />
+
+        <ImageView
+            android:id="@+id/vip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/tv_client_name"
+            android:layout_alignTop="@id/tv_client_name"
+            android:layout_marginLeft="11dp"
+            android:layout_toRightOf="@id/tv_client_name"
+            android:src="@mipmap/vip" />
+
+        <TextView
+            android:id="@+id/vip_class"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/tv_client_name"
+            android:layout_marginLeft="2.5dp"
+            android:layout_toRightOf="@id/vip"
+            android:textColor="#f47400"
+            android:textSize="@dimen/h13" />
+
+        <TextView
+            android:id="@+id/ordinary_member"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/tv_client_name"
+            android:layout_marginLeft="11dp"
+            android:layout_toRightOf="@id/tv_client_name"
+            android:text="普通会员"
+            android:textColor="#f47400"
+            android:textSize="@dimen/h13" />
     </RelativeLayout>
 
     <View

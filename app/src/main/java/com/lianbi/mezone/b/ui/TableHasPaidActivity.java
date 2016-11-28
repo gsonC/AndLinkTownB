@@ -2,6 +2,7 @@ package com.lianbi.mezone.b.ui;
 
 import android.app.Dialog;
 import android.graphics.Bitmap;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
@@ -54,6 +55,9 @@ public class TableHasPaidActivity extends BaseActivity {
     @Bind(R.id.num_should_pay)
     TextView num_should_pay;//合计
 
+    @Bind(R.id.yuan_1)
+    TextView yuan_1;
+
     @Bind(R.id.actually_paid_amount)
     TextView actually_paid_amount;//实际付款
 
@@ -86,6 +90,8 @@ public class TableHasPaidActivity extends BaseActivity {
         JSONObject jsonObject = JSON.parseObject(data);
         fen_num.setText(jsonObject.getString("proNum"));
         String totalOrderMoney = jsonObject.getString("totalOrderMoney");
+        yuan_1.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);//中划线
+        num_should_pay.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);//中划线
         num_should_pay.setText(totalOrderMoney);
         String benefitMoney = jsonObject.getString("benefitMoney");
         double actually_paid = MathExtend.round(Double.parseDouble(totalOrderMoney) - Double.parseDouble(benefitMoney), 2);
