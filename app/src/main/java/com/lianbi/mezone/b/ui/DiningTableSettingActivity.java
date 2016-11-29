@@ -629,7 +629,6 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
                 onTitleLeftClick();
                 break;
             case R.id.menu_setting:
-                boolean isLogin = ContentUtils.getLoginStatus(DiningTableSettingActivity.this);
                 boolean re = JumpIntent
                         .jumpLogin_addShop(isLogin, API.TRADE, DiningTableSettingActivity.this);
                 if (re) {

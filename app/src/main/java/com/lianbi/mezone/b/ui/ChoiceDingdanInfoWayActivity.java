@@ -63,7 +63,6 @@ public class ChoiceDingdanInfoWayActivity extends BaseActivity {
 
 	@Override
 	protected void onChildClick(View view) {
-		boolean isLogin = ContentUtils.getLoginStatus(this);
 		switch (view.getId()) {
 			case R.id.llt_app_dingdanway:
 				re = JumpIntent.jumpLogin_addShop(isLogin, API.ORDERDETAIL, this);

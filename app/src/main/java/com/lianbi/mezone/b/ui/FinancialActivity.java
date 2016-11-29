@@ -263,7 +263,6 @@ public class FinancialActivity extends BaseActivity {
 
 	@Override
 	public void onChildClick(View v) {
-		boolean isLogin = ContentUtils.getLoginStatus(this);
 		boolean re = false;
 		switch (v.getId()) {
 			case R.id.iv_recharge:// 充值

@@ -35,10 +35,6 @@ public class FirstActivity extends BaseActivity {
 		setContentView(R.layout.act_first);
 		ImageView act_first_iv = (ImageView) findViewById(R.id.act_first_iv);
 
-		/**
-		 * 如果登录过自动登录
-		 */
-		final boolean isLogin = ContentUtils.getLoginStatus(this);
 		if (isLogin) {
 			autoLogin();
 		 }
