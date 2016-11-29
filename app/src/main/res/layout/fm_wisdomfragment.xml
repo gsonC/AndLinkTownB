@@ -78,6 +78,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:background="@color/colores_news_14"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center_vertical"
+                >
+                <cn.com.hgh.view.MyGridView
+                    android:id="@+id/gv_shouyeservice"
+                    android:layout_width="fill_parent"
+                    android:layout_height="2dp"
+                    android:horizontalSpacing="0.0dip"
+                    android:listSelector="@null"
+                    android:numColumns="3"
+                    android:scrollbars="none"
+                    android:stretchMode="columnWidth"
+                    android:verticalSpacing="0.0dip" >
+                </cn.com.hgh.view.MyGridView>
+
+
+
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -179,34 +201,84 @@
                     android:layout_width="0.5dp"
                     android:layout_height="match_parent"
                     android:background="@color/colores_news_14"/>
+
             </LinearLayout>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:background="@color/colores_news_14"/>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:id="@+id/ll_wisdommanage_fenxiang"
+                android:layout_width="0dp"
+                android:layout_height="85dp"
                 android:orientation="vertical"
-                android:layout_gravity="center_vertical"
-                >
-                <cn.com.hgh.view.MyGridView
-                    android:id="@+id/gv_shouyeservice"
-                    android:layout_width="fill_parent"
-                    android:layout_height="2dp"
-                    android:horizontalSpacing="0.0dip"
-                    android:listSelector="@null"
-                    android:numColumns="3"
-                    android:scrollbars="none"
-                    android:stretchMode="columnWidth"
-                    android:verticalSpacing="0.0dip" >
-                </cn.com.hgh.view.MyGridView>
-
-
+                android:layout_weight="1"
+                android:gravity="center">
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="34dp"
+                    android:layout_marginTop="12dp"
+                    android:src="@mipmap/fenxiangyingxiaotwo"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="分享营销"
+                    android:textSize="14.5dp"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/tag_mask"
+                    />
 
             </LinearLayout>
 
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:background="@color/colores_news_14"/>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="85dp"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:gravity="center">
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="34dp"
+                    android:layout_marginTop="12dp"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14.5dp"
+                    android:layout_marginTop="8dp"
+                    />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="85dp"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:gravity="center">
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="34dp"
+                    android:layout_marginTop="12dp"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14.5dp"
+                    android:layout_marginTop="8dp"
+                    />
+
+            </LinearLayout>
+        </LinearLayout>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="11dp"

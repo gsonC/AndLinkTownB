@@ -136,7 +136,6 @@ public class ComeDetailActivity extends BaseActivity {
 				getOrder(true, false);
 				break;
 			case R.id.tv_fail:
-
 				tvAll.setChecked(false);
 				tvSuccess.setChecked(false);
 				tvFail.setChecked(true);

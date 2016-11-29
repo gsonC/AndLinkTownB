@@ -731,6 +731,11 @@ public class API {
 	* */
 	public static final String INTEGRALRECORD = "vipIntegral/vipIntegralList.do";
 	///////////////////////////////////////////////////////会员管理部分接口////////////////////////////////////////////////////////////////////////////
+	/* 店铺会员等级折扣比例修改* */
+	public static final String UPDATEDISTRIC = "updateDistrictByBusinessId.do";
+
+	/* 店铺会员等级和折扣比例查询* */
+	public static final String MEMBERVIPINFO = "queryDistrictByBusinessId.do";
 	/* 会员分类列表* */
 	public static final String MEMBER_CATEGORY_LIST = "vipType/vipTypeList.do";
 	/* 添加会员类别* */

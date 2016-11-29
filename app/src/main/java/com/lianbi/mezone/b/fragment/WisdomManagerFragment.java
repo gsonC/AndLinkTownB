@@ -118,6 +118,8 @@ public class WisdomManagerFragment extends Fragment implements OnClickListener {
 	RelativeLayout llWisdommanageShop;
 	@Bind(R.id.ll_wisdommanage_Servicemall)
 	RelativeLayout llWisdommanageServicemall;
+	@Bind(R.id.ll_wisdommanage_fenxiang)
+	LinearLayout llWisdommanageFenxiang;
 	private OkHttpsImp httpsImp;
 	private MainActivity mMainActivity;
 	public static WisdomManagerFragment jiaoYiGuanLiFragment;
@@ -161,12 +163,12 @@ public class WisdomManagerFragment extends Fragment implements OnClickListener {
 		initListAdapter();
 		return view;
 	}
+
 	private void listen() {
-		gv_shouyeservice.setOnItemClickListener(new  AdapterView.OnItemClickListener() {
+		gv_shouyeservice.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-									int position, long id) {
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				String appCode = "";
 				try {
 					appCode = mData.get(position).getAppCode();
@@ -175,10 +177,9 @@ public class WisdomManagerFragment extends Fragment implements OnClickListener {
 				boolean isLogin = ContentUtils.getLoginStatus(mMainActivity);
 				boolean re = false;
 
-				 if ("wcm".equals(appCode)) {// 微信商城
+				if ("wcm".equals(appCode)) {// 微信商城
 					if (isLogin) {
-						Intent intent_web = new Intent(mMainActivity,
-								H5WebActivty.class);
+						Intent intent_web = new Intent(mMainActivity, H5WebActivty.class);
 						intent_web.putExtra(Constants.NEDDLOGIN, false);
 						intent_web.putExtra("NEEDNOTTITLE", false);
 						intent_web.putExtra("Re", true);
@@ -186,10 +187,9 @@ public class WisdomManagerFragment extends Fragment implements OnClickListener {
 						intent_web.putExtra(WebActivty.U, getSAUrl(API.TOSTORE_MODULE_WCM, 1));
 						mMainActivity.startActivity(intent_web);
 					}
-				}  else if ("wifi".equals(appCode)) {//智能WIFI
+				} else if ("wifi".equals(appCode)) {//智能WIFI
 					if (isLogin) {
-						Intent intent_web = new Intent(mMainActivity,
-								WIFIWebActivity.class);
+						Intent intent_web = new Intent(mMainActivity, WIFIWebActivity.class);
 						intent_web.putExtra(Constants.NEDDLOGIN, false);
 						intent_web.putExtra("NEEDNOTTITLE", false);
 						intent_web.putExtra("Re", true);
@@ -210,6 +210,7 @@ public class WisdomManagerFragment extends Fragment implements OnClickListener {
 			}
 		});
 	}
+
 	private QuickAdapter<ShouyeServiceBean> mAdapter;
 
 	public void initListAdapter() {
@@ -290,6 +291,7 @@ public class WisdomManagerFragment extends Fragment implements OnClickListener {
 	 * 初始化试图
 	 */
 	private void initView(View view) {
+		llWisdommanageFenxiang.setOnClickListener(this);
 		llWisdommanageShouting.setOnClickListener(this);
 		llWisdommanageServicemall.setOnClickListener(this);
 		llWisdommanageShopservice.setOnClickListener(this);
@@ -329,6 +331,9 @@ public class WisdomManagerFragment extends Fragment implements OnClickListener {
 
 			case R.id.ll_wisdommanage_Shouting://商圈吆喝
 				startActivity(new Intent(mMainActivity, LeaguesYellListActivity.class));
+				break;
+			case R.id.ll_wisdommanage_fenxiang://分享营销
+				//startActivity(new Intent(mMainActivity, ShareMarketingActivity.class));
 				break;
 		}
 	}

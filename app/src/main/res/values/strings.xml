@@ -261,7 +261,7 @@
     <string name="activity_marketingselectmember_title">请选择要发送的会员</string>
     <string name="activity_marketingsmsexample_title">选择短信模板</string>
     <string name="activity_memberadress_title">添加地址</string>
-    <string name="activity_memberclassify_title">会员分类</string>
+    <string name="activity_memberclassify_title">会员等级</string>
     <string name="activity_memberedit_title">会员编辑</string>
     <string name="activity_memberexplain_title">说明</string>
     <string name="activity_membermanagement_title">会员管理</string>

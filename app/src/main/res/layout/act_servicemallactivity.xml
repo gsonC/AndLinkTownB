@@ -301,7 +301,7 @@
             android:layout_weight="2.5"
             android:gravity="center_vertical"
             android:singleLine="true"
-            android:text="大牛叫你做营销"
+            android:text="大牛教你做营销"
             android:textColor="@color/colores_news_10"
             android:textSize="17sp" />
         <LinearLayout

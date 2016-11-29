@@ -14,6 +14,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
@@ -74,12 +75,13 @@ public class MembersListActivity extends BaseActivity {
 	 * 根据拼音来排雷list数据
 	 */
 	private PinyinComparator mPinyinComparator;
-	private String paramLike = "";
+	private String paramLike="";
 	private String typeID = "";
 	private final int REQUEST_ADDMEMBER = 1357;
 	private final int REQUEST_CHANGMEMBERINFO = 1538;
 	boolean isSort = false;
-
+	  TextView  tv_mb_vipType;
+	String  viptype;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -87,10 +89,11 @@ public class MembersListActivity extends BaseActivity {
 		mPinyinComparator = new PinyinComparator();
 		setContentView(R.layout.act_memberslist, NOTYPE);
 		initView();
-		setLisenter();
 		initAdapter();
+		setLisenter();
 		initGetIntent();
 		getMembersList(true);
+
 	}
     private   void  initGetIntent(){
 		String typeID=getIntent().getStringExtra("typeId");
@@ -122,15 +125,12 @@ public class MembersListActivity extends BaseActivity {
 				ImageView tv_mb_photo = helper.getView(R.id.tv_mb_photo);//头像
 
 				TextView tv_mb_nickname = helper.getView(R.id.tv_mb_nickname);//昵称
-				TextView tv_mb_vipType = helper.getView(R.id.tv_mb_vipType);//类别
+				 tv_mb_vipType = helper.getView(R.id.tv_mb_vipType);//类别
 				TextView tv_mb_vipPhone = helper.getView(R.id.tv_mb_vipPhone);//手机号
-				/*ScreenUtils.textAdaptationOn720(tv_mb_phone, MembersListActivity.this, 24);//本周新增会员
-				ScreenUtils.textAdaptationOn720(tv_mb_category, MembersListActivity.this, 24);//本周新增会员
-				ScreenUtils.textAdaptationOn720(tv_mb_source, MembersListActivity.this, 24);//本周新增会员
-				ScreenUtils.textAdaptationOn720(tv_mb_label, MembersListActivity.this, 24);//本周新增会员
-				ScreenUtils.textAdaptationOn720(tv_mb_integral, MembersListActivity.this, 24);//本周新增会员*/
+
 				Glide.with(MembersListActivity.this).load(item.getVipPhoto()).error(R.mipmap.default_head).into(tv_mb_photo);
 				tv_mb_nickname.setText(item.getNickName());
+				 viptype=item.getVipType();
 				if(!AbStrUtil.isEmpty(item.getVipType())){
 					tv_mb_vipType.setText(item.getVipType());
 				}else{
@@ -154,6 +154,7 @@ public class MembersListActivity extends BaseActivity {
 	 */
 	private void initView() {
 		setPageTitle(getString(R.string.activity_memberlist_title));
+		setPageRightText("会员等级");
 		mAct_member_list_edit = (EditText) findViewById(R.id.act_member_list_edit);//搜索框
 		mTv_newaddmember = (TextView) findViewById(R.id.tv_newaddmember);//本周新增会员
 		mTv_cumulativemember = (TextView) findViewById(R.id.tv_cumulativemember);//累计会员总数
@@ -255,12 +256,33 @@ public class MembersListActivity extends BaseActivity {
 
 
 	}
+/**
+ * 匹配输入框
+ */
+
+	private void editSuit(String input){
+		ArrayList<MemberInfoBean> arrayList=new ArrayList<MemberInfoBean>();
+		if(TextUtils.isEmpty(input)){
+			arrayList=mDatas;
+		}else{
+			arrayList.clear();
+			for(MemberInfoBean memberInfoBean:mDatas){
+				 if(!AbStrUtil.isEmpty(memberInfoBean.getVipType())&&memberInfoBean.getVipType().contains(input)){
+                     arrayList.add(memberInfoBean);
+				}
+			}
+		}
+		mAdapter.replaceAll(arrayList);
+	}
+
+
 
 	/**
 	 * 添加监听
 	 */
 	private void setLisenter() {
 		// 根据输入框输入值的改变来过滤搜索
+
 		mAct_member_list_edit
 				.addTextChangedListener(new TextWatcher() {
 
@@ -268,10 +290,10 @@ public class MembersListActivity extends BaseActivity {
 					public void onTextChanged(CharSequence s, int start,
 											  int before, int count) {
 						// 当输入框里面的值为空，更新为原来的列表，否则为过滤数据列表
-						paramLike = s.toString();
 		//				filterData(s.toString());
-						if("".equals(paramLike)){
-							filterData("");
+						if("".equals(s.toString())){
+							editSuit("");
+							//filterData("");
 						}
 					}
 
@@ -293,9 +315,9 @@ public class MembersListActivity extends BaseActivity {
 												  KeyEvent event) {
 						if (actionId == EditorInfo.IME_ACTION_DONE
 								|| actionId == EditorInfo.IME_ACTION_UNSPECIFIED) {
-							paramLike = mAct_member_list_edit
+							String	input= mAct_member_list_edit
 									.getText().toString().trim();
-							filterData(paramLike);
+							editSuit(input);
 						}
 						AbAppUtil.closeSoftInput(MembersListActivity.this);
 						return false;
@@ -428,4 +450,10 @@ public class MembersListActivity extends BaseActivity {
 
 	}
 
+	@Override
+	protected void onTitleRightClickTv() {
+		super.onTitleRightClickTv();
+		Intent intent=new Intent(MembersListActivity.this,MemberClassifyActivity.class);
+	 startActivity(intent);
+	}
 }

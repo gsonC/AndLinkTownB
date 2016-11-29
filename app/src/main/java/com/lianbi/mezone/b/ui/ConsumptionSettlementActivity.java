@@ -81,7 +81,6 @@ public class ConsumptionSettlementActivity extends BaseActivity {
 			imComestoreEject.setVisibility(View.VISIBLE);
 		}
 	}
-
 	/**
 	 * 动画
 	 */
@@ -120,13 +119,6 @@ public class ConsumptionSettlementActivity extends BaseActivity {
 	private void initview() {
 
 		setPageTitle(getString(R.string.activity_consumptionsettlement_title));
-		//imComestoreDetail.setOnClickListener(this);
-		//imComestoreDetail.setOnClickListener(new View.OnClickListener() {
-		//	@Override
-		//	public void onClick(View v) {
-		//		startActivity(new Intent(ConsumptionSettlementActivity.this,DiningTableSettingActivity.class));
-		//	}
-		//});
 		//刷新设置
 		actCumptionAbpulltorefreshview.setLoadMoreEnable(true);
 		actCumptionAbpulltorefreshview.setPullRefreshEnable(true);
@@ -168,18 +160,14 @@ public class ConsumptionSettlementActivity extends BaseActivity {
 				TextView tv_consum_total = helper.getView(R.id.tv_consum_total);
 				TextView tv_consum_time = helper.getView(R.id.tv_consum_time);
 				TextView tv_consum_price = helper.getView(R.id.tv_consum_price);
-				/*TextView tv_consum_daytime = helper.getView(R.id.tv_consum_daytime);*/
 				TextView tv_consum_where = helper.getView(R.id.tv_consum_where);
 				TextView tv_consum_shoukuan = helper.getView(R.id.tv_consum_shoukuan);
-				/*TextView tv_consum_rmb = helper.getView(R.id.tv_consum_rmb);*/
 				tableId=item.getTableId();
 				tableName = item.getTableName();
 				tv_consum_where.setText(item.getTableName());
 				tv_consum_total.setText(item.getProductCount());
 				tv_consum_price.setText(item.getUnPaidorderAmt());
 				tv_consum_time.setText(item.getCreateTime());
-//				getOnlinePayController(item.getTableId());
-				//getOnlinePayController(item.getTableId());
 
 				TextView tv_consum_detail = helper.getView(R.id.tv_consum_detail);
 				tv_consum_detail.setOnClickListener(new View.OnClickListener() {

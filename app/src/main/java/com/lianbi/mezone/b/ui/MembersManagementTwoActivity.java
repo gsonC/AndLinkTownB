@@ -62,9 +62,9 @@ public class MembersManagementTwoActivity extends BaseActivity {
 		List<String> list1 = new ArrayList<String>();
 		list1.add("会员列表");
 		list1.add("会员分类");
-		/*list1.add("标签管理");*/
+		list1.add("标签管理");
 
-		map.put("会员信息管理", list1);
+		map.put("list1", list1);
 
 
 

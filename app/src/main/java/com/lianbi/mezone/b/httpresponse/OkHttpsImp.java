@@ -785,27 +785,56 @@ public enum OkHttpsImp {
     }
     ///////////////////////////////////////////////////////////会员管理部分接口/////////////////////////////////////////////////////////////////////////////////////
 
+
     /**
-     * 获取会员分类列表
+     * 店铺会员等级和折扣比例查询
      */
-    public void getMemberCategoryList(MyResultCallback<String> myResultCallback, String businessId, String pageNo, String pageSize, String reqTime, String uuid) throws Exception {
+    public void getMemberCategoryList(MyResultCallback<String> myResultCallback,
+                                      String serNum, String source, String reqTime,
+                                      String businessId
+    ) throws Exception {
         Map<String, String> params = new HashMap<String, String>();
-        params.put("businessId", businessId);
-        params.put("pageNo", pageNo);
-        params.put("pageSize", pageSize);
+        params.put("serNum", serNum);
+        params.put("source", source);
         params.put("reqTime", reqTime);
-        params.put("serNum", uuid);
-        params.put("source", appsource);
+        params.put("businessId", businessId);
         String sign = getSign(md5_key, params);
         params.put("sign", sign);
-        String url = getAbsoluteUrl(API.MEMBER_CATEGORY_LIST);
+        String url = getAbsoluteUrl(API.MEMBERVIPINFO);
         postProgressResponse(myResultCallback, params, url);
     }
 
     /**
+     * 店铺会员等级折扣比例修改
+     */
+    public void getupdateDistrict(MyResultCallback<String> myResultCallback,
+                                      String serNum, String source, String reqTime,
+                                      String businessId,String vipGrade,
+                                  String discountRate,String reserved
+    ) throws Exception {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("serNum", serNum);
+        params.put("source", appsource);
+        params.put("reqTime", reqTime);
+        params.put("businessId", businessId);
+        params.put("vipGrade", vipGrade);
+        params.put("discountRate", discountRate);
+        params.put("reserved", reserved);
+        String sign = getSign(md5_key, params);
+        params.put("sign", sign);
+        String url = getAbsoluteUrl(API.UPDATEDISTRIC);
+        postProgressResponse(myResultCallback, params, url);
+    }
+
+
+    /**
+     *
      * 获取会员分类详情
      */
-    public void getMemberTypedetaiL(MyResultCallback<String> myResultCallback, String businessId, String typeId, String reqTime, String uuid) throws Exception {
+    public void getMemberTypedetaiL( MyResultCallback<String> myResultCallback,
+                                    String typeId, String reqTime, String uuid,
+                                    String businessId
+                                    ) throws Exception {
         Map<String, String> params = new HashMap<String, String>();
         params.put("businessId", businessId);
         params.put("typeId", typeId);

@@ -11,8 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="7dp"
-        android:paddingLeft="8dp"
-        android:paddingRight="15dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
         android:background="@color/white"
         android:gravity="center_vertical"
         android:orientation="horizontal" >
@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="会员类别"
+            android:text="会员等级"
             android:textColor="@color/showcolor"
             android:textSize="16sp" />
 
@@ -67,11 +67,11 @@
 
         <TextView
             android:id="@+id/tv_integralratio"
-            android:layout_width="0dp"
+            android:layout_width="20dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="积分比例"
+            android:text="升级规则"
             android:textColor="@color/showcolor"
             android:textSize="16sp" />
     </LinearLayout>
@@ -80,17 +80,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/colores_news_14" />
-    <!--<cn.com.hgh.baseadapter.recyclerViewadapter.pullrefreshrecyclerview.PullRefreshRecyclerView
-        android:id="@+id/prlv_actmarketingselect"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_below="@id/v_01"
-        android:divider="@null"
-        android:background="@color/white"
-        android:listSelector="@color/transparent"
-        android:scrollbars="none">
-    </cn.com.hgh.baseadapter.recyclerViewadapter.pullrefreshrecyclerview.PullRefreshRecyclerView>-->
+
     <com.lhh.ptrrv.library.PullToRefreshRecyclerView
         android:visibility="visible"
         android:id="@+id/ptrrv"
@@ -111,9 +101,6 @@
         android:src="@mipmap/iv_empty"
         android:layout_below="@id/v_01"
         />
-<!--
-    ptr:ptrDrawable="@drawable/android"
--->
 
     <TextView
         android:visibility="gone"
@@ -126,45 +113,5 @@
         android:gravity="center"
         android:text="没有可以加载的数据了"
         android:textSize="16sp" />
-<!--
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rlv_actclassify"
-        android:layout_below="@id/v_01"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#ffffff"
-        android:layout_marginBottom="60dp"
-        android:divider="@color/colores_news_14"
-        android:dividerHeight="1dp"
-     />
--->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@color/white"
-        android:layout_gravity="bottom"
-        >
-        <View
-            android:id="@+id/v_bottom"
-            android:layout_alignParentTop="true"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colores_news_14"
-            />
-    <TextView
-        android:id="@+id/text_newcategory"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:background="@drawable/shap_hollow_red"
-        android:clickable="true"
-        android:gravity="center"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:paddingLeft="30dp"
-        android:paddingRight="30dp"
-        android:text="@string/newaddcategory"
-        android:textColor="@color/color_ff6351"
-        android:textSize="17sp" />
-    </RelativeLayout>
+
 </LinearLayout>
