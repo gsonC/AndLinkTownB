@@ -386,8 +386,8 @@ public class ExpandableButtonMenu extends RelativeLayout implements View.OnClick
         Log.d(TAG, "mainButton: " + mainButtonSize);
 
         RelativeLayout.LayoutParams rParams = (LayoutParams) mCloseBtn.getLayoutParams();
-        rParams.width = (int) (sWidth * 0.13);
-        rParams.height = (int) (sWidth * 0.13);
+        rParams.width = (int) (sWidth * 0.11);
+        rParams.height = (int) (sWidth * 0.11);
         rParams.setMargins(0, 0, 0, (int) (sHeight * bottomPadding + EXTRA_MARGIN));
 
         rParams = (LayoutParams) mMidContainer.getLayoutParams();

@@ -368,6 +368,9 @@ public class AddShopActivity extends BaseActivity {
 												"新增商铺成功");
 										finish();
 									}else{
+										ContentUtils.putSharePre(AddShopActivity.this,
+												Constants.SHARED_PREFERENCE_NAME,
+												Constants.LOGINED_IN, true);
 										Intent intent = new Intent(
 												AddShopActivity.this,
 												MainActivity.class);
@@ -394,7 +397,6 @@ public class AddShopActivity extends BaseActivity {
 			e.printStackTrace();
 		}
 	}
-
 	/**
 	 * B端切换店铺
 	 */
@@ -409,6 +411,9 @@ public class AddShopActivity extends BaseActivity {
 
 							@Override
 							public void onResponseResult(Result result) {
+								ContentUtils.putSharePre(AddShopActivity.this,
+										Constants.SHARED_PREFERENCE_NAME,
+										Constants.LOGINED_IN, true);
 								Intent intent = new Intent(
 										AddShopActivity.this,
 										ChangeShopActivity.class);

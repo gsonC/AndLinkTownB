@@ -165,6 +165,9 @@ public class AddShopInfoActivity extends BaseActivity {
                                     Constants.USERTAG, Constants.USERSHOPLEAGUESAREA,areaCode);
                             switch (fromwhich){
                                 case  FROMLOGINPAGE:
+                                    ContentUtils.putSharePre(AddShopInfoActivity.this,
+                                            Constants.SHARED_PREFERENCE_NAME,
+                                            Constants.LOGINED_IN, true);
                                     Intent intentmain = new Intent();
                                     intentmain.setClass(AddShopInfoActivity.this, MainActivity.class);
                                     setResult(RESULT_OK, intentmain);
