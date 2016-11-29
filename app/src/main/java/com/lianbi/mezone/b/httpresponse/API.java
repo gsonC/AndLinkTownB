@@ -9,7 +9,7 @@ public class API {
 	/**
 	 * 微信分享APP_ID
 	 */
-	public static final String APP_ID = "wx5ce2ffa100e3f587";
+	public static final String APP_ID = "wxbe5a3f5342a2b178";
 	/**
 	 * 服务器异常
 	 */

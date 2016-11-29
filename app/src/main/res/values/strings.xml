@@ -324,6 +324,8 @@
     <string name="activity_withdrawrecord_title">提现记录</string>
     <string name="close">关闭</string>
     <string name="share">分享到</string>
+    <string name="weixin_title">不薅你羊毛的新型售卖方式,再不来你就OUT了!</string>
+    <string name="weixin_describe">老板娘为联营场景搭建平台,您可以发起,也可以加入联营场景,通过场景式售卖,获取更多收益.</string>
     <string name="empty"/>
 
 </resources>

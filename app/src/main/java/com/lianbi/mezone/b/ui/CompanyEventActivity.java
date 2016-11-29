@@ -42,6 +42,7 @@ public class CompanyEventActivity extends BaseActivity {
 	private View pickView;
 	private PopupWindow pw;
 	private IWXAPI api;
+	private final String COMPANYEVENTURL = "http://www.xylbn.cn";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -94,12 +95,12 @@ public class CompanyEventActivity extends BaseActivity {
 
 		//分享网页
 		WXWebpageObject webpage = new WXWebpageObject();
-		webpage.webpageUrl = "http://www.baidu.com";
+		webpage.webpageUrl = COMPANYEVENTURL;
 
 		//用WXTextObject对象初始化一个WXMediaMessage对象
 		WXMediaMessage msg = new WXMediaMessage(webpage);
-		msg.title = "网页标题";
-		msg.description = "网页描述";
+		msg.title = getString(R.string.weixin_title);
+		msg.description = getString(R.string.weixin_describe);
 
 		Bitmap thumb = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
 
@@ -170,7 +171,7 @@ public class CompanyEventActivity extends BaseActivity {
 				dialog.dismiss();
 			}
 		});
-		mWeb_webactivty.loadUrl("https://www.baidu.com/");
+		mWeb_webactivty.loadUrl(COMPANYEVENTURL);
 	}
 
 	@Override
