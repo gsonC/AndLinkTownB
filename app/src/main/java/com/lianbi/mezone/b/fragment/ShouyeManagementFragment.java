@@ -80,7 +80,6 @@ import cn.com.hgh.playview.imp.TextSliderView;
 import cn.com.hgh.utils.AbDateUtil;
 import cn.com.hgh.utils.AbStrUtil;
 import cn.com.hgh.utils.AbViewUtil;
-import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.DynamicWaveTask;
 import cn.com.hgh.utils.GlideRoundTransform;
 import cn.com.hgh.utils.JumpIntent;
@@ -113,7 +112,6 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 	private OrderPushCount mOrderPushCount;
 	//更多服务
 	public static final int MORESERVICE = 7;
-	boolean isLogin;
 	/**
 	 * 广告
 	 */
@@ -187,7 +185,6 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 		EventBus.getDefault().register(this);//注册EventBus
 		mActivity = (MainActivity) getActivity();
 		mOkHttpsImp = OkHttpsImp.SINGLEOKHTTPSIMP.newInstance(mActivity);
-		isLogin = ContentUtils.getLoginStatus(mActivity);
 		intView(view);
 		initLineChartView();
 		getShopPushCount();
@@ -1011,7 +1008,7 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 
 				JumpIntent.jumpWebActivty
 						(mActivity, WebMoreServiceActivty.class,
-								isLogin, API.WEB_MORESERVICE, MORESERVICE,
+								mActivity.isLogin, API.WEB_MORESERVICE, MORESERVICE,
 								false, false, true, "应用商城");
 
 				break;

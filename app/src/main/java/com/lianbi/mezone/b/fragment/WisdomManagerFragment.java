@@ -45,7 +45,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.QuickAdapter;
-import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.CryptTool;
 import cn.com.hgh.utils.JumpIntent;
 import cn.com.hgh.utils.WebEncryptionUtil;
@@ -136,7 +135,7 @@ public class WisdomManagerFragment extends Fragment implements OnClickListener {
 	 * 刷新fm数据
 	 */
 	public void refreshFMData() {
-		if (ContentUtils.getLoginStatus(mMainActivity)) {
+		if (mMainActivity.isLogin) {
 			// mDatas.clear();
 			mMainActivity.getServiceMall();
 			// getServiceMallAll();
@@ -174,11 +173,10 @@ public class WisdomManagerFragment extends Fragment implements OnClickListener {
 					appCode = mData.get(position).getAppCode();
 				} catch (Exception e) {
 				}
-				boolean isLogin = ContentUtils.getLoginStatus(mMainActivity);
 				boolean re = false;
 
 				if ("wcm".equals(appCode)) {// 微信商城
-					if (isLogin) {
+					if (mMainActivity.isLogin) {
 						Intent intent_web = new Intent(mMainActivity, H5WebActivty.class);
 						intent_web.putExtra(Constants.NEDDLOGIN, false);
 						intent_web.putExtra("NEEDNOTTITLE", false);
@@ -188,7 +186,7 @@ public class WisdomManagerFragment extends Fragment implements OnClickListener {
 						mMainActivity.startActivity(intent_web);
 					}
 				} else if ("wifi".equals(appCode)) {//智能WIFI
-					if (isLogin) {
+					if (mMainActivity.isLogin) {
 						Intent intent_web = new Intent(mMainActivity, WIFIWebActivity.class);
 						intent_web.putExtra(Constants.NEDDLOGIN, false);
 						intent_web.putExtra("NEEDNOTTITLE", false);
@@ -197,7 +195,7 @@ public class WisdomManagerFragment extends Fragment implements OnClickListener {
 						mMainActivity.startActivity(intent_web);
 					}
 				} else if ("qns".equals(appCode)) {//排队取号
-					if (isLogin) {
+					if (mMainActivity.isLogin) {
 						Intent intent_line = new Intent(mMainActivity, LineTakeNoWebActivity.class);
 						intent_line.putExtra(Constants.NEDDLOGIN, false);
 						intent_line.putExtra("NEEDNOTTITLE", false);
@@ -310,14 +308,13 @@ public class WisdomManagerFragment extends Fragment implements OnClickListener {
 
 	@Override
 	public void onClick(View view) {
-		boolean isLogin = ContentUtils.getLoginStatus(mMainActivity);
 		boolean re = false;
 		switch (view.getId()) {//到店服务
 			case R.id.ll_wisdommanage_shopservice:
 				startActivity(new Intent(getActivity(), DiningTableSettingActivity.class));
 				break;
 			case R.id.ll_wisdommanage_Servicemall://服务商城
-				re = JumpIntent.jumpLogin_addShop(isLogin, API.SERVICESTORE, mMainActivity);
+				re = JumpIntent.jumpLogin_addShop(mMainActivity.isLogin, API.SERVICESTORE, mMainActivity);
 				if (re) {
 
 					Intent intent_more = new Intent(mMainActivity, ServiceMallActivity.class);

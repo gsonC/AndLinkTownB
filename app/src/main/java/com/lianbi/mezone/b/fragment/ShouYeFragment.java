@@ -72,7 +72,7 @@ public class ShouYeFragment extends Fragment implements OnSliderClickListener,
 	 * 刷新fm数据
 	 */
 	public void refreshFMData() {
-		if (ContentUtils.getLoginStatus(mActivity)) {
+		if (mActivity.isLogin) {
 			// mDatas.clear();
 			//mActivity.getServiceMall();
 			// getServiceMallAll();

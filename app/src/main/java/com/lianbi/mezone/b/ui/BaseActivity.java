@@ -63,7 +63,10 @@ public class BaseActivity extends FragmentActivity implements OnClickListener {
 	 * 屏幕高度
 	 */
 	public int screenHeight = 0;
-
+	/**
+	 * App登录状态
+	 */
+	public boolean isLogin;
 	public FragmentManager fm;
 	public static UserShopInfoBean userShopInfoBean;
 	public String BusinessId="";
@@ -96,6 +99,7 @@ public class BaseActivity extends FragmentActivity implements OnClickListener {
             ContentUtils.showMsg(this, getString(R.string.currentnetworkisnotavailable));
 		}
 		activityManager.putActivity(this);
+		isLogin = ContentUtils.getLoginStatus(this);
 		if (userShopInfoBean == null) {
 			userShopInfoBean = new UserShopInfoBean(this);
 		}

@@ -26,7 +26,6 @@ import com.lianbi.mezone.b.impl.MyShopChange;
 import com.lianbi.mezone.b.ui.AboutUsActivity;
 import com.lianbi.mezone.b.ui.ActionProduceActivity;
 import com.lianbi.mezone.b.ui.BaseActivity;
-import com.lianbi.mezone.b.ui.CompanyEventActivity;
 import com.lianbi.mezone.b.ui.FeedBackActivity;
 import com.lianbi.mezone.b.ui.FinancialActivity;
 import com.lianbi.mezone.b.ui.LeaguesYellListActivity;
@@ -166,7 +165,7 @@ public class MineFragment extends Fragment implements OnClickListener,
 	}
 
 	private void setDataLogin() {
-		if (ContentUtils.getLoginStatus(maActivity)) {
+		if (maActivity.isLogin) {
 			llt_fm_mine_nologin.setVisibility(View.GONE);
 			llt_fm_mine_info.setVisibility(View.VISIBLE);
 			if (null == BaseActivity.userShopInfoBean.getName()
@@ -269,7 +268,6 @@ public class MineFragment extends Fragment implements OnClickListener,
 
 	@Override
 	public void onClick(View arg0) {
-		boolean isLogin = ContentUtils.getLoginStatus(maActivity);
 		boolean re = false;
 		switch (arg0.getId()) {
 
@@ -286,7 +284,7 @@ public class MineFragment extends Fragment implements OnClickListener,
 
 				break;
 			case R.id.llt_mine_message:// 我的消息
-				re = JumpIntent.jumpLogin_addShop(isLogin, API.NEWS, maActivity);
+				re = JumpIntent.jumpLogin_addShop(maActivity.isLogin, API.NEWS, maActivity);
 				if (re) {
 					startActivityForResult(new Intent(maActivity,
 							MineMsgActivity.class), MINEMSGACTIVITY_CODE);
@@ -314,9 +312,7 @@ public class MineFragment extends Fragment implements OnClickListener,
 				break;
 			case R.id.llt_feedback://意见反馈
 
-				boolean Login = ContentUtils.getLoginStatus(maActivity);
-
-				if (Login) {
+				if (maActivity.isLogin) {
 					Intent intent = new Intent(maActivity, FeedBackActivity.class);
 					startActivity(intent);
 				}else{
@@ -330,7 +326,7 @@ public class MineFragment extends Fragment implements OnClickListener,
 				break;
 			case R.id.fm_mine_textinfo:// 我的资料
 
-				re = JumpIntent.jumpLogin_addShop1(isLogin, API.MATERIAL,
+				re = JumpIntent.jumpLogin_addShop1(maActivity.isLogin, API.MATERIAL,
 						maActivity);
 				if (re) {
 					startActivityForResult(new Intent(maActivity,
@@ -340,7 +336,7 @@ public class MineFragment extends Fragment implements OnClickListener,
 				break;
 			case R.id.fm_mine_textcaiwushi://财务室
 
-				re = JumpIntent.jumpLogin_addShop1(isLogin, API.MATERIAL,
+				re = JumpIntent.jumpLogin_addShop1(maActivity.isLogin, API.MATERIAL,
 						maActivity);
 				if (re) {
 					startActivity(new Intent(maActivity, FinancialActivity.class));
@@ -348,7 +344,7 @@ public class MineFragment extends Fragment implements OnClickListener,
 				}
 				break;
 			case R.id.fm_mine_bussiness:// 我的商铺
-				re = JumpIntent.jumpLogin_addShop(isLogin, API.STORE, maActivity);
+				re = JumpIntent.jumpLogin_addShop(maActivity.isLogin, API.STORE, maActivity);
 				if (re) {
 					MyShopActivity.setMyShopChange(this);
 					maActivity

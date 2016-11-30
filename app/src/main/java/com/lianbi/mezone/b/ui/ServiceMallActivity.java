@@ -157,7 +157,6 @@ public class ServiceMallActivity extends BaseActivity {
 							@Override
 							public void onClick(View v) {
 								final String  serviceId=String.valueOf(item.getId());
-								boolean isLogin = ContentUtils.getLoginStatus(ServiceMallActivity.this);
 								String  appCode = item.getAppCode();
 								String  introduceurl=item.getIntroduceUrl();
 								String  isfdownload=item.getDownload();

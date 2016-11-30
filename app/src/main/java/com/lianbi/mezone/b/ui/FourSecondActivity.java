@@ -46,7 +46,6 @@ public class FourSecondActivity extends BaseActivity {
 
 	private TextView mTv_daojishi;
 	private MyCountDownTimer mc;
-	private boolean mIsLogin;
 	private MsgReceiver mMsgReceiver;
 	private Intent mIntent;
 	private ImageView mImg_first_foursecond;
@@ -73,11 +72,7 @@ public class FourSecondActivity extends BaseActivity {
 		 */
 		startDownLoadAreaCodeService();
 
-		/**
-		 * 如果登录过自动登录
-		 */
-		mIsLogin = ContentUtils.getLoginStatus(this);
-		if (mIsLogin) {
+		if (isLogin) {
 			autoLogin();
 		}
 
@@ -89,7 +84,7 @@ public class FourSecondActivity extends BaseActivity {
 		switch (view.getId()) {
 			case R.id.tv_daojishi:
 				isClick = true;
-				if (mIsLogin) {
+				if (isLogin) {
 					checkID();
 					//startActivity(new Intent(FourSecondActivity.this,
 					//		MainActivity.class));
@@ -260,7 +255,7 @@ public class FourSecondActivity extends BaseActivity {
 		public void onFinish() {
 			if (!isClick) {
 
-				if (mIsLogin) {
+				if (isLogin) {
 
 					checkID();
 

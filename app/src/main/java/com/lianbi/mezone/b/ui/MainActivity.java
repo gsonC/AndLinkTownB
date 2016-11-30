@@ -135,7 +135,7 @@ public class MainActivity extends BaseActivity implements MyShopChange {
 	}
 
 	public void postCID() {
-		if (ContentUtils.getLoginStatus(this)) {
+		if (isLogin) {
 			postClientId();
 		}
 	}
@@ -351,7 +351,6 @@ public class MainActivity extends BaseActivity implements MyShopChange {
 	@Override
 	protected void onTitleRightClick1() {
 		super.onTitleRightClick1();
-		boolean isLogin = ContentUtils.getLoginStatus(this);
 		boolean re = false;
 		switch (curPosition) {
 			case POSITION0:// 二维码扫描
@@ -382,7 +381,6 @@ public class MainActivity extends BaseActivity implements MyShopChange {
 	@Override
 	protected void onTitleRightClickTv() {
 		super.onTitleRightClickTv();
-		boolean isLogin = ContentUtils.getLoginStatus(this);
 		boolean re = false;
 		switch (curPosition) {
 			case POSITION0:
@@ -404,7 +402,7 @@ public class MainActivity extends BaseActivity implements MyShopChange {
 					break;
 				}
 			case POSITION3:
-				if (ContentUtils.getLoginStatus(this)) {
+				if (isLogin) {
 					DialogCommon dialog = new DialogCommon(MainActivity.this) {
 						@Override
 						public void onCheckClick() {
@@ -630,7 +628,7 @@ public class MainActivity extends BaseActivity implements MyShopChange {
 			fm_funcpage0.setVisibility(View.GONE);
 			fm_funcpage3.setVisibility(View.VISIBLE);
 			fm_funcpage1.setVisibility(View.GONE);
-			if (ContentUtils.getLoginStatus(this)) {
+			if (isLogin) {
 				setPageRightTextVisibility(View.VISIBLE);
 			} else {
 				setPageRightTextVisibility(View.INVISIBLE);
@@ -693,7 +691,7 @@ public class MainActivity extends BaseActivity implements MyShopChange {
 	}
 
 	private void setShoyYeTitle() {
-		if (ContentUtils.getLoginStatus(this)) {
+		if (isLogin) {
 			try {
 				if (POSITION0 == clickPosition) {
 					setPageTitle(ShopName);
@@ -793,7 +791,7 @@ public class MainActivity extends BaseActivity implements MyShopChange {
 	 * 获取已有的服务商城列表
 	 */
 	public void getServiceMall() {
-		if (ContentUtils.getLoginStatus(this) && !TextUtils.isEmpty(userShopInfoBean.getBusinessId())) {
+		if (isLogin && !TextUtils.isEmpty(userShopInfoBean.getBusinessId())) {
 			okHttpsImp.getMoreServerMall(new MyResultCallback<String>() {
 
 				@Override

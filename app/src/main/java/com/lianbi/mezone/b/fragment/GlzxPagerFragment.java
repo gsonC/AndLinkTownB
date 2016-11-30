@@ -1,7 +1,5 @@
 package com.lianbi.mezone.b.fragment;
 
-import java.util.ArrayList;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,23 +11,21 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import cn.com.hgh.utils.ContentUtils;
-import cn.com.hgh.utils.JumpIntent;
 
 import com.bumptech.glide.Glide;
-import com.xizhi.mezone.b.R;
 import com.lianbi.mezone.b.bean.MoreServerMallBean;
 import com.lianbi.mezone.b.httpresponse.API;
 import com.lianbi.mezone.b.ui.ChoiceDingdanInfoWayActivity;
-import com.lianbi.mezone.b.ui.DingdanInfoActivity;
 import com.lianbi.mezone.b.ui.MainActivity;
 import com.lianbi.mezone.b.ui.MemberManagementActivity;
-import com.lianbi.mezone.b.ui.OrderProductActivity;
-import com.lianbi.mezone.b.ui.OrderProductListActivity;
 import com.lianbi.mezone.b.ui.ServiceMallActivity;
-import com.lianbi.mezone.b.ui.ServiceShopActivity;
-import com.lianbi.mezone.b.ui.TransactionManagementActivity;
 import com.lianbi.mezone.b.ui.WebActivty;
+import com.xizhi.mezone.b.R;
+
+import java.util.ArrayList;
+
+import cn.com.hgh.utils.ContentUtils;
+import cn.com.hgh.utils.JumpIntent;
 
 public class GlzxPagerFragment extends Fragment implements OnClickListener {
 
@@ -216,12 +212,11 @@ public class GlzxPagerFragment extends Fragment implements OnClickListener {
 
 	@Override
 	public void onClick(View view) {
-		boolean isLogin = ContentUtils.getLoginStatus(mMainActivity);
 		boolean re = false;
 		switch (view.getId()) {
 		case R.id.GLZX_jiaoyi_gl1:// 交易管理1
 			if (isF) {
-				re = JumpIntent.jumpLogin_addShop(isLogin, API.TRADE,
+				re = JumpIntent.jumpLogin_addShop(mMainActivity.isLogin, API.TRADE,
 						mMainActivity);
 				if (re) {
 					// Intent intent_more = new Intent(mMainActivity,
@@ -239,7 +234,7 @@ public class GlzxPagerFragment extends Fragment implements OnClickListener {
 		case R.id.GLZX_huiyuan_gl2:// 会员管理2
 			if (isF) {
 
-				re = JumpIntent.jumpLogin_addShop(isLogin, API.VIP,
+				re = JumpIntent.jumpLogin_addShop(mMainActivity.isLogin, API.VIP,
 						mMainActivity);
 				if (re) {
 					Intent intent_more = new Intent(mMainActivity,
@@ -254,7 +249,7 @@ public class GlzxPagerFragment extends Fragment implements OnClickListener {
 		case R.id.GLZX_pingjia_gl3: {// 订单列表3
 			if (isF) {
 
-				re = JumpIntent.jumpLogin_addShop(isLogin, API.ORDER,
+				re = JumpIntent.jumpLogin_addShop(mMainActivity.isLogin, API.ORDER,
 						mMainActivity);
 				if (re) {
 //					 Intent intent_more = new Intent(mMainActivity,
@@ -272,7 +267,7 @@ public class GlzxPagerFragment extends Fragment implements OnClickListener {
 		}
 			break;
 		case R.id.GLZX_shebei_gl4: {// 设备管理4
-			re = JumpIntent.jumpLogin_addShop1(isLogin, API.SERVER,
+			re = JumpIntent.jumpLogin_addShop1(mMainActivity.isLogin, API.SERVER,
 					mMainActivity);
 			
 			if (re) {

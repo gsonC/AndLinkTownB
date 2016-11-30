@@ -132,9 +132,6 @@ public class LoginActivity extends BaseActivity {
 					String reString = result.getData();
 					ContentUtils.putSharePre(LoginActivity.this,
 							Constants.SHARED_PREFERENCE_NAME,
-							Constants.LOGINED_IN, true);
-					ContentUtils.putSharePre(LoginActivity.this,
-							Constants.SHARED_PREFERENCE_NAME,
 							Constants.USER_NAME, username);
 					ContentUtils.putSharePre(LoginActivity.this,
 							Constants.SHARED_PREFERENCE_NAME,
@@ -238,6 +235,9 @@ public class LoginActivity extends BaseActivity {
 								dialogCommon.show();
 
 							} else {
+								ContentUtils.putSharePre(LoginActivity.this,
+										Constants.SHARED_PREFERENCE_NAME,
+										Constants.LOGINED_IN, true);
 								Intent intent = new Intent();
 								intent.putExtra("LoginBackBean", backBean);
 								intent.setClass(LoginActivity.this, MainActivity.class);
