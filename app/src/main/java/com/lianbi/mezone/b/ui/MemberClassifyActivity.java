@@ -9,6 +9,7 @@ import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,11 +18,15 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.lhh.ptrrv.library.PullToRefreshRecyclerView;
 import com.lhh.ptrrv.library.footer.loadmore.BaseLoadMoreView;
 import com.lianbi.mezone.b.bean.MemberClassify;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.xizhi.mezone.b.R;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -184,7 +189,7 @@ public class MemberClassifyActivity extends BaseActivity {
                 @Override
                 public void onResponseResult(Result result) {
                     String reString = result.getData();
-                    /*int  dataSize;
+                    int  dataSize;
                     if (reString != null) {
                         JSONObject jsonObject;
                         try {
@@ -207,17 +212,17 @@ public class MemberClassifyActivity extends BaseActivity {
                                 mData.addAll(memberclassifyList);
                                 updateView(mData);
                                 mPtrrv.onFinishLoading(true, false);
-                                if(memberclassifyList.size()!=0) {
+                                /*if(memberclassifyList.size()!=0) {
                                     page = page + 1;
-                                }
+                                }*/
                             }
-                            if(page==1&&mDatas.size()==0){
+                           /* if(page==1&&mDatas.size()==0){
                                 mPtrrv.setVisibility(View.GONE);
                                 img_ememberslist_empty.setVisibility(View.VISIBLE);
                             }else{
                                 mPtrrv.setVisibility(View.VISIBLE);
                                 img_ememberslist_empty.setVisibility(View.GONE);
-                            }
+                            }*/
                             if(isResh==true){
                                 mPtrrv.setOnRefreshComplete();
                                 mPtrrv.onFinishLoading(true, false);
@@ -226,7 +231,7 @@ public class MemberClassifyActivity extends BaseActivity {
                             e.printStackTrace();
                         }
                     }
-                    dialog.dismiss();*/
+                    dialog.dismiss();
                 }
 
                 @Override

@@ -32,7 +32,6 @@ public class MembersComeMember extends BaseActivity {
 		setContentView(R.layout.activity_members_come_member,NOTYPE);
 		ButterKnife.bind(this);
        setPageTitle("会员列表");
-       setPageRightText("折扣设置");
 	}
 
 	@Override
@@ -53,11 +52,7 @@ public class MembersComeMember extends BaseActivity {
 		}
 	}
 
-	@Override
-	protected void onTitleRightClickTv() {
-		super.onTitleRightClick1();
-      startActivity(new Intent(MembersComeMember.this,MemberAddCategoryActivity.class));
-	}
+
 
 
 }
