@@ -19,6 +19,43 @@ public class TableOrderBean implements Serializable {
     private String userId;
     private String userName;
 
+    public String getProNum() {
+        return proNum;
+    }
+
+    public void setProNum(String proNum) {
+        this.proNum = proNum;
+    }
+
+    public String getTotalOrderMoney() {
+        return totalOrderMoney;
+    }
+
+    public void setTotalOrderMoney(String totalOrderMoney) {
+        this.totalOrderMoney = totalOrderMoney;
+    }
+
+    public String getTotalOriginalMoney() {
+        return totalOriginalMoney;
+    }
+
+    public void setTotalOriginalMoney(String totalOriginalMoney) {
+        this.totalOriginalMoney = totalOriginalMoney;
+    }
+
+    public String getOrderCookTime() {
+        return orderCookTime;
+    }
+
+    public void setOrderCookTime(String orderCookTime) {
+        this.orderCookTime = orderCookTime;
+    }
+
+    private String proNum;
+    private String totalOrderMoney;
+    private String totalOriginalMoney;
+    private String orderCookTime;
+
     public String getCreateTime() {
         return createTime;
     }

@@ -16,6 +16,15 @@ public class OneDishInOrder implements Serializable {
     private String price;
     private String proName;
     private String productId;
+    private String originalPrice;
+
+    public String getOriginalPrice() {
+        return originalPrice;
+    }
+
+    public void setOriginalPrice(String originalPrice) {
+        this.originalPrice = originalPrice;
+    }
 
     public OneDishInOrder() {
     }
