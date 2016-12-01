@@ -72,10 +72,16 @@ public class FourSecondActivity extends BaseActivity {
 		 */
 		startDownLoadAreaCodeService();
 
+
+
+	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
 		if (isLogin) {
 			autoLogin();
 		}
-
 	}
 
 	@Override
@@ -280,7 +286,13 @@ public class FourSecondActivity extends BaseActivity {
 	private int FROMLOGINPAGE = 1;
 
 	private void checkID() {
-
+        if(mBackBean==null||
+		   mMyShopInfoBean==null){
+			startActivity(new Intent(FourSecondActivity.this,
+					LoginAndRegisterActivity.class));
+			finish();
+		}
+		else
 		if (!checkAreaID()) {
 			startActivity(new Intent(FourSecondActivity.this,
 					MainActivity.class));

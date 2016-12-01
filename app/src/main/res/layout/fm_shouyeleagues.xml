@@ -146,156 +146,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/colores_news_14"/>
-
-            <LinearLayout
-                android:id="@+id/lay_shouyeLeagues_dyn"
+            <cn.com.hgh.view.MyListView
+                android:id="@+id/act_shouyeLeaguesdyn_listview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:paddingBottom="3dp"
+                android:dividerHeight="0dp"
+                android:divider="@null"
                 android:background="@color/white"
-                android:orientation="vertical"
-                >
-
-                <LinearLayout
-                    android:id="@+id/lay_shouyeLeagues_first"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    >
-
-                    <ImageView
-                        android:id="@+id/iv_shouyeLeagues_recruit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        />
-
-                    <TextView
-                        android:id="@+id/tv_shouyeLeagues_retitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:ellipsize="end"
-                        android:paddingBottom="5dp"
-                        android:paddingLeft="5dp"
-                        android:paddingRight="10dp"
-                        android:paddingTop="5dp"
-                        android:singleLine="true"
-                        android:text="暂无"
-                        android:textColor="@color/colores_news_10"/>
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/tv_shouyeLeagues_recontent"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="5dp"
-                    android:ellipsize="end"
-                    android:paddingBottom="8dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="8dp"
-                    android:singleLine="true"
-                    android:text="暂无"
-                    android:textColor="@color/color_999999"/>
-
-                <LinearLayout
-                    android:id="@+id/lay_shouyeLeagues_second"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    >
-
-                    <ImageView
-                        android:id="@+id/iv_shouyeLeagues_news"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        />
-
-                    <TextView
-                        android:id="@+id/tv_shouyeLeagues_newtitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="5dp"
-                        android:ellipsize="end"
-                        android:paddingBottom="5dp"
-                        android:paddingLeft="5dp"
-                        android:paddingRight="10dp"
-                        android:paddingTop="5dp"
-                        android:singleLine="true"
-                        android:text="暂无"
-                        android:textColor="@color/colores_news_10"/>
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/tv_shouyeLeagues_newcontent"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="5dp"
-                    android:ellipsize="end"
-                    android:paddingBottom="8dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="8dp"
-                    android:singleLine="true"
-                    android:text="暂无"
-                    android:textColor="@color/color_999999"/>
-
-                <LinearLayout
-                    android:id="@+id/lay_shouyeLeagues_third"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    >
-
-                    <ImageView
-                        android:id="@+id/iv_shouyeLeagues_discount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        />
-
-                    <TextView
-                        android:id="@+id/tv_shouyeLeagues_discounttitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="5dp"
-                        android:ellipsize="end"
-                        android:paddingBottom="5dp"
-                        android:paddingLeft="5dp"
-                        android:paddingRight="10dp"
-                        android:paddingTop="5dp"
-                        android:singleLine="true"
-                        android:text="暂无"
-                        android:textColor="@color/colores_news_10"/>
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/tv_shouyeLeagues_discountcontent"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="5dp"
-                    android:ellipsize="end"
-                    android:paddingBottom="8dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="8dp"
-                    android:singleLine="true"
-                    android:text="暂无"
-                    android:textColor="@color/color_999999"/>
-            </LinearLayout>
+                android:listSelector="@color/white"
+                android:scrollbars="none">
+            </cn.com.hgh.view.MyListView>
 
             <View
                 android:layout_width="match_parent"

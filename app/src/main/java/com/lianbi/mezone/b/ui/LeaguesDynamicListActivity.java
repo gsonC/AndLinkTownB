@@ -47,11 +47,14 @@ public class LeaguesDynamicListActivity extends BaseActivity {
     private Context mContext;
     private ArrayList<LeaguesYellBean> mData = new ArrayList<LeaguesYellBean>();
     private ArrayList<LeaguesYellBean> mDatas = new ArrayList<LeaguesYellBean>();
+    private ArrayList<LeaguesYellBean> mSortData = new ArrayList<LeaguesYellBean>();
     private QuickAdapter<LeaguesYellBean> mAdapter;
+    LeaguesYellBean  mLeaguesYellBean;
     boolean isExpanded = false;
     private int page = 1;
+    private int intExpanded=0;
     HttpDialog dialog;
-
+    private String thefirsfew;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +72,9 @@ public class LeaguesDynamicListActivity extends BaseActivity {
      */
     private void initData() {
         setPageTitle(getString(R.string.activity_leaguesdynamiclist_title));
+        if(!TextUtils.isEmpty(getIntent().getStringExtra("thefirsfew"))){
+            thefirsfew=getIntent().getStringExtra("thefirsfew");
+        }
     }
     private void setLisenter() {
         actLeaguesdynamiclistAbpulltorefreshview.setLoadMoreEnable(true);
@@ -128,6 +134,7 @@ public class LeaguesDynamicListActivity extends BaseActivity {
                                 if(item.isExpanded()){
                                     item.setExpanded(false);
                                 }else{
+                                    intExpanded=helper.getPosition();
                                     item.setExpanded(true);
                                 }
                                 mAdapter.replaceAll(mDatas);
@@ -158,7 +165,7 @@ public class LeaguesDynamicListActivity extends BaseActivity {
     private void getLeaguesDynamicData(final boolean isResh) {
         if (isResh) {
             page =1;
-            mDatas.clear();
+            mSortData.clear();
         }
         try {
             okHttpsImp.queryBusinessDynamic(
@@ -180,7 +187,6 @@ public class LeaguesDynamicListActivity extends BaseActivity {
                     new MyResultCallback<String>() {
                         @Override
                         public void onResponseResult(Result result) {
-                            page++;
                             String reString = result.getData();
                             try {
                                     JSONObject jsonObject = new JSONObject(reString);
@@ -197,8 +203,38 @@ public class LeaguesDynamicListActivity extends BaseActivity {
                                                 mData.add(LeaguesZxy);
                                             }
                                         }
-                                        updateView(mData);
+                                        if (!TextUtils.isEmpty(thefirsfew)&&
+                                                page == 1
+                                                ) {
+                                            int firsfew=Integer.parseInt(thefirsfew);
+                                            int datasize = mData.size();
+                                            for (int i = 0; i < datasize; i++) {
+                                                if (i == firsfew) {
+                                                    mLeaguesYellBean = mData.get(i);
+                                                    mLeaguesYellBean.setExpanded(true);
+                                                    mData.remove(i);
+                                                }
+
+                                            }
+                                            mSortData.add(mLeaguesYellBean);
+                                            mSortData.addAll(mData);
+                                        }
+                                           else
+                                        if (mData.size() != 0) {
+                                            mSortData.addAll(mData);
+                                        }
+
+                                        int mSortDataSize=mSortData.size();
+                                        for(int i=0;i<mSortDataSize;i++){
+                                             if(i==intExpanded){
+                                                 mSortData.get(i).setExpanded(true);
+                                             }else{
+                                                 mSortData.get(i).setExpanded(false);
+                                             }
+                                        }
+                                        updateView(mSortData);
                                     }
+                                page++;
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -225,6 +261,7 @@ public class LeaguesDynamicListActivity extends BaseActivity {
         }
     }
     protected void updateView(ArrayList<LeaguesYellBean> arrayList) {
+        mDatas.clear();
         mDatas.addAll(arrayList);
         mAdapter.replaceAll(mDatas);
     }
