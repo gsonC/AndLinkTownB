@@ -37,7 +37,6 @@ import com.lianbi.mezone.b.push.PushDemoReceiver;
 import com.lianbi.mezone.b.receiver.Downloader;
 import com.lianbi.mezone.b.service.MyService;
 import com.tencent.mm.sdk.openapi.IWXAPI;
-import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.xizhi.mezone.b.R;
 
 import org.json.JSONException;
@@ -109,29 +108,10 @@ public class MainActivity extends BaseActivity implements MyShopChange {
 
 		//LocationUtills.initLocationClient(this, this);
 
-		//regToWx();
-
 		postCID();
 
 		getUpData();
 
-	}
-
-	/**
-	 * 微信注册
-	 */
-	private void regToWx() {
-		//通过WXAPIFactory工厂,获取IWXAPI的实例
-		api = WXAPIFactory.createWXAPI(this, API.APP_ID, true);
-		//将应用的appid注册到微信
-		api.registerApp(API.APP_ID);
-		if (!api.isWXAppInstalled()) {
-			ContentUtils.putSharePre(this, Constants.SHARED_PREFERENCE_NAME,
-					Constants.WEIXIN_ISEX, true);
-		}else{
-			ContentUtils.putSharePre(this, Constants.SHARED_PREFERENCE_NAME,
-					Constants.WEIXIN_ISEX, false);
-		}
 	}
 
 	public void postCID() {
@@ -548,8 +528,9 @@ public class MainActivity extends BaseActivity implements MyShopChange {
                         startActivity(intent);
 						break;
 					case RIGHT:
-						changeFuncPage(POSITION);
-
+						Intent intent1 = new Intent(MainActivity.this, CompanyEventActivity.class);
+						intent1.putExtra("CompanyEventUrl",API.SCENECOLLECTION);
+						startActivity(intent1);
 						break;
 				}
 			}

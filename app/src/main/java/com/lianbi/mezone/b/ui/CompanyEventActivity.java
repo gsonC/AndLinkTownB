@@ -3,6 +3,7 @@ package com.lianbi.mezone.b.ui;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -22,6 +23,7 @@ import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.xizhi.mezone.b.R;
 
+import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.Picture_Base64;
 import cn.com.hgh.utils.WebViewInit;
 import cn.com.hgh.view.HttpDialog;
@@ -42,7 +44,7 @@ public class CompanyEventActivity extends BaseActivity {
 	private View pickView;
 	private PopupWindow pw;
 	private IWXAPI api;
-	private final String COMPANYEVENTURL = "http://www.xylbn.cn";
+	private String COMPANYEVENTURL = "";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,7 @@ public class CompanyEventActivity extends BaseActivity {
 		api = WXAPIFactory.createWXAPI(this, API.APP_ID, true);
 		//将应用的appid注册到微信
 		api.registerApp(API.APP_ID);
+		COMPANYEVENTURL = getIntent().getStringExtra("CompanyEventUrl");
 		initView();
 		intShareView();
 	}
@@ -95,14 +98,14 @@ public class CompanyEventActivity extends BaseActivity {
 
 		//分享网页
 		WXWebpageObject webpage = new WXWebpageObject();
-		webpage.webpageUrl = COMPANYEVENTURL;
+		webpage.webpageUrl = API.COMPANYEVENT;
 
 		//用WXTextObject对象初始化一个WXMediaMessage对象
 		WXMediaMessage msg = new WXMediaMessage(webpage);
 		msg.title = getString(R.string.weixin_title);
 		msg.description = getString(R.string.weixin_describe);
 
-		Bitmap thumb = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
+		Bitmap thumb = BitmapFactory.decodeResource(getResources(), R.mipmap.icon_wxshare);
 
 		thumb = Bitmap.createScaledBitmap(thumb, 150, 150, true);
 
@@ -171,18 +174,22 @@ public class CompanyEventActivity extends BaseActivity {
 				dialog.dismiss();
 			}
 		});
-		mWeb_webactivty.loadUrl(COMPANYEVENTURL);
+
+		if(TextUtils.isEmpty(COMPANYEVENTURL)){
+			mWeb_webactivty.loadUrl(API.MYCOMPANEY);
+		}else{
+			mWeb_webactivty.loadUrl(COMPANYEVENTURL);
+		}
 	}
 
 	@Override
 	protected void onTitleRightClick1() {
 		super.onTitleRightClick1();
-		//if (!ContentUtils.getSharePreBoolean(this,
-		//		Constants.SHARED_PREFERENCE_NAME, Constants.WEIXIN_ISEX)) {
+		if(api.isWXAppInstalled()){
 			intPopShareView();
-		//} else {
-		//	ContentUtils.showMsg(this, "您还未安装微信客户端,无法使用分享功能");
-		//}
+		}else{
+			ContentUtils.showMsg(this, "您还未安装微信客户端,无法使用分享功能");
+		}
 
 	}
 

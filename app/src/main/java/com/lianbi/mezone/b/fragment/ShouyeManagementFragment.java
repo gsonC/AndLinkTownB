@@ -968,7 +968,9 @@ public class ShouyeManagementFragment extends Fragment implements OnClickListene
 				startActivity(new Intent(mActivity, ComeDetailActivity.class));
 				break;
 			case R.id.llt_shouyemanagement_companyevent://圣诞轰趴
-				startActivity(new Intent(mActivity, CompanyEventActivity.class));
+				Intent intent1 = new Intent(mActivity, CompanyEventActivity.class);
+				intent1.putExtra("CompanyEventUrl",API.COMPANYEVENT);
+				startActivity(intent1);
 				break;
 			/**
 			 * 会员营销

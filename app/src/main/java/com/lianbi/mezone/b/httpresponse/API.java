@@ -73,6 +73,14 @@ public class API {
 	 */
 	public static final String HOST = ENVIRONMENTAL + "/lincombFront/";
 	/**
+	 * 圣诞轰趴
+	 */
+	public static final String COMPANYEVENT = TOSTORESERVICE+"/wcm/serviceMall/enterScene/1";
+	/**
+	 * 场景征集令
+	 */
+	public static final String SCENECOLLECTION = TOSTORESERVICE+"/wcm/serviceMall/launchScene";
+	/**
 	 * 发布产品
 	 */
 	public static final String WEBCUR = HOST + "template/product/release.html";
