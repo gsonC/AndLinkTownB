@@ -87,7 +87,8 @@ public class MemberClassifyActivity extends BaseActivity {
     private static final int REQUEST_CODE_UPDATA_RESULT = 1009;
 //    添加会员类别
     private static final int REQUEST_CODE_ADD_RESULT = 1010;
-
+    //折扣设置
+    private static final int REQUEST_CODE_ADD_SETING = 1011;
     boolean  Nodata=false;
     boolean  isResh;
 
@@ -362,6 +363,9 @@ public class MemberClassifyActivity extends BaseActivity {
                     initAccess();
                     getMemberCategoryList(false);
                 break;
+                case REQUEST_CODE_ADD_SETING:
+                    getMemberCategoryList(true);
+                    break;
             }
         }
     }
@@ -370,7 +374,7 @@ public class MemberClassifyActivity extends BaseActivity {
     protected void onTitleRightClickTv() {
         super.onTitleRightClickTv();
         Intent intent=new Intent(MemberClassifyActivity.this,CountActivity.class);
-       startActivity(intent);
+       startActivityForResult(intent,REQUEST_CODE_ADD_SETING);
     }
 }
 
