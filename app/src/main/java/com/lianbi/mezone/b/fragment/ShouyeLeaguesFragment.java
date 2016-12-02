@@ -54,7 +54,6 @@ import com.lianbi.mezone.b.ui.LeaguesDynamicListActivity;
 import com.lianbi.mezone.b.ui.LeaguesStorelistActivity;
 import com.lianbi.mezone.b.ui.LeaguesYellListActivity;
 import com.lianbi.mezone.b.ui.MainActivity;
-import com.lianbi.mezone.b.ui.WebActivty;
 import com.xizhi.mezone.b.R;
 
 import org.json.JSONObject;
@@ -706,9 +705,9 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
             String url = ades_ImageEs.get(slider.getP()).getBannerUrl();
             Intent intent = new Intent(mActivity, CompanyEventActivity.class);
             if(url.startsWith("http")){
-                intent.putExtra(WebActivty.U, url);
+                intent.putExtra("CompanyEventUrl", url);
             }else{
-                intent.putExtra(WebActivty.U, API.MYCOMPANEY);
+                intent.putExtra("CompanyEventUrl", API.MYCOMPANEY);
             }
             startActivity(intent);
         }
