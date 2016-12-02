@@ -136,7 +136,7 @@ public class CompanyEventActivity extends BaseActivity {
 
 	private void initView() {
 		dialog = new HttpDialog(this);
-		setPageRightResource(R.mipmap.icon_share);
+
 		mWeb_webactivty = (WebView) findViewById(R.id.web_webactivty);
 		WebViewInit.WebSettingInit(mWeb_webactivty, this);
 
@@ -177,7 +177,11 @@ public class CompanyEventActivity extends BaseActivity {
 
 		if(TextUtils.isEmpty(COMPANYEVENTURL)){
 			mWeb_webactivty.loadUrl(API.MYCOMPANEY);
+		}else if(COMPANYEVENTURL.contains("enterScene")){
+			setPageRightResource(R.mipmap.icon_share);
+			mWeb_webactivty.loadUrl(COMPANYEVENTURL);
 		}else{
+			setPageRightImageVisibility();
 			mWeb_webactivty.loadUrl(COMPANYEVENTURL);
 		}
 	}

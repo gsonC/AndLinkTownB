@@ -49,10 +49,12 @@ import com.lianbi.mezone.b.bean.ShouYeBannerBean;
 import com.lianbi.mezone.b.httpresponse.API;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.lianbi.mezone.b.httpresponse.OkHttpsImp;
+import com.lianbi.mezone.b.ui.CompanyEventActivity;
 import com.lianbi.mezone.b.ui.LeaguesDynamicListActivity;
 import com.lianbi.mezone.b.ui.LeaguesStorelistActivity;
 import com.lianbi.mezone.b.ui.LeaguesYellListActivity;
 import com.lianbi.mezone.b.ui.MainActivity;
+import com.lianbi.mezone.b.ui.WebActivty;
 import com.xizhi.mezone.b.R;
 
 import org.json.JSONObject;
@@ -700,6 +702,16 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
      */
     @Override
     public void onSliderClick(BaseSliderView slider) {
+        if (ades_ImageEs != null && ades_ImageEs.size() > 0) {
+            String url = ades_ImageEs.get(slider.getP()).getBannerUrl();
+            Intent intent = new Intent(mActivity, CompanyEventActivity.class);
+            if(url.startsWith("http")){
+                intent.putExtra(WebActivty.U, url);
+            }else{
+                intent.putExtra(WebActivty.U, API.MYCOMPANEY);
+            }
+            startActivity(intent);
+        }
     }
 
 }
