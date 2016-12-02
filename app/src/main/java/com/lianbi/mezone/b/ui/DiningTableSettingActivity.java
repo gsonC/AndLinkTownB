@@ -530,13 +530,9 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
             public void onResponseResult(Result result) {
                 Dialog dialog = new Dialog(DiningTableSettingActivity.this);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                TextView textView = new TextView(DiningTableSettingActivity.this);
-                textView.setGravity(Gravity.CENTER);
-                textView.setText("翻桌成功");
-                textView.setBackgroundColor(getResources().getColor(android.R.color.white));
-                dialog.setContentView(textView);
                 dialog.setCancelable(true);
                 dialog.setCanceledOnTouchOutside(true);
+                dialog.setContentView(R.layout.fantai_success_dialog_layout);
                 Window win = dialog.getWindow();
                 WindowManager.LayoutParams lp = win.getAttributes();
                 lp.gravity = Gravity.CENTER;

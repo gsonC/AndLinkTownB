@@ -772,7 +772,7 @@ public class MainActivity extends BaseActivity implements MyShopChange {
 	 * 获取已有的服务商城列表
 	 */
 	public void getServiceMall() {
-		if (isLogin && !TextUtils.isEmpty(userShopInfoBean.getBusinessId())) {
+		if (isLogin && !TextUtils.isEmpty(BusinessId)) {
 			okHttpsImp.getMoreServerMall(new MyResultCallback<String>() {
 
 				@Override
