@@ -2,18 +2,20 @@ package com.lianbi.mezone.b.ui;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+import com.lianbi.mezone.b.bean.MemberClassify;
 import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.xizhi.mezone.b.R;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 
@@ -63,19 +65,15 @@ public class CountActivity extends BaseActivity {
 				nicespinnerText = niceSpinner.getText().toString();
 				if (data.get(position).equals("普通会员")) {
 					getMemberCategoryList("VP0");
-					tv_radiovalue.setText(disC);
 					tvCountMoney.setText("0≤普通会员<300");
 				} else if (data.get(position).equals("VIP1")) {
 					getMemberCategoryList("VP1");
-					tv_radiovalue.setText(disC);
 					tvCountMoney.setText("300≤VIP2<1000");
 				} else if (data.get(position).equals("VIP2")) {
 					getMemberCategoryList("VP2");
-					tv_radiovalue.setText(disC);
 					tvCountMoney.setText("1000≤VIP3<3000");
 				} else if (data.get(position).equals("VIP3")) {
 					getMemberCategoryList("VP3");
-					tv_radiovalue.setText(disC);
 					tvCountMoney.setText("3000≤");
 				}
 
@@ -122,7 +120,7 @@ public class CountActivity extends BaseActivity {
 /**
  * 店铺会员等级折扣比例修改
  */
-private void getMemberCategoryList(String vipGrade){
+private void  getMemberCategoryList(String vipGrade){
 	try {
 		okHttpsImp.getMemberCategoryList(new MyResultCallback<String>() {
 			@Override
@@ -132,22 +130,31 @@ private void getMemberCategoryList(String vipGrade){
 					try {
 						JSONObject jsonObject=new JSONObject(reString);
 						reString=jsonObject.getString("list");
-						 disC=(new BigDecimal(jsonObject.getInt("discountRate"))).setScale(1,BigDecimal.ROUND_HALF_UP).toString();
+						if (!TextUtils.isEmpty(reString)) {
+							ArrayList<MemberClassify> memberclassifylist = (ArrayList<MemberClassify>) JSON
+									.parseArray(reString,
+											MemberClassify.class);
+                            if(!memberclassifylist.isEmpty()){
+							disC=memberclassifylist.get(0).getDiscountRate().toString();
+							tv_radiovalue.setText(disC);
+							}
+						}
 
-					} catch (JSONException e) {
+					} catch (Exception e) {
 						e.printStackTrace();
 					}
 				}
 
 			}
-
 			@Override
 			public void onResponseFailed(String msg) {
+				ContentUtils.showMsg(CountActivity.this, "网络访问失败");
 
 			}
 		},uuid, "app", reqTime,BusinessId,vipGrade);
 	} catch (Exception e) {
 		e.printStackTrace();
 	}
-}
+
+  }
 }
