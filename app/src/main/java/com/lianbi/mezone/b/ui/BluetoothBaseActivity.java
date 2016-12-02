@@ -1,6 +1,5 @@
 package com.lianbi.mezone.b.ui;
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
@@ -10,18 +9,14 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.Settings;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -92,22 +87,22 @@ public abstract class BluetoothBaseActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {//如果 API level 是大于等于 23(Android 6.0) 时
-            if (isLocationEnable(this)) {
-                setLocationService();
-            }
-
-            //判断是否具有权限
-            if (this.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                //判断是否需要向用户解释为什么需要申请该权限
-                if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                        Manifest.permission.ACCESS_COARSE_LOCATION)) {
-                    ContentUtils.showMsg(this, getString(R.string.activity_bluetoothbase_sincesixstart));
-                }
-                //请求权限
-                requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_REQUEST_COARSE_LOCATION);
-            }
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {//如果 API level 是大于等于 23(Android 6.0) 时
+//            if (isLocationEnable(this)) {
+//                setLocationService();
+//            }
+//
+//            //判断是否具有权限
+//            if (this.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//                //判断是否需要向用户解释为什么需要申请该权限
+//                if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+//                        Manifest.permission.ACCESS_COARSE_LOCATION)) {
+//                    ContentUtils.showMsg(this, getString(R.string.activity_bluetoothbase_sincesixstart));
+//                }
+//                //请求权限
+//                requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_REQUEST_COARSE_LOCATION);
+//            }
+//        }
         checkBluetoothExist();
         addIntentFilter();
 
@@ -648,39 +643,39 @@ public abstract class BluetoothBaseActivity extends BaseActivity {
         this.unregisterReceiver(mReceiver);
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == PERMISSION_REQUEST_COARSE_LOCATION) {
-            //用户允许改权限，0表示允许，-1表示拒绝 PERMISSION_GRANTED = 0， PERMISSION_DENIED = -1
-            //permission was granted, yay! Do the contacts-related task you need to do.
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                //这里进行授权被允许的处理
-
-                if (!mBluetoothAdapter.isEnabled()) {
-                    //打开蓝牙
-                    openBluetooth();
-                    return;
-                }
-
-                if (mBluetoothDeviceList.isEmpty()) {
-                    showSearchBluetoothDeviceDialog();
-                    return;
-                }
-
-                // Check that we're actually connected before trying anything
-                if (mService.getState() != BluetoothService.STATE_CONNECTED) {
-                    connectingBluetoothDialog();
-                    return;
-                }
-            } else {
-                //permission denied, boo! Disable the functionality that depends on this permission.
-                //这里进行权限被拒绝的处理
-                ContentUtils.showMsg(this, "权限申请被拒，无法搜索到蓝牙设备");
-            }
-        } else {
-            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        }
-    }
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//        if (requestCode == PERMISSION_REQUEST_COARSE_LOCATION) {
+//            //用户允许改权限，0表示允许，-1表示拒绝 PERMISSION_GRANTED = 0， PERMISSION_DENIED = -1
+//            //permission was granted, yay! Do the contacts-related task you need to do.
+//            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                //这里进行授权被允许的处理
+//
+//                if (!mBluetoothAdapter.isEnabled()) {
+//                    //打开蓝牙
+//                    openBluetooth();
+//                    return;
+//                }
+//
+//                if (mBluetoothDeviceList.isEmpty()) {
+//                    showSearchBluetoothDeviceDialog();
+//                    return;
+//                }
+//
+//                // Check that we're actually connected before trying anything
+//                if (mService.getState() != BluetoothService.STATE_CONNECTED) {
+//                    connectingBluetoothDialog();
+//                    return;
+//                }
+//            } else {
+//                //permission denied, boo! Disable the functionality that depends on this permission.
+//                //这里进行权限被拒绝的处理
+//                ContentUtils.showMsg(this, "权限申请被拒，无法搜索到蓝牙设备");
+//            }
+//        } else {
+//            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//        }
+//    }
 
     private boolean compareTo(List<BluetoothDevice> data, BluetoothDevice enity) {
         int s = data.size();

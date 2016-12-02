@@ -61,7 +61,6 @@
             android:layout_alignTop="@id/tv_client_name"
             android:layout_marginLeft="11dp"
             android:layout_toRightOf="@id/tv_client_name"
-            android:text="普通会员"
             android:textColor="#f47400"
             android:textSize="@dimen/h13" />
 
@@ -96,7 +95,6 @@
             android:textSize="@dimen/h13" />
 
         <TextView
-            android:id="@+id/time_cn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/tv_order_time"
@@ -141,6 +139,16 @@
         android:layout_height="11dp"
         android:background="@color/color_ededed" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:paddingLeft="11dp"
+        android:text="订单列表"
+        android:textColor="@color/commo_text_color"
+        android:textSize="@dimen/h15" />
+
     <cn.com.hgh.view.MyListView
         android:id="@+id/dishes_list_container"
         android:layout_width="match_parent"
@@ -152,15 +160,4 @@
         android:listSelector="@color/transparent"
         android:scrollbars="none"
         android:scrollingCache="true" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="match_parent"
-        android:layout_height="44dp"
-        android:background="@android:color/white"
-        android:gravity="center_vertical"
-        android:paddingLeft="11dp"
-        android:text="订单列表"
-        android:textColor="@color/commo_text_color"
-        android:textSize="@dimen/h15" />
 </LinearLayout>
