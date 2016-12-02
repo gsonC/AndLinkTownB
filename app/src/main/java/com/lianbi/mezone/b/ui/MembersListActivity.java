@@ -202,7 +202,7 @@ public class MembersListActivity extends BaseActivity {
 
 		try {
 			okHttpsImp.getMembersList(uuid, "app", reqTime, OkHttpsImp.md5_key,
-					userShopInfoBean.getBusinessId(), page + "", 20 + "", new MyResultCallback<String>() {
+					userShopInfoBean.getBusinessId(), page + "", 15 + "", new MyResultCallback<String>() {
 
 						@Override
 						public void onResponseResult(Result result) {

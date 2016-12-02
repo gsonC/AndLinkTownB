@@ -28,6 +28,7 @@ import com.xizhi.mezone.b.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -117,7 +118,7 @@ public class MemberClassifyActivity extends BaseActivity {
         setPageRightText("折扣设置");
         dialog = new HttpDialog(this);
         initRecyclerView();
-        getMemberCategoryList();
+        getMemberCategoryList(false);
 
     }
 
@@ -166,7 +167,7 @@ public class MemberClassifyActivity extends BaseActivity {
             super.handleMessage(msg);
             if (msg.what == MSG_CODE_REFRESH) {
                 initAccess();
-                getMemberCategoryList();
+                getMemberCategoryList(true);
 //                mPtrrv.setOnRefreshComplete();
 //                mPtrrv.onFinishLoading(true, false);
             } else if (msg.what == MSG_CODE_LOADMORE) {
@@ -176,13 +177,13 @@ public class MemberClassifyActivity extends BaseActivity {
                         mAdapter.notifyDataSetChanged();
                         mPtrrv.onFinishLoading(false, false);
                 }else{
-                       getMemberCategoryList();
+                       getMemberCategoryList(false);
                 }
             }
         }
     };
 
-    private void getMemberCategoryList() {
+    private void getMemberCategoryList(final  boolean isResh) {
         try {
             okHttpsImp.getMemberCategoryList(new MyResultCallback<String>() {
 
@@ -194,8 +195,8 @@ public class MemberClassifyActivity extends BaseActivity {
                         JSONObject jsonObject;
                         try {
                             jsonObject = new JSONObject(reString);
-                            reString = jsonObject.getString("vipTypeList");
-                            dataSize = jsonObject.getInt("dataSize");
+                            reString = jsonObject.getString("list");
+                            dataSize = jsonObject.getInt("count");
 
                             if(dataSize==0&&mDatas.size()!=0){
                                 Nodata=true;
@@ -236,16 +237,16 @@ public class MemberClassifyActivity extends BaseActivity {
 
                 @Override
                 public void onResponseFailed(String msg) {
-                   /* dialog.dismiss();
+                    dialog.dismiss();
                     img_ememberslist_empty.setVisibility(View.VISIBLE);
                     mPtrrv.setVisibility(View.GONE);
                     if(isResh==true){
                         mPtrrv.setOnRefreshComplete();
                     }
-                    mPtrrv.onFinishLoading(true, false);*/
+                    mPtrrv.onFinishLoading(true, false);
 
                 }
-            } ,uuid, "app", reqTime,BusinessId);
+            } ,uuid, "app", reqTime,BusinessId,"");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -301,21 +302,26 @@ public class MemberClassifyActivity extends BaseActivity {
                     img_right.setVisibility(View.GONE);
                     tv_loadedall.setVisibility(View.VISIBLE);
                  }else{
-                    tv_memberclassify.setText(mDatas.get(position).getTypeName());
-                    tv_memebernum.setText(String.valueOf(mDatas.get(position).getThisTypeCount()));
+                    tv_memberclassify.setText(mDatas.get(position).getVipGrade());
+                    tv_memebernum.setText(String.valueOf(mDatas.get(position).getVipCount()));
 //                    int  a=Integer.parseInt(mDatas.get(position).getTypeDiscountRatio());
-                    int  a=mDatas.get(position).getTypeDiscountRatio();
+
+                  /*  int  a=mDatas.get(position).getDiscountRate();
                     double   dou=0.0;
                     dou=division(a,10);
-//                  double discountratio=Integer.parseInt(mDatas.get(position).getTypeDiscountRatio());
-                    tv_memberdiscount.setText(String.valueOf(dou));
-                    if(mDatas.get(position).getTypeName().equals("普通会员")){
-                        tv_memberratio.setText("0≤普通会员<300");
-                    }else if(mDatas.get(position).getTypeName().equals("VIP1")) {
-                        tv_memberratio.setText("300≤普通会员<1000");
-                    }else if(mDatas.get(position).getTypeName().equals("VIP2")){
-                        tv_memberratio.setText("1000≤普通会员<3000");
-                    }else if(mDatas.get(position).getTypeName().equals("VIP3")){
+                    tv_memberdiscount.setText(String.valueOf(dou));*/
+
+
+
+                   String ddd= new BigDecimal(mDatas.get(position).getDiscountRate()+"").setScale(1 ,BigDecimal.ROUND_HALF_UP).toString();
+                    tv_memberdiscount.setText(ddd);
+                    if(mDatas.get(position).getVipGradeName().equals("普通会员")){
+                        tv_memberratio.setText("0≤VIP1<3000");
+                    }else if(mDatas.get(position).getVipGradeName().equals("VIP1")) {
+                        tv_memberratio.setText("300≤VIP2<1000");
+                    }else if(mDatas.get(position).getVipGradeName().equals("VIP2")){
+                        tv_memberratio.setText("1000≤VIP3<3000");
+                    }else if(mDatas.get(position).getVipGradeName().equals("VIP3")){
                         tv_memberratio.setText("3000≤");
                     }else{
                         tv_memberratio.setText("");
@@ -330,11 +336,11 @@ public class MemberClassifyActivity extends BaseActivity {
 
             @Override
             protected void onItemClick(View view, int adapterPosition) {
-                Intent intent = new Intent();
+                /*Intent intent = new Intent();
                 intent.setClass(MemberClassifyActivity.this,MemberAddCategoryActivity.class);
                 intent.putExtra("type", "分类详情");
                 intent.putExtra("info",mDatas.get(adapterPosition));
-                startActivityForResult(intent,REQUEST_CODE_UPDATA_RESULT);
+                startActivityForResult(intent,REQUEST_CODE_UPDATA_RESULT);*/
 
             }
         }
@@ -355,12 +361,12 @@ public class MemberClassifyActivity extends BaseActivity {
             switch (requestCode) {
                 case REQUEST_CODE_UPDATA_RESULT:
                     initAccess();
-                    getMemberCategoryList();
+                    getMemberCategoryList(false);
 
                 break;
                 case REQUEST_CODE_ADD_RESULT:
                     initAccess();
-                    getMemberCategoryList();
+                    getMemberCategoryList(false);
                 break;
             }
         }

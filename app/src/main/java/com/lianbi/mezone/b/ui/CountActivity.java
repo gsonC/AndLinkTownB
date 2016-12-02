@@ -7,31 +7,39 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.lianbi.mezone.b.httpresponse.MyResultCallback;
 import com.xizhi.mezone.b.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.LinkedList;
 
 import cn.com.hgh.spinner.NiceSpinner;
+import cn.com.hgh.utils.AbDateUtil;
+import cn.com.hgh.utils.AbStrUtil;
+import cn.com.hgh.utils.ContentUtils;
+import cn.com.hgh.utils.Result;
 
 public class CountActivity extends BaseActivity {
-/*
 
-	private TextView text;
-	private Spinner spinner;
-	private ArrayAdapter adapter;
-	private String typename;
-*/
 	private EditText tv_radiovalue;
-  private TextView tvCountMoney;
+	private TextView tvCountMoney;
 	private LinkedList<String> data;
+
+	private NiceSpinner niceSpinner;
+	private String nicespinnerText;
+	private String disC;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_count, NOTYPE);
-
 		initview();
 		spinner();
+
 	}
 
 	private void initview() {
@@ -40,90 +48,106 @@ public class CountActivity extends BaseActivity {
 		tvCountMoney = (TextView) findViewById(R.id.tv_countMoney);
 		tvCountMoney.setText("0≤普通会员<300");
 	}
-   private void spinner(){
-	   NiceSpinner niceSpinner = (NiceSpinner) findViewById(R.id.nice_spinner);
-	    tv_radiovalue = (EditText) findViewById(R.id.tv_radiovalue);
-	   niceSpinner.setTextColor(Color.BLACK);
 
-	    data=new LinkedList<>(Arrays.asList("普通会员", "VIP1", "VIP2", "VIP3"));
-	   niceSpinner.attachDataSource(data);
-	   niceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-		   @Override
-		   public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-			   if (data.get(position).equals("普通会员")) {
-				   tvCountMoney.setText("0≤普通会员<300");
-			   }else if(data.get(position).equals("VIP1")){
-				   tvCountMoney.setText("300≤VIP2<1000");
-			   }
-			   else if(data.get(position).equals("VIP2")){
-				   tvCountMoney.setText("1000≤VIP3<3000");
-			   }else if(data.get(position).equals("VIP3")){
-				   tvCountMoney.setText("3000≤");
-			   }
-		   }
+	private void spinner() {
+		niceSpinner = (NiceSpinner) findViewById(R.id.nice_spinner);
+		tv_radiovalue = (EditText) findViewById(R.id.tv_radiovalue);
 
-		   @Override
-		   public void onNothingSelected(AdapterView<?> parent) {
+		niceSpinner.setTextColor(Color.BLACK);
 
-		   }
-	   });
+		data = new LinkedList<>(Arrays.asList("普通会员", "VIP1", "VIP2", "VIP3"));
+		niceSpinner.attachDataSource(data);
+		niceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+				nicespinnerText = niceSpinner.getText().toString();
+				if (data.get(position).equals("普通会员")) {
+					getMemberCategoryList("VP0");
+					tv_radiovalue.setText(disC);
+					tvCountMoney.setText("0≤普通会员<300");
+				} else if (data.get(position).equals("VIP1")) {
+					getMemberCategoryList("VP1");
+					tv_radiovalue.setText(disC);
+					tvCountMoney.setText("300≤VIP2<1000");
+				} else if (data.get(position).equals("VIP2")) {
+					getMemberCategoryList("VP2");
+					tv_radiovalue.setText(disC);
+					tvCountMoney.setText("1000≤VIP3<3000");
+				} else if (data.get(position).equals("VIP3")) {
+					getMemberCategoryList("VP3");
+					tv_radiovalue.setText(disC);
+					tvCountMoney.setText("3000≤");
+				}
 
-	   }
-	/*private void spinner() {
+			}
 
+			@Override
+			public void onNothingSelected(AdapterView<?> parent) {
 
-		spinner = (Spinner) findViewById(R.id.spinner);
-		*//*spinner.setBackgroundColor(Color.WHITE);*//*
-		//将可选内容与ArrayAdapter连接起来
-		adapter = ArrayAdapter.createFromResource(this, R.array.songs, R.layout.spinner_item);
+			}
+		});
 
-		//设置下拉列表的风格
-		adapter.setDropDownViewResource(R.layout.dropdown_stytle);
-
-		//将adapter2 添加到spinner中
-		spinner.setAdapter(adapter);
-
-		//添加事件Spinner事件监听
-		spinner.setOnItemSelectedListener(new SpinnerXMLSelectedListener());
 	}
-
-	//使用XML形式操作
-	class SpinnerXMLSelectedListener implements AdapterView.OnItemSelectedListener {
-		public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long arg3) {
-			if (adapter.getItem(position).equals("普通会员")) {
-				tvCountMoney.setText("0≤普通会员<300");
-			}else if(adapter.getItem(position).equals("VIP1")){
-				tvCountMoney.setText("300≤VIP2<1000");
-			}
-			else if(adapter.getItem(position).equals("VIP2")){
-				tvCountMoney.setText("1000≤VIP3<3000");
-			}else if(adapter.getItem(position).equals("VIP3")){
-				tvCountMoney.setText("3000≤");
-			}
-
-		}
-
-		public void onNothingSelected(AdapterView<?> arg0) {
-
-		}
-
-	}*/
 
 	/**
 	 * 店铺会员等级折扣比例修改
 	 */
-     /*private void getupdateDistrictByBusinessId(){
-       okHttpsImp.getupdateDistrict(new MyResultCallback<String>() {
-		   @Override
-		   public void onResponseResult(Result result) {
+	private void getupdateDistrictByBusinessId() {
+		String reqTime = AbDateUtil.getDateTimeNow();
+		String uuid = AbStrUtil.getUUID();
 
-		   }
+	String	input=tv_radiovalue.getText().toString();
+		try {
+			okHttpsImp.getupdateDistrict(new MyResultCallback<String>() {
+				@Override
+				public void onResponseResult(Result result) {
+					finish();
+				}
 
-		   @Override
-		   public void onResponseFailed(String msg) {
+				@Override
+				public void onResponseFailed(String msg) {
+					ContentUtils.showMsg(CountActivity.this,"sssss");
+				}
+			}, uuid, "app", reqTime, BusinessId, nicespinnerText,input);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
-		   }
-	   },uuid, "app", reqTime,BusinessId,);
-	 }*/
+	@Override
+	protected void onTitleRightClickTv() {
+		super.onTitleRightClickTv();
+		getupdateDistrictByBusinessId();
+	}
+/**
+ * 店铺会员等级折扣比例修改
+ */
+private void getMemberCategoryList(String vipGrade){
+	try {
+		okHttpsImp.getMemberCategoryList(new MyResultCallback<String>() {
+			@Override
+			public void onResponseResult(Result result) {
+				String reString = result.getData();
+				if (reString != null) {
+					try {
+						JSONObject jsonObject=new JSONObject(reString);
+						reString=jsonObject.getString("list");
+						 disC=(new BigDecimal(jsonObject.getInt("discountRate"))).setScale(1,BigDecimal.ROUND_HALF_UP).toString();
 
-  }
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+				}
+
+			}
+
+			@Override
+			public void onResponseFailed(String msg) {
+
+			}
+		},uuid, "app", reqTime,BusinessId,vipGrade);
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+}
+}
