@@ -62,15 +62,19 @@ public class CountActivity extends BaseActivity {
 		niceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-				nicespinnerText = niceSpinner.getText().toString();
+				//nicespinnerText = niceSpinner.getText().toString();
+
 				if (data.get(position).equals("普通会员")) {
 					getMemberCategoryList("VP0");
+					tv_radiovalue.setText(disC);
 					tvCountMoney.setText("0≤普通会员<300");
 				} else if (data.get(position).equals("VIP1")) {
 					getMemberCategoryList("VP1");
+					tv_radiovalue.setText(disC);
 					tvCountMoney.setText("300≤VIP2<1000");
 				} else if (data.get(position).equals("VIP2")) {
 					getMemberCategoryList("VP2");
+					tv_radiovalue.setText(disC);
 					tvCountMoney.setText("1000≤VIP3<3000");
 				} else if (data.get(position).equals("VIP3")) {
 					getMemberCategoryList("VP3");
@@ -94,7 +98,7 @@ public class CountActivity extends BaseActivity {
 		String reqTime = AbDateUtil.getDateTimeNow();
 		String uuid = AbStrUtil.getUUID();
 
-	String	input=tv_radiovalue.getText().toString();
+	    String	input=tv_radiovalue.getText().toString();
 		try {
 			okHttpsImp.getupdateDistrict(new MyResultCallback<String>() {
 				@Override

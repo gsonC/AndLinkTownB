@@ -304,12 +304,6 @@ public class MemberClassifyActivity extends BaseActivity {
                  }else{
                     tv_memberclassify.setText(mDatas.get(position).getVipGrade());
                     tv_memebernum.setText(String.valueOf(mDatas.get(position).getVipCount()));
-//                    int  a=Integer.parseInt(mDatas.get(position).getTypeDiscountRatio());
-
-                  /*  int  a=mDatas.get(position).getDiscountRate();
-                    double   dou=0.0;
-                    dou=division(a,10);
-                    tv_memberdiscount.setText(String.valueOf(dou));*/
 
 
 
