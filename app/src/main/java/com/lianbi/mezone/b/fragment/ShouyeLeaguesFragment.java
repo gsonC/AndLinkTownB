@@ -703,14 +703,11 @@ public class ShouyeLeaguesFragment extends Fragment implements OnChartValueSelec
     public void onSliderClick(BaseSliderView slider) {
         if (ades_ImageEs != null && ades_ImageEs.size() > 0) {
             String url = ades_ImageEs.get(slider.getP()).getBannerUrl();
-            Intent intent = new Intent(mActivity, CompanyEventActivity.class);
-            if(url.startsWith("http")){
+            if(!TextUtils.isEmpty(url)&&url.startsWith("http")){
+                Intent intent = new Intent(mActivity, CompanyEventActivity.class);
                 intent.putExtra("CompanyEventUrl", url);
-            }else{
-                intent.putExtra("CompanyEventUrl", API.MYCOMPANEY);
+                startActivity(intent);
             }
-            startActivity(intent);
         }
     }
-
 }
