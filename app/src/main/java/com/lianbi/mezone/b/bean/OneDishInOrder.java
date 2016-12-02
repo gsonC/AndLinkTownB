@@ -8,15 +8,15 @@ import java.io.Serializable;
 
 public class OneDishInOrder implements Serializable {
     private static final long serialVersionUID = 7917189692362848831L;
-    private String benefitMoney;
-    private String cookingTime;
-    private String desc;
-    private String isDel;
-    private String num;
-    private String price;
+    private String benefitMoney;//折扣
+    private String cookingTime;//烹饪时间
+    private String desc;//备注
+    private String isDel;//产品状态0:正常 1：已删除
+    private String num;//产品数量
+    private String price;//会员价
     private String proName;
     private String productId;
-    private String originalPrice;
+    private String originalPrice;//非会员价
 
     public String getOriginalPrice() {
         return originalPrice;

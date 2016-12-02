@@ -39,7 +39,6 @@ import cn.com.hgh.baseadapter.QuickAdapter;
 import cn.com.hgh.utils.AbDateUtil;
 import cn.com.hgh.utils.AbViewUtil;
 import cn.com.hgh.utils.ContentUtils;
-import cn.com.hgh.utils.MathExtend;
 import cn.com.hgh.utils.Result;
 
 /*
@@ -88,14 +87,11 @@ public class TableHasPaidActivity extends BaseActivity {
 
     private void addDataToView(String data) {
         JSONObject jsonObject = JSON.parseObject(data);
-        fen_num.setText(jsonObject.getString("proNum"));
-        String totalOrderMoney = jsonObject.getString("totalOrderMoney");
+        fen_num.setText(jsonObject.getString("proNum"));//产品数量
         yuan_1.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);//中划线
         num_should_pay.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);//中划线
-        num_should_pay.setText(totalOrderMoney);
-        String benefitMoney = jsonObject.getString("benefitMoney");
-        double actually_paid = MathExtend.round(Double.parseDouble(totalOrderMoney) - Double.parseDouble(benefitMoney), 2);
-        actually_paid_amount.setText(Double.toString(actually_paid));
+        num_should_pay.setText(jsonObject.getString("totalOriginalMoney"));//原始订单总金额(原始总金额)
+        actually_paid_amount.setText(jsonObject.getString("totalOrderMoney"));//实付金额
         mData = JSON.parseArray(jsonObject.getString("alreadyPaidOrders"), TableOrderBean.class);
         mAdapter.replaceAll(mData);
     }
@@ -105,11 +101,13 @@ public class TableHasPaidActivity extends BaseActivity {
             @Override
             protected void convert(BaseAdapterHelper helper, TableOrderBean item) {
                 helper.getView(R.id.dotted_line).setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-                ((TextView) helper.getView(R.id.time_cn)).setText("支付时间：");
                 final ImageView avatar = helper.getView(R.id.iv_avatar);//头像
                 TextView name = helper.getView(R.id.tv_client_name);
                 TextView remark = helper.getView(R.id.remarks);//备注
                 TextView order_time = helper.getView(R.id.tv_order_time);//支付时间
+                ImageView vip = helper.getView(R.id.vip);
+                TextView vip_class = helper.getView(R.id.vip_class);
+                TextView ordinary_member = helper.getView(R.id.ordinary_member);
                 LinearLayout container = helper.getView(R.id.dishes_list_container);
                 Glide.with(TableHasPaidActivity.this)
                         .load(item.getPhoto())
@@ -128,6 +126,25 @@ public class TableHasPaidActivity extends BaseActivity {
                 name.setText(item.getUserName());
                 remark.setText(item.getDesc());
                 order_time.setText(AbDateUtil.exchangeFormat(item.getCreateTime(), "yyyyMMddHHmmss", AbDateUtil.dateFormatHM));
+                String vipTypeName = item.getVipTypeName();
+                if (TextUtils.isEmpty(vipTypeName)) {
+                    vip.setVisibility(View.GONE);
+                    vip_class.setVisibility(View.GONE);
+                    ordinary_member.setVisibility(View.GONE);
+                } else {
+                    if (vipTypeName.contains("VIP")) {
+                        vipTypeName = vipTypeName.substring(3);
+                        vip_class.setText(vipTypeName);
+                        vip.setVisibility(View.VISIBLE);
+                        vip_class.setVisibility(View.VISIBLE);
+                        ordinary_member.setVisibility(View.GONE);
+                    } else {
+                        ordinary_member.setText(vipTypeName);
+                        vip.setVisibility(View.GONE);
+                        vip_class.setVisibility(View.GONE);
+                        ordinary_member.setVisibility(View.VISIBLE);
+                    }
+                }
 
                 container.removeAllViews();
                 ArrayList<OneDishInOrder> detailInfo = item.getDetailInfo();
@@ -136,11 +153,16 @@ public class TableHasPaidActivity extends BaseActivity {
                     TextView dish_name = (TextView) oneDishLayout.findViewById(R.id.dish_name);
                     TextView dish_price = (TextView) oneDishLayout.findViewById(R.id.dish_price);
                     TextView tv_dish_num = (TextView) oneDishLayout.findViewById(R.id.tv_dish_num);
+                    TextView renminbi_sign_ = (TextView) oneDishLayout.findViewById(R.id.renminbi_sign_);
+                    TextView actually_dish_price = (TextView) oneDishLayout.findViewById(R.id.actually_dish_price);
 
                     OneDishInOrder oneDishInOrder = detailInfo.get(i);
                     dish_name.setText(oneDishInOrder.getProName());
                     dish_price.setText(oneDishInOrder.getPrice());
                     tv_dish_num.setText(oneDishInOrder.getNum());
+                    renminbi_sign_.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);//中划线
+                    actually_dish_price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);//中划线
+                    actually_dish_price.setText(oneDishInOrder.getOriginalPrice());
                     LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(screenWidth,
                             (int) AbViewUtil.dip2px(TableHasPaidActivity.this, 80.0f));
                     oneDishLayout.setLayoutParams(layoutParams);

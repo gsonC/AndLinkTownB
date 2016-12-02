@@ -65,12 +65,11 @@
             android:textSize="@dimen/h13" />
 
         <TextView
-            android:id="@+id/time_cn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/tv_order_time"
             android:layout_toLeftOf="@id/tv_order_time"
-            android:text="下单时间："
+            android:text="支付时间："
             android:textColor="@color/colores_news_19"
             android:textSize="@dimen/h13" />
 
@@ -101,7 +100,6 @@
             android:layout_alignTop="@id/tv_client_name"
             android:layout_marginLeft="11dp"
             android:layout_toRightOf="@id/tv_client_name"
-            android:text="普通会员"
             android:textColor="#f47400"
             android:textSize="@dimen/h13" />
     </RelativeLayout>

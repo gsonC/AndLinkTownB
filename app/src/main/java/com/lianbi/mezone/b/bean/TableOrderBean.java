@@ -10,14 +10,30 @@ import java.util.ArrayList;
 public class TableOrderBean implements Serializable {
     private static final long serialVersionUID = 6129235598609222382L;
     private String createTime;
-    private String desc;
+    private String desc;//备注
     private ArrayList<OneDishInOrder> detailInfo;
     private String orderAmount;
     private String orderNo;
-    private String photo;
+    private String photo;//头像连接
     private String thirdOrderNo;
     private String userId;
     private String userName;
+
+    /*
+    * 普通会员
+    * VIP1
+    * VIP2
+    * VIP3
+    * */
+    private String vipTypeName;
+
+    public String getVipTypeName() {
+        return vipTypeName;
+    }
+
+    public void setVipTypeName(String vipTypeName) {
+        this.vipTypeName = vipTypeName;
+    }
 
     public String getProNum() {
         return proNum;

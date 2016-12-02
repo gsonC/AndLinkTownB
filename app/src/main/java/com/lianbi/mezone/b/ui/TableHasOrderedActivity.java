@@ -161,10 +161,11 @@ public class TableHasOrderedActivity extends BluetoothBaseActivity {
 
     private void addDataToView(String data) {
         JSONObject jsonObject = JSON.parseObject(data);
-        fen_num.setText(jsonObject.getString("proNum"));
+        fen_num.setText(jsonObject.getString("proNum"));//产品数量
         yuan.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);//中划线
         num_should_pay.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);//中划线
-        num_should_pay.setText(jsonObject.getString("totalOrderMoney"));
+        num_should_pay.setText(jsonObject.getString("totalOriginalMoney"));//原始订单总金额(原始总金额)
+        num_actually_pay.setText(jsonObject.getString("totalOrderMoney"));//实付金额
         mData = JSON.parseArray(jsonObject.getString("unPaidOrders"), TableOrderBean.class);
 //        过滤掉已取消
 //        for (int i = 0; i < mData.size(); i++) {
@@ -194,11 +195,14 @@ public class TableHasOrderedActivity extends BluetoothBaseActivity {
             @Override
             protected void convert(final BaseAdapterHelper helper_1, final TableOrderBean item) {
                 helper_1.getView(R.id.dotted_line).setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-                ((TextView) helper_1.getView(R.id.time_cn)).setText("下单时间：");
                 final ImageView avatar = helper_1.getView(R.id.iv_avatar);//头像
                 TextView name = helper_1.getView(R.id.tv_client_name);
                 TextView remark = helper_1.getView(R.id.remarks);//备注
                 TextView order_time = helper_1.getView(R.id.tv_order_time);//支付时间
+                TextView waiting_time = helper_1.getView(R.id.waiting_time);
+                ImageView vip = helper_1.getView(R.id.vip);
+                TextView vip_class = helper_1.getView(R.id.vip_class);
+                TextView ordinary_member = helper_1.getView(R.id.ordinary_member);
                 MyListView container = helper_1.getView(R.id.dishes_list_container);
                 Glide.with(TableHasOrderedActivity.this)
                         .load(item.getPhoto())
@@ -217,6 +221,26 @@ public class TableHasOrderedActivity extends BluetoothBaseActivity {
                 name.setText(item.getUserName());
                 remark.setText(item.getDesc());
                 order_time.setText(AbDateUtil.exchangeFormat(item.getCreateTime(), "yyyyMMddHHmmss", AbDateUtil.dateFormatHM));
+                waiting_time.setText(item.getOrderCookTime());
+                String vipTypeName = item.getVipTypeName();
+                if (TextUtils.isEmpty(vipTypeName)) {
+                    vip.setVisibility(View.GONE);
+                    vip_class.setVisibility(View.GONE);
+                    ordinary_member.setVisibility(View.GONE);
+                } else {
+                    if (vipTypeName.contains("VIP")) {
+                        vipTypeName = vipTypeName.substring(3);
+                        vip_class.setText(vipTypeName);
+                        vip.setVisibility(View.VISIBLE);
+                        vip_class.setVisibility(View.VISIBLE);
+                        ordinary_member.setVisibility(View.GONE);
+                    } else {
+                        ordinary_member.setText(vipTypeName);
+                        vip.setVisibility(View.GONE);
+                        vip_class.setVisibility(View.GONE);
+                        ordinary_member.setVisibility(View.VISIBLE);
+                    }
+                }
 
                 final ArrayList<OneDishInOrder> detailInfo = item.getDetailInfo();
                 QuickAdapter<OneDishInOrder> adapter = new QuickAdapter<OneDishInOrder>(TableHasOrderedActivity.this, R.layout.one_dish_layout, detailInfo) {
@@ -226,9 +250,14 @@ public class TableHasOrderedActivity extends BluetoothBaseActivity {
                         TextView dish_price = helper_2.getView(R.id.dish_price);
                         TextView tv_dish_num = helper_2.getView(R.id.tv_dish_num);
                         TextView cancel_dish = helper_2.getView(R.id.cancel_dish);
+                        TextView renminbi_sign_ = helper_2.getView(R.id.renminbi_sign_);
+                        TextView actually_dish_price = helper_2.getView(R.id.actually_dish_price);
                         dish_name.setText(oneDishInOrder.getProName());
                         dish_price.setText(oneDishInOrder.getPrice());
                         tv_dish_num.setText(oneDishInOrder.getNum());
+                        renminbi_sign_.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);//中划线
+                        actually_dish_price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);//中划线
+                        actually_dish_price.setText(oneDishInOrder.getOriginalPrice());
                         cancel_dish.setVisibility(View.VISIBLE);
                         String isDel = oneDishInOrder.getIsDel();
                         if (isDel.equals("0")) {
