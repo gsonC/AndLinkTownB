@@ -277,7 +277,7 @@ public class DiningTableSettingActivity extends BluetoothBaseActivity implements
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onShouyeRefreshEvent(RefreshEvent event) {
         //false 的时候进行刷新界面操作
-        if (0==event.getRefreshNumber()) {
+        if (0 == event.getRefreshNumber()) {
             getTableinfo();
         }
     }

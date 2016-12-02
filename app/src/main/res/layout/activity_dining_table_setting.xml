@@ -223,7 +223,7 @@
                                         android:layout_width="43dp"
                                         android:layout_height="43dp"
                                         android:layout_centerInParent="true"
-                                        android:src="@mipmap/wallet" />
+                                        android:src="@mipmap/icon_shouyemag_order" />
 
                                     <TextView
                                         android:id="@+id/pay_num"
@@ -240,7 +240,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="消费结算"
+                                    android:text="客户买单"
                                     android:textColor="@color/commo_text_color"
                                     android:textSize="@dimen/h14" />
                             </LinearLayout>
@@ -261,7 +261,7 @@
                                         android:layout_width="43dp"
                                         android:layout_height="43dp"
                                         android:layout_centerInParent="true"
-                                        android:src="@mipmap/call" />
+                                        android:src="@mipmap/icon_shouyemag_call" />
 
                                     <TextView
                                         android:id="@+id/call_num"
@@ -278,7 +278,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="呼叫服务"
+                                    android:text="响应呼叫"
                                     android:textColor="@color/commo_text_color"
                                     android:textSize="@dimen/h14" />
                             </LinearLayout>
@@ -299,7 +299,7 @@
                                         android:layout_width="43dp"
                                         android:layout_height="43dp"
                                         android:layout_centerInParent="true"
-                                        android:src="@mipmap/service" />
+                                        android:src="@mipmap/icon_shouyemag_condetail" />
 
                                     <TextView
                                         android:id="@+id/particulars_num"
@@ -316,7 +316,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="到店明细"
+                                    android:text="消费流水"
                                     android:textColor="@color/commo_text_color"
                                     android:textSize="@dimen/h14" />
                             </LinearLayout>
