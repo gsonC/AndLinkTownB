@@ -77,6 +77,10 @@ public class API {
 	 */
 	public static final String COMPANYEVENT = TOSTORESERVICE+"/wcm/serviceMall/enterScene/1";
 	/**
+	 * 订单管理
+	 */
+	public static final String ORDERMANAGER = TOSTORESERVICE+"/wcm/order/myOrders?storeId=";
+	/**
 	 * 场景征集令
 	 */
 	public static final String SCENECOLLECTION = TOSTORESERVICE+"/wcm/serviceMall/launchScene";
@@ -220,7 +224,7 @@ public class API {
 	/**
 	 * 联璧官网
 	 */
-	public static final String MYCOMPANEY = "http://www.lianbi.com.cn/";
+	public static final String MYCOMPANEY = "http://www.xylbn.cn/";
 	/**
 	 * 饼状柱状图
 	 */

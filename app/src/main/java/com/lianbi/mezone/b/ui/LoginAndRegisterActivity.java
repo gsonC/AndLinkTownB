@@ -2,6 +2,7 @@ package com.lianbi.mezone.b.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import com.xizhi.mezone.b.R;
 
 import cn.com.hgh.utils.AbViewUtil;
+import cn.com.hgh.utils.ContentUtils;
 
 /*
  * @创建者     master
@@ -58,5 +60,40 @@ public class LoginAndRegisterActivity extends BaseActivity {
 						RegisterActivity.class));
 				break;
 		}
+		finish();
 	}
+
+	/**
+	 * 返回键时间间隔
+	 */
+	private long mExitTime;
+
+	/**
+	 * 返回键监听
+	 */
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+
+			if ((System.currentTimeMillis() - mExitTime) > 1000) {
+				ContentUtils.showMsg(this,
+						getResources().getString(R.string.balck_tuichu));
+
+				mExitTime = System.currentTimeMillis();
+
+			} else {
+
+				finish();
+
+			}
+
+			return true;
+
+		}
+
+		return super.onKeyDown(keyCode, event);
+
+	}
+
 }

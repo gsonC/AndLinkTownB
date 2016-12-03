@@ -3431,11 +3431,12 @@ public enum OkHttpsImp {
      * 判断是否有中文
      */
     public static boolean isChinese(String str) {
-        if (str.length() < str.getBytes().length) {
-            return true;// 中文
-        } else {
-            return false;
-        }
+        return str.length() < str.getBytes().length;
+    //    if (str.length() < str.getBytes().length) {
+    //        return true;// 中文
+    //    } else {
+    //        return false;
+    //    }
     }
 
 }

@@ -34,6 +34,7 @@ import com.lianbi.mezone.b.ui.MainActivity;
 import com.lianbi.mezone.b.ui.MineMsgActivity;
 import com.lianbi.mezone.b.ui.MineTextInfoActivity;
 import com.lianbi.mezone.b.ui.MyShopActivity;
+import com.lianbi.mezone.b.ui.OrderManagerWebActivity;
 import com.xizhi.mezone.b.R;
 
 import org.json.JSONException;
@@ -57,7 +58,7 @@ public class MineFragment extends Fragment implements OnClickListener,
 	CircularImageView circularimageview_fm_mine;
 	LinearLayout llt_fm_mine_nologin, llt_fm_mine_info, llt_mine_message,
 			llt_mine_function, llt_mine_phone_vip, llt_mine_about_us,
-			llt_mine_fm_title_bg, llt_feedback,llt_mine_meyaohe,llt_mine_changjing;
+			llt_mine_fm_title_bg, llt_feedback,llt_mine_meyaohe,llt_mine_changjing,llt_mine_myorder;
 	TextView fm_mine_name, fm_mine_vip, fm_mine_adress, mine_fm_tv_num_message,
 			tv_mine_vision_fm, mine_fm_phone_num;
 	ImageView fm_mine_textinfo, fm_mine_bussiness, fm_mine_product_f, img_update_red,fm_mine_textcaiwushi;
@@ -193,6 +194,7 @@ public class MineFragment extends Fragment implements OnClickListener,
 	}
 
 	private void listen() {
+		llt_mine_myorder.setOnClickListener(this);
 		llt_mine_changjing.setOnClickListener(this);
 		llt_mine_meyaohe.setOnClickListener(this);
 		llt_fm_mine_info.setOnClickListener(this);
@@ -210,6 +212,7 @@ public class MineFragment extends Fragment implements OnClickListener,
 	}
 
 	private void initView(View view) {
+		llt_mine_myorder = (LinearLayout) view.findViewById(R.id.llt_mine_myorder);
 		llt_mine_meyaohe = (LinearLayout) view
 				.findViewById(R.id.llt_mine_meyaohe);
 		llt_mine_changjing = (LinearLayout) view
@@ -270,6 +273,12 @@ public class MineFragment extends Fragment implements OnClickListener,
 	public void onClick(View arg0) {
 		boolean re = false;
 		switch (arg0.getId()) {
+
+			case R.id.llt_mine_myorder://我的订单
+				Intent intent_web = new Intent(maActivity,OrderManagerWebActivity.class);
+				intent_web.putExtra("OrderManagerWebUrl",API.ORDERMANAGER+ BaseActivity.userShopInfoBean.getBusinessId());
+				startActivity(intent_web);
+				break;
 
 			case R.id.llt_mine_changjing://我的场景
 				maActivity.changeFuncPage(POSITION);

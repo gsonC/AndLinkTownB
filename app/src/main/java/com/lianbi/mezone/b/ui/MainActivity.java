@@ -395,10 +395,10 @@ public class MainActivity extends BaseActivity implements MyShopChange {
 
 							ContentUtils.putSharePre(MainActivity.this, Constants.SHARED_PREFERENCE_NAME, Constants.LOGINED_IN, false);
 							userShopInfoBean = null;
-							refreshFMData();
+							//refreshFMData();
 							setPageRightTextVisibility(View.INVISIBLE);
 							Intent intent = new Intent();
-							intent.setClass(MainActivity.this, LoginActivity.class);
+							intent.setClass(MainActivity.this, LoginAndRegisterActivity.class);
 							startActivity(intent);
 							finish();
 							dismiss();

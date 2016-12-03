@@ -166,6 +166,11 @@ public class CompanyEventActivity extends BaseActivity {
 			@Override
 			public void onPageStarted(WebView view, String url, Bitmap favicon) {
 				dialog.show();
+				if(!url.contains("enterScene")){
+					setPageRightImageVisibility();
+				}else{
+					setPageRightResource(R.mipmap.icon_share);
+				}
 			}
 
 			@Override
