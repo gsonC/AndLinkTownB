@@ -102,7 +102,7 @@ public class OrderManagerWebActivity extends BaseActivity {
 
 	@Override
 	protected void onTitleLeftClick() {
-		if (gobackUrl.contains("searchOrders")) {
+		if (gobackUrl.contains("searchOrders")||gobackUrl.contains("order/showOrderDetl")) {
 			mWeb_webactivty.loadUrl(COMPANYEVENTURL);
 		} else if (gobackUrl.contains("order/myOrders")) {
 			finish();
