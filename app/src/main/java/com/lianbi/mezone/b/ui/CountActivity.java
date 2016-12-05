@@ -111,7 +111,7 @@ public class CountActivity extends BaseActivity {
 
 				@Override
 				public void onResponseFailed(String msg) {
-					ContentUtils.showMsg(CountActivity.this,"sssss");
+					
 				}
 			}, uuid, "app", reqTime, BusinessId, nicespinnerText,input);
 		} catch (Exception e) {
