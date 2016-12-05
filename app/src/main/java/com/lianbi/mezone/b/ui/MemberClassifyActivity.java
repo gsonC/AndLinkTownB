@@ -303,7 +303,7 @@ public class MemberClassifyActivity extends BaseActivity {
                     img_right.setVisibility(View.GONE);
                     tv_loadedall.setVisibility(View.VISIBLE);
                  }else{
-                    tv_memberclassify.setText(mDatas.get(position).getVipGrade());
+                    tv_memberclassify.setText(mDatas.get(position).getVipGradeName());
                     tv_memebernum.setText(String.valueOf(mDatas.get(position).getVipCount()));
 
 
