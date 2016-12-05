@@ -31,6 +31,7 @@ import com.lianbi.mezone.b.ui.LeaguesYellListActivity;
 import com.lianbi.mezone.b.ui.LineTakeNoWebActivity;
 import com.lianbi.mezone.b.ui.MainActivity;
 import com.lianbi.mezone.b.ui.ServiceMallActivity;
+import com.lianbi.mezone.b.ui.ShareMarketingActivity;
 import com.lianbi.mezone.b.ui.WIFIWebActivity;
 import com.lianbi.mezone.b.ui.WebActivty;
 import com.xizhi.mezone.b.R;
@@ -331,7 +332,7 @@ public class WisdomManagerFragment extends Fragment implements OnClickListener {
 				startActivity(new Intent(mMainActivity, LeaguesYellListActivity.class));
 				break;
 			case R.id.ll_wisdommanage_fenxiang://分享营销
-				//startActivity(new Intent(mMainActivity, ShareMarketingActivity.class));
+				startActivity(new Intent(mMainActivity, ShareMarketingActivity.class));
 				break;
 		}
 	}
