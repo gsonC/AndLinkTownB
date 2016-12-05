@@ -71,7 +71,9 @@ public class FourSecondActivity extends BaseActivity {
 		 * 启动下载省市区Code Service
 		 */
 		startDownLoadAreaCodeService();
-
+		if (isLogin) {
+			autoLogin();
+		}
 
 
 	}
@@ -79,9 +81,7 @@ public class FourSecondActivity extends BaseActivity {
 	@Override
 	protected void onStart() {
 		super.onStart();
-		if (isLogin) {
-			autoLogin();
-		}
+
 	}
 
 	@Override
