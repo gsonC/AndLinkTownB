@@ -378,7 +378,10 @@ public class MainActivity extends BaseActivity implements MyShopChange {
 					//Intent intent = new Intent(this, IncomeActivity.class);
 					//startActivity(intent);
 					//break;
-					ContentUtils.showMsg(MainActivity.this, "敬请期待");
+					Intent intent1 = new Intent(MainActivity.this, CompanyEventActivity.class);
+					intent1.putExtra("CompanyEventUrl",API.SCENECOLLECTION);
+					startActivity(intent1);
+//					ContentUtils.showMsg(MainActivity.this, "敬请期待");
 					break;
 				}
 			case POSITION3:
