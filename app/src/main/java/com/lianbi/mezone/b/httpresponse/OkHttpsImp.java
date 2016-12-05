@@ -448,7 +448,7 @@ public enum OkHttpsImp {
         // Map<String, String> params = new HashMap<String, String>();
         params.put("storeId", storeId);
         String url = getHttpUrl(storeId, "getDownloadApps");
-        postProgressResponse(myResultCallback, params, url);
+        getProgressResponse(myResultCallback, params, url);
     }
 
     /**
