@@ -311,11 +311,11 @@ public class MemberClassifyActivity extends BaseActivity {
                    String ddd= new BigDecimal(mDatas.get(position).getDiscountRate()+"").setScale(1 ,BigDecimal.ROUND_HALF_UP).toString();
                     tv_memberdiscount.setText(ddd);
                     if(mDatas.get(position).getVipGradeName().equals("普通会员")){
-                        tv_memberratio.setText("0≤VIP1<3000");
+                        tv_memberratio.setText("0≤VIP0<3000");
                     }else if(mDatas.get(position).getVipGradeName().equals("VIP1")) {
-                        tv_memberratio.setText("300≤VIP2<1000");
+                        tv_memberratio.setText("300≤VIP1<1000");
                     }else if(mDatas.get(position).getVipGradeName().equals("VIP2")){
-                        tv_memberratio.setText("1000≤VIP3<3000");
+                        tv_memberratio.setText("1000≤VIP2<3000");
                     }else if(mDatas.get(position).getVipGradeName().equals("VIP3")){
                         tv_memberratio.setText("3000≤");
                     }else{
