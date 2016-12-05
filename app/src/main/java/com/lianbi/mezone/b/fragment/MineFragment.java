@@ -166,7 +166,7 @@ public class MineFragment extends Fragment implements OnClickListener,
 	}
 
 	private void setDataLogin() {
-		if (maActivity.isLogin) {
+		if (ContentUtils.getLoginStatus(maActivity)) {
 			llt_fm_mine_nologin.setVisibility(View.GONE);
 			llt_fm_mine_info.setVisibility(View.VISIBLE);
 			if (null == BaseActivity.userShopInfoBean.getName()

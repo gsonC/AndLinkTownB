@@ -45,6 +45,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.com.hgh.baseadapter.BaseAdapterHelper;
 import cn.com.hgh.baseadapter.QuickAdapter;
+import cn.com.hgh.utils.ContentUtils;
 import cn.com.hgh.utils.CryptTool;
 import cn.com.hgh.utils.JumpIntent;
 import cn.com.hgh.utils.WebEncryptionUtil;
@@ -135,7 +136,7 @@ public class WisdomManagerFragment extends Fragment implements OnClickListener {
 	 * 刷新fm数据
 	 */
 	public void refreshFMData() {
-		if (mMainActivity.isLogin) {
+		if (ContentUtils.getLoginStatus(mMainActivity)) {
 			// mDatas.clear();
 			mMainActivity.getServiceMall();
 			// getServiceMallAll();

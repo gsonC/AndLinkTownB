@@ -378,7 +378,10 @@ public class MainActivity extends BaseActivity implements MyShopChange {
 					//Intent intent = new Intent(this, IncomeActivity.class);
 					//startActivity(intent);
 					//break;
-					ContentUtils.showMsg(MainActivity.this, "敬请期待");
+					Intent intent1 = new Intent(MainActivity.this, CompanyEventActivity.class);
+					intent1.putExtra("CompanyEventUrl",API.SCENECOLLECTION);
+					startActivity(intent1);
+//					ContentUtils.showMsg(MainActivity.this, "敬请期待");
 					break;
 				}
 			case POSITION3:
@@ -395,7 +398,7 @@ public class MainActivity extends BaseActivity implements MyShopChange {
 
 							ContentUtils.putSharePre(MainActivity.this, Constants.SHARED_PREFERENCE_NAME, Constants.LOGINED_IN, false);
 							userShopInfoBean = null;
-							//refreshFMData();
+							refreshFMData();
 							setPageRightTextVisibility(View.INVISIBLE);
 							Intent intent = new Intent();
 							intent.setClass(MainActivity.this, LoginAndRegisterActivity.class);
@@ -488,7 +491,6 @@ public class MainActivity extends BaseActivity implements MyShopChange {
 	 * 刷新fm数据
 	 */
 	public void refreshFMData() {
-		setShoyYeTitle();
 		((ShouYeFragment) fm_shouye).refreshFMData();
 		((WisdomManagerFragment) fm_wisdommanage).refreshFMData();
 		//((FinancialOfficeFragment) fm_caiwushi).refreshFMData();
@@ -772,7 +774,7 @@ public class MainActivity extends BaseActivity implements MyShopChange {
 	 * 获取已有的服务商城列表
 	 */
 	public void getServiceMall() {
-		if (isLogin && !TextUtils.isEmpty(BusinessId)) {
+		if (ContentUtils.getLoginStatus(this)) {
 			okHttpsImp.getMoreServerMall(new MyResultCallback<String>() {
 
 				@Override
