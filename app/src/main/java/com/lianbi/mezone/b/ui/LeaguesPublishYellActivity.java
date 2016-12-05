@@ -44,7 +44,7 @@ public class LeaguesPublishYellActivity extends BaseActivity {
     String strTitle="";
     String strContactnum="";
     String strSaysomething="";
-
+    String isfrommainactivity="";
     @OnClick({R.id.lay_leaguespublishyell_publish})
     public void OnClick(View v) {
         switch (v.getId()) {
@@ -70,6 +70,9 @@ public class LeaguesPublishYellActivity extends BaseActivity {
      */
     private void initData() {
         setPageTitle(getString(R.string.activity_leaguespublishyell_title));
+        if(getIntent().getStringExtra("isfrommainactivity").equals("true")){
+            isfrommainactivity="true";
+        }
 
     }
     private boolean verify() {
@@ -123,33 +126,18 @@ public class LeaguesPublishYellActivity extends BaseActivity {
                         @Override
                         public void onResponseResult(Result result) {
                             String reString = result.getData();
-                            DialogCommon dialog = new DialogCommon(LeaguesPublishYellActivity.this) {
-                                @Override
-                                public void onCheckClick() {
-                                    dismiss();
-                                    Intent intent = new Intent(LeaguesPublishYellActivity.this, LeaguesYellListActivity.class);
-                                    setResult(RESULT_OK, intent);
-                                    finish();
-                                }
-
-                                @Override
-                                public void onOkClick() {
-                                    dismiss();
-                                    etLeaguespublishyellTitle.setText("");
-                                    etLeaguespublishyellContactnum.setText("");
-                                    etLeaguespublishyellSaysomething.setText("");
-                                    strTitle="";
-                                    strContactnum="";
-                                    strSaysomething="";
-                                }
-                            };
-                            dialog.setCancelable(false);
-                            dialog.setCanceledOnTouchOutside(false);
-                            dialog.setTextTitle("发布成功");
-                            dialog.setTv_dialog_common_ok("再发一条");
-                            dialog.setTv_dialog_common_cancel("查看详情");
-                            dialog.show();
-
+                            ContentUtils.showMsg(LeaguesPublishYellActivity.this, "发布成功");
+                            if(isfrommainactivity.equals("true")){
+                             Intent intent = new Intent(LeaguesPublishYellActivity.this, LeaguesYellListActivity.class);
+                             startActivity(intent);
+                             finish();
+                            }
+                            else
+                            {
+                            Intent intent = new Intent(LeaguesPublishYellActivity.this, LeaguesYellListActivity.class);
+                            setResult(RESULT_OK, intent);
+                            finish();
+                            }
                         }
 
                         @Override

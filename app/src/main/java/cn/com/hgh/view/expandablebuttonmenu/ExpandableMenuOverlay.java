@@ -38,7 +38,7 @@ public class ExpandableMenuOverlay extends ImageButton implements DialogInterfac
     private static final float DEFAULT_DIM_AMOUNT = 0.8f;
 
     private Dialog mDialog;
-    private ExpandableButtonMenu mButtonMenu;
+    public ExpandableButtonMenu mButtonMenu;
 
     private float dimAmount = DEFAULT_DIM_AMOUNT;
     private boolean mAdjustViewSize = true;

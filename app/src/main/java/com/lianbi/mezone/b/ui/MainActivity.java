@@ -526,10 +526,13 @@ public class MainActivity extends BaseActivity implements MyShopChange {
 			public void onClick(ExpandableButtonMenu.MenuButton action) {
 				switch (action) {
 					case LEFT:
+						em_releasesceneyell.mButtonMenu.toggle();
 						Intent intent = new Intent(MainActivity.this, LeaguesPublishYellActivity.class);
+						intent.putExtra("isfrommainactivity","true");
                         startActivity(intent);
 						break;
 					case RIGHT:
+						em_releasesceneyell.mButtonMenu.toggle();
 						Intent intent1 = new Intent(MainActivity.this, CompanyEventActivity.class);
 						intent1.putExtra("CompanyEventUrl",API.SCENECOLLECTION);
 						startActivity(intent1);
