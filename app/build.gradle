@@ -21,7 +21,6 @@ android {
             minifyEnabled false//是否进行代码混淆
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-    }
 
     //task nativeLibsToJar(type: Zip, description: "create a jar archive of the native libs") {
     //   destinationDir file("$projectDir/libs")
@@ -65,3 +64,4 @@ dependencies {
     compile 'co.lemonlabs:expandable-button-menu:1.0.0'
 }
 
+}

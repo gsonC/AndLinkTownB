@@ -259,7 +259,7 @@ public class ComeDetailActivity extends BaseActivity {
 				timeSelectorTo.showCurrent();
 				break;
 			case R.id.iv_close:
-				initSearch(beginTime, endTime, orderStatus, dateStatus, 1);
+				initSearch(beginTime, endTime, orderStatus, "", 1);
 				getOrder(true, false);
 				break;
 		}
