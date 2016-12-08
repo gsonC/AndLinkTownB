@@ -261,6 +261,8 @@ public class ComeDetailActivity extends BaseActivity {
 			case R.id.iv_close:
 				initSearch(beginTime, endTime, orderStatus, "", 1);
 				getOrder(true, false);
+
+
 				break;
 		}
 	}
