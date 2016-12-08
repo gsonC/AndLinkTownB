@@ -281,7 +281,7 @@ public class ComeDetailActivity extends BaseActivity {
 
 	public void clearUpdate() {
 		mDatas.clear();
-
+     
 	}
 
 
